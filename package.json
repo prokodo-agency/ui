@@ -15,11 +15,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/prokodo/ui"
+    "url": "https://github.com/prokodo-agency/ui"
   },
   "homepage": "https://www.prokodo.com",
   "bugs": {
-    "url": "https://github.com/prokodo/ui/issues"
+    "url": "https://github.com/prokodo-agency/ui/issues"
   },
   "scripts": {
     "dev": "vite",
