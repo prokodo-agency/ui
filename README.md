@@ -1,6 +1,6 @@
 # 🧩 Prokodo UI
 
-**Modern, customizable UI components built with React and TypeScript — developed by [prokodo](https://prokodo.com) for high-performance web interfaces.**
+**Modern, customizable UI components built with React and TypeScript — developed by [prokodo](https://www.prokodo.com) for high-performance web interfaces.**
 
 ![Vite](https://img.shields.io/badge/Built%20with-Vite-646CFF?style=flat&logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?style=flat&logo=typescript&logoColor=white)
@@ -26,6 +26,6 @@
 ### 1. Install the package
 
 ```bash
-pnpm add prokodo-ui
+pnpm add @prokodo/ui
 # or
-npm install prokodo-ui
+npm install @prokodo/ui
