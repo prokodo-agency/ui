@@ -1,0 +1,268 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Select";
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.95, 0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+}
+  
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.95, 0.8);
+    }
+}
+
+#{$selector} {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    
+    &__field {
+        position: relative;
+        box-shadow: var(--elevation-1);
+        border-radius: $ui-form-element;
+
+        &--expanded {
+            box-shadow: none;
+        }
+    }
+
+    &__button {
+        box-sizing: border-box;
+        width: calc(100% - $space-xs + 4px);
+        padding: 0;
+        text-align: left;
+        mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+        mask-composite: add;
+        border: none;
+        color: var(--color-grey-900);
+        border-radius: $ui-form-element;
+        position: relative;
+        cursor: pointer;
+        @include gradientBorderVar(7);
+
+        &__inner {
+            display: flex;
+            align-items: center;
+            padding: px-to-rem(14px) $space-lg;
+            background: var(--color-white);
+            border-radius: $ui-form-element;
+            margin: 2px;
+            color: var(--color-grey-900);
+            @include text("base");
+
+            html[data-theme='dark'] & {
+                background-color: var(--color-grey-200);
+            }
+        }
+
+        &--expanded {
+            border-top-left-radius: px-to-rem(27px);
+            border-top-right-radius: px-to-rem(27px);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            @include gradientBorderVar(4);
+    
+            & > span {
+                border-top-left-radius: px-to-rem(25px);
+                border-top-right-radius: px-to-rem(25px);
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    
+        @include when-hovered() {
+            @include gradientBorderVar(4);
+        }
+    
+        @include when-focused() {
+            outline: 0;
+            @include gradientBorderVar(4);
+        }
+    
+        & > svg {
+            font-size: 1rem;
+            position: absolute;
+            height: 100%;
+            top: 0;
+            right: 10px;
+        }
+    }
+    
+    &__listbox {
+        position: relative;
+        box-sizing: border-box;
+        padding: 2px;
+        margin: -6px 0 0 0;
+        overflow: auto;
+        outline: 0;
+        color: var(--color-grey-900);
+        border-bottom-left-radius: px-to-rem(25px);
+        border-bottom-right-radius: px-to-rem(25px);
+        box-shadow: var(--elevation-3);
+        max-height: 225px;
+        scrollbar-width: none;
+    
+        &.open {
+            animation: fade-in 200ms ease-out forwards;
+        }
+    
+        &.closed {
+            animation: fade-out 200ms ease-in forwards;
+        }
+    
+        &.placement-top {
+            transform-origin: bottom;
+        }
+    
+        &.placement-bottom {
+            transform-origin: top;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: red; /* Set the background color */
+        }
+    }
+    
+    &__item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        list-style: none;
+        padding: $space-md $space-lg;
+        background: var(--color-white);
+        z-index: 1501;
+        cursor: pointer;
+        backface-visibility: hidden;
+        perspective: 1000px;
+
+        &:last-child {
+            border-bottom-left-radius: px-to-rem(25px);
+            border-bottom-right-radius: px-to-rem(25px);
+        }
+        
+        @include when-hovered() {
+            background-color: var(--color-primary-100) !important;
+
+            &:not(.disabled) {
+                background-color: var(--color-grey-50);
+            }
+        }
+    
+        &--selected {
+            background-color: var(--color-primary-50) !important;
+        }
+    
+        &.base-Option-highlighted {
+            background-color: var(--color-grey-100);
+        }
+    
+        &:focus-visible {
+            outline: 0;
+            background-color: var(--color-primary-100);
+        }
+    
+        &.base-Option-highlighted.base--selected {
+            background-color: var(--color-primary-100);
+            color: var(--color-primary-900);
+        }
+    
+        &--disabled {
+            color: var(--color-grey-400);
+        }
+    }
+    
+    &__popup {
+        width: 100%;
+        z-index: 1500;
+        max-height: 230px;
+        transform: none !important;
+        top: 53px !important;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            @include gradientBorderVar(4);
+            mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            mask-composite: add;
+            z-index: 1500;
+            border-bottom-left-radius: px-to-rem(25px);
+            border-bottom-right-radius: px-to-rem(25px);
+        }
+
+        @media (max-width: 768px) {
+            width: 100%; // Ensure it stays responsive on smaller screens
+        }
+    }
+
+    &__checkbox {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        margin-right: $space-md;
+        transform: scale(1.2);
+        mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+        mask-composite: add;
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 5px;
+        cursor: pointer;
+        @include gradientBorderVar(7);
+
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 2px;
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+            background-color: var(--color-white);
+        }
+
+        &--checked {
+            @include gradientBorderVar(4);
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                @include gradientBackgroundVar(primary-grey-secondary);
+                -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="black"></path></svg>') no-repeat center;
+                mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="black"></path></svg>') no-repeat center;
+                -webkit-mask-size: contain;
+                mask-size: contain;
+            }
+        }
+    }
+}

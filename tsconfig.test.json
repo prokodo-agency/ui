@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "types": ["jest", "node"],
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": [
+    "jest.d.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "src/tests/**/*",
+    "jest.*"
+  ]
+}

@@ -1,0 +1,63 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".PostWidget";
+
+#{$selector} {
+    &__list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        &--has-fullWidth {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        &__item {
+            display: block;
+            margin-top: $space-lg;
+
+            &--has-fullWidth {
+                width: 50%;
+            }
+        }
+
+        &__item__content {
+            display: flex;
+            justify-content: flex-start;
+        }
+    }
+    
+    &__image {
+        object-fit: cover;
+
+        &__link {
+            position: relative;
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin-right: $space-lg;
+            line-height: 0;
+            border-radius: $ui-image-border-radius;
+            overflow: hidden;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__headline {
+        @include textLineClamp(3);
+    }
+
+    &__date {
+        display: block;
+        margin: 0;
+        color: var(--color-grey-300);
+        @include text("caption");
+    }
+}

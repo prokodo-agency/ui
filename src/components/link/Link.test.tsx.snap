@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The common link component should render primary 1`] = `undefined`;
+
+exports[`The common link component should render secondary 1`] = `undefined`;

@@ -1,0 +1,57 @@
+@use "./colors";
+// gradiant properties
+// -----------------------------------------------------------------------------
+
+
+$gradientDefaultDeg: 90deg;
+$gradientBackground: (
+  light: (
+    primary-secondary: linear-gradient(112.34deg, colors.$light--primary-500 0%, colors.$light--secondary-500 100%),
+    primary-grey-secondary: linear-gradient($gradientDefaultDeg, colors.$light--primary-500 0%, colors.$light--primary-800 50%, colors.$light--secondary-500 100%),
+    grey-1: linear-gradient(180deg, colors.$white -9.57%, colors.$light--grey-50 102.02%),
+    grey-2: linear-gradient(180deg, colors.$white -9.57%, colors.$light--grey-50 102.02%),
+    radial-grey-1: radial-gradient(55.8% 55.8% at 50% 46.23%, #F0F0F0 0%, colors.$white 100%),
+  ),
+  dark: (
+    primary-secondary: linear-gradient(112.34deg, colors.$dark--primary-500 0%, colors.$dark--secondary-500 100%),
+    primary-grey-secondary: linear-gradient($gradientDefaultDeg, colors.$dark--primary-500 0%, colors.$dark--primary-800 50%, colors.$dark--secondary-500 100%),
+    grey-1: linear-gradient(180deg, colors.$black -9.57%, colors.$dark--grey-50 102.02%),
+    grey-2: linear-gradient(180deg, colors.$black -9.57%, colors.$dark--grey-50 102.02%),
+    radial-grey-1: radial-gradient(55.8% 55.8% at 50% 46.23%, colors.$dark--grey-100 0%, colors.$dark--grey-50 100%),
+  ),
+);
+
+$gradientDefaultBorderDeg: 90deg;
+$gradientBorder: (
+  light: (
+    1: linear-gradient(180deg, colors.$light--secondary-500 0%, colors.$light--primary-500 100%),
+    2: linear-gradient($gradientDefaultBorderDeg, colors.$light--primary-500 0%, colors.$light--secondary-500 100%),
+    3: linear-gradient($gradientDefaultBorderDeg, colors.$light--primary-500 0%, colors.$light--secondary-500 100%),
+    4: linear-gradient(112.34deg, colors.$light--primary-500 0%, colors.$light--secondary-500 100%),
+    5: linear-gradient($gradientDefaultBorderDeg, colors.$light--primary-500 0%, colors.$light--secondary-500 100%),
+    6: linear-gradient($gradientDefaultBorderDeg, colors.$light--secondary-500 4.63%, colors.$light--primary-500 100%),
+    7: linear-gradient($gradientDefaultBorderDeg, colors.$light--grey-100 4.63%, colors.$light--grey-300 100%),
+  ),
+  dark: (
+    1: linear-gradient(180deg, colors.$dark--secondary-500 0%, colors.$dark--primary-500 100%),
+    2: linear-gradient($gradientDefaultBorderDeg, colors.$dark--primary-500 0%, colors.$dark--secondary-500 100%),
+    3: linear-gradient($gradientDefaultBorderDeg, colors.$dark--primary-500 0%, colors.$dark--secondary-500 100%),
+    4: linear-gradient(112.34deg, colors.$dark--primary-500 0%, colors.$dark--secondary-500 100%),
+    5: linear-gradient($gradientDefaultBorderDeg, colors.$dark--primary-500 0%, colors.$dark--secondary-500 100%),
+    7: linear-gradient(180deg, colors.$dark--grey-100 0%, colors.$dark--grey-300 100%),
+  ),
+);
+
+$gradientDefaultTextDeg: 90deg;
+$gradientText: (
+  light: (
+    primary-secondary: linear-gradient($gradientDefaultTextDeg, colors.$light--primary-500 0%, colors.$light--primary-800 50%, colors.$light--secondary-500 100%),
+    primary: linear-gradient($gradientDefaultTextDeg, colors.$light--primary-500 0%, colors.$light--grey-400 100%),
+    grey: linear-gradient($gradientDefaultTextDeg, colors.$light--grey-400 0%, colors.$light--grey-600 100%),
+  ),
+  dark: (
+    primary-secondary: linear-gradient($gradientDefaultTextDeg, colors.$dark--primary-500 0%, colors.$dark--primary-800 50%, colors.$dark--secondary-500 100%),
+    primary: linear-gradient($gradientDefaultTextDeg, colors.$dark--primary-500 0%, colors.$dark--grey-400 100%),
+    grey: linear-gradient($gradientDefaultTextDeg, colors.$dark--grey-400 0%, colors.$dark--grey-600 100%),
+  ),
+);

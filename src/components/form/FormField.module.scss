@@ -1,0 +1,10 @@
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".FormField";
+
+#{$selector} {
+    padding-bottom: $space-lg;
+
+    &:last-of-type {
+        padding-bottom: 0;
+    }
+}

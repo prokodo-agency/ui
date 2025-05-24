@@ -1,0 +1,157 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/colors" as *;
+@use "@/styles/designsystem/config/screens" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Switch";
+
+#{$selector} {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__label {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 16px;
+    padding-bottom: 0;
+
+    @include screenLargerThan($screen-md) {
+      grid-template-columns: 80% 20%;
+    }
+
+    @include screenLargerThan($screen-lg) {
+      grid-template-columns: 90% 10%;
+    }
+
+    &__content {
+      padding-right: $space-lg;
+    }
+  }
+
+  &__control {
+    position: relative;
+    width: 42px;
+    height: 26px;
+    background-color: var(--color-grey-500);
+    border-radius: 13px;
+    transition: background-color 0.3s ease;
+
+    @include when-focused-within() {
+      @include use-custom-focus-outline();
+      border-radius: 13px;
+    }
+
+    &--checked {
+      @include gradientBorderVar(4);
+    }
+
+    &--disabled {
+      background-color: var(--color-grey-300);
+      cursor: not-allowed;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 2px;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      background-color: $white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    &--checked::before {
+      transform: translateY(-50%) translateX(16px);
+    }
+  }
+
+  &__input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: $white;
+    transition: background-color 0.3s ease;
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-sizing: border-box;
+      background-color: $white;
+      transition: background-color 0.3s ease;
+    }
+
+    &--primary {
+        color: var(--color-primary-500);
+    }
+    &--secondary {
+        color: var(--color-secondary-500);
+    }
+    &--success {
+        color: var(--color-success);
+    }
+    &--error {
+        color: var(--color-error);
+    }
+    &--info {
+        color: var(--color-grey-300);
+    }
+    &--warning {
+        color: var(--color-warning);
+    }
+  }
+
+  &__icon__container {
+    position: absolute;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    left: 3px;
+    transition: color 0.3s ease, transform 0.3s ease;
+
+    &--checked {
+      left: auto;
+      right: 3px;
+    }
+  }
+
+  &__thumb {
+    width: 22px;
+    height: 22px;
+    background-color: $white;
+    border-radius: 50%;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  &__track {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-grey-300);
+    border-radius: 13px;
+    transition: background-color 0.3s ease;
+
+    &--checked {
+      background-color: var(--color-primary-500);
+    }
+
+    &--disabled {
+      background-color: var(--color-grey-200);
+    }
+  }
+}

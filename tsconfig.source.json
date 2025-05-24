@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "google.maps", "vite/client"],
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["."],
+  "exclude": [
+    "node_modules",
+    "next.config.js",
+    "eslint.config.mjs",
+    "coverage/",
+    "src/tests",
+    "**/*.test.*",
+    "jest.*"
+  ]
+}

@@ -1,0 +1,161 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Input";
+
+#{$selector} {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+
+  &__label {
+    padding-top: $space-md;
+    padding-bottom: $space-sm;
+  }
+
+  &--primary .Input__field {
+    border-color: var(--color-primary-500);
+  }
+
+  &--secondary .Input__field {
+    border-color: var(--color-secondary-500);
+  }
+
+  &--error .Input__field {
+    border-color: var(--color-error);
+  }
+
+  &__field {
+    position: relative;
+    box-shadow: var(--elevation-1);
+    border-radius: $ui-form-element;
+  }
+
+  &__input {
+    width: calc(100% - $space-xs + 4px);
+    padding: 0;
+    text-align: left;
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask-composite: add;
+    border: none;
+    color: var(--color-grey-900);
+    border-radius: $ui-form-element;
+    @include gradientBorderVar(7);
+
+    @include when-hovered() {
+      @include gradientBorderVar(4);
+    }
+
+    &--multiline {
+      height: 100%;
+    }
+
+    &--focused {
+      @include gradientBorderVar(4);
+    }
+
+    &--disabled {
+      @include gradientBackgroundVar("info");
+      @include when-hovered() {
+        @include gradientBackgroundVar("info");
+      }
+    }
+
+    &__node {
+      width: calc(100% - $space-xl - $space-xl - $space-xs);
+      padding: px-to-rem(14px) $space-xl;
+      margin: 2px;
+      border: none;
+      outline: none;
+      border-radius: $ui-form-element;
+      color: var(--color-grey-900);
+      @include text("base");
+      
+      html[data-theme='dark'] & {
+        background-color: var(--color-grey-200);
+      }
+
+      &--multiline {
+        display: inline-table;
+        min-height: calc(100% - 32px);
+        resize: vertical; // Allow only vertical resizing
+        overflow: auto; // Ensure scrollbars appear if content overflows
+        position: relative;
+
+        &::-webkit-resizer {
+          display: none; // Hide the default WebKit resizer
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          right: 5px; // Adjust to place it inside the textarea
+          bottom: 5px; // Adjust to place it inside the textarea
+          width: 16px;
+          height: 16px;
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23000" d="M2 14h12v1H2zM0 12h16v1H0zM4 10h8v1H4z"/></svg>') no-repeat center center;
+          opacity: 0.5; // Optional: Make it semi-transparent
+          pointer-events: none; // Prevent the fake icon from interfering with text editing
+        }
+      }
+    }
+
+     @include when-focused() {
+      border-color: var(--color-primary-500);
+      box-shadow: 0 0 5px var(--color-primary-500);
+    }
+
+    &[aria-invalid="true"] {
+      border-color: var(--color-error);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__helperText__wrapper {
+    padding-top: $space-xs;
+    margin-bottom: 0 !important;
+  }
+
+  &__helperText {
+    padding-left: $space-xl;
+    padding-top: $space-md;
+    display: flex;
+    color: var(--color-grey-300);
+    width: 80%;
+    @include text("caption");
+
+    html[data-theme='dark'] & {
+      color: var(--color-grey-700);
+    }
+
+    &__content {
+      width: 100%;
+
+      &--is-error {
+        color: var(--color-error);
+      }
+    }
+
+    &__legend {
+      width: 25%;
+      text-align: right;
+    }
+  }
+
+  &__counter {
+    padding-top: $space-md;
+    color: var(--color-grey-600);
+    @include text("caption");
+  }
+}

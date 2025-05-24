@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(dep)"
+    target-branch: "main"
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(dep-frontend)"
+    target-branch: "main"
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore (dep-backend)"
+    target-branch: "main"

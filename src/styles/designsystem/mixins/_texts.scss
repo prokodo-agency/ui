@@ -1,0 +1,73 @@
+@use "sass:map";
+@use "sass:list";
+
+@use "@/styles/designsystem/config/texts" as *;
+@use "@/styles/designsystem/config/screens" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+
+@mixin _text-properties($key, $at, $important: false) {
+  $token: map.get($text-tokens, $key);
+  $definitions: (
+    ("font-weight", $font-weight, "weight"),
+    ("font-size", $font-size, "size"),
+    ("font-family", $font-family, "family"),
+    ("font-style", $font-style, "style"),
+    ("line-height", $font-height, "height"),
+    ("letter-spacing", $font-spacing, "spacing"),
+    ("text-transform", $font-transform, "transform"),
+    ("text-align", $font-align, "align"),
+    ("text-decoration", $font-decoration, "decorate"),
+  );
+
+  @each $def in $definitions {
+    $property: list.nth($def, 1);
+    $source: list.nth($def, 2);
+    $name: list.nth($def, 3);
+    $values: map.get($token, $name);
+    $value: null;
+    $prev: null;
+
+    @if ($at <= list.length($values)) {
+      $value: list.nth($values, $at);
+
+      @if ($at - 1 > 0) {
+        $prev: list.nth($values, $at - 1);
+      }
+    }
+
+    @if $value != null {
+      @if $important {
+        #{$property}: map.get($source, $value) !important;
+      } @else {
+        #{$property}: map.get($source, $value);
+      }
+    }
+  }
+}
+
+@mixin text($key, $important: false) {
+  $index: 1;
+
+  @each $breakpoint in $screen-breakpoints {
+    @if ($index == 1) {
+      @include _text-properties($key, $index, $important);
+    } @else {
+      @include screenLargerThan($breakpoint) {
+        @include _text-properties($key, $index, $important);
+      }
+    }
+
+    $index: $index + 1;
+  }
+}
+
+@mixin textLineClamp($lineClamp) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lineClamp;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin textShadow($shadow) {
+  filter: drop-shadow(var(--elevation-#{$shadow}--text));
+}

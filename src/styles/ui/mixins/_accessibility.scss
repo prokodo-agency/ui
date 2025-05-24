@@ -1,0 +1,159 @@
+@use "@/styles/designsystem/config/colors" as *;
+@use "@/styles/designsystem/config/radials" as *;
+
+/**
+ * Visually hides an element but not removes them for screen readers.
+ */
+@mixin hidden() {
+  position: absolute;
+  top: auto;
+  left: -99999px;
+  width: 0;
+  height: 0;
+  text-indent: -99999px;
+}
+
+/**
+ * The inverse of the `hidden` helper to reset a previously hidden element to be
+ * visible for users.
+ */
+@mixin visible() {
+  position: static;
+  width: auto;
+  height: auto;
+  left: auto;
+  text-indent: inherit;
+}
+
+/**
+ * Creates a selector for :hover effects depending on the current user input
+ * device. If the input device is a mouse, this hover effect will appear.
+ * Keyboard and touch inputs are ignored.
+ *
+ * Example usage:
+ * .link {
+ *   color: blue;
+ *
+ *   @include when-hovered() {
+ *     color: green;
+ *   }
+ * }
+ */
+@mixin when-hovered() {
+  &:hover {
+    @content;
+  }
+}
+
+/**
+ * Creates a selector for :active effects depending on the current user input
+ * device. The state applies when the input device is a mouse or keyboard. Touch
+ * devices will not show a pressed state.
+ *
+ * Example usage:
+ * .link {
+ *   box-shadow: none;
+ *
+ *   @include when-pressed() {
+ *     box-shadow: inset 0 2px 4px grey;
+ *   }
+ * }
+ */
+@mixin when-pressed() {
+  &:active {
+    @content;
+  }
+}
+
+/**
+ * Creates a selector for :focus effects depending on the current user input
+ * device. When the user navigates using a keyboard, the focus effect defined in
+ * here is applied. For other input devices they don't show up.
+ *
+ * Example usage:
+ * .link {
+ *   text-decoration: none;
+ *
+ *   @include when-focused() {
+ *     text-decoration: underline;
+ *   }
+ * }
+ */
+@mixin when-focused() {
+  &:focus {
+    @content;
+  }
+}
+
+@mixin when-focuse-visible() {
+  &:focus-visible {
+    @content;
+  }
+}
+
+/**
+ * Creates a selector for :focus-within effects depending on the current user
+ * input device. When the user navigates using a keyboard, the focus effect
+ * defined in here is applied. For other input devices they don't show up.
+ *
+ * Example usage:
+ * .link {
+ *   img {
+ *     opacity: 0.75;
+ *
+ *     @include when-focused-within() {
+ *       opacity: 1;
+ *     }
+ *   }
+ * }
+ */
+@mixin when-focused-within() {
+  &:focus-within {
+    @content;
+  }
+}
+
+/**
+ * Wrapper for media query "prefers-reduced-motion".
+ */
+@mixin when-prefers-reduced-motion() {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+/**
+ * This helper hides the outline but still makes it visible for
+ * Windows high-contrast users. Use this instead of `outline: 0;`.
+ */
+ @mixin use-custom-focus-outline($borderRadius: false) {
+  outline: 3px solid $light--primary-500;
+  outline-offset: 4px;
+  @if $borderRadius {
+    border-radius: $borderRadius;
+  } @else {
+    border-radius: $ui-form-element;
+  }
+}
+
+/**
+ * This helper hides the outline but still makes it visible for
+ * Windows high-contrast users. Use this instead of `outline: 0;`.
+ */
+@mixin use-high-contrast-outline() {
+  outline: 3px solid transparent;
+}
+
+/**
+ * Renders an alternative, but application consistent focus-ring.
+ */
+@mixin use-focusring($color: rgb(0, 102, 255), $withBorder: false) {
+  @include use-high-contrast-outline();
+  transition: box-shadow timing("normal") ease-in-out;
+
+  @if $withBorder {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px rgb($color 0.5), 0 0 transparent;
+  } @else {
+    box-shadow: 0 0 0 3px rgb($color 0.5);
+  }
+}

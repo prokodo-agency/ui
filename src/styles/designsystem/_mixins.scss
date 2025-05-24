@@ -1,0 +1,8 @@
+// This is an entry point that registers all available mixins. This file is
+// imported by next.config.js. All referenced mixins are therefore available in
+// any SASS file.
+/* stylelint-disable */
+@use "mixins/flex.scss" as *;
+@use "mixins/gradients.scss" as *;
+@use "mixins/screens.scss" as *;
+@use "mixins/texts.scss" as *;

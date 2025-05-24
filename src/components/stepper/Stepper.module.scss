@@ -1,0 +1,193 @@
+@use "sass:map";
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/screens" as *;
+@use "@/styles/designsystem/config/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Stepper";
+
+#{$selector} {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0;
+    height: 100%;
+
+    @include screenLargerThan($screen-md) {
+        width: 100%;
+        flex-direction: row;
+    }
+
+    &__step {
+        position: relative;
+        height: 100%;
+        list-style-type: none;
+        cursor: pointer;
+
+        &::after {
+            content: '';
+            position: relative;
+            display: block;
+            margin: px-to-rem(-160px) 0 px-to-rem(20px) px-to-rem(20px);
+            height: calc(100% - 150px);
+            width: 3px;
+            @include gradientBorderVar(7);
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        @include screenLargerThan($screen-md) {
+            width: 100%;
+            
+            &::after {
+                position: absolute;
+                top: px-to-rem(20px);
+                margin: 0;
+                left: auto;
+                height: 3px;
+                width: calc(100% - 80px);
+                transform: translateX(-50%);
+            }
+        }
+    
+        &:first-child::after {
+            display: none;
+        }
+
+        &--is-active::after {
+            @include gradientBorderVar(5);
+        }
+    }
+
+    &__icon {
+        display: block !important;
+        width: px-to-rem(40px);
+        height: px-to-rem(40px);
+
+        &__container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: px-to-rem(40px);
+            height: px-to-rem(40px);
+            border-radius: 9999px;
+            margin-bottom: $space-md;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: inherit;
+                padding: 3px;
+                @include gradientBorderVar(7);
+                mask: 
+                    linear-gradient(var(--color-white) 0 0) content-box, 
+                    linear-gradient(var(--color-white) 0 0);
+                mask-composite: exclude;
+            }
+
+            &--is-active {
+                box-shadow: var(elevation-1);
+
+                &::before {
+                    @include gradientBorderVar(1);
+                    padding: 4px;
+                }
+    
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 4px;  // Adjust to position within the padding
+                    left: 4px; // Adjust to position within the padding
+                    right: 4px;
+                    bottom: 4px;
+                    border-radius: inherit;
+                    box-shadow: var(--elevation-1--inset);
+                }
+            }
+
+            @include when-focused() {
+                border-radius: 9999px;
+                @include use-custom-focus-outline();
+            }
+        }
+
+        &__label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--color-grey-700);
+            @include text("headline/xs");
+
+            &--is-active {
+                color: var(--color-grey-900);
+            }
+        }
+
+        &__completed {
+            visibility: hidden;
+
+            &__container {
+                position: relative;
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="black"></path></svg>') no-repeat center;
+                    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="black"></path></svg>') no-repeat center;
+                    -webkit-mask-size: contain;
+                    mask-size: contain;
+                    @include gradientBackgroundVar(primary-grey-secondary);
+                }
+            }
+        }
+    }
+    
+    &__label {
+        text-align: center;
+        align-items: flex-start;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        font-family: map.get($font-family, "caption") !important;
+        font-size: map.get($font-size, "xs") !important;
+        line-height: map.get($font-height, "sm") !important;
+        color: var(--color-grey-600) !important;
+        @include text("caption");
+
+        &--is-active {
+            color: var(--color-grey-800) !important;
+        }
+
+        &__text {
+            color: var(--color-grey-700) !important;
+            @include hidden();
+
+            &--is-active {
+                color: var(--color-grey-900) !important;
+            }
+
+            @include screenLargerThan($screen-sm) {
+                @include visible();
+            }
+        }
+
+        @include screenLargerThan($screen-md) {
+            align-items: center;
+            @include text("headline/xs");
+        }
+    }
+}

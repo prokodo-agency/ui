@@ -1,0 +1,20 @@
+// The named breakpoints:
+$screen-sm: 375px;
+$screen-md: 480px;
+$screen-lg: 960px;
+$screen-xl: 1280px;
+
+// All screen breakpoints. Ensure that they are sorted by their values (mobile first)!
+$screen-breakpoints: ($screen-sm, $screen-md, $screen-lg, $screen-xl);
+
+// All layout "margins" (see design grid specifications, no technical CSS margins)
+// across breakpoints. Ensure that they are sorted accordingly to the defined
+// $screen-breakpoints.
+$screen-offsets: (12px, 46px, 60px, 120px);
+
+// The maximum size that contents should grow inside the layout.
+$screen-max-contents-width: px-to-rem(1440px);
+
+// NAVIGATION
+$main-navigation-height: px-to-rem(90px);
+

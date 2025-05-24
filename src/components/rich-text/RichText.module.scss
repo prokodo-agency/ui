@@ -1,0 +1,97 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".RichText";
+
+#{$selector} {
+    &__p {
+        color: var(--color-grey-500);
+        @include text("base");
+
+        html[data-theme='dark'] & {
+            color: var(--color-grey-700);
+        }
+    }
+
+    &__pre {
+        color: var(--color-grey-500);
+        padding: $space-lg $space-md;
+        border: 1px solid var(--color-grey-200);
+        border-radius: $ui-default-border-radius;
+        background-color: var(--color-grey-50);
+        overflow-x: auto;
+        overflow-wrap: break-word;
+        @include text("code");
+
+        html[data-theme='dark'] & {
+            color: var(--color-grey-300);
+            background-color: var(--color-grey-50);
+        }
+    }
+
+    &__ul,
+    &__ol {
+        padding: 0;
+        list-style-type: none;
+        color: var(--color-grey-500);
+    }
+
+    &__li {
+        display: flex;
+        align-items: flex-start;
+
+        &__icon {
+            min-width: 20px;
+            max-width: 20px;
+            margin-right: $space-sm;
+            margin-top: $space-xs;
+        }
+    }
+
+    &__ol {
+        &__decimal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 19px;
+            height: 19px;
+            background-color: var(--color-primary-500);
+            color: var(--color-grey-500);
+            border: 1px solid var(--color-primary-500);
+            border-radius: 200px;
+            margin-right: $space-sm;
+            @include text("caption");
+        }
+
+        li {
+            display: -webkit-box;
+
+            icon {
+                &--inherit {
+                    color: var(--color-grey-900);
+                }
+                &--primary {
+                    color: var(--color-primary-500);
+                }
+                &--secondary {
+                    color: var(--color-secondary-500);
+                }
+                &--info {
+                    color: var(--color-grey-500);
+                }
+                &--success {
+                    color: var(--color-success);
+                }
+                &--error {
+                    color: var(--color-error);
+                }
+                &--warning {
+                    color: var(--color-warning);
+                }
+                &--white {
+                    color: var(--color-white);
+                }
+            }
+        }
+    }
+}

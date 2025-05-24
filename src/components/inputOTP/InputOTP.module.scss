@@ -1,0 +1,34 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".InputOTP";
+
+#{$selector} {
+    display: flex;
+    justify-content: space-between;
+
+    &__label,
+    &__instruction {
+        @include hidden();
+    }
+
+    &__field {
+        width: 42px;
+        height: 42px;
+    }
+
+    &__input {
+        width: 42px;
+        height: 42px;
+
+        &__container {
+            width: 100%;
+            height: 100%;
+            border-radius: 80px;
+        }
+
+        &__node {
+            width: 100%;
+            padding: $space-sm $space-lg;
+        }
+    }
+}

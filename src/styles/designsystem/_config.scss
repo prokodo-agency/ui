@@ -1,0 +1,13 @@
+// This is an entry point that registers all available configurations. This file
+// is imported by next.config.js. All referenced configurations are therefore
+// available in any SASS file.
+/* stylelint-disable */
+@use "config/colors.scss" as *;
+@use "config/elevation.scss" as *;
+@use "config/gradients.scss" as *;
+@use "config/layers.scss" as *;
+@use "config/screens.scss" as *;
+@use "config/spaces.scss" as *;
+@use "config/texts.scss" as *;
+@use "config/timings.scss" as *;
+@use "config/radials.scss" as *;

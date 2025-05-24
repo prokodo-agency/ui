@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The common BaseLink component using locale 'de' should render anchor links 1`] = `
+<a
+  href="#bottom"
+>
+  Bottom
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'de' should render disabled links 1`] = `
+<a
+  href="https://example.com"
+  rel="noopener noreferrer"
+  style="pointer-events: none;"
+  tabindex="-1"
+  target="_blank"
+>
+  https://example.com
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'de' should render download links 1`] = `
+<a
+  download="sample.pdf"
+  href="http://www.africau.edu/images/default/sample.pdf"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  sample.pdf
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'de' should render external links 1`] = `
+<a
+  href="https://example.com"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  https://example.com
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'de' should render internal links 1`] = `
+<a
+  href="/"
+>
+  Home
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'de' should render locale links 1`] = `
+<a
+  href="/"
+>
+  Home
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'de' should render mailto links 1`] = `
+<a
+  href="mailto:foo@example.com"
+>
+  foo@example.com
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'en' should render anchor links 1`] = `
+<a
+  href="#bottom"
+>
+  Bottom
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'en' should render disabled links 1`] = `
+<a
+  href="https://example.com"
+  rel="noopener noreferrer"
+  style="pointer-events: none;"
+  tabindex="-1"
+  target="_blank"
+>
+  https://example.com
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'en' should render download links 1`] = `
+<a
+  download="sample.pdf"
+  href="http://www.africau.edu/images/default/sample.pdf"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  sample.pdf
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'en' should render external links 1`] = `
+<a
+  href="https://example.com"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  https://example.com
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'en' should render internal links 1`] = `
+<a
+  href="/"
+>
+  Home
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'en' should render locale links 1`] = `
+<a
+  href="/"
+>
+  Home
+</a>
+`;
+
+exports[`The common BaseLink component using locale 'en' should render mailto links 1`] = `
+<a
+  href="mailto:foo@example.com"
+>
+  foo@example.com
+</a>
+`;

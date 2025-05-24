@@ -1,0 +1,213 @@
+// Properties
+// -----------------------------------------------------------------------------
+
+$font-family: (
+  // next/fonts currently not working in safari. Solution for now is to fallback to an similar apple system font
+  "default": (var(--font-secondary), -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif),
+  "headline": (var(--font-primary), -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif),
+);
+
+$font-size: (
+  "3xl": 2.75rem,  // Slightly reduced for better UX across devices
+  "2xl": 2.25rem,  // Scalable but not overwhelming
+  "lg": 1.75rem,   // Improved readability for large text
+  "md": 1.5rem,    // Consistent with accessibility standards (minimum 16px)
+  "ms": 1.25rem,
+  "sm": 1.125rem,
+  "xs": 1rem,      // 16px for body text, ideal for legibility
+  "xxs": 0.875rem, // Use with caution for captions
+);
+
+$font-weight: (
+  "regular": 400,  // Standard weight for body text, ensuring legibility
+  "medium": 500,   // Medium weight for headlines, enhancing contrast
+  "bold": 700,     // For more prominent headlines
+  "black": 900,    // Avoid using too much black weight; use selectively for impact
+);
+
+$font-style: (
+  "italic": italic,
+  "normal": normal,
+);
+
+$font-spacing: (
+  "normal": 0.03em,  // Slight letter spacing improves readability
+);
+
+$font-height: (
+  "xl": 1.6,    // Optimized line height for larger text (headlines)
+  "lg": 1.55,   // Consistent and easy to read
+  "md": 1.5,    // Standard line height for medium text
+  "sm": 1.45,   // Slightly tighter for small text, keeping it readable
+  "xs": 1.4,    // Compacted for small text, still maintains accessibility
+);
+
+$font-transform: (
+  "none": none,
+);
+
+$font-align: (
+  "left": left,
+  "center": center,
+  "right": right,
+);
+
+$font-decoration: (
+  "none": none,
+);
+
+// Tokens
+//
+// Each token can take a list of properties for each primitive value. The index
+// of a property is matching the breakpoint defined in the screens configuration
+// and needs at least one value. If there are more values than breakpoints, the
+// not matching values will be ignored. Example:
+//
+// Defined screens are: 'sm', 'md', 'lg', 'xl'
+// The font size of a token can change accordingly: 'size': ('sm', 'lg', 'xl', '2xl')
+// -----------------------------------------------------------------------------
+$text-tokens: (
+  "base/lg": (
+    "family": ("default"),
+    "weight": ("bold"),
+    "size": ("lg", "md", "md"),
+    "spacing": ("normal"),
+    "height": ("xl", "lg", "lg"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "base/md": (
+    "family": ("default"),
+    "weight": ("medium"),
+    "size": ("md", "sm", "sm"),
+    "spacing": ("normal"),
+    "height": ("lg", "md", "md"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "base": (
+    "family": ("default"),
+    "weight": ("regular"),
+    "size": ("sm", "xs", "xs"),
+    "spacing": ("normal"),
+    "height": ("md", "sm", "sm"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "caption": (
+    "family": ("default"),
+    "weight": ("regular"),
+    "size": ("xs", "xxs", "xxs"),
+    "spacing": ("normal"),
+    "height": ("sm", "xs", "xs"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "code": (
+    "family": ("default"),
+    "weight": ("regular"),
+    "size": ("xs", "xxs", "xxs"),
+    "spacing": ("normal"),
+    "height": ("sm", "xs", "xs"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "quote": (
+    "family": ("default"),
+    "weight": ("regular"),
+    "size": ("xs", "xxs", "xxs"),
+    "spacing": ("normal"),
+    "height": ("sm"),
+    "style": ("italic"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "headline/3xl": (
+    "family": ("headline"),
+    "weight": ("black"),
+    "size": ("lg", "2xl", "3xl"),
+    "spacing": ("normal"),
+    "height": ("xl"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "headline/2xl": (
+    "family": ("headline"),
+    "weight": ("bold"),
+    "size": ("md", "lg", "2xl"),
+    "spacing": ("normal"),
+    "height": ("lg"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "headline/lg": (
+    "family": ("headline"),
+    "weight": ("medium"),
+    "size": ("md", "md", "lg"),
+    "spacing": ("normal"),
+    "height": ("md"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "headline/md": (
+    "family": ("headline"),
+    "weight": ("regular"),
+    "size": ("sm", "md", "md"),
+    "spacing": ("normal"),
+    "height": ("md"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "headline/sm": (
+    "family": ("headline"),
+    "weight": ("regular"),
+    "size": ("sm"),
+    "spacing": ("normal"),
+    "height": ("sm"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "headline/xs": (
+    "family": ("headline"),
+    "weight": ("regular"),
+    "size": ("xs"),
+    "spacing": ("normal"),
+    "height": ("xs"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+  "link": (
+    "family": ("default"),
+    "weight": ("medium"),
+    "size": ("sm", "xs", "xs"),
+    "spacing": ("normal"),
+    "height": ("lg", "md", "md"),
+    "style": ("normal"),
+    "transform": ("none"),
+    "align": ("left"),
+    "decorate": ("none"),
+  ),
+);

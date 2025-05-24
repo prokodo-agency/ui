@@ -1,0 +1,68 @@
+
+/*
+    As example (light, primary)
+    See defined modes in designsystem/config/gradients
+*/
+@mixin gradientBackground($mode, $gradient) {
+    $selectedGradient: map-get($gradientBackground, $mode);
+
+    @if map-has-key($selectedGradient, $gradient) {
+        background: map-get($selectedGradient, $gradient);
+    } @else {
+        @error "The mode #{$mode} or gradient #{$gradient} is not defined in $gradientBorder.";
+    }
+}
+
+@mixin gradientBorder($mode, $gradient) {
+    $selectedGradient: map-get($gradientBorder, $mode);
+
+    @if map-has-key($selectedGradient, $gradient) {
+        background: map-get($selectedGradient, $gradient);
+    } @else {
+        @error "The mode #{$mode} or gradient #{$gradient} is not defined in $gradientBorder.";
+    }
+}
+
+@mixin gradientText($mode, $gradient) {
+    $selectedGradient: map-get($gradientText, $mode);
+
+    @if map-has-key($selectedGradient, $gradient) {
+        background-image: map-get($selectedGradient, $gradient);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    } @else {
+        @error "The mode #{$mode} or gradient #{$gradient} is not defined in $gradientText.";
+    }
+}
+
+@mixin gradientBackgroundVar($gradient) {
+    background: var(--gradient-background-#{$gradient});
+}
+
+@mixin gradientBorderVar($gradient) {
+    background: var(--gradient-border-#{$gradient});
+}
+
+@mixin gradientTextVar($gradient: null, $textColor: transparent, $characters: 0)  {
+    @if $gradient {
+      // Apply only background-image if $gradient is defined and $textFillColor is not defined
+      background-image: var(--gradient-text-#{$gradient});
+    }
+    
+    @if $textColor != null {
+        // Apply background-clip and text-fill-color only if $gradient is not defined
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: $textColor;
+    }
+
+    @if $characters != 0 {
+        // Calculate the width of the gradient based on character count and font size
+        background-size: calc(#{$characters}ch) 100%;
+        background-repeat: no-repeat;
+
+        // Shift the background gradient into position
+        background-position: 0 0;
+    }
+}

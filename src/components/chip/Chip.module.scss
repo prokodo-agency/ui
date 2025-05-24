@@ -1,0 +1,99 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Chip";
+
+#{$selector} {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $ui-background-border-radius;
+  padding: $space-xs $space-sm;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-color: var(--color-grey-500);
+  color: var(--color-black);
+  @include text("base/md");
+
+  &--filled {
+    background-color: var(--color-grey-500);
+    color: var(--color-white);
+
+    &--primary {
+      background-color: var(--color-primary-500);
+    }
+
+    &--secondary {
+      background-color: var(--color-secondary-500);
+    }
+
+    &--info {
+      background-color: var(--color-grey-300);
+    }
+
+    &--success {
+      background-color: var(--color-success);
+    }
+
+    &--error {
+      background-color: var(--color-error);
+    }
+
+    &--warning {
+      background-color: var(--color-warning);
+    }
+  }
+
+  &--outlined {
+    border: 1px solid;
+    background-color: transparent;
+    border-color: var(--color-grey-500);
+    color: var(--color-black);
+
+    &--primary {
+      border-color: var(--color-primary-300);
+      color: var(--color-primary-500);
+    }
+    &--secondary {
+      border-color: var(--color-secondary-300);
+      color: var(--color-secondary-500);
+    }
+    &--info {
+      border-color: var(--color-grey-300);
+      color: var(--color-grey-500);
+    }
+    &--success {
+      border-color: var(--color-success);
+      color: var(--color-success);
+    }
+    &--error {
+      border-color: var(--color-error);
+      color: var(--color-error);
+    }
+    &--warning {
+      border-color: var(--color-warning);
+      color: var(--color-warning);
+    }
+  }
+
+  &__label {
+    margin-right: 8px;
+  }
+
+  &__delete {
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    margin-left: 8px;
+    transition: color 0.3s ease;
+    @include text("base/md");
+
+    @include when-hovered() {
+      color: var(--color-error);
+    }
+  }
+}

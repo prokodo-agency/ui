@@ -1,0 +1,33 @@
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Label";
+
+#{$selector} {
+    font-weight: 400;
+    display: block;
+    padding-bottom: $space-lg;
+    @include text("base/md");
+
+    & {
+        @include textShadow(1);
+    }
+
+    &__highlighted {
+        font-style: normal;
+        @include gradientTextVar("primary", transparent);
+
+        &--error {
+            @include gradientTextVar("error", null);
+        }
+    }
+
+    &__text {
+        color: var(--color-grey-500);
+        font-style: normal;
+
+        html[data-theme='dark'] & {
+            color: var(--color-grey-700);
+        }
+    }
+}

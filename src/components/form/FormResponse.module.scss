@@ -1,0 +1,30 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".FormResponse";
+
+#{$selector} {
+    padding: 0 $space-lg;
+
+    &__success {
+        color: var(--color-success);
+        font-weight: 700;
+    }
+
+    &__errors {
+        display: block;
+        margin-bottom: $space-md;
+        color: var(--color-grey-300);
+
+        &__item {
+            display: block;
+            padding-bottom: $space-lg;
+            @include text("base/md");
+        }
+
+        &__desc {
+            display: block;
+            padding: 0;
+            color: var(--color-error);
+        }
+    }
+}

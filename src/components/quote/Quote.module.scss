@@ -1,0 +1,43 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Quote";
+
+#{$selector} {
+    margin: 0;
+
+    &__headline {
+        padding-bottom: $space-lg;
+    }
+
+    &__quote {
+        margin: 0;
+        &__content {
+            margin: 0 0 $space-lg 0;
+            @include text("quote");
+        }
+    }
+
+    &__caption {
+        display: flex;
+
+        &__avatar {
+            margin-right: $space-lg;
+        }
+
+        &__author {
+            display: flex;
+            flex-direction: column;
+
+            &__name {
+                color: var(--color-grey-900);
+                @include text("headline/xs");
+            }
+
+            &__position {
+                padding-top: $space-xs;
+                color: var(--color-grey-500);
+                @include text("base");
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Teaser";
+
+#{$selector} {
+    overflow: hidden;
+
+    &__card {
+        padding: 0;
+
+        &__content {
+            padding: $space-lg;
+        }
+    }
+
+    &__image {
+        object-fit: cover;
+
+        &__wrapper {
+            position: relative;
+            width: 100%;
+            height: 230px;
+        }
+
+        &__caption {
+            bottom: $space-sm;
+            text-align: right;
+            padding-right: $space-sm;
+            width: calc(100% - $space-sm);
+        }
+    }
+
+    &__animation {
+        width: 100%;
+        height: 230px;
+    }
+
+    &__headline--has-lineClamp {
+        @include textLineClamp(1)
+    }
+
+    &__content {
+        text-align: center;
+        @include text("base");
+
+        &--has-lineClamp {
+            @include textLineClamp(3)
+        }
+
+        &--align-left  {
+            text-align: left;
+        }
+
+        &--align-right  {
+            text-align: right;
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+
+        &__icon {
+            margin-right: $space-xs;
+        }
+    }
+}

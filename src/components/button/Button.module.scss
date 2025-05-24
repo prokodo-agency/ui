@@ -1,0 +1,233 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/colors" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Button";
+
+#{$selector} {
+  display: inline-block;
+  border-radius: $ui-form-element;
+  border-width: 0;
+  padding: px-to-rem(14px) $space-xl;
+  background-color: var(--color-grey-50);
+  box-shadow: var(--elevation-1);
+  cursor: pointer;
+
+  @include gradientBackgroundVar("inherit");
+  @include text("headline/xs", true);
+
+  html[data-theme='dark'] & {
+    background-color: var(--color-grey-100);
+  }
+
+  @include when-hovered() {
+    box-shadow: none;
+  }
+
+  @include when-focused-within() {
+    @include use-custom-focus-outline();
+    border-radius: $ui-form-element;
+  }
+
+  &--has-bg-primary,
+  &--has-bg-secondary,
+  &--has-bg-info,
+  &--has-bg-error {
+    color: $white !important;
+  }
+
+  &--has-bg-success,
+  &--has-bg-warning {
+    color: var(--color-black);
+  }
+
+  &--has-bg-primary {
+    @include gradientBackgroundVar("primary");
+  }
+
+  &--has-bg-secondary {
+    @include gradientBackgroundVar("secondary");
+  }
+
+  &--is-disabled,
+  &--has-bg-info {
+    @include gradientBackgroundVar("info");
+  }
+
+  &--has-bg-success {
+    @include gradientBackgroundVar("success");
+  }
+
+  &--has-bg-warning {
+    @include gradientBackgroundVar("warning");
+  }
+
+  &--has-bg-error {
+    @include gradientBackgroundVar("error");
+  }
+
+  &--has-text-inherit,
+  &--has-text-primary,
+  &--has-text-secondary,
+  &--has-text-info,
+  &--has-text-success,
+  &--has-text-warning,
+  &--has-text-error {
+    background: none;
+    background-color: var(--color-grey-50);
+    padding: $space-md $space-lg;
+    transition: background-color 0.3s ease-in-out;
+
+    @include when-hovered() {
+      color: $white;
+    }
+  }
+
+  &--has-text-inherit {
+    color: var(--color-black);
+
+    @include when-hovered() {
+      background-color: var(--color-grey-500);
+    }
+  }
+
+  &--has-text-primary {
+    color: var(--color-primary-500);
+
+    @include when-hovered() {
+      background-color: var(--color-primary-500);
+    }
+  }
+
+  &--has-text-secondary {
+    color: var(--color-secondary-500);
+
+    @include when-hovered() {
+      background-color: var(--color-secondary-500);
+    }
+  }
+
+  &--is-disabled,
+  &--has-text-info {
+    color: var(--color-grey-700);
+
+    @include when-hovered() {
+      background-color: var(--color-grey-100);
+    }
+  }
+
+  &--has-text-success {
+    color: var(--color-success);
+
+    @include when-hovered() {
+      background-color: var(--color-success);
+    }
+  }
+
+  &--has-text-warning {
+    color: var(--color-warning);
+
+    @include when-hovered() {
+      background-color: var(--color-warning);
+    }
+  }
+
+  &--has-text-error {
+    color: var(--color-error);
+
+    @include when-hovered() {
+      background-color: var(--color-error);
+    }
+  }
+
+  &--has-variant-outlined {
+    position: relative;
+    background: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      padding: 2px;
+      mask: 
+          linear-gradient(#fff 0 0) content-box, 
+          linear-gradient(#fff 0 0);
+      mask-composite: exclude; 
+      z-index: 0;
+      @include gradientBorderVar(4);
+    }
+
+    html[data-theme='dark'] & {
+      background: none;
+    }
+  }
+
+  &--icon-only {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10000px;
+    padding: $space-md;
+
+    html[data-theme='dark'] & {
+      background: none;
+    }
+  }
+
+  &--has-fullWidth {
+    display: block;
+    width: 100%;
+  }
+
+  &--is-disabled {
+    cursor: default;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__icon {
+    margin-right: 5px;
+
+    &--icon-only {
+      margin-right: 0;
+    }
+  }
+
+  &__link {
+    display: table;
+    width: 100%;
+    color: inherit;
+    @include text("headline/xs");
+
+    &--icon-only {
+      display: contents;
+    }
+
+    @include when-hovered() {
+      text-decoration: none;
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    border-radius: 2rem;
+    width: 100%;
+
+    &--icon-only {
+      padding: 0.5rem;
+      border-radius: 2000rem;
+    }
+  }
+}

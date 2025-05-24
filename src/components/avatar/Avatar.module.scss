@@ -1,0 +1,76 @@
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Avatar";
+
+#{$selector} {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $space-sm;
+    border-radius: 200px;
+    overflow: hidden;
+    background-color: var(--color-grey-100);
+
+    &--primary {
+        background-color: var(--color-primary-500);
+    }
+
+    &--secondary {
+        background-color: var(--color-secondary-500);
+    }
+
+    &--info {
+        background-color: var(--color-grey-300);
+    }
+
+    &--success {
+        background-color: var(--color-success);
+    }
+    
+    &--warning {
+        background-color: var(--color-warning);
+    }
+
+    &--error {
+        background-color: var(--color-error);
+    }
+
+    &--white {
+        background-color: var(--color-white);
+    }
+
+    &--has-size-xs {
+        padding: $space-xs;
+        width: 30px;
+        height: 30px;
+    }
+
+    &--has-size-sm {
+        width: 40px;
+        height: 40px;
+    }
+
+    &--has-size-md {
+        width: 60px;
+        height: 60px;
+    }
+
+    &--has-size-lg {
+        width: 80px;
+        height: 80px;
+    }
+
+    &--has-size-xl {
+        width: 100px;
+        height: 100px;
+    }
+
+    &__image {
+        object-fit: cover;
+    }
+
+    &__link {
+        box-shadow: var(--elevation-1);
+        border-radius: 200px;
+    }
+}

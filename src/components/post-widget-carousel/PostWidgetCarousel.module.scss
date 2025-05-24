@@ -1,0 +1,54 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".PostWidgetCarousel";
+
+#{$selector} {
+    &__carousel {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        margin-top: $space-xl;
+
+        &__item {
+            &__image__link {
+                position: relative;
+                width: 100%;
+                height: 200px;
+                display: block;
+                line-height: 0;
+                border-radius: $ui-image-border-radius;
+                overflow: hidden;
+            }
+
+            &__image {
+                object-fit: cover;
+            }
+
+            &__link {
+                position: relative;
+                display: block;
+            }
+        }
+
+        &__dots {
+            margin-top: 0;
+        }
+
+        &__buttons {
+            position: absolute;
+            bottom: $space-md;
+            right: $space-lg;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            min-width: 100px;
+        }
+    }
+
+    &__headline {
+        width: 75%;
+        margin-top: $space-md !important;
+        @include textLineClamp(2);
+    }
+}

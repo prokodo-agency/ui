@@ -1,0 +1,100 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".PostTeaser";
+
+#{$selector} {
+    &__card {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        padding: 0 !important;
+
+        &__container {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        &__content {
+            padding: 0 $space-lg 0;
+        }
+
+        &__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding: 0 $space-lg $space-lg $space-lg;
+        }
+    }
+
+    &__meta {
+        position: absolute;
+        top: $space-lg;
+        left: $space-lg;
+        width: calc(100% - (2* $space-lg));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 2;
+
+        &__category {
+            display: inline-block;
+            max-width: 50%;
+            @include textLineClamp(1);
+        }
+    }
+
+    &__image {
+        object-fit: cover;
+
+        &__wrapper {
+            position: relative;
+            width: 100%;
+            height: 230px;
+        }
+
+        &__caption {
+            bottom: $space-sm;
+            text-align: right;
+            padding-right: $space-sm;
+            width: calc(100% - $space-sm);
+        }
+    }
+
+    &__date {
+        padding: 0;
+        color: var(--color-grey-300);
+        @include text("headline/xs");
+    }
+
+    &__animation {
+        width: 100%;
+        height: 230px;
+    }
+
+    &__headline {
+        padding: $space-lg $space-lg 0;
+        @include textLineClamp(1);
+    }
+
+    &__content {
+        @include text("base");
+
+        & {
+            @include textLineClamp(3);
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+
+        &__icon {
+            margin-right: $space-xs;
+        }
+
+        &--is-hovered {
+            color: var(--color-primary-500) !important;
+        }
+    }
+}

@@ -1,0 +1,57 @@
+/**
+ * This mixin specifies basic text-styles for components that render a richtext
+ * content.
+ */
+@mixin richtext() {
+  /*
+  > h2,
+  > h3,
+  > h4,
+  > h5,
+  > h6 {
+
+  }
+  */
+
+  p,
+  li {
+    strong {
+      font-weight: font-wight("bold");
+    }
+
+    em {
+      font-style: font-style("italic");
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  p,
+  li,
+  ul,
+  ol {
+    margin-bottom: $space-sm;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /*
+  ul {
+    li {
+
+    }
+  }
+  */
+
+  /*
+  ol {
+    li {
+
+    }
+  }
+  */
+}

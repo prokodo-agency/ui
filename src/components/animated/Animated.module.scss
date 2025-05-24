@@ -1,0 +1,42 @@
+$selector: ".Animated";
+
+#{$selector} {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease-out, transform 300ms ease-out, visibility 300ms ease-out;
+    will-change: opacity, transform, visibility;
+
+    &--animate-bottom-top {
+        transform: translate(0, 20vh);
+    }
+
+    &--animate-top-bottom {
+        transform: translate(0, -20vh);
+    }
+
+    &--animate-left-right {
+        transform: translate(-20vh, 0);
+    }
+
+    &--animate-right-left {
+        transform: translate(20vh, 0);
+    }
+
+    &--is-visible {
+        opacity: 1;
+        transform: none;
+        visibility: visible;
+    }
+
+    &--is-disabled {
+        transform: none;
+    }
+
+    &--has-fast-speed {
+        transition: opacity 500ms ease-out, transform 500ms ease-out, visibility 500ms ease-out;
+    }
+
+    &--has-slow-speed {
+        transition: opacity 1500ms ease-out, transform 500ms ease-out, visibility 1500ms ease-out;
+    }
+}

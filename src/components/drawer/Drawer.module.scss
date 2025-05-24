@@ -1,0 +1,175 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Drawer";
+
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#{$selector} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1300;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+
+    &::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    &__container {
+        position: fixed;
+        // height: 100%;
+        width: calc(100% - $space-xl);
+        background-color: #ffffff;
+        box-shadow: var(--elevation-1);
+        z-index: 1301;
+        padding: $space-md;
+        pointer-events: none;
+        background-color: var(--color-white);
+        transition: transform 0.3s ease;
+
+        &--fullscreen {
+            height: calc(100% - $space-lg) !important;
+            overflow-y: auto;
+        }
+
+        &--open {
+            opacity: 1;
+            pointer-events: auto;
+    
+            &::after {
+                opacity: 1;
+            }
+        }
+    
+        &--anchor-left {
+            top: 0;
+            left: 0;
+            height: 100%;
+    
+            &--enter {
+                animation: slideInLeft 0.5s ease-in forwards;
+            }
+    
+            &--exit {
+                animation: slideInLeft 0.5s ease-out reverse;
+            }
+        }
+    
+        &--anchor-right {
+            top: 0;
+            right: 0;
+            height: 100%;
+            
+            &--enter {
+                animation: slideInRight 0.5s ease-in forwards;
+            }
+    
+            &--exit {
+                animation: slideInRight 0.5s ease-out reverse;
+            }
+        }
+    
+        &--anchor-top {
+            top: 0;
+            left: 0;
+
+            &--enter {
+                animation: slideInTop 0.5s ease-in forwards;
+            }
+    
+            &--exit {
+                animation: slideInTop 0.5s ease-out reverse;
+            }
+        }
+    
+        &--anchor-bottom {
+            border-top-left-radius: $ui-background-border-radius;
+            border-top-right-radius: $ui-background-border-radius;
+            bottom: 0;
+            left: 0;
+    
+            &--enter {
+                animation: slideInBottom 0.5s ease-in forwards;
+            }
+    
+            &--exit {
+                animation: slideInBottom 0.5s ease-out reverse;
+            }
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        padding: $space-lg 0;
+
+        &__title {
+            @include text('headline/md')
+        }
+
+        &--has-title {
+            justify-content: space-between;
+        }
+    }
+
+    &__content {
+        @include text('base')
+    }
+}

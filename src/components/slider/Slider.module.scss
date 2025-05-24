@@ -1,0 +1,113 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/screens" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Slider";
+
+#{$selector} {
+    padding-bottom: $space-xl;
+
+    &__label {
+        padding-bottom: $space-2xl;
+    }
+
+    &__root {
+        color: var(--color-grey-700);
+        width: 100%;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
+
+        &--disabled {
+            pointer-events: none;
+            cursor: default;
+            color: var(--color-primary-600);
+            opacity: 0.4;
+        }
+    }
+
+    &__rail {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        border-radius: 6px;
+        opacity: 0.3;
+        @include gradientBackgroundVar("primary-grey-secondary");
+    }
+    
+    &__track {
+        display: block;
+        position: absolute;
+        height: 4px;
+        border-radius: 6px;
+        @include gradientBackgroundVar("primary-secondary");
+    }
+
+    &__thumb {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        outline: 0;
+        background-color: var(--color-primary-500);
+        transition-property: box-shadow, transform;
+        transition-timing-function: ease;
+        transition-duration: 120ms;
+        transform-origin: center;
+        @include gradientBackgroundVar("primary-secondary");
+
+        @include when-hovered() {
+            box-shadow: 0 0 0 6px var(--color-primary-500) 0.3;
+        }
+
+        &--focused {
+            box-shadow: 0 0 0 6px var(--color-primary-700) 0.3;
+            outline: none;
+        }
+    }
+
+    &__mark {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        border-radius: 99%;
+        background-color: #dedede;
+        margin-right: -50px;
+
+        &__label {
+            position: absolute;
+            margin-top: $space-3xl;
+            margin-left: -$space-lg;
+            color: var(--color-grey-300);
+            @include text("base");
+            
+            & {
+                @include hidden();
+            }
+
+            @include screenLargerThan($screen-md) {
+                position: absolute;
+                @include visible();
+            }
+        }
+    }
+
+    &__valueText {
+        position: relative;
+        top: -1.7em;
+        text-align: center;
+        align-self: center;
+        @include text("headline/xs");
+    }
+}

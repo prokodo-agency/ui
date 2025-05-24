@@ -1,0 +1,35 @@
+Business Source License 1.1
+
+Licensor:        prokodo (Christian Salat)
+Licensed Work:   prokodo-ui – a reusable UI component library built with React and TypeScript.
+Software License Date: 2025-05-23
+Change Date:     2028-05-23
+Change License:  MIT
+
+Terms
+=====
+
+The Licensed Work is provided under the terms of the Business Source License 1.1 (“BUSL”), 
+as published by MariaDB Corporation Ab (see https://mariadb.com/bsl11).
+
+Use Limitation
+--------------
+You may use, copy, modify, and distribute the Licensed Work, 
+but only for the following purpose:
+
+- **Evaluation and internal use**, including for client projects delivered by the Licensor (prokodo).
+
+You may **not use** the Licensed Work:
+- as part of any commercial SaaS product, public-facing platform, or resale offering,
+- unless you obtain a **commercial license** from the Licensor.
+
+Change Date
+-----------
+After the Change Date (2028-05-23), the Licensed Work will automatically be made available under the Change License (MIT), allowing full commercial use, including production and resale.
+
+Additional Terms
+----------------
+The Licensor may offer separate commercial licenses for production or client use. 
+Contact info@prokodo.com for inquiries.
+
+This license does not grant trademark rights or permission to use the “prokodo” name without separate written consent.

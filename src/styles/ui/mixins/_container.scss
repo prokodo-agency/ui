@@ -1,0 +1,30 @@
+@use "@/styles/designsystem/config/screens" as *;
+
+/**
+ * Specifies the outer layout for all contents across breakpoints. Apply this
+ * mixin to the container element, to center the contents on the screen within
+ * the layout offsets.
+ */
+@mixin centered-container() {
+  max-width: $screen-max-contents-width;
+  margin: 0 auto;
+
+  $index: 1;
+
+  /* @each $breakpoint in $screen-breakpoints {
+    $offset: nth($screen-offsets, $index);
+
+    @if ($index == 0) {
+      padding-right: $offset;
+      padding-left: $offset;
+    }
+    @else {
+      @include screenLargerThan($breakpoint) {
+        padding-right: $offset;
+        padding-left: $offset;
+      }
+    }
+
+    $index: $index + 1;
+  } */
+}

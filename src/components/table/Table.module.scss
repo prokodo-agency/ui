@@ -1,0 +1,108 @@
+$selector: ".Table";
+
+#{$selector} {
+  &__container {
+    width: 100%;
+    overflow-x: auto;
+    margin: 16px 0;
+    border: 1px solid var(--color-grey-200);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+
+    &--primary {
+      border-color: var(--color-primary-500);
+    }
+
+    &--secondary {
+      border-color: var(--color-secondary-500);
+    }
+
+    &--info {
+      border-color: var(--color-info-500);
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 15px;
+  }
+
+  &__caption {
+    padding: 16px;
+    background-color: var(--color-grey-50);
+    color: var(--color-grey-700);
+    text-align: left;
+    font-weight: 500;
+
+    html[data-theme="dark"] & {
+      background-color: var(--color-grey-800);
+      color: var(--color-grey-300);
+    }
+  }
+
+  &__head {
+    background-color: var(--color-grey-200);
+
+    &--primary {
+      background-color: var(--color-primary-100);
+    }
+
+    &--secondary {
+      background-color: var(--color-secondary-100);
+    }
+
+    &--info {
+      background-color: var(--color-info-100);
+    }
+
+    &__row {
+      border-bottom: 2px solid var(--color-grey-300);
+    }
+
+    &__cell {
+      padding: 12px 16px;
+      font-weight: 700;
+      color: var(--color-grey-900);
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+
+      &:hover {
+        background-color: var(--color-grey-100);
+      }
+
+      &.is-active {
+        color: var(--color-primary-500);
+        border-bottom: 2px solid var(--color-primary-500);
+      }
+
+      &.is-sorted {
+        color: var(--color-info-500);
+      }
+    }
+  }
+
+  &__body {
+    background-color: var(--color-white);
+
+    &__row {
+      &:hover {
+        background-color: var(--color-grey-50);
+      }
+    }
+
+    &__cell {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-grey-200);
+      color: var(--color-grey-700);
+      text-align: left;
+
+      &.with-icon {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+}

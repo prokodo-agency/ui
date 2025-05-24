@@ -1,0 +1,23 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".Form";
+
+#{$selector} {
+    &__label {
+        @include hidden();
+    }
+
+    &__hp {
+        display: none !important;
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+
+        &__submit {
+            margin-bottom: $space-xl;
+            align-self: center;
+        }
+    }
+}

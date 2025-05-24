@@ -1,0 +1,169 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/colors" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+$selector: ".List";
+
+#{$selector}
+
+ {
+    padding: 0;
+
+    &__item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+        margin: $space-xs 0;
+        color: var(--color-grey-500);
+        @include text("headline/xs");
+
+        &__card {
+            margin: $space-md 0;
+
+            &__content {
+                display: flex;
+                align-items: center;
+                padding: $space-md;
+            }
+        }
+
+        &__inner {
+            width: 100%;
+            display: flex;
+        }
+
+        &__link {
+            display: flex;
+            align-items: center;
+            @include text('base');
+        }
+
+        &__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: flex-start;
+            min-width: 2.5rem;
+            height: 2.5rem;
+            margin-top: $space-xs;
+            margin-right: $space-xs;
+            border-radius: 1000rem;
+            background-color: var(--color-grey-50);
+
+            html[data-theme='dark'] & {
+                background-color: var(--color-grey-400);
+            }
+
+            &__svg {
+                color: var(--color-black);
+            }
+
+            &__wrapper {
+                display: flex;
+                align-items: center;
+                padding-right: $space-sm;
+            }
+        }
+
+        &__title {
+            &--card {
+                display: block;
+                padding: $space-md 0 $space-xs $space-sm;
+                @include text("headline/xs");
+            }
+        }
+
+        &__content {
+            width: calc(100% - $space-2xl);
+        }
+
+        &__desc {
+            color: var(--color-grey-600);
+            margin: 0;
+            padding: 0 0 $space-xs $space-sm;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            line-clamp: 3;
+            -webkit-line-clamp: 3; /* Limits the content to 3 lines */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Adds the ellipsis at the end */
+            word-wrap: break-word;
+            @include text("base");
+        }
+
+        &--is-clickable {
+            cursor: pointer;
+            color: var(--color-grey-500);
+
+            @include when-hovered() {
+                a > div div:first-child {
+                    @include gradientBackgroundVar(primary-secondary);
+
+                    svg {
+                        color: $white;
+                    }
+                }
+
+                div > div:last-child span {
+                    @include gradientTextVar(primary);
+                }
+            }
+
+            &--inherit {
+                @include when-hovered() {
+                    color: var(--color-primary-500);
+                }
+            }
+
+            &--primary {
+                color: var(--color-primary-500);
+            }
+        
+            &--secondary {
+                color: var(--color-secondary-500);
+            }
+
+            &--info {
+                color: var(--color-grey-300);
+            }
+
+            &--success {
+                color: var(--color-success);
+            }
+            
+            &--warning {
+                color: var(--color-warning);
+            }
+
+            &--error {
+                color: var(--color-error);
+            }
+        
+            &--white {
+                color: var(--color-white);
+        
+                @include when-hovered() {
+                    color: var(--color-white);
+                }
+            }
+        
+            &--primary,
+            &--secondary,
+            &--success,
+            &--error,
+            &--info,
+            &--warning {
+                @include when-hovered() {
+                    color: var(--color-grey-500);
+                }
+            }
+        }
+
+        &--card {
+            display: block;
+            text-decoration: none;
+        }
+    }
+}

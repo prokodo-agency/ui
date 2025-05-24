@@ -1,0 +1,74 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+$selector: ".Link";
+
+#{$selector}
+
+ {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--color-grey-500);
+  @include text("link");
+
+  @include when-hovered() {
+    text-decoration: underline;
+  }
+
+  &--has-no-background {
+    @include when-hovered() {
+      text-decoration: underline;
+      color: var(--color-primary-500);
+    }
+
+    @include when-focused {
+      color: var(--color-primary-500);
+    }
+
+    &--primary {
+      color: var(--color-primary-500);
+    }
+
+    &--secondary {
+      color: var(--color-secondary-500);
+    }
+
+    &--info {
+      color: var(--color-grey-300);
+    }
+
+    &--success {
+        color: var(--color-success);
+    }
+    
+    &--warning {
+        color: var(--color-warning);
+    }
+
+    &--error {
+        color: var(--color-error);
+    }
+
+    &--white {
+      color: var(--color-white);
+
+      @include when-hovered() {
+        color: var(--color-white);
+      }
+    }
+
+    &--primary,
+    &--secondary,
+    &--success,
+    &--error,
+    &--info,
+    &--warning {
+      @include when-hovered() {
+        color: var(--color-grey-500);
+      }
+
+      @include when-focused {
+        color: var(--color-grey-500);
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+
+/**
+ * Gradient move, mainly for text
+ */
+@keyframes gradientMove {
+    from {
+      background-position: 0% 50%;
+    }
+    to {
+      background-position: 100% 50%;
+    }
+}
+
+/**
+ * Fade in
+ */
+
+ @keyframes fadeInKeyframe {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@mixin fadeInAnimation($time: 1s) {
+    animation: fadeInKeyframe ease $time;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}

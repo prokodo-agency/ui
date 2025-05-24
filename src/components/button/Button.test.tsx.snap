@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The Button component should render Button 1`] = `undefined`;
+
+exports[`The Button component should render disabled Button 1`] = `undefined`;
+
+exports[`The Button component should render loading Button 1`] = `undefined`;
