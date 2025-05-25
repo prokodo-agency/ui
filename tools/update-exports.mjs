@@ -12,6 +12,7 @@ const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
 
 // Base export
 const exportsField = {
+  "./theme.css": "./dist/ui.css",
   '.': {
     types: './dist/types/index.d.ts',
     import: './dist/index.es.js',
