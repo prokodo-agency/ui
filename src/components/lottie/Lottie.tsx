@@ -1,20 +1,14 @@
 "use client"
 
-import {
-  FC,
-  memo,
-  useEffect,
-  useRef,
-  useState,
-  lazy,
-  Suspense,
-} from "react"
+import { memo, useEffect, useRef, useState, lazy, Suspense } from "react"
 
 import { create } from "@/helpers/bem"
+
 import styles from "./Lottie.module.scss"
 import { ANIMATIONS } from "./LottieAnimations"
 
 import type { LottieProps } from "./Lottie.model"
+import type { FC } from "react"
 
 const bem = create(styles, "Lottie")
 
@@ -53,7 +47,9 @@ export const Lottie: FC<LottieProps> = memo(
         {isInView ? (
           <Suspense
             fallback={
-              <div className={bem("placeholder", undefined, containerClassName)} />
+              <div
+                className={bem("placeholder", undefined, containerClassName)}
+              />
             }
           >
             <DotLottieReact
@@ -61,9 +57,9 @@ export const Lottie: FC<LottieProps> = memo(
               autoResizeCanvas
               loop
               className={bem(undefined, undefined, className)}
+              renderConfig={{ devicePixelRatio: 0.9 }}
               src={ANIMATIONS[animationName]}
               useFrameInterpolation={false}
-              renderConfig={{ devicePixelRatio: 0.9 }}
               {...props}
             />
           </Suspense>

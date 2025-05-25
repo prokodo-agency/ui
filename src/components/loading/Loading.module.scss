@@ -1,4 +1,4 @@
-$selector: ".Loading";
+@use "@/styles/ui/mixins/bem" as *;
 
 @keyframes spin {
     0% {
@@ -9,7 +9,7 @@ $selector: ".Loading";
     }
 }
 
-#{$selector} {
+@include define-block("Loading") {
     position: relative;
     display: flex;
     align-items: center;

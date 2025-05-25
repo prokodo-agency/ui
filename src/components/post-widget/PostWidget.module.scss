@@ -1,9 +1,9 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".PostWidget";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("PostWidget") {
     &__list {
         list-style-type: none;
         margin: 0;

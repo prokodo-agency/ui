@@ -4,9 +4,9 @@
 @use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Carousel";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Carousel") {
     position: relative;
     width: 100%;
     overflow: hidden;

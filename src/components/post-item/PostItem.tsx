@@ -13,9 +13,10 @@ import { Grid, GridRow } from "../grid"
 import { Headline } from "../headline"
 import { RichText } from "../rich-text"
 import { Skeleton } from "../skeleton"
-import { PostItemAuthor } from "./PostItemAuthor"
 
 import styles from "./PostItem.module.scss"
+import { PostItemAuthor } from "./PostItemAuthor"
+
 import type { PostItemProps } from "./PostItem.model"
 
 const bem = create(styles, "PostItem")
@@ -119,17 +120,17 @@ export const PostItem: FC<PostItemProps> = memo(
           <GridRow md={4} xs={12}>
             <Card
               enableShadow
+              background={isString(image?.src) ? 3 : undefined}
               className={bem("image__wrapper")}
               contentClassName={bem("image__content__wrapper")}
               redirect={button?.redirect}
-              background={isString(image?.src) ? 3 : undefined}
             >
               {!imageLoaded && <Skeleton height="275px" />}
               {ImageComponent && image?.src && isString(image.src) && (
                 <ImageComponent
                   {...image}
-                  sizes="(max-width: 960px) 100vw, 25vw"
                   className={bem("image")}
+                  sizes="(max-width: 960px) 100vw, 25vw"
                   onLoad={() => setImageLoaded(true)}
                 />
               )}

@@ -48,7 +48,6 @@ export const Default: Story = {
   args: {
     children,
   },
-  parameters: { actions: { argTypesRegex: null } },
 }
 
 export const CardHighlight: Story = {
@@ -57,7 +56,6 @@ export const CardHighlight: Story = {
     highlight: true,
     children,
   },
-  parameters: { actions: { argTypesRegex: null } },
 }
 
 export const CardBackground: Story = {
@@ -66,7 +64,6 @@ export const CardBackground: Story = {
     background: 1,
     children,
   },
-  parameters: { actions: { argTypesRegex: null } },
 }
 
 export const CardGradiant: Story = {
@@ -75,7 +72,6 @@ export const CardGradiant: Story = {
     gradiant: true,
     children,
   },
-  parameters: { actions: { argTypesRegex: null } },
 }
 
 export const CardClickHandler: Story = {

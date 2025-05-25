@@ -3,7 +3,8 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Select";
+@use "@/styles/designsystem/functions/texts" as *;
+@use "@/styles/ui/mixins/bem" as *;
 
 @keyframes fade-in {
     0% {
@@ -27,7 +28,7 @@ $selector: ".Select";
     }
 }
 
-#{$selector} {
+@include define-block("Select") {
     display: flex;
     flex-direction: column;
     justify-content: space-around;

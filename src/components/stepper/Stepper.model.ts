@@ -10,7 +10,7 @@ export type StepperTranslations = {
   status: {
     open: string
     completed: string
-  },
+  }
 }
 
 export type Step = HTMLAttributes<HTMLLIElement> & {

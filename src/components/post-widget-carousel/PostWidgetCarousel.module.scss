@@ -1,9 +1,9 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".PostWidgetCarousel";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("PostWidgetCarousel") {
     &__carousel {
         position: relative;
         width: 100%;

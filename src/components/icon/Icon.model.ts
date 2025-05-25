@@ -1,9 +1,9 @@
-import type { ICON_MAP } from "./Icon.utils"
 import type { Color } from "@/types/colors"
 import type { Variants } from "@/types/variants"
 import type { AriaAttributes, AriaRole } from "react"
+import type { ICONS } from "./iconsMap"
 
-export type IconName = keyof typeof ICON_MAP
+export type IconName = keyof typeof ICONS
 
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | number
 

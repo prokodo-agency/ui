@@ -1,11 +1,9 @@
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/colors" as *;
-$selector: ".Headline";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector}
-
- {
+@include define-block("Headline") {
     margin: 0;
     white-space: pre-line;
 

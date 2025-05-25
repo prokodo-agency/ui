@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src", "jest-setup.d.ts", "jest.*"],
+  "exclude": ["dist", "tools", "vite.config.ts", "svgo.config.ts"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}

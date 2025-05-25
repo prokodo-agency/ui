@@ -6,9 +6,10 @@
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/config/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Stepper";
+@use "@/styles/designsystem/functions/texts" as *;
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Stepper") {
     display: flex;
     justify-content: space-between;
     flex-direction: column;

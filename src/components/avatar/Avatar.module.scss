@@ -1,7 +1,7 @@
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Avatar";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Avatar") {
     position: relative;
     display: flex;
     justify-content: center;

@@ -1,11 +1,11 @@
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/designsystem/config/screens" as *;
-$selector: ".GridRow";
+@use "@/styles/ui/mixins/bem" as *;
 
 $spacing-unit: $space-md;
 
-#{$selector} {
+@include define-block("GridRow") {
     /* Grid alignment classes */
     &--align-left {
         justify-items: start;

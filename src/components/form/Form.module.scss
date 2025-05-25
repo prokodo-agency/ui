@@ -1,8 +1,8 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Form";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Form") {
     &__label {
         @include hidden();
     }

@@ -1,4 +1,4 @@
-$selector: ".Skeleton";
+@use "@/styles/ui/mixins/bem" as *;
 
 @keyframes skeleton-pulse {
     0% {
@@ -25,7 +25,7 @@ $selector: ".Skeleton";
     }
 }
 
-#{$selector} {
+@include define-block("Skeleton") {
     display: inline-block;
     background-color: rgba(var(--color-black), 0.11);
     border-radius: 4px;

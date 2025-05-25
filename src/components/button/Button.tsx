@@ -8,9 +8,8 @@ import {
   useId,
 } from "react"
 
-import { isString } from "@/helpers/validations"
-
 import { create } from "@/helpers/bem"
+import { isString } from "@/helpers/validations"
 
 import { Icon } from "../icon"
 import { Link } from "../link"

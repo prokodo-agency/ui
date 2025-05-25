@@ -5,9 +5,10 @@
 @use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Button";
+@use "@/styles/designsystem/functions/texts" as *;
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Button") {
   display: inline-block;
   border-radius: $ui-form-element;
   border-width: 0;

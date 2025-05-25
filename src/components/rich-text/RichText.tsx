@@ -1,9 +1,9 @@
 "use client"
 
 import { type FC, type ReactNode, memo, useCallback, useMemo } from "react"
+import ReactMarkdown from "react-markdown"
 import remarkBreaks from "remark-breaks"
 import remarkGfm from "remark-gfm"
-import ReactMarkdown from "react-markdown"
 
 import { AnimatedText } from "@/components/animatedText"
 import { Headline } from "@/components/headline"

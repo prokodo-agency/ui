@@ -41,7 +41,6 @@ export const Default: Story = {
     },
     content: "Lorem ipsum dolar sit amet and more promo content",
   },
-  parameters: { actions: { argTypesRegex: null } },
 }
 
 export const Animated: Story = {
@@ -52,5 +51,4 @@ export const Animated: Story = {
     },
     content: "Lorem ipsum dolar sit amet and more promo content",
   },
-  parameters: { actions: { argTypesRegex: null } },
 }

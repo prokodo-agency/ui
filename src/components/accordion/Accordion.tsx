@@ -1,13 +1,12 @@
 "use client"
 import { type FC, type SyntheticEvent, useCallback, useState } from "react"
 
-import { create } from "@/helpers/bem"
-import { isNull } from "@/helpers/validations"
-
 import { Animated } from "@/components/animated"
 import { Button, type ButtonProps } from "@/components/button"
 import { Headline } from "@/components/headline"
 import { Icon, type IconName, type IconColor } from "@/components/icon"
+import { create } from "@/helpers/bem"
+import { isNull } from "@/helpers/validations"
 
 import styles from "./Accordion.module.scss"
 

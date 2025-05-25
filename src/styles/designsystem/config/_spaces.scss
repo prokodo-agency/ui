@@ -1,3 +1,5 @@
+@use "@/styles/designsystem/functions/texts" as *;
+
 // The named spacings:
 $space-xs: px-to-rem(4px);
 $space-sm: px-to-rem(8px);

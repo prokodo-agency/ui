@@ -10,19 +10,23 @@ type ClassNames = (
   extra?: WordSet,
 ) => string
 
-function create(styles: Styles, name: string): ClassNames {
-  const bem = new BEMHelper({ name, outputIsString: true })
+const COMPANY_PREFIX = "prokodo"
+
+function create(styles: Styles, blockName: string): ClassNames {
+  const prefixedName = `${COMPANY_PREFIX}-${blockName}`;
+  const bem = new BEMHelper({ name: prefixedName, outputIsString: true });
 
   return (element, modifiers, extra) => {
-    const className = bem(element, modifiers, extra)
-    const classNames = className.split(" ")
+    const className = bem(element, modifiers, extra);
+    const classNames = className.split(" ");
 
     return classNames
-      .map(key =>
+      .map((key) =>
         styles[key] !== undefined && styles[key] !== "" ? styles[key] : key,
       )
-      .join(" ")
-  }
+      .join(" ");
+  };
 }
+
 
 export { create }

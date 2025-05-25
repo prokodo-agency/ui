@@ -1,43 +1,46 @@
-import { expect } from "@jest/globals"
+jest.mock("./iconsMap", () => {
+  const mkSvg = (label: string) =>
+    function Svg(props: any) {
+      return (
+        <svg aria-hidden={props["aria-hidden"]} role={props.role} {...props}>
+          <text>{label}</text>
+        </svg>
+      )
+    }
+
+  return {
+    ICONS: {
+      abacus_icon: () => Promise.resolve(mkSvg("abacus")),
+      absolute_icon: () => Promise.resolve(mkSvg("absolute")),
+      access_icon: () => Promise.resolve(mkSvg("access")),
+    },
+  }
+})
 
 import { render, screen } from "@/tests"
 
 import { Icon } from "./Icon"
 
-import type { FC, SVGProps } from "react"
-
-jest.mock("@/assets/icons/tire.svg", () => {
-  const svg = "<svg><text>tire icon</text></svg>"
-  const ReactComponent: FC<SVGProps<SVGSVGElement>> = props => (
-    <svg {...props}>
-      <text>tire icon</text>
-    </svg>
-  )
-
-  return {
-    default: svg,
-    ReactComponent,
-  }
-})
-
 describe("The common icon component", () => {
-  it("should render a svg icon", () => {
+  it("should render a svg icon", async () => {
     render(<Icon name="AbacusIcon" />)
-    const svgIcon = screen.getByRole("img") // Assuming the svg has the role "img"
-    expect(svgIcon).toMatchSnapshot()
+
+    const svg = await screen.findByRole("presentation")
+    expect(svg).toBeInTheDocument()
   })
 
-  it("should render with default accessibility attributes", () => {
+  it("should render with default accessibility attributes", async () => {
     render(<Icon name="AbsoluteIcon" />)
-    const svgIcon = screen.getByRole("img", { hidden: true }) // For hidden elements
-    expect(svgIcon).toHaveAttribute("role", "presentation")
-    expect(svgIcon).toHaveAttribute("aria-hidden", "true")
+
+    const svg = await screen.findByRole("presentation", { hidden: true })
+    expect(svg).toHaveAttribute("aria-hidden", "true")
   })
 
-  it("should allow to overwrite accessibility attributes", () => {
+  it("should allow to overwrite accessibility attributes", async () => {
     render(<Icon aria-hidden="false" name="AccessIcon" role="alert" />)
-    const svgIcon = screen.getByRole("alert") // Now querying by the role set to "alert"
-    expect(svgIcon).toHaveAttribute("role", "alert")
-    expect(svgIcon).toHaveAttribute("aria-hidden", "false")
+
+    const svg = await screen.findByRole("alert")
+    expect(svg).toHaveAttribute("role", "alert")
+    expect(svg).toHaveAttribute("aria-hidden", "false")
   })
 })

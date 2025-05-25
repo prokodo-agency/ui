@@ -1,8 +1,8 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".PostTeaser";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("PostTeaser") {
     &__card {
         display: flex;
         height: 100%;

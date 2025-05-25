@@ -11,6 +11,7 @@ import { isString } from "@/helpers/validations"
 
 import { Animated } from "../animated"
 import { Loading } from "../loading"
+
 import type { CalendlyProps } from "./Calendly.model"
 
 declare global {
@@ -55,16 +56,18 @@ export const Calendly: FC<CalendlyProps> = ({
 
   const formatColor = (color?: string) => color?.replaceAll("#", "")
 
-  const getSafePrefill = (data?: CalendlyProps["data"]): Record<string, string> => {
+  const getSafePrefill = (
+    data?: CalendlyProps["data"],
+  ): Record<string, string> => {
     const result: Record<string, string> = {}
     if (!data) return result
-  
+
     for (const key of ["name", "email", "firstName", "lastName"] as const) {
       if (isString(data[key])) {
         result[key] = data[key]!
       }
     }
-  
+
     return result
   }
 
@@ -74,14 +77,26 @@ export const Calendly: FC<CalendlyProps> = ({
     if (hideDetails) urlParams.set("hide_landing_page_details", "1")
     if (hideEventTypeDetails) urlParams.set("hide_event_type_details", "1")
     if (hideCookieSettings) urlParams.set("hide_gdpr_banner", "1")
-    if (isString(color.background)) urlParams.set("background_color", formatColor(color.background)!)
-    if (isString(color.text)) urlParams.set("text_color", formatColor(color.text)!)
-    if (isString(color.button)) urlParams.set("primary_color", formatColor(color.button)!)
-    if (isString(data?.utm_campaign)) urlParams.set("utm_campaign", data?.utm_campaign ?? "")
-    if (isString(data?.utm_source)) urlParams.set("utm_source", data?.utm_source ?? "")
+    if (isString(color.background))
+      urlParams.set("background_color", formatColor(color.background)!)
+    if (isString(color.text))
+      urlParams.set("text_color", formatColor(color.text)!)
+    if (isString(color.button))
+      urlParams.set("primary_color", formatColor(color.button)!)
+    if (isString(data?.utm_campaign))
+      urlParams.set("utm_campaign", data?.utm_campaign ?? "")
+    if (isString(data?.utm_source))
+      urlParams.set("utm_source", data?.utm_source ?? "")
 
     return `https://calendly.com/${calendlyId}?${urlParams.toString()}`
-  }, [calendlyId, color, data, hideDetails, hideEventTypeDetails, hideCookieSettings])
+  }, [
+    calendlyId,
+    color,
+    data,
+    hideDetails,
+    hideEventTypeDetails,
+    hideCookieSettings,
+  ])
 
   const handleAnimate = useCallback(
     (isVisible: boolean) => {

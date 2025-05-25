@@ -3,7 +3,7 @@ import { render, screen } from "@/tests"
 import { Link } from "./Link"
 
 describe("The common link component", () => {
-  it("should render primary", () => {
+  it("should render primary", async () => {
     render(
       <Link href="/" variant="primary">
         Primary link
@@ -12,7 +12,7 @@ describe("The common link component", () => {
     expect(screen.getByText("Primary link")).toMatchSnapshot()
   })
 
-  it("should render secondary", () => {
+  it("should render secondary", async () => {
     render(
       <Link href="/" variant="secondary">
         Secondary link
@@ -21,7 +21,7 @@ describe("The common link component", () => {
     expect(screen.getByText("Secondary link")).toMatchSnapshot()
   })
 
-  it("should not open inbound links in a new tab", () => {
+  it("should not open inbound links in a new tab", async () => {
     render(
       <Link href="/" variant="primary">
         Inbound link

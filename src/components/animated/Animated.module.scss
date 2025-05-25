@@ -1,6 +1,6 @@
-$selector: ".Animated";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Animated") {
     opacity: 0;
     visibility: hidden;
     transition: opacity 300ms ease-out, transform 300ms ease-out, visibility 300ms ease-out;

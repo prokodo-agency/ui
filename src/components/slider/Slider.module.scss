@@ -4,9 +4,9 @@
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Slider";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Slider") {
     padding-bottom: $space-xl;
 
     &__label {

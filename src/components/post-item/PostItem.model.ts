@@ -1,8 +1,8 @@
-import type { ComponentType } from "react"
 import type { ButtonProps } from "../button"
 import type { HeadlineProps } from "../headline"
 import type { ImageProps } from "../image"
 import type { PostItemAuthorProps } from "./PostItemAuthor.model"
+import type { ComponentType } from "react"
 
 export type PostItemHeadline = {
   content: string

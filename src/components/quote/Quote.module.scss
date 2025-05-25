@@ -1,8 +1,8 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Quote";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Quote") {
     margin: 0;
 
     &__headline {

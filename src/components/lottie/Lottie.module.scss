@@ -1,6 +1,6 @@
-$selector: ".Lottie";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Lottie") {
     &__container {
         position: relative;
     }

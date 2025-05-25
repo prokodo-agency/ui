@@ -18,7 +18,6 @@ export const Link: FC<LinkProps> = memo(
     href,
     children,
     className,
-    locale,
     style,
     target,
     itemProp,
@@ -57,7 +56,6 @@ export const Link: FC<LinkProps> = memo(
         aria-label={ariaLabel}
         href={href}
         itemProp={itemProp}
-        locale={locale}
         target={target ?? undefined}
         onClick={onClick}
       >

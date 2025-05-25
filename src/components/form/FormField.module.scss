@@ -1,7 +1,7 @@
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".FormField";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("FormField") {
     padding-bottom: $space-lg;
 
     &:last-of-type {

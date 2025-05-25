@@ -2,11 +2,9 @@
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/keyframes/animations" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Card";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector}
-
- {
+@include define-block("Card") {
     position: relative;
     color: var(--color-white);
     background-color: var(--color-white);

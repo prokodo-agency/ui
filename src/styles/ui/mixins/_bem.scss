@@ -1,0 +1,7 @@
+
+@mixin define-block($name) {
+  $prefix: "prokodo-#{$name}";
+  .#{$prefix} {
+    @content;
+  }
+}

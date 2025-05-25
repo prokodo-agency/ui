@@ -1,18 +1,15 @@
 "use client"
 
 import { Switch as MUISwitch } from "@mui/base/Switch"
-import {
-  useState,
-  type FC,
-  type ChangeEvent,
-  useCallback,
-} from "react"
+import { useState, type FC, type ChangeEvent, useCallback } from "react"
 
 import { create } from "@/helpers/bem"
+
 import { Icon, type IconName } from "../icon"
 import { Label } from "../label"
 
 import styles from "./Switch.module.scss"
+
 import type { SwitchProps } from "./Switch.model"
 
 const bem = create(styles, "Switch")

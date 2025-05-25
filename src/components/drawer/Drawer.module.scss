@@ -1,7 +1,7 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Drawer";
+@use "@/styles/ui/mixins/bem" as *;
 
 @keyframes slideInLeft {
     0% {
@@ -47,7 +47,7 @@ $selector: ".Drawer";
     }
 }
 
-#{$selector} {
+@include define-block("Drawer") {
     position: fixed;
     top: 0;
     left: 0;

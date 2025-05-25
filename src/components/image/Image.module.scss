@@ -1,8 +1,8 @@
 @use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-$selector: ".Image";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Image") {
     position: relative;
     display: flex;
     justify-content: center;

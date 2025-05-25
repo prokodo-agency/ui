@@ -8,8 +8,6 @@ import {
   useCallback,
 } from "react"
 
-import { create } from "@/helpers/bem"
-import { isString } from "@/helpers/validations"
 import BGprimary1 from "@/assets/images/card_background_primary_1.webp"
 import BGprimary2 from "@/assets/images/card_background_primary_2.webp"
 import BGprimary3 from "@/assets/images/card_background_primary_3.webp"
@@ -18,6 +16,8 @@ import BGsecondary1 from "@/assets/images/card_background_secondary_1.webp"
 import BGsecondary2 from "@/assets/images/card_background_secondary_2.webp"
 import BGsecondary3 from "@/assets/images/card_background_secondary_3.webp"
 import BGsecondary4 from "@/assets/images/card_background_secondary_4.webp"
+import { create } from "@/helpers/bem"
+import { isString } from "@/helpers/validations"
 
 import { Animated } from "../animated"
 import { Image } from "../image"
@@ -197,8 +197,8 @@ export const Card: FC<CardProps> = ({
         alt="prokodo - background image"
         src={typeof background === "string" ? background : backgroundSrc}
         {...backgroundProps}
-        imageComponent={backgroundProps?.imageComponent ?? "img"}
         className={bem("background", undefined, backgroundProps?.className)}
+        imageComponent={backgroundProps?.imageComponent ?? "img"}
       />
     )
   }, [variant, background, backgroundProps])

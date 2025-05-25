@@ -1,8 +1,8 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".FormResponse";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("FormResponse") {
     padding: 0 $space-lg;
 
     &__success {

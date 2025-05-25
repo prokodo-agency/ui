@@ -122,9 +122,7 @@ export const Dialog: FC<DialogProps> = ({
                 className={bem("close")}
                 role="button"
                 tabIndex={0}
-                aria-label={
-                  (translations?.close ?? "Close dialog") as string
-                }
+                aria-label={(translations?.close ?? "Close dialog") as string}
                 onClick={handleClose}
                 onKeyDown={handleKeyDown}
               >

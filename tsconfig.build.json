@@ -6,9 +6,15 @@
     "declarationMap": false,
     "outDir": "./dist/types",
     "rootDir": "./src",
-    "composite": false,
+    "composite": true,
     "noEmit": false
   },
   "include": ["src/index.ts", "src/components/**/*"],
-  "exclude": ["**/*.test.*", "**/*.stories.*", "**/*.spec.*", "node_modules", "dist"]
+  "exclude": [
+    "**/*.test.*",
+    "**/*.stories.*",
+    "**/*.spec.*",
+    "node_modules",
+    "dist"
+  ]
 }

@@ -1,6 +1,6 @@
-$selector: ".Table";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Table") {
   &__container {
     width: 100%;
     overflow-x: auto;

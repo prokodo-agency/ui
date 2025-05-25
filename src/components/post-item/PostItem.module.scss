@@ -4,9 +4,9 @@
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".PostItem";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("PostItem") {
     &__grid {
         align-items: center;
         justify-content: space-between;

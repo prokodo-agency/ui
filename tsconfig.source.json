@@ -4,6 +4,8 @@
     "types": ["node", "google.maps", "vite/client"],
     "typeRoots": ["node_modules/@types", "src/types"],
     "jsx": "react-jsx",
+    "composite": true,
+    "noEmit": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true

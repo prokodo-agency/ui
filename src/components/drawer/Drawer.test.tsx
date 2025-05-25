@@ -18,7 +18,7 @@ jest.mock(
 )
 
 describe("The common drawer component", () => {
-  it("should render drawer", () => {
+  it("should render drawer", async () => {
     const { container } = render(
       <Drawer anchor="right" open={true} onClose={jest.fn()} />,
     )

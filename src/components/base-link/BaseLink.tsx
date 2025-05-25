@@ -19,8 +19,7 @@ export const BaseLink: FC<BaseLinkProps> = ({
   const isAppUrl = /^\w+:/.test(href)
 
   const computedTarget = target ?? (isAbsolute ? "_blank" : undefined)
-  const computedRel =
-    rel ?? (isAbsolute ? "noopener noreferrer" : undefined)
+  const computedRel = rel ?? (isAbsolute ? "noopener noreferrer" : undefined)
   const tabIndex = disabled ? -1 : undefined
   const linkStyle = disabled ? { ...DISABLE_STYLES, ...style } : style
 
@@ -30,10 +29,10 @@ export const BaseLink: FC<BaseLinkProps> = ({
       <a
         {...rest}
         href={href}
+        rel={computedRel}
         style={linkStyle}
         tabIndex={tabIndex}
         target={computedTarget}
-        rel={computedRel}
       >
         {children}
       </a>
@@ -42,12 +41,7 @@ export const BaseLink: FC<BaseLinkProps> = ({
 
   // Internal link with custom component
   return (
-    <LinkComponent
-      {...rest}
-      href={href}
-      style={linkStyle}
-      tabIndex={tabIndex}
-    >
+    <LinkComponent {...rest} href={href} style={linkStyle} tabIndex={tabIndex}>
       {children}
     </LinkComponent>
   )

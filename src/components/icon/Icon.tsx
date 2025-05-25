@@ -3,7 +3,6 @@ import {
   Suspense,
   useMemo,
   type FC,
-  type ComponentType,
 } from "react"
 import { create } from "@/helpers/bem"
 import styles from "./Icon.module.scss"
@@ -36,16 +35,8 @@ export const getIconSize = (size?: IconSize): number => {
   }
 }
 
-// Converts PascalCase to snake_case used in filenames
-const formatIconName = (name: string): string =>
-  name
-    .replace(/([a-z])([A-Z])/g, "$1_$2")
-    .replace(/Icon$/, "")
-    .toLowerCase()
-
 const getIconLoader = (name: string) => {
-  const snakeName = formatIconName(name)
-  const loader = ICONS[`${snakeName}_icon`]
+  const loader = ICONS[name]
   return loader ? loader() : Promise.resolve({ default: FallbackIcon })
 }
 
@@ -54,13 +45,15 @@ export const Icon: FC<IconProps> = ({
   size,
   color,
   className,
+  role = "presentation",
+  "aria-hidden": ariaHidden = role === "presentation" ? "true" : undefined,
   ...props
 }) => {
   const LazyIcon = useMemo(
     () =>
       lazy(async () => {
-        const Component = await getIconLoader(name ?? "")
-        return { default: Component as ComponentType<any> }
+        const module = await getIconLoader(name as string)
+        return { default: module.default } // <-- wichtig
       }),
     [name]
   )
@@ -68,8 +61,8 @@ export const Icon: FC<IconProps> = ({
   return (
     <Suspense fallback={<FallbackIcon />}>
       <LazyIcon
-        aria-hidden="true"
-        role="presentation"
+        role={role}
+        aria-hidden={ariaHidden}
         size={getIconSize(size)}
         color={color}
         name={name}

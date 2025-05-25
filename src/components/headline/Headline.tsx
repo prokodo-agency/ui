@@ -80,9 +80,7 @@ export const Headline: FC<HeadlineProps> = ({
   const animateText = useCallback(
     (children: ReactNode) =>
       animated ? (
-        <AnimatedText {...animationProps}>
-          {children as string}
-        </AnimatedText>
+        <AnimatedText {...animationProps}>{children as string}</AnimatedText>
       ) : (
         children
       ),
@@ -93,7 +91,10 @@ export const Headline: FC<HeadlineProps> = ({
     (attr: HTMLAttributes<HTMLHeadingElement>) => {
       if (!/^h[1-6]$/.test(type)) return null // Only allow h1–h6
       const children = attr.children as ReactNode
-      const HTag = type as keyof Pick<JSX.IntrinsicElements, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>
+      const HTag = type as keyof Pick<
+        JSX.IntrinsicElements,
+        "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+      >
       return (
         <HTag {...attr} aria-level={parseInt(type[1] ?? "", 10)} {...baseProps}>
           {animateText(children)}
@@ -109,7 +110,7 @@ export const Headline: FC<HeadlineProps> = ({
         className={bem("headline")}
         remarkPlugins={[remarkGfm, remarkBreaks]}
         components={{
-          p: (props) => renderHTag(props as HTMLAttributes<HTMLHeadingElement>),
+          p: props => renderHTag(props as HTMLAttributes<HTMLHeadingElement>),
         }}
       >
         {props.children as string}

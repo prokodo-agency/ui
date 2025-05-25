@@ -2,9 +2,9 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Chip";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Chip") {
   display: inline-flex;
   align-items: center;
   border-radius: $ui-background-border-radius;

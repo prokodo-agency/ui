@@ -15,8 +15,8 @@ export type DialogAction = Omit<ButtonProps, "id"> & {
 export type DialogActions = DialogAction[]
 
 export type DialogTranslations = {
-  cancel: string,
-  close: string,
+  cancel: string
+  close: string
 }
 
 export type DialogProps = Omit<
@@ -36,7 +36,7 @@ export type DialogProps = Omit<
   hideTitle?: boolean
   actions?: ButtonProps[]
   renderHeader?: () => ReactNode
-  translations: DialogTranslations
+  translations?: DialogTranslations
   children?: ReactNode
   containerChildren?: ReactNode
 }

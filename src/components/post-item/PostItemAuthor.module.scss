@@ -1,8 +1,8 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".PostItemAuthor";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("PostItemAuthor") {
     display: flex;
     align-items: center;
     padding-right: $space-xl;

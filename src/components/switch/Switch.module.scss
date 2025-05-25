@@ -5,9 +5,9 @@
 @use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Switch";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Switch") {
   position: relative;
   display: flex;
   align-items: center;

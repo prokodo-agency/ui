@@ -1,12 +1,8 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/config/colors" as *;
-$selector: ".Icon";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector}
-
- {
-    // color: var(--color-black);
-
+@include define-block("Icon") {
     &--primary {
         color: var(--color-primary-500);
 

@@ -1,8 +1,8 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".InputOTP";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("InputOTP") {
     display: flex;
     justify-content: space-between;
 

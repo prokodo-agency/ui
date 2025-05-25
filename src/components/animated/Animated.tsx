@@ -2,9 +2,8 @@
 
 import { type FC, useEffect, useState, useRef } from "react"
 
-import { isNumber } from "@/helpers/validations"
-
 import { create } from "@/helpers/bem"
+import { isNumber } from "@/helpers/validations"
 
 import styles from "./Animated.module.scss"
 

@@ -3,11 +3,9 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".List";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector}
-
- {
+@include define-block("List") {
     padding: 0;
 
     &__item {

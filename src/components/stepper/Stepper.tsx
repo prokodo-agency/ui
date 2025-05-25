@@ -54,8 +54,8 @@ export const Stepper: FC<StepperProps> = ({
   return (
     <ol
       {...props}
-      className={bem(undefined, undefined, className)}
       aria-label={translations?.stepper ?? "Stepper Navigation"}
+      className={bem(undefined, undefined, className)}
     >
       {steps.map((step, i) => {
         const { key, label, labelProps, ...rest } = step
@@ -96,8 +96,10 @@ export const Stepper: FC<StepperProps> = ({
                   tabIndex={active ? 0 : -1}
                   aria-label={`${translations?.step ?? "Step"} ${i + 1} ${label}. ${
                     completed
-                      ? translations?.status.completed ?? "Completed. Press Enter to jump back to this step."
-                      : translations?.status.open ?? "Open. Future step and therefore deactivated."
+                      ? (translations?.status.completed ??
+                        "Completed. Press Enter to jump back to this step.")
+                      : (translations?.status.open ??
+                        "Open. Future step and therefore deactivated.")
                   }`}
                   className={bem("icon__container", {
                     "is-active": active || completed,

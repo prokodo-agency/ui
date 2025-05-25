@@ -3,9 +3,10 @@
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Input";
+@use "@/styles/designsystem/functions/texts" as *;
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Input") {
   position: relative;
   display: flex;
   flex-direction: column;

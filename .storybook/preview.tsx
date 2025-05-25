@@ -1,13 +1,41 @@
-import { withThemeFromJSXProvider } from "@storybook/addon-themes"
-
+import React, { useEffect } from "react"
 import type { Preview, ReactRenderer } from "@storybook/react"
+import { withThemeFromJSXProvider } from "@storybook/addon-themes"
+import "../src/styles/theme.scss"
+
+const withThemeWrapper = (Story, context) => {
+  const theme = context.globals.theme || "light"
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme)
+  }, [theme])
+
+  return <Story />
+}
+
+export const decorators = [withThemeWrapper]
+
+export const globalTypes = {
+  theme: {
+    name: "Theme",
+    description: "Global theme for components",
+    defaultValue: "light",
+    toolbar: {
+      icon: "circlehollow",
+      items: [
+        { value: "light", title: "Light" },
+        { value: "dark", title: "Dark" },
+      ],
+    },
+  },
+}
 
 const preview: Preview = {
+  globalTypes,
   parameters: {
     nextjs: {
       appDirectory: true,
     },
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,

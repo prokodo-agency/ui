@@ -2,9 +2,9 @@
 @use "@/styles/ui/mixins/container" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Dialog";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Dialog") {
     position: fixed;
     top: 50%;
     left: 50%;

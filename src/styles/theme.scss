@@ -1,3 +1,6 @@
+@use "./designsystem/config/colors" as *;
+@use "./designsystem/config/elevation" as *;
+
 // Default variables (Light Theme)
 :root {
   --color-white: #{$white};

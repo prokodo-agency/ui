@@ -35,16 +35,22 @@
       "@/*": ["./src/*"],
       "@/assets/*": ["src/assets/*"]
     },
-    "declarationDir": "./dist/types",
     "outDir": "./dist"
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".storybook/*.ts",
-    ".storybook/*.tsx", "tools/generate-icon-names.cjs",
+    ".storybook/*.tsx",
+    "jest.config.mjs"
   ],
-  "exclude": ["./node_modules/**/*"],
+  "exclude": [
+    "./node_modules/**/*",
+    "vite.config.ts",
+    "svgo.config.ts",
+    "tools",
+    "src/tests"
+  ],
   "references": [
     {
       "path": "./tsconfig.source.json"

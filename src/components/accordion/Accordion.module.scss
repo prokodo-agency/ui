@@ -1,4 +1,4 @@
-$selector: ".Accordion";
+@use "@/styles/ui/mixins/bem" as *;
 
 @keyframes backgroundFill {
   0% {
@@ -10,7 +10,7 @@ $selector: ".Accordion";
   }
 }
 
-#{$selector} {
+@include define-block("Accordion") {
   display: flex;
   flex-direction: column;
 

@@ -3,9 +3,9 @@
 @use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".ImageText";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("ImageText") {
     &__grid {
         position: relative;
         flex-direction: column-reverse !important;

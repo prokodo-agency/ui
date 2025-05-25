@@ -13,7 +13,6 @@ export type LinkDefaultProps = BaseLinkProps & {
   variant?: LinkVariants
   classNames?: LinkClassNames
   hasBackground?: boolean
-  locale?: string
   ariaLabel?: string
   onPress?: MouseEventHandler<HTMLAnchorElement>
 }

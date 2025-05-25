@@ -29,3 +29,4 @@
 pnpm add @prokodo/ui
 # or
 npm install @prokodo/ui
+```

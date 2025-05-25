@@ -1,0 +1,1 @@
+function p(n,t,o=(e,i)=>e===i){return n.length===t.length&&n.every((e,i)=>o(e,t[i]))}const r={border:0,clip:"rect(0 0 0 0)",height:"1px",margin:"-1px",overflow:"hidden",padding:0,position:"absolute",whiteSpace:"nowrap",width:"1px"};export{p as a,r as v};

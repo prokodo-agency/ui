@@ -1,8 +1,6 @@
-import { useArgs } from "@storybook/client-api"
-
 import { Accordion } from "./Accordion"
 
-import type { AccordionProps, AccordionItem } from "./Accordion.model"
+import type { AccordionItem } from "./Accordion.model"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
@@ -68,13 +66,6 @@ const items: AccordionItem[] = [
   },
 ]
 
-const AccordionWrapper = (args: AccordionProps) => {
-  const [{ expanded }, updateArgs] = useArgs()
-  const handleChange = (index: number) => updateArgs({ expanded: index })
-
-  return <Accordion {...args} expanded={expanded} onChange={handleChange} />
-}
-
 export const Default: Story = {
   args: {
     id: "example",
@@ -82,6 +73,8 @@ export const Default: Story = {
     items,
     onChange: () => console.log("Changed!"),
   },
-  parameters: { actions: { argTypesRegex: null } },
-  render: args => <AccordionWrapper {...args} />,
+  render: (args, { updateArgs }) => {
+    const handleChange = (index: number) => updateArgs({ expanded: index })
+    return <Accordion {...args} onChange={handleChange} />
+  },
 }

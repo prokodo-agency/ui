@@ -1,7 +1,7 @@
 @use "@/styles/designsystem/config/spaces" as *;
-$selector: ".Grid";
+@use "@/styles/ui/mixins/bem" as *;
 
-#{$selector} {
+@include define-block("Grid") {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     padding: $space-lg;

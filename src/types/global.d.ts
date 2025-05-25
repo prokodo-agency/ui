@@ -20,7 +20,7 @@ declare global {
         as?: string
         eager?: boolean
         import?: string
-      }
+      },
     ): Record<string, () => Promise<T>>
   }
 }
