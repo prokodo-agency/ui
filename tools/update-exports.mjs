@@ -30,7 +30,7 @@ for (const name of components) {
   if (!existsSync(entryFile)) continue
 
   exportsField[`./${name}`] = {
-    import: `./dist/components/${name}.js`,
+    import: `./dist/components/${name}/index.js`,
     types: `./dist/types/components/${name}/index.d.ts`,
   }
 }

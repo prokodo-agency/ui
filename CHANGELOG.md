@@ -1,5 +1,23 @@
 # @prokodo/ui
 
+## 0.0.10
+
+### Patch Changes
+
+- Bugfix build config
+
+## 0.0.11
+
+### Patch Changes
+
+- Bugfix build config
+
+## 0.0.10
+
+### Patch Changes
+
+- Bugfix build config
+
 ## 0.0.9
 
 ### Patch Changes

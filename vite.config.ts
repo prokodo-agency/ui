@@ -5,15 +5,16 @@ import react from "@vitejs/plugin-react"
 import checker from "vite-plugin-checker"
 
 function getComponentEntries() {
-  const dir = path.resolve(__dirname, "src/components")
-  const entries: Record<string, string> = {}
-  fs.readdirSync(dir).forEach((name) => {
-    const entry = path.join(dir, name, "index.ts")
-    if (fs.existsSync(entry)) {
-      entries[name] = entry
+  const baseDir = path.resolve(__dirname, "src/components");
+  const entries: Record<string, string> = {};
+  fs.readdirSync(baseDir).forEach((name) => {
+    const indexFile = path.join(baseDir, name, "index.ts");
+    if (fs.existsSync(indexFile)) {
+      const key = `components/${name}/index`; // 👈 wichtig!
+      entries[key] = indexFile;
     }
-  })
-  return entries
+  });
+  return entries;
 }
 
 export default defineConfig({
@@ -83,9 +84,10 @@ export default defineConfig({
       output: {
         sourcemap: false,
         dir: "dist",
-        entryFileNames: chunkInfo =>
-          chunkInfo.name === "index" ? "index.[format].js" : "components/[name].js",
-        chunkFileNames: "components/[name].js",
+        preserveModules: true,
+        preserveModulesRoot: "src",
+        entryFileNames: "[name].js",
+        chunkFileNames: "[name].js",
         globals: {
           react: "React",
           "react-dom": "ReactDOM",

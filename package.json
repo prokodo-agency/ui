@@ -1,6 +1,6 @@
 {
   "name": "@prokodo/ui",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "description": "Modern, customizable UI components built with React and TypeScript — developed by prokodo for high-performance web interfaces.",
   "sideEffects": false,
@@ -15,163 +15,163 @@
       "require": "./dist/index.cjs.js"
     },
     "./accordion": {
-      "import": "./dist/components/accordion.js",
+      "import": "./dist/components/accordion/index.js",
       "types": "./dist/types/components/accordion/index.d.ts"
     },
     "./animated": {
-      "import": "./dist/components/animated.js",
+      "import": "./dist/components/animated/index.js",
       "types": "./dist/types/components/animated/index.d.ts"
     },
     "./animatedText": {
-      "import": "./dist/components/animatedText.js",
+      "import": "./dist/components/animatedText/index.js",
       "types": "./dist/types/components/animatedText/index.d.ts"
     },
     "./avatar": {
-      "import": "./dist/components/avatar.js",
+      "import": "./dist/components/avatar/index.js",
       "types": "./dist/types/components/avatar/index.d.ts"
     },
     "./base-link": {
-      "import": "./dist/components/base-link.js",
+      "import": "./dist/components/base-link/index.js",
       "types": "./dist/types/components/base-link/index.d.ts"
     },
     "./button": {
-      "import": "./dist/components/button.js",
+      "import": "./dist/components/button/index.js",
       "types": "./dist/types/components/button/index.d.ts"
     },
     "./calendly": {
-      "import": "./dist/components/calendly.js",
+      "import": "./dist/components/calendly/index.js",
       "types": "./dist/types/components/calendly/index.d.ts"
     },
     "./card": {
-      "import": "./dist/components/card.js",
+      "import": "./dist/components/card/index.js",
       "types": "./dist/types/components/card/index.d.ts"
     },
     "./carousel": {
-      "import": "./dist/components/carousel.js",
+      "import": "./dist/components/carousel/index.js",
       "types": "./dist/types/components/carousel/index.d.ts"
     },
     "./chip": {
-      "import": "./dist/components/chip.js",
+      "import": "./dist/components/chip/index.js",
       "types": "./dist/types/components/chip/index.d.ts"
     },
     "./datePicker": {
-      "import": "./dist/components/datePicker.js",
+      "import": "./dist/components/datePicker/index.js",
       "types": "./dist/types/components/datePicker/index.d.ts"
     },
     "./dialog": {
-      "import": "./dist/components/dialog.js",
+      "import": "./dist/components/dialog/index.js",
       "types": "./dist/types/components/dialog/index.d.ts"
     },
     "./drawer": {
-      "import": "./dist/components/drawer.js",
+      "import": "./dist/components/drawer/index.js",
       "types": "./dist/types/components/drawer/index.d.ts"
     },
     "./form": {
-      "import": "./dist/components/form.js",
+      "import": "./dist/components/form/index.js",
       "types": "./dist/types/components/form/index.d.ts"
     },
     "./grid": {
-      "import": "./dist/components/grid.js",
+      "import": "./dist/components/grid/index.js",
       "types": "./dist/types/components/grid/index.d.ts"
     },
     "./headline": {
-      "import": "./dist/components/headline.js",
+      "import": "./dist/components/headline/index.js",
       "types": "./dist/types/components/headline/index.d.ts"
     },
     "./icon": {
-      "import": "./dist/components/icon.js",
+      "import": "./dist/components/icon/index.js",
       "types": "./dist/types/components/icon/index.d.ts"
     },
     "./image": {
-      "import": "./dist/components/image.js",
+      "import": "./dist/components/image/index.js",
       "types": "./dist/types/components/image/index.d.ts"
     },
     "./image-text": {
-      "import": "./dist/components/image-text.js",
+      "import": "./dist/components/image-text/index.js",
       "types": "./dist/types/components/image-text/index.d.ts"
     },
     "./input": {
-      "import": "./dist/components/input.js",
+      "import": "./dist/components/input/index.js",
       "types": "./dist/types/components/input/index.d.ts"
     },
     "./inputOTP": {
-      "import": "./dist/components/inputOTP.js",
+      "import": "./dist/components/inputOTP/index.js",
       "types": "./dist/types/components/inputOTP/index.d.ts"
     },
     "./label": {
-      "import": "./dist/components/label.js",
+      "import": "./dist/components/label/index.js",
       "types": "./dist/types/components/label/index.d.ts"
     },
     "./link": {
-      "import": "./dist/components/link.js",
+      "import": "./dist/components/link/index.js",
       "types": "./dist/types/components/link/index.d.ts"
     },
     "./list": {
-      "import": "./dist/components/list.js",
+      "import": "./dist/components/list/index.js",
       "types": "./dist/types/components/list/index.d.ts"
     },
     "./loading": {
-      "import": "./dist/components/loading.js",
+      "import": "./dist/components/loading/index.js",
       "types": "./dist/types/components/loading/index.d.ts"
     },
     "./lottie": {
-      "import": "./dist/components/lottie.js",
+      "import": "./dist/components/lottie/index.js",
       "types": "./dist/types/components/lottie/index.d.ts"
     },
     "./map": {
-      "import": "./dist/components/map.js",
+      "import": "./dist/components/map/index.js",
       "types": "./dist/types/components/map/index.d.ts"
     },
     "./post-item": {
-      "import": "./dist/components/post-item.js",
+      "import": "./dist/components/post-item/index.js",
       "types": "./dist/types/components/post-item/index.d.ts"
     },
     "./post-teaser": {
-      "import": "./dist/components/post-teaser.js",
+      "import": "./dist/components/post-teaser/index.js",
       "types": "./dist/types/components/post-teaser/index.d.ts"
     },
     "./post-widget": {
-      "import": "./dist/components/post-widget.js",
+      "import": "./dist/components/post-widget/index.js",
       "types": "./dist/types/components/post-widget/index.d.ts"
     },
     "./post-widget-carousel": {
-      "import": "./dist/components/post-widget-carousel.js",
+      "import": "./dist/components/post-widget-carousel/index.js",
       "types": "./dist/types/components/post-widget-carousel/index.d.ts"
     },
     "./quote": {
-      "import": "./dist/components/quote.js",
+      "import": "./dist/components/quote/index.js",
       "types": "./dist/types/components/quote/index.d.ts"
     },
     "./rich-text": {
-      "import": "./dist/components/rich-text.js",
+      "import": "./dist/components/rich-text/index.js",
       "types": "./dist/types/components/rich-text/index.d.ts"
     },
     "./select": {
-      "import": "./dist/components/select.js",
+      "import": "./dist/components/select/index.js",
       "types": "./dist/types/components/select/index.d.ts"
     },
     "./skeleton": {
-      "import": "./dist/components/skeleton.js",
+      "import": "./dist/components/skeleton/index.js",
       "types": "./dist/types/components/skeleton/index.d.ts"
     },
     "./slider": {
-      "import": "./dist/components/slider.js",
+      "import": "./dist/components/slider/index.js",
       "types": "./dist/types/components/slider/index.d.ts"
     },
     "./stepper": {
-      "import": "./dist/components/stepper.js",
+      "import": "./dist/components/stepper/index.js",
       "types": "./dist/types/components/stepper/index.d.ts"
     },
     "./switch": {
-      "import": "./dist/components/switch.js",
+      "import": "./dist/components/switch/index.js",
       "types": "./dist/types/components/switch/index.d.ts"
     },
     "./table": {
-      "import": "./dist/components/table.js",
+      "import": "./dist/components/table/index.js",
       "types": "./dist/types/components/table/index.d.ts"
     },
     "./teaser": {
-      "import": "./dist/components/teaser.js",
+      "import": "./dist/components/teaser/index.js",
       "types": "./dist/types/components/teaser/index.d.ts"
     }
   },
