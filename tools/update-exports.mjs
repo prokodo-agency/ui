@@ -15,8 +15,7 @@ const exportsField = {
   "./theme.css": "./dist/ui.css",
   '.': {
     types: './dist/types/index.d.ts',
-    import: './dist/index.es.js',
-    require: './dist/index.cjs.js',
+    import: './dist/index.js',
   },
 }
 

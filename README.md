@@ -32,6 +32,8 @@
 
 ### 1. Install the package
 
+> ⚠️ ESM-only: This package does not support CommonJS (`require()`).
+
 ```bash
 pnpm add @prokodo/ui
 # or

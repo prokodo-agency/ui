@@ -60,7 +60,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "prokodo-ui",
       fileName: format => `index.${format}.js`,
-      formats: ["es", "cjs"],
+      formats: ["es"],
     },
     rollupOptions: {
       // Avoid bundling peer dependencies
