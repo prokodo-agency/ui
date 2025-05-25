@@ -1,2 +1,7 @@
 export * from "./Button"
-export type * from "./Button.model"
+export type {
+  ButtonProps,
+  ButtonColor,
+  ButtonIconProps,
+  ButtonDefaultProps,
+} from "./Button.model"

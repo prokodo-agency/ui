@@ -1,2 +1,2 @@
 export * from "./InputOTP"
-export type * from "./InputOTP.model"
+export type { InputOTPProps } from "./InputOTP.model"

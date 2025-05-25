@@ -1,2 +1,7 @@
 export * from "./PostTeaser"
-export type * from "./PostTeaser.model"
+export type {
+  PostTeaserProps,
+  PostTeaserHeadline,
+  PostTeaserImage,
+  PostTeaserRedirect,
+} from "./PostTeaser.model"

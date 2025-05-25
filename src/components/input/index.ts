@@ -1,2 +1,8 @@
 export * from "./Input"
-export type * from "./Input.model"
+export type {
+  InputProps,
+  InputChangeEvent,
+  InputColor,
+  InputErrorTranslations,
+  InputValidateEvent,
+} from "./Input.model"

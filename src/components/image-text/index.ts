@@ -1,2 +1,7 @@
 export * from "./ImageText"
-export type * from "./ImageText.model"
+export type {
+  ImageTextProps,
+  ImageTextHeadline,
+  ImageTextAnimatedBorder,
+  ImageTextAnimation,
+}from "./ImageText.model"

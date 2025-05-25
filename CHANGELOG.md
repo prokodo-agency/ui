@@ -1,6 +1,13 @@
 # @prokodo/ui
 
+## 0.0.8
+
+### Patch Changes
+
+- Changed type structure
+
 <<<<<<< HEAD
+
 ## 0.0.7
 
 ### Patch Changes
@@ -20,16 +27,17 @@
 - Added theme.css to export files
 
 =======
->>>>>>> eaa5a3fb9c588b005cb1cba62d9ce68eec3c6963
+
+> > > > > > > eaa5a3fb9c588b005cb1cba62d9ce68eec3c6963
+
 ## 0.0.6
 
 ### Patch Changes
 
 - f7f8cfb: Splitted component library in single exports
-<<<<<<< HEAD
-- fix: Exporting theme.css
-=======
->>>>>>> eaa5a3fb9c588b005cb1cba62d9ce68eec3c6963
+  <<<<<<< HEAD
+- # fix: Exporting theme.css
+  > > > > > > > eaa5a3fb9c588b005cb1cba62d9ce68eec3c6963
 
 ## 0.0.5
 

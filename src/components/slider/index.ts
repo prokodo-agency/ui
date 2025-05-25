@@ -1,2 +1,2 @@
 export * from "./Slider"
-export type * from "./Slider.model"
+export type { SliderProps } from "./Slider.model"

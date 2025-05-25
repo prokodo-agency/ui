@@ -1,2 +1,10 @@
 export * from "./Teaser"
-export type * from "./Teaser.model"
+export type {
+  TeaserProps,
+  TeaserAlign,
+  TeaserAnimation,
+  TeaserHeadline,
+  TeaserImage,
+  TeaserRedirect,
+  TeaserVariant,
+} from "./Teaser.model"

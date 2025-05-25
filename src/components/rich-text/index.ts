@@ -1,2 +1,2 @@
 export * from "./RichText"
-export type * from "./RichText.model"
+export type { RichTextProps } from "./RichText.model"

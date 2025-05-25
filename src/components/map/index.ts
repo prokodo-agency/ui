@@ -1,2 +1,7 @@
 export * from "./Map"
-export type * from "./Map.model"
+export type {
+  MapProps,
+  MapCenter,
+  MapMarker,
+  MapMarkerPosition,
+} from "./Map.model"

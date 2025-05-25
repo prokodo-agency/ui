@@ -1,2 +1,2 @@
 export * from "./Avatar"
-export type * from "./Avatar.model"
+export type { AvatarProps, AvatarSize } from "./Avatar.model"

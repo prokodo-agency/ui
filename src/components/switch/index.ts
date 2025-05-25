@@ -1,2 +1,2 @@
 export * from "./Switch"
-export * from "./Switch.model"
+export type { SwitchProps, SwitchColor } from "./Switch.model"

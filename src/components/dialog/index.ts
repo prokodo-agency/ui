@@ -1,2 +1,8 @@
 export * from "./Dialog"
-export type * from "./Dialog.model"
+export type {
+  DialogProps,
+  DialogAction,
+  DialogActions,
+  DialogRef,
+  DialogTranslations,
+} from "./Dialog.model"

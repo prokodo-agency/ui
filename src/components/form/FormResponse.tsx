@@ -1,4 +1,4 @@
-import { type FC, type HTMLAttributes, useMemo, memo } from "react"
+import { type FC, useMemo, memo } from "react"
 
 import { List, type ListDefaultItemProps } from "@/components/list"
 import { create } from "@/helpers/bem"
@@ -6,13 +6,9 @@ import { isArray, isNull } from "@/helpers/validations"
 
 import styles from "./FormResponse.module.scss"
 
-import type { FormMessages } from "./Form.model"
+import type { FormResponseProps } from "./Form.model"
 
 const bem = create(styles, "FormResponse")
-
-export type FormResponseProps = HTMLAttributes<HTMLDivElement> & {
-  messages?: FormMessages
-}
 
 export const FormResponse: FC<FormResponseProps> = memo(
   ({ className, messages, ...props }) => {

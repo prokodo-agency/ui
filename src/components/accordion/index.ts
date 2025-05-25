@@ -1,2 +1,6 @@
 export * from "./Accordion"
-export type * from "./Accordion.model"
+export type {
+  AccordionProps,
+  AccordionItem,
+  AccordionAction,
+} from "./Accordion.model"

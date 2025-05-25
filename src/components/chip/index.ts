@@ -1,2 +1,2 @@
 export * from "./Chip"
-export type * from "./Chip.model"
+export type { ChipProps, ChipColor, ChipVariant } from "./Chip.model"

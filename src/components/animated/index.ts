@@ -1,2 +1,2 @@
 export * from "./Animated"
-export type * from "./Animated.model"
+export type { AnimatedProps } from "./Animated.model"

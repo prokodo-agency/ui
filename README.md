@@ -41,8 +41,7 @@ npm install @prokodo/ui
 ### 2. Use a component
 
 ```tsx
-import { Button } from '@prokodo/ui'
-import type { ButtonProps } from '@prokodo/ui'
+import { Button, type ButtonProps } from "@prokodo/ui/button"
 
 export default function Example() {
   return <Button>Click me</Button>

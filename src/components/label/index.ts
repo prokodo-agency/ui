@@ -1,2 +1,2 @@
 export * from "./Label"
-export type * from "./Label.model"
+export type { LabelProps } from "./Label.model"

@@ -1,2 +1,8 @@
 export * from "./PostWidget"
-export type * from "./PostWidget.model"
+export type {
+  PostWidgetProps,
+  PostWidgetHeadline,
+  PostWidgetImage,
+  PostWidgetItem,
+  PostWidgetRedirect,
+} from "./PostWidget.model"

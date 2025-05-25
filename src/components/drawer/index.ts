@@ -1,2 +1,2 @@
 export * from "./Drawer"
-export type * from "./Drawer.model"
+export type { DrawerProps } from "./Drawer.model"

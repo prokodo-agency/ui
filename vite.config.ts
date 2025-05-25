@@ -85,7 +85,7 @@ export default defineConfig({
         dir: "dist",
         entryFileNames: chunkInfo =>
           chunkInfo.name === "index" ? "index.[format].js" : "components/[name].js",
-        chunkFileNames: "components/[name]-[hash].js",
+        chunkFileNames: "components/[name].js",
         globals: {
           react: "React",
           "react-dom": "ReactDOM",

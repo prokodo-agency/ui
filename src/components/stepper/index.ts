@@ -1,2 +1,6 @@
 export * from "./Stepper"
-export type * from "./Stepper.model"
+export type {
+  StepperProps,
+  StepperRef,
+  StepperTranslations,
+} from "./Stepper.model"

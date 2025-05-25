@@ -1,2 +1,6 @@
 export * from "./DatePicker"
-export type * from "./DatePicker.model"
+export type {
+  DatePickerProps,
+  DatePickerValue,
+  DatePickerErrorTranslations,
+} from "./DatePicker.model"

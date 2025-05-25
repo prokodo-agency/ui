@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { ReactElement, FormHTMLAttributes } from "react"
+import type { ReactElement, FormHTMLAttributes, HTMLAttributes } from "react"
 import type { ButtonProps } from "../button"
 
 import {
@@ -95,6 +95,10 @@ export type FormAllowedChildren =
 
 export type ParentComponentProps = {
   children: FormAllowedChildren | FormAllowedChildren[] // Allow one or multiple allowed children
+}
+
+export type FormResponseProps = HTMLAttributes<HTMLDivElement> & {
+  messages?: FormMessages
 }
 
 export type OnChangeFormHandler = (fields: FormField) => void

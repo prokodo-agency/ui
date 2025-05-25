@@ -1,2 +1,2 @@
 export * from "./Quote"
-export type * from "./Quote.model"
+export type { QuoteProps, QuoteAuthor, QuoteHeadline } from "./Quote.model"

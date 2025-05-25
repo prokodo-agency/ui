@@ -1,2 +1,2 @@
 export * from "./Loading"
-export type * from "./Loading.model"
+export type { LoadingProps, LoadingSize } from "./Loading.model"

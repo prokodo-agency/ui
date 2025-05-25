@@ -1,3 +1,9 @@
 export * from "./PostItem"
-export type * from "./PostItem.model"
-export type * from "./PostItemAuthor.model"
+export type {
+  PostItemProps,
+  PostItemHeadline,
+} from "./PostItem.model"
+export type {
+  PostItemAuthorAvatar,
+  PostItemAuthorProps,
+} from "./PostItemAuthor.model"

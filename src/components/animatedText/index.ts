@@ -1,2 +1,2 @@
 export * from "./AnimatedText"
-export type * from "./AnimatedText.model"
+export type { AnimatedTextProps } from "./AnimatedText.model"

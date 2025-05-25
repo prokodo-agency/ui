@@ -1,2 +1,2 @@
 export * from "./BaseLink"
-export type * from "./BaseLink.model"
+export type { BaseLinkProps } from "./BaseLink.model"
