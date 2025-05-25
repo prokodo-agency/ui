@@ -20,10 +20,6 @@ const exportsField = {
   },
 }
 
-function capitalizeFirstLetter(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
 // Add per-component exports
 const components = readdirSync(componentsDir, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())
@@ -35,7 +31,7 @@ for (const name of components) {
 
   exportsField[`./${name}`] = {
     import: `./dist/components/${name}.js`,
-    types: `./dist/types/components/${name}/${capitalizeFirstLetter(name)}.d.ts`,
+    types: `./dist/types/components/${name}/index.d.ts`,
   }
 }
 

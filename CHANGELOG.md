@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.9
+
+### Patch Changes
+
+- Changed type structure
+
 ## 0.0.8
 
 ### Patch Changes
