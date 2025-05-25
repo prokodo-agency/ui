@@ -1,2 +1,1 @@
-cd frontend
-pnpm fix
+pnpm test

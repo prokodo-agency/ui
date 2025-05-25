@@ -25,7 +25,7 @@
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc --project tsconfig.typecheck.json",
-    "test": "NODE_ENV=test jest --coverage --verbose",
+    "test": "NODE_ENV=test jest --coverage --verbose && pnpm lint && pnpm typecheck",
     "test:watch": "NODE_ENV=test jest --watch",
     "test:ci": "NODE_ENV=test jest --runInBand --ci",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
@@ -35,7 +35,8 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build && echo 'ui.prokodo.com' > storybook-static/CNAME",
     "storybook:deploy": "gh-pages -d storybook-static",
-    "generate-icon-types": "node tools/generate-icon-names.cjs"
+    "generate-icon-types": "node tools/generate-icon-names.cjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",

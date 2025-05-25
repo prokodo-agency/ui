@@ -1,7 +1,7 @@
 jest.mock("./iconsMap", () => {
   const mkSvg = (label: string) => ({
     default: (props: any) => (
-      <svg role={props.role} aria-hidden={props["aria-hidden"]} {...props}>
+      <svg aria-hidden={props["aria-hidden"]} role={props.role} {...props}>
         <text>{label}</text>
       </svg>
     ),
