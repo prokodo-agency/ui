@@ -20,7 +20,7 @@ export const useGoogleMaps = (apiKey: string, reload?: boolean): boolean => {
         console.error("Error loading Google Maps", err)
         throw new Error("Error loading Google Map: ", err)
       })
-  }, [reload])
+  }, [apiKey, reload])
 
   return loaded
 }

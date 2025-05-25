@@ -10,7 +10,7 @@ type ClassNames = (
   extra?: WordSet,
 ) => string
 
-const COMPANY_PREFIX = "prokodo"
+export const COMPANY_PREFIX = "prokodo"
 
 function create(styles: Styles, blockName: string): ClassNames {
   const prefixedName = `${COMPANY_PREFIX}-${blockName}`;

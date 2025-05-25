@@ -74,9 +74,9 @@ export const Calendly: FC<CalendlyProps> = ({
   const dataUrl = useMemo(() => {
     const urlParams = new URLSearchParams()
 
-    if (hideDetails) urlParams.set("hide_landing_page_details", "1")
-    if (hideEventTypeDetails) urlParams.set("hide_event_type_details", "1")
-    if (hideCookieSettings) urlParams.set("hide_gdpr_banner", "1")
+    if (Boolean(hideDetails)) urlParams.set("hide_landing_page_details", "1")
+    if (Boolean(hideEventTypeDetails)) urlParams.set("hide_event_type_details", "1")
+    if (Boolean(hideCookieSettings)) urlParams.set("hide_gdpr_banner", "1")
     if (isString(color.background))
       urlParams.set("background_color", formatColor(color.background)!)
     if (isString(color.text))

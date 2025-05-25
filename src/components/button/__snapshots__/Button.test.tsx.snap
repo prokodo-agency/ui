@@ -2,14 +2,14 @@
 
 exports[`The Button component should render Button 1`] = `
 <button
-  class="Button Button--has-variant-contained Button--has-bg-primary"
+  class="prokodo-Button prokodo-Button--has-variant-contained prokodo-Button--has-bg-primary"
   color="primary"
   id="Button-«r0»"
   title="Test title"
 >
   <span
     aria-labelledby="Button-«r0»"
-    class="Button__title"
+    class="prokodo-Button__title"
   >
     Test title
   </span>
@@ -18,7 +18,7 @@ exports[`The Button component should render Button 1`] = `
 
 exports[`The Button component should render disabled Button 1`] = `
 <button
-  class="Button Button--has-variant-contained Button--has-bg-primary Button--is-disabled"
+  class="prokodo-Button prokodo-Button--has-variant-contained prokodo-Button--has-bg-primary prokodo-Button--is-disabled"
   color="primary"
   disabled=""
   id="Button-«r1»"
@@ -27,7 +27,7 @@ exports[`The Button component should render disabled Button 1`] = `
 >
   <span
     aria-labelledby="Button-«r1»"
-    class="Button__title"
+    class="prokodo-Button__title"
   >
     Test title
   </span>
@@ -36,14 +36,14 @@ exports[`The Button component should render disabled Button 1`] = `
 
 exports[`The Button component should render loading Button 1`] = `
 <button
-  class="Button Button--has-variant-contained Button--has-bg-primary"
+  class="prokodo-Button prokodo-Button--has-variant-contained prokodo-Button--has-bg-primary"
   color="primary"
   disabled=""
   id="Button-«r2»"
   title="Test title"
 >
   <div
-    class="Loading"
+    class="prokodo-Loading"
     style="display: flex; align-items: center; justify-content: center; gap: 16px;"
   >
     <svg
@@ -53,7 +53,7 @@ exports[`The Button component should render loading Button 1`] = `
     >
       <defs>
         <lineargradient
-          class="Loading__gradient"
+          class="prokodo-Loading__gradient"
           id="loading-gradient"
           x1="0%"
           x2="0%"
@@ -73,7 +73,7 @@ exports[`The Button component should render loading Button 1`] = `
       </defs>
     </svg>
     <div
-      class="Loading__animation Loading__animation--size-xs"
+      class="prokodo-Loading__animation prokodo-Loading__animation--size-xs"
       style="border-radius: 50%; border: 4px solid transparent; border-top: 4px solid; animation: spin 1s linear infinite;"
     />
   </div>

@@ -1,6 +1,8 @@
 "use client"
 import { type FC, type CSSProperties } from "react"
 
+import { isNull } from "@/helpers/validations"
+
 import type { BaseLinkProps } from "./BaseLink.model"
 
 export const BaseLink: FC<BaseLinkProps> = ({
@@ -20,11 +22,11 @@ export const BaseLink: FC<BaseLinkProps> = ({
 
   const computedTarget = target ?? (isAbsolute ? "_blank" : undefined)
   const computedRel = rel ?? (isAbsolute ? "noopener noreferrer" : undefined)
-  const tabIndex = disabled ? -1 : undefined
-  const linkStyle = disabled ? { ...DISABLE_STYLES, ...style } : style
+  const tabIndex = !isNull(disabled) ? -1 : undefined
+  const linkStyle = !isNull(disabled) ? { ...DISABLE_STYLES, ...style } : style
 
   // Use plain <a> for absolute or special URLs
-  if (isAbsolute || isDownload || isAppUrl || !LinkComponent) {
+  if (isAbsolute || isDownload || isAppUrl || LinkComponent === undefined) {
     return (
       <a
         {...rest}

@@ -79,7 +79,7 @@ export const Headline: FC<HeadlineProps> = ({
 
   const animateText = useCallback(
     (children: ReactNode) =>
-      animated ? (
+      Boolean(animated) ? (
         <AnimatedText {...animationProps}>{children as string}</AnimatedText>
       ) : (
         children

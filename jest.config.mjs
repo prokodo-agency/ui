@@ -19,7 +19,7 @@ export default {
   },
   testEnvironment: "jsdom",
   moduleNameMapper: {
-    "\\.(css|scss|sass)$": "identity-obj-proxy",
+    '\\.(css|scss|sass)$': 'identity-obj-proxy',
     "\\.svg$": "<rootDir>/src/tests/mocks/svgr.ts",
     "\\.(jpg|jpeg|png|gif|webp|avif|ico)$":
       "<rootDir>/src/tests/mocks/image.ts",

@@ -1,6 +1,6 @@
 "use client"
 
-import { memo, useEffect, useRef, useState, lazy, Suspense } from "react"
+import { type FC, memo, useEffect, useRef, useState, lazy, Suspense } from "react"
 
 import { create } from "@/helpers/bem"
 
@@ -8,7 +8,6 @@ import styles from "./Lottie.module.scss"
 import { ANIMATIONS } from "./LottieAnimations"
 
 import type { LottieProps } from "./Lottie.model"
-import type { FC } from "react"
 
 const bem = create(styles, "Lottie")
 
@@ -25,7 +24,7 @@ export const Lottie: FC<LottieProps> = memo(
 
     useEffect(() => {
       const observer = new IntersectionObserver(([entry]) => {
-        if (entry?.isIntersecting) {
+        if (entry?.isIntersecting === true) {
           setIsInView(true)
           observer.disconnect()
         }

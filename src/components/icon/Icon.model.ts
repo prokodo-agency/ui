@@ -1,7 +1,7 @@
+import type { ICONS } from "./iconsMap"
 import type { Color } from "@/types/colors"
 import type { Variants } from "@/types/variants"
 import type { AriaAttributes, AriaRole } from "react"
-import type { ICONS } from "./iconsMap"
 
 export type IconName = keyof typeof ICONS
 

@@ -20,7 +20,7 @@
 - 🧩 **Component-rich**: 35+ reusable UI components
 - 🧪 **Reliable**: Fully tested with Jest and Testing Library
 - 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
-- 📦 **Distribution-ready**: Publishable to internal or public npm registries
+- 📦 **DReady-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
 - 🧱 **Optimized for SSR**: Works great with Next.js and React Server Components
 
 ---

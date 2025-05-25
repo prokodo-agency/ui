@@ -126,7 +126,7 @@ export const PostItem: FC<PostItemProps> = memo(
               redirect={button?.redirect}
             >
               {!imageLoaded && <Skeleton height="275px" />}
-              {ImageComponent && image?.src && isString(image.src) && (
+              {ImageComponent !== undefined && isString(image?.src) && (
                 <ImageComponent
                   {...image}
                   className={bem("image")}

@@ -1,46 +1,51 @@
-import { create } from "./bem"
+import { COMPANY_PREFIX, create } from "@/helpers/bem"
 
 describe("The bem helper", () => {
+  const block = "block"
+  const prefixed = `${COMPANY_PREFIX}-${block}`
+
   const styles = {
-    block: "block__123",
-    "block--modifier": "block--modifier__789",
-    "block--is-enabled": "block--is-enabled__789",
-    block__element: "block__element__456",
-    "block__element--modifier": "block__element--modifier__789",
-    "block__element--is-enabled": "block__element--is-enabled__789",
-    "block__element--is-visible": "block__element--is-visible__789",
+    [prefixed]: prefixed,
+    [`${prefixed}__element`]: `${prefixed}__element`,
+    [`${prefixed}--modifier`]: `${prefixed}--modifier`,
+    [`${prefixed}--is-enabled`]: `${prefixed}--is-enabled`,
+    [`${prefixed}__element--modifier`]: `${prefixed}__element--modifier`,
+    [`${prefixed}__element--is-enabled`]: `${prefixed}__element--is-enabled`,
   }
 
   describe("create", () => {
-    it("should create bem helper by string", async () => {
-      const bem = create(styles, "block")
-      expect(bem()).toBe("block__123")
+    it("should create bem helper by string", () => {
+      const bem = create(styles, block)
+      expect(bem()).toBe(prefixed)
     })
 
-    it("should return classname for elements", async () => {
-      const bem = create(styles, "block")
-      expect(bem("element")).toBe("block__element__456")
+    it("should return classname for elements", () => {
+      const bem = create(styles, block)
+      expect(bem("element")).toBe(`${prefixed}__element`)
       expect(bem("element", "modifier")).toBe(
-        "block__element__456 block__element--modifier__789",
+        `${prefixed}__element ${prefixed}__element--modifier`
       )
-      expect(bem("element", { "is-enabled": true, "is-visible": false })).toBe(
-        "block__element__456 block__element--is-enabled__789",
-      )
-    })
-
-    it("should return classname with modifieres", async () => {
-      const bem = create(styles, "block")
-      expect(bem(undefined, "modifier")).toBe("block__123 block--modifier__789")
-      expect(bem(undefined, { "is-enabled": true, "is-visible": false })).toBe(
-        "block__123 block--is-enabled__789",
+      expect(bem("element", { "is-enabled": true })).toBe(
+        `${prefixed}__element ${prefixed}__element--is-enabled`
       )
     })
 
-    it("should use unknown key when not defined in styles", async () => {
-      const bem = create(styles, "block")
+    it("should return classname with modifiers", () => {
+      const bem = create(styles, block)
+      expect(bem(undefined, "modifier")).toBe(
+        `${prefixed} ${prefixed}--modifier`
+      )
+      expect(bem(undefined, { "is-enabled": true })).toBe(
+        `${prefixed} ${prefixed}--is-enabled`
+      )
+    })
 
-      expect(bem("unknown")).toBe("block__unknown")
-      expect(bem(undefined, "unknown")).toBe("block__123 block--unknown")
+    it("should use unknown key when not defined in styles", () => {
+      const bem = create(styles, block)
+      expect(bem("unknown")).toBe(`${prefixed}__unknown`)
+      expect(bem(undefined, "unknown")).toBe(
+        `${prefixed} ${prefixed}--unknown`
+      )
     })
   })
 })

@@ -19,23 +19,23 @@ import type { DialogProps } from "./Dialog.model"
 const bem = create(styles, "Dialog")
 
 export const Dialog: FC<DialogProps> = ({
-  ref,
-  contentRef,
-  fullScreen,
-  open,
+  actions,
+  children,
   className,
   classNameHeader,
+  containerChildren,
+  contentProps = {},
+  contentRef,
+  fullScreen,
+  hideTitle,
+  onClose,
+  open,
+  ref,
+  renderHeader,
+  scroll = "paper",
+  showCloseButton,
   title,
   titleProps = {},
-  hideTitle,
-  showCloseButton,
-  contentProps = {},
-  scroll = "paper",
-  actions,
-  renderHeader,
-  onClose,
-  children,
-  containerChildren,
   translations,
   ...props
 }) => {
@@ -119,10 +119,10 @@ export const Dialog: FC<DialogProps> = ({
             </div>
             {Boolean(showCloseButton) && (
               <div
+                aria-label={(translations?.close ?? "Close dialog") as string}
                 className={bem("close")}
                 role="button"
                 tabIndex={0}
-                aria-label={(translations?.close ?? "Close dialog") as string}
                 onClick={handleClose}
                 onKeyDown={handleKeyDown}
               >

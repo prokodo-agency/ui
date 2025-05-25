@@ -1,18 +1,17 @@
 jest.mock("./iconsMap", () => {
-  const mkSvg = (label: string) =>
-    function Svg(props: any) {
-      return (
-        <svg aria-hidden={props["aria-hidden"]} role={props.role} {...props}>
-          <text>{label}</text>
-        </svg>
-      )
-    }
+  const mkSvg = (label: string) => ({
+    default: (props: any) => (
+      <svg role={props.role} aria-hidden={props["aria-hidden"]} {...props}>
+        <text>{label}</text>
+      </svg>
+    ),
+  })
 
   return {
     ICONS: {
-      abacus_icon: () => Promise.resolve(mkSvg("abacus")),
-      absolute_icon: () => Promise.resolve(mkSvg("absolute")),
-      access_icon: () => Promise.resolve(mkSvg("access")),
+      AbacusIcon: () => Promise.resolve(mkSvg("abacus")),
+      AbsoluteIcon: () => Promise.resolve(mkSvg("absolute")),
+      AccessIcon: () => Promise.resolve(mkSvg("access")),
     },
   }
 })
@@ -25,7 +24,7 @@ describe("The common icon component", () => {
   it("should render a svg icon", async () => {
     render(<Icon name="AbacusIcon" />)
 
-    const svg = await screen.findByRole("presentation")
+    const svg = await screen.findByRole("presentation", { hidden: true })
     expect(svg).toBeInTheDocument()
   })
 
