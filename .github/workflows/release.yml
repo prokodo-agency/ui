@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    name: Build & Release
+    name: Version & Publish
     runs-on: ubuntu-latest
 
     permissions:
@@ -44,6 +44,20 @@ jobs:
 
       - name: 🛠 Build library
         run: pnpm run build
+
+      - name: 🧾 Version packages (if changeset exists)
+        run: pnpm changeset version || echo "No version changes"
+      
+      - name: 📦 Install updated deps if needed
+        run: pnpm install --frozen-lockfile
+
+      - name: ⬆️ Commit and push version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "ci: version bump"
+          git push
 
       - name: 🚀 Publish to npm
         run: pnpm publish --access public
