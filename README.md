@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="https://cdn.prokodo.com/prokodo_logo_1a3bb7867c/prokodo_logo_1a3bb7867c.webp" alt="prokodo logo" height="80" />
+  <a href="https://www.prokodo.com" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn.prokodo.com/prokodo_logo_1a3bb7867c/prokodo_logo_1a3bb7867c.webp" alt="prokodo – UI component library for React" height="58" />
+  </a>
 </p>
 <h1 align="center">prokodo UI (Beta)</h1>
 <h2 align="center">Empowering Digital Innovation</h2>
@@ -10,6 +12,7 @@
 [![CI](https://github.com/prokodo-agency/ui/actions/workflows/release.yml/badge.svg)](https://github.com/prokodo-agency/ui/actions/workflows/release.yml)
 [![License: BUSL-1.1](https://img.shields.io/badge/license-BUSL--1.1-blue.svg)](LICENSE)
 [![Storybook](https://img.shields.io/badge/storybook-ui.prokodo.com-ff4785?logo=storybook&logoColor=white)](https://ui.prokodo.com)
+[![bundlephobia](https://img.shields.io/bundlephobia/minzip/@prokodo/ui?label=bundle%20size&style=flat&color=blue)](https://bundlephobia.com/result?p=@prokodo/ui)
 
 ---
 
@@ -20,7 +23,7 @@
 - 🧩 **Component-rich**: 35+ reusable UI components
 - 🧪 **Reliable**: Fully tested with Jest and Testing Library
 - 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
-- 📦 **DReady-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
+- 📦 **Ready-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
 - 🧱 **Optimized for SSR**: Works great with Next.js and React Server Components
 
 ---
@@ -38,8 +41,8 @@ npm install @prokodo/ui
 ### 2. Use a component
 
 ```tsx
-import { Button, Accordion, Form } from '@prokodo/ui'
-import type { ButtonProps, AccordionProps, FormProps } from '@prokodo/ui'
+import { Button } from '@prokodo/ui'
+import type { ButtonProps } from '@prokodo/ui'
 
 export default function Example() {
   return <Button>Click me</Button>
@@ -113,3 +116,4 @@ pnpm run storybook:build
 This library is published under the Business Source License 1.1 (BUSL-1.1).
 
 © 2025 prokodo — All rights reserved.
+Visit us at [prokodo.com](https://www.prokodo.com).

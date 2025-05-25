@@ -9,7 +9,7 @@
     "composite": true,
     "noEmit": false
   },
-  "include": ["src/index.ts", "src/components/**/*"],
+  "include": ["src/index.ts", "src/components/**/*", "src/helpers/**/*", "src/hooks/**/*", "src/types"],
   "exclude": [
     "**/*.test.*",
     "**/*.stories.*",

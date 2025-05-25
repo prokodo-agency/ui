@@ -1,7 +1,20 @@
+import fs from "node:fs"
 import path from "node:path"
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import checker from "vite-plugin-checker"
+
+function getComponentEntries() {
+  const dir = path.resolve(__dirname, "src/components")
+  const entries: Record<string, string> = {}
+  fs.readdirSync(dir).forEach((name) => {
+    const entry = path.join(dir, name, "index.ts")
+    if (fs.existsSync(entry)) {
+      entries[name] = entry
+    }
+  })
+  return entries
+}
 
 export default defineConfig({
   plugins: [
@@ -37,13 +50,13 @@ export default defineConfig({
       "@hugeicons": path.resolve(
         __dirname,
         "node_modules/hugeicons-react/dist/esm/icons",
-      ), // ✅ add this
+      ),
     },
   },
   build: {
     sourcemap: false,
     lib: {
-      entry: "src/index.ts",
+      entry: path.resolve(__dirname, "src/index.ts"),
       name: "prokodo-ui",
       fileName: format => `index.${format}.js`,
       formats: ["es", "cjs"],
@@ -63,8 +76,16 @@ export default defineConfig({
         "@googlemaps/js-api-loader",
         "@lottiefiles/dotlottie-react",
       ],
+      input: {
+        index: path.resolve(__dirname, "src/index.ts"),
+        ...getComponentEntries() // see below
+      },
       output: {
         sourcemap: false,
+        dir: "dist",
+        entryFileNames: chunkInfo =>
+          chunkInfo.name === "index" ? "index.[format].js" : "components/[name].js",
+        chunkFileNames: "components/[name]-[hash].js",
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
