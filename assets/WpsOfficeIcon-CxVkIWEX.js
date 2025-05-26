@@ -1,0 +1,1 @@
+import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const r=o("WpsOfficeIcon",[["path",{d:"M13.5 14.5L15.5 18.5L22 5.5H15L12 11.5L8.5 18.5L2 5.5H9L10.5 8.5",stroke:"currentColor",key:"k0"}]]);export{r as default};

@@ -1,0 +1,1 @@
+import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const t=r("AlertCircleIcon",[["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k0"}],["path",{d:"M11.992 15H12.001",stroke:"currentColor",key:"k1"}],["path",{d:"M12 12L12 8",stroke:"currentColor",key:"k2"}]]);export{t as default};

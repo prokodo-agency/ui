@@ -1,0 +1,1 @@
+import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("PlusSignIcon",[["path",{d:"M12 4V20M20 12H4",stroke:"currentColor",key:"k0"}]]);export{e as default};

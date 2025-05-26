@@ -1,5 +1,0 @@
-import r from"./create-hugeicon-component-BLjPOeDr.js";import"./index-BKmLb0-U.js";import"./defaultAttributes-C6jiU18v.js";/**
- * @license hugeicons-react v0.2.0
- *
- * See the LICENSE file in the root directory of this source tree.
- */const p=r("SearchReplaceIcon",[["path",{d:"M17.5 17.5001L22 22.0001",stroke:"currentColor",key:"k0"}],["path",{d:"M20 11.0001C20 15.9707 15.9706 20.0001 11 20.0001C7.46628 20.0001 4.40822 17.9636 2.93552 15.0001M2 11.0001C2 6.02956 6.02944 2.00012 11 2.00012C14.5337 2.00012 17.5918 4.03669 19.0645 7.00012M19.0645 7.00012V2.00012M19.0645 7.00012H14.5M2.93552 15.0001L2.93552 20.0001M2.93552 15.0001L7.5 15.0001",stroke:"currentColor",key:"k1"}]]);export{p as default};

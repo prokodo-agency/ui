@@ -1,0 +1,1 @@
+import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const t=r("InternetIcon",[["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k0"}],["ellipse",{cx:"12",cy:"12",rx:"4",ry:"10",stroke:"currentColor",key:"k1"}],["path",{d:"M2 12H22",stroke:"currentColor",key:"k2"}]]);export{t as default};

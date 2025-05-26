@@ -1,0 +1,1 @@
+import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=o("BendToolIcon",[["circle",{cx:"19",cy:"4",r:"2",stroke:"currentColor",key:"k0"}],["circle",{cx:"5",cy:"20",r:"2",stroke:"currentColor",key:"k1"}],["path",{d:"M5 18C5 10 10 4 17 4",stroke:"currentColor",key:"k2"}]]);export{c as default};

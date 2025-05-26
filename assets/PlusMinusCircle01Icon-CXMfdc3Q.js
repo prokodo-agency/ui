@@ -1,0 +1,1 @@
+import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=r("PlusMinusCircle01Icon",[["path",{d:"M12 7.5V13.8636M15.5 10.6818H8.5M15.5 16.5H8.5",stroke:"currentColor",key:"k0"}],["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k1"}]]);export{c as default};

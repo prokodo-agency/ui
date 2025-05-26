@@ -1,0 +1,1 @@
+import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const r=o("WiseIcon",[["path",{d:"M11 22L19.0001 2H7.00008L9.5 6.5L5 11H12",stroke:"currentColor",key:"k0"}]]);export{r as default};

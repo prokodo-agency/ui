@@ -1,5 +1,0 @@
-import r from"./create-hugeicon-component-BLjPOeDr.js";import"./index-BKmLb0-U.js";import"./defaultAttributes-C6jiU18v.js";/**
- * @license hugeicons-react v0.2.0
- *
- * See the LICENSE file in the root directory of this source tree.
- */const c=r("GreaterThanCircleIcon",[["path",{d:"M10 8L13.3322 11.0203C14.2226 11.8273 14.2226 12.1727 13.3322 12.9797L10 16",stroke:"currentColor",key:"k0"}],["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k1"}]]);export{c as default};

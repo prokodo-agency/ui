@@ -1,0 +1,1 @@
+import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=r("CameraLensIcon",[["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k0"}],["circle",{cx:"12",cy:"12",r:"4",stroke:"currentColor",key:"k1"}],["path",{d:"M12 8H21M16 12V21M8 12V3M12 16H3",stroke:"currentColor",key:"k2"}]]);export{c as default};

@@ -1,0 +1,1 @@
+import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=r("SingLeftIcon",[["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k0"}],["circle",{cx:"10",cy:"16",r:"2",stroke:"currentColor",key:"k1"}],["path",{d:"M8.00897 9H8M16 9H15.991",stroke:"currentColor",key:"k2"}]]);export{c as default};

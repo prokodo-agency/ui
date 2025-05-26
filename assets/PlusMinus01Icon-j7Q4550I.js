@@ -1,0 +1,1 @@
+import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("PlusMinus01Icon",[["path",{d:"M12 3V17M19 10H5",stroke:"currentColor",key:"k0"}],["path",{d:"M19 21H5",stroke:"currentColor",key:"k1"}]]);export{e as default};
