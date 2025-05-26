@@ -3,6 +3,7 @@ import path from "node:path"
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react"
 import checker from "vite-plugin-checker"
+import pkg from "./package.json"
 
 function getComponentEntries() {
   const baseDir = path.resolve(__dirname, "src/components");
@@ -21,6 +22,9 @@ export default async () => {
   const { visualizer } = await import("rollup-plugin-visualizer");
 
   return defineConfig({
+    define: {
+      __PACKAGE_VERSION__: JSON.stringify(pkg.version),
+    },
     plugins: [
       react(),
       visualizer({

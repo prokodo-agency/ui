@@ -6,6 +6,8 @@ import type { IconProps, IconSize } from "./Icon.model"
 import type { IconName } from "./IconList"
 import type { FC } from "react"
 
+declare const __PACKAGE_VERSION__: string
+
 const bem = create(styles, "Icon")
 
 // ──────────────────────────────────────────────────────────
@@ -26,8 +28,7 @@ export const getIconSize = (s?: IconSize): number => {
 //  CDN helper
 // ──────────────────────────────────────────────────────────
 const urlFromName = (name: IconName) =>
-  // TODO: Make version dynamic
-  `https://cdn.jsdelivr.net/gh/prokodo/ui@v0.0.17/assets/icons/${name
+  `https://cdn.jsdelivr.net/gh/prokodo/ui@v${__PACKAGE_VERSION__}/assets/icons/${name
     .replace(/Icon$/, "")
     .replace(/([a-z])([A-Z])/g, "$1_$2")
     .toLowerCase()}_icon.svg`

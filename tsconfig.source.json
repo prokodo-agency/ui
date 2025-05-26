@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["."],
+  "include": [".", "package.json"],
   "exclude": [
     "node_modules",
     "next.config.js",

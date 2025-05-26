@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.18
+
+### Patch Changes
+
+- fix: Dynamic version for CDN based icons of Icon component
+
 ## 0.0.17
 
 ### Patch Changes
