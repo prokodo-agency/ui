@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("RecordIcon",[["circle",{cx:"12",cy:"12",r:"8",stroke:"currentColor",key:"k0"}]]);export{e as default};

@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const r=o("Pulse01Icon",[["path",{d:"M2 12H6L7.5 8L9.5 15L13 6L15.5 18L18 12H22",stroke:"currentColor",key:"k0"}]]);export{r as default};

@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("MoreHorizontalIcon",[["path",{d:"M11.9959 12H12.0049",stroke:"currentColor",key:"k0"}],["path",{d:"M17.9998 12H18.0088",stroke:"currentColor",key:"k1"}],["path",{d:"M5.99981 12H6.00879",stroke:"currentColor",key:"k2"}]]);export{e as default};

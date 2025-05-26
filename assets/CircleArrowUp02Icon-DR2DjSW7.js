@@ -1,1 +1,0 @@
-import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=r("CircleArrowUp02Icon",[["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k0"}],["path",{d:"M9.5 10.5C9.99153 9.9943 11.2998 8 12 8M14.5 10.5C14.0085 9.9943 12.7002 8 12 8M12 8V16",stroke:"currentColor",key:"k1"}]]);export{c as default};

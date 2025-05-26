@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("MultiplicationSignIcon",[["path",{d:"M18 6L12 12M12 12L6 18M12 12L18 18M12 12L6 6",stroke:"currentColor",key:"k0"}]]);export{e as default};

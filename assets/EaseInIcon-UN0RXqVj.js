@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const r=o("EaseInIcon",[["path",{d:"M21 4C21 4 14 20 3 20",stroke:"currentColor",key:"k0"}]]);export{r as default};

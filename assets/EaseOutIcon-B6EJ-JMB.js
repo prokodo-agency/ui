@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const r=o("EaseOutIcon",[["path",{d:"M3 20C3 20 10 4 21 4",stroke:"currentColor",key:"k0"}]]);export{r as default};

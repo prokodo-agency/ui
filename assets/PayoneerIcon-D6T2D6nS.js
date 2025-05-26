@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=o("PayoneerIcon",[["circle",{cx:"12",cy:"12",r:"9.5",stroke:"currentColor",key:"k0"}]]);export{c as default};

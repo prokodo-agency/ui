@@ -1,1 +1,0 @@
-import{c as t}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=t("TextAlignJustifyCenterIcon",[["path",{d:"M3 3H21",stroke:"currentColor",key:"k0"}],["path",{d:"M3 9H21",stroke:"currentColor",key:"k1"}],["path",{d:"M3 15H21",stroke:"currentColor",key:"k2"}],["path",{d:"M3 21H21",stroke:"currentColor",key:"k3"}]]);export{e as default};

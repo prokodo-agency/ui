@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const t=o("Time04Icon",[["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k0"}],["path",{d:"M9.5 9.5L12.9999 12.9996M16 8L11 13",stroke:"currentColor",key:"k1"}]]);export{t as default};

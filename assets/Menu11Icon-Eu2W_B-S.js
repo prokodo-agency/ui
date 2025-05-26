@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("Menu11Icon",[["path",{d:"M20 12L10 12",stroke:"currentColor",key:"k0"}],["path",{d:"M20 5L4 5",stroke:"currentColor",key:"k1"}],["path",{d:"M20 19L4 19",stroke:"currentColor",key:"k2"}]]);export{e as default};

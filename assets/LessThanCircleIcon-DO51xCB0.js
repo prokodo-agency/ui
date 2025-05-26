@@ -1,1 +1,0 @@
-import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=r("LessThanCircleIcon",[["path",{d:"M14 8L10.6678 11.0203C9.77741 11.8273 9.77741 12.1727 10.6678 12.9797L14 16",stroke:"currentColor",key:"k0"}],["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k1"}]]);export{c as default};

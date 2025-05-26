@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("GitCommitIcon",[["path",{d:"M12 3L12 8.5M12 21L12 15",stroke:"currentColor",key:"k0"}],["circle",{cx:"12",cy:"12",r:"3",stroke:"currentColor",key:"k1"}]]);export{e as default};

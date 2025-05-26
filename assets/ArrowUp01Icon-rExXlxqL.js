@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("ArrowUp01Icon",[["path",{d:"M18 15C18 15 13.5811 9.00001 12 9C10.4188 8.99999 6 15 6 15",stroke:"currentColor",key:"k0"}]]);export{e as default};

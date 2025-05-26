@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const r=o("SolidLine01Icon",[["path",{d:"M2.5 12L21.5002 12",stroke:"currentColor",key:"k0"}]]);export{r as default};

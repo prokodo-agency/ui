@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("GridIcon",[["path",{d:"M7 2V22",stroke:"currentColor",key:"k0"}],["path",{d:"M17 2V22",stroke:"currentColor",key:"k1"}],["path",{d:"M22 7L2 7",stroke:"currentColor",key:"k2"}],["path",{d:"M22 17L2 17",stroke:"currentColor",key:"k3"}]]);export{e as default};

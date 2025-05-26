@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("Tick02Icon",[["path",{d:"M5 14L8.5 17.5L19 6.5",stroke:"currentColor",key:"k0"}]]);export{e as default};

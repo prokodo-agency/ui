@@ -1,1 +1,0 @@
-import{c as e}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const t=e("EthereumEllipseIcon",[["path",{d:"M8 12L12 6L16 12M8 12L12 18L16 12M8 12L12 13.5L16 12",stroke:"currentColor",key:"k0"}],["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k1"}]]);export{t as default};

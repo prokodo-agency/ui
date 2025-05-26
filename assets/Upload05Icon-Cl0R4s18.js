@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("Upload05Icon",[["path",{d:"M12 5L12 15M12 5C11.2998 5 9.99153 6.9943 9.5 7.5M12 5C12.7002 5 14.0085 6.9943 14.5 7.5",stroke:"currentColor",key:"k0"}],["path",{d:"M5 19H19.0001",stroke:"currentColor",key:"k1"}]]);export{e as default};

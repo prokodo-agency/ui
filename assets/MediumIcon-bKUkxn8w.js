@@ -1,1 +1,0 @@
-import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=r("MediumIcon",[["circle",{cx:"6.5",cy:"12",r:"4.5",stroke:"currentColor",key:"k0"}],["ellipse",{cx:"15.5",cy:"12",rx:"2.5",ry:"4.5",stroke:"currentColor",key:"k1"}],["ellipse",{cx:"21",cy:"12",rx:"1",ry:"4.5",stroke:"currentColor",key:"k2"}]]);export{c as default};

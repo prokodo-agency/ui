@@ -1,1 +1,0 @@
-import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const o=r("ChartBubble02Icon",[["circle",{cx:"5",cy:"7",r:"3",stroke:"currentColor",key:"k0"}],["circle",{cx:"8",cy:"18",r:"4",stroke:"currentColor",key:"k1"}],["circle",{cx:"17",cy:"7",r:"5",stroke:"currentColor",key:"k2"}]]);export{o as default};

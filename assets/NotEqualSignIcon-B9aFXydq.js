@@ -1,1 +1,0 @@
-import{c as o}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=o("NotEqualSignIcon",[["path",{d:"M4 8H20",stroke:"currentColor",key:"k0"}],["path",{d:"M4 16H20",stroke:"currentColor",key:"k1"}],["path",{d:"M6 20L18 4",stroke:"currentColor",key:"k2"}]]);export{e as default};

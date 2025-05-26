@@ -1,1 +1,0 @@
-import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const e=r("ChartRingIcon",[["path",{d:"M9 9L5 5M16 12H22M12 16V22",stroke:"currentColor",key:"k0"}],["circle",{cx:"12",cy:"12",r:"4",stroke:"currentColor",key:"k1"}],["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k2"}]]);export{e as default};

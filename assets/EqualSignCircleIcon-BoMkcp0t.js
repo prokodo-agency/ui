@@ -1,1 +1,0 @@
-import{c as r}from"./create-hugeicon-component-BHumxRFO.js";import"./index-BKmLb0-U.js";const c=r("EqualSignCircleIcon",[["circle",{cx:"12",cy:"12",r:"10",stroke:"currentColor",key:"k0"}],["path",{d:"M8 9H16M8 15H16",stroke:"currentColor",key:"k1"}]]);export{c as default};
