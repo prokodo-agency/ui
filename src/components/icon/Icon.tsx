@@ -30,7 +30,8 @@ export const getIconSize = (s?: IconSize): number => {
 const urlFromName = (name: IconName) =>
   `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${__PACKAGE_VERSION__}/assets/icons/${name
     .replace(/Icon$/, "")
-    .replace(/([a-z])([A-Z])/g, "$1_$2")
+    .replace(/([a-z])([A-Z0-9])/g, "$1_$2")
+    .replace(/([0-9])([a-zA-Z])/g, "$1_$2")
     .toLowerCase()}_icon.svg`
 
 // ──────────────────────────────────────────────────────────

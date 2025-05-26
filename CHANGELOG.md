@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.20
+
+### Patch Changes
+
+- fix: Bugfix icon component
+
 ## 0.0.19
 
 ### Patch Changes
