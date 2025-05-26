@@ -9,8 +9,11 @@ import {
   isValidElement,
 } from "react"
 
+import { getIconSize } from "@/components/icon"
+import Cancel01Icon from "@/components/icon/loaders/Cancel01Icon"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
+
 
 import { Button } from "../button"
 import { Headline } from "../headline"
@@ -34,12 +37,9 @@ export const renderDrawerCloseButton = (
   <Button
     aria-label="Close dialog"
     color="info"
+    icon={<Cancel01Icon size={getIconSize("sm")} />}
     role="button"
     variant="text"
-    iconProps={{
-      name: "Cancel01Icon",
-      size: "sm",
-    }}
     onClick={onClose}
   />
 )

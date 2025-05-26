@@ -3,21 +3,24 @@ import {
   type FC,
   type MouseEvent,
   type KeyboardEvent,
+  type ReactElement,
   useMemo,
   useRef,
   useId,
+  isValidElement,
+  cloneElement,
 } from "react"
 
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
-import { Icon } from "../icon"
 import { Link } from "../link"
 import { Loading } from "../loading"
 
 import styles from "./Button.module.scss"
 
 import type { ButtonDefaultProps, ButtonProps } from "./Button.model"
+import type { IconProps } from "@/components/icon/Icon.model"
 
 const bem = create(styles, "Button")
 
@@ -28,7 +31,7 @@ export const Button: FC<ButtonProps> = ({
   id,
   fullWidth,
   color = "primary",
-  iconProps = {},
+  icon,
   loading,
   variant = "contained",
   className,
@@ -41,8 +44,7 @@ export const Button: FC<ButtonProps> = ({
   const labelRef = useRef<HTMLSpanElement | null>(null)
   const ariaLabelId = `Button-${uniqueId}`
   const isOutlined = variant === "outlined"
-  const iconName = iconProps?.name
-  const isIconOnly = iconName && !(props as ButtonDefaultProps)?.title
+  const isIconOnly = icon !== undefined && !(props as ButtonDefaultProps)?.title
   const iconModifier = useMemo(
     () => ({
       "icon-only": Boolean(isIconOnly),
@@ -52,9 +54,12 @@ export const Button: FC<ButtonProps> = ({
 
   const renderInnerContent = () => (
     <span ref={labelRef} aria-labelledby={ariaLabelId} className={bem("title")}>
-      {iconName && (
-        <Icon className={bem("icon", iconModifier)} {...iconProps} />
-      )}
+      {icon !== undefined && isValidElement(icon) &&
+        cloneElement(icon as ReactElement<IconProps>, {
+          className: bem("icon", iconModifier, icon?.props?.className),
+          size: icon?.props?.size ?? 20,
+        })
+      }
       {(props as ButtonDefaultProps)?.title}
     </span>
   )

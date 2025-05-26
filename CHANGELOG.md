@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.15
+
+### Patch Changes
+
+- Refactored icon handling for optimal performance, memory usage, and flexibility in consuming applications (e.g., Next.js). This enables dynamic icon loading without triggering excessive module preloading or memory leaks during build.
+
 ## 0.0.14
 
 ### Patch Changes

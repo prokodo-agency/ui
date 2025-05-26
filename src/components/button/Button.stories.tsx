@@ -1,4 +1,7 @@
+import ArrowRight01Icon from "@/components/icon/loaders/ArrowRight01Icon"
+
 import { Button } from "./Button"
+
 
 import type { Meta, StoryObj } from "@storybook/react"
 
@@ -43,9 +46,7 @@ export const Default: Story = {
     title: "Button",
     variant: "contained",
     color: "primary",
-    iconProps: {
-      name: "ArrowRight01Icon",
-    },
+    icon: <ArrowRight01Icon />,
   },
 }
 
@@ -58,8 +59,6 @@ export const WithLink: Story = {
       href: "#",
       target: "_blank",
     },
-    iconProps: {
-      name: "ArrowRight01Icon",
-    },
+    icon: <ArrowRight01Icon />,
   },
 }

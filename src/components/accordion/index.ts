@@ -3,4 +3,5 @@ export type {
   AccordionProps,
   AccordionItem,
   AccordionAction,
+  AccordionIconOverride,
 } from "./Accordion.model"
