@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.19
+
+### Patch Changes
+
+- fix: Hotfix Icon component file path
+
 ## 0.0.18
 
 ### Patch Changes
