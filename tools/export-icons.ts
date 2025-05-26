@@ -5,7 +5,7 @@ import * as walk from "acorn-walk"
 
 const ICONS_DIR = path.resolve("node_modules/hugeicons-react/dist/esm/icons")
 const OUTPUT_DIR = path.resolve("assets/icons")
-const TYPES_PATH = path.resolve("src/components/icon/Icon-list.ts")
+const TYPES_PATH = path.resolve("src/components/icon/IconList.ts")
 
 await mkdir(OUTPUT_DIR, { recursive: true })
 

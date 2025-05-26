@@ -2,8 +2,8 @@ import { create } from "@/helpers/bem"
 
 import styles from "./Icon.module.scss"
 
-import type { IconName } from "./Icon-list"
 import type { IconProps, IconSize } from "./Icon.model"
+import type { IconName } from "./IconList"
 import type { FC } from "react"
 
 const bem = create(styles, "Icon")
@@ -27,7 +27,7 @@ export const getIconSize = (s?: IconSize): number => {
 // ──────────────────────────────────────────────────────────
 const urlFromName = (name: IconName) =>
   // TODO: Make version dynamic
-  `https://cdn.jsdelivr.net/gh/prokodo/ui@v0.0.16/assets/icons/${name
+  `https://cdn.jsdelivr.net/gh/prokodo/ui@v0.0.17/assets/icons/${name
     .replace(/Icon$/, "")
     .replace(/([a-z])([A-Z])/g, "$1_$2")
     .toLowerCase()}_icon.svg`
@@ -43,10 +43,10 @@ export const Icon: FC<IconProps> = ({ name, size, label, className = "", ...rest
   return (
     <img
       alt={label ?? ""}
-      aria-hidden={label ? undefined : "true"}
+      aria-hidden={typeof label === "string" ? undefined : "true"}
       className={bem(undefined, undefined, className)}
       height={sizePx}
-      role={label ? "img" : "presentation"}
+      role={typeof label === "string" ? "img" : "presentation"}
       src={urlFromName(name)}
       width={sizePx}
       {...rest}

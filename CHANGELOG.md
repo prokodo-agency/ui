@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.17
+
+### Patch Changes
+
+- fix: consistent casing for Icon-list import
+
 ## 0.0.16
 
 ### Patch Changes

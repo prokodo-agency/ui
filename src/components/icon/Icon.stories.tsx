@@ -1,5 +1,5 @@
 import { Icon } from "./Icon"
-import { ICON_NAMES } from "./Icon-list"
+import { ICON_NAMES } from "./IconList"
 
 import type { Meta, StoryObj } from "@storybook/react"
 

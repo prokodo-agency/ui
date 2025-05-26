@@ -6,4 +6,4 @@ export type {
 } from "./Icon.model"
 export type {
   IconName
-} from "./Icon-list"
+} from "./IconList"

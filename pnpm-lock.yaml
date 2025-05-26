@@ -20,9 +20,6 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
-      hugeicons-react:
-        specifier: ^0.3.0
-        version: 0.3.0(react@19.1.0)
       react:
         specifier: 19.1.0
         version: 19.1.0
@@ -4112,11 +4109,6 @@ packages:
   https-proxy-agent@5.0.1:
     resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
     engines: {node: '>= 6'}
-
-  hugeicons-react@0.3.0:
-    resolution: {integrity: sha512-znmC+uX7xVqcIs0q09LvwEvJkjX0U3xgT05BSiRV19farS4lPONOKjYT0JkcQG5cvfV0rXHSEAEVNjbHAu81rg==}
-    peerDependencies:
-      react: '>=16.0.0'
 
   human-id@4.1.1:
     resolution: {integrity: sha512-3gKm/gCSUipeLsRYZbbdA1BD83lBoWUkZ7G9VFrhWPAU76KwYo5KR8V28bpoPm/ygy0x5/GCbpRQdY7VLYCoIg==}
@@ -11148,10 +11140,6 @@ snapshots:
       debug: 4.4.1
     transitivePeerDependencies:
       - supports-color
-
-  hugeicons-react@0.3.0(react@19.1.0):
-    dependencies:
-      react: 19.1.0
 
   human-id@4.1.1: {}
 

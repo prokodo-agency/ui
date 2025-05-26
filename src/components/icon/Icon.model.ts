@@ -1,4 +1,4 @@
-import type { IconName } from "./Icon-list"
+import type { IconName } from "./IconList"
 import type { Color } from "@/types/colors"
 import type { Variants } from "@/types/variants"
 import type { AriaAttributes, AriaRole } from "react"
