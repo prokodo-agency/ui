@@ -1,0 +1,5 @@
+import r from"./create-hugeicon-component-BLjPOeDr.js";import"./index-BKmLb0-U.js";import"./defaultAttributes-C6jiU18v.js";/**
+ * @license hugeicons-react v0.2.0
+ *
+ * See the LICENSE file in the root directory of this source tree.
+ */const k=r("LeftToRightListBulletIcon",[["path",{d:"M8 5L20 5",stroke:"currentColor",key:"k0"}],["path",{d:"M4 5H4.00898",stroke:"currentColor",key:"k1"}],["path",{d:"M4 12H4.00898",stroke:"currentColor",key:"k2"}],["path",{d:"M4 19H4.00898",stroke:"currentColor",key:"k3"}],["path",{d:"M8 12L20 12",stroke:"currentColor",key:"k4"}],["path",{d:"M8 19L20 19",stroke:"currentColor",key:"k5"}]]);export{k as default};

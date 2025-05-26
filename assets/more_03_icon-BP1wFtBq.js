@@ -1,5 +1,0 @@
-import{y as r}from"./create-hugeicon-component-BA1CRAwo.js";import"./index-BKmLb0-U.js";/**
- * @license hugeicons-react v0.2.0
- *
- * See the LICENSE file in the root directory of this source tree.
- */const o=r("More03Icon",[["rect",{x:"18",y:"18",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k0"}],["rect",{x:"18",y:"10.5",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k1"}],["rect",{x:"18",y:"3",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k2"}],["rect",{x:"10.5",y:"18",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k3"}],["rect",{x:"10.5",y:"10.5",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k4"}],["rect",{x:"10.5",y:"3",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k5"}],["rect",{x:"3",y:"18",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k6"}],["rect",{x:"3",y:"10.5",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k7"}],["rect",{x:"3",y:"3",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k8"}]]);export{o as default};

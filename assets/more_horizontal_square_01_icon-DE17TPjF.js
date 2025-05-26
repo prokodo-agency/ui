@@ -1,0 +1,5 @@
+import r from"./create-hugeicon-component-BLjPOeDr.js";import"./index-BKmLb0-U.js";import"./defaultAttributes-C6jiU18v.js";/**
+ * @license hugeicons-react v0.2.0
+ *
+ * See the LICENSE file in the root directory of this source tree.
+ */const i=r("MoreHorizontalSquare01Icon",[["rect",{x:"18",y:"10.5",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k0"}],["rect",{x:"10.5",y:"10.5",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k1"}],["rect",{x:"3",y:"10.5",width:"3",height:"3",rx:"1",stroke:"currentColor",key:"k2"}]]);export{i as default};
