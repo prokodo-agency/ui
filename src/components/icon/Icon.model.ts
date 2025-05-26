@@ -1,9 +1,7 @@
-import type { ICONS } from "./iconsMap"
+import type { IconName } from "./icons"
 import type { Color } from "@/types/colors"
 import type { Variants } from "@/types/variants"
-import type { AriaAttributes, AriaRole } from "react"
-
-export type IconName = keyof typeof ICONS
+import type { AriaAttributes, AriaRole, SuspenseProps } from "react"
 
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | number
 
@@ -16,4 +14,5 @@ export type IconProps = {
   className?: string
   role?: AriaRole
   onClick?: () => void
+  suspenseProps?: SuspenseProps
 } & AriaAttributes

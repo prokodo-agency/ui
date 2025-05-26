@@ -1,6 +1,6 @@
 import fs from "node:fs"
 import path from "node:path"
-import { defineConfig } from "vite"
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react"
 import checker from "vite-plugin-checker"
 
@@ -10,89 +10,97 @@ function getComponentEntries() {
   fs.readdirSync(baseDir).forEach((name) => {
     const indexFile = path.join(baseDir, name, "index.ts");
     if (fs.existsSync(indexFile)) {
-      const key = `components/${name}/index`; // 👈 wichtig!
+      const key = `components/${name}/index`;
       entries[key] = indexFile;
     }
   });
   return entries;
 }
 
-export default defineConfig({
-  plugins: [
-    react(),
-    checker({
-      typescript: {
-        tsconfigPath: path.resolve(__dirname, "tsconfig.typecheck.json"),
+export default async () => {
+  const { visualizer } = await import("rollup-plugin-visualizer");
+
+  return defineConfig({
+    plugins: [
+      react(),
+      visualizer({
+        open: !process.env.CI || process.env.CI === "false",
+        filename: "stats.html",
+      }),
+      checker({
+        typescript: {
+          tsconfigPath: path.resolve(__dirname, "tsconfig.typecheck.json"),
+        },
+      }),
+    ],
+    assetsInclude: ["**/*.webp"],
+    css: {
+      modules: {
+        // Allows for BEM-friendly CSS module naming
+        generateScopedName: "[local]",
       },
-    }),
-  ],
-  assetsInclude: ["**/*.webp"],
-  css: {
-    modules: {
-      // Allows for BEM-friendly CSS module naming
-      generateScopedName: "[local]",
-    },
-    preprocessorOptions: {
-      scss: {
-        includePaths: [path.resolve(__dirname, 'src')],
-        additionalData: `
-          @use "@/styles/designsystem/functions.scss" as *;
-          @use "@/styles/designsystem/keyframes.scss" as *;
-          @use "@/styles/designsystem/mixins.scss" as *;
-          @use "@/styles/designsystem/config.scss" as *;
-          @use "@/styles/ui/mixins.scss" as *;
-        `,
-      },
-    },
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-      "@hugeicons": path.resolve(
-        __dirname,
-        "node_modules/hugeicons-react/dist/esm/icons",
-      ),
-    },
-  },
-  build: {
-    sourcemap: false,
-    lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "prokodo-ui",
-      fileName: format => `index.${format}.js`,
-      formats: ["es"],
-    },
-    rollupOptions: {
-      // Avoid bundling peer dependencies
-      external: [
-        "react",
-        "react-dom",
-        "react-bem-helper",
-        "dayjs",
-        "@mui/base",
-        "react-markdown",
-        "remark-gfm",
-        "remark-breaks",
-        /^hugeicons-react\/dist\/esm\/icons\/.*\.js$/,
-        "@googlemaps/js-api-loader",
-        "@lottiefiles/dotlottie-react",
-      ],
-      input: {
-        index: path.resolve(__dirname, "src/index.ts"),
-        ...getComponentEntries() // see below
-      },
-      output: {
-        sourcemap: false,
-        dir: "dist",
-        preserveModules: true,
-        preserveModulesRoot: "src",
-        entryFileNames: "[name].js",
-        chunkFileNames: "[name].js",
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
+      preprocessorOptions: {
+        scss: {
+          includePaths: [path.resolve(__dirname, 'src')],
+          additionalData: `
+            @use "@/styles/designsystem/functions.scss" as *;
+            @use "@/styles/designsystem/keyframes.scss" as *;
+            @use "@/styles/designsystem/mixins.scss" as *;
+            @use "@/styles/designsystem/config.scss" as *;
+            @use "@/styles/ui/mixins.scss" as *;
+          `,
         },
       },
     },
-  },
-})
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+        "@hugeicons": path.resolve(
+          __dirname,
+          "node_modules/hugeicons-react/dist/esm/icons",
+        ),
+      },
+    },
+    build: {
+      sourcemap: false,
+      lib: {
+        entry: path.resolve(__dirname, "src/index.ts"),
+        name: "prokodo-ui",
+        fileName: format => `index.${format}.js`,
+        formats: ["es"],
+      },
+      rollupOptions: {
+        // Avoid bundling peer dependencies
+        external: [
+          "react",
+          "react-dom",
+          "react-bem-helper",
+          "dayjs",
+          "@mui/base",
+          "react-markdown",
+          "remark-gfm",
+          "remark-breaks",
+          /^hugeicons-react\/dist\/esm\/icons\/.*\.js$/,
+          "@googlemaps/js-api-loader",
+          "@lottiefiles/dotlottie-react",
+        ],
+        input: {
+          index: path.resolve(__dirname, "src/index.ts"),
+          ...getComponentEntries()
+        },
+        output: {
+          sourcemap: false,
+          dir: "dist",
+          preserveModules: true,
+          preserveModulesRoot: "src",
+          entryFileNames: "[name].js",
+          chunkFileNames: "[name].js",
+          globals: {
+            react: "React",
+            "react-dom": "ReactDOM",
+          },
+        },
+      },
+    },
+ });
+};

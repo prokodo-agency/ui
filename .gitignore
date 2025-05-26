@@ -12,12 +12,10 @@ cypress/screenshots/
 cypress/videos/
 .eslintcache
 
-# next.js
-/.next/
-/out/
-
 # production
 /build
+.vite-inspect
+stats.html
 
 # misc
 .DS_Store

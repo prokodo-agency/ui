@@ -1,3 +1,7 @@
+jest.mock("@/components/icon/iconLoader", () => ({
+  getIconLoader: () => null
+}))
+
 import { expect } from "@jest/globals"
 
 import { render } from "@/tests"

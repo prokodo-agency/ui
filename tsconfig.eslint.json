@@ -11,5 +11,5 @@
     "src/tests/**/*.ts",
     "src/tests/**/*.tsx"
   ],
-  "exclude": ["node_modules", "out", "dist", "coverage"]
+  "exclude": ["node_modules", "out", "dist", "coverage", "src/vendor/hugeicons/**"]
 }

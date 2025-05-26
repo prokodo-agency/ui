@@ -1,24 +1,15 @@
-jest.mock("./iconsMap", () => {
-  const mkSvg = (label: string) => ({
-    default: (props: any) => (
-      <svg aria-hidden={props["aria-hidden"]} role={props.role} {...props}>
-        <text>{label}</text>
-      </svg>
-    ),
-  })
-
-  return {
-    ICONS: {
-      AbacusIcon: () => Promise.resolve(mkSvg("abacus")),
-      AbsoluteIcon: () => Promise.resolve(mkSvg("absolute")),
-      AccessIcon: () => Promise.resolve(mkSvg("access")),
-    },
-  }
-})
+jest.mock("@/components/icon/iconLoader", () => ({
+  getIconLoader: () => () =>
+    Promise.resolve({
+      default: ((props) => <svg {...props} />) as FC<Record<string, unknown>>,
+    }),
+}))
 
 import { render, screen } from "@/tests"
 
 import { Icon } from "./Icon"
+
+import type { FC } from "react"
 
 describe("The common icon component", () => {
   it("should render a svg icon", async () => {

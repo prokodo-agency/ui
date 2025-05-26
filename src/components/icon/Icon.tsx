@@ -1,25 +1,21 @@
+"use client"
 import {
   lazy,
   Suspense,
   useMemo,
   type FC,
+  type ComponentType,
 } from "react"
 
 import { create } from "@/helpers/bem"
 
 import styles from "./Icon.module.scss"
-import { ICONS } from "./iconsMap"
+import { getIconLoader } from "./iconLoader"
+
 
 import type { IconProps, IconSize } from "./Icon.model"
 
 const bem = create(styles, "Icon")
-
-const FallbackIcon: FC = () => (
-  <svg height="24" viewBox="0 0 24 24" width="24">
-    <circle cx="12" cy="12" r="10" stroke="black" strokeWidth="2" />
-    <line stroke="black" strokeWidth="2" x1="6" x2="18" y1="6" y2="18" />
-  </svg>
-)
 
 export const getIconSize = (size?: IconSize): number => {
   switch (size) {
@@ -38,11 +34,6 @@ export const getIconSize = (size?: IconSize): number => {
   }
 }
 
-const getIconLoader = (name: string) => {
-  const loader = ICONS[name]
-  return typeof loader === "function" ? loader() : Promise.resolve({ default: FallbackIcon })
-}
-
 export const Icon: FC<IconProps> = ({
   name,
   size,
@@ -50,32 +41,32 @@ export const Icon: FC<IconProps> = ({
   className,
   role = "presentation",
   "aria-hidden": ariaHidden = role === "presentation" ? "true" : undefined,
+  suspenseProps,
   ...props
 }) => {
-  const LazyIcon = useMemo(
-    () =>
-      lazy(async () => {
-        const module = await getIconLoader(name as string)
-        return { default: module.default }
-      }),
-    [name]
-  )
+  const LazyIcon = useMemo<ComponentType<Partial<IconProps>> | null>(() => {
+    const loader = getIconLoader(name as string)
+    return loader ? lazy(loader) : null
+  }, [name])
 
-  return (
-    <Suspense fallback={<FallbackIcon />}>
+  const sizePx = getIconSize(size)
+
+  return LazyIcon ? (
+    <Suspense
+      fallback={<span style={{ width: sizePx, height: sizePx, display: "inline-block" }} />}
+      {...suspenseProps}
+    >
       <LazyIcon
         aria-hidden={ariaHidden}
         color={color}
         name={name}
         role={role}
-        size={getIconSize(size)}
+        size={sizePx}
         {...props}
-        className={bem(
-          undefined,
-          typeof color === "string" ? { [color]: true } : undefined,
-          className
-        )}
+        className={bem(undefined, typeof color === "string" ? { [color]: true } : undefined, className)}
       />
     </Suspense>
+  ) : (
+    <span style={{ width: sizePx, height: sizePx, display: "inline-block" }} />
   )
 }

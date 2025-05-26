@@ -1,6 +1,7 @@
-import type { StorybookConfig } from "@storybook/react"
+import { mergeConfig } from "vite"
+import path from "path"
 
-const config: StorybookConfig = {
+const config = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(tsx|ts)"],
   staticDirs: ["../src/assets"],
 
@@ -18,7 +19,15 @@ const config: StorybookConfig = {
       builder: "@storybook/builder-vite"
     },
   },
-
+  viteFinal: async (config) => {
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "../src"),
+        },
+      },
+    })
+  },
   docs: {},
   env: { STORYBOOK: "true" },
   typescript: { reactDocgen: "react-docgen-typescript" },

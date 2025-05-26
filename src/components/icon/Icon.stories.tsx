@@ -1,6 +1,5 @@
-import * as HugeIcons from "hugeicons-react"
-
 import { Icon } from "./Icon"
+import { Icons } from "./icon-list"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
@@ -14,7 +13,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     name: {
-      options: [undefined, ...Object.keys(HugeIcons)],
+      options: [undefined, ...Icons],
       control: { type: "select" },
     },
     color: {

@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.12
+
+### Patch Changes
+
+- Improved the Icon component by introducing dynamic loading via `getIconLoader`. This enables better tree-shaking and significantly reduces bundle size by avoiding eager loading of the entire icon set. Supports both Vite (using `import.meta.glob`) and fallback environments like Jest or Storybook using `import()`. Also improves compatibility with SSR and CI environments.
+
 ## 0.0.11
 
 ### Patch Changes
