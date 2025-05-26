@@ -1,0 +1,5 @@
+// Auto-generated loader for BlackHoleIcon
+import type { FC } from "react"
+import type { IconProps } from "../Icon.model"
+import Component from "../../../vendor/hugeicons/black_hole_icon"
+export default Component as FC<IconProps>

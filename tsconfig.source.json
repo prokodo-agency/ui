@@ -18,6 +18,7 @@
     "coverage/",
     "src/tests",
     "**/*.test.*",
-    "jest.*"
+    "jest.*",
+    "src/vendor/hugeicons/*.js"
   ]
 }

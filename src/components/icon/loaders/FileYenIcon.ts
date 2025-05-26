@@ -1,0 +1,5 @@
+// Auto-generated loader for FileYenIcon
+import type { FC } from "react"
+import type { IconProps } from "../Icon.model"
+import Component from "../../../vendor/hugeicons/file_yen_icon"
+export default Component as FC<IconProps>

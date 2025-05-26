@@ -1,5 +1,4 @@
 import { forwardRef, createElement } from "react"
-
 import defaultAttributes from "./defaultAttributes"
 
 export type IconProps = {

@@ -1,7 +1,7 @@
-jest.mock("@/components/icon/iconLoader", () => ({
+jest.mock("@/components/icon/getIconLoader", () => ({
   getIconLoader: () => () =>
     Promise.resolve({
-      default: ((props) => <svg {...props} />) as FC<Record<string, unknown>>,
+      default: ((props) => <svg {...props} />) as FC<SVGProps<SVGSVGElement>>,
     }),
 }))
 
@@ -9,7 +9,7 @@ import { render, screen } from "@/tests"
 
 import { Icon } from "./Icon"
 
-import type { FC } from "react"
+import type { FC, SVGProps } from "react"
 
 describe("The common icon component", () => {
   it("should render a svg icon", async () => {

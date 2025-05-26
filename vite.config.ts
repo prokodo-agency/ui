@@ -80,10 +80,13 @@ export default async () => {
           "react-markdown",
           "remark-gfm",
           "remark-breaks",
-          /^\.?\.?\/vendor\/hugeicons\/.*\.js$/,
+          /^\.?\.?\/vendor\/hugeicons\/.*\.(js|ts)$/,
           "@googlemaps/js-api-loader",
           "@lottiefiles/dotlottie-react",
         ],
+        treeshake: {
+          moduleSideEffects: false,
+        },
         input: {
           index: path.resolve(__dirname, "src/index.ts"),
           ...getComponentEntries()

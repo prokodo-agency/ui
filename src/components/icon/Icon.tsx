@@ -9,11 +9,11 @@ import {
 
 import { create } from "@/helpers/bem"
 
+import { getIconLoader } from "./getIconLoader"
 import styles from "./Icon.module.scss"
-import { getIconLoader } from "./iconLoader"
-
 
 import type { IconProps, IconSize } from "./Icon.model"
+import type { IconName } from "./icons"
 
 const bem = create(styles, "Icon")
 
@@ -45,7 +45,7 @@ export const Icon: FC<IconProps> = ({
   ...props
 }) => {
   const LazyIcon = useMemo<ComponentType<Partial<IconProps>> | null>(() => {
-    const loader = getIconLoader(name as string)
+    const loader = getIconLoader(name as IconName)
     return loader ? lazy(loader) : null
   }, [name])
 

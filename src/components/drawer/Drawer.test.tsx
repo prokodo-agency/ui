@@ -1,4 +1,4 @@
-jest.mock("@/components/icon/iconLoader", () => ({
+jest.mock("@/components/icon/getIconLoader", () => ({
   getIconLoader: () => null
 }))
 

@@ -9,12 +9,12 @@
     "composite": true,
     "noEmit": false
   },
-  "include": ["src/index.ts", "src/components/**/*", "src/helpers/**/*", "src/hooks/**/*", "src/types"],
+  "include": ["src/index.ts", "src/components/**/*", "src/helpers/**/*", "src/hooks/**/*", "src/types", "src/vendor/hugeicons/**/*"],
   "exclude": [
     "**/*.test.*",
     "**/*.stories.*",
     "**/*.spec.*",
     "node_modules",
-    "dist"
+    "dist",
   ]
 }

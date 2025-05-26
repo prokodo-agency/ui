@@ -21,7 +21,8 @@ export default [
       "**/*.scss",
       "jest.d.ts",
       "postcss.config.js",
-      "src/vendor/hugeicons/**"
+      "src/vendor/hugeicons/**",
+      "src/components/icon/loaders/"
     ],
   },
   {
