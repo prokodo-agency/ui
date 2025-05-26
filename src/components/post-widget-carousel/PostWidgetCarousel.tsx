@@ -8,9 +8,6 @@ import {
   useState,
 } from "react"
 
-import { getIconSize } from "@/components/icon"
-import ArrowLeft01Icon from "@/components/icon/loaders/ArrowLeft01Icon"
-import ArrowRight01Icon from "@/components/icon/loaders/ArrowRight01Icon"
 import { create } from "@/helpers/bem"
 
 import { Button } from "../button"
@@ -130,14 +127,20 @@ export const PostWidgetCarousel: FC<PostWidgetCarouselProps> = memo(
                   aria-label="Last category"
                   className={bem("carousel__button")}
                   color="primary"
-                  icon={<ArrowLeft01Icon size={getIconSize("sm")}/>}
+                  iconProps={{
+                    name: "ArrowLeft01Icon",
+                    size: "sm",
+                  }}
                   onClick={() => ref.current?.slidePrev()}
                 />
                 <Button
                   aria-label="Next category"
                   className={bem("carousel__button")}
                   color="primary"
-                  icon={<ArrowRight01Icon size={getIconSize("sm")}/>}
+                  iconProps={{
+                    name: "ArrowRight01Icon",
+                    size: "sm",
+                  }}
                   onClick={() => ref.current?.slideNext()}
                 />
               </div>

@@ -5,5 +5,5 @@ export type {
   IconSize,
 } from "./Icon.model"
 export type {
-  IconName,
-} from "./icons"
+  IconName
+} from "./Icon-list"

@@ -13,10 +13,6 @@ import {
   useRef,
 } from "react"
 
-
-import { getIconSize } from "@/components/icon"
-import ArrowLeft01Icon from "@/components/icon/loaders/ArrowLeft01Icon"
-import ArrowRight01Icon from "@/components/icon/loaders/ArrowRight01Icon"
 import { create } from "@/helpers/bem"
 
 import { Button } from "../button"
@@ -320,8 +316,12 @@ export const Carousel: FC<CarouselProps> = ({
           <Button
             aria-label="Swipe one slide backwards"
             className={bem("button", undefined, classNameButtons)}
-            icon={<ArrowLeft01Icon color="white" size={getIconSize("md")}/>}
             variant="outlined"
+            iconProps={{
+              name: "ArrowLeft01Icon",
+              size: "md",
+              color: "white"
+            }}
             onClick={() => slide(PREV)}
           />
         )}
@@ -330,8 +330,12 @@ export const Carousel: FC<CarouselProps> = ({
           <Button
             aria-label="Swipe one slide forwards"
             className={bem("button", undefined, classNameButtons)}
-            icon={<ArrowRight01Icon color="white" size={getIconSize("md")}/>}
             variant="outlined"
+            iconProps={{
+              name: "ArrowRight01Icon",
+              size: "md",
+              color: "white"
+            }}
             onClick={() => slide(NEXT)}
           />
         )}

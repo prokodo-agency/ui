@@ -1,5 +1,0 @@
-// Auto-generated loader for PiCircleIcon
-import type { FC } from "react"
-import type { IconProps } from "../Icon.model"
-import Component from "../../../vendor/hugeicons/pi_circle_icon"
-export default Component as FC<IconProps>

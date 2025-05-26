@@ -10,8 +10,6 @@ import {
 
 import { Button, type ButtonProps } from "@/components/button"
 import { Headline } from "@/components/headline"
-import { getIconSize } from "@/components/icon"
-import Cancel01Icon from "@/components/icon/loaders/Cancel01Icon"
 import { create } from "@/helpers/bem"
 
 import styles from "./Dialog.module.scss"
@@ -134,9 +132,12 @@ export const Dialog: FC<DialogProps> = ({
                 <Button
                   inert
                   color="inherit"
-                  icon={<Cancel01Icon size={getIconSize("sm")} />}
                   tabIndex={-1}
                   variant="text"
+                  iconProps={{
+                    name: "Cancel01Icon",
+                    size: "sm",
+                  }}
                 />
               </div>
             )}

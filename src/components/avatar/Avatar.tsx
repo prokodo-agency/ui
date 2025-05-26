@@ -1,13 +1,11 @@
 "use client"
 import { type FC, useMemo, useCallback } from "react"
 
-import UserIcon from "@/components/icon/loaders/UserIcon"
 import { create } from "@/helpers/bem"
 
-import { getIconSize } from "../icon"
+import { Icon, getIconSize } from "../icon"
 import { Image } from "../image"
 import { Link } from "../link"
-
 
 import styles from "./Avatar.module.scss"
 
@@ -21,7 +19,6 @@ export const Avatar: FC<AvatarProps> = ({
   size = "sm",
   image,
   redirect,
-  iconOverride,
   ...props
 }) => {
   const variantModifier = useMemo(
@@ -56,8 +53,8 @@ export const Avatar: FC<AvatarProps> = ({
             className={bem("image", undefined, image.className)}
             tabIndex={0}
           />
-        ) : iconOverride ?? (
-          <UserIcon
+        ) : (
+          <Icon
             className={bem("icon", variantModifier)}
             name="UserIcon"
             size={getIconSize(size) * 2}
@@ -68,7 +65,7 @@ export const Avatar: FC<AvatarProps> = ({
         )}
       </div>
     ),
-    [sizeModifier, variantModifier, className, image, variant, size, iconOverride, props],
+    [sizeModifier, variantModifier, className, image, variant, size, props],
   )
 
   if (redirect) {

@@ -1,6 +1,6 @@
 // Auto-generated, do not edit manually.
 
-export const Icons = [
+export const ICON_NAMES =[
   "AbacusIcon",
   "AbsoluteIcon",
   "AccelerationIcon",
@@ -1813,7 +1813,6 @@ export const Icons = [
   "InboxUnreadIcon",
   "InboxUploadIcon",
   "IncognitoIcon",
-  "IndexIcon",
   "IndiaGateIcon",
   "Inequality01Icon",
   "Inequality02Icon",
@@ -4127,4 +4126,6 @@ export const Icons = [
   "ZoomInAreaIcon",
   "ZoomOutAreaIcon",
   "ZoomSquareIcon",
-]
+] as const
+
+export type IconName = typeof ICON_NAMES[number]

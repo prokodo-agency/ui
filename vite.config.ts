@@ -80,7 +80,7 @@ export default async () => {
           "react-markdown",
           "remark-gfm",
           "remark-breaks",
-          /^\.?\.?\/vendor\/hugeicons\/.*\.(js|ts)$/,
+          "hugeicons-react",
           "@googlemaps/js-api-loader",
           "@lottiefiles/dotlottie-react",
         ],

@@ -1,36 +1,41 @@
-jest.mock("@/components/icon/getIconLoader", () => ({
-  getIconLoader: () => () =>
-    Promise.resolve({
-      default: ((props) => <svg {...props} />) as FC<SVGProps<SVGSVGElement>>,
-    }),
-}))
-
 import { render, screen } from "@/tests"
 
 import { Icon } from "./Icon"
 
-import type { FC, SVGProps } from "react"
-
 describe("The common icon component", () => {
-  it("should render a svg icon", async () => {
+  it("renders a decorative <img>", () => {
     render(<Icon name="AbacusIcon" />)
 
-    const svg = await screen.findByRole("presentation", { hidden: true })
-    expect(svg).toBeInTheDocument()
+    // „presentation“ + hidden, weil aria-hidden="true"
+    const img = screen.getByRole("presentation", { hidden: true })
+
+    expect(img).toBeInTheDocument()
+    expect(img.tagName).toBe("IMG")
+    expect(img).toHaveAttribute("src", expect.stringContaining("abacus_icon.svg"))
+    expect(img).toHaveAttribute("aria-hidden", "true")
   })
 
-  it("should render with default accessibility attributes", async () => {
-    render(<Icon name="AbsoluteIcon" />)
-
-    const svg = await screen.findByRole("presentation", { hidden: true })
-    expect(svg).toHaveAttribute("aria-hidden", "true")
-  })
-
-  it("should allow to overwrite accessibility attributes", async () => {
+  it("allows custom accessibility attributes", () => {
     render(<Icon aria-hidden="false" name="AccessIcon" role="alert" />)
 
-    const svg = await screen.findByRole("alert")
-    expect(svg).toHaveAttribute("role", "alert")
-    expect(svg).toHaveAttribute("aria-hidden", "false")
+    const img = screen.getByRole("alert")
+    expect(img).toHaveAttribute("role", "alert")
+    expect(img).toHaveAttribute("aria-hidden", "false")
+  })
+
+  it("applies default size", () => {
+    render(<Icon name="AbsoluteIcon" />)
+
+    const img = screen.getByRole("presentation", { hidden: true })
+    expect(img).toHaveAttribute("width", "16")
+    expect(img).toHaveAttribute("height", "16")
+  })
+
+  it("applies size `lg`", () => {
+    render(<Icon name="AbsoluteIcon" size="lg" />)
+
+    const img = screen.getByRole("presentation", { hidden: true })
+    expect(img).toHaveAttribute("width", "40")
+    expect(img).toHaveAttribute("height", "40")
   })
 })

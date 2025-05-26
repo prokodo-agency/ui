@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.16
+
+### Patch Changes
+
+- Migrate all icons to use a CDN-based loading approach. Improves performance and enables SSR compatibility. Also implements AAA-level accessibility.
+
 ## 0.0.15
 
 ### Patch Changes

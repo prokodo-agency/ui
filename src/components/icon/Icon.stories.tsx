@@ -1,5 +1,5 @@
 import { Icon } from "./Icon"
-import { Icons } from "./icon-list"
+import { ICON_NAMES } from "./Icon-list"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
@@ -13,7 +13,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     name: {
-      options: [undefined, ...Icons],
+      options: [undefined, ...ICON_NAMES],
       control: { type: "select" },
     },
     color: {

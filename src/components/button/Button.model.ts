@@ -1,6 +1,6 @@
+import type { IconProps } from "../icon"
 import type { LinkProps } from "../link"
-import type { IconProps } from "@/components/icon/Icon.model"
-import type { ReactElement, ButtonHTMLAttributes } from "react"
+import type { ButtonHTMLAttributes } from "react"
 
 export type ButtonColor =
   | "inherit"
@@ -27,18 +27,18 @@ export type ButtonProperties = Omit<
 // Default button with text (title will be used as aria-label)
 export type ButtonDefaultProps = Omit<ButtonProperties, "title"> & {
   title: string
-  icon?: ReactElement<Partial<IconProps>>
+  iconProps?: IconProps
   "aria-label"?: string
 }
 
 // Icon button
 export type ButtonIconProps =
   | (Omit<ButtonProperties, "title" | "aria-label"> & {
-      icon: ReactElement<Partial<IconProps>>
+      iconProps: IconProps
       "aria-label": string
     })
   | (Omit<ButtonProperties, "title" | "aria-label"> & {
-      icon: ReactElement<Partial<IconProps>>
+      iconProps: IconProps
       inert: boolean
     })
 

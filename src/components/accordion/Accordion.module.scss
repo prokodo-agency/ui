@@ -65,6 +65,10 @@
   &__icon {
     padding-left: $space-lg;
     transition: transform 0.3s ease;
+
+    &--is-hidden {
+      display: none;
+    }
   }
 
   &__content {

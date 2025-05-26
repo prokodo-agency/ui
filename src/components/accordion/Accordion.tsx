@@ -4,11 +4,9 @@ import { type FC, type SyntheticEvent, useCallback, useState } from "react"
 import { Animated } from "@/components/animated"
 import { Button, type ButtonProps } from "@/components/button"
 import { Headline } from "@/components/headline"
-import MinusSignIcon from "@/components/icon/loaders/MinusSignIcon"
-import PlusSignIcon from "@/components/icon/loaders/PlusSignIcon"
+import { Icon, type IconName, type IconColor } from "@/components/icon"
 import { create } from "@/helpers/bem"
 import { isNull } from "@/helpers/validations"
-
 
 import styles from "./Accordion.module.scss"
 
@@ -22,9 +20,9 @@ export const Accordion: FC<AccordionProps> = ({
   className,
   variant = "primary",
   titleOptions,
+  iconProps,
   items,
   onChange,
-  iconOverride,
   ...props
 }) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(expanded)
@@ -39,20 +37,17 @@ export const Accordion: FC<AccordionProps> = ({
   )
 
   const renderIcon = useCallback(
-    (isExpanded?: boolean) => {
-      const iconSize = 20
-      if (Boolean(isExpanded)) {
-        return iconOverride?.expanded ?? (
-          <MinusSignIcon className={bem("icon")} size={iconSize} />
-        )
-      }
-      return iconOverride?.collapsed ?? (
-        <PlusSignIcon className={bem("icon")} size={iconSize} />
-      )
-    },
-    [iconOverride],
+    (name: IconName, color?: IconColor, hidden?: boolean) => (
+      <Icon
+        className={bem("icon", { "is-hidden": Boolean(hidden) })}
+        color={color}
+        name={name}
+        size="sm"
+        {...iconProps}
+      />
+    ),
+    [iconProps],
   )
-
   return (
     <div className={bem(undefined, { [variant]: true }, className)} {...props}>
       {items.map((item, index) => {
@@ -99,7 +94,8 @@ export const Accordion: FC<AccordionProps> = ({
                   {title}
                 </Headline>
               )}
-              {renderIcon(isExpanded)}
+              {renderIcon("PlusSignIcon", "primary", isExpanded)}
+              {renderIcon("MinusSignIcon", "white", !isExpanded)}
             </div>
             <div
               aria-labelledby={`${accId}-header`}

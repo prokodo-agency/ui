@@ -3,6 +3,8 @@
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("Icon") {
+    // color: var(--color-black);
+
     &--primary {
         color: var(--color-primary-500);
 
