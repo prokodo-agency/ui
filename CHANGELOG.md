@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.13
+
+### Patch Changes
+
+- Avoid bundling all icon files directly into the npm package. This reduces install size and improves tree-shaking for consumers.
+
 ## 0.0.12
 
 ### Patch Changes
