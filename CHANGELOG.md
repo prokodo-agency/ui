@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.22
+
+### Patch Changes
+
+- Refactored the Icon component to improve compatibility and performance in server-rendered environments.
+
 ## 0.0.21
 
 ### Patch Changes

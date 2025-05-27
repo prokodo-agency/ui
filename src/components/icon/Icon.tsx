@@ -1,13 +1,12 @@
-"use client"
+import { PROKODO_UI_VERSION } from "@/constants/project"
 import { create } from "@/helpers/bem"
+
 
 import styles from "./Icon.module.scss"
 
 import type { IconProps, IconSize } from "./Icon.model"
 import type { IconName } from "./IconList"
 import type { FC } from "react"
-
-declare const __PACKAGE_VERSION__: string
 
 const bem = create(styles, "Icon")
 
@@ -29,7 +28,7 @@ export const getIconSize = (s?: IconSize): number => {
 //  CDN helper
 // ──────────────────────────────────────────────────────────
 const urlFromName = (name: IconName) =>
-  `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${__PACKAGE_VERSION__}/assets/icons/${name
+  `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${PROKODO_UI_VERSION}/assets/icons/${name
     .replace(/Icon$/, "")
     .replace(/([a-z])([A-Z0-9])/g, "$1_$2")
     .replace(/([0-9])([a-zA-Z])/g, "$1_$2")
