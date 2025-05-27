@@ -1,3 +1,4 @@
+"use client"
 import { create } from "@/helpers/bem"
 
 import styles from "./Icon.module.scss"

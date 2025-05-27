@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.21
+
+### Patch Changes
+
+- fix: Converted icon component in client component
+
 ## 0.0.20
 
 ### Patch Changes
