@@ -1,14 +1,13 @@
-import { type FC, memo } from "react"
-
 import { create } from "@/helpers/bem"
 
 import styles from "./Grid.module.scss"
 
 import type { GridProps } from "./Grid.model"
+import type { FC } from "react"
 
 const bem = create(styles, "Grid")
 
-export const Grid: FC<GridProps> = memo(
+export const Grid: FC<GridProps> = (
   ({ spacing = 2, className, children, ...props }) => (
     <div
       className={bem(undefined, undefined, className)}
@@ -19,7 +18,7 @@ export const Grid: FC<GridProps> = memo(
     >
       {children}
     </div>
-  ),
+  )
 )
 
 Grid.displayName = "Grid"

@@ -1,14 +1,13 @@
-import { type FC, memo } from "react"
-
 import { create } from "@/helpers/bem"
 
 import styles from "./GridRow.module.scss"
 
 import type { GridRowProps } from "./Grid.model"
+import type { FC } from "react"
 
 const bem = create(styles, "GridRow")
 
-export const GridRow: FC<GridRowProps> = memo(
+export const GridRow: FC<GridRowProps> = (
   ({ align, className, children, xs, sm, md, lg, xl, ...props }) => (
     <div
       className={bem(
@@ -27,7 +26,7 @@ export const GridRow: FC<GridRowProps> = memo(
     >
       {children}
     </div>
-  ),
+  )
 )
 
 GridRow.displayName = "GridRow"

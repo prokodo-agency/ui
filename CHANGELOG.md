@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.24
+
+### Patch Changes
+
+- fix: RSC ready Grid & GridRow
+
 ## 0.0.23
 
 ### Patch Changes
