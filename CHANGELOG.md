@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.26
+
+### Patch Changes
+
+- fix: Changed build config for RSC compatibility (test only)
+
 ## 0.0.25
 
 ### Patch Changes

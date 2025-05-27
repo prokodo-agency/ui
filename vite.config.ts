@@ -78,6 +78,8 @@ export default async () => {
         external: [
           "react",
           "react-dom",
+          "react/jsx-runtime",
+          "react/jsx-dev-runtime",
           "react-bem-helper",
           "dayjs",
           "@mui/base",
