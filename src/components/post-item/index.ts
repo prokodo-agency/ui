@@ -1,4 +1,5 @@
 export * from "./PostItem"
+export * from "./PostItemAuthor"
 export type {
   PostItemProps,
   PostItemHeadline,

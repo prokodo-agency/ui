@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.25
+
+### Patch Changes
+
+- Possibility to export PostItemAuthor component
+
 ## 0.0.24
 
 ### Patch Changes
