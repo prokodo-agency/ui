@@ -1,6 +1,6 @@
 {
   "name": "@prokodo/ui",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "type": "module",
   "description": "Modern, customizable UI components built with React and TypeScript — developed by prokodo for high-performance web interfaces.",
   "sideEffects": false,
@@ -198,7 +198,7 @@
     "storybook:deploy": "gh-pages -d storybook-static",
     "export-icons": "tsx tools/export-icons.ts",
     "prepare": "husky",
-    "release": "pnpm changeset && pnpm changeset version && pnpm install && git add . && git commit -m 'ci: version bump' && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags"
+    "release": "pnpm build && pnpm changeset && pnpm changeset version && pnpm install && git add . && git commit -m 'ci: version bump' && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",

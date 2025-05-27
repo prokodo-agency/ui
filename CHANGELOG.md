@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.23
+
+### Patch Changes
+
+- fix: Typescript config bug
+
 ## 0.0.22
 
 ### Patch Changes
