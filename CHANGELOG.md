@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.36
+
+### Patch Changes
+
+- chore: Optimization of code structure for AIC
+
 ## 0.0.35
 
 ### Patch Changes
