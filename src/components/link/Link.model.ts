@@ -26,3 +26,8 @@ export type LinkClickProps = LinkDefaultProps & {
 }
 
 export type LinkProps = LinkHrefProps | LinkClickProps
+
+export type LinkViewProps = LinkProps & {
+  LinkTag: 'a' | 'span';
+  hasHandlers: boolean;
+};

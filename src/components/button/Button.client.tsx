@@ -1,7 +1,6 @@
 
-// TODO: Change to client component
 'use client'
-import { Link } from '../link/Link'
+import Link from '../link/Link.client'
 import { Loading } from '../loading'
 
 import { ButtonView } from './Button.view'

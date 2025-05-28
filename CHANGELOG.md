@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.37
+
+### Patch Changes
+
+- feat: Converted Link component in AIC
+
 ## 0.0.36
 
 ### Patch Changes

@@ -1,6 +1,5 @@
 
-// TODO: Change to server component
-import { Link } from '../link/Link'
+import Link from '../link/Link.server'
 
 import { ButtonView } from './Button.view'
 
