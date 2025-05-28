@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.32
+
+### Patch Changes
+
+- fix: Optimization for experimental AIC Button
+
 ## 0.0.31
 
 ### Patch Changes
