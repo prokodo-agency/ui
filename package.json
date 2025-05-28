@@ -1,6 +1,6 @@
 {
   "name": "@prokodo/ui",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "type": "module",
   "description": "Modern, customizable UI components built with React and TypeScript — developed by prokodo for high-performance web interfaces.",
   "sideEffects": false,
