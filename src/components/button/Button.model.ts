@@ -1,6 +1,6 @@
 import type { IconProps } from "../icon"
 import type { LinkProps } from "../link"
-import type { ButtonHTMLAttributes } from "react"
+import type { ButtonHTMLAttributes, ComponentType, ReactNode } from "react"
 
 export type ButtonColor =
   | "inherit"
@@ -46,12 +46,12 @@ export type ButtonIconProps =
 export type ButtonProps = ButtonIconProps | ButtonDefaultProps
 
 export type ButtonViewProps = ButtonProps & {
-  isIconOnly: boolean;
-  LinkComponent: React.ComponentType<{
+  isIconOnly: boolean
+  LinkComponent: ComponentType<{
     href: string;
-    className: string;
-    disabled?: boolean;
-    id?: string;
-    children: React.ReactNode;
-  }>;
-};
+    className: string
+    disabled?: boolean
+    id?: string
+    children: ReactNode
+  }>
+}

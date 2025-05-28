@@ -69,14 +69,13 @@ export const Headline: FC<HeadlineProps> = ({
 
   const renderHTag = (attr: HTMLAttributes<HTMLHeadingElement>) => {
     if (!/^h[1-6]$/.test(type)) return null // Only allow h1–h6
-    const node = attr.children as ReactNode
     const HTag = type as keyof Pick<
       JSX.IntrinsicElements,
       "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
     >
     return (
       <HTag {...attr} aria-level={parseInt(type[1] ?? "", 10)} {...baseProps}>
-        {wrapText(node)}
+        {wrapText(children)}
       </HTag>
     )
   }

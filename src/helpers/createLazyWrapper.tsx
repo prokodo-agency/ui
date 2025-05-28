@@ -1,5 +1,4 @@
-/* utils/createLazyWrapper.tsx
-   ------------------------------------------------------------- */
+/* utils/createLazyWrapper.tsx */
 'use client'
 import {
   type ComponentType,
@@ -9,50 +8,57 @@ import {
 
 import { useHydrationReady } from '@/hooks/useHydrationReady'
 
-/* ---------- factory options ---------------------------------- */
 export interface LazyWrapperOptions<P extends object> {
-  /** Display-name for DevTools / data-island marker. */
   name: string
-  /** Hydrated client component (full interactivity). */
   Client: ComponentType<P>
-  /** Pure server component (identical HTML to entry render). */
   Server: ComponentType<P>
+  hydrateOnVisible?: boolean
+  ioOptions?: IntersectionObserverInit
+  /**
+   * NEW: override the default “has any onX or redirect” check
+   * so you can force hydration even with no handlers.
+   */
+  isInteractive?: (props: Readonly<P>) => boolean
 }
 
-/* ---------- helper ------------------------------------------- */
 export function createLazyWrapper<P extends object>({
   name,
   Client,
   Server,
+  hydrateOnVisible = false,
+  ioOptions,
+  isInteractive: customInteractive,
 }: LazyWrapperOptions<P>): ComponentType<P & { priority?: boolean }> {
-  /* ----------- final wrapper component ----------------------- */
   const LazyWrapper: FC<P & { priority?: boolean }> = ({
     priority = false,
     ...raw
   }): ReactElement => {
-    /* ----- heuristic: prop-based interaction check ----------- */
-    const props = raw as Record<string, unknown> & {
-      redirect?: unknown
-      onClick?: unknown
-      onKeyDown?: unknown
-    }
+    const props = raw as Record<string, unknown> & { redirect?: unknown }
 
-    const hasInteraction =
-      typeof props.onClick === 'function' ||
-      typeof props.onKeyDown === 'function' ||
+    // 1) compute the “auto” heuristic:
+    const autoInteractive =
+      Object.entries(props).some(
+        ([k,v]) => k.startsWith('on') && typeof v === 'function'
+      ) ||
       props.redirect !== undefined
 
-    /* -------- viewport / IO gate ----------------------------- */
+    // 2) allow a custom override:
+    const interactive = customInteractive
+      ? customInteractive(raw as P) || autoInteractive
+      : autoInteractive
+
+    // 3) now gate hydration by viewport if requested
     const [visible, ref] = useHydrationReady({
-      enabled: hasInteraction && !priority,
+      enabled: interactive && hydrateOnVisible && !priority,
+      ...ioOptions,
     })
 
-    /* -------- hydrated branch ------------------------------- */
-    if (hasInteraction && (priority || visible)) {
+    // 4) once we know we need interactivity, mount the Client
+    if (interactive && (priority || visible)) {
       return <Client {...(raw as P)} />
     }
 
-    /* -------- static placeholder (HTML identical to server) --- */
+    // 5) otherwise show the identical Server markup
     return (
       <div ref={ref} data-island={name.toLowerCase()}>
         <Server {...(raw as P)} />

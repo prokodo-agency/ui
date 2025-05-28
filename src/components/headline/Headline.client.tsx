@@ -32,6 +32,7 @@ export const HeadlineClient: FC<HeadlineProps> = ({
   align,
   isRichtext = false,
   variant = "inherit",
+  children,
   ...props
 }) => {
   const isHighlighted =
@@ -54,7 +55,7 @@ export const HeadlineClient: FC<HeadlineProps> = ({
   }, [size])
 
   const ariaLabel =
-    typeof props.children === "string" ? props.children : undefined
+    typeof children === "string" ? children : undefined
   const baseProps = useMemo(
     () => ({
       "aria-label": ariaLabel,
@@ -81,7 +82,6 @@ export const HeadlineClient: FC<HeadlineProps> = ({
   const renderHTag = useCallback(
     (attr: HTMLAttributes<HTMLHeadingElement>) => {
       if (type[1] === undefined) return null
-      const children = attr.children as ReactNode
       // Map the `type` prop to appropriate heading tags
       const HTag: keyof JSX.IntrinsicElements = type
       return (
@@ -103,7 +103,7 @@ export const HeadlineClient: FC<HeadlineProps> = ({
             renderHTag(props as HTMLAttributes<HTMLHeadingElement>),
         }}
       >
-        {props?.children as string}
+        {children as string}
       </Markdown>
     )
   }
