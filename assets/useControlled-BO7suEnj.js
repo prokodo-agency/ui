@@ -1,0 +1,1 @@
+var f=Object.defineProperty;var o=(e,t)=>f(e,"name",{value:t,configurable:true});import{r as a}from"./index-wP9GnQbl.js";function p({controlled:e,default:t,name:i,state:d="value"}){const{current:s}=a.useRef(e!==void 0);const[u,l]=a.useState(t);const n=s?e:u;const r=a.useCallback(c=>{if(!s){l(c)}},[]);return[n,r]}o(p,"useControlled");export{p as u};

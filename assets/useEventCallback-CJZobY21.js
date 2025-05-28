@@ -1,1 +1,0 @@
-import{r as t}from"./index-Bw_7RdAX.js";import{u}from"./useEnhancedEffect-BK3lijAC.js";function s(e){return e&&e.ownerDocument||document}function a(e){const r=t.useRef(e);return u(()=>{r.current=e}),t.useRef((...n)=>(0,r.current)(...n)).current}export{s as o,a as u};

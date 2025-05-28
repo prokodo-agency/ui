@@ -1,0 +1,1 @@
+var r=Object.defineProperty;var i=(s,t)=>r(s,"name",{value:t,configurable:true});const o=i(s=>typeof s==="string"&&s.trim()!=="","isString");const a=i(s=>typeof s==="number","isNumber");const c=i(s=>Array.isArray(s)&&s.length>0,"isArray");const l=i(s=>s===null||s===void 0,"isNull");const e=i(s=>s!==false&&s!==void 0,"isTrue");export{a,o as b,c,e as d,l as i};
