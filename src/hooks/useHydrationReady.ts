@@ -1,30 +1,39 @@
-import { useEffect, useRef, useState } from 'react'
+'use client'
+import { useLayoutEffect, useRef, useState } from 'react'
 
-type Options = {
+export type UseHydrationReadyOptions = {
   enabled?: boolean
+  threshold?: number
 }
 
-export function useHydrationReady({ enabled = true }: Options): readonly [boolean, React.RefObject<HTMLDivElement | null>] {
+export function useHydrationReady(
+  opts: UseHydrationReadyOptions = {},
+): readonly [boolean, React.RefObject<HTMLDivElement | null>] {
+  const { enabled = true, threshold = 0.1 } = opts
   const ref = useRef<HTMLDivElement | null>(null)
-  const [visible, setVisible] = useState(!enabled)
 
-  useEffect(() => {
-    if (enabled === false || visible) return
+  /* ① sync check: already inside first viewport? */
+  const [visible, setVisible] = useState(() => {
+    if (!enabled || typeof window === 'undefined') return !enabled
+    const box = ref.current?.getBoundingClientRect()
+    return !!box && box.top < window.innerHeight
+  })
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting === true) {
+  /* ② async observer for off-screen elements */
+  useLayoutEffect(() => {
+    if (!enabled || visible) return
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e?.isIntersecting === true) {
           setVisible(true)
-          observer.disconnect()
+          io.disconnect()
         }
       },
-      { threshold: 0.1 }
+      { threshold },
     )
-
-    if (ref.current) observer.observe(ref.current)
-
-    return () => observer.disconnect()
-  }, [enabled, visible])
+    if (ref.current) io.observe(ref.current)
+    return () => io.disconnect()
+  }, [enabled, visible, threshold])
 
   return [visible, ref] as const
 }

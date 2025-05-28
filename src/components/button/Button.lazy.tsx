@@ -1,25 +1,30 @@
 'use client'
+
 import { useHydrationReady } from '@/hooks/useHydrationReady'
 
 import ButtonClient from './Button.client'
-import ButtonStatic from './Button.server'
+import ButtonServer from './Button.server'
 
 import type { ButtonProps } from './Button.model'
-import type { JSX } from 'react'
+import type { JSX } from "react"
 
-export default function ButtonClientWrapper(props: ButtonProps): JSX.Element {
-  const hasInteraction = !!props.onClick || !!props.onKeyDown || !!props.redirect
-  const [visible, ref] = useHydrationReady({ enabled: hasInteraction })
+export default function ButtonWrapper(props: ButtonProps):JSX.Element {
+  const hasInteraction =
+    !!props.onClick || !!props.onKeyDown || !!props.redirect
 
-  const shouldHydrate = hasInteraction && visible
+  /* If caller really wants “always-on”, they can pass lazy={false}. */
+  const lazy = props?.lazy ?? true
 
-  if (shouldHydrate) {
+  const [visible, ref] = useHydrationReady({
+    enabled: hasInteraction && lazy,
+  })
+
+  if (hasInteraction && (visible || !lazy)) {
     return <ButtonClient {...props} />
   }
-
   return (
     <div ref={ref}>
-      <ButtonStatic {...props} />
+      <ButtonServer {...props} />
     </div>
   )
 }

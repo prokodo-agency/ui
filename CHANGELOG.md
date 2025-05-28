@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.29
+
+### Patch Changes
+
+- fix: Small optimization for experimental AIC
+
 ## 0.0.28
 
 ### Patch Changes
