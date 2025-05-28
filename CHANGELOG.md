@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.30
+
+### Patch Changes
+
+- fix: Added priority option to AIC Button component
+
 ## 0.0.29
 
 ### Patch Changes
