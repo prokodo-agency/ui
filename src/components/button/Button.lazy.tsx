@@ -8,25 +8,27 @@ import ButtonServer from './Button.server'
 import type { ButtonProps } from './Button.model'
 import type { JSX } from "react"
 
-type ButtonLazyProps = ButtonProps & { priority?: boolean };
+type WrapperProps = ButtonProps & { priority?: boolean }
 
-export default function ButtonWrapper(props: ButtonLazyProps):JSX.Element {
+export default function ButtonWrapper({
+  priority = false,
+  ...props
+}: WrapperProps): JSX.Element {
   const hasInteraction =
     !!props.onClick || !!props.onKeyDown || !!props.redirect
 
-  /* If caller really wants “always-on”, they can pass lazy={false}. */
-  const lazy = Boolean(props?.priority) ? false : true
-
+  /* If priority → skip observer */
   const [visible, ref] = useHydrationReady({
-    enabled: hasInteraction && lazy,
-    priority: props.priority,
-  });
+    enabled: hasInteraction && !priority,
+  })
 
-  if (hasInteraction && (visible || !lazy)) {
+  if (hasInteraction && (priority || visible)) {
     return <ButtonClient {...props} />
   }
+
+  /* Placeholder: identical to server HTML */
   return (
-    <div ref={ref}>
+    <div ref={ref} data-island="button">
       <ButtonServer {...props} />
     </div>
   )
