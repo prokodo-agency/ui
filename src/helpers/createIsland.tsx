@@ -33,7 +33,7 @@ export function createIsland<P extends object>({
   isInteractive: customInteractive,
 }: IslandOptions<P>): ComponentType<P & { priority?: boolean }> {
   /* Pre-load chunk once (browser only) */
-  if (typeof window !== 'undefined') void loadLazy();
+  // if (typeof window !== 'undefined') void loadLazy();
 
   /* Typed React.lazy wrapper */
   const LazyWrapper =

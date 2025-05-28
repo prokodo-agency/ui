@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.38
+
+### Patch Changes
+
+- fix: Bugfix in AIC logic and Link component
+
 ## 0.0.37
 
 ### Patch Changes

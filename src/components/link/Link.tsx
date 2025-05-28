@@ -2,7 +2,6 @@ import { createIsland } from '@/helpers/createIsland';
 
 import LinkServer from './Link.server';
 
-
 import type { LinkProps } from './Link.model';
 
 export const Link = createIsland<LinkProps>({

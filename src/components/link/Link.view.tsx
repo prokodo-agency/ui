@@ -10,19 +10,22 @@ import type { JSX } from "react"
 const bem = create(styles, 'Link');
 
 export function LinkView({
-  variant = 'inherit',
-  href,
-  children,
-  className,
-  style,
-  target,
-  itemProp,
-  hasBackground,
-  ariaLabel,
-  LinkTag,
-  hasHandlers,
-  ...rest
+    variant = 'inherit',
+    href,
+    children,
+    className,
+    style,
+    target,
+    itemProp,
+    hasBackground,
+    ariaLabel,
+    LinkTag,
+    hasHandlers,
+    onClick,
+    ...props
 }: LinkViewProps): JSX.Element {
+  const cleanedProps = { ...props };
+  delete cleanedProps.linkComponent;
   const linkMod = {
     'has-no-background': hasBackground === false,
     [`has-no-background--${variant}`]: hasBackground === false,
@@ -40,7 +43,7 @@ export function LinkView({
       {...common}
       role="button"
       tabIndex={0}
-      {...rest} /* onClick / onKeyDown forwarded only in client */
+      {...cleanedProps} /* onClick / onKeyDown forwarded only in client */
     >
       {children}
     </span>
@@ -49,7 +52,7 @@ export function LinkView({
       {...common}
       href={href}
       target={target ?? undefined}
-      {...(hasHandlers ? { onClick: rest?.onClick } : null)}
+      {...(hasHandlers ? { onClick } : null)}
     >
       {children}
     </BaseLink>
