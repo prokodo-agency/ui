@@ -2,40 +2,35 @@
 
 exports[`The Button component should render Button 1`] = `
 <button
-  class="prokodo-Button prokodo-Button--has-variant-contained prokodo-Button--has-bg-primary"
+  aria-label="Test title"
+  class="prokodo-Button prokodo-Button--has-variant-undefined"
+  title="Test title"
   type="button"
 >
-  <span
-    class="prokodo-Button__title"
-  >
-    Test title
-  </span>
+  Test title
 </button>
 `;
 
 exports[`The Button component should render disabled Button 1`] = `
 <button
-  class="prokodo-Button prokodo-Button--has-variant-contained prokodo-Button--has-bg-primary prokodo-Button--is-disabled"
+  aria-label="Test title"
+  class="prokodo-Button prokodo-Button--has-variant-undefined prokodo-Button--is-disabled"
   disabled=""
+  tabindex="-1"
+  title="Test title"
   type="button"
 >
-  <span
-    class="prokodo-Button__title"
-  >
-    Test title
-  </span>
+  Test title
 </button>
 `;
 
 exports[`The Button component should render loading Button 1`] = `
 <button
-  class="prokodo-Button prokodo-Button--has-variant-contained prokodo-Button--has-bg-primary"
+  aria-label="Test title"
+  class="prokodo-Button prokodo-Button--has-variant-undefined"
+  title="Test title"
   type="button"
 >
-  <span
-    class="prokodo-Button__title"
-  >
-    Test title
-  </span>
+  Test title
 </button>
 `;

@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.34
+
+### Patch Changes
+
+- fix: Splitted AIC Button component in single view
+
 ## 0.0.33
 
 ### Patch Changes

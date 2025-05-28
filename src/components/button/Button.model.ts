@@ -44,3 +44,14 @@ export type ButtonIconProps =
     })
 
 export type ButtonProps = ButtonIconProps | ButtonDefaultProps
+
+export type ButtonViewProps = ButtonProps & {
+  isIconOnly: boolean;
+  LinkComponent: React.ComponentType<{
+    href: string;
+    className: string;
+    disabled?: boolean;
+    id?: string;
+    children: React.ReactNode;
+  }>;
+};
