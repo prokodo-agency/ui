@@ -15,6 +15,7 @@ export type ButtonProperties = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   "color"
 > & {
+  priority?: boolean
   color?: ButtonColor
   fullWidth?: boolean
   contentClassName?: string

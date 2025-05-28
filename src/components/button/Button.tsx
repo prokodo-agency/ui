@@ -15,7 +15,7 @@ const LazyWrapper =
   typeof window !== 'undefined' ? lazy(loader) : null
 // ----------------------------------------------------------------
 
-export function Button(props: ButtonProps): JSX.Element {
+export function Button({ priority, ...props }: ButtonProps): JSX.Element {
   const interactive =
     !!props.onClick || !!props.onKeyDown || !!props.redirect
 
@@ -25,7 +25,7 @@ export function Button(props: ButtonProps): JSX.Element {
   /* Interactive: identical markup on server + client = ☑ no mismatch */
   return (
     <Suspense fallback={<ButtonServer {...props} />}>
-      {LazyWrapper ? <LazyWrapper {...props} /> : <Fragment />}
+      {LazyWrapper ? <LazyWrapper {...props} priority={priority} /> : <Fragment />}
     </Suspense>
   )
 }
