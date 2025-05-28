@@ -1,4 +1,4 @@
-import { Headline } from "./Headline"
+import { Headline } from "./Headline.server"
 
 import type { Meta, StoryObj } from "@storybook/react"
 

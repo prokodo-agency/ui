@@ -1,5 +1,4 @@
 "use client"
-
 import {
   type JSX,
   type FC,
@@ -8,7 +7,7 @@ import {
   useCallback,
   useMemo,
 } from "react"
-import ReactMarkdown from "react-markdown"
+import Markdown from "react-markdown"
 import remarkBreaks from "remark-breaks"
 import remarkGfm from "remark-gfm"
 
@@ -16,19 +15,13 @@ import { AnimatedText } from "@/components/animatedText"
 import { create } from "@/helpers/bem"
 
 import styles from "./Headline.module.scss"
+import { POSSIBLE_HIGHLIGHTS } from "./Headline.variants"
 
-import type { HeadlineProps, HeadlineVariant } from "./Headline.model"
+import type { HeadlineProps } from "./Headline.model"
 
 const bem = create(styles, "Headline")
 
-export const POSSIBLE_HIGHLIGHTS: HeadlineVariant[] = [
-  "inherit",
-  "primary",
-  "secondary",
-  "white",
-]
-
-export const Headline: FC<HeadlineProps> = ({
+export const HeadlineClient: FC<HeadlineProps> = ({
   animated,
   animationProps = {},
   type = "h3",
@@ -51,21 +44,17 @@ export const Headline: FC<HeadlineProps> = ({
     [size]: typeof size === "string" && !!size,
     [`${align}`]: !!align,
   }
-
   const bemClass = bem(undefined, modifier, className)
-
   const customStyle = useMemo(() => {
-    if (typeof size === "number") {
+    if (typeof size === "number")
       return {
         fontSize: `${size}em`,
       }
-    }
     return {}
   }, [size])
 
   const ariaLabel =
     typeof props.children === "string" ? props.children : undefined
-
   const baseProps = useMemo(
     () => ({
       "aria-label": ariaLabel,
@@ -80,7 +69,9 @@ export const Headline: FC<HeadlineProps> = ({
   const animateText = useCallback(
     (children: ReactNode) =>
       Boolean(animated) ? (
-        <AnimatedText {...animationProps}>{children as string}</AnimatedText>
+        <AnimatedText {...animationProps}>
+          {children as ReactNode & string}
+        </AnimatedText>
       ) : (
         children
       ),
@@ -89,14 +80,12 @@ export const Headline: FC<HeadlineProps> = ({
 
   const renderHTag = useCallback(
     (attr: HTMLAttributes<HTMLHeadingElement>) => {
-      if (!/^h[1-6]$/.test(type)) return null // Only allow h1–h6
+      if (type[1] === undefined) return null
       const children = attr.children as ReactNode
-      const HTag = type as keyof Pick<
-        JSX.IntrinsicElements,
-        "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
-      >
+      // Map the `type` prop to appropriate heading tags
+      const HTag: keyof JSX.IntrinsicElements = type
       return (
-        <HTag {...attr} aria-level={parseInt(type[1] ?? "", 10)} {...baseProps}>
+        <HTag {...attr} aria-level={parseInt(type[1], 10)} {...baseProps}>
           {animateText(children)}
         </HTag>
       )
@@ -106,17 +95,17 @@ export const Headline: FC<HeadlineProps> = ({
 
   if (isRichtext) {
     return (
-      <ReactMarkdown
+      <Markdown
         className={bem("headline")}
         remarkPlugins={[remarkGfm, remarkBreaks]}
         components={{
-          p: props => renderHTag(props as HTMLAttributes<HTMLHeadingElement>),
+          p: (props: HTMLAttributes<HTMLParagraphElement>) =>
+            renderHTag(props as HTMLAttributes<HTMLHeadingElement>),
         }}
       >
-        {props.children as string}
-      </ReactMarkdown>
+        {props?.children as string}
+      </Markdown>
     )
   }
-
   return renderHTag(props as HTMLAttributes<HTMLHeadingElement>)
 }

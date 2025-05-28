@@ -11,6 +11,7 @@ export type HeadlineVariant = Variants
 
 export type HeadlineProps = Omit<HTMLProps<HTMLHeadingElement>, "size"> & {
   animated?: boolean
+  // Only used in Client
   animationProps?: Omit<AnimatedTextProps, "children">
   type?: HeadlineTypeProps
   size?: HeadlineSizeProps | number
@@ -20,4 +21,5 @@ export type HeadlineProps = Omit<HTMLProps<HTMLHeadingElement>, "size"> & {
   variant?: HeadlineVariant
   isRichtext?: boolean
   children: ReactNode
+  renderText?: (text: string) => ReactNode
 }

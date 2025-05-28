@@ -65,7 +65,12 @@ export default async () => {
         ),
       },
     },
+    esbuild: {
+      keepNames: true,
+      minifySyntax: false,
+    },
     build: {
+      minify: false,
       sourcemap: false,
       lib: {
         entry: path.resolve(__dirname, "src/index.ts"),
@@ -107,6 +112,12 @@ export default async () => {
           globals: {
             react: "React",
             "react-dom": "ReactDOM",
+          },
+          banner: chunk => {
+            // Füge Direktive nur bei Dateien an, deren Pfad ".client." oder ".lazy." enthält
+            return /(\.client\.|\.lazy\.)/.test(chunk.facadeModuleId ?? '')
+              ? '"use client";'
+              : '';
           },
         },
       },

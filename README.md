@@ -18,6 +18,7 @@
 
 ## ✨ Features
 
+- ✨ **Adaptive-Island Components (AIC)**: One import per component. Renders as zero-JS RSC and self-hydrates *only* when interaction is detected & the element is visible. (Currently in Beta for Button)
 - ⚡️ **Modern stack**: Vite, React 19, TypeScript, and SCSS Modules
 - 💅 **Design consistency**: Theming via design tokens and BEM-style naming
 - 🧩 **Component-rich**: 35+ reusable UI components
@@ -42,59 +43,102 @@ npm install @prokodo/ui
 
 ### 2. Use a component
 
-```tsx
-import { Button, type ButtonProps } from "@prokodo/ui/button"
+#### Next.js (RSC)
 
-export default function Example() {
-  return <Button>Click me</Button>
+```tsx
+import { Headline, type HeadlineProps } from "@prokodo/ui/button"
+
+export default function Layout() {
+  return <Headline>Click me</Headline>
 }
 ```
 
+#### Next.js (Client optimized)
+
+```tsx
+import { HeadlineClient, type HeadlineProps } from "@prokodo/ui/button"
+
+export default function Layout() {
+  return <HeadlineClient>Click me</HeadlineClient>
+}
+```
+
+#### Next.js (Client non-optimized, means RSC only)
+
+```tsx
+"use client"
+import { Headline as UIHeadline, type HeadlineProps } from "@prokodo/ui/button"
+import { type FC, memo } from "react"
+
+export const Headline: FC<HeadlineProps> = memo(props => <UIHeadline {...props} />)
+```
+
 ## 📦 Available Components
-- Accordion
-- Animated
-- AnimatedText
-- Avatar
-- BaseLink
-- Button
-- Calendly
-- Card
-- Carousel
-- Chip
-- DatePicker
-- Dialog
-- Drawer
-- Form
-- FormResponse
-- Grid
-- GridRow
-- Headline
-- Icon
-- Image
-- ImageText
-- Input
-- InputOTP
-- Label
-- Link
-- List
-- Loading
-- Lottie
-- Map
-- PostItem
-- PostTeaser
-- PostWidget
-- PostWidgetCarousel
-- Quote
-- RichText
-- Select
-- Skeleton
-- Slider
-- Stepper
-- Switch
-- Table
-- Teaser
+
+### Compatibility of the components
+
+✅ = Available as RSC (<[ComponentName] />) and for client exportable (<[ComponentName]Client />)
+❌ = Not available
+\- = Currently only for RSC optimized
+
+> If RSC and client have ✅-symbol means available as RSC (<[ComponentName] />) & extra client export (<[ComponentName]Client />)
+
+| Komponente             | 🧠 RSC-Compatible (`app/layout.tsx`) | 💡 SSR-Compatible (`"use client"`) |
+|------------------------|:------------------------------------:|:----------------------------------:|
+| Accordion              | ❌                                   | ✅                                 |
+| Animated               | ❌                                   | ✅                                 |
+| AnimatedText           | ❌                                   | ✅                                 |
+| Avatar                 | ❌                                   | ✅                                 |
+| BaseLink               | ❌                                   | ✅                                 |
+| Button                 | ❌                                   | ✅                                 |
+| Calendly               | ❌                                   | ✅                                 |
+| Card                   | ❌                                   | ✅                                 |
+| Carousel               | ❌                                   | ✅                                 |
+| Chip                   | ❌                                   | ✅                                 |
+| DatePicker             | ❌                                   | ✅                                 |
+| Dialog                 | ❌                                   | ✅                                 |
+| Drawer                 | ❌                                   | ✅                                 |
+| Form                   | ❌                                   | ✅                                 |
+| FormResponse           | ✅                                   | –                                  |
+| Grid                   | ✅                                   | –                                  |
+| GridRow                | ✅                                   | –                                  |
+| Headline               | ✅                                   | ✅                                 |
+| Icon                   | ✅                                   | –                                  |
+| Image                  | ✅                                   | –                                  |
+| ImageText              | ❌                                   | ✅                                 |
+| Input                  | ❌                                   | ✅                                 |
+| InputOTP               | ❌                                   | ✅                                 |
+| Label                  | ✅                                   | –                                  |
+| Link                   | ❌                                   | ✅                                 |
+| List                   | ✅                                   | –                                  |
+| Loading                | ✅                                   | –                                  |
+| Lottie                 | ❌                                   | ✅                                 |
+| Map                    | ❌                                   | ✅                                 |
+| PostItem               | ✅                                   | –                                  |
+| PostTeaser             | ✅                                   | –                                  |
+| PostWidget             | ✅                                   | –                                  |
+| PostWidgetCarousel     | ❌                                   | ✅                                 |
+| Quote                  | ✅                                   | –                                  |
+| RichText               | ✅                                   | –                                  |
+| Select                 | ❌                                   | ✅                                 |
+| Skeleton               | ✅                                   | –                                  |
+| Slider                 | ❌                                   | ✅                                 |
+| Stepper                | ❌                                   | ✅                                 |
+| Switch                 | ❌                                   | ✅                                 |
+| Table                  | ✅                                   | –                                  |
+| Teaser                 | ❌                                   | ✅                                 |
+
+## 🎯 Next steps
+
+- [ ] Make all components **RSC-compatible** and **client-optimized**
+- [ ] Add more ✨ **fancy styling**, UI polish and properties
+- [ ] Improve **accessibility** to meet **WCAG 2.2 AAA** standards
+- [ ] Detailed Documentation about the components
 
 ## 📘 Documentation
+
+> Notice: Currently are not all components in Storybook available
+
 Explore all components and examples in the official Storybook:
 
 👉 https://ui.prokodo.com

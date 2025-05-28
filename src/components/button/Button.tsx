@@ -1,131 +1,25 @@
-"use client"
-import {
-  type FC,
-  type MouseEvent,
-  type KeyboardEvent,
-  useMemo,
-  useRef,
-  useId,
-} from "react"
+import { lazy, Suspense, type JSX } from 'react'
 
-import { create } from "@/helpers/bem"
-import { isString } from "@/helpers/validations"
+import ButtonStatic from './Button.server'
 
-import { Icon } from "../icon"
-import { Link } from "../link"
-import { Loading } from "../loading"
+import type { ButtonProps } from './Button.model'
 
-import styles from "./Button.module.scss"
+const LazyWrapper =
+  typeof window !== 'undefined'
+    ? lazy(() => import('./Button.lazy'))
+    : null
 
-import type { ButtonDefaultProps, ButtonProps } from "./Button.model"
+export const Button = (props: ButtonProps): JSX.Element => {
+  const interactive =
+    !!props.onClick || !!props.onKeyDown || !!props.redirect
 
-const bem = create(styles, "Button")
-
-const mockEvent = {} as MouseEvent<HTMLButtonElement>
-const mockKeyDownEvent = {} as KeyboardEvent<HTMLButtonElement>
-
-export const Button: FC<ButtonProps> = ({
-  id,
-  fullWidth,
-  color = "primary",
-  iconProps = {},
-  loading,
-  variant = "contained",
-  className,
-  contentClassName,
-  disabled,
-  redirect,
-  ...props
-}) => {
-  const uniqueId = useId()
-  const labelRef = useRef<HTMLSpanElement | null>(null)
-  const ariaLabelId = `Button-${uniqueId}`
-  const isOutlined = variant === "outlined"
-  const iconName = iconProps?.name
-  const isIconOnly = iconName && !(props as ButtonDefaultProps)?.title
-  const iconModifier = useMemo(
-    () => ({
-      "icon-only": Boolean(isIconOnly),
-    }),
-    [isIconOnly],
-  )
-
-  const renderInnerContent = () => (
-    <span ref={labelRef} aria-labelledby={ariaLabelId} className={bem("title")}>
-      {iconName && (
-        <Icon className={bem("icon", iconModifier)} {...iconProps} />
-      )}
-      {(props as ButtonDefaultProps)?.title}
-    </span>
-  )
-
-  const renderContent = () => {
-    if (Boolean(loading)) {
-      return <Loading size="xs" />
-    }
-    return renderInnerContent()
-  }
-
-  const renderVariant = () => {
-    if (isOutlined) {
-      return (
-        <div className={bem("content", iconModifier, contentClassName)}>
-          {renderContent()}
-        </div>
-      )
-    }
-    return renderContent()
-  }
-
-  if (redirect) {
+  if (interactive && LazyWrapper) {
     return (
-      <Link
-        disabled={disabled}
-        href={redirect.href}
-        className={bem(
-          undefined,
-          {
-            "has-fullWidth": Boolean(fullWidth),
-            [`has-variant-${variant}`]: true,
-            [`has-bg-${color}`]: variant === "contained",
-            [`has-text-${color}`]: variant === "text",
-            "is-disabled": Boolean(disabled),
-            ...iconModifier,
-          },
-          className,
-        )}
-        onClick={() => props?.onClick?.(mockEvent)}
-        onKeyDown={() => props?.onKeyDown?.(mockKeyDownEvent)}
-      >
-        {renderVariant()}
-      </Link>
+      <Suspense fallback={<ButtonStatic {...props} />}>
+        <LazyWrapper {...props} />
+      </Suspense>
     )
   }
-  return (
-    <button
-      {...props}
-      color={color}
-      disabled={Boolean(disabled) || Boolean(loading)}
-      id={`${ariaLabelId}${isString(id) ? ` ${id}` : ""}`}
-      className={bem(
-        undefined,
-        {
-          "has-fullWidth": Boolean(fullWidth),
-          [`has-variant-${variant}`]: true,
-          [`has-bg-${color}`]: variant === "contained",
-          [`has-text-${color}`]: variant === "text",
-          "is-disabled": Boolean(disabled),
-          ...iconModifier,
-        },
-        className,
-      )}
-      tabIndex={
-        redirect !== undefined || Boolean(disabled)
-          ? -1
-          : (props?.tabIndex ?? undefined)
-      }
-    >
-      {renderVariant()}
-    </button>
-  )
+
+  return <ButtonStatic {...props} />
 }

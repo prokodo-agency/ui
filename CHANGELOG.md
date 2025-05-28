@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.27
+
+### Patch Changes
+
+- Adaptive-Island Component infrastructure (experimental)
+
 ## 0.0.26
 
 ### Patch Changes

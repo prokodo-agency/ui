@@ -56,9 +56,7 @@ export const ImageText: FC<ImageTextProps> = ({
           </GridRow>
         )}
         <GridRow className={bem("content")} md={leftColumnMd} xs={10}>
-          <Animated
-          // animation={screenLargerThanMd ? "left-right" : "bottom-top"}
-          >
+          <Animated>
             {subTitle && (
               <Headline
                 highlight

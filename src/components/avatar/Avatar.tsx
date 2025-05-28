@@ -22,7 +22,7 @@ export const Avatar: FC<AvatarProps> = ({
   ...props
 }) => {
   const variantModifier = useMemo(
-    () => ({
+() => ({
       [variant]: !!variant,
     }),
     [variant],
