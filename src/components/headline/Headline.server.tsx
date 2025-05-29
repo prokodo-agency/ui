@@ -1,7 +1,8 @@
-import type { HeadlineProps } from "./Headline.model"
 import { HeadlineView } from "./Headline.view"
 
-/** Einziger Export für das Island-Pattern. */
-export default function HeadlineServer(props: HeadlineProps) {
+import type { HeadlineProps } from "./Headline.model"
+import type { JSX } from "react"
+
+export default function HeadlineServer(props: HeadlineProps): JSX.Element {
   return <HeadlineView {...props} />
 }

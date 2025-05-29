@@ -1,4 +1,5 @@
 import { AnimatedTextView } from "./AnimatedText.view"
+
 import type { AnimatedTextProps } from "./AnimatedText.model"
 import type { JSX } from "react"
 

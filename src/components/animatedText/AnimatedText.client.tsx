@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useState, type JSX } from "react"
+
 import { AnimatedTextView } from "./AnimatedText.view"
+
 import type { AnimatedTextProps } from "./AnimatedText.model"
 
 export default function AnimatedTextClient(
@@ -17,7 +19,7 @@ export default function AnimatedTextClient(
 
   /* start typing after the optional delay */
   useEffect(() => {
-    if (disabled) return
+    if (Boolean(disabled)) return
 
     const t0 = window.setTimeout(() => {
       const id = window.setInterval(() => {

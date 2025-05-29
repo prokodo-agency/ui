@@ -1,5 +1,5 @@
 "use client"
-import { useState, useCallback, type SyntheticEvent    , JSX } from "react"
+import { useState, useCallback, type SyntheticEvent, type JSX } from "react"
 
 import { Animated } from "@/components/animated/Animated"
 import Button from "@/components/button/Button.client"

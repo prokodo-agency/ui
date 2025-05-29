@@ -5,6 +5,7 @@ import styles from "./Accordion.module.scss"
 
 import type { AccordionViewProps } from "./Accordion.model"
 import type { ButtonProps } from "@/components/button"
+import type { JSX } from "react"
 
 const bem = create(styles, "Accordion")
 
@@ -22,7 +23,7 @@ export function AccordionView({
   HeadlineComponent,
   IconComponent,
   ...domRest
-}: AccordionViewProps) {
+}: AccordionViewProps): JSX.Element {
   return (
     <div className={bem(undefined, { [variant]: true }, className)} {...domRest}>
       {items.map((item, index) => {
@@ -89,7 +90,7 @@ export function AccordionView({
             >
               {!isNull(renderContent) && <AnimatedComponent>{renderContent}</AnimatedComponent>}
 
-              {actions?.length ? (
+              {actions !== undefined && actions?.length ? (
                 <div className={bem("actions")}>
                   {actions.map((action) => (
                     <ButtonComponent key={`${accId}-action-${action.id}`} {...(action as ButtonProps)} />

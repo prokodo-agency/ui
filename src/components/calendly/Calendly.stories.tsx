@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
 import { Calendly } from "@/components/calendly"
+
+import type { Meta, StoryObj } from "@storybook/react"
 
 /* ---------- Story meta ------------------------------------ */
 const meta = {

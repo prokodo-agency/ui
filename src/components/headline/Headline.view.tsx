@@ -2,8 +2,8 @@ import ReactMarkdown from "react-markdown"
 import remarkBreaks from "remark-breaks"
 import remarkGfm from "remark-gfm"
 
-import { create } from "@/helpers/bem"
 import { AnimatedText } from "@/components/animatedText"
+import { create } from "@/helpers/bem"
 
 import styles from "./Headline.module.scss"
 import { POSSIBLE_HIGHLIGHTS } from "./Headline.variants"

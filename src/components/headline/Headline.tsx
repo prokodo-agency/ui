@@ -1,5 +1,7 @@
 import { createIsland } from "@/helpers/createIsland"
+
 import HeadlineServer from "./Headline.server"
+
 import type { HeadlineProps } from "./Headline.model"
 
 export const Headline = createIsland<HeadlineProps>({

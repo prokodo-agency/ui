@@ -1,7 +1,6 @@
-import type { ReactNode, RefObject } from "react"
+import type { ReactNode } from "react"
 
 export type AnimatedProps = {
-  ref?: RefObject<HTMLDivElement>
   className?: string
   disabled?: boolean
   animation?: "bottom-top" | "top-bottom" | "left-right" | "right-left"

@@ -1,9 +1,12 @@
-import { create } from "@/helpers/bem"
 import { Icon, getIconSize } from "@/components/icon"
 import { Image } from "@/components/image"
 import { Link } from "@/components/link"
+import { create } from "@/helpers/bem"
+
 import styles from "./Avatar.module.scss"
+
 import type { AvatarProps } from "./Avatar.model"
+import type { JSX } from "react"
 
 const bem = create(styles, "Avatar")
 
@@ -14,7 +17,7 @@ export function AvatarView({
   image,
   redirect,
   ...rest
-}: AvatarProps) {
+}: AvatarProps): JSX.Element {
   const rootClass = bem(
     undefined,
     { [variant]: true, [`has-size-${size}`]: true },
@@ -22,7 +25,7 @@ export function AvatarView({
   )
 
   const inner = (
-    <div {...rest} tabIndex={-1} className={rootClass}>
+    <div {...rest} className={rootClass} tabIndex={-1}>
       {image ? (
         <Image
           {...image}

@@ -1,10 +1,10 @@
 "use client"
 
 import { isNull } from "@/helpers/validations"
-import type { CSSProperties } from "react"
-import type { BaseLinkProps } from "./BaseLink.model"
 
-/** 1:1 dein ursprünglicher Code – jetzt in eigener Client-Datei */
+import type { BaseLinkProps } from "./BaseLink.model"
+import type { CSSProperties, JSX } from "react"
+
 export default function BaseLinkClient({
   href,
   children,
@@ -14,7 +14,7 @@ export default function BaseLinkClient({
   target,
   rel,
   ...rest
-}: BaseLinkProps) {
+}: BaseLinkProps): JSX.Element {
   const DISABLE: CSSProperties = { pointerEvents: "none" }
   const isAbsolute  = href?.startsWith("http")
   const isDownload  = rest.download !== undefined

@@ -1,5 +1,6 @@
 import { AnimatedView } from "@/components/animated/Animated.view"
 import { Loading } from "@/components/loading"
+
 import type { CalendlyProps } from "./Calendly.model"
 import type { CSSProperties, JSX } from "react"
 
@@ -17,7 +18,7 @@ export function CalendlyView({
 
   return (
     <AnimatedView isVisible={false} {...animationProps}>
-      {!hideLoading && <LoadingComponent />}
+      {!Boolean(hideLoading) && <LoadingComponent />}
       <div {...rest} data-calendly style={style} />
     </AnimatedView>
   )

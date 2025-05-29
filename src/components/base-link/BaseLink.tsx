@@ -1,5 +1,7 @@
 import { createIsland } from "@/helpers/createIsland"
+
 import BaseLinkServer from "./BaseLink.server"
+
 import type { BaseLinkProps } from "./BaseLink.model"
 
 const isInteractive = (p: BaseLinkProps) =>

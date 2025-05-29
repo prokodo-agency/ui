@@ -25,7 +25,7 @@ export default function AnimatedClient(props: AnimatedProps): JSX.Element {
   const timeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
-    if (disabled) return
+    if (Boolean(disabled)) return
     timeoutRef.current = window.setTimeout(() => {
       setVisible(true)
       onAnimate?.(true)

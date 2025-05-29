@@ -1,7 +1,9 @@
 import { create } from "@/helpers/bem"
+
 import { BaseLink } from "../base-link"
 
 import styles from "./Link.module.scss"
+
 import type { LinkViewProps } from "./Link.model"
 import type { JSX } from "react"
 
@@ -62,8 +64,8 @@ export function LinkView({
       {...common}
       {...rest}
       href={href}
-      target={target}
       linkComponent={linkComponent}
+      target={target}
       {...(hasHandlers ? { onClick } : null)}
     >
       {children}

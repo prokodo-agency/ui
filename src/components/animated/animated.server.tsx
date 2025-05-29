@@ -1,12 +1,8 @@
 import { AnimatedView } from "./Animated.view"
 
 import type { AnimatedProps } from "./Animated.model"
+import type { JSX } from "react"
 
-/**
- * Server‐only entry: always renders the static view
- * with isVisible=false (no animation yet).
- */
-export default function AnimatedServer(props: AnimatedProps) {
-  const { delay, intersectionObserverOptions, onAnimate, ...rest } = props
+export default function AnimatedServer({ ...rest }: AnimatedProps): JSX.Element {
   return <AnimatedView {...rest} isVisible={false} />
 }

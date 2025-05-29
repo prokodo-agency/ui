@@ -7,16 +7,18 @@ import {
   useState,
   useEffect,
   type CSSProperties,
+  type JSX,
 } from "react"
 
-import { isString } from "@/helpers/validations"
 import { Animated } from "@/components/animated"
 import { Loading } from "@/components/loading"
+import { isString } from "@/helpers/validations"
+
 import type { CalendlyProps } from "./Calendly.model"
 
 let scriptAlreadyLoaded = false
 
-export default function CalendlyClient(props: CalendlyProps) {
+export default function CalendlyClient(props: CalendlyProps): JSX.Element {
   const {
     calendlyId,
     data,
@@ -40,20 +42,20 @@ export default function CalendlyClient(props: CalendlyProps) {
   /* ---------- helpers ------------------------------------ */
   const format = (c?: string) => c?.replaceAll("#", "")
 
-  const safePrefill = (): Record<string, string> => {
+  const safePrefill = useCallback((): Record<string, string> => {
     const res: Record<string, string> = {}
     if (!data) return res
     for (const k of ["name", "email", "firstName", "lastName"] as const) {
       if (isString(data[k])) res[k] = data[k]!
     }
     return res
-  }
+  }, [data])
 
   const dataUrl = useMemo(() => {
     const p = new URLSearchParams()
-    if (hideDetails) p.set("hide_landing_page_details", "1")
-    if (hideEventTypeDetails) p.set("hide_event_type_details", "1")
-    if (hideCookieSettings) p.set("hide_gdpr_banner", "1")
+    if (Boolean(hideDetails)) p.set("hide_landing_page_details", "1")
+    if (Boolean(hideEventTypeDetails)) p.set("hide_event_type_details", "1")
+    if (Boolean(hideCookieSettings)) p.set("hide_gdpr_banner", "1")
     if (isString(colors.background)) p.set("background_color", format(colors?.background)!)
     if (isString(colors.text))       p.set("text_color", format(colors.text)!)
     if (isString(colors.button))     p.set("primary_color", format(colors.button)!)
@@ -91,7 +93,7 @@ export default function CalendlyClient(props: CalendlyProps) {
 
       tryInit()
     },
-    [scriptLoaded, widgetInitialized, dataUrl, data],
+    [scriptLoaded, widgetInitialized, dataUrl, safePrefill],
   )
 
   /* ---------- load external SDK exactly once -------------- */
@@ -119,7 +121,7 @@ export default function CalendlyClient(props: CalendlyProps) {
 
   return (
     <Animated {...animationProps} onAnimate={onAnimate}>
-      {!hideLoading && !widgetInitialized && <Loading />}
+      {!Boolean(hideLoading) && !widgetInitialized && <Loading />}
       <div ref={calendlyRef} {...rest} style={divStyle} />
     </Animated>
   )

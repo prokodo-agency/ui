@@ -1,6 +1,8 @@
 import { createLazyWrapper } from "@/helpers/createLazyWrapper"
+
 import HeadlineClient from "./Headline.client"
 import HeadlineServer from "./Headline.server"
+
 import type { HeadlineProps } from "./Headline.model"
 
 export default createLazyWrapper<HeadlineProps>({
