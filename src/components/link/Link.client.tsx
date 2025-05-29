@@ -1,15 +1,15 @@
-'use client';
-import { memo } from 'react';
+"use client"
+import { memo } from "react"
 
-import { LinkView } from './Link.view';
+import { LinkView } from "./Link.view"
 
-import type { LinkProps } from './Link.model';
+import type { LinkProps } from "./Link.model"
 
 const LinkClient: React.FC<LinkProps> = memo((props) => {
-  const { href, onClick } = props;
+  const { href, onClick } = props
 
-  const linkTag = onClick && !href ? 'span' : 'a';
-  const hasHandlers = Boolean(onClick) || Boolean(props.onKeyDown);
+  const linkTag = onClick && !href ? "span" : "a"
+  const hasHandlers = Boolean(onClick) || Boolean(props.onKeyDown)
 
   return (
     <LinkView
@@ -17,8 +17,8 @@ const LinkClient: React.FC<LinkProps> = memo((props) => {
       hasHandlers={hasHandlers}
       LinkTag={linkTag}
     />
-  );
-});
+  )
+})
 
-LinkClient.displayName = 'LinkClient';
-export default LinkClient;
+LinkClient.displayName = "LinkClient"
+export default LinkClient

@@ -1,7 +1,7 @@
 
 import Animated from "@/components/animated/Animated.server"
 import Button from "@/components/button/Button.server"
-import { Headline } from "@/components/headline/Headline.server"
+import Headline from "@/components/headline/Headline.server"
 import { Icon } from "@/components/icon"
 
 import { AccordionView } from "./Accordion.view"

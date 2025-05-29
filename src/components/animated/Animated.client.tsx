@@ -11,7 +11,6 @@ import type { AnimatedProps } from './Animated.model'
 
 export default function AnimatedClient(props: AnimatedProps): JSX.Element {
   const {
-    ref,
     delay = 0,
     onAnimate,
     disabled,
@@ -40,7 +39,6 @@ export default function AnimatedClient(props: AnimatedProps): JSX.Element {
 
   return (
     <AnimatedView
-      ref={ref}
       animation={animation}
       className={className}
       disabled={disabled}

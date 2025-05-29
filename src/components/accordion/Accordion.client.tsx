@@ -3,7 +3,7 @@ import { useState, useCallback, type SyntheticEvent    , JSX } from "react"
 
 import { Animated } from "@/components/animated/Animated"
 import Button from "@/components/button/Button.client"
-import { HeadlineClient as Headline} from "@/components/headline/Headline.client"
+import Headline from "@/components/headline/Headline.client"
 import { Icon } from "@/components/icon"
 
 import { AccordionView } from "./Accordion.view"

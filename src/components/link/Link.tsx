@@ -9,8 +9,5 @@ export const Link = createIsland<LinkProps>({
   Server: LinkServer,
   loadLazy: () => import('./Link.lazy'),
   // optional: custom predicate (e.g. always interactive if target="_blank")
-  isInteractive: (p) =>
-    typeof p.onClick === 'function' ||
-    typeof p.onKeyDown === 'function' ||
-    p.target === '_blank',
+  isInteractive: (p) => typeof p.linkComponent === "function",
 });
