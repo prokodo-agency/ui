@@ -25,7 +25,7 @@ export function AccordionView({
   ...domRest
 }: AccordionViewProps): JSX.Element {
   return (
-    <div className={bem(undefined, { [variant]: true }, className)} {...domRest}>
+    <div {...domRest} className={bem(undefined, { [variant]: true }, className)}>
       {items.map((item, index) => {
         const { title, renderHeader, renderContent, actions, className: itemCls } = item
         const accId = `${id}-${title}`

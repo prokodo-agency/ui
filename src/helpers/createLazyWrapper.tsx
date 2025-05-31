@@ -1,11 +1,9 @@
-/* utils/createLazyWrapper.tsx */
 'use client'
 import {
   type ComponentType,
   type FC,
   type ReactElement,
 } from 'react'
-
 import { useHydrationReady } from '@/hooks/useHydrationReady'
 
 export interface LazyWrapperOptions<P extends object> {
@@ -14,10 +12,6 @@ export interface LazyWrapperOptions<P extends object> {
   Server: ComponentType<P>
   hydrateOnVisible?: boolean
   ioOptions?: IntersectionObserverInit
-  /**
-   * NEW: override the default “has any onX or redirect” check
-   * so you can force hydration even with no handlers.
-   */
   isInteractive?: (props: Readonly<P>) => boolean
 }
 
@@ -33,35 +27,32 @@ export function createLazyWrapper<P extends object>({
     priority = false,
     ...raw
   }): ReactElement => {
-    const props = raw as Record<string, unknown> & { redirect?: unknown }
+    const props = raw as P & { redirect?: unknown }
 
-    // 1) compute the “auto” heuristic:
+    // 1) “auto” heuristic
     const autoInteractive =
       Object.entries(props).some(
-        ([k,v]) => k.startsWith('on') && typeof v === 'function'
+        ([k, v]) => k.startsWith('on') && typeof v === 'function',
       ) ||
       props.redirect !== undefined
 
-    // 2) allow a custom override:
+    // 2) optional override
     const interactive = customInteractive
-      ? customInteractive(raw as P) || autoInteractive
+      ? customInteractive(props) || autoInteractive
       : autoInteractive
 
-    // 3) now gate hydration by viewport if requested
+    // 3) intersection-observer flag
     const [visible, ref] = useHydrationReady({
       enabled: interactive && hydrateOnVisible && !priority,
       ...ioOptions,
     })
 
-    // 4) once we know we need interactivity, mount the Client
-    if (interactive && (priority || visible)) {
-      return <Client {...(raw as P)} />
-    }
-
-    // 5) otherwise show the identical Server markup
+    // 4) single wrapper around both branches:
     return (
       <div ref={ref} data-island={name.toLowerCase()}>
-        <Server {...(raw as P)} />
+        {interactive && (priority || visible)
+          ? <Client {...props} />
+          : <Server {...props} />}
       </div>
     )
   }

@@ -1,10 +1,7 @@
 export * from "./Select"
 export type {
   SelectProps,
-  SelectChangeEvent,
-  SelectColor,
+  SelectValue,
   SelectEvent,
   SelectItem,
-  SelectValueMultiple,
-  SelectValueSingle,
 } from "./Select.model"

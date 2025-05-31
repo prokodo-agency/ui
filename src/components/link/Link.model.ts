@@ -1,6 +1,6 @@
 import type { BaseLinkProps } from "../base-link"
 import type { Variants } from "@/types/variants"
-import type { MouseEventHandler } from "react"
+import type { MouseEventHandler, ComponentType } from "react"
 
 export type LinkVariants = Omit<Variants, "white">
 
@@ -29,5 +29,6 @@ export type LinkProps = LinkHrefProps | LinkClickProps
 
 export type LinkViewProps = LinkProps & {
   LinkTag: 'a' | 'span';
+  BaseLinkComponent: ComponentType<BaseLinkProps>
   hasHandlers: boolean;
 };

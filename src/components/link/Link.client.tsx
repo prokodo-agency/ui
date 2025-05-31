@@ -2,6 +2,7 @@
 import { memo } from "react"
 
 import { LinkView } from "./Link.view"
+import BaseLink from "../base-link/BaseLink.server"
 
 import type { LinkProps } from "./Link.model"
 
@@ -16,6 +17,7 @@ const LinkClient: React.FC<LinkProps> = memo((props) => {
       {...props}
       hasHandlers={hasHandlers}
       LinkTag={linkTag}
+      BaseLinkComponent={BaseLink}
     />
   )
 })

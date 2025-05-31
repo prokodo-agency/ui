@@ -170,6 +170,11 @@
     }
   }
 
+  &--has-icon {
+    display: flex;
+    align-items: center;
+  }
+
   &--icon-only {
     display: flex;
     justify-content: center;

@@ -223,9 +223,9 @@ export const Form: FC<FormProps> = memo(
           aria-required={Boolean(field?.required) ? "true" : undefined} // Indicate required fields
           messagesFields={messagesFields}
           variant={variant}
-          disabled={
-            disableFields !== undefined ? disableFields : field?.disabled
-          }
+          // disabled={
+          //   disableFields !== undefined ? disableFields : field?.disabled
+          // }
           onChange={handleChangeField}
           onValidate={handleValidationField}
         />

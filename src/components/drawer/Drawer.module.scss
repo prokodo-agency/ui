@@ -3,173 +3,193 @@
 @use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
+// Keyframes for sliding from each edge:
 @keyframes slideInLeft {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  0%   { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0);    opacity: 1; }
+}
+@keyframes slideOutLeft {
+  0%   { transform: translateX(0);    opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0; }
 }
 
 @keyframes slideInRight {
-    0% {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  0%   { transform: translateX(100%);  opacity: 0; }
+  100% { transform: translateX(0);    opacity: 1; }
+}
+@keyframes slideOutRight {
+  0%   { transform: translateX(0);    opacity: 1; }
+  100% { transform: translateX(100%);  opacity: 0; }
 }
 
 @keyframes slideInTop {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  0%   { transform: translateY(-100%); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+@keyframes slideOutTop {
+  0%   { transform: translateY(0);    opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 0; }
 }
 
 @keyframes slideInBottom {
-    0% {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  0%   { transform: translateY(100%);  opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+@keyframes slideOutBottom {
+  0%   { transform: translateY(0);    opacity: 1; }
+  100% { transform: translateY(100%);  opacity: 0; }
 }
 
 @include define-block("Drawer") {
+  // The backdrop that dims the screen when drawer is open:
+  &__backdrop {
     position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1301;
+
+    &--open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none !important;
+    }
+  }
+
+  // The sliding “container” that holds header + content:
+  &__container {
+    position: fixed;
+    background-color: var(--color-white);
+    box-shadow: var(--elevation-1);
+    z-index: 1302;
+    pointer-events: none; // until “open”
+    // We will override these per‐anchor:
+    width: 300px;
+    height: 100%;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1300;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+  }
 
-    &::after {
-        content: "";
-        position: fixed;
+  &__container {
+    // Always enable pointer‐events when open:
+    &--open {
+      pointer-events: auto;
+    }
+
+    // If “fullscreen” is true, fill the entire viewport:
+    &--fullscreen {
+        width: 100vw !important;
+        height: 100vh !important;
+        top: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        right: 0 !important;
+    }
+
+    // Anchor‐left styles:
+    &--anchor-left {
+        top: 0;
+        left: 0;
+        width: 80vw;
+        height: 100vh;
+        transform: translateX(-100%);
+
+        &--open {
+            animation: slideInLeft 0.3s ease forwards;
+        }
+
+        &:not(&--open) {
+          animation: slideOutLeft 0.3s ease forwards;
+        }
+    }
+
+    // Anchor‐right styles:
+    &--anchor-right {
+        top: 0;
+        left: auto;
+        right: 0;
+        width: 80vw;
+        height: 100vh;
+        transform: translateX(100%);
+
+        &--open {
+          animation: slideInRight 0.3s ease forwards;
+        }
+
+        &:not(&--open) {
+          animation: slideOutRight 0.3s ease forwards;
+        }
+    }
+
+    // Anchor‐top styles:
+    &--anchor-top {
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: -1;
-        opacity: 1;
-        transition: opacity 0.3s ease-in-out;
-    }
-    
-    &__container {
-        position: fixed;
-        // height: 100%;
-        width: calc(100% - $space-xl);
-        background-color: #ffffff;
-        box-shadow: var(--elevation-1);
-        z-index: 1301;
-        padding: $space-md;
-        pointer-events: none;
-        background-color: var(--color-white);
-        transition: transform 0.3s ease;
-
-        &--fullscreen {
-            height: calc(100% - $space-lg) !important;
-            overflow-y: auto;
-        }
+        height: 50vh;
+        transform: translateY(-100%);
+        // animation: slideOutTop 0.3s ease forwards;
 
         &--open {
-            opacity: 1;
-            pointer-events: auto;
-    
-            &::after {
-                opacity: 1;
-            }
+          animation: slideInTop 0.3s ease forwards;
         }
-    
-        &--anchor-left {
-            top: 0;
-            left: 0;
-            height: 100%;
-    
-            &--enter {
-                animation: slideInLeft 0.5s ease-in forwards;
-            }
-    
-            &--exit {
-                animation: slideInLeft 0.5s ease-out reverse;
-            }
-        }
-    
-        &--anchor-right {
-            top: 0;
-            right: 0;
-            height: 100%;
-            
-            &--enter {
-                animation: slideInRight 0.5s ease-in forwards;
-            }
-    
-            &--exit {
-                animation: slideInRight 0.5s ease-out reverse;
-            }
-        }
-    
-        &--anchor-top {
-            top: 0;
-            left: 0;
 
-            &--enter {
-                animation: slideInTop 0.5s ease-in forwards;
-            }
-    
-            &--exit {
-                animation: slideInTop 0.5s ease-out reverse;
-            }
-        }
-    
-        &--anchor-bottom {
-            border-top-left-radius: $ui-background-border-radius;
-            border-top-right-radius: $ui-background-border-radius;
-            bottom: 0;
-            left: 0;
-    
-            &--enter {
-                animation: slideInBottom 0.5s ease-in forwards;
-            }
-    
-            &--exit {
-                animation: slideInBottom 0.5s ease-out reverse;
-            }
+        &:not(&--open) {
+          animation: slideOutTop 0.3s ease forwards;
         }
     }
 
-    &__header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: flex-end;
-        padding: $space-lg 0;
+    // Anchor‐bottom styles:
+    &--anchor-bottom {
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 50vh;
+        transform: translateY(100%);
 
-        &__title {
-            @include text('headline/md')
+        &--open {
+          animation: slideInBottom 0.3s ease forwards;
         }
 
-        &--has-title {
-            justify-content: space-between;
+        &:not(&--open) {
+          animation: slideOutBottom 0.3s ease forwards;
         }
     }
 
-    &__content {
-        @include text('base')
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      transition: none;
     }
+
+    &--open {
+      pointer-events: auto;
+
+      @media (prefers-reduced-motion: reduce) {
+        transform: translateY(0);
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  }
+
+  // Header inside the container:
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem; // adjust as needed
+    border-bottom: 1px solid var(--color-grey-200);
+  }
+
+  // Content area:
+  &__content {
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: calc(100% - 3rem); // adjust if needed
+  }
 }

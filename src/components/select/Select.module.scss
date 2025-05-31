@@ -6,264 +6,227 @@
 @use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-        transform: scale(0.95, 0.8);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1, 1);
-    }
-}
-  
-@keyframes fade-out {
-    0% {
-        opacity: 1;
-        transform: scale(1, 1);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.95, 0.8);
-    }
-}
+/* fade-in / out for the popup ------------------------------------------------ */
+@keyframes fade-in  { 0% {opacity:.0; transform:scale(.95,.8)} 100% {opacity:1} }
+@keyframes fade-out { 0% {opacity:1 ; transform:scale(1 ,1 )} 100% {opacity:0; transform:scale(.95,.8)} }
 
 @include define-block("Select") {
+  position: relative;
+
+  &__label {
+    position: absolute;
+    left: $space-xl;
+    top: calc($space-xl + $space-xs);
+    transform-origin: top left;
+    /* start centered vertically, at full size */
+    transform: translateY(-150%) scale(0.75);
+    padding: 0 $space-xs;
+    font-size: 1rem;
+    color: var(--color-primary-500);
+    z-index: 1;
+    pointer-events: none;
+    background-color: var(--color-white);
+  }
+
+  /* ───────────────── field (container for button + listbox) */
+  &__field {
+    position:relative;
+    box-shadow:var(--elevation-1);
+    border-radius:$ui-form-element;
+
+    /*   ‘expanded’ state is now driven by a class your JS toggles */
+    &--expanded {
+        box-shadow:none;
+    }
+  }
+
+  /* ───────────────── toggle button (was MUI root) */
+  &__button {
+    box-sizing:border-box;
+    width:calc(100% - $space-xs + 4px);
+    padding:0;
+    text-align:left;
+    cursor:pointer;
+    border:none;
+    color:var(--color-grey-900);
+    border-radius:$ui-form-element;
+    position:relative;
+    @include gradientBorderVar(7);
+    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite:add;
+
+    /* hover / focus */
+    @include when-hovered() {
+        @include gradientBorderVar(4);
+    }
+    @include when-focused() {
+        outline:0; @include gradientBorderVar(4);
+    }
+
+    /* open state — JS toggles .Select__button--expanded **and**
+       .Select__field--expanded plus aria-expanded="true"          */
+    &--expanded {
+      border-top-left-radius:px-to-rem(27px);
+      border-top-right-radius:px-to-rem(27px);
+      border-bottom-left-radius:0;
+      border-bottom-right-radius:0;
+      @include gradientBorderVar(4);
+
+      > .Select__button__inner {
+        border-top-left-radius:px-to-rem(25px);
+        border-top-right-radius:px-to-rem(25px);
+        border-bottom-left-radius:0;
+        border-bottom-right-radius:0;
+      }
+    }
+
+    /* caret / icon (if you still have one) */
+    > svg {
+      position:absolute; top:0; right:10px; font-size:1rem; height:100%;
+    }
+
+    /* inner text */
+    &__inner {
+      display:flex;
+      align-items:center;
+      padding:px-to-rem(14px) $space-lg;
+      margin:2px;
+      background:var(--color-white);
+      border-radius:$ui-form-element;
+      @include text("base");
+
+      html[data-theme='dark'] & {
+        background:var(--color-grey-200);
+      }
+
+      &--expanded {
+        border-top-left-radius:px-to-rem(25px);
+        border-top-right-radius:px-to-rem(25px);
+        border-bottom-left-radius:0;
+        border-bottom-right-radius:0;
+      }
+
+      &--is-placeholder {
+        color:var(--color-grey-500);
+      }
+    }
+  }
+
+  /* ───────────────── listbox (popup) */
+  &__listbox {
+    position:relative;
+    box-sizing:border-box;
+    padding: 2px;
+    margin: -2px 0 0 0;
+    overflow:auto;
+    outline:0;
+    max-height: 225px;
+    width: calc(100% + 1px);
+    color:var(--color-grey-900);
+    border-bottom-left-radius:px-to-rem(25px);
+    border-bottom-right-radius:px-to-rem(25px);
+    @include gradientBorderVar(4);
+    box-shadow:var(--elevation-3);
+    scrollbar-width: none;
+
+    /* animation – your JS toggles .is-open / .is-closed */
+    &--is-open   {
+      animation:fade-in 200ms ease-out forwards;
+    }
+    &--is-closed {
+      animation:fade-out 200ms ease-in  forwards;
+    }
+  }
+
+  /* ───────────────── option item */
+  &__item {
+    list-style:none;
+    display:flex; align-items:center;
+    padding:$space-md $space-lg;
+    cursor:pointer;
+    background:var(--color-white);
+    position:relative;
+    backface-visibility:hidden;
+    margin-top: -2px;
+    perspective:1000px;
+    @include text("base");
+
+    &:last-child {
+      border-bottom-left-radius:px-to-rem(25px);
+      border-bottom-right-radius:px-to-rem(25px);
+    }
+
+    /* hover / focus */
+    @include when-hovered() {
+      background-color:var(--color-grey-50);
+    }
+
+    @include when-focuse-visible() {
+      outline:0;
+      background:var(--color-primary-100);
+    }
+
+    /* selected */
+    &--selected {
+      background-color:var(--color-primary-50);
+    }
+
+    /* disabled (if you add aria-disabled) */
+    &[aria-disabled="true"] { color:var(--color-grey-400); cursor:not-allowed; }
+  }
+
+  /* ───────────────── checkbox for multi-select */
+  &__checkbox {
+    width:18px; height:18px; margin-right:$space-md; position:relative;
+    transform:scale(1.2); cursor:pointer; border:none; border-radius:5px;
+    -webkit-appearance:none; appearance:none;
+    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite:add;
+    @include gradientBorderVar(7);
+
+    &:before { /* white inner square */
+      content:""; position:absolute; inset:2px; background:var(--color-white);
+    }
+
+    &--checked { /* gradient + tick mark */
+      @include gradientBorderVar(4);
+
+      &::after {
+        content:""; position:absolute; inset:0;
+        @include gradientBackgroundVar(primary-grey-secondary);
+        -webkit-mask:url('data:image/svg+xml;utf8,\
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" \
+               stroke-width="1.5" fill="none" stroke-linecap="round" \
+               stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" \
+               stroke="black"/></svg>') no-repeat center / contain;
+        mask:url('data:image/svg+xml;utf8,\
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" \
+               stroke-width="1.5" fill="none" stroke-linecap="round" \
+               stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" \
+               stroke="black"/></svg>') no-repeat center / contain;
+      }
+    }
+  }
+
+  /* ───────────────── helper / error text */
+  &__helperText {
+    padding-left: $space-xl;
+    padding-top: $space-md;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 100%;
-    
-    &__field {
-        position: relative;
-        box-shadow: var(--elevation-1);
-        border-radius: $ui-form-element;
+    color: var(--color-grey-300);
+    width: 80%;
+    @include text("caption");
 
-        &--expanded {
-            box-shadow: none;
-        }
+    html[data-theme='dark'] & {
+      color: var(--color-grey-700);
     }
 
-    &__button {
-        box-sizing: border-box;
-        width: calc(100% - $space-xs + 4px);
-        padding: 0;
-        text-align: left;
-        mask: 
-            linear-gradient(#fff 0 0) content-box, 
-            linear-gradient(#fff 0 0);
-        mask-composite: add;
-        border: none;
-        color: var(--color-grey-900);
-        border-radius: $ui-form-element;
-        position: relative;
-        cursor: pointer;
-        @include gradientBorderVar(7);
+    &__content {
+      width: 100%;
 
-        &__inner {
-            display: flex;
-            align-items: center;
-            padding: px-to-rem(14px) $space-lg;
-            background: var(--color-white);
-            border-radius: $ui-form-element;
-            margin: 2px;
-            color: var(--color-grey-900);
-            @include text("base");
-
-            html[data-theme='dark'] & {
-                background-color: var(--color-grey-200);
-            }
-        }
-
-        &--expanded {
-            border-top-left-radius: px-to-rem(27px);
-            border-top-right-radius: px-to-rem(27px);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            @include gradientBorderVar(4);
-    
-            & > span {
-                border-top-left-radius: px-to-rem(25px);
-                border-top-right-radius: px-to-rem(25px);
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-        }
-    
-        @include when-hovered() {
-            @include gradientBorderVar(4);
-        }
-    
-        @include when-focused() {
-            outline: 0;
-            @include gradientBorderVar(4);
-        }
-    
-        & > svg {
-            font-size: 1rem;
-            position: absolute;
-            height: 100%;
-            top: 0;
-            right: 10px;
-        }
+      &--is-error {
+        color: var(--color-error);
+      }
     }
-    
-    &__listbox {
-        position: relative;
-        box-sizing: border-box;
-        padding: 2px;
-        margin: -6px 0 0 0;
-        overflow: auto;
-        outline: 0;
-        color: var(--color-grey-900);
-        border-bottom-left-radius: px-to-rem(25px);
-        border-bottom-right-radius: px-to-rem(25px);
-        box-shadow: var(--elevation-3);
-        max-height: 225px;
-        scrollbar-width: none;
-    
-        &.open {
-            animation: fade-in 200ms ease-out forwards;
-        }
-    
-        &.closed {
-            animation: fade-out 200ms ease-in forwards;
-        }
-    
-        &.placement-top {
-            transform-origin: bottom;
-        }
-    
-        &.placement-bottom {
-            transform-origin: top;
-        }
-
-        &::-webkit-scrollbar-track {
-            background: red; /* Set the background color */
-        }
-    }
-    
-    &__item {
-        position: relative;
-        display: flex;
-        align-items: center;
-        list-style: none;
-        padding: $space-md $space-lg;
-        background: var(--color-white);
-        z-index: 1501;
-        cursor: pointer;
-        backface-visibility: hidden;
-        perspective: 1000px;
-
-        &:last-child {
-            border-bottom-left-radius: px-to-rem(25px);
-            border-bottom-right-radius: px-to-rem(25px);
-        }
-        
-        @include when-hovered() {
-            background-color: var(--color-primary-100) !important;
-
-            &:not(.disabled) {
-                background-color: var(--color-grey-50);
-            }
-        }
-    
-        &--selected {
-            background-color: var(--color-primary-50) !important;
-        }
-    
-        &.base-Option-highlighted {
-            background-color: var(--color-grey-100);
-        }
-    
-        &:focus-visible {
-            outline: 0;
-            background-color: var(--color-primary-100);
-        }
-    
-        &.base-Option-highlighted.base--selected {
-            background-color: var(--color-primary-100);
-            color: var(--color-primary-900);
-        }
-    
-        &--disabled {
-            color: var(--color-grey-400);
-        }
-    }
-    
-    &__popup {
-        width: 100%;
-        z-index: 1500;
-        max-height: 230px;
-        transform: none !important;
-        top: 53px !important;
-
-        &::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            @include gradientBorderVar(4);
-            mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            mask-composite: add;
-            z-index: 1500;
-            border-bottom-left-radius: px-to-rem(25px);
-            border-bottom-right-radius: px-to-rem(25px);
-        }
-
-        @media (max-width: 768px) {
-            width: 100%; // Ensure it stays responsive on smaller screens
-        }
-    }
-
-    &__checkbox {
-        position: relative;
-        width: 18px;
-        height: 18px;
-        margin-right: $space-md;
-        transform: scale(1.2);
-        mask: 
-            linear-gradient(#fff 0 0) content-box, 
-            linear-gradient(#fff 0 0);
-        mask-composite: add;
-        border: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        border-radius: 5px;
-        cursor: pointer;
-        @include gradientBorderVar(7);
-
-        &:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            margin: 2px;
-            width: calc(100% - 4px);
-            height: calc(100% - 4px);
-            background-color: var(--color-white);
-        }
-
-        &--checked {
-            @include gradientBorderVar(4);
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                @include gradientBackgroundVar(primary-grey-secondary);
-                -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="black"></path></svg>') no-repeat center;
-                mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="black"></path></svg>') no-repeat center;
-                -webkit-mask-size: contain;
-                mask-size: contain;
-            }
-        }
-    }
+  }
 }

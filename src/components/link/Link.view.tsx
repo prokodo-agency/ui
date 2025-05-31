@@ -1,7 +1,5 @@
 import { create } from "@/helpers/bem"
 
-import { BaseLink } from "../base-link"
-
 import styles from "./Link.module.scss"
 
 import type { LinkViewProps } from "./Link.model"
@@ -22,6 +20,7 @@ export function LinkView({
   LinkTag,
   hasHandlers,
   onClick,
+  BaseLinkComponent,
   linkComponent,
   ...rest
 }: LinkViewProps): JSX.Element {
@@ -60,7 +59,7 @@ export function LinkView({
     )
   }
   return (
-    <BaseLink
+    <BaseLinkComponent
       {...common}
       {...rest}
       href={href}
@@ -69,6 +68,6 @@ export function LinkView({
       {...(hasHandlers ? { onClick } : null)}
     >
       {children}
-    </BaseLink>
+    </BaseLinkComponent>
   )
 }

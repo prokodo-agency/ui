@@ -15,7 +15,7 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    showCloseButton: {
+    hideCloseButton: {
       control: { type: "boolean" },
     },
     title: {
@@ -60,6 +60,15 @@ const DialogWithRef: FC<DialogProps> = args => {
 export const Default: Story = {
   args: {
     title: "Example Dialog",
+    onClose: () => console.log("Dialog closed"),
+  },
+  render: args => <DialogWithRef {...args} />,
+}
+
+export const FullScreen: Story = {
+  args: {
+    title: "Example Dialog",
+    fullScreen: true,
     onClose: () => console.log("Dialog closed"),
   },
   render: args => <DialogWithRef {...args} />,

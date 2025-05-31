@@ -16,12 +16,11 @@ import {
   type DatePickerValue,
 } from "../datePicker"
 import { GridRow } from "../grid"
-import { Input, type InputProps, type InputColor } from "../input"
+import { Input, type InputProps } from "../input"
 import {
   Select,
   type SelectProps,
   type SelectEvent,
-  type SelectColor,
 } from "../select"
 import { Slider, type SliderProps } from "../slider"
 import { Switch, type SwitchProps } from "../switch"
@@ -67,7 +66,6 @@ export const FormField: FC<FormFieldProps> = memo(
       case "switch":
         return renderFieldContainer(
           <Switch
-            color={variant as SelectColor}
             {...(props as SwitchProps)}
             onChange={(_: ChangeEvent<HTMLInputElement>, checked: boolean) =>
               onChange?.(props as FormFieldModel, checked)
@@ -86,7 +84,6 @@ export const FormField: FC<FormFieldProps> = memo(
       case "select":
         return renderFieldContainer(
           <Select
-            color={variant as SelectColor}
             {...(props as SelectProps)}
             onChange={(_: SelectEvent, value: string | string[] | null) =>
               onChange?.(props as FormFieldModel, value ?? undefined)
@@ -96,7 +93,6 @@ export const FormField: FC<FormFieldProps> = memo(
       case "input":
         return renderFieldContainer(
           <Input
-            color={variant as InputColor}
             errorTranslations={messagesFields?.errors?.input}
             onValidate={(_, err) => onValidate?.(props as FormFieldModel, err)}
             onChange={(e: FocusEvent<HTMLInputElement>) =>
