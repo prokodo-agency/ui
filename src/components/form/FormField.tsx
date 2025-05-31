@@ -105,7 +105,7 @@ export const FormField: FC<FormFieldProps> = memo(
         return renderFieldContainer(
           <DatePicker
             {...(props as DatePickerProps)}
-            errorTranslations={messagesFields?.errors?.date}
+            translations={messagesFields?.errors?.date}
             onValidate={(_, err) => onValidate?.(props as FormFieldModel, err)}
             onChange={(value: DatePickerValue) =>
               onChange?.(

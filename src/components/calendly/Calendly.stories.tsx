@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 /* ---------- Story meta ------------------------------------ */
 const meta = {
-  title: "prokodo/common/Calendly",
+  title: "prokodo/service/Calendly",
   component: Calendly,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

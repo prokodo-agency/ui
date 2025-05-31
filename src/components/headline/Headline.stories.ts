@@ -14,6 +14,7 @@ const meta = {
       options: ["h1", "h2", "h3", "h4", "h5", "h6"],
       control: { type: "select" },
     },
+    highlight: { type: "boolean" },
     size: {
       options: ["xs", "sm", "md", "lg", "xl", "xxl"],
       control: { type: "select" },

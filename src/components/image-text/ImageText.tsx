@@ -1,6 +1,3 @@
-"use client"
-import { type FC, useState } from "react"
-
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
@@ -15,6 +12,7 @@ import { RichText } from "../rich-text"
 import styles from "./ImageText.module.scss"
 
 import type { ImageTextProps } from "./ImageText.model"
+import type { FC } from "react"
 
 const bem = create(styles, "ImageText")
 
@@ -22,13 +20,14 @@ export const ImageText: FC<ImageTextProps> = ({
   animatedBorder,
   reverse,
   subTitle,
+  subTitleProps,
   title,
+  titleProps,
   content,
   animation,
   image,
   button,
 }) => {
-  const [lineVisible, setLineVisible] = useState(false)
   const leftColumnMd = image
     ? animatedBorder
       ? 4
@@ -43,39 +42,27 @@ export const ImageText: FC<ImageTextProps> = ({
           "is-reverse": Boolean(reverse),
         })}
       >
-        {animatedBorder && (
-          <GridRow className={bem("animated__border__wrapper")} sm={2} xs={3}>
-            <Animated
-              className={bem("animated__border", {
-                "is-visible": lineVisible,
-                [`${animatedBorder?.direction ?? "top-to-bottom"}`]:
-                  !!animatedBorder?.direction,
-              })}
-              onAnimate={visible => setLineVisible(visible)}
-            />
-          </GridRow>
-        )}
         <GridRow className={bem("content")} md={leftColumnMd} xs={10}>
           <Animated>
             {subTitle && (
               <Headline
                 highlight
-                className={bem("sub__headline", undefined, subTitle?.className)}
                 size="sm"
                 type="h3"
                 variant="primary"
-                {...subTitle}
+                {...subTitleProps}
+                className={bem("sub__headline", undefined, subTitleProps?.className)}
               >
-                {subTitle?.content}
+                {subTitle}
               </Headline>
             )}
             <Headline
-              className={bem("headline", undefined, title?.className)}
               size="lg"
               type="h2"
-              {...title}
+              {...titleProps}
+              className={bem("headline", undefined, titleProps?.className)}
             >
-              {title.content}
+              {title}
             </Headline>
             {isString(content) && (
               <RichText className={bem("content__paragraph")}>
@@ -93,10 +80,7 @@ export const ImageText: FC<ImageTextProps> = ({
         </GridRow>
         {image && (
           <GridRow className={bem("image")} md={6} xs={10}>
-            <Animated
-              // animation={screenLargerThanMd ? "right-left" : "bottom-top"}
-              className={bem("animated__container")}
-            >
+            <Animated className={bem("animated__container")}>
               {animation ? (
                 <Lottie
                   animationName={animation}

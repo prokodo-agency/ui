@@ -59,10 +59,6 @@ export default async () => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
-        "@hugeicons": path.resolve(
-          __dirname,
-          "node_modules/hugeicons-react/dist/esm/icons",
-        ),
       },
     },
     esbuild: {
@@ -87,11 +83,9 @@ export default async () => {
           "react/jsx-dev-runtime",
           "react-bem-helper",
           "dayjs",
-          "@mui/base",
           "react-markdown",
           "remark-gfm",
           "remark-breaks",
-          "hugeicons-react",
           "@googlemaps/js-api-loader",
           "@lottiefiles/dotlottie-react",
         ],

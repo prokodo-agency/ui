@@ -3,7 +3,7 @@ import { PostTeaser } from "./PostTeaser"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/common/PostTeaser",
+  title: "prokodo/blog/PostTeaser",
   component: PostTeaser,
   parameters: {
     layout: "centered",

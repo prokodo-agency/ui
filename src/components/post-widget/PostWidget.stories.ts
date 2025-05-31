@@ -4,7 +4,7 @@ import type { PostWidgetItem } from "./PostWidget.model"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/common/PostWidget",
+  title: "prokodo/blog/PostWidget",
   component: PostWidget,
   parameters: {
     layout: "centered",

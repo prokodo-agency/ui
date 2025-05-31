@@ -6,4 +6,5 @@ export const Input = createIsland<InputProps>({
   name: "Input",
   Server: InputServer,
   loadLazy: () => import("./Input.lazy"),
+  isInteractive: () => true
 })

@@ -57,7 +57,7 @@ export function CardView({
     "has-highlight": Boolean(highlight),
     "has-gradiant": Boolean(gradiant),
     "has-background": Boolean(background),
-    "has-shadow": Boolean(enableShadow),
+    "has-shadow": Boolean(enableShadow) || Boolean(isClickable),
     "has-animation": Boolean(animated),
   }
 

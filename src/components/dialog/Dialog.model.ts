@@ -58,8 +58,7 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
 
 /**
  * Props for your *client-side wrapper* (DialogClient),
- * which adds the `ref`, the `open?: boolean` flag, and the
- * more MUI-style `onClose(event, reason)` signature.
+ * which adds the `ref`, the `open?: boolean` flag
  */
 export type DialogProps = Omit<
   DialogViewProps,
@@ -67,7 +66,7 @@ export type DialogProps = Omit<
 > & {
   /** initial open flag from the page or parent */
   open?: boolean
-  /** callback signature like MUI's `<Modal onClose={(e,reason)=>…}/>` */
+  /** callback signature */
   onChange?: (
     event: unknown,
     reason: DialogChangeReson,

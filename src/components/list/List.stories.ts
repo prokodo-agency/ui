@@ -64,8 +64,9 @@ const cardItems: ListCardItemProps[] = [
   },
   {
     icon: "AccelerationIcon",
-    title: "Card list item (Icon)",
+    title: "Card list item (Icon + Clickable)",
     desc: "This is a short description",
+    onClick: () => console.log("Clicked"),
   },
   {
     icon: "AccidentIcon",

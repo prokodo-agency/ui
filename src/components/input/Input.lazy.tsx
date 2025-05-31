@@ -7,4 +7,5 @@ export default createLazyWrapper<InputProps>({
   name: "Input",
   Client: InputClient,
   Server: InputServer,
+  isInteractive: () => true
 })

@@ -3,7 +3,6 @@ import { useState, useCallback, type SyntheticEvent, type JSX } from "react"
 
 import { Animated } from "@/components/animated/Animated"
 import Button from "@/components/button/Button.client"
-import Headline from "@/components/headline/Headline.client"
 import { Icon } from "@/components/icon"
 
 import { AccordionView } from "./Accordion.view"
@@ -30,7 +29,6 @@ export default function AccordionClient(props: AccordionProps): JSX.Element {
       AnimatedComponent={Animated}
       ButtonComponent={Button}
       expandedIndex={expandedIndex}
-      HeadlineComponent={Headline}
       IconComponent={Icon}
       onToggle={handleToggle}
     />

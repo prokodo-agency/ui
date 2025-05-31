@@ -39,6 +39,5 @@ export type AccordionViewProps = Omit<AccordionProps, 'expanded' | 'onChange' | 
   ) => void;
   AnimatedComponent: ComponentType<AnimatedProps>
   ButtonComponent: ComponentType<ButtonProps>
-  HeadlineComponent: ComponentType<HeadlineProps>
   IconComponent: ComponentType<IconProps>
 }

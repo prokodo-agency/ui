@@ -20,7 +20,7 @@ jest.mock(
 describe("The common drawer component", () => {
   it("should render drawer", async () => {
     const { container } = render(
-      <Drawer anchor="right" open={true} onClose={jest.fn()} />,
+      <Drawer anchor="right" open={true} onChange={jest.fn()} />,
     )
     expect(container.firstChild).toMatchSnapshot()
   })

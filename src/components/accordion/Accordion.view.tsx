@@ -1,6 +1,8 @@
 import { create } from "@/helpers/bem"
 import { isNull } from "@/helpers/validations"
 
+import { Headline } from "@/components/headline"
+
 import styles from "./Accordion.module.scss"
 
 import type { AccordionViewProps } from "./Accordion.model"
@@ -20,7 +22,6 @@ export function AccordionView({
   iconProps,
   AnimatedComponent,
   ButtonComponent,
-  HeadlineComponent,
   IconComponent,
   ...domRest
 }: AccordionViewProps): JSX.Element {
@@ -55,14 +56,14 @@ export function AccordionView({
               {!isNull(renderHeader) ? (
                 renderHeader
               ) : (
-                <HeadlineComponent
+                <Headline
                   className={bem("title", { "is-expanded": isExpanded })}
                   size="sm"
                   type="h3"
                   {...(item.titleOptions ?? titleOptions)}
                 >
                   {title}
-                </HeadlineComponent>
+                </Headline>
               )}
 
               <IconComponent

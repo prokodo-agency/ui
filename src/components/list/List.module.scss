@@ -95,16 +95,16 @@
             cursor: pointer;
             color: var(--color-grey-500);
 
-            @include when-hovered() {
-                a > div div:first-child {
-                    @include gradientBackgroundVar(primary-secondary);
+            a {
+                @include text("headline/xs");
+            }
 
-                    svg {
-                        color: $white;
-                    }
+            @include when-hovered() {
+                span[role="presentation"] {
+                    color: var(--color-primary-500);
                 }
 
-                div > div:last-child span {
+                .list-title {
                     @include gradientTextVar(primary);
                 }
             }
