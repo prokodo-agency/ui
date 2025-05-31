@@ -1,80 +1,88 @@
-/* utils/createIsland.tsx
-   ───────────────────────────────────────── */
+/* utils/createIsland.tsx */
 import {
   lazy,
   Suspense,
   type ComponentType,
   type FC,
+  type ReactNode,
   type JSX,
 } from 'react';
 
-/* ---------- factory options -------------------------------- */
 export interface IslandOptions<P extends object> {
-  /** Name used for DevTools & `data-island` marker */
   name: string;
-  /** Pure server-only render (no hooks).  */
   Server: ComponentType<P>;
-  /** Dynamic import that resolves the *.lazy wrapper. */
-  loadLazy: () => Promise<{
-    default: ComponentType<P & { priority?: boolean }>;
-  }>;
-  /**
-   * Optional custom predicate that decides whether this
-   * set of props needs client interactivity.
-   */
+  loadLazy: () => Promise<{ default: ComponentType<P & { priority?: boolean }> }>;
+  /** force all instances interactive if truthy */
   isInteractive?: (props: Readonly<P>) => boolean;
 }
 
-/* ---------- helper ---------------------------------------- */
 export function createIsland<P extends object>({
   name,
   Server,
   loadLazy,
   isInteractive: customInteractive,
 }: IslandOptions<P>): ComponentType<P & { priority?: boolean }> {
-  /* Pre-load chunk once (browser only) */
-  // if (typeof window !== 'undefined') void loadLazy();
+  const LazyComp = lazy(() => loadLazy().then((m) => ({ default: m.default })));
 
-  /* Typed React.lazy wrapper */
-  const LazyWrapper =
-    typeof window !== 'undefined'
-      ? lazy(() => loadLazy().then((m) => ({ default: m.default })))
-      : null;
+  /* this is how Next knows to preload your chunk:
+     a use of loadLazy() on the server side emits <link rel="preload"> */
+  if (typeof window === 'undefined') {
+    void loadLazy();
+  }
 
-  /* ----------- final entry component ---------------------- */
+  const Wrap: FC<{ children: ReactNode }> = ({ children }) => (
+    <div data-island={name.toLowerCase()}>{children}</div>
+  );
+
   const Island: FC<P & { priority?: boolean }> = ({
     priority = false,
     ...raw
   }) => {
-    const props = raw as P;
+    const props = raw as P & { redirect?: unknown };
 
-    /* Generic interaction test: any onX handler or redirect prop */
+    // same old “onX or redirect” heuristic
     const autoInteractive =
       Object.entries(props).some(
-        ([key, val]) => key.startsWith('on') && typeof val === 'function',
-      ) || (props as { redirect?: unknown }).redirect !== undefined;
+        ([k, v]) => k.startsWith('on') && typeof v === 'function',
+      ) || props.redirect !== undefined;
 
+    // allow custom overrides
     const interactive = customInteractive
       ? customInteractive(props) || autoInteractive
       : autoInteractive;
 
-    /* Purely static — stream Server HTML once */
-    if (!interactive) return <Server {...props} />;
+    // **PRIORITY shortcut**:
+    // if this island is marked priority, we skip Suspense entirely
+    if (interactive && priority) {
+      return (
+        <Wrap>
+          {/* render the client bundle immediately */}
+          <LazyComp {...props} priority={priority} />
+        </Wrap>
+      );
+    }
 
-    /* identical HTML on server & first paint */
+    // static (no interactivity)
+    if (!interactive) {
+      return (
+        <Wrap>
+          <Server {...props} />
+        </Wrap>
+      );
+    }
+
+    // usual lazy/Suspense fallback
     const fallback: JSX.Element = (
-      <div data-island={name.toLowerCase()}>
+      <Wrap>
         <Server {...props} />
-      </div>
+      </Wrap>
     );
 
     return (
       <Suspense fallback={fallback}>
-        {LazyWrapper ? (
-          <LazyWrapper {...props} priority={priority} />
-        ) : (
-          fallback /* server branch: LazyWrapper === null */
-        )}
+        <Wrap>
+          <LazyComp {...props} priority={priority} />
+        </Wrap>
       </Suspense>
     );
   };

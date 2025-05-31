@@ -1,5 +1,8 @@
 import { Card } from "./Card"
 
+import { Headline } from "../headline"
+import { RichText } from "../rich-text"
+
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
@@ -34,13 +37,13 @@ type Story = StoryObj<typeof meta>
 
 const children = (
   <>
-    <h1>Headline</h1>
-    <p>
+    <Headline type="h1">Headline</Headline>
+    <RichText>
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
       voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
       clita kasd gubergren.
-    </p>
+    </RichText>
   </>
 )
 

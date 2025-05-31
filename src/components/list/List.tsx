@@ -1,23 +1,12 @@
-"use client"
-
-import {
-  type FC,
-  type ReactNode,
-  Fragment,
-  memo,
-  useCallback,
-  useMemo,
-} from "react"
-
+import React from "react"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
 import { Card } from "../card"
-import { Icon, type IconName } from "../icon"
+import { Icon } from "../icon"
 import { Link, type LinkProps } from "../link"
 
 import styles from "./List.module.scss"
-
 import type {
   ListProps,
   ListItemProps,
@@ -28,192 +17,168 @@ import type { Variants } from "@/types/variants"
 
 const bem = create(styles, "List")
 
-// Memoized List component to prevent unnecessary re-renders
-export const List: FC<ListProps> = memo(
-  ({
-    type,
-    variant = "inherit",
-    className,
-    options = {},
-    items,
-    classNameDesc,
-    ...props
-  }) => {
-    const modifier = useMemo(
-      () => ({
-        [`${type}`]: !!type,
-      }),
-      [type],
-    )
+/**
+ * A fully server‐rendered List component.  
+ * Any interactive fragments (e.g. <Link> or clickable <li>) will hydrate on the client.
+ */
+export function List({
+  type,
+  variant = "inherit",
+  className,
+  options = {},
+  items = [],
+  classNameDesc,
+  ...props
+}: ListProps) {
+  // Build a modifier object for BEM classes if `type` is truthy.
+  const modifier: Record<string, boolean> = {}
+  if (type) {
+    modifier[type] = true
+  }
 
-    const renderTitle = useCallback(
-      (title: string, item?: ListDefaultItemProps) => (
-        <span
-          className={bem("item__title", {
-            "is-clickable": !!item?.onClick,
-            ...modifier,
-          })}
-        >
-          {title}
-        </span>
-      ),
-      [modifier],
-    )
+  return (
+    <ul
+      // If your list is never updated dynamically, you can safely remove aria-live.
+      aria-live="polite"
+      aria-relevant="additions text"
+      {...props}
+      className={bem(undefined, undefined, className)}
+    >
+      {items.map((item: ListItemProps) => {
+        const { title, desc, icon, redirect, onClick, variant: itemVariant, className: itemClassName } = item
+        const isClickable = Boolean(onClick || redirect)
 
-    const renderLink = useCallback(
-      (props: LinkProps, children: ReactNode) => (
-        <Link
-          className={bem("item__link", undefined, props?.className)}
-          variant={variant}
-          {...props}
-        >
-          {children}
-        </Link>
-      ),
-      [variant],
-    )
+        // 1) Prepare <li> props for keyboard accessibility if clickable:
+        const liHandlers: {
+          role?: string
+          tabIndex?: number
+          onClick?: () => void
+          onKeyDown?: (e: React.KeyboardEvent) => void
+        } = {}
 
-    const renderIcon = useCallback(
-      (name?: IconName) => {
-        if (!name) return null
-        return (
-          <div className={bem("item__icon__wrapper")}>
-            <Icon color={variant as Variants} name={name} {...options?.icon} />
-          </div>
-        )
-      },
-      [variant, options?.icon],
-    )
+        if (isClickable) {
+          liHandlers.role = "button"
+          liHandlers.tabIndex = 0
 
-    const renderDesc = useCallback(
-      (desc?: string) =>
-        isString(desc) && (
-          <p className={bem("item__desc", undefined, classNameDesc)}>{desc}</p>
-        ),
-      [classNameDesc],
-    )
-
-    const renderCardItem = useCallback(
-      (item: ListCardItemProps) => {
-        const icon = item?.icon
-        return (
-          <Card
-            variant="white"
-            {...item}
-            className={bem("item__card", undefined, item?.className)}
-            contentClassName={bem(
-              "item__card__content",
-              undefined,
-              item?.contentClassName,
-            )}
-          >
-            <div
-              className={bem("item__inner", undefined, item?.innerClassName)}
-            >
-              {icon && (
-                <div
-                  className={bem(
-                    "item__icon",
-                    undefined,
-                    item?.iconProps?.className,
-                  )}
-                >
-                  <Icon
-                    {...item?.iconProps}
-                    className={bem("item__icon__svg")}
-                    name={icon}
-                    size="sm"
-                  />
-                </div>
-              )}
-              <div className={bem("item__content")}>
-                {renderTitle(item.title)}
-                {renderDesc(item?.desc)}
-              </div>
-            </div>
-          </Card>
-        )
-      },
-      [renderTitle, renderDesc],
-    )
-
-    const renderItem = useCallback(
-      (item: ListItemProps) => {
-        switch (type) {
-          case "card":
-            return renderCardItem(item as ListCardItemProps)
-          default:
-            if (item?.redirect !== undefined) {
-              return renderLink(
-                item.redirect,
-                <Fragment>
-                  {renderIcon(item?.icon)}
-                  {renderTitle(item.title, item)}
-                  {renderDesc(item?.desc)}
-                </Fragment>,
-              )
+          // Only call onClick if this is a “default”‐typed list (not a card).
+          if (type === "default" && onClick) {
+            liHandlers.onClick = () => void onClick(item as ListDefaultItemProps)
+            liHandlers.onKeyDown = (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                onClick(item as ListDefaultItemProps)
+              }
             }
-            return (
-              <Fragment>
-                {renderIcon(item?.icon)}
-                {renderTitle(item.title, item)}
-                {renderDesc(item?.desc)}
-              </Fragment>
-            )
+          }
         }
-      },
-      [type, renderCardItem, renderIcon, renderLink, renderTitle, renderDesc],
-    )
 
-    return (
-      <ul
-        aria-live="polite"
-        aria-relevant="additions text"
-        {...props}
-        className={bem(undefined, undefined, className)}
-      >
-        {items.map((item: ListItemProps) => {
-          const isClickable = !!item?.onClick || !!item?.redirect
-          // TODO: Add an additional Button component in li to resolve lint error
+        // 2) Compute the className for <li>:
+        const liClass = bem(
+          "item",
+          {
+            "is-clickable": isClickable,
+            [`is-clickable--${itemVariant ?? variant}`]: isClickable,
+            ...modifier,
+          },
+          itemClassName
+        )
+
+        // 3) Helper to render the title <span>:
+        const TitleSpan = () => {
+          const titleClass = bem("item__title", {
+            "is-clickable": isClickable,
+            ...modifier,
+          }, "list-title")
+          return <span className={titleClass}>{title}</span>
+        }
+
+        // 4) Helper to render an optional description <p>:
+        const DescParagraph = () => {
+          if (!isString(desc)) return null
+          return <p className={bem("item__desc", undefined, classNameDesc)}>{desc}</p>
+        }
+
+        // 5) Helper to render an icon (purely decorative):
+        const IconWrapper = () => {
+          if (!icon) return null
+          // aria-hidden for decorative icons
           return (
-            /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
-            <li
-              key={`list-item-${item.title}`}
-              aria-pressed={isClickable ? false : undefined}
-              role={isClickable ? "button" : undefined}
-              tabIndex={isClickable ? 0 : -1}
-              className={bem(
-                "item",
-                {
-                  "is-clickable": isClickable,
-                  [`is-clickable--${item?.variant ?? variant}`]: isClickable,
-                  ...modifier,
-                },
-                item?.className,
-              )}
-              onClick={
-                type === "default" && isClickable
-                  ? () => item.onClick?.(item)
-                  : undefined
-              }
-              onKeyDown={
-                isClickable
-                  ? e => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault()
-                        item?.onClick?.(item)
-                      }
-                    }
-                  : undefined
-              }
-            >
-              {renderItem(item)}
+            <div className={bem("item__icon__wrapper")} aria-hidden="true">
+              <Icon color={variant as Variants} name={icon} {...options.icon} />
+            </div>
+          )
+        }
+
+        // 6) If `type === "card"`, render a <Card> wrapper:
+        if (type === "card") {
+          const cardItem = item as ListCardItemProps
+          return (
+            <li key={`list-item-${title}`} className={liClass} {...liHandlers}>
+              <Card
+                variant="white"
+                {...cardItem}
+                className={bem("item__card", undefined, cardItem.className)}
+                contentClassName={bem(
+                  "item__card__content",
+                  undefined,
+                  cardItem.contentClassName
+                )}
+              >
+                <div className={bem("item__inner", undefined, cardItem.innerClassName)}>
+                  {/* Decorative Icon */}
+                  {icon && (
+                    <div
+                      className={bem("item__icon", undefined, cardItem.iconProps?.className)}
+                      aria-hidden="true"
+                    >
+                      <Icon
+                        {...cardItem.iconProps}
+                        className={bem("item__icon__svg")}
+                        name={icon}
+                        size="sm"
+                      />
+                    </div>
+                  )}
+                  <div className={bem("item__content")}>
+                    <TitleSpan />
+                    <DescParagraph />
+                  </div>
+                </div>
+              </Card>
             </li>
           )
-        })}
-      </ul>
-    )
-  },
-)
+        }
+
+        // 7) Otherwise, “default”‐type list or free‐form link item:
+        if (redirect) {
+          // If redirect is present, render a proper <Link> (anchor) inside <li>.
+          const linkProps = redirect as LinkProps
+          return (
+            <li key={`list-item-${title}`} className={liClass}>
+              <Link
+                className={bem("item__link", undefined, linkProps.className)}
+                variant={variant}
+                {...linkProps}
+              >
+                <IconWrapper />
+                <TitleSpan />
+                <DescParagraph />
+              </Link>
+            </li>
+          )
+        }
+
+        // 8) Finally: a non‐link, potentially clickable <li> that is NOT a card:
+        return (
+          <li key={`list-item-${title}`} className={liClass} {...liHandlers}>
+            <IconWrapper />
+            <TitleSpan />
+            <DescParagraph />
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
 
 List.displayName = "List"

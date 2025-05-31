@@ -3,7 +3,7 @@ import { Slider } from "./Slider"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/common/Slider",
+  title: "prokodo/form/Slider",
   component: Slider,
   parameters: {
     layout: "centered",
@@ -18,22 +18,22 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     id: "example1",
-    defaultValue: 50,
+    value: 50,
   },
 }
 
 const marks = [
   {
-    value: 0,
-    label: "0°C",
+    value: 10,
+    label: "10°C",
   },
   {
     value: 20,
     label: "20°C",
   },
   {
-    value: 37,
-    label: "37°C",
+    value: 45,
+    label: "45°C",
   },
   {
     value: 100,
@@ -44,13 +44,11 @@ const marks = [
 export const WithLabels: Story = {
   args: {
     id: "example2",
-    "aria-label": "Temperature",
-    defaultValue: 30,
-    getAriaValueText: (value: number) => `${value}°C`,
-    shiftStep: 30,
-    step: 10,
+    label: "Temperature",
+    value: 30,
+    step: 5,
     marks,
     min: 10,
-    max: 110,
+    max: 100,
   },
 }

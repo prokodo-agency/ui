@@ -16,8 +16,10 @@ export type ImageTextAnimatedBorder = {
 export type ImageTextProps = {
   animatedBorder?: ImageTextAnimatedBorder
   reverse?: boolean
-  subTitle?: ImageTextHeadline
-  title: ImageTextHeadline
+  subTitle?: string
+  subTitleProps?: Omit<HeadlineProps, "children">
+  title: string
+  titleProps?: Omit<HeadlineProps, "children">
   content?: string
   animation?: ImageTextAnimation
   image?: ImageProps

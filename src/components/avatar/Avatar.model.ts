@@ -6,6 +6,7 @@ import type { ReactNode, HTMLAttributes } from "react"
 export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl"
 
 export type AvatarProps = {
+  priority?: boolean
   variant?: Variants
   size?: AvatarSize
   image?: ImageProps

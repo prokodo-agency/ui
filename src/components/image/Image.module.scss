@@ -15,10 +15,13 @@
     &__caption {
         position: absolute;
         width: 100%;
-        text-align: center;
-        bottom: 0;
+        bottom: -$space-lg;
         left: 0;
         opacity: 0.5;
         @include text("caption");
+
+        & {
+            text-align: center;
+        }
     }
 }

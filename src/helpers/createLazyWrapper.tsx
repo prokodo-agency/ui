@@ -1,61 +1,58 @@
-/* utils/createLazyWrapper.tsx
-   ------------------------------------------------------------- */
 'use client'
 import {
   type ComponentType,
   type FC,
   type ReactElement,
 } from 'react'
-
 import { useHydrationReady } from '@/hooks/useHydrationReady'
 
-/* ---------- factory options ---------------------------------- */
 export interface LazyWrapperOptions<P extends object> {
-  /** Display-name for DevTools / data-island marker. */
   name: string
-  /** Hydrated client component (full interactivity). */
   Client: ComponentType<P>
-  /** Pure server component (identical HTML to entry render). */
   Server: ComponentType<P>
+  hydrateOnVisible?: boolean
+  ioOptions?: IntersectionObserverInit
+  isInteractive?: (props: Readonly<P>) => boolean
 }
 
-/* ---------- helper ------------------------------------------- */
 export function createLazyWrapper<P extends object>({
   name,
   Client,
   Server,
+  hydrateOnVisible = false,
+  ioOptions,
+  isInteractive: customInteractive,
 }: LazyWrapperOptions<P>): ComponentType<P & { priority?: boolean }> {
-  /* ----------- final wrapper component ----------------------- */
   const LazyWrapper: FC<P & { priority?: boolean }> = ({
     priority = false,
     ...raw
   }): ReactElement => {
-    /* ----- heuristic: prop-based interaction check ----------- */
-    const props = raw as Record<string, unknown> & {
-      redirect?: unknown
-      onClick?: unknown
-      onKeyDown?: unknown
-    }
+    const props = raw as P & { redirect?: unknown }
 
-    const hasInteraction =
-      typeof props.onClick === 'function' ||
-      typeof props.onKeyDown === 'function' ||
+    // 1) “auto” heuristic
+    const autoInteractive =
+      Object.entries(props).some(
+        ([k, v]) => k.startsWith('on') && typeof v === 'function',
+      ) ||
       props.redirect !== undefined
 
-    /* -------- viewport / IO gate ----------------------------- */
+    // 2) optional override
+    const interactive = customInteractive
+      ? customInteractive(props) || autoInteractive
+      : autoInteractive
+
+    // 3) intersection-observer flag
     const [visible, ref] = useHydrationReady({
-      enabled: hasInteraction && !priority,
+      enabled: interactive && hydrateOnVisible && !priority,
+      ...ioOptions,
     })
 
-    /* -------- hydrated branch ------------------------------- */
-    if (hasInteraction && (priority || visible)) {
-      return <Client {...(raw as P)} />
-    }
-
-    /* -------- static placeholder (HTML identical to server) --- */
+    // 4) single wrapper around both branches:
     return (
       <div ref={ref} data-island={name.toLowerCase()}>
-        <Server {...(raw as P)} />
+        {interactive && (priority || visible)
+          ? <Client {...props} />
+          : <Server {...props} />}
       </div>
     )
   }

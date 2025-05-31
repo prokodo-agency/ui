@@ -2,7 +2,10 @@ export * from "./Input"
 export type {
   InputProps,
   InputChangeEvent,
-  InputColor,
   InputErrorTranslations,
   InputValidateEvent,
+  InputBlur,
+  InputBlurEventHandler,
+  InputFocus,
+  InputFocusEventHandler,
 } from "./Input.model"

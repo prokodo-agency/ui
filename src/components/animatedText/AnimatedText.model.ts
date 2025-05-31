@@ -6,3 +6,8 @@ export type AnimatedTextProps = HTMLAttributes<HTMLSpanElement> & {
   disabled?: boolean
   children: string
 }
+
+export type AnimatedTextViewProps = Omit<AnimatedTextProps, "children"> & {
+  /** the substring actually visible right now */
+  text: string
+}

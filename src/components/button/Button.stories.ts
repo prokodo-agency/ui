@@ -49,6 +49,17 @@ export const Default: Story = {
   },
 }
 
+export const IconOnly: Story = {
+  args: {
+    "aria-label": "Button",
+    variant: "contained",
+    color: "primary",
+    iconProps: {
+      name: "ArrowRight01Icon",
+    },
+  },
+}
+
 export const WithLink: Story = {
   args: {
     title: "Button",

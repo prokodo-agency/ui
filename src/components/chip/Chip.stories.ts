@@ -1,33 +1,32 @@
-import { Chip } from "./Chip"
-
 import type { Meta, StoryObj } from "@storybook/react"
+import { Chip } from "@/components/chip"
 
+/* ---------- Meta ----------------------------------------- */
 const meta = {
   title: "prokodo/common/Chip",
   component: Chip,
-  parameters: {
-    layout: "centered",
-  },
+  parameters: { layout: "centered" },
   tags: ["autodocs"],
   argTypes: {
     variant: {
+      control: "radio",
       options: ["filled", "outlined"],
-      control: { type: "select" },
     },
     color: {
+      control: "radio",
       options: [
         "inherit",
-        "default",
         "primary",
         "secondary",
+        "success",
         "error",
         "info",
-        "success",
         "warning",
-        "white",
+        "white"
       ],
-      control: { type: "select" },
     },
+    /* hide styling helpers */
+    className: { table: { disable: true } },
   },
 } satisfies Meta<typeof Chip>
 
@@ -36,6 +35,23 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: "Chip",
+    label: "Default chip",
+  },
+}
+
+export const Clickable: Story = {
+  args: {
+    label: "Click me",
+    onClick: () => alert("chip clicked"),
+    color: "success",
+  },
+}
+
+export const Deletable: Story = {
+  args: {
+    label: "Removable chip",
+    onDelete: () => alert("delete pressed"),
+    variant: "outlined",
+    color: "error",
   },
 }
