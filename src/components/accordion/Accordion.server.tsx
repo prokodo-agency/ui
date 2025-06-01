@@ -1,5 +1,5 @@
 
-import Animated from "@/components/animated/Animated.server"
+import Animated from "../animated/Animated.server"
 import Button from "@/components/button/Button.server"
 import { Icon } from "@/components/icon"
 
