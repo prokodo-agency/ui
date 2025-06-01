@@ -1,6 +1,6 @@
 import { createIsland } from "@/helpers/createIsland"
 
-import AnimatedServer from "./Animated.server"
+import AnimatedServer from "./Temp.server"
 
 import type { AnimatedProps } from "./Animated.model"
 
