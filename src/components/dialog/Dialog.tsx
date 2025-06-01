@@ -1,5 +1,7 @@
 import { createIsland } from '@/helpers/createIsland'
+
 import DialogServer from './Dialog.server'
+
 import type { DialogProps } from './Dialog.model'
 
 export const Dialog = createIsland<DialogProps>({

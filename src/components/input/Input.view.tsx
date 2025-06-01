@@ -1,8 +1,11 @@
-import { create } from "@/helpers/bem"
 import { Label } from "@/components/label"
+import { create } from "@/helpers/bem"
+import { isString } from "@/helpers/validations"
+
 import styles from "./Input.module.scss"
+
 import type { InputProps } from "./Input.model"
-import type { HTMLInputTypeAttribute } from "react"
+import type { JSX, HTMLInputTypeAttribute } from "react"
 
 const bem = create(styles, "Input")
 
@@ -24,11 +27,11 @@ export function InputView({
   inputContainerClassName,
   inputClassName,
   rows,
-  minRows,
-  maxRows,
+  // minRows,
+  // maxRows,
   type = "text",
   ...rest
-}: InputProps) {
+}: InputProps): JSX.Element {
   delete rest.onValidate
   delete rest.errorTranslations
 
@@ -36,8 +39,9 @@ export function InputView({
   const hasValue = (value !== undefined && value !== "") || Boolean(placeholder)
 
   // for aria-describedby
+  const hasHelperText = isString(helperText)
   const errorId  = isError ? `${name}-error`  : undefined
-  const helperId = !isError && helperText   ? `${name}-helper` : undefined
+  const helperId = !isError && hasHelperText ? `${name}-helper` : undefined
   const describedBy = [errorId, helperId].filter(Boolean).join(" ") || undefined
   return (
     <div className={bem(undefined, undefined, className)}>
@@ -45,10 +49,10 @@ export function InputView({
         {typeof label === "string" && (
           <Label
             {...labelProps}
+            error={isError}
             htmlFor={name}
             label={label}
             required={required}
-            error={isError}
             className={bem("label", {
               "is-focused": Boolean(isFocused) || hasValue,
             }, labelProps.className)}
@@ -61,30 +65,30 @@ export function InputView({
             multiline: Boolean(multiline),
             fullWidth: Boolean(fullWidth),
           }, inputContainerClassName)}>
-            {multiline ? (
+            {Boolean(multiline) ? (
               <textarea
                 {...rest}
+                // Enforce minRows/maxRows here via styles or JS
+                aria-describedby={describedBy}
+                aria-invalid={isError}
+                aria-required={required}
+                className={bem("input__node", { multiline: true }, inputClassName)}
                 id={name}
                 name={name}
                 placeholder={placeholder}
                 rows={rows}
-                // you could enforce minRows/maxRows here via styles or JS
-                aria-required={required}
-                aria-invalid={isError}
-                aria-describedby={describedBy}
-                className={bem("input__node", { multiline: true }, inputClassName)}
               />
             ) : (
               <input
                 {...rest}
+                aria-describedby={describedBy}
+                aria-invalid={isError}
+                aria-required={required}
                 id={name}
                 name={name}
-                type={type as HTMLInputTypeAttribute}
                 placeholder={placeholder}
+                type={type as HTMLInputTypeAttribute}
                 value={value ?? ""}
-                aria-required={required}
-                aria-invalid={isError}
-                aria-describedby={describedBy}
                 className={bem(
                   "input__node",
                   { multiline: false },
@@ -95,15 +99,15 @@ export function InputView({
           </div>
         </div>
       </div>
-      
-      {(isError || helperText || typeof maxLength === "number") && (
+
+      {(isError || hasHelperText || typeof maxLength === "number") && (
         <div className={bem("footer")}>
-          {(isError || helperText) && (
+          {(isError || hasHelperText) && (
             <div
-              id={errorId ?? helperId}
-              role={isError ? "alert" : undefined}
               aria-live={isError ? "assertive" : "polite"}
               className={bem("helperText")}
+              id={errorId ?? helperId}
+              role={isError ? "alert" : undefined}
             >
               <span
                 className={bem("helperText__content", {

@@ -1,31 +1,16 @@
 import { AnimatedView } from "@/components/animated/Animated.view"
-import { Skeleton } from "@/components/skeleton"
 import { Image } from "@/components/image"
-import bgP1 from "@/assets/images/card_background_primary_1.webp"
-import bgP2 from "@/assets/images/card_background_primary_2.webp"
-import bgP3 from "@/assets/images/card_background_primary_3.webp"
-import bgP4 from "@/assets/images/card_background_primary_4.webp"
-import bgS1 from "@/assets/images/card_background_secondary_1.webp"
-import bgS2 from "@/assets/images/card_background_secondary_2.webp"
-import bgS3 from "@/assets/images/card_background_secondary_3.webp"
-import bgS4 from "@/assets/images/card_background_secondary_4.webp"
-
+import { Skeleton } from "@/components/skeleton"
 import { create } from "@/helpers/bem"
+import { isString } from "@/helpers/validations"
 
 import styles from "./Card.module.scss"
 
-import type { AnimatedViewProps } from "@/components/animated/Animated.model"
 import type { CardProps } from "./Card.model"
+import type { AnimatedViewProps } from "@/components/animated/Animated.model"
+import type { JSX } from "react"
 
 const bem = create(styles, "Card")
-
-/** Helper picks correct background */
-function pickBg(variant: string, bg?: CardProps["background"]) {
-  if (typeof bg === "string") return bg
-  if (variant === "secondary")
-    return [bgS1, bgS2, bgS3, bgS4][(bg ?? 1) - 1]
-  return [bgP1, bgP2, bgP3, bgP4][(bg ?? 1) - 1]
-}
 
 export function CardView({
   isClickable,
@@ -42,15 +27,13 @@ export function CardView({
   contentClassName,
   background,
   backgroundProps,
-  disabled,
-  redirect,
   children,
   animationProps,
   ...rest
 }: CardProps & {
   animationProps?: AnimatedViewProps
   isClickable?: boolean
-}) {
+}): JSX.Element {
   const mod = {
     [variant]: true,
     "is-clickable": Boolean(isClickable),
@@ -63,7 +46,7 @@ export function CardView({
 
   const container = (
     <div className={bem(undefined, mod, className)} {...rest}>
-      {loading && (
+      {Boolean(loading) && (
         <Skeleton
           className={bem("skeleton", mod)}
           variant="rectangular"
@@ -77,7 +60,7 @@ export function CardView({
       </div>
 
       {/* background/gradiant */}
-      {gradiant && (
+      {Boolean(gradiant) && (
         <div
           className={bem(
             "gradiant",
@@ -86,16 +69,16 @@ export function CardView({
           )}
         />
       )}
-      {background && (
+      {isString(background) && (
         <Image
           alt="card background"
-          src={pickBg(variant, background)}
+          imageComponent={backgroundProps?.imageComponent ?? "img"}
+          src={background}
           className={bem(
             "background",
             undefined,
             backgroundProps?.className,
           )}
-          imageComponent={backgroundProps?.imageComponent ?? "img"}
           {...backgroundProps}
         />
       )}

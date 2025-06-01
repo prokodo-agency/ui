@@ -1,5 +1,6 @@
-import { Accordion } from "./Accordion"
 import { RichText } from "../rich-text"
+
+import { Accordion } from "./Accordion"
 
 import type { AccordionItem } from "./Accordion.model"
 import type { Meta, StoryObj } from "@storybook/react"

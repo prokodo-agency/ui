@@ -1,7 +1,9 @@
 import { SwitchView } from "./Switch.view"
-import type { SwitchProps } from "./Switch.model"
 
-export default function SwitchServer(props: SwitchProps) {
+import type { SwitchProps } from "./Switch.model"
+import type { JSX } from "react"
+
+export default function SwitchServer(props: SwitchProps): JSX.Element {
   const {
     checked: controlledChecked,
   } = props
@@ -13,9 +15,9 @@ export default function SwitchServer(props: SwitchProps) {
       checked={undefined}
       isChecked={isChecked}
       isFocused={false}
-      onChangeInternal={() => {}}
-      onFocusInternal={() => {}}
-      onBlurInternal={() => {}}
+      onBlurInternal={() => undefined}
+      onChangeInternal={() => undefined}
+      onFocusInternal={() => undefined}
     />
   )
 }

@@ -4,10 +4,10 @@ import remarkGfm from "remark-gfm"
 
 import { create } from "@/helpers/bem"
 
-import { Link } from "../link"
-import { Headline } from "../headline"
 import { AnimatedText } from "../animatedText"
+import { Headline } from "../headline"
 import { Icon } from "../icon"
+import { Link } from "../link"
 
 import styles from "./RichText.module.scss"
 

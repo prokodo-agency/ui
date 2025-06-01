@@ -1,7 +1,11 @@
-import { useState } from "react"
+/* eslint-disable */
 import dayjs, { type Dayjs } from "dayjs"
-import type { Meta, StoryObj } from "@storybook/react"
+import { useState } from "react"
+
 import { DatePicker } from "./DatePicker"
+
+import type { Meta, StoryObj } from "@storybook/react"
+
 
 const meta = {
   title: "prokodo/form/DatePicker",
@@ -78,7 +82,7 @@ export const Default: Story = {
         <DatePicker
             {...args}
             value={value}
-            onChange={setValue}
+            onChange={(value) => setValue(dayjs(value))}
         />
     )
   },
@@ -99,7 +103,7 @@ export const WithRange: Story = {
       <DatePicker
         {...args}
         value={value}
-        onChange={setValue}
+        onChange={(value) => setValue(dayjs(value))}
       />
     )
   },

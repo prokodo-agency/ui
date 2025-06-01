@@ -114,20 +114,21 @@
 
   /* ───────────────── listbox (popup) */
   &__listbox {
-    position:relative;
+    position: absolute;
     box-sizing:border-box;
     padding: 2px;
     margin: -2px 0 0 0;
     overflow:auto;
     outline:0;
     max-height: 225px;
-    width: calc(100% + 1px);
+    width: 100%;
     color:var(--color-grey-900);
     border-bottom-left-radius:px-to-rem(25px);
     border-bottom-right-radius:px-to-rem(25px);
     @include gradientBorderVar(4);
     box-shadow:var(--elevation-3);
     scrollbar-width: none;
+    z-index: 10;
 
     /* animation – your JS toggles .is-open / .is-closed */
     &--is-open   {

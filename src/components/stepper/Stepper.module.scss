@@ -67,6 +67,10 @@
         width: px-to-rem(40px);
         height: px-to-rem(40px);
 
+        &__sr__only {
+            @include hidden();
+        }
+
         &__container {
             position: relative;
             display: flex;

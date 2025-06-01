@@ -3,12 +3,12 @@ import { PostTeaser } from "./PostTeaser"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/blog/PostTeaser",
+  title: "prokodo/🚧 Experimental/blog/PostTeaser",
   component: PostTeaser,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["experimental"],
   argTypes: {
     hideCategory: {
       control: { type: "boolean" },
@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_1000x230.webp",
       alt: "Cover",
     },
     title: {

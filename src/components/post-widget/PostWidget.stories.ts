@@ -4,12 +4,12 @@ import type { PostWidgetItem } from "./PostWidget.model"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/blog/PostWidget",
+  title: "prokodo/🚧 Experimental/blog/PostWidget",
   component: PostWidget,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["experimental"],
   argTypes: {},
 } satisfies Meta<typeof PostWidget>
 
@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>
 const items = [
   {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_60x60.webp",
       alt: "Cover",
     },
     title: {
@@ -33,7 +33,7 @@ const items = [
   },
   {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_60x60.webp",
       alt: "Cover",
     },
     title: {
@@ -47,7 +47,7 @@ const items = [
   },
   {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_60x60.webp",
       alt: "Cover",
     },
     title: {

@@ -28,6 +28,8 @@ export default async () => {
     plugins: [
       react(),
       visualizer({
+        gzipSize: true,
+        brotliSize: true, // if you want brotli as well
         open: !process.env.CI || process.env.CI === "false",
         filename: "stats.html",
       }),

@@ -8,18 +8,20 @@ import {
   useCallback,
 } from "react"
 
+import { isNull } from "@/helpers/validations"
+
 import { DatePickerView } from "./DatePicker.view"
 
-import type {
-  InputChangeEvent
-} from "@/components/input"
 import type {
   DatePickerProps,
   DatePickerValue,
 } from "./DatePicker.model"
+import type {
+  InputChangeEvent
+} from "@/components/input"
 
 function toDayjs(val?: DatePickerValue): Dayjs | null {
-  if (!val) return null
+  if (!isNull(val)) return null
   if (isDayjs(val)) return val
   const d = dayjs(val)
   return d.isValid() ? d : null
@@ -66,24 +68,24 @@ const DatePickerClient: FC<DatePickerProps> = ({
         onChange?.(null)
         return
       }
-      if (minDate && d.isBefore(dayjs(minDate), "day")) {
+      if (!isNull(minDate) && d.isBefore(dayjs(minDate), "day")) {
         const msg =
           dayjs(minDate).isSame(dayjs(), "day")
-            ? translations?.minDate ||
+            ? translations?.minDate ??
               "Date cannot be in the past."
-            : translations?.minDate ||
+            : translations?.minDate ??
               `Date must be ≥ ${dayjs(minDate).format(format)}`
         setError(msg)
         onValidate?.(name, msg)
         onChange?.(null)
         return
       }
-      if (maxDate && d.isAfter(dayjs(maxDate), "day")) {
+      if (!isNull(maxDate) && d.isAfter(dayjs(maxDate), "day")) {
         const msg =
           dayjs(maxDate).isSame(dayjs(), "day")
-            ? translations?.maxDate ||
+            ? translations?.maxDate ??
               "Date cannot be in the future."
-            : translations?.maxDate ||
+            : translations?.maxDate ??
               `Date must be ≤ ${dayjs(maxDate).format(format)}`
         setError(msg)
         onValidate?.(name, msg)
@@ -97,20 +99,20 @@ const DatePickerClient: FC<DatePickerProps> = ({
     },
     [format, maxDate, minDate, name, onChange, onValidate, translations]
   )
-  
+
   return (
     <DatePickerView
       {...rest}
-      name={name}
-      label={label}
-      helperText={helperText}
       errorText={error}
-      value={date}
       format={format}
-      minDate={minDate}
+      helperText={helperText}
+      label={label}
       maxDate={maxDate}
-      onValidate={onValidate}
+      minDate={minDate}
+      name={name}
+      value={date}
       onChange={(value) => emitValue(value)}
+      onValidate={onValidate}
     />
   )
 }

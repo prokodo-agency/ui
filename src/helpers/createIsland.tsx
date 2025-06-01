@@ -12,7 +12,12 @@ export interface IslandOptions<P extends object> {
   name: string;
   Server: ComponentType<P>;
   loadLazy: () => Promise<{ default: ComponentType<P & { priority?: boolean }> }>;
-  /** force all instances interactive if truthy */
+  // When to use isInteractive:
+  // - If your component never receives any “onX” callbacks at all, but still needs client-only logic—for example, a
+  // tooltip that opens on hover or a carousel that auto-rotates. Since there is no prop named onX, the wrapper would assume “static,”
+  // unless you force isInteractive: () => true.
+  // - If you want to force hydration even when the consumer forgot to supply an onChange (or any “onX”). In that case,
+  // isInteractive: () => true guarantees the client bundle always loads.
   isInteractive?: (props: Readonly<P>) => boolean;
 }
 

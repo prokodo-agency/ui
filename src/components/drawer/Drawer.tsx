@@ -1,5 +1,7 @@
 import { createIsland } from '@/helpers/createIsland'
+
 import DrawerServer from './Drawer.server'
+
 import type { DrawerProps } from './Drawer.model'
 
 /**
@@ -7,7 +9,7 @@ import type { DrawerProps } from './Drawer.model'
  *
  *    import { Drawer } from '@/components/drawer'
  *
- * and use <Drawer open={...} ...>...</Drawer> in their JSX. 
+ * and use <Drawer open={...} ...>...</Drawer> in their JSX.
  */
 export const Drawer = createIsland<DrawerProps>({
   name: 'Drawer',

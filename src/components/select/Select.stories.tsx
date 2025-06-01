@@ -1,9 +1,10 @@
 /* components/select/Select.stories.tsx
    ───────────────────────────────────── */
 
-import type { Meta, StoryObj } from "@storybook/react";
 import { Select } from "@/components/select";
+
 import type { SelectItem } from "./Select.model";
+import type { Meta, StoryObj } from "@storybook/react";
 
 /* ---------- sample data ------------------------------------------------ */
 const demoItems: SelectItem[] = [

@@ -1,5 +1,7 @@
 import { createIsland } from "@/helpers/createIsland"
+
 import CardServer from "./Card.server"
+
 import type { CardProps } from "./Card.model"
 
 export const Card = createIsland<CardProps>({

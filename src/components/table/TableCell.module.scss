@@ -1,0 +1,26 @@
+@use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+
+@include define-block("TableCell") {
+  padding: $space-xl $space-sm;
+  text-align: center;
+
+  &:first-child {
+    font-weight: 500;
+    text-align: left;
+    @include text("headline/sm");
+  }
+
+  &__inner {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include text("base");
+  }
+
+  &__icon {
+    padding-bottom: $space-lg;
+  }
+}

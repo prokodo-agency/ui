@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
 import { Chip } from "@/components/chip"
+
+import type { Meta, StoryObj } from "@storybook/react"
 
 /* ---------- Meta ----------------------------------------- */
 const meta = {

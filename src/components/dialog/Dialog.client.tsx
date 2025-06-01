@@ -7,7 +7,9 @@ import {
   useImperativeHandle,
   useRef,
 } from 'react'
+
 import { DialogView } from './Dialog.view'
+
 import type { DialogRef, DialogChangeReson, DialogProps } from './Dialog.model'
 
 const FADE_DURATION = 300
@@ -88,16 +90,16 @@ function DialogClient(
   return (
     <DialogView
       {...props}
-      open={isOpen}
-      onClose={closeDialog}
       closeButtonRef={closeButtonRef}
       containerRef={containerRef}
-      onMouseDown={e => e.stopPropagation()}
+      open={isOpen}
       wrapperProps={{
         onMouseDown: () => {
           if (closeOnBackdropClick) closeDialog('backdropClick')
         }
       }}
+      onClose={closeDialog}
+      onMouseDown={e => e.stopPropagation()}
     />
   )
 }

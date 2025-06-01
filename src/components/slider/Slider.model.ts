@@ -1,5 +1,5 @@
-import type { HTMLAttributes, FocusEvent, ChangeEvent } from "react";
 import type { LabelProps } from "../label";
+import type { HTMLAttributes, FocusEvent, ChangeEvent } from "react";
 
 export interface SliderMark {
   value: number;
@@ -21,6 +21,15 @@ export interface SliderProps {
 
   /** Step increment (default: 1) */
   step?: number;
+
+  /* Name attribute of the field */
+  name?: string
+
+  /** Custom error message */
+  errorText?: string;
+
+  /** Custom helper message */
+  helperText?: string;
 
   /**
    * If true, show tick marks at each step (unstyled; view will position them).

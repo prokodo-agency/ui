@@ -1,7 +1,7 @@
 import type { InputProps } from "../input";
 import type { Dayjs } from "dayjs";
 
-export type DatePickerValue = Dayjs | null;
+export type DatePickerValue = Dayjs | string | null;
 
 export type DatePickerErrorTranslations = {
   required?: string;

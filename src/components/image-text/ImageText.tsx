@@ -44,7 +44,7 @@ export const ImageText: FC<ImageTextProps> = ({
       >
         <GridRow className={bem("content")} md={leftColumnMd} xs={10}>
           <Animated>
-            {subTitle && (
+            {isString(subTitle) && (
               <Headline
                 highlight
                 size="sm"
@@ -81,9 +81,9 @@ export const ImageText: FC<ImageTextProps> = ({
         {image && (
           <GridRow className={bem("image")} md={6} xs={10}>
             <Animated className={bem("animated__container")}>
-              {animation ? (
+              {isString(animation) ? (
                 <Lottie
-                  animationName={animation}
+                  animation={animation as string}
                   className={bem("animation")}
                 />
               ) : (

@@ -1,8 +1,11 @@
 import { Button } from '@/components/button'
 import { Headline } from '@/components/headline'
 import { create } from '@/helpers/bem'
-import type { DialogViewProps } from './Dialog.model'
+
 import styles from './Dialog.module.scss'
+
+import type { DialogViewProps } from './Dialog.model'
+import type { JSX } from 'react'
 
 const bem = create(styles, 'Dialog')
 
@@ -28,9 +31,8 @@ export function DialogView({
   closeOnBackdropClick = true,
   closeButtonProps,
   closeButtonRef,
-  containerRef,
   ...rest
-}: DialogViewProps) {
+}: DialogViewProps): JSX.Element {
   // Modifikatoren für den Container (innen)
   const containerMods = {
     fullScreen,
@@ -44,11 +46,11 @@ export function DialogView({
 
   const renderDialog = () => (
     <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="dialog-title"
       aria-describedby="dialog-content"
+      aria-labelledby="dialog-title"
+      aria-modal="true"
       className={bem(undefined, wrapperMods, className)}
+      role="dialog"
       {...rest}
     >
       <div className={bem('container', containerMods)}>
@@ -56,8 +58,8 @@ export function DialogView({
           <div>
             <Headline
               {...titleProps}
-              id="dialog-title"
               className={bem('title', { 'is-hidden': hideTitle })}
+              id="dialog-title"
             >
               {title}
             </Headline>
@@ -68,23 +70,23 @@ export function DialogView({
             <Button
               aria-label={translations?.close}
               color="inherit"
-              variant="outlined"
               iconProps={{ name: 'Cancel01Icon', size: 'sm' }}
+              variant="outlined"
               {...closeButtonProps}
-              title={translations?.close ?? "Close"}
               ref={closeButtonRef}
+              title={translations?.close ?? "Close"}
               onClick={onClose}
             />
           )}
         </div>
 
-        {/* Focus-Trap Sentinel */}
-        <div tabIndex={0} aria-hidden="true" />
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+        <div aria-hidden="true" tabIndex={0} />
 
         <div
           {...contentProps}
-          id="dialog-content"
           ref={contentRef}
+          id="dialog-content"
           className={bem(
             'content',
             { [`scroll-${scroll}`]: true },
@@ -96,11 +98,13 @@ export function DialogView({
 
         {actions.length > 0 && (
           <div className={bem('actions')}>
-            <div tabIndex={0} aria-hidden="true" />
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+            <div aria-hidden="true" tabIndex={0} />
             {actions.map((action) => (
               <Button key={action.id} {...action} title={action?.title ?? ""} />
             ))}
-            <div tabIndex={0} aria-hidden="true" />
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+            <div aria-hidden="true" tabIndex={0} />
           </div>
         )}
       </div>

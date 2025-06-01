@@ -1,8 +1,9 @@
 "use client"
 import { memo } from "react"
 
-import { LinkView } from "./Link.view"
 import BaseLink from "../base-link/BaseLink.server"
+
+import { LinkView } from "./Link.view"
 
 import type { LinkProps } from "./Link.model"
 
@@ -15,9 +16,9 @@ const LinkClient: React.FC<LinkProps> = memo((props) => {
   return (
     <LinkView
       {...props}
+      BaseLinkComponent={BaseLink}
       hasHandlers={hasHandlers}
       LinkTag={linkTag}
-      BaseLinkComponent={BaseLink}
     />
   )
 })

@@ -43,34 +43,74 @@ npm install @prokodo/ui
 
 ### 2. Use a component
 
-#### Next.js (RSC)
+#### React
 
 ```tsx
-import { Headline, type HeadlineProps } from "@prokodo/ui/button"
+import { Button, type ButtonProps } from "@prokodo/ui/button";
 
 export default function Layout() {
-  return <Headline>Click me</Headline>
+  // Renders to HTML on the server with zero‐JS.
+  // On the client, it will hydrate when scrolled into view or the user interacts.
+  return <Headline title="Click me"/>;
 }
 ```
 
-#### Next.js (Client optimized)
+
+#### Next.js (RSC + AIC, lazy‐hydrate when visible/interacted)
 
 ```tsx
-import { HeadlineClient, type HeadlineProps } from "@prokodo/ui/button"
+import { Button, type ButtonProps } from "@prokodo/ui/button";
 
 export default function Layout() {
-  return <HeadlineClient>Click me</HeadlineClient>
+  // Renders to HTML on the server with zero‐JS.
+  // On the client, it will hydrate when scrolled into view or the user interacts.
+  return <Headline title="Click me"/>;
 }
 ```
 
-#### Next.js (Client non-optimized, means RSC only)
+#### Next.js (RSC + AIC, force immediate hydration with priority)
 
 ```tsx
-"use client"
-import { Headline as UIHeadline, type HeadlineProps } from "@prokodo/ui/button"
-import { type FC, memo } from "react"
+import { Button, type ButtonProps } from "@prokodo/ui/button";
 
-export const Headline: FC<HeadlineProps> = memo(props => <UIHeadline {...props} />)
+export default function AboveTheFoldHero() {
+  // Because this lives above the fold, we want it to hydrate right away:
+  return <Button priority title="Welcome to prokodo"/>;
+}
+```
+
+#### Next.js ("use client" wrapper, immediate hydration - above the fold)
+
+```tsx
+"use client";
+
+import { Button, type ButtonProps } from "@prokodo/ui/button";
+import { type FC, memo } from "react";
+
+// In a pure‐client file, you can wrap the AIC export.
+// The `priority` prop here ensures hydration runs immediately when mounted.
+export const HeadlineClient: FC<ButtonProps> = memo((props) => {
+  return <Button {...props} priority />;
+});
+```
+
+#### Next.js (hydrate on visibility only, default behavior)
+
+```tsx
+import { Headline, type ButtonProps } from "@prokodo/ui/button";
+
+export default function GalleryPage() {
+  return (
+    <div style={{ height: "200vh" }}>
+      <p>Keep scrolling…</p>
+      <div style={{ marginTop: "100vh" }}>
+        {/* This will render as HTML on the server;
+            on the client, it only hydrates when this element scrolls into view. */}
+        <Button title="I hydrate when you see me"/>
+      </div>
+    </div>
+  );
+}
 ```
 
 ## 📦 Available Components
@@ -83,50 +123,55 @@ export const Headline: FC<HeadlineProps> = memo(props => <UIHeadline {...props} 
 
 > If RSC and client have ✅-symbol means available as RSC (<[ComponentName] />) & extra client export (<[ComponentName]Client />)
 
-| Komponente             | 🧠 RSC-Compatible (`app/layout.tsx`) | 💡 SSR-Compatible (`"use client"`) |
-|------------------------|:------------------------------------:|:----------------------------------:|
-| Accordion              | ❌                                   | ✅                                 |
-| Animated               | ❌                                   | ✅                                 |
-| AnimatedText           | ❌                                   | ✅                                 |
-| Avatar                 | ❌                                   | ✅                                 |
-| BaseLink               | ❌                                   | ✅                                 |
-| Button                 | ❌                                   | ✅                                 |
-| Calendly               | ❌                                   | ✅                                 |
-| Card                   | ❌                                   | ✅                                 |
-| Carousel               | ❌                                   | ✅                                 |
-| Chip                   | ❌                                   | ✅                                 |
-| DatePicker             | ❌                                   | ✅                                 |
-| Dialog                 | ❌                                   | ✅                                 |
-| Drawer                 | ❌                                   | ✅                                 |
-| Form                   | ❌                                   | ✅                                 |
-| FormResponse           | ✅                                   | –                                  |
-| Grid                   | ✅                                   | –                                  |
-| GridRow                | ✅                                   | –                                  |
-| Headline               | ✅                                   | ✅                                 |
-| Icon                   | ✅                                   | –                                  |
-| Image                  | ✅                                   | –                                  |
-| ImageText              | ❌                                   | ✅                                 |
-| Input                  | ❌                                   | ✅                                 |
-| InputOTP               | ❌                                   | ✅                                 |
-| Label                  | ✅                                   | –                                  |
-| Link                   | ❌                                   | ✅                                 |
-| List                   | ✅                                   | –                                  |
-| Loading                | ✅                                   | –                                  |
-| Lottie                 | ❌                                   | ✅                                 |
-| Map                    | ❌                                   | ✅                                 |
-| PostItem               | ✅                                   | –                                  |
-| PostTeaser             | ✅                                   | –                                  |
-| PostWidget             | ✅                                   | –                                  |
-| PostWidgetCarousel     | ❌                                   | ✅                                 |
-| Quote                  | ✅                                   | –                                  |
-| RichText               | ✅                                   | –                                  |
-| Select                 | ❌                                   | ✅                                 |
-| Skeleton               | ✅                                   | –                                  |
-| Slider                 | ❌                                   | ✅                                 |
-| Stepper                | ❌                                   | ✅                                 |
-| Switch                 | ❌                                   | ✅                                 |
-| Table                  | ✅                                   | –                                  |
-| Teaser                 | ❌                                   | ✅                                 |
+## 📦 Available Components
+
+### Compatibility of the components
+
+✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also used as a client‐only entry.
+– = RSC (AIC) only; no client‐side bundle. (Best practice: Use it only in RSC)
+
+| Component             | ✅ AIC-Compatible (RSC + Client) | ✅ SSR-Compatible (`"use client"`) |
+|-----------------------|:--------------------------------:|:---------------------------------:|
+| Accordion             | ✅                               | ✅                                 |
+| Animated              | ✅                               | ✅                                 |
+| AnimatedText          | ✅                               | ✅                                 |
+| Avatar                | ✅                               | ✅                                 |
+| BaseLink              | ✅                               | ✅                                 |
+| Button                | ✅                               | ✅                                 |
+| Calendly              | ✅                               | ✅                                 |
+| Card                  | ✅                               | ✅                                 |
+| Carousel              | ✅                               | ✅                                 |
+| Chip                  | ✅                               | ✅                                 |
+| DatePicker            | ✅                               | ✅                                 |
+| Dialog                | ✅                               | ✅                                 |
+| Drawer                | ✅                               | ✅                                 |
+| Form                  | ✅                               | ✅                                 |
+| FormResponse          | ✅                               | –                                  |
+| Grid/GridRow          | ✅                               | –                                  |
+| Headline              | ✅                               | -                                  |
+| Icon                  | ✅                               | –                                  |
+| Image                 | ✅                               | –                                  |
+| ImageText             | ✅                               | -                                  |
+| Input                 | ✅                               | ✅                                 |
+| Label                 | ✅                               | –                                  |
+| Link                  | ✅                               | ✅                                 |
+| List                  | ✅                               | –                                  |
+| Loading               | ✅                               | –                                  |
+| Lottie                | ❌                               | ✅                                 |
+| Map                   | ❌                               | ✅                                 |
+| PostItem              | ❌ (Experimental - Coming soon)  | –                                  |
+| PostTeaser            | ❌ (Experimental - Coming soon)  | –                                  |
+| PostWidget            | ❌ (Experimental - Coming soon)  | –                                  |
+| PostWidgetCarousel    | ❌ (Experimental - Coming soon)  | -                                  |
+| Quote                 | ✅                               | –                                  |
+| RichText              | ✅                               | –                                  |
+| Select                | ✅                               | ✅                                 |
+| Skeleton              | ✅                               | –                                  |
+| Slider                | ✅                               | ✅                                 |
+| Stepper               | ✅                               | ✅                                 |
+| Switch                | ✅                               | ✅                                 |
+| Table                 | ✅                               | –                                  |
+| Teaser                | ✅                               | -                                  |
 
 ## 🎯 Next steps
 
@@ -136,8 +181,6 @@ export const Headline: FC<HeadlineProps> = memo(props => <UIHeadline {...props} 
 - [ ] Detailed Documentation about the components
 
 ## 📘 Documentation
-
-> Notice: Currently are not all components in Storybook available
 
 Explore all components and examples in the official Storybook:
 

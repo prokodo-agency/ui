@@ -4,12 +4,12 @@ import type { PostWidgetCarouselItem } from "./PostWidgetCarousel.model"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/blog/PostWidgetCarousel",
+  title: "prokodo/🚧 Experimental/blog/PostWidgetCarousel",
   component: PostWidgetCarousel,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["experimental"],
   argTypes: {
     variant: {
       options: [
@@ -33,7 +33,7 @@ type Story = StoryObj<typeof meta>
 const items = [
   {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_1000x230.webp",
       alt: "Cover",
     },
     title: {
@@ -45,7 +45,7 @@ const items = [
   },
   {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_1000x230.webp",
       alt: "Cover",
     },
     title: {
@@ -57,7 +57,7 @@ const items = [
   },
   {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_1000x230.webp",
       alt: "Cover",
     },
     title: {

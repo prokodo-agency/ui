@@ -2,7 +2,9 @@
 import {
   useState, useRef, useCallback, useEffect, type KeyboardEvent, memo, type JSX
 } from "react"
+
 import { SelectView } from "./Select.view"
+
 import type {
   SelectProps,
   SelectValue,
@@ -40,12 +42,12 @@ function SelectClient<Value extends string = string>(
   const listRef    = useRef<HTMLUListElement>(null)
   const [open, setOpen]     = useState(false)
   const [val , setVal] = useState<SelectValue<Value>>(
-    extValue ?? (multiple ? [] : "")
+    extValue ?? (Boolean(multiple) ? [] : "")
   )
 
   /* sync external value */
   useEffect(() => {
-    setVal(extValue ?? (multiple ? [] : ""))
+    setVal(extValue ?? (Boolean(multiple) ? [] : ""))
   }, [extValue, multiple])
 
   const close = useCallback(() => {
@@ -60,8 +62,8 @@ function SelectClient<Value extends string = string>(
 
     const handleOutside = (e: MouseEvent) => {
       if (
-        !listRef.current?.contains(e.target as Node) &&
-        !btnRef.current?.contains(e.target as Node)
+        !Boolean(listRef.current?.contains(e.target as Node)) &&
+        !Boolean(btnRef.current?.contains(e.target as Node))
       ) {
         close()
       }
@@ -85,23 +87,23 @@ function SelectClient<Value extends string = string>(
   const clickOption = (opt: Value | null) => {
     const newVal =
       opt === null
-        ? (multiple ? [] : "")
+        ? (Boolean(multiple) ? [] : "")
         : mergeValue<Value>(val, opt, multiple)
 
     setVal(newVal)
     onChange?.(null, newVal)
-    if (!multiple) close()
+    if (!Boolean(multiple)) close()
   }
 
   return (
     <SelectView
       {...rest}
+      /* extra, only the client knows */
       id={id}
+      items={items}
       multiple={multiple}
       required={required}
-      value={val as any}
-      items={items}
-      /* extra, only the client knows */
+      value={val as Value}
       _clientState={{
         open,
         buttonRef : btnRef,

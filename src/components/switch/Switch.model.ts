@@ -1,6 +1,6 @@
-import type { ChangeEvent, HTMLAttributes, FocusEvent } from "react"
-import type { LabelProps } from "../label"
 import type { IconName } from "../icon"
+import type { LabelProps } from "../label"
+import type { ChangeEvent, HTMLAttributes, FocusEvent } from "react"
 
 /**
  * Supported color variants (derived from the original "variant" prop).
@@ -38,6 +38,12 @@ export type SwitchProps = HTMLAttributes<HTMLInputElement> & {
 
   /** Disable the switch when true. */
   disabled?: boolean
+
+  /** Custom error message */
+  errorText?: string;
+
+  /** Custom helper message */
+  helperText?: string;
 
   /**
    * Called whenever the switch state changes.

@@ -8,7 +8,9 @@ import {
   type ChangeEvent,
   type FocusEvent,
 } from "react"
+
 import { SliderView } from "./Slider.view"
+
 import type { SliderProps } from "./Slider.model"
 
 function SliderClient(props: SliderProps) {
@@ -80,9 +82,9 @@ function SliderClient(props: SliderProps) {
       {...props}
       internalValue={internalValue}
       isFocused={isFocused}
-      onFocusInternal={handleFocus}
       onBlurInternal={handleBlur}
       onChangeInternal={handleChange}
+      onFocusInternal={handleFocus}
     />
   )
 }

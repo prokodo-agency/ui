@@ -1,7 +1,7 @@
+import { Headline } from "@/components/headline"
 import { create } from "@/helpers/bem"
 import { isNull } from "@/helpers/validations"
 
-import { Headline } from "@/components/headline"
 
 import styles from "./Accordion.module.scss"
 

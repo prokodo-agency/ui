@@ -6,9 +6,9 @@ import { create } from "@/helpers/bem"
 
 import { AnimatedText } from "../animatedText"
 
+import styles from "./Headline.module.scss"
 import { POSSIBLE_HIGHLIGHTS } from "./Headline.variants"
 
-import styles from "./Headline.module.scss"
 
 import type { HeadlineProps } from "./Headline.model"
 import type { FC, HTMLAttributes, ReactNode, JSX } from "react"

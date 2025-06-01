@@ -1,8 +1,9 @@
 /* stories/Carousel.stories.tsx
    ─────────────────────────── */
 
-import type { Meta, StoryObj } from "@storybook/react";
 import { Carousel } from "@/components/carousel";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {

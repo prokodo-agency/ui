@@ -19,6 +19,7 @@ export const Default: Story = {
   args: {
     id: "example1",
     value: 50,
+    onChange: () => undefined,
   },
 }
 
@@ -50,5 +51,6 @@ export const WithLabels: Story = {
     marks,
     min: 10,
     max: 100,
+    onChange: () => undefined,
   },
 }

@@ -1,10 +1,12 @@
-import React from 'react'
-import { create } from '@/helpers/bem'
 import { Button } from '@/components/button'
 import { Headline } from '@/components/headline'
-import type { DrawerViewProps } from './Drawer.model'
-import type { FC } from 'react'
+import { create } from '@/helpers/bem'
+import { isString } from "@/helpers/validations"
+
 import styles from './Drawer.module.scss'
+
+import type { DrawerViewProps } from './Drawer.model'
+import type { FC, HTMLAttributes } from 'react'
 
 const bem = create(styles, 'Drawer')
 
@@ -23,7 +25,6 @@ export const DrawerView: FC<DrawerViewProps> = ({
   children,
   onClose,
   backdropProps,
-  closeOnBackdropClick = true,
   ...rest
 }) => {
   const isOpen = Boolean(open)
@@ -32,15 +33,15 @@ export const DrawerView: FC<DrawerViewProps> = ({
       className={bem('backdrop', { open: isOpen })}
       {...backdropProps}
     >
-      {/* 
+      {/*
         Inner container: stops propagation of mousedown so clicks INSIDE
-        do not bubble up to backdrop. 
+        do not bubble up to backdrop.
       */}
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={title ? 'drawer-title' : undefined}
         ref={containerRef}
+        aria-labelledby={isString(title) ? 'drawer-title' : undefined}
+        aria-modal="true"
+        role="dialog"
         className={bem(
           'container',
           {
@@ -51,15 +52,14 @@ export const DrawerView: FC<DrawerViewProps> = ({
           },
           containerClassName
         )}
-        onMouseDown={e => e.stopPropagation()}
-        {...(rest as React.HTMLAttributes<HTMLDivElement>)}
+        {...(rest as HTMLAttributes<HTMLDivElement>)}
       >
         <div className={bem('header')}>
           {renderHeader ? (
             renderHeader()
           ) : (
             <>
-              {title && (
+              {isString(title) && (
                 <Headline size="md" {...titleProps} id="drawer-title">
                   {title}
                 </Headline>
@@ -67,8 +67,8 @@ export const DrawerView: FC<DrawerViewProps> = ({
               {/* Close‐button always shown in header if no custom renderHeader */}
               <Button
                 aria-label="Close drawer"
-                variant="text"
                 iconProps={{ name: 'Cancel01Icon', size: 'sm' }}
+                variant="text"
                 {...closeButtonProps}
                 ref={closeButtonRef}
                 onClick={() => onClose?.('escapeKeyDown')}
@@ -77,7 +77,7 @@ export const DrawerView: FC<DrawerViewProps> = ({
           )}
         </div>
 
-        <div className={bem('content')}>{children}</div>
+        <div className={bem('content', undefined, className)}>{children}</div>
       </div>
     </div>
   )

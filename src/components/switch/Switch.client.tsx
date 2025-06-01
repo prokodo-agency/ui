@@ -7,7 +7,9 @@ import {
   type ChangeEvent,
   type FocusEvent,
 } from "react"
+
 import { SwitchView } from "./Switch.view"
+
 import type { SwitchProps } from "./Switch.model"
 
 function SwitchClient(props: SwitchProps) {
@@ -43,14 +45,14 @@ function SwitchClient(props: SwitchProps) {
       setIsFocused(true)
       onFocus?.(e)
     },
-    []
+    [onFocus]
   )
   const handleBlur = useCallback(
     (e: FocusEvent<HTMLInputElement>) => {
       setIsFocused(false)
       onBlur?.(e)
     },
-    []
+    [onBlur]
   )
 
   return (
@@ -59,9 +61,9 @@ function SwitchClient(props: SwitchProps) {
       checked={undefined}
       isChecked={isChecked}
       isFocused={isFocused}
+      onBlurInternal={handleBlur}
       onChangeInternal={handleChange}
       onFocusInternal={handleFocus}
-      onBlurInternal={handleBlur}
     />
   )
 }

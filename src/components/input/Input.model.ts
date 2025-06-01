@@ -1,3 +1,4 @@
+import type { LabelProps } from "../label";
 import type {
   Ref,
   ChangeEvent,
@@ -7,7 +8,6 @@ import type {
   TextareaHTMLAttributes,
   InputHTMLAttributes,
 } from "react";
-import type { LabelProps } from "../label";
 
 /* ---------- Basistypen ---------------------------------- */
 export type FieldType = Omit<

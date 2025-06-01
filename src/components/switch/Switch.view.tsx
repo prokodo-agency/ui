@@ -1,7 +1,9 @@
-import { create } from "@/helpers/bem"
-import { Label } from "@/components/label"
 import { Icon, type IconName } from "@/components/icon"
+import { Label } from "@/components/label"
+import { create } from "@/helpers/bem"
+
 import styles from "./Switch.module.scss"
+
 import type { SwitchViewProps } from "./Switch.model"
 import type { FC } from "react"
 
@@ -57,22 +59,22 @@ export const SwitchView: FC<SwitchViewProps> = ({
         />
 
         <input
-          id={name}
-          name={name}
-          type="checkbox"
-          role="switch"
-          checked={isChecked}
-          disabled={disabled}
           aria-checked={isChecked}
           aria-disabled={disabled || undefined}
           aria-required={required || undefined}
+          checked={isChecked}
+          disabled={disabled}
+          id={name}
+          name={name}
+          role="switch"
+          type="checkbox"
           {...(hasLabel && !hideLabel
             ? { "aria-labelledby": `${name}-label-text` }
             : { "aria-label": label })}
           className={bem("input")}
+          onBlur={onBlurInternal}
           onChange={onChangeInternal}
           onFocus={onFocusInternal}
-          onBlur={onBlurInternal}
         />
 
         <div
@@ -84,9 +86,9 @@ export const SwitchView: FC<SwitchViewProps> = ({
           {(icon || checkedIcon) && (
             <span className={bem("icon__wrapper")}>
               <Icon
+                className={bem("icon", { isActive: isChecked })}
                 name={(isChecked ? checkedIcon : icon) as IconName}
                 size="sm"
-                className={bem("icon", { isActive: isChecked })}
               />
             </span>
           )}

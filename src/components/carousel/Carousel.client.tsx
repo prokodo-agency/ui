@@ -11,10 +11,13 @@ import {
   type KeyboardEvent,
   type TouchEvent,
 } from "react"
-import { create } from "@/helpers/bem"
+
 import { Button } from "@/components/button"
 import { Lottie } from "@/components/lottie"
 import { Skeleton } from "@/components/skeleton"
+import { create } from "@/helpers/bem"
+import { isNumber } from "@/helpers/validations"
+
 import styles from "./Carousel.module.scss"
 import {
   PREV,
@@ -25,6 +28,7 @@ import {
   handleMouseDown,
   handleMouseUp,
 } from "./Carousel.services"
+
 import type { CarouselProps, CarouselDirection } from "./Carousel.model"
 
 const bem = create(styles, "Carousel")
@@ -117,7 +121,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
 
   /* autoplay */
   useEffect(() => {
-    if (!autoplay || autoplay <= 0) return
+    if (!isNumber(autoplay) || (autoplay as number) <= 0) return
     if (!isPlaying) return
     const id = setInterval(() => slide(NEXT), autoplay)
     return () => clearInterval(id)
@@ -134,27 +138,19 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
   const offset = -current * (100 / itemsToShow)
 
   /* ------------- render ---------------------------------- */
-  if (num === 0) return <Skeleton variant="rectangular" width="100%" height="200px" />
+  if (num === 0) return <Skeleton height="200px" variant="rectangular" width="100%" />
 
   return (
     <div
       {...rest}
       ref={containerRef}
+      role="button"
+      tabIndex={0}
       className={bem(
         undefined,
         { "is-active": mouseActive },
         className,
       )}
-      role="button"
-      tabIndex={0}
-      onMouseEnter={(e) => {
-        onMouseEnter?.(e)
-        setPlaying(false)
-      }}
-      onMouseLeave={(e) => {
-        onMouseLeave?.(e)
-        setPlaying(true)
-      }}
       onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
         onKeyDown?.(e)
         if (e.key === "ArrowLeft") slide(PREV)
@@ -165,22 +161,30 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
         handleMouseDown(e, mouseStartX)
         setMouse(true)
       }}
+      onMouseEnter={(e) => {
+        onMouseEnter?.(e)
+        setPlaying(false)
+      }}
+      onMouseLeave={(e) => {
+        onMouseLeave?.(e)
+        setPlaying(true)
+      }}
       onMouseUp={(e) => {
         onMouseUp?.(e)
         handleMouseUp(e, mouseStartX, mouseEndX, slide)
         setMouse(false)
       }}
-      onTouchStart={(e: TouchEvent<HTMLDivElement>) => {
-        onTouchStart?.(e)
-        handleTouchStart(e, touchStartX)
+      onTouchEnd={(e) => {
+        onTouchEnd?.(e)
+        handleTouchEnd(touchStartX, touchEndX, slide)
       }}
       onTouchMove={(e) => {
         onTouchMove?.(e)
         handleTouchMove(e, touchEndX)
       }}
-      onTouchEnd={(e) => {
-        onTouchEnd?.(e)
-        handleTouchEnd(touchStartX, touchEndX, slide)
+      onTouchStart={(e: TouchEvent<HTMLDivElement>) => {
+        onTouchStart?.(e)
+        handleTouchStart(e, touchStartX)
       }}
     >
       <div
@@ -192,6 +196,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
       >
         {items.map((child, i) => (
           <div
+            // eslint-disable-next-line react/no-array-index-key
             key={`cl-${i}`}
             className={bem("item", undefined, classNameItem)}
             style={{ width: `${100 / itemsToShow}%` }}
@@ -208,18 +213,18 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
         })}
       >
         <div className={bem("mobile__tutorial__animation")}>
-          <Lottie animationName="Swipe" />
+          <Lottie animation="https://lottie.host/7da0edc5-d79e-497c-bcce-ab9dd8e9458d/lahjQ7ICxg.lottie" />
         </div>
       </div>
 
       {/* controls & dots */}
       <footer className={bem("controls", undefined, classNameControls)}>
-        {enableControl && (
+        {Boolean(enableControl) && (
           <Button
             aria-label="previous"
             className={bem("button", undefined, classNameButtons)}
-            variant="outlined"
             iconProps={{ name: "ArrowLeft01Icon", size: "md", color: "white" }}
+            variant="outlined"
             onClick={() => slide(PREV)}
           />
         )}
@@ -229,6 +234,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
             const active = i === (current - itemsToShow + num) % num
             return (
               <button
+                // eslint-disable-next-line react/no-array-index-key
                 key={`dot-${i}`}
                 className={bem("dots__dot", { "is-active": active }, classNameDot)}
                 onClick={() => slideTo(i)}
@@ -238,12 +244,12 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
           })}
         </span>
 
-        {enableControl && (
+        {Boolean(enableControl) && (
           <Button
             aria-label="next"
             className={bem("button", undefined, classNameButtons)}
-            variant="outlined"
             iconProps={{ name: "ArrowRight01Icon", size: "md", color: "white" }}
+            variant="outlined"
             onClick={() => slide(NEXT)}
           />
         )}

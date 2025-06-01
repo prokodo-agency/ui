@@ -2,10 +2,14 @@
 import {
   useState, useEffect, useCallback, useMemo, memo,
   type ChangeEvent,
+  type JSX,
 } from "react"
+
+import { isNull, isNumber } from "@/helpers/validations"
+
 import { InputView } from "./Input.view"
 import { handleValidation } from "./InputValidation"
-import { isNull } from "@/helpers/validations"
+
 import type { InputProps, InputFocus, InputBlur } from "./Input.model"
 
 function InputClient({
@@ -26,7 +30,7 @@ function InputClient({
   onFocus,
   onBlur,
   ...rest
-}: InputProps) {
+}: InputProps): JSX.Element {
   const [focused, setFocused] = useState(false)
   const [val, setVal] = useState<string | number | undefined>(value)
   const [err, setErr] = useState<string | undefined>(errorText)
@@ -38,13 +42,13 @@ function InputClient({
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const v = e.target.value
-      if (maxLength && v.length > maxLength) return
+      if (isNumber(maxLength) && v.length > (maxLength as number)) return
 
       setVal(v)
       const minInt = rawType === "number" ? min as number : undefined
       const maxInt = rawType === "number" ? max as number : undefined
       handleValidation(
-        multiline ? "text" : rawType,
+        Boolean(multiline) ? "text" : rawType,
         name,
         v,
         required,
@@ -75,27 +79,28 @@ function InputClient({
     ],
   )
 
-  const handleFocus = (e: InputFocus) => {
+  const handleFocus = useCallback((e: InputFocus) => {
     setFocused(true)
     onFocus?.(e)
-  }
-  const handleBlur = (e: InputBlur) => {
+  }, [onFocus])
+
+  const handleBlur = useCallback((e: InputBlur) => {
     setFocused(false)
     onBlur?.(e)
-  }
-  
+  }, [onBlur])
+
   const viewBase = useMemo(() => ({
     ...rest,
     name,
-    isFocused: isFocused || focused,
+    isFocused: isFocused !== undefined ? Boolean(isFocused) : focused,
     value: val,
     errorText: err,
     onChange: handleChange,
     onFocus: handleFocus,
     onBlur: handleBlur
-  }), [isFocused, focused, val, err, handleChange, handleFocus, handleBlur])
+  }), [isFocused, focused, val, err, name, handleChange, handleFocus, handleBlur, rest])
 
-  const viewProps: InputProps = multiline
+  const viewProps: InputProps = Boolean(multiline)
     ? {
         ...viewBase,
         multiline: true,

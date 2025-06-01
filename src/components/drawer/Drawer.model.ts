@@ -1,6 +1,6 @@
-import type { HTMLAttributes, ReactNode, Ref } from 'react'
-import type { HeadlineProps } from '../headline'
 import type { ButtonProps } from '../button'
+import type { HeadlineProps } from '../headline'
+import type { HTMLAttributes, MouseEventHandler, ReactNode, Ref } from 'react'
 
 /**
  * Anchor positions for the drawer.
@@ -59,7 +59,7 @@ export interface DrawerProps {
    * Defaults to true.
    */
   closeOnBackdropClick?: boolean
-  
+
   /**
    * Option overwrittes for the close button
    */
@@ -94,7 +94,7 @@ export interface DrawerProps {
 
 /**
  * Props are exactly `DrawerProps` plus some internal refs.
- * 
+ *
  * - `open`: whether drawer is visible (controls CSS classes).
  * - `onClose`: callback (closeDrawer) coming from Client.
  * - `closeButtonRef`: ref to the “×” button for focus‐management.
@@ -107,4 +107,5 @@ export interface DrawerViewProps extends DrawerProps {
   closeButtonRef?: React.RefObject<HTMLButtonElement | null>
   containerRef?: React.RefObject<HTMLDivElement | null>
   backdropProps?: HTMLAttributes<HTMLDivElement>
+  onMouseDown?: MouseEventHandler<HTMLDivElement>
 }

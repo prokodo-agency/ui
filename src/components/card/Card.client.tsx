@@ -6,7 +6,11 @@ import {
   type JSX,
   type KeyboardEvent,
 } from "react"
+
+import { isNull } from "@/helpers/validations"
+
 import { CardView } from "./Card.view"
+
 import type { CardProps } from "./Card.model"
 
 export default function CardClient({
@@ -19,7 +23,7 @@ export default function CardClient({
   ...rest
 }: CardProps): JSX.Element {
   const isClickable =
-    (!disabled && typeof onClick === "function") ||
+    (!Boolean(disabled) && typeof onClick === "function") ||
     (!!redirect && typeof redirect.href === "string")
 
   const handleClickVoid = useCallback(() => {
@@ -28,7 +32,7 @@ export default function CardClient({
 
   const handleKey = useCallback(
     (e: KeyboardEvent<Element>) => {
-      if (e.code === "Enter" && onClick && !disabled) onClick()
+      if (e.code === "Enter" && typeof onClick === "function" && !Boolean(disabled)) onClick()
       onKeyDown?.(e)
     },
     [onClick, onKeyDown, disabled],
@@ -36,18 +40,18 @@ export default function CardClient({
   const extra: HTMLAttributes<HTMLDivElement> = isClickable
     ? {
         role: "button",
-        tabIndex: !disabled && !redirect ? 0 : -1,
+        tabIndex: !Boolean(disabled) && !isNull(redirect) ? 0 : -1,
       }
     : { tabIndex: -1 }
-      
+
   return (
     <CardView
       {...rest}
       {...extra}
-      isClickable={isClickable}
       disabled={disabled}
+      isClickable={isClickable}
       redirect={redirect}
-      onClick={!disabled ? handleClickVoid : undefined}
+      onClick={!Boolean(disabled) ? handleClickVoid : undefined}
       onKeyDown={handleKey}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

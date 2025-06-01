@@ -1,5 +1,7 @@
 import { createIsland } from "@/helpers/createIsland"
+
 import ChipServer from "./Chip.server"
+
 import type { ChipProps } from "./Chip.model"
 
 export const Chip = createIsland<ChipProps>({

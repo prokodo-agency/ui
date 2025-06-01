@@ -1,8 +1,11 @@
-import type { FC } from "react"
-import { create } from "@/helpers/bem"
 import { Label } from "@/components/label"
+import { create } from "@/helpers/bem"
+import { isString } from "@/helpers/validations"
+
 import styles from "./Slider.module.scss"
+
 import type { SliderViewProps, SliderMark } from "./Slider.model"
+import type { FC } from "react"
 
 const bem = create(styles, "Slider")
 
@@ -55,7 +58,7 @@ export const SliderView: FC<SliderViewProps> = ({
   return (
     <div className={bem(undefined, undefined, className)}>
       {/* Optionales Label */}
-      {label && (
+      {isString(label) && (
         <Label
           {...labelProps}
           htmlFor={id}
@@ -71,10 +74,7 @@ export const SliderView: FC<SliderViewProps> = ({
         Root-Container braucht eine feste Höhe (z.B. 30px), siehe SCSS.
         Darin liegt alles positioniert.
       */}
-      <div
-        className={bem("root", { disabled: Boolean(disabled) })}
-        aria-disabled={disabled || undefined}
-      >
+      <div className={bem("root", { disabled: Boolean(disabled) })}>
         {/* 1) Rail (unbefüllter Hintergrund) */}
         <div className={bem("rail")} />
 
@@ -97,9 +97,9 @@ export const SliderView: FC<SliderViewProps> = ({
           return (
             <div
               key={m.value}
+              aria-hidden="true"
               className={bem("mark")}
               style={{ left: `${leftPct}%` }}
-              aria-hidden="true"
             >
               {typeof m.label === "string" ? (
                 <span className={bem("mark__label")}>{m.label}</span>
@@ -110,27 +110,27 @@ export const SliderView: FC<SliderViewProps> = ({
 
         {/* 4) Native <input type="range">, transparent, liegt oben */}
         <input
-          id={id}
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={internalValue}
-          disabled={disabled}
-          aria-required={required}
-          aria-valuemin={min}
+          aria-disabled={Boolean(disabled) || undefined}
+          aria-label={label}
           aria-valuemax={max}
+          aria-valuemin={min}
           aria-valuenow={internalValue}
           aria-valuetext={String(internalValue)}
-          aria-label={label}
           className={bem("input")}
-          onFocus={onFocusInternal}
+          disabled={disabled}
+          id={id}
+          max={max}
+          min={min}
+          step={step}
+          type="range"
+          value={internalValue}
           onBlur={onBlurInternal}
           onChange={onChangeInternal}
+          onFocus={onFocusInternal}
         />
 
         {/* 5) Floating Value Label (Tooltip) über dem Thumb */}
-        {!disabled && (
+        {!Boolean(disabled) && (
           <span
             {...valueLabelProps}
             className={bem("valueText", { focused: isFocused })}

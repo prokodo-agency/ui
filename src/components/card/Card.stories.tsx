@@ -1,7 +1,8 @@
-import { Card } from "./Card"
 
 import { Headline } from "../headline"
 import { RichText } from "../rich-text"
+
+import { Card } from "./Card"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
@@ -64,7 +65,7 @@ export const CardHighlight: Story = {
 export const CardBackground: Story = {
   args: {
     variant: "primary",
-    background: 1,
+    background: "/images/placeholder_1000x200.webp",
     children,
   },
 }
@@ -80,7 +81,7 @@ export const CardGradiant: Story = {
 export const CardClickHandler: Story = {
   args: {
     variant: "primary",
-    background: 1,
+    background: "/images/placeholder_1000x200.webp",
     onClick: () => console.log("Clicked!"),
     children,
   },

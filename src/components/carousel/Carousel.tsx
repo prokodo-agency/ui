@@ -1,5 +1,7 @@
 import { createIsland } from "@/helpers/createIsland"
+
 import CarouselServer from "./Carousel.server"
+
 import type { CarouselProps } from "./Carousel.model"
 
 export const Carousel = createIsland<CarouselProps>({

@@ -5,7 +5,6 @@ import { type FC, memo, useEffect, useRef, useState, lazy, Suspense } from "reac
 import { create } from "@/helpers/bem"
 
 import styles from "./Lottie.module.scss"
-import { ANIMATIONS } from "./LottieAnimations"
 
 import type { LottieProps } from "./Lottie.model"
 
@@ -18,7 +17,7 @@ const DotLottieReact = lazy(() =>
 )
 
 export const Lottie: FC<LottieProps> = memo(
-  ({ className, animationName, containerClassName, ...props }) => {
+  ({ className, animation, containerClassName, ...props }) => {
     const [isInView, setIsInView] = useState(false)
     const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -36,7 +35,7 @@ export const Lottie: FC<LottieProps> = memo(
       return () => observer.disconnect()
     }, [])
 
-    if (!ANIMATIONS?.[animationName]) return null
+    if (!animation) return null
 
     return (
       <div
@@ -57,7 +56,7 @@ export const Lottie: FC<LottieProps> = memo(
               loop
               className={bem(undefined, undefined, className)}
               renderConfig={{ devicePixelRatio: 0.9 }}
-              src={ANIMATIONS[animationName]}
+              src={animation}
               useFrameInterpolation={false}
               {...props}
             />

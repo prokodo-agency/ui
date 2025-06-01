@@ -1,7 +1,9 @@
 'use client'
 import { createLazyWrapper } from '@/helpers/createLazyWrapper'
+
 import DrawerClient from './Drawer.client'
 import DrawerServer from './Drawer.server'
+
 import type { DrawerProps } from './Drawer.model'
 
 /**

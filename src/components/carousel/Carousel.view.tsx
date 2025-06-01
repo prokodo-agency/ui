@@ -1,8 +1,11 @@
-import { create } from "@/helpers/bem"
+import { Children, type JSX } from "react"
+
 import { Skeleton } from "@/components/skeleton"  // optional placeholder
+import { create } from "@/helpers/bem"
+
 import styles from "./Carousel.module.scss"
+
 import type { CarouselProps } from "./Carousel.model"
-import { Children } from "react"
 
 const bem = create(styles, "Carousel")
 
@@ -17,11 +20,11 @@ export function CarouselView({
   enableControl,
   children,
   ...rest
-}: CarouselProps) {
+}: CarouselProps): JSX.Element {
   const items = Children.toArray(children)
 
   if (items.length === 0) {
-    return <Skeleton variant="rectangular" width="100%" height="200px" />
+    return <Skeleton height="200px" variant="rectangular" width="100%" />
   }
 
   return (
@@ -33,6 +36,7 @@ export function CarouselView({
       <div className={bem("wrapper", undefined, classNameWrapper)}>
         {items.map((child, i) => (
           <div
+            // eslint-disable-next-line react/no-array-index-key
             key={`static-carousel-${i}`}
             className={bem("item", undefined, classNameItem)}
             style={{ width: `${100 / itemsToShow}%` }}
@@ -47,6 +51,7 @@ export function CarouselView({
         <span className={bem("dots", undefined, classNameDots)}>
           {items.map((_, i) => (
             <span
+              // eslint-disable-next-line react/no-array-index-key
               key={`dot-${i}`}
               className={bem("dots__dot", undefined, classNameDot)}
             />
@@ -55,7 +60,7 @@ export function CarouselView({
       )}
 
       {/* controls rendered but inactive until JS */}
-      {enableControl && (
+      {Boolean(enableControl) && (
         <footer className={bem("controls")}>
           <span className={bem("button")} />
           <span className={bem("button")} />

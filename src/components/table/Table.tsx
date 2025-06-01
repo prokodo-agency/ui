@@ -1,99 +1,86 @@
-"use client"
-import {
-  type FC,
-  type ReactNode,
-  memo,
-  useCallback,
-  isValidElement,
-} from "react"
-
 import { create } from "@/helpers/bem"
-import { isArray } from "@/helpers/validations"
+import { isString } from "@/helpers/validations"
+
+import { Animated } from "../animated"
+import { Headline } from "../headline"
+import { RichText } from "../rich-text"
 
 import styles from "./Table.module.scss"
+import { TableCell } from "./TableCell"
 
-import type {
-  TableProps,
-  TableRowProps,
-  TableHeaderCellProps,
-  TableBodyCellProps,
-} from "./Table.model"
+import type { TableProps } from "./Table.model"
+import type { FC } from "react"
 
 const bem = create(styles, "Table")
 
-export const Table: FC<TableProps> = memo(
-  ({
-    variant = "primary",
-    className,
-    ariaLabel,
-    caption,
-    headerType = "single",
-    data,
-    headerProps,
-    bodyProps,
-    ...props
-  }) => {
-    const renderTableBodyCell = useCallback(
-      (props: TableBodyCellProps): ReactNode => {
-        const cellProps =
-          headerType === "double" ? { ...props, scope: "row" } : props
-        const { label, icon, className, ...rest } = cellProps
-        return (
-          <td
-            key={`table-body-cell-${label}`}
-            className={bem("cell", { "with-icon": Boolean(icon) }, className)}
-            {...rest}
+export const Table: FC<TableProps> = ({
+  id,
+  title,
+  titleProps,
+  content,
+  ariaLabel,
+  caption,
+  type = "single",
+  header,
+  body,
+  ...props
+}) => {
+  const ariaLabelId = `Table-${id}`
+  return (
+    <div className={bem()}>
+      {isString(title) && (
+        <Animated animation="left-right" className={bem("header")}>
+          <Headline
+            className={bem("headline", undefined)}
+            id={ariaLabelId}
+            size="xl"
+            type="h2"
+            {...titleProps}
           >
-            {isValidElement(icon) ? (
-              <span className={bem("cell__icon")}>{icon}</span>
-            ) : null}
-            {label}
-          </td>
-        )
-      },
-      [headerType],
-    )
-
-    if (!isArray(data?.header) || !isArray(data?.body)) return null
-
-    return (
-      <div className={bem("container", variant, className)}>
-        <table
-          aria-label={ariaLabel}
-          className={bem(undefined, variant)}
-          {...props}
-        >
-          <caption className={bem("caption")}>{caption}</caption>
-          <thead className={bem("head", variant)} {...headerProps}>
+            {title}
+          </Headline>
+        </Animated>
+      )}
+      {isString(content) && (
+        <Animated className={bem("content")} delay={500}>
+          <RichText>{content}</RichText>
+        </Animated>
+      )}
+      <div className={bem("table__wrapper")}>
+        <table aria-label={ariaLabel} className={bem("table")} {...props}>
+          <thead className={bem("head")}>
             <tr className={bem("head__row")}>
-              {data.header.map((cell: TableHeaderCellProps) => (
+              {header.map(cell => (
                 <th
-                  key={`table-header-cell-${cell.label}`}
-                  className={bem("head__cell", cell.className)}
-                  colSpan={cell.colSpan}
-                  rowSpan={cell.rowSpan}
+                  key={`table-header-cell-${cell?.label}`}
+                  className={bem("head__cell")}
                 >
-                  {cell.label}
+                  {cell?.label}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className={bem("body", variant)} {...bodyProps}>
-            {data.body.map(({ data, className }: TableRowProps) => (
+          <tbody className={bem("body")}>
+            {body.map(row => (
               <tr
-                key={`table-body-row-${data?.[0]?.label}`}
-                className={bem("body__row", className)}
+                key={`table-body-row-${row?.cells?.[0]?.label}`}
+                className={bem("body__row")}
               >
-                {data.map((cell: TableBodyCellProps) =>
-                  renderTableBodyCell(cell),
-                )}
+                {row?.cells
+                  .filter(el => el !== null)
+                  .map(cell => (
+                    <TableCell
+                      key={`table-body-cell-${cell.label}`}
+                      {...cell}
+                      type={type}
+                    />
+                  ))}
               </tr>
             ))}
           </tbody>
+          <caption className={bem("caption")}>{caption}</caption>
         </table>
       </div>
-    )
-  },
-)
-
-Table.displayName = "Table"
+    </div>
+  )
+}

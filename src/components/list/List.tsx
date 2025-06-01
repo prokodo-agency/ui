@@ -1,4 +1,3 @@
-import React from "react"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
@@ -7,6 +6,7 @@ import { Icon } from "../icon"
 import { Link, type LinkProps } from "../link"
 
 import styles from "./List.module.scss"
+
 import type {
   ListProps,
   ListItemProps,
@@ -14,11 +14,12 @@ import type {
   ListCardItemProps,
 } from "./List.model"
 import type { Variants } from "@/types/variants"
+import type { JSX, KeyboardEvent } from "react"
 
 const bem = create(styles, "List")
 
 /**
- * A fully server‐rendered List component.  
+ * A fully server‐rendered List component.
  * Any interactive fragments (e.g. <Link> or clickable <li>) will hydrate on the client.
  */
 export function List({
@@ -29,7 +30,7 @@ export function List({
   items = [],
   classNameDesc,
   ...props
-}: ListProps) {
+}: ListProps): JSX.Element {
   // Build a modifier object for BEM classes if `type` is truthy.
   const modifier: Record<string, boolean> = {}
   if (type) {
@@ -53,7 +54,7 @@ export function List({
           role?: string
           tabIndex?: number
           onClick?: () => void
-          onKeyDown?: (e: React.KeyboardEvent) => void
+          onKeyDown?: (e: KeyboardEvent) => void
         } = {}
 
         if (isClickable) {
@@ -103,7 +104,7 @@ export function List({
           if (!icon) return null
           // aria-hidden for decorative icons
           return (
-            <div className={bem("item__icon__wrapper")} aria-hidden="true">
+            <div aria-hidden="true" className={bem("item__icon__wrapper")}>
               <Icon color={variant as Variants} name={icon} {...options.icon} />
             </div>
           )
@@ -128,8 +129,8 @@ export function List({
                   {/* Decorative Icon */}
                   {icon && (
                     <div
-                      className={bem("item__icon", undefined, cardItem.iconProps?.className)}
                       aria-hidden="true"
+                      className={bem("item__icon", undefined, cardItem.iconProps?.className)}
                     >
                       <Icon
                         {...cardItem.iconProps}

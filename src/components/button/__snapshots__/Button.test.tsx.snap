@@ -1,36 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`The Button component should render Button 1`] = `
-<button
-  aria-label="Test title"
-  class="prokodo-Button prokodo-Button--has-variant-undefined"
-  title="Test title"
-  type="button"
+<div
+  data-island="button"
 >
-  Test title
-</button>
+  <button
+    aria-label="Test title"
+    class="prokodo-Button prokodo-Button--has-icon prokodo-Button--has-variant-undefined"
+    title="Test title"
+    type="button"
+  >
+    Test title
+  </button>
+</div>
 `;
 
 exports[`The Button component should render disabled Button 1`] = `
-<button
-  aria-label="Test title"
-  class="prokodo-Button prokodo-Button--has-variant-undefined prokodo-Button--is-disabled"
-  disabled=""
-  tabindex="-1"
-  title="Test title"
-  type="button"
+<div
+  data-island="button"
 >
-  Test title
-</button>
+  <button
+    aria-label="Test title"
+    class="prokodo-Button prokodo-Button--has-icon prokodo-Button--has-variant-undefined prokodo-Button--is-disabled"
+    disabled=""
+    tabindex="-1"
+    title="Test title"
+    type="button"
+  >
+    Test title
+  </button>
+</div>
 `;
 
 exports[`The Button component should render loading Button 1`] = `
-<button
-  aria-label="Test title"
-  class="prokodo-Button prokodo-Button--has-variant-undefined"
-  title="Test title"
-  type="button"
+<div
+  data-island="button"
 >
-  Test title
-</button>
+  <button
+    aria-label="Test title"
+    class="prokodo-Button prokodo-Button--has-icon prokodo-Button--has-variant-undefined"
+    title="Test title"
+    type="button"
+  >
+    Test title
+  </button>
+</div>
 `;

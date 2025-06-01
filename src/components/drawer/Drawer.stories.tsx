@@ -1,8 +1,12 @@
+/* eslint-disable */
 import { type FC, Fragment, useRef, useState } from 'react'
-import { Meta, StoryObj } from '@storybook/react'
+
 import { Button } from '../button'
+
 import { Drawer } from './Drawer'
+
 import type { DrawerProps, DrawerChangeReason, DrawerRef } from './Drawer.model'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'prokodo/common/Drawer',
@@ -136,9 +140,9 @@ export const FullscreenTop: Story = {
         <Drawer
           {...args}
           ref={drawerRef}
-          open={isOpen}
-          anchor="top"
           fullscreen
+          anchor="top"
+          open={isOpen}
           onChange={handleChange}
         >
           <div style={{ padding: '2rem' }}>
@@ -187,10 +191,10 @@ export const RightDisabledBackdrop: Story = {
         <Drawer
           {...args}
           ref={drawerRef}
-          open={isOpen}
           anchor="right"
-          fullscreen={false}
           closeOnBackdropClick={false}
+          fullscreen={false}
+          open={isOpen}
           onChange={handleChange}
         >
           <div style={{ padding: '1rem' }}>

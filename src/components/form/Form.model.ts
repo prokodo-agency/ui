@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { ReactElement, FormHTMLAttributes, HTMLAttributes } from "react"
+import type { FormEvent, ReactElement, FormHTMLAttributes, HTMLAttributes, InputHTMLAttributes } from "react"
 import type { ButtonProps } from "../button"
 
 import {
@@ -15,12 +15,15 @@ import { Switch, type SwitchProps } from "../switch"
 /* eslint-enable */
 
 export type FormVariants =
+  | "inherit"
   | "primary"
   | "secondary"
   | "success"
   | "error"
   | "info"
   | "warning"
+
+export type FormFieldTypes = "input" | "select" | "switch" | "slider" | "date"
 
 export type FormFieldValue = string | boolean | string[] | undefined
 
@@ -31,6 +34,7 @@ export type FormFieldCondition = {
 }
 
 export type FormFieldOptionals = {
+  fieldType?: FormFieldTypes
   visible?: boolean
   conditions?: FormFieldCondition[]
   value?: FormFieldValue
@@ -102,16 +106,29 @@ export type FormResponseProps = HTMLAttributes<HTMLDivElement> & {
 }
 
 export type OnChangeFormHandler = (fields: FormField) => void
+
+export type FormButton = Omit<ButtonProps, "title"> & {
+  title?: string
+}
+
 export type FormProps = {
   label: string
-  disableFields?: boolean
   variant?: FormVariants
   hideResponse?: boolean
   fields?: FormField[]
   defaultFields?: FormField[]
   messages?: FormMessages
   messagesFields?: FormFieldMessages
-  button: ButtonProps
+  button: FormButton
   onSubmit?: (fields: FormField[]) => void
   onChangeForm?: OnChangeFormHandler
 } & FormHTMLAttributes<HTMLFormElement>
+
+export type FormViewProps = FormProps & {
+  formState: FormField[]
+  formMessages?: FormMessages
+  honeypot: InputHTMLAttributes<HTMLInputElement>
+  fieldProps?: FormField
+  onFormSubmit: (e: FormEvent<HTMLFormElement>) => void
+  isFormValid: boolean
+}

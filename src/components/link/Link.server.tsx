@@ -1,5 +1,6 @@
-import { LinkView } from './Link.view'
 import BaseLink from "../base-link/BaseLink.server"
+
+import { LinkView } from './Link.view'
 
 import type { LinkProps } from './Link.model'
 import type { JSX } from "react"
@@ -10,9 +11,9 @@ export default function LinkServer(props: LinkProps): JSX.Element {
   return (
     <LinkView
       {...props}
+      BaseLinkComponent={BaseLink}
       hasHandlers={hasHandlers}
       LinkTag={linkTag}
-      BaseLinkComponent={BaseLink}
     />
   )
 }

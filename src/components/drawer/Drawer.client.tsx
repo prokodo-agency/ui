@@ -8,7 +8,9 @@ import {
   useRef,
   type Ref,
 } from 'react'
+
 import { DrawerView } from './Drawer.view'
+
 import type {
   DrawerRef,
   DrawerProps,
@@ -93,10 +95,9 @@ function DrawerClient(
   return (
     <DrawerView
       {...props}
-      open={isOpen}
-      onClose={closeDrawer}
       closeButtonRef={closeButtonRef}
       containerRef={containerRef}
+      open={isOpen}
       backdropProps={{
         onMouseDown: () => {
           if (isOpen && closeOnBackdropClick) {
@@ -104,6 +105,8 @@ function DrawerClient(
           }
         }
       }}
+      onClose={closeDrawer}
+      onMouseDown={e => e.stopPropagation()}
     />
   )
 }
