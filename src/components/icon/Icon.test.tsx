@@ -2,40 +2,44 @@ import { render, screen } from "@/tests"
 
 import { Icon } from "./Icon"
 
-describe("The common icon component", () => {
-  it("renders a decorative <img>", () => {
+describe("The common Icon component", () => {
+  it("renders a decorative icon with correct mask URL", () => {
     render(<Icon name="AbacusIcon" />)
 
-    // „presentation“ + hidden, weil aria-hidden="true"
-    const img = screen.getByRole("presentation", { hidden: true })
+    const icon = screen.getByRole("presentation", { hidden: true })
+    expect(icon).toBeInTheDocument()
+    expect(icon.tagName).toBe("SPAN")
+    expect(icon).toHaveAttribute("aria-hidden", "true")
 
-    expect(img).toBeInTheDocument()
-    expect(img.tagName).toBe("IMG")
-    expect(img).toHaveAttribute("src", expect.stringContaining("abacus_icon.svg"))
-    expect(img).toHaveAttribute("aria-hidden", "true")
+    // Check inline styles directly
+    expect(icon).toHaveStyle({width:"16px"})
+    expect(icon).toHaveStyle({height:"16px"})
+    expect(icon).toHaveStyle({backgroundColor:"currentColor"})
+    expect(icon.style.maskImage).toContain("abacus_icon.svg")
   })
 
-  it("allows custom accessibility attributes", () => {
-    render(<Icon aria-hidden="false" name="AccessIcon" role="alert" />)
+  it("renders an accessible icon when label is provided", () => {
+    render(<Icon label="Access" name="AccessIcon" />)
 
-    const img = screen.getByRole("alert")
-    expect(img).toHaveAttribute("role", "alert")
-    expect(img).toHaveAttribute("aria-hidden", "false")
+    const icon = screen.getByRole("img", { name: "Access" })
+    expect(icon).toBeInTheDocument()
+    expect(icon).toHaveAttribute("aria-label", "Access")
+    expect(icon).not.toHaveAttribute("aria-hidden")
   })
 
-  it("applies default size", () => {
+  it("applies default size (`16px`)", () => {
     render(<Icon name="AbsoluteIcon" />)
 
-    const img = screen.getByRole("presentation", { hidden: true })
-    expect(img).toHaveAttribute("width", "16")
-    expect(img).toHaveAttribute("height", "16")
+    const icon = screen.getByRole("presentation", { hidden: true })
+    expect(icon).toHaveStyle({width:"16px"})
+    expect(icon).toHaveStyle({height:"16px"})
   })
 
-  it("applies size `lg`", () => {
+  it("applies size `lg` (`40px`)", () => {
     render(<Icon name="AbsoluteIcon" size="lg" />)
 
-    const img = screen.getByRole("presentation", { hidden: true })
-    expect(img).toHaveAttribute("width", "40")
-    expect(img).toHaveAttribute("height", "40")
+    const icon = screen.getByRole("presentation", { hidden: true })
+    expect(icon).toHaveStyle({width:"40px"})
+    expect(icon).toHaveStyle({height:"40px"})
   })
 })

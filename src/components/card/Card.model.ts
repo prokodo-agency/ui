@@ -6,8 +6,6 @@ import type { Ref, ReactNode, KeyboardEvent, ElementType } from "react"
 
 export type CardVariant = Variants
 
-export type CardBackground = string | 1 | 2 | 3 | 4
-
 export type CardBackgroundProps = {
   imageComponent: ElementType
   src?: string
@@ -27,7 +25,7 @@ export type CardProps = {
   customAnimation?: "bottom-top" | "top-bottom" | "left-right" | "right-left"
   className?: string
   contentClassName?: string
-  background?: CardBackground
+  background?: string
   backgroundProps?: CardBackgroundProps
   disabled?: boolean
   redirect?: LinkProps

@@ -2,7 +2,6 @@ import type { HeadlineProps } from "../headline"
 import type { IconProps } from "../icon"
 import type { ImageProps } from "../image"
 import type { LinkProps } from "../link"
-import type { LottieAnimation } from "../lottie"
 import type { Variants } from "@/types/variants"
 
 export type TeaserVariant = Variants
@@ -12,8 +11,6 @@ export type TeaserHeadline = {
 } & Omit<HeadlineProps, "children">
 
 export type TeaserImage = ImageProps
-
-export type TeaserAnimation = LottieAnimation
 
 export type TeaserRedirect = LinkProps & {
   label?: string
@@ -30,7 +27,7 @@ export type TeaserProps = {
   title: TeaserHeadline
   content?: string
   image?: TeaserImage
-  animation?: TeaserAnimation
+  animation?: string
   onClick?: () => void
   redirect?: TeaserRedirect
 }

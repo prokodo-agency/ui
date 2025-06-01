@@ -1,5 +1,8 @@
-import type { Variants } from "@/types/variants"
-import type { ReactNode, TableHTMLAttributes, HTMLAttributes } from "react"
+import type { HeadlineProps } from "../headline"
+import type { IconProps } from "../icon"
+import type { TableHTMLAttributes } from "react"
+
+export type TableType = "double" | "single"
 
 // Define types for table header and body cells
 export type TableHeaderCellProps = {
@@ -11,15 +14,11 @@ export type TableHeaderCellProps = {
 
 export type TableBodyCellProps = {
   label?: string
-  icon?: ReactNode
-  colSpan?: number
-  rowSpan?: number
-  className?: string
+  icon?: IconProps
 }
 
 export type TableRowProps = {
-  data: TableBodyCellProps[]
-  className?: string
+  cells: TableBodyCellProps[]
 }
 
 export type TableData = {
@@ -27,13 +26,13 @@ export type TableData = {
   body?: TableRowProps[]
 }
 
-// Define the table props interface
 export type TableProps = TableHTMLAttributes<HTMLTableElement> & {
-  ariaLabel: string
+  content?: string | null
+  type?: TableType
   caption: string
-  variant?: Variants
-  headerType?: "single" | "double"
-  data?: TableData
-  headerProps?: HTMLAttributes<HTMLTableSectionElement>
-  bodyProps?: HTMLAttributes<HTMLTableSectionElement>
+  ariaLabel: string
+  title?: string | null
+  titleProps?: HeadlineProps
+  header: TableHeaderCellProps[]
+  body: TableRowProps[]
 }

@@ -1,108 +1,70 @@
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/screens" as *;
+@use "@/styles/designsystem/config/spaces" as *;
 
 @include define-block("Table") {
+  padding-bottom: $space-xl;
+  padding-left: calc($space-lg + $space-xs);
+
+  @include screenLargerThan($screen-md) {
+    padding-left: 0;
+  }
+  
   &__container {
-    width: 100%;
-    overflow-x: auto;
-    margin: 16px 0;
-    border: 1px solid var(--color-grey-200);
-    border-radius: 8px;
-    box-shadow: var(--shadow-sm);
-
-    &--primary {
-      border-color: var(--color-primary-500);
-    }
-
-    &--secondary {
-      border-color: var(--color-secondary-500);
-    }
-
-    &--info {
-      border-color: var(--color-info-500);
-    }
+    overflow: visible;
   }
 
-  table {
-    width: 100%;
+  &__headline {
+    margin-left: -40px;
+  }
+
+  &__content {
+    padding-left: $space-xl;
+  }
+
+  &__table {
+    table-layout: auto;
     border-collapse: collapse;
-    text-align: left;
-    font-size: 15px;
-  }
 
-  &__caption {
-    padding: 16px;
-    background-color: var(--color-grey-50);
-    color: var(--color-grey-700);
-    text-align: left;
-    font-weight: 500;
-
-    html[data-theme="dark"] & {
-      background-color: var(--color-grey-800);
-      color: var(--color-grey-300);
+    &__wrapper {
+      position: relative;
+      padding-left: $space-xl;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: calc(100vw - $space-2xl);
     }
   }
 
   &__head {
-    background-color: var(--color-grey-200);
-
-    &--primary {
-      background-color: var(--color-primary-100);
-    }
-
-    &--secondary {
-      background-color: var(--color-secondary-100);
-    }
-
-    &--info {
-      background-color: var(--color-info-100);
-    }
-
     &__row {
-      border-bottom: 2px solid var(--color-grey-300);
+      border-bottom: 1px solid var(--color-grey-200);
     }
 
     &__cell {
-      padding: 12px 16px;
-      font-weight: 700;
-      color: var(--color-grey-900);
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
+      padding: $space-xl $space-sm;
+      font-weight: 500;
+      text-align: center;
+      @include text("headline/sm");
 
-      &:hover {
-        background-color: var(--color-grey-100);
-      }
-
-      &.is-active {
+      &:first-child {
         color: var(--color-primary-500);
-        border-bottom: 2px solid var(--color-primary-500);
-      }
-
-      &.is-sorted {
-        color: var(--color-info-500);
+        text-align: left;
       }
     }
   }
 
   &__body {
-    background-color: var(--color-white);
-
     &__row {
-      &:hover {
-        background-color: var(--color-grey-50);
-      }
-    }
-
-    &__cell {
-      padding: 12px 16px;
       border-bottom: 1px solid var(--color-grey-200);
-      color: var(--color-grey-700);
-      text-align: left;
-
-      &.with-icon {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
     }
+  }
+
+  &__caption {
+    color: var(--color-grey-300);
+    text-align: right;
+    opacity: 0;
+    @include text('caption');
   }
 }

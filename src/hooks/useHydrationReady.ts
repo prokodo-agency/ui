@@ -2,9 +2,9 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
 export function useHydrationReady(
-  opts: { enabled?: boolean; threshold?: number } = {},
+  opts: { enabled?: boolean; ioOptions?: IntersectionObserverInit } = {},
 ): readonly [boolean, React.RefObject<HTMLDivElement | null>] {
-  const { enabled = true, threshold = 0.1 } = opts;
+  const { enabled = true, ioOptions = { threshold: 0.1 } } = opts;
   const ref = useRef<HTMLDivElement | null>(null);
 
   /* Sync check: already in viewport? */
@@ -24,11 +24,11 @@ export function useHydrationReady(
           io.disconnect();
         }
       },
-      { threshold },
+      { ...ioOptions },
     );
     if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
-  }, [enabled, visible, threshold]);
+  }, [enabled, visible, ioOptions]);
 
   return [visible, ref] as const;
 }

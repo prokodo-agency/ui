@@ -18,15 +18,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const steps: Step[] = [
-  {
-    label: "Step 1",
-  },
-  {
-    label: "Step 2",
-  },
-  {
-    label: "Step 3",
-  },
+  { label: "Flight search" },
+  { label: "Booking" },
+  { label: "Checkout" },
 ]
 
 const StepperWithState = (args: StepperProps) => {
@@ -37,13 +31,17 @@ const StepperWithState = (args: StepperProps) => {
 export const Default: Story = {
   args: {
     steps,
+    initialStep: 1,
+    // Add this no-op so the island hydrates:
+    onChange: (_, index: number) => console.log("Current Index: ", index),
   },
-  render: args => <StepperWithState {...args} />,
+  render: (args) => <StepperWithState {...args} />,
 }
 
 export const WithIcon: Story = {
   args: {
     steps,
+    onChange: (_, index: number) => console.log("Current Index: ", index),
   },
-  render: args => <StepperWithState {...args} />,
+  render: (args) => <StepperWithState {...args} />,
 }

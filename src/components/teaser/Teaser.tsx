@@ -1,4 +1,3 @@
-import { type FC, memo } from "react"
 
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
@@ -13,10 +12,11 @@ import { RichText } from "../rich-text"
 import styles from "./Teaser.module.scss"
 
 import type { TeaserProps } from "./Teaser.model"
+import type { FC } from "react"
 
 const bem = create(styles, "Teaser")
 
-export const Teaser: FC<TeaserProps> = memo(
+export const Teaser: FC<TeaserProps> =
   ({
     className,
     variant = "primary",
@@ -26,7 +26,6 @@ export const Teaser: FC<TeaserProps> = memo(
     image,
     title,
     content,
-    onClick,
     redirect,
     ...props
   }) => (
@@ -36,10 +35,9 @@ export const Teaser: FC<TeaserProps> = memo(
       className={bem(undefined, undefined, className)}
       contentClassName={bem("card")}
       redirect={redirect}
-      onClick={onClick}
     >
-      {animation && (
-        <Lottie animationName={animation} className={bem("animation")} />
+      {animation !== undefined && (
+        <Lottie animation={animation} className={bem("animation")} />
       )}
       {image && (
         <div className={bem("image__wrapper")}>
@@ -96,7 +94,6 @@ export const Teaser: FC<TeaserProps> = memo(
         )}
       </div>
     </Card>
-  ),
 )
 
 Teaser.displayName = "Teaser"

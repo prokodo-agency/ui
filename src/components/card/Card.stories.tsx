@@ -1,3 +1,7 @@
+
+import { Headline } from "../headline"
+import { RichText } from "../rich-text"
+
 import { Card } from "./Card"
 
 import type { Meta, StoryObj } from "@storybook/react"
@@ -34,13 +38,13 @@ type Story = StoryObj<typeof meta>
 
 const children = (
   <>
-    <h1>Headline</h1>
-    <p>
+    <Headline type="h1">Headline</Headline>
+    <RichText>
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
       voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
       clita kasd gubergren.
-    </p>
+    </RichText>
   </>
 )
 
@@ -61,7 +65,7 @@ export const CardHighlight: Story = {
 export const CardBackground: Story = {
   args: {
     variant: "primary",
-    background: 1,
+    background: "/images/placeholder_1000x200.webp",
     children,
   },
 }
@@ -77,7 +81,7 @@ export const CardGradiant: Story = {
 export const CardClickHandler: Story = {
   args: {
     variant: "primary",
-    background: 1,
+    background: "/images/placeholder_1000x200.webp",
     onClick: () => console.log("Clicked!"),
     children,
   },

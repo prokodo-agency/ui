@@ -1,66 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`The BaseLink component should render anchor links 1`] = `
-<a
-  href="#bottom"
+<div
+  data-island="baselink"
 >
-  Bottom
-</a>
+  <a
+    href="#bottom"
+  >
+    Bottom
+  </a>
+</div>
 `;
 
 exports[`The BaseLink component should render disabled links 1`] = `
-<a
-  href="https://example.com"
-  rel="noopener noreferrer"
-  style="pointer-events: none;"
-  tabindex="-1"
-  target="_blank"
+<div
+  data-island="baselink"
 >
-  https://example.com
-</a>
+  <a
+    href="https://example.com"
+    rel="noopener noreferrer"
+    style="pointer-events: none;"
+    tabindex="-1"
+    target="_blank"
+  >
+    https://example.com
+  </a>
+</div>
 `;
 
 exports[`The BaseLink component should render download links 1`] = `
-<a
-  download="sample.pdf"
-  href="http://www.africau.edu/images/default/sample.pdf"
-  rel="noopener noreferrer"
-  target="_blank"
+<div
+  data-island="baselink"
 >
-  sample.pdf
-</a>
+  <a
+    download="sample.pdf"
+    href="http://www.africau.edu/images/default/sample.pdf"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    sample.pdf
+  </a>
+</div>
 `;
 
 exports[`The BaseLink component should render external links 1`] = `
-<a
-  href="https://example.com"
-  rel="noopener noreferrer"
-  target="_blank"
+<div
+  data-island="baselink"
 >
-  https://example.com
-</a>
+  <a
+    href="https://example.com"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    https://example.com
+  </a>
+</div>
 `;
 
 exports[`The BaseLink component should render internal links 1`] = `
-<a
-  href="/"
+<div
+  data-island="baselink"
 >
-  Home
-</a>
+  <a
+    href="/"
+  >
+    Home
+  </a>
+</div>
 `;
 
 exports[`The BaseLink component should render locale links 1`] = `
-<a
-  href="/"
+<div
+  data-island="baselink"
 >
-  Home
-</a>
+  <a
+    href="/"
+  >
+    Home
+  </a>
+</div>
 `;
 
 exports[`The BaseLink component should render mailto links 1`] = `
-<a
-  href="mailto:foo@example.com"
+<div
+  data-island="baselink"
 >
-  foo@example.com
-</a>
+  <a
+    href="mailto:foo@example.com"
+  >
+    foo@example.com
+  </a>
+</div>
 `;

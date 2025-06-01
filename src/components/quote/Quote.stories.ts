@@ -33,7 +33,7 @@ export const WithAvatar: Story = {
     author: {
       avatar: {
         image: {
-          src: "./_mocks/placeholder.jpeg",
+          src: "/assets/images/placeholder_60x60.webp",
           alt: "Image alt",
         },
       },
@@ -56,7 +56,7 @@ export const WithTitle: Story = {
     author: {
       avatar: {
         image: {
-          src: "./_mocks/placeholder.jpeg",
+          src: "/assets/images/placeholder_60x60.webp",
           alt: "Image alt",
         },
       },

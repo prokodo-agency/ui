@@ -2,14 +2,14 @@ import {
   type FC,
   type ClipboardEvent,
   type ChangeEvent,
-  type KeyboardEvent,
+  // type KeyboardEvent,
   memo,
   useState,
   useRef,
 } from "react"
 
 import { create } from "@/helpers/bem"
-import { isArray } from "@/helpers/validations"
+// import { isArray } from "@/helpers/validations"
 
 import { Input } from "../input"
 
@@ -53,26 +53,26 @@ export const InputOTP: FC<InputOTPProps> = memo(
       }
     }
 
-    const handleKeyDown = (
-      e: KeyboardEvent<HTMLInputElement>,
-      index: number,
-    ) => {
-      if (
-        e.key === "Backspace" &&
-        index > 0 &&
-        isArray(otp) &&
-        otp[index] !== undefined
-      ) {
-        inputs.current[index - 1]?.focus() // Focus previous input on backspace
-      }
+    // const handleKeyDown = (
+    //   e: KeyboardEvent<HTMLInputElement>,
+    //   index: number,
+    // ) => {
+    //   if (
+    //     e.key === "Backspace" &&
+    //     index > 0 &&
+    //     isArray(otp) &&
+    //     otp[index] !== undefined
+    //   ) {
+    //     inputs.current[index - 1]?.focus() // Focus previous input on backspace
+    //   }
 
-      // Arrow keys for navigating between inputs
-      if (e.key === "ArrowLeft" && index > 0) {
-        inputs.current[index - 1]?.focus()
-      } else if (e.key === "ArrowRight" && index < length - 1) {
-        inputs.current[index + 1]?.focus()
-      }
-    }
+    //   // Arrow keys for navigating between inputs
+    //   if (e.key === "ArrowLeft" && index > 0) {
+    //     inputs.current[index - 1]?.focus()
+    //   } else if (e.key === "ArrowRight" && index < length - 1) {
+    //     inputs.current[index + 1]?.focus()
+    //   }
+    // }
 
     const handlePaste = (e: ClipboardEvent<HTMLDivElement>) => {
       const paste = e.clipboardData.getData("text").slice(0, length).split("")
@@ -139,9 +139,9 @@ export const InputOTP: FC<InputOTPProps> = memo(
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               handleChange(e.target.value, index)
             }
-            onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
-              handleKeyDown(e, index)
-            }
+            // onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+            //   handleKeyDown(e, index)
+            // }
           />
         ))}
       </div>
