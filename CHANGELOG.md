@@ -1,24 +1,32 @@
 # @prokodo/ui
 
+## 0.0.40
+
+### Patch Changes
+
+- Updated README
+
 ## 0.0.39
 
 ### Patch Changes
 
 #### ♻️ Refactor: Automated Island Component (AIC) Pattern
+
 Refactored `Button`, `Link`, `Animated`, and `Accordion` components to adopt the new **Automated Island Component (AIC)** architecture.
 
 #### ✅ Benefits for Consumers
+
 - **Unified Import**  
   All components can now be imported via:
   ```ts
-  import { Button } from '@prokodo/ui';
-  ````
+  import { Button } from "@prokodo/ui"
+  ```
 - **Optimized Rendering**
-⚡ Server-first rendering when no interactivity is needed
-🧠 On-demand hydration only for interactive islands
-👀 IntersectionObserver-based gating to defer client JS until in-view
-⏩ Optional priority prop to force eager hydration (for above-the-fold content)
-🧹 Zero-config tree-shaking: unused islands are excluded from the bundle
+  ⚡ Server-first rendering when no interactivity is needed
+  🧠 On-demand hydration only for interactive islands
+  👀 IntersectionObserver-based gating to defer client JS until in-view
+  ⏩ Optional priority prop to force eager hydration (for above-the-fold content)
+  🧹 Zero-config tree-shaking: unused islands are excluded from the bundle
 
 - 🔧 Technical Changes
 - 🧩 Core Helpers
@@ -33,11 +41,11 @@ Refactored `Button`, `Link`, `Animated`, and `Accordion` components to adopt the
 
 - 📦 Component Structure
   Each refactored component now includes:
-  - *.server.tsx
+  - \*.server.tsx
     Pure server-side rendering (no React hooks)
-  - *.client.tsx
+  - \*.client.tsx
     Fully interactive client logic
-  - *.lazy.tsx
+  - \*.lazy.tsx
     Lazy-loaded wrapper using IntersectionObserver
 
 index.tsx
