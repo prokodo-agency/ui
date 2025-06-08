@@ -4,7 +4,47 @@
 
 ### Patch Changes
 
-- ♻️ Refactor: Automated Island Component (AIC) Pattern
+#### ♻️ Refactor: Automated Island Component (AIC) Pattern
+Refactored `Button`, `Link`, `Animated`, and `Accordion` components to adopt the new **Automated Island Component (AIC)** architecture.
+
+#### ✅ Benefits for Consumers
+- **Unified Import**  
+  All components can now be imported via:
+  ```ts
+  import { Button } from '@prokodo/ui';
+  ````
+- **Optimized Rendering**
+⚡ Server-first rendering when no interactivity is needed
+🧠 On-demand hydration only for interactive islands
+👀 IntersectionObserver-based gating to defer client JS until in-view
+⏩ Optional priority prop to force eager hydration (for above-the-fold content)
+🧹 Zero-config tree-shaking: unused islands are excluded from the bundle
+
+- 🔧 Technical Changes
+- 🧩 Core Helpers
+helpers/createIsland.tsx
+Entry component factory to auto-detect interactivity and select server/client rendering
+
+helpers/createLazyWrapper.tsx
+Client-side wrapper to defer hydration using IntersectionObserver + priority flags
+
+hooks/useHydrationReady
+Extended to accept custom IntersectionObserver options
+
+- 📦 Component Structure
+Each refactored component now includes:
+
+*.server.tsx
+Pure server-side rendering (no React hooks)
+
+*.client.tsx
+Fully interactive client logic
+
+*.lazy.tsx
+Lazy-loaded wrapper using IntersectionObserver
+
+index.tsx
+Wires everything together using createIsland or createLazyWrapper
 
 ## 0.0.38
 
