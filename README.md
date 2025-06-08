@@ -130,18 +130,8 @@ export default function GalleryPage() {
 
 ### Compatibility of the components
 
-✅ = Available as RSC (<[ComponentName] />) and for client exportable (<[ComponentName]Client />)
-❌ = Not available
-\- = Currently only for RSC optimized
-
-> If RSC and client have ✅-symbol means available as RSC (<[ComponentName] />) & extra client export (<[ComponentName]Client />)
-
-## 📦 Available Components
-
-### Compatibility of the components
-
-✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also used as a client‐only entry.
-– = RSC (AIC) only; no client‐side bundle. (Best practice: Use it only in RSC)
+- ✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also used as a client‐only entry.
+- \- = RSC (AIC) only; no client‐side bundle. (Useable in both, but best practice to use in RSC only)
 
 | Component             | ✅ AIC (RSC + optional client)   | ✅ SSR-Compatible (`"use client"`) |
 |-----------------------|:--------------------------------:|:---------------------------------:|
