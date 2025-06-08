@@ -22,26 +22,23 @@ Refactored `Button`, `Link`, `Animated`, and `Accordion` components to adopt the
 
 - 🔧 Technical Changes
 - 🧩 Core Helpers
-helpers/createIsland.tsx
-Entry component factory to auto-detect interactivity and select server/client rendering
+- helpers/createIsland.tsx
+  Entry component factory to auto-detect interactivity and select server/client rendering
 
-helpers/createLazyWrapper.tsx
-Client-side wrapper to defer hydration using IntersectionObserver + priority flags
+- helpers/createLazyWrapper.tsx
+  Client-side wrapper to defer hydration using IntersectionObserver + priority flags
 
-hooks/useHydrationReady
-Extended to accept custom IntersectionObserver options
+- hooks/useHydrationReady
+  Extended to accept custom IntersectionObserver options
 
 - 📦 Component Structure
-Each refactored component now includes:
-
-*.server.tsx
-Pure server-side rendering (no React hooks)
-
-*.client.tsx
-Fully interactive client logic
-
-*.lazy.tsx
-Lazy-loaded wrapper using IntersectionObserver
+  Each refactored component now includes:
+  - *.server.tsx
+    Pure server-side rendering (no React hooks)
+  - *.client.tsx
+    Fully interactive client logic
+  - *.lazy.tsx
+    Lazy-loaded wrapper using IntersectionObserver
 
 index.tsx
 Wires everything together using createIsland or createLazyWrapper
