@@ -1,3 +1,4 @@
+@use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
@@ -30,10 +31,8 @@
 
     &__wrapper {
       position: relative;
-      padding-left: $space-xl;
       overflow-x: auto;
       overflow-y: hidden;
-      max-width: calc(100vw - $space-2xl);
     }
   }
 
@@ -58,6 +57,16 @@
   &__body {
     &__row {
       border-bottom: 1px solid var(--color-grey-200);
+
+      &--has-link {
+        @include when-hovered() {
+          background: var(--color-grey-50);
+        }
+
+        @include when-focused() {
+          background: var(--color-grey-50);
+        }
+      }
     }
   }
 

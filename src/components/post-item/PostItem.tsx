@@ -120,13 +120,13 @@ export const PostItem: FC<PostItemProps> = memo(
           <GridRow md={4} xs={12}>
             <Card
               enableShadow
-              background={image?.src}
+              background={image?.src as string}
               className={bem("image__wrapper")}
               contentClassName={bem("image__content__wrapper")}
               redirect={button?.redirect}
             >
               {!imageLoaded && <Skeleton height="275px" />}
-              {ImageComponent !== undefined && isString(image?.src) && (
+              {ImageComponent !== undefined && isString(image?.src as string) && (
                 <ImageComponent
                   {...image}
                   className={bem("image")}

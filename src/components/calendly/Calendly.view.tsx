@@ -1,4 +1,4 @@
-import { AnimatedView } from "@/components/animated/Animated.view"
+import { Animated } from "@/components/animated/Animated"
 import { Loading } from "@/components/loading"
 
 import type { CalendlyProps } from "./Calendly.model"
@@ -17,9 +17,9 @@ export function CalendlyView({
   }
 
   return (
-    <AnimatedView isVisible={false} {...animationProps}>
+    <Animated {...animationProps}>
       {!Boolean(hideLoading) && <LoadingComponent />}
       <div {...rest} data-calendly style={style} />
-    </AnimatedView>
+    </Animated>
   )
 }

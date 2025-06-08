@@ -2,7 +2,7 @@ import type { CardProps } from "../card"
 import type { IconProps, IconName } from "../icon"
 import type { LinkProps } from "../link"
 import type { Variants } from "@/types/variants"
-import type { HTMLAttributes } from "react"
+import type { HTMLAttributes, ReactNode } from "react"
 
 export type ListType = "default" | "icon" | "card"
 
@@ -10,7 +10,7 @@ export type ListVariant = Omit<Variants, "white">
 
 export type ListCardItemProps = {
   title: string
-  desc?: string
+  desc?: string | ReactNode
   icon?: IconName
   variant?: ListVariant
   iconProps?: IconProps
@@ -21,7 +21,7 @@ export type ListCardItemProps = {
 
 export type ListDefaultItemProps = {
   title: string
-  desc?: string
+  desc?: string | ReactNode
   className?: string
   icon?: IconName
   variant?: ListVariant

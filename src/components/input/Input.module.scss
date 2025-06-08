@@ -85,9 +85,10 @@
     }
 
     &--disabled {
-      @include gradientBackgroundVar("info");
+      @include gradientBorderVar(8);
+
       @include when-hovered() {
-        @include gradientBackgroundVar("info");
+        @include gradientBorderVar(8);
       }
     }
 
@@ -130,6 +131,11 @@
           opacity: 0.5; // Optional: Make it semi-transparent
           pointer-events: none; // Prevent the fake icon from interfering with text editing
         }
+      }
+
+      &:disabled {
+        color: var(--color-grey-300);
+        background: var(--color-white);
       }
     }
 

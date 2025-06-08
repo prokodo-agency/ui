@@ -10,4 +10,5 @@ export default createLazyWrapper<AccordionProps>({
   name: "Accordion",
   Client: AccordionClient,
   Server: AccordionServer,
+  isInteractive: () => true
 })

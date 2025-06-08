@@ -3,7 +3,6 @@
 @use "@/styles/designsystem/config/spaces" as *;
 
 @include define-block("TableCell") {
-  padding: $space-xl $space-sm;
   text-align: center;
 
   &:first-child {
@@ -14,9 +13,12 @@
 
   &__inner {
     display: inline-flex;
+    height: 100%;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: $space-xl $space-sm;
     @include text("base");
   }
 

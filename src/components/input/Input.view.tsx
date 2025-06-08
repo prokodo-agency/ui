@@ -12,6 +12,7 @@ const bem = create(styles, "Input")
 export function InputView({
   name,
   label,
+  disabled,
   placeholder,
   isFocused,
   labelProps = {},
@@ -27,8 +28,10 @@ export function InputView({
   inputContainerClassName,
   inputClassName,
   rows,
-  // minRows,
-  // maxRows,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  minRows,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  maxRows,
   type = "text",
   ...rest
 }: InputProps): JSX.Element {
@@ -62,6 +65,7 @@ export function InputView({
         <div className={bem("field", undefined, fieldClassName)}>
           <div className={bem("input", {
             "is-focused": Boolean(isFocused),
+            disabled: Boolean(disabled),
             multiline: Boolean(multiline),
             fullWidth: Boolean(fullWidth),
           }, inputContainerClassName)}>
@@ -73,6 +77,7 @@ export function InputView({
                 aria-invalid={isError}
                 aria-required={required}
                 className={bem("input__node", { multiline: true }, inputClassName)}
+                disabled={disabled}
                 id={name}
                 name={name}
                 placeholder={placeholder}
@@ -84,6 +89,7 @@ export function InputView({
                 aria-describedby={describedBy}
                 aria-invalid={isError}
                 aria-required={required}
+                disabled={disabled}
                 id={name}
                 name={name}
                 placeholder={placeholder}

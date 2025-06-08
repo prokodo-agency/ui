@@ -1,10 +1,9 @@
-import type { AnimatedProps } from "@/components/animated"
 import type { ButtonProps } from "@/components/button"
 import type { HeadlineProps } from "@/components/headline"
 import type { IconProps } from "@/components/icon"
 import type { Schema } from "@/types/schema"
 import type { Variants } from "@/types/variants"
-import type { ComponentType, ReactNode, SyntheticEvent, HTMLAttributes } from "react"
+import type { ReactNode, SyntheticEvent, HTMLAttributes } from "react"
 
 export type AccordionAction = Omit<ButtonProps, "id"> & {
   id: string
@@ -37,7 +36,4 @@ export type AccordionViewProps = Omit<AccordionProps, 'expanded' | 'onChange' | 
     index: number,
     event: SyntheticEvent<HTMLDivElement>
   ) => void;
-  AnimatedComponent: ComponentType<AnimatedProps>
-  ButtonComponent: ComponentType<ButtonProps>
-  IconComponent: ComponentType<IconProps>
 }

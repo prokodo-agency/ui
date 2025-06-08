@@ -1,5 +1,6 @@
 import type { HeadlineProps } from "../headline"
 import type { IconProps } from "../icon"
+import type { LinkProps } from "../link"
 import type { TableHTMLAttributes } from "react"
 
 export type TableType = "double" | "single"
@@ -15,10 +16,12 @@ export type TableHeaderCellProps = {
 export type TableBodyCellProps = {
   label?: string
   icon?: IconProps
+  classNameInner?: string
 }
 
 export type TableRowProps = {
   cells: TableBodyCellProps[]
+  redirect?: LinkProps
 }
 
 export type TableData = {

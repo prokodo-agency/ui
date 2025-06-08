@@ -164,14 +164,66 @@ export default function GalleryPage() {
 | PostWidget            | ❌ (Experimental - Coming soon)  | –                                  |
 | PostWidgetCarousel    | ❌ (Experimental - Coming soon)  | -                                  |
 | Quote                 | ✅                               | –                                  |
-| RichText              | ✅                               | –                                  |
+| RichText              | ✅                               | ✅                                 |
 | Select                | ✅                               | ✅                                 |
+| SideNav               | ✅                               | ✅                                 |
 | Skeleton              | ✅                               | –                                  |
 | Slider                | ✅                               | ✅                                 |
 | Stepper               | ✅                               | ✅                                 |
 | Switch                | ✅                               | ✅                                 |
 | Table                 | ✅                               | –                                  |
 | Teaser                | ✅                               | -                                  |
+
+## How to create my own Island Component?
+
+### 1. Create your island component (Navbar.tsx):
+
+Island architecture lets you render components on the server and hydrate them on the client only when needed.
+
+```tsx
+import { createIsland } from '@prokodo/ui/createIsland';
+import { NavbarServer } from './Navbar.server';
+
+import type { NavbarProps } from './Navbar.model';
+
+export const Navbar = createIsland<NavbarProps>({
+  name: 'Navbar',
+  Server: NavbarServer,
+  loadLazy: () => import('./Navbar.lazy'),
+
+  // Optional: Force client-side hydration as soon as someone uses an action
+  // We are automatically recognizing onChange, onKeyDown, ... events. Only needed for custom attributes.
+  isInteractive: (p: NavbarProps) => p.customEvent === true,
+});
+
+```
+
+### 2. Create your lazy wrapper (Navbar.lazy):
+
+```tsx
+'use client'
+import { createLazyWrapper } from '@prokodo/ui/createLazyWrapper';
+
+import { NavbarClient } from './Navbar.client';
+import { NavbarServer } from './Navbar.server';
+
+import type { NavbarProps } from './Navbar.model';
+
+export default createLazyWrapper<NavbarProps>({
+  name: 'Navbar',
+  Client: NavbarClient,
+  Server: NavbarServer,
+
+  // Optional: Defer hydration until the component becomes visible in the viewport (Default: true)
+  // Can be controlled by priority attribute.
+  hydrateOnVisible: false,
+
+  // Optional: Force client-side hydration as soon as someone uses an action.
+  // We are automatically recognizing onChange, onKeyDown, ... events. Only needed for custom attributes.
+  isInteractive: (p: NavbarProps) => p.customEvent === true,
+});
+
+```
 
 ## 🎯 Next steps
 

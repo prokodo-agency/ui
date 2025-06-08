@@ -1,8 +1,9 @@
 'use client'
 import {
   type ComponentType,
-  type FC,
   type ReactElement,
+  type FC,
+  cloneElement,
 } from 'react'
 
 import { useHydrationReady } from '@/hooks/useHydrationReady'
@@ -11,19 +12,8 @@ export interface LazyWrapperOptions<P extends object> {
   name: string
   Client: ComponentType<P>
   Server: ComponentType<P>
-  // When it makes sense to use hydrateOnVisible:
-  // - Below‐the‐fold widgets: If you have a heavy interactive area (e.g. a map widget, data‐visualization, large form,
-  //   or complex carousel) that appears well down the page, you can save initial JS work by waiting until the user scrolls there.
-  // - Rarely used controls: Think of a settings panel or user menu that sits hidden until triggered—hydrating it only
-  // on first visibility reduces wasted work.
   hydrateOnVisible?: boolean
   ioOptions?: IntersectionObserverInit
-  // When to use isInteractive:
-  // - If your component never receives any “onX” callbacks at all, but still needs client-only logic—for example, a
-  // tooltip that opens on hover or a carousel that auto-rotates. Since there is no prop named onX, the wrapper would assume “static,”
-  // unless you force isInteractive: () => true.
-  // - If you want to force hydration even when the consumer forgot to supply an onChange (or any “onX”). In that case,
-  // isInteractive: () => true guarantees the client bundle always loads.
   isInteractive?: (props: Readonly<P>) => boolean
 }
 
@@ -41,32 +31,52 @@ export function createLazyWrapper<P extends object>({
   }): ReactElement => {
     const props = raw as P & { redirect?: unknown }
 
-    // 1) “auto” heuristic
     const autoInteractive =
       Object.entries(props).some(
         ([k, v]) => k.startsWith('on') && typeof v === 'function',
       ) ||
       props.redirect !== undefined
 
-    // 2) optional override
     const interactive = customInteractive
       ? customInteractive(props) || autoInteractive
       : autoInteractive
 
-    // 3) intersection-observer flag
     const [visible, ref] = useHydrationReady({
       enabled: interactive && hydrateOnVisible && !priority,
       ...ioOptions,
     })
 
-    // 4) single wrapper around both branches:
-    return (
-      <div ref={ref} data-island={name.toLowerCase()}>
-        {interactive && (priority || visible)
-          ? <Client {...props} />
-          : <Server {...props} />}
-      </div>
-    )
+    const islandName = name.toLowerCase()
+
+    if (interactive && (priority || visible)) {
+      const clientEl = <Client {...props} />
+      // 1) log which lazy wrapper is rendering:
+      console.log(
+        `[hydrate] createLazyWrapper “${name}” rendering client (priority=${Boolean(
+          priority
+        )}, visible=${visible})`
+      )
+
+      // 2) only pass priority when true:
+      const extra: {'data-island': string; priority?: boolean} = { 'data-island': islandName }
+      if (priority) {
+        extra.priority = priority
+      }
+      return cloneElement(clientEl as ReactElement, extra)
+    } else {
+      const serverEl = <Server {...props} />
+      // 1) log which lazy wrapper is rendering server:
+      console.log(
+        `[hydrate] createLazyWrapper “${name}” rendering server (visible=${visible})`
+      )
+
+      // 2) always attach data-island  ref when rendering server
+      return cloneElement(
+        serverEl as ReactElement,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { 'data-island': islandName, ref } as any
+      )
+    }
   }
 
   LazyWrapper.displayName = `${name}Lazy`

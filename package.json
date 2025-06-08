@@ -12,6 +12,14 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./createIsland": {
+      "types": "./dist/types/helpers/createIsland.d.ts",
+      "import": "./dist/helpers/createIsland.js"
+    },
+    "./createLazyWrapper": {
+      "types": "./dist/types/helpers/createLazyWrapper.d.ts",
+      "import": "./dist/helpers/createLazyWrapper.js"
+    },
     "./accordion": {
       "import": "./dist/components/accordion/index.js",
       "types": "./dist/types/components/accordion/index.d.ts"
@@ -148,6 +156,10 @@
       "import": "./dist/components/select/index.js",
       "types": "./dist/types/components/select/index.d.ts"
     },
+    "./sidenav": {
+      "import": "./dist/components/sidenav/index.js",
+      "types": "./dist/types/components/sidenav/index.d.ts"
+    },
     "./skeleton": {
       "import": "./dist/components/skeleton/index.js",
       "types": "./dist/types/components/skeleton/index.d.ts"
@@ -204,11 +216,11 @@
     "@googlemaps/js-api-loader": "^1.16.6",
     "@lottiefiles/dotlottie-react": "^0.7.2",
     "dayjs": "^1.11.13",
+    "markdown-it": "^14.1.0",
+    "marked": "^15.0.12",
     "react-bem-helper": "^1.4.1",
-    "react-markdown": "^9.0.1",
-    "remark-breaks": "^4.0.0",
-    "remark-gfm": "^4.0.0",
-    "typescript": "5.5.3"
+    "typescript": "5.5.3",
+    "xss": "^1.0.15"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
@@ -269,6 +281,7 @@
     "jest-canvas-mock": "^2.5.2",
     "jest-css-modules": "^2.1.0",
     "jest-environment-jsdom": "^29.7.0",
+    "next": "^15.3.3",
     "postcss": "^8.4.39",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^10.0.2",

@@ -12,6 +12,7 @@ const bem = create(styles, 'Dialog')
 export function DialogView({
   open,
   title,
+  containerRef,
   hideTitle = false,
   renderHeader,
   hideCloseButton = false,
@@ -49,11 +50,11 @@ export function DialogView({
       aria-describedby="dialog-content"
       aria-labelledby="dialog-title"
       aria-modal="true"
-      className={bem(undefined, wrapperMods, className)}
       role="dialog"
       {...rest}
+      className={bem(undefined, wrapperMods, className)}
     >
-      <div className={bem('container', containerMods)}>
+      <div ref={containerRef} className={bem('container', containerMods)}>
         <div className={bem('header', undefined, classNameHeader)}>
           <div>
             <Headline

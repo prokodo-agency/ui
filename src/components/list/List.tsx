@@ -1,3 +1,5 @@
+import { isValidElement, type JSX, type KeyboardEvent } from "react"
+
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
@@ -14,7 +16,6 @@ import type {
   ListCardItemProps,
 } from "./List.model"
 import type { Variants } from "@/types/variants"
-import type { JSX, KeyboardEvent } from "react"
 
 const bem = create(styles, "List")
 
@@ -95,8 +96,8 @@ export function List({
 
         // 4) Helper to render an optional description <p>:
         const DescParagraph = () => {
-          if (!isString(desc)) return null
-          return <p className={bem("item__desc", undefined, classNameDesc)}>{desc}</p>
+          if (!isString(desc as string) && !isValidElement(desc)) return null
+          return <p className={bem("item__desc", {"card": type === "card"}, classNameDesc)}>{desc as string}</p>
         }
 
         // 5) Helper to render an icon (purely decorative):
@@ -116,6 +117,7 @@ export function List({
           return (
             <li key={`list-item-${title}`} className={liClass} {...liHandlers}>
               <Card
+                priority
                 variant="white"
                 {...cardItem}
                 className={bem("item__card", undefined, cardItem.className)}
@@ -161,8 +163,10 @@ export function List({
                 variant={variant}
                 {...linkProps}
               >
-                <IconWrapper />
-                <TitleSpan />
+                <div className={bem("item__link__header")}>
+                  <IconWrapper />
+                  <TitleSpan />
+                </div>
                 <DescParagraph />
               </Link>
             </li>

@@ -3,6 +3,7 @@
 exports[`The common link component should render primary 1`] = `
 <a
   class="prokodo-Link"
+  data-island="link"
   href="/"
 >
   Primary link
@@ -12,6 +13,7 @@ exports[`The common link component should render primary 1`] = `
 exports[`The common link component should render secondary 1`] = `
 <a
   class="prokodo-Link"
+  data-island="link"
   href="/"
 >
   Secondary link

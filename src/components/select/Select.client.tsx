@@ -31,6 +31,7 @@ function SelectClient<Value extends string = string>(
   {
     id,
     multiple,
+    disabled,
     required,
     value: extValue,
     items,
@@ -74,6 +75,7 @@ function SelectClient<Value extends string = string>(
   }, [open, close])
 
   const handleKey = (e: KeyboardEvent) => {
+    if (Boolean(disabled)) return
     if (e.key === "Escape") {
       e.preventDefault()
       close()
@@ -99,6 +101,7 @@ function SelectClient<Value extends string = string>(
     <SelectView
       {...rest}
       /* extra, only the client knows */
+      disabled={disabled}
       id={id}
       items={items}
       multiple={multiple}

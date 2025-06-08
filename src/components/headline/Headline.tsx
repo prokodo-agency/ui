@@ -1,17 +1,14 @@
-import Markdown from "react-markdown"
-import remarkBreaks from "remark-breaks"
-import remarkGfm from "remark-gfm"
+import { type FC, type ReactNode, type JSX } from "react"
 
 import { create } from "@/helpers/bem"
 
 import { AnimatedText } from "../animatedText"
+import { RichText } from "../rich-text"
 
 import styles from "./Headline.module.scss"
 import { POSSIBLE_HIGHLIGHTS } from "./Headline.variants"
 
-
 import type { HeadlineProps } from "./Headline.model"
-import type { FC, HTMLAttributes, ReactNode, JSX } from "react"
 
 const bem = create(styles, "Headline")
 
@@ -26,10 +23,14 @@ export const Headline: FC<HeadlineProps> = ({
   align,
   isRichtext = false,
   variant = "inherit",
-  ...props
+  children,
+  ...remainingProps
 }) => {
+  // 1) Determine highlight state
   const isHighlighted =
     Boolean(highlight) && POSSIBLE_HIGHLIGHTS.includes(variant)
+
+  // 2) Build BEM modifier object
   const modifier = {
     [variant]: !!variant,
     "is-highlighted": isHighlighted,
@@ -38,54 +39,73 @@ export const Headline: FC<HeadlineProps> = ({
     [size]: typeof size === "string" && !!size,
     [`${align}`]: !!align,
   }
+
+  // 3) Combine BEM classes + any passed-in className
   const bemClass = bem(undefined, modifier, className)
+
+  // 4) Inline style if size is numeric
   const customStyle =
     typeof size === "number"
-      ? {
-          fontSize: `${size}em`,
-        }
+      ? { fontSize: `${size}em` }
       : {}
+
+  // 5) Compute aria-label if children is plain text
   const ariaLabel =
-    typeof props.children === "string" ? props.children : undefined
+    typeof children === "string" ? children : undefined
+
+  // 6) Base props (className, style, aria-label, plus any schema attrs)
   const baseProps = {
     "aria-label": ariaLabel,
     className: bemClass,
     style: customStyle,
-    node: undefined,
     ...schema,
   }
-  const animateText = (children: ReactNode) => {
-    if (animated === false || animated === undefined) return children
-    return (
-      <AnimatedText {...animationProps}>
-        {children as ReactNode & string}
-      </AnimatedText>
-    )
+
+  // 7) Animation wrapper
+  const animateText = (text: ReactNode) => {
+    if (animated === false || animated === undefined) {
+      return text
+    }
+    return <AnimatedText {...animationProps}>{text as string}</AnimatedText>
   }
-  const renderHTag = (attr: HTMLAttributes<HTMLHeadingElement>) => {
-    if (type[1] === undefined) return null
-    const children = attr.children as ReactNode
-    // Map the `type` prop to appropriate heading tags
-    const HTag: keyof JSX.IntrinsicElements = type
+
+  // 8) Helper: render a heading tag (h1…h6) with exactly the attributes it needs
+  const renderHTag = ({ children: headingChildren }: { children?: ReactNode }) => {
+    // Map type = "h2" → actual <h2>...<h2>
+    const HTag = type as keyof JSX.IntrinsicElements
+    const headingLevel = parseInt(type.charAt(1), 10)
+
     return (
-      <HTag {...attr} aria-level={parseInt(type[1], 10)} {...baseProps}>
-        {animateText(children)}
+      <HTag {...baseProps} aria-level={headingLevel}>
+        {animateText(headingChildren)}
       </HTag>
     )
   }
+
+  // 9) Rich‐text branch: wrap the raw markdown in <RichText>,
+  //    and tell it to convert every <p>…</p> into our heading via overrideParagraph
   if (isRichtext) {
     return (
-      <Markdown
-        className={bem("headline")}
-        remarkPlugins={[remarkGfm, remarkBreaks]}
-        components={{
-          p: (props: HTMLAttributes<HTMLParagraphElement>) =>
-            renderHTag(props as HTMLAttributes<HTMLHeadingElement>),
-        }}
+      <RichText
+        animated={animated}
+        animationProps={animationProps}
+        className={bem("headline", undefined, className)}
+        itemProp={undefined}
+        linkComponent={undefined}
+        schema={schema}
+        variant={variant}
+        {...remainingProps}
+        overrideParagraph={(textContent: string) =>
+          renderHTag({ children: textContent })
+        }
       >
-        {props?.children as string}
-      </Markdown>
+        {children as string}
+      </RichText>
     )
   }
-  return renderHTag(props as HTMLAttributes<HTMLHeadingElement>)
+
+  // 10) Non‐rich mode: render exactly one heading with our animations
+  return renderHTag({ children })
 }
+
+Headline.displayName = "Headline"

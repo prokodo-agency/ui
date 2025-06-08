@@ -17,6 +17,14 @@ const exportsField = {
     types: './dist/types/index.d.ts',
     import: './dist/index.js',
   },
+  './createIsland': {
+    types: './dist/types/helpers/createIsland.d.ts',
+    import: './dist/helpers/createIsland.js',
+  },
+  './createLazyWrapper': {
+    types: './dist/types/helpers/createLazyWrapper.d.ts',
+    import: './dist/helpers/createLazyWrapper.js',
+  },
 }
 
 // Add per-component exports

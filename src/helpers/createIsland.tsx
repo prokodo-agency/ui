@@ -1,24 +1,17 @@
-/* utils/createIsland.tsx */
 import {
   lazy,
   Suspense,
   type ComponentType,
   type FC,
-  type ReactNode,
-  type JSX,
-} from 'react';
+  type ReactElement,
+  cloneElement,
+} from 'react'
 
 export interface IslandOptions<P extends object> {
-  name: string;
-  Server: ComponentType<P>;
-  loadLazy: () => Promise<{ default: ComponentType<P & { priority?: boolean }> }>;
-  // When to use isInteractive:
-  // - If your component never receives any “onX” callbacks at all, but still needs client-only logic—for example, a
-  // tooltip that opens on hover or a carousel that auto-rotates. Since there is no prop named onX, the wrapper would assume “static,”
-  // unless you force isInteractive: () => true.
-  // - If you want to force hydration even when the consumer forgot to supply an onChange (or any “onX”). In that case,
-  // isInteractive: () => true guarantees the client bundle always loads.
-  isInteractive?: (props: Readonly<P>) => boolean;
+  name: string
+  Server: ComponentType<P>
+  loadLazy: () => Promise<{ default: ComponentType<P & { priority?: boolean }> }>
+  isInteractive?: (props: Readonly<P>) => boolean
 }
 
 export function createIsland<P extends object>({
@@ -27,71 +20,64 @@ export function createIsland<P extends object>({
   loadLazy,
   isInteractive: customInteractive,
 }: IslandOptions<P>): ComponentType<P & { priority?: boolean }> {
-  const LazyComp = lazy(() => loadLazy().then((m) => ({ default: m.default })));
+  const LazyComp = lazy(() => loadLazy().then((m) => ({ default: m.default })))
 
-  /* this is how Next knows to preload your chunk:
-     a use of loadLazy() on the server side emits <link rel="preload"> */
   if (typeof window === 'undefined') {
-    void loadLazy();
+    void loadLazy() // preload on server
   }
 
-  const Wrap: FC<{ children: ReactNode }> = ({ children }) => (
-    <div data-island={name.toLowerCase()}>{children}</div>
-  );
+    function withIslandAttr(
+      el: ReactElement,
+      priority?: boolean
+    ): ReactElement {
+      const islandName = name.toLowerCase()
+
+      console.debug(
+        `[hydrate] createIsland “${name}” rendering as interactive=${Boolean(
+          priority
+        )}`
+      )
+
+      // 2) Only pass `priority` if truthy:
+      const extra: {'data-island': string; priority?: boolean} = { 'data-island': islandName }
+      if (Boolean(priority)) {
+        extra.priority = priority
+      }
+      return cloneElement(el as ReactElement, extra)
+    }
 
   const Island: FC<P & { priority?: boolean }> = ({
     priority = false,
     ...raw
   }) => {
-    const props = raw as P & { redirect?: unknown };
+    const props = raw as P & { redirect?: unknown }
 
-    // same old “onX or redirect” heuristic
     const autoInteractive =
       Object.entries(props).some(
         ([k, v]) => k.startsWith('on') && typeof v === 'function',
-      ) || props.redirect !== undefined;
+      ) || props.redirect !== undefined
 
-    // allow custom overrides
     const interactive = customInteractive
       ? customInteractive(props) || autoInteractive
-      : autoInteractive;
+      : autoInteractive
 
-    // **PRIORITY shortcut**:
-    // if this island is marked priority, we skip Suspense entirely
     if (interactive && priority) {
-      return (
-        <Wrap>
-          {/* render the client bundle immediately */}
-          <LazyComp {...props} priority={priority} />
-        </Wrap>
-      );
+      return withIslandAttr(<LazyComp {...props} />)
     }
 
-    // static (no interactivity)
     if (!interactive) {
-      return (
-        <Wrap>
-          <Server {...props} />
-        </Wrap>
-      );
+      return withIslandAttr(<Server {...props} />)
     }
 
-    // usual lazy/Suspense fallback
-    const fallback: JSX.Element = (
-      <Wrap>
-        <Server {...props} />
-      </Wrap>
-    );
+    const fallback = withIslandAttr(<Server {...props} />)
 
     return (
       <Suspense fallback={fallback}>
-        <Wrap>
-          <LazyComp {...props} priority={priority} />
-        </Wrap>
+        {withIslandAttr(<LazyComp {...props} />)}
       </Suspense>
-    );
-  };
+    )
+  }
 
-  Island.displayName = `${name}Island`;
-  return Island;
+  Island.displayName = `${name}Island`
+  return Island
 }

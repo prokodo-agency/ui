@@ -1,6 +1,7 @@
 /* eslint-disable */
 import type { FormEvent, ReactElement, FormHTMLAttributes, HTMLAttributes, InputHTMLAttributes } from "react"
 import type { ButtonProps } from "../button"
+import type { HeadlineProps } from "../headline"
 
 import {
   DatePicker,
@@ -12,6 +13,7 @@ import { InputOTP } from "../inputOTP"
 import { Select, type SelectProps } from "../select"
 import { Slider, type SliderProps } from "../slider"
 import { Switch, type SwitchProps } from "../switch"
+import type { FormFieldProps } from "./FormField.client"
 /* eslint-enable */
 
 export type FormVariants =
@@ -113,22 +115,25 @@ export type FormButton = Omit<ButtonProps, "title"> & {
 
 export type FormProps = {
   label: string
+  disabled?: boolean
   variant?: FormVariants
   hideResponse?: boolean
   fields?: FormField[]
+  hideHeadline?: boolean
+  headlineProps?: HeadlineProps
   defaultFields?: FormField[]
   messages?: FormMessages
   messagesFields?: FormFieldMessages
   button: FormButton
   onSubmit?: (fields: FormField[]) => void
   onChangeForm?: OnChangeFormHandler
-} & FormHTMLAttributes<HTMLFormElement>
+} & Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit">
 
 export type FormViewProps = FormProps & {
-  formState: FormField[]
+  formState: Omit<FormField, "onChange">[]
   formMessages?: FormMessages
   honeypot: InputHTMLAttributes<HTMLInputElement>
-  fieldProps?: FormField
+  fieldProps?: FormFieldProps
   onFormSubmit: (e: FormEvent<HTMLFormElement>) => void
   isFormValid: boolean
 }

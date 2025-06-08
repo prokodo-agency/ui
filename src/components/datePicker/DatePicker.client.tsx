@@ -20,9 +20,20 @@ import type {
   InputChangeEvent
 } from "@/components/input"
 
+/**
+ * Convert a DatePickerValue (string | Dayjs | null | undefined)
+ * into either a Dayjs (if valid) or null (if empty/invalid).
+ */
 function toDayjs(val?: DatePickerValue): Dayjs | null {
-  if (!isNull(val)) return null
-  if (isDayjs(val)) return val
+  // If val is null or undefined → no date selected
+  if (isNull(val)) {
+    return null
+  }
+  // If val is already a Dayjs → use it directly
+  if (isDayjs(val)) {
+    return val
+  }
+  // Otherwise try parsing the string
   const d = dayjs(val)
   return d.isValid() ? d : null
 }

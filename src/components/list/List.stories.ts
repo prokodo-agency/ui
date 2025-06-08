@@ -54,6 +54,11 @@ const customItems: ListDefaultItemProps[] = [
   },
   {
     title: "Icon list element",
+    icon: "AbacusIcon",
+    redirect: {
+      href: "#",
+    },
+    desc: "This is a very very very very very very very very very very very long description",
   },
 ]
 
@@ -75,6 +80,7 @@ const cardItems: ListCardItemProps[] = [
   },
   {
     title: "Card list item",
+    desc: "This is a very very very very very very very very very very very long description",
   },
 ]
 

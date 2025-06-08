@@ -1,0 +1,142 @@
+/* src/components/side-nav/SideNav.module.scss */
+@use "@/styles/ui/mixins/accessibility"      as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts"     as *;
+@use "@/styles/designsystem/config/colors"    as *;
+@use "@/styles/designsystem/config/spaces"    as *;
+@use "@/styles/designsystem/config/radials"   as *;
+@use "@/styles/ui/mixins/bem"                 as *;
+
+$rail-w: 240px;   // entire moulding width
+$rail-c: 56px;    // Visible toggle width
+
+@keyframes label-in  { from { opacity:0; } to { opacity:1; } }
+@keyframes label-out { from { opacity:1; } to { opacity:0; } }
+
+@include define-block("SideNav") {
+  --bg: var(--color-white);
+  --shadow: var(--elevation-2);
+  --t: 280ms;
+
+  top: 0;
+  left: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  width: $rail-w;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+
+  /* ───── collapsed → slide to the right leaving only the toggle visible */
+  &--collapsed {
+    width: $rail-c;
+  }
+
+  &__collape__label {
+    @include text("caption");
+
+    &--is-hidden {
+    @include hidden();
+    }
+  }
+
+  /* toggle button (always visible!) ------------------------------------- */
+  &__toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--bg);
+    transition: background-color 120ms;
+    padding: $space-md $space-lg $space-md $space-md;
+    border: none;
+    cursor: pointer;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      width: 100%;
+      @include gradientBackgroundVar("primary-secondary");
+    }
+
+    @include when-hovered()            {
+      background: var(--color-grey-50);
+    }
+
+    @include when-focuse-visible()     {
+      // @include focus-ring();
+    }
+  }
+
+  /* list / items -------------------------------------------------------- */
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    flex: 1 0 auto;
+  }
+
+  &__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-sm $space-lg $space-sm $space-md;
+    text-decoration: none;
+    border-radius: $space-xs;
+    transition: background-color 120ms;
+
+    @include when-hovered() {
+      text-decoration: none;
+      background: var(--color-grey-50);
+
+      & > div:first-of-type {
+        position: relative;
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          @include gradientBackgroundVar("primary");
+          border-radius: $ui-image-border-radius;
+          opacity: 0.5;
+        }
+      }
+    }
+
+    @include when-focuse-visible() {
+      // @include focus-ring();
+    }
+
+    &[aria-current="page"] {
+      background: var(--color-primary-50);
+    }
+  }
+
+  &__icon__wrapper  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-xs;
+    background: var(--color-grey-50);
+    border-radius: $ui-image-border-radius;
+  }
+
+  &__label  {
+    @include text("base");
+    animation: label-in 150ms ease forwards;
+
+    &--collapsed & {
+      animation: label-out 150ms ease forwards;
+    }
+  }
+}

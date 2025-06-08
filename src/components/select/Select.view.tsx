@@ -11,6 +11,7 @@ const bem = create(styles, "Select")
 
 export function SelectView<Value extends string = string>({
   id,
+  disabled,
   name = id,
   label,
   hideLabel,
@@ -48,7 +49,11 @@ export function SelectView<Value extends string = string>({
   const display =
     selectedItems.length === 0
       ? (
-        <span className={bem("button__inner", { "is-placeholder": true, expanded: open })}>
+        <span className={bem("button__inner", {
+          "is-placeholder": true,
+          "is-placeholder--disabled": Boolean(disabled),
+          expanded: open,
+        })}>
           {placeholder}
         </span>
       )
@@ -88,6 +93,7 @@ export function SelectView<Value extends string = string>({
           aria-expanded={open}
           aria-haspopup="listbox"
           className={bem("button", { expanded: open })}
+          disabled={disabled}
           id={id}
           name={name}
           type="button"

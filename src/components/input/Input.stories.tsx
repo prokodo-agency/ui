@@ -55,6 +55,15 @@ export const Default: Story = {
   },
 }
 
+export const Disabled: Story = {
+  args: {
+    name: "demo",
+    disabled: true,
+    value: "bla",
+    label: "Your name",
+  },
+}
+
 export const WithValidation: Story = {
   args: {
     name: "email",

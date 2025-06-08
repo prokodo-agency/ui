@@ -4,5 +4,6 @@ import type { AnimatedProps } from "./Animated.model"
 import type { JSX } from "react"
 
 export default function AnimatedServer({ ...rest }: AnimatedProps): JSX.Element {
-  return <AnimatedView {...rest} isVisible={false} />
+  delete rest?.onAnimate
+  return <AnimatedView {...rest}  isVisible={false} />
 }

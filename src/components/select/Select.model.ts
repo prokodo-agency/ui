@@ -25,6 +25,7 @@ export interface SelectProps<Value extends string = string> {
 
   /* behaviour */
   multiple?: boolean;
+  disabled?: boolean
   required?: boolean;
   value?: Value | Value[] | null;
   placeholder?: string;

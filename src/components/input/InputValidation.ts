@@ -65,7 +65,7 @@ export const handleValidation = (
 
   // Define regex patterns for different field types
   let regexPatterns: { [key in HTMLInputTypeAttribute]?: RegExp } = {
-    text: /^[a-zA-Z\s,.!?'-]+$/,
+    // text: /^[a-zA-Z\s,.!?'-]+$/,
     email:
       /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x21\x23-\x5b\x5d-\x7e]|\\[\x21-\x7e])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}|(?:\[(?:(?:2(?:5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(?:2(?:5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x21-\x5a\x53-\x7e]|\\[\x21-\x7e])+)])$/i,
     tel: /^\+?[1-9]\d{1,14}$/,
@@ -87,7 +87,7 @@ export const handleValidation = (
     }
   }
   const errorMessages: InputErrorTranslations = {
-    text: "Text can only include letters and common punctuation.",
+    // text: "Text can only include letters and common punctuation.",
     email: "Please enter a valid email address (e.g., name@example.com).",
     tel: "Please enter a valid phone number.",
     url: "Please enter a valid URL.",

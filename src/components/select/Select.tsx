@@ -8,4 +8,5 @@ export const Select = createIsland<SelectProps>({
   name: "Select",
   Server: SelectServer,
   loadLazy: () => import("./Select.lazy"),
+  isInteractive: () => true
 })

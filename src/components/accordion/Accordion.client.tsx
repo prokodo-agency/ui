@@ -1,10 +1,6 @@
 "use client"
 import { useState, useCallback, type SyntheticEvent, type JSX } from "react"
 
-import { Animated } from "@/components/animated/Animated"
-import Button from "@/components/button/Button.client"
-import { Icon } from "@/components/icon"
-
 import { AccordionView } from "./Accordion.view"
 
 import type { AccordionProps } from "./Accordion.model"
@@ -26,10 +22,7 @@ export default function AccordionClient(props: AccordionProps): JSX.Element {
   return (
     <AccordionView
       {...rest}
-      AnimatedComponent={Animated}
-      ButtonComponent={Button}
       expandedIndex={expandedIndex}
-      IconComponent={Icon}
       onToggle={handleToggle}
     />
   )

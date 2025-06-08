@@ -14,7 +14,7 @@ export type SwitchColor =
   | "info"
   | "warning"
 
-export type SwitchProps = HTMLAttributes<HTMLInputElement> & {
+export type SwitchProps = Omit<HTMLAttributes<HTMLInputElement>, "onChange"> & {
   /** The ID and name of this switch instance (used for Label htmlFor). */
   name: string
 

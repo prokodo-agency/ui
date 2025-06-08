@@ -17,8 +17,11 @@ const bem = create(styles, "Form")
 export const FormView: FC<FormViewProps> = ({
   id,
   variant = "primary",
+  disabled,
   action,
   label,
+  hideHeadline,
+  headlineProps,
   className,
   formState,
   formMessages,
@@ -43,15 +46,18 @@ export const FormView: FC<FormViewProps> = ({
     >
       {/* Invisible heading for screen readers */}
       <Headline
-        className={bem("label")}
-        id={`${id}-heading`}
         type="h2"
+        {...headlineProps}
+        id={`${id}-heading`}
+        className={bem("label", {
+          "is-hidden": Boolean(hideHeadline)
+        }, headlineProps?.className)}
       >
         {label}
       </Headline>
 
       {/* Render each field in a GridRow */}
-      <Grid spacing={2}>
+      <Grid className={bem("grid")} spacing={2}>
         {isArray(formState) &&
           formState.map((field) => (
             <FormField
@@ -59,6 +65,9 @@ export const FormView: FC<FormViewProps> = ({
               key={field.name}
               messagesFields={messagesFields}
               variant={variant}
+              disabled={
+                disabled !== undefined ? disabled : field?.disabled
+              }
               {...fieldProps}
             />
           ))}
@@ -86,12 +95,13 @@ export const FormView: FC<FormViewProps> = ({
         {/* Submit button (only if honeypot is empty) */}
         {(honeypot?.value as string)?.length === 0 && (
           <Button
+            fullWidth
             aria-label="Submit form"
-            className={bem("footer__submit")}
-            color={variant}
             title="Submit"
             type="submit"
             {...button}
+            className={bem("footer__submit", undefined, button?.className)}
+            color={button?.color ?? variant}
             disabled={Boolean(formMessages?.errors) || !isFormValid}
           />
         )}

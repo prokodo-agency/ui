@@ -1,5 +1,4 @@
 "use client"
-import dayjs from "dayjs"
 import {
   useState,
   useEffect,
@@ -15,9 +14,6 @@ import { isString } from "@/helpers/validations"
 import { FormView } from "./Form.view"
 
 import type {
-  InputChangeEvent
-} from "../input"
-import type {
   FormField,
   FormMessages,
   FormProps,
@@ -28,6 +24,7 @@ type PartialFormField = { [K in keyof FormField]?: FormField[K] };
 
 export const FormClient = memo((props: FormProps) => {
   const {
+    disabled,
     fields,
     defaultFields,
     messages: initialMessages,
@@ -74,7 +71,10 @@ export const FormClient = memo((props: FormProps) => {
   // 6) Validate a single field (called by FormField)
   const handleFieldValidate = useCallback(
     (field: FormField, err?: string) => {
-      const idx = formState.findIndex((f) => f.name === field.name)
+      if (field.errorText === err) {
+        return
+      }
+      const idx = formState.findIndex((f) => f?.name === field?.name)
       if (idx < 0) return
       updateSingleField(idx, { errorText: err })
 
@@ -102,27 +102,12 @@ export const FormClient = memo((props: FormProps) => {
   // 7) Handle a change in a single field (include conditional logic)
   const handleFieldChange = useCallback(
     (field: FormField, value?: FormFieldValue) => {
-      let val = value
-      switch (field?.fieldType) {
-        case "slider":
-          val = value?.toString()
-          break
-        case "select":
-          val = value ?? undefined
-          break
-        case "input":
-          val = (value as unknown as InputChangeEvent)?.target.value ?? undefined
-          break
-        case "date":
-          val = value !== undefined ? dayjs(value as string)?.format("YYYY-MM-DDTHH:mm:ssZ") : undefined
-          break
-        }
       const idx = formState.findIndex((f) => f.name === field.name)
       if (idx < 0) return
 
       // If there are no conditions, update value directly
       if (!field.conditions || field.conditions.length === 0) {
-        updateSingleField(idx, { value: val })
+        updateSingleField(idx, { value })
         return
       }
 
@@ -137,15 +122,15 @@ export const FormClient = memo((props: FormProps) => {
 
       // Then apply matching conditions
       const matched = (field.conditions ?? []).filter((c) => {
-        if (val === undefined || c.equalTo === undefined) return true
-        if (typeof c.equalTo === "boolean" && c.equalTo === val) {
+        if (value === undefined || c.equalTo === undefined) return true
+        if (typeof c.equalTo === "boolean" && c.equalTo === value) {
           return true
         }
         if (typeof c.equalTo === "string") {
-          return c.equalTo === val
+          return c.equalTo === value
         }
-        if (Array.isArray(c.equalTo) && typeof val === "string") {
-          return c.equalTo.includes(val)
+        if (Array.isArray(c.equalTo) && typeof value === "string") {
+          return c.equalTo.includes(value)
         }
         return false
       })
@@ -157,7 +142,7 @@ export const FormClient = memo((props: FormProps) => {
       })
 
       // Finally, update this field’s own value
-      updateSingleField(idx, { value: val })
+      updateSingleField(idx, { value })
     },
     [defaultFields, formState, updateSingleField]
   )
@@ -232,6 +217,7 @@ export const FormClient = memo((props: FormProps) => {
   return (
     <FormView
       {...restProps}
+      disabled={disabled}
       formMessages={formMessages}
       formState={formState}
       isFormValid={isFormValid}
@@ -239,7 +225,7 @@ export const FormClient = memo((props: FormProps) => {
         onChange: handleFieldChange,
         onValidate: handleFieldValidate,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any}
+      }as any}
       honeypot={{
         value: honeypotValue,
         onChange: handleHpChange,

@@ -188,8 +188,8 @@
   }
 
   &--has-fullWidth {
-    display: block;
     width: 100%;
+    justify-content: center;
   }
 
   &--is-disabled {
@@ -228,6 +228,7 @@
   &__content {
     display: flex;
     justify-content: center;
+    align-items: center;
     border-radius: 2rem;
     width: 100%;
 

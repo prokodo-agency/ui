@@ -1,4 +1,5 @@
 import { create } from '@/helpers/bem'
+import { isString } from '@/helpers/validations'
 
 import { Icon } from '../icon'
 
@@ -12,8 +13,8 @@ const bem = create(styles, 'Button')
 export const ButtonView: FC<ButtonViewProps> = ({
   buttonRef,
   fullWidth,
-  color,
-  variant,
+  color = "primary",
+  variant = "contained",
   className,
   contentClassName,
   disabled,
@@ -48,7 +49,7 @@ export const ButtonView: FC<ButtonViewProps> = ({
       undefined,
       {
         'has-fullWidth': Boolean(fullWidth),
-        'has-icon': !Boolean(isIconOnly),
+        'has-icon': !Boolean(isIconOnly) && isString(iconProps?.name),
         [`has-variant-${variant}`]: true,
         [`has-bg-${color}`]: variant === 'contained',
         [`has-text-${color}`]: variant === 'text',

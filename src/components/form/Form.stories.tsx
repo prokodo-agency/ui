@@ -127,7 +127,7 @@ export const Default: Story = {
     onSubmit: handleSubmit,
     onChangeForm: handleChangeForm,
   } as FormProps,
-  render: (args) => <Form {...args} />,
+  render: (args) => <Form priority {...args} />,
 }
 
 export const WithInitialMessages: Story = {
@@ -141,7 +141,7 @@ export const WithInitialMessages: Story = {
     onSubmit: handleSubmit,
     onChangeForm: handleChangeForm,
   } as FormProps,
-  render: (args) => <Form {...args} />,
+  render: (args) => <Form priority {...args} />,
 }
 
 export const HideResponse: Story = {
@@ -155,5 +155,5 @@ export const HideResponse: Story = {
     onSubmit: handleSubmit,
     onChangeForm: handleChangeForm,
   } as FormProps,
-  render: (args) => <Form {...args} />,
+  render: (args) => <Form priority {...args} />,
 }

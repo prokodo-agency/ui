@@ -55,6 +55,7 @@ export type InputProps = {
   inputContainerClassName?: string;
   inputClassName?: string;
   fullWidth?: boolean;
+  disabled?: boolean
   required?: boolean;
   name: string;
   label?: string;

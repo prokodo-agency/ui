@@ -49,6 +49,16 @@ export const Default: Story = {
   },
 };
 
+export const Disabled: Story = {
+  args: {
+    id: "select-demo-1",
+    label: "Choose a value",
+    items: demoItems,
+    disabled: true,
+    placeholder: "-- Please choose --",
+  },
+};
+
 export const Required: Story = {
   args: {
     ...Default.args,

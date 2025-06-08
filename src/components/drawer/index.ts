@@ -1,2 +1,8 @@
 export * from "./Drawer"
-export type { DrawerProps } from "./Drawer.model"
+export type {
+    DrawerRef,
+    DrawerAnchor,
+    DrawerChangeReason,
+    DrawerViewProps,
+    DrawerProps
+} from "./Drawer.model"

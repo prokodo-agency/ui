@@ -1,12 +1,13 @@
+import { Animated } from "@/components/animated"
+import { Button, type ButtonProps } from "@/components/button"
 import { Headline } from "@/components/headline"
+import { Icon } from "@/components/icon"
 import { create } from "@/helpers/bem"
 import { isNull } from "@/helpers/validations"
-
 
 import styles from "./Accordion.module.scss"
 
 import type { AccordionViewProps } from "./Accordion.model"
-import type { ButtonProps } from "@/components/button"
 import type { JSX } from "react"
 
 const bem = create(styles, "Accordion")
@@ -20,9 +21,6 @@ export function AccordionView({
   onToggle,
   titleOptions,
   iconProps,
-  AnimatedComponent,
-  ButtonComponent,
-  IconComponent,
   ...domRest
 }: AccordionViewProps): JSX.Element {
   return (
@@ -66,14 +64,14 @@ export function AccordionView({
                 </Headline>
               )}
 
-              <IconComponent
+              <Icon
                 className={bem("icon", { "is-hidden": isExpanded })}
                 color="primary"
                 name="PlusSignIcon"
                 size="sm"
                 {...iconProps}
               />
-              <IconComponent
+              <Icon
                 className={bem("icon", { "is-hidden": !isExpanded })}
                 color="white"
                 name="MinusSignIcon"
@@ -89,12 +87,12 @@ export function AccordionView({
               id={`${accId}-content`}
               role="region"
             >
-              {!isNull(renderContent) && <AnimatedComponent>{renderContent}</AnimatedComponent>}
+              {!isNull(renderContent) && <Animated>{renderContent}</Animated>}
 
               {actions !== undefined && actions?.length ? (
                 <div className={bem("actions")}>
                   {actions.map((action) => (
-                    <ButtonComponent key={`${accId}-action-${action.id}`} {...(action as ButtonProps)} />
+                    <Button key={`${accId}-action-${action.id}`} {...(action as ButtonProps)} />
                   ))}
                 </div>
               ) : null}

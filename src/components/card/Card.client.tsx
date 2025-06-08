@@ -2,12 +2,11 @@
 
 import {
   useCallback,
-  type HTMLAttributes,
   type JSX,
   type KeyboardEvent,
 } from "react"
 
-import { isNull } from "@/helpers/validations"
+import { isString } from "@/helpers/validations"
 
 import { CardView } from "./Card.view"
 
@@ -37,20 +36,18 @@ export default function CardClient({
     },
     [onClick, onKeyDown, disabled],
   )
-  const extra: HTMLAttributes<HTMLDivElement> = isClickable
-    ? {
-        role: "button",
-        tabIndex: !Boolean(disabled) && !isNull(redirect) ? 0 : -1,
-      }
-    : { tabIndex: -1 }
+
+  const linkRole = isString(redirect?.href) && !Boolean(disabled) ? "link" : undefined
+  const linkTabIndex = isString(redirect?.href) && !Boolean(disabled) ? 0 : undefined
 
   return (
     <CardView
       {...rest}
-      {...extra}
       disabled={disabled}
       isClickable={isClickable}
       redirect={redirect}
+      role={linkRole}
+      tabIndex={linkTabIndex}
       onClick={!Boolean(disabled) ? handleClickVoid : undefined}
       onKeyDown={handleKey}
       onMouseEnter={onMouseEnter}

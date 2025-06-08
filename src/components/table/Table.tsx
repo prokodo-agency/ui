@@ -53,7 +53,7 @@ export const Table: FC<TableProps> = ({
               {header.map(cell => (
                 <th
                   key={`table-header-cell-${cell?.label}`}
-                  className={bem("head__cell")}
+                  className={bem("head__cell", undefined, cell?.className)}
                 >
                   {cell?.label}
                 </th>
@@ -64,7 +64,7 @@ export const Table: FC<TableProps> = ({
             {body.map(row => (
               <tr
                 key={`table-body-row-${row?.cells?.[0]?.label}`}
-                className={bem("body__row")}
+                className={bem("body__row", {"has-link": isString(row?.redirect?.href)})}
               >
                 {row?.cells
                   .filter(el => el !== null)
@@ -72,6 +72,7 @@ export const Table: FC<TableProps> = ({
                     <TableCell
                       key={`table-body-cell-${cell.label}`}
                       {...cell}
+                      redirect={row?.redirect}
                       type={type}
                     />
                   ))}

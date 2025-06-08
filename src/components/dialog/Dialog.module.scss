@@ -20,6 +20,11 @@
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
+    left: -99999px;
+
+    & {
+        position: fixed;
+    }
 
     @media (prefers-reduced-motion: reduce) {
         transition: none;
@@ -27,6 +32,7 @@
 
     &--is-visible {
         opacity: 1;
+        left: 50%;
         visibility: visible;
         pointer-events: auto;
         transform: translate(-50%, -50%) scale(1);
@@ -35,7 +41,7 @@
 
     &__container {
         position: relative;
-        padding: $space-xl $space-lg;
+        padding: $space-md;
         @include centered-container();
 
         @include when-focuse-visible() {
@@ -59,7 +65,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: $space-lg 0;
+        padding-bottom: $space-lg;
     }
 
     &__close {
@@ -110,10 +116,17 @@
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease;
+        z-index: 1299;
+        left: -99999px;
 
         &--is-visible {
             opacity: 1;
             pointer-events: auto;
+            left: 0;
+
+            & {
+                position: fixed;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
