@@ -18,7 +18,7 @@
 
 ## ✨ Features
 
-- ✨ **Adaptive-Island Components (AIC)**: One import per component. Renders as zero-JS RSC and self-hydrates *only* when interaction is detected & the element is visible. (Currently in Beta for Button)
+- ✨ **Adaptive Island Components (AIC)**: A rendering strategy where each component loads only the JavaScript it needs — when needed.
 - ⚡️ **Modern stack**: Vite, React 19, TypeScript, and SCSS Modules
 - 💅 **Design consistency**: Theming via design tokens and BEM-style naming
 - 🧩 **Component-rich**: 35+ reusable UI components
@@ -26,6 +26,19 @@
 - 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
 - 📦 **Ready-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
 - 🧱 **Optimized for SSR**: Works great with Next.js and React Server Components
+
+## ⚡ Lightweight by Design
+
+Addaptial Island Components (AIC) are fully modular and optimized for modern frameworks (Next.js, Remix, etc.).  
+Each component is built for **lazy loading**, works seamlessly with **React Server Components (RSC)**, and can be **tree-shaken** out when unused.
+
+**Total bundle (all components): ~195 kB gzipped**
+- **Only 5–20 kB** are typically loaded per page
+- **Zero-JS on initial render** for most components
+- **Hydration is deferred** until interaction or visibility
+- Shared styles are minimal: **only ~16.5 kB gzipped**
+
+This makes `@prokodo/ui` ideal for modern SSR apps using Next.js or Remix, with excellent Time-to-Interactive (TTI) and Core Web Vitals.
 
 ---
 
@@ -130,7 +143,7 @@ export default function GalleryPage() {
 ✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also used as a client‐only entry.
 – = RSC (AIC) only; no client‐side bundle. (Best practice: Use it only in RSC)
 
-| Component             | ✅ AIC-Compatible (RSC + Client) | ✅ SSR-Compatible (`"use client"`) |
+| Component             | ✅ AIC (RSC + optional client)   | ✅ SSR-Compatible (`"use client"`) |
 |-----------------------|:--------------------------------:|:---------------------------------:|
 | Accordion             | ✅                               | ✅                                 |
 | Animated              | ✅                               | ✅                                 |
@@ -227,7 +240,6 @@ export default createLazyWrapper<NavbarProps>({
 
 ## 🎯 Next steps
 
-- [ ] Make all components **RSC-compatible** and **client-optimized**
 - [ ] Add more ✨ **fancy styling**, UI polish and properties
 - [ ] Improve **accessibility** to meet **WCAG 2.2 AAA** standards
 - [ ] Detailed Documentation about the components
