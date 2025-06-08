@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.39
+
+### Patch Changes
+
+- ♻️ Refactor: Automated Island Component (AIC) Pattern
+
 ## 0.0.38
 
 ### Patch Changes
