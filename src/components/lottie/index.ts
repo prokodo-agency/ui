@@ -1,2 +1,2 @@
 export * from "./Lottie"
-export type { LottieProps, LottieAnimation } from "./Lottie.model"
+export type { LottieProps } from "./Lottie.model"

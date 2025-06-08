@@ -1,65 +1,61 @@
-import type { LabelProps } from "../label"
-import type {
-  SelectProps as MUISelectProps,
-  OptionProps,
-  SelectValue as MUISelectValue,
-} from "@mui/base"
-import type {
-  ReactNode,
-  Ref,
-  MouseEvent,
-  KeyboardEvent,
-  FocusEvent,
-} from "react"
+import type { ChangeEvent, RefObject, ReactNode, Ref, ComponentProps, MouseEventHandler, KeyboardEventHandler } from "react"
 
-export type SelectEvent = MouseEvent | KeyboardEvent | FocusEvent | null
-export type SelectChangeEvent = SelectProps["onChange"]
+/* ---------- basic event --------------------------------------- */
+export type SelectEvent = ChangeEvent<HTMLSelectElement> | null;
 
-// Define a default value type for the select component
-type DefaultValueType = string
-
-// Define the type for individual select items, with a default generic type for the value
-export type SelectItem<Value = DefaultValueType> = Omit<
-  OptionProps<Value>,
-  "children"
-> & {
-  label?: string
-  icon?: () => ReactNode
+/* ---------- option item --------------------------------------- */
+export interface SelectItem<Value extends string = string> {
+  value: Value;
+  label: string;
+  icon?: () => ReactNode;
+  className?: string;
 }
 
-export type SelectValueSingle = MUISelectValue<DefaultValueType, false>
-export type SelectValueMultiple = MUISelectValue<DefaultValueType, true>
+export type SelectValue<V extends string = string> =
+  | V
+  | V[]
+  | "";
 
-// Define the supported colors for the select component
-export type SelectColor =
-  | "primary"
-  | "secondary"
-  | "error"
-  | "info"
-  | "success"
-  | "warning"
+/* ---------- main props --------------------------------------- */
+export interface SelectProps<Value extends string = string> {
+  /* structural */
+  id: string;
+  name?: string;
+  items: SelectItem<Value>[];
 
-// Adjust the SelectProps type to correctly handle `multiple` prop:
-export type SelectProps<
-  OptionValue extends {} = DefaultValueType,
-  Multiple extends boolean = false | true,
-  RootComponentType extends React.ElementType = "button",
-> = Omit<
-  MUISelectProps<OptionValue, Multiple, RootComponentType>, // Use MUISelectProps with the updated Multiple type
-  "variant" | "color" | "name" | "onChange"
-> & {
-  ref?: Ref<HTMLButtonElement> // Ensure ref is typed as HTMLButtonElement
-  id: string
-  iconVisible?: boolean
-  name: string
-  color?: SelectColor
-  label: string
-  hideLabel?: boolean
-  labelProps?: Omit<LabelProps, "label" | "require" | "error">
-  classNameSelect?: string
-  items: SelectItem<OptionValue>[] // Ensure items can handle the OptionValue type
-  multiple?: Multiple // Add multiple to the type explicitly
-  errorText?: string
-  helperText?: string
-  onChange?: (e: SelectEvent, value: string | string[] | null) => void
+  /* behaviour */
+  multiple?: boolean;
+  disabled?: boolean
+  required?: boolean;
+  value?: Value | Value[] | null;
+  placeholder?: string;
+  onChange?: (e: SelectEvent, v: SelectValue) => void;
+
+  /* visual */
+  label: string;
+  hideLabel?: boolean;
+  iconVisible?: boolean;
+
+  /* messaging */
+  helperText?: string;
+  errorText?: string;
+
+  /* misc */
+  className?: string;
+  fieldClassName?: string;
+  selectClassName?: string;
+  labelProps?: ComponentProps<"label">;
+  ref?: Ref<HTMLSelectElement>;
 }
+
+type SelectClientState<V extends string = string> = {
+  open: boolean;
+  buttonRef: RefObject<HTMLButtonElement | null>;
+  listRef:   RefObject<HTMLUListElement | null>;
+  onButtonClick: MouseEventHandler<HTMLButtonElement>;
+  onButtonKey:   KeyboardEventHandler<HTMLButtonElement>;
+  onOptionClick: (v: V | null) => void;
+};
+
+export type SelectViewProps<V extends string = string> = SelectProps<V> & { _clientState?: SelectClientState<V> };
+

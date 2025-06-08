@@ -1,10 +1,13 @@
+import type { ImageProps as NextImageProps, StaticImageData } from "next/image"
 import type { ImgHTMLAttributes, ElementType } from "react"
 
-export interface BaseImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+export type BaseImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "width" | "height"> & {
   /**
    * Optional caption rendered below the image
    */
   caption?: string
+
+  src?: string | StaticImageData
 
   /**
    * Additional class for the outer <figure> container (if caption is used)
@@ -35,5 +38,5 @@ export type ImageProps = BaseImageProps &
         imageComponent: ElementType
         // Let TS infer props — no extra enforcement
         // Advanced: use ComponentPropsWithRef<typeof imageComponent> to enforce, if needed
-      }
+      } & NextImageProps
   )

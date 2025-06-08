@@ -15,20 +15,36 @@
   width: 100%;
 
   &__label {
-    padding-top: $space-md;
-    padding-bottom: $space-sm;
+    position: absolute;
+    left: $space-xl;
+    top: calc($space-xl + $space-xs);
+    transform-origin: top left;
+    /* start centered vertically, at full size */
+    transform: translateY(-50%) scale(1);
+    transition:
+      transform 0.2s ease,
+      color     0.2s ease,
+      background-color 0.2s ease;
+
+    padding: 0;
+    font-size: 1rem;
+    color: var(--color-grey-600);
+    z-index: 1;
+    pointer-events: none;
+
+    &--is-focused {
+      /* lift up and shrink */
+      transform: translateY(-150%) scale(0.75);
+      color: var(--color-primary-500);
+
+      /* white background behind text so it “floats” */
+      background-color: var(--color-white);
+      padding: 0 $space-xs;
+    }
   }
 
-  &--primary .Input__field {
-    border-color: var(--color-primary-500);
-  }
-
-  &--secondary .Input__field {
-    border-color: var(--color-secondary-500);
-  }
-
-  &--error .Input__field {
-    border-color: var(--color-error);
+  &__inner {
+    position: relative;
   }
 
   &__field {
@@ -50,11 +66,17 @@
     border-radius: $ui-form-element;
     @include gradientBorderVar(7);
 
+     &--is-focused {
+      @include gradientBorderVar(4);
+    }
+
     @include when-hovered() {
       @include gradientBorderVar(4);
     }
 
     &--multiline {
+      display: flex;
+      flex-direction: column;
       height: 100%;
     }
 
@@ -63,9 +85,10 @@
     }
 
     &--disabled {
-      @include gradientBackgroundVar("info");
+      @include gradientBorderVar(8);
+
       @include when-hovered() {
-        @include gradientBackgroundVar("info");
+        @include gradientBorderVar(8);
       }
     }
 
@@ -84,8 +107,11 @@
       }
 
       &--multiline {
-        display: inline-table;
-        min-height: calc(100% - 32px);
+         /* allow it to grow to fill the wrapper */
+        flex: 1;
+        /* remove inline-table & min-height */
+        display: block;
+        height: 100%;
         resize: vertical; // Allow only vertical resizing
         overflow: auto; // Ensure scrollbars appear if content overflows
         position: relative;
@@ -105,6 +131,11 @@
           opacity: 0.5; // Optional: Make it semi-transparent
           pointer-events: none; // Prevent the fake icon from interfering with text editing
         }
+      }
+
+      &:disabled {
+        color: var(--color-grey-300);
+        background: var(--color-white);
       }
     }
 

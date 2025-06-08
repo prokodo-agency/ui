@@ -1,6 +1,7 @@
 /* eslint-disable */
-import type { ReactElement, FormHTMLAttributes, HTMLAttributes } from "react"
+import type { FormEvent, ReactElement, FormHTMLAttributes, HTMLAttributes, InputHTMLAttributes } from "react"
 import type { ButtonProps } from "../button"
+import type { HeadlineProps } from "../headline"
 
 import {
   DatePicker,
@@ -12,15 +13,19 @@ import { InputOTP } from "../inputOTP"
 import { Select, type SelectProps } from "../select"
 import { Slider, type SliderProps } from "../slider"
 import { Switch, type SwitchProps } from "../switch"
+import type { FormFieldProps } from "./FormField.client"
 /* eslint-enable */
 
 export type FormVariants =
+  | "inherit"
   | "primary"
   | "secondary"
   | "success"
   | "error"
   | "info"
   | "warning"
+
+export type FormFieldTypes = "input" | "select" | "switch" | "slider" | "date"
 
 export type FormFieldValue = string | boolean | string[] | undefined
 
@@ -31,6 +36,7 @@ export type FormFieldCondition = {
 }
 
 export type FormFieldOptionals = {
+  fieldType?: FormFieldTypes
   visible?: boolean
   conditions?: FormFieldCondition[]
   value?: FormFieldValue
@@ -102,16 +108,32 @@ export type FormResponseProps = HTMLAttributes<HTMLDivElement> & {
 }
 
 export type OnChangeFormHandler = (fields: FormField) => void
+
+export type FormButton = Omit<ButtonProps, "title"> & {
+  title?: string
+}
+
 export type FormProps = {
   label: string
-  disableFields?: boolean
+  disabled?: boolean
   variant?: FormVariants
   hideResponse?: boolean
   fields?: FormField[]
+  hideHeadline?: boolean
+  headlineProps?: HeadlineProps
   defaultFields?: FormField[]
   messages?: FormMessages
   messagesFields?: FormFieldMessages
-  button: ButtonProps
+  button: FormButton
   onSubmit?: (fields: FormField[]) => void
   onChangeForm?: OnChangeFormHandler
-} & FormHTMLAttributes<HTMLFormElement>
+} & Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit">
+
+export type FormViewProps = FormProps & {
+  formState: Omit<FormField, "onChange">[]
+  formMessages?: FormMessages
+  honeypot: InputHTMLAttributes<HTMLInputElement>
+  fieldProps?: FormFieldProps
+  onFormSubmit: (e: FormEvent<HTMLFormElement>) => void
+  isFormValid: boolean
+}

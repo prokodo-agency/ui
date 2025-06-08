@@ -3,7 +3,7 @@ import path from "path"
 
 const config = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(tsx|ts)"],
-  staticDirs: ["../src/assets"],
+  staticDirs: ["../assets"],
 
   addons: [
     "@storybook/addon-links",

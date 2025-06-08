@@ -1,14 +1,18 @@
 
 'use client'
+import { forwardRef, type JSX } from "react"
+
 import Link from '../link/Link.client'
 import { Loading } from '../loading'
 
 import { ButtonView } from './Button.view'
 
-import type { ButtonProps, ButtonDefaultProps } from './Button.model'
-import type { JSX } from "react"
+import type { ButtonRef, ButtonProps, ButtonDefaultProps } from './Button.model'
 
-export default function ButtonClient(props: ButtonProps): JSX.Element {
+function ButtonClient(
+  props: ButtonProps,
+  ref: ButtonRef
+): JSX.Element {
   const { loading, iconProps = {}, ...rest } = props
   const isIconOnly =
     typeof iconProps?.name === "string" && !(props as ButtonDefaultProps).title
@@ -20,6 +24,7 @@ export default function ButtonClient(props: ButtonProps): JSX.Element {
       {Boolean(loading) && <Loading size="xs" />}
       <ButtonView
         {...rest}
+        buttonRef={ref}
         iconProps={finalIconProps}
         isIconOnly={Boolean(isIconOnly)}
         LinkComponent={Link}
@@ -27,3 +32,5 @@ export default function ButtonClient(props: ButtonProps): JSX.Element {
     </>
   )
 }
+
+export default forwardRef<HTMLButtonElement, ButtonProps>(ButtonClient)

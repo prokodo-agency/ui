@@ -1,0 +1,119 @@
+"use client"
+import {
+  useState, useEffect, useCallback, useMemo, memo,
+  type ChangeEvent,
+  type JSX,
+} from "react"
+
+import { isNull, isNumber } from "@/helpers/validations"
+
+import { InputView } from "./Input.view"
+import { handleValidation } from "./InputValidation"
+
+import type { InputProps, InputFocus, InputBlur } from "./Input.model"
+
+function InputClient({
+  multiline,
+  isFocused,
+  type: rawType = "text",
+  name,
+  value,
+  required,
+  min,
+  max,
+  maxLength,
+  customRegexPattern,
+  errorText,
+  errorTranslations,
+  onValidate,
+  onChange,
+  onFocus,
+  onBlur,
+  ...rest
+}: InputProps): JSX.Element {
+  const [focused, setFocused] = useState(false)
+  const [val, setVal] = useState<string | number | undefined>(value)
+  const [err, setErr] = useState<string | undefined>(errorText)
+
+  useEffect(() => {
+    if (!isNull(value)) setVal(value)
+  }, [value])
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const v = e.target.value
+      if (isNumber(maxLength) && v.length > (maxLength as number)) return
+
+      setVal(v)
+      const minInt = rawType === "number" ? min as number : undefined
+      const maxInt = rawType === "number" ? max as number : undefined
+      handleValidation(
+        Boolean(multiline) ? "text" : rawType,
+        name,
+        v,
+        required,
+        minInt,
+        maxInt,
+        customRegexPattern,
+        errorTranslations,
+        (n, error) => {
+          setErr(error)
+          onValidate?.(n, error)
+        },
+      )
+
+      onChange?.(e)
+    },
+    [
+      multiline,
+      rawType,
+      name,
+      required,
+      min,
+      max,
+      maxLength,
+      customRegexPattern,
+      errorTranslations,
+      onValidate,
+      onChange,
+    ],
+  )
+
+  const handleFocus = useCallback((e: InputFocus) => {
+    setFocused(true)
+    onFocus?.(e)
+  }, [onFocus])
+
+  const handleBlur = useCallback((e: InputBlur) => {
+    setFocused(false)
+    onBlur?.(e)
+  }, [onBlur])
+
+  const viewBase = useMemo(() => ({
+    ...rest,
+    name,
+    isFocused: isFocused !== undefined ? Boolean(isFocused) : focused,
+    value: val,
+    errorText: err,
+    onChange: handleChange,
+    onFocus: handleFocus,
+    onBlur: handleBlur
+  }), [isFocused, focused, val, err, name, handleChange, handleFocus, handleBlur, rest])
+
+  const viewProps: InputProps = Boolean(multiline)
+    ? {
+        ...viewBase,
+        multiline: true,
+      }
+    : {
+        ...viewBase,
+        type: rawType,
+        rows: undefined,
+        minRows: undefined,
+        maxRows: undefined
+      }
+
+  return <InputView {...viewProps} />
+}
+
+export default memo(InputClient)

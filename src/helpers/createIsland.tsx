@@ -1,84 +1,83 @@
-/* utils/createIsland.tsx
-   ───────────────────────────────────────── */
 import {
   lazy,
   Suspense,
   type ComponentType,
   type FC,
-  type JSX,
-} from 'react';
+  type ReactElement,
+  cloneElement,
+} from 'react'
 
-/* ---------- factory options -------------------------------- */
 export interface IslandOptions<P extends object> {
-  /** Name used for DevTools & `data-island` marker */
-  name: string;
-  /** Pure server-only render (no hooks).  */
-  Server: ComponentType<P>;
-  /** Dynamic import that resolves the *.lazy wrapper. */
-  loadLazy: () => Promise<{
-    default: ComponentType<P & { priority?: boolean }>;
-  }>;
-  /**
-   * Optional custom predicate that decides whether this
-   * set of props needs client interactivity.
-   */
-  isInteractive?: (props: Readonly<P>) => boolean;
+  name: string
+  Server: ComponentType<P>
+  loadLazy: () => Promise<{ default: ComponentType<P & { priority?: boolean }> }>
+  isInteractive?: (props: Readonly<P>) => boolean
 }
 
-/* ---------- helper ---------------------------------------- */
 export function createIsland<P extends object>({
   name,
   Server,
   loadLazy,
   isInteractive: customInteractive,
 }: IslandOptions<P>): ComponentType<P & { priority?: boolean }> {
-  /* Pre-load chunk once (browser only) */
-  // if (typeof window !== 'undefined') void loadLazy();
+  const LazyComp = lazy(() => loadLazy().then((m) => ({ default: m.default })))
 
-  /* Typed React.lazy wrapper */
-  const LazyWrapper =
-    typeof window !== 'undefined'
-      ? lazy(() => loadLazy().then((m) => ({ default: m.default })))
-      : null;
+  if (typeof window === 'undefined') {
+    void loadLazy() // preload on server
+  }
 
-  /* ----------- final entry component ---------------------- */
+    function withIslandAttr(
+      el: ReactElement,
+      priority?: boolean
+    ): ReactElement {
+      const islandName = name.toLowerCase()
+
+      console.debug(
+        `[hydrate] createIsland “${name}” rendering as interactive=${Boolean(
+          priority
+        )}`
+      )
+
+      // 2) Only pass `priority` if truthy:
+      const extra: {'data-island': string; priority?: boolean} = { 'data-island': islandName }
+      if (Boolean(priority)) {
+        extra.priority = priority
+      }
+      return cloneElement(el as ReactElement, extra)
+    }
+
   const Island: FC<P & { priority?: boolean }> = ({
     priority = false,
     ...raw
   }) => {
-    const props = raw as P;
+    const props = raw as P & { redirect?: unknown }
 
-    /* Generic interaction test: any onX handler or redirect prop */
     const autoInteractive =
       Object.entries(props).some(
-        ([key, val]) => key.startsWith('on') && typeof val === 'function',
-      ) || (props as { redirect?: unknown }).redirect !== undefined;
+        ([k, v]) => k.startsWith('on') && typeof v === 'function',
+      ) || props.redirect !== undefined
 
     const interactive = customInteractive
       ? customInteractive(props) || autoInteractive
-      : autoInteractive;
+      : autoInteractive
 
-    /* Purely static — stream Server HTML once */
-    if (!interactive) return <Server {...props} />;
+    if (interactive && priority) {
+      return withIslandAttr(<LazyComp {...props} />)
+    }
 
-    /* identical HTML on server & first paint */
-    const fallback: JSX.Element = (
-      <div data-island={name.toLowerCase()}>
-        <Server {...props} />
-      </div>
-    );
+    if (!interactive) {
+      return withIslandAttr(<Server {...props} />)
+    }
+
+    const fallback = withIslandAttr(<Server {...props} />)
 
     return (
       <Suspense fallback={fallback}>
-        {LazyWrapper ? (
-          <LazyWrapper {...props} priority={priority} />
-        ) : (
-          fallback /* server branch: LazyWrapper === null */
-        )}
+        {withIslandAttr(<LazyComp {...props} />)}
       </Suspense>
-    );
-  };
+    )
+  }
 
-  Island.displayName = `${name}Island`;
-  return Island;
+  Island.displayName = `${name}Island`
+  return Island
 }

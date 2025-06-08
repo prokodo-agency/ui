@@ -1,18 +1,20 @@
 import { create } from '@/helpers/bem'
+import { isString } from '@/helpers/validations'
 
 import { Icon } from '../icon'
 
 import styles from './Button.module.scss'
 
 import type { ButtonViewProps, ButtonDefaultProps } from './Button.model'
-import type { JSX } from "react"
+import type { FC } from "react"
 
 const bem = create(styles, 'Button')
 
-export function ButtonView({
+export const ButtonView: FC<ButtonViewProps> = ({
+  buttonRef,
   fullWidth,
-  color,
-  variant,
+  color = "primary",
+  variant = "contained",
   className,
   contentClassName,
   disabled,
@@ -21,7 +23,7 @@ export function ButtonView({
   isIconOnly,
   LinkComponent,
   ...rest
-}: ButtonViewProps): JSX.Element {
+}) => {
   const isOutlined = variant === 'outlined'
   const iconName   = iconProps?.name
   const iconMod    = { 'icon-only': isIconOnly }
@@ -47,6 +49,7 @@ export function ButtonView({
       undefined,
       {
         'has-fullWidth': Boolean(fullWidth),
+        'has-icon': !Boolean(isIconOnly) && isString(iconProps?.name),
         [`has-variant-${variant}`]: true,
         [`has-bg-${color}`]: variant === 'contained',
         [`has-text-${color}`]: variant === 'text',
@@ -64,8 +67,9 @@ export function ButtonView({
   ) : (
     <button
       {...common}
+      ref={buttonRef}
       disabled={Boolean(disabled)}
-      tabIndex={redirect !== undefined || Boolean(disabled) ? -1 : rest.tabIndex}
+      tabIndex={Boolean(disabled) ? -1 : rest.tabIndex}
       type="button"
       {...rest}
     >

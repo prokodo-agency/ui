@@ -3,8 +3,4 @@
 
 @include define-block("FormField") {
     padding-bottom: $space-lg;
-
-    &:last-of-type {
-        padding-bottom: 0;
-    }
 }

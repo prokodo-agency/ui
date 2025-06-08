@@ -1,63 +1,82 @@
-/* utils/createLazyWrapper.tsx
-   ------------------------------------------------------------- */
 'use client'
 import {
   type ComponentType,
-  type FC,
   type ReactElement,
+  type FC,
+  cloneElement,
 } from 'react'
 
 import { useHydrationReady } from '@/hooks/useHydrationReady'
 
-/* ---------- factory options ---------------------------------- */
 export interface LazyWrapperOptions<P extends object> {
-  /** Display-name for DevTools / data-island marker. */
   name: string
-  /** Hydrated client component (full interactivity). */
   Client: ComponentType<P>
-  /** Pure server component (identical HTML to entry render). */
   Server: ComponentType<P>
+  hydrateOnVisible?: boolean
+  ioOptions?: IntersectionObserverInit
+  isInteractive?: (props: Readonly<P>) => boolean
 }
 
-/* ---------- helper ------------------------------------------- */
 export function createLazyWrapper<P extends object>({
   name,
   Client,
   Server,
+  hydrateOnVisible = false,
+  ioOptions,
+  isInteractive: customInteractive,
 }: LazyWrapperOptions<P>): ComponentType<P & { priority?: boolean }> {
-  /* ----------- final wrapper component ----------------------- */
   const LazyWrapper: FC<P & { priority?: boolean }> = ({
     priority = false,
     ...raw
   }): ReactElement => {
-    /* ----- heuristic: prop-based interaction check ----------- */
-    const props = raw as Record<string, unknown> & {
-      redirect?: unknown
-      onClick?: unknown
-      onKeyDown?: unknown
-    }
+    const props = raw as P & { redirect?: unknown }
 
-    const hasInteraction =
-      typeof props.onClick === 'function' ||
-      typeof props.onKeyDown === 'function' ||
+    const autoInteractive =
+      Object.entries(props).some(
+        ([k, v]) => k.startsWith('on') && typeof v === 'function',
+      ) ||
       props.redirect !== undefined
 
-    /* -------- viewport / IO gate ----------------------------- */
+    const interactive = customInteractive
+      ? customInteractive(props) || autoInteractive
+      : autoInteractive
+
     const [visible, ref] = useHydrationReady({
-      enabled: hasInteraction && !priority,
+      enabled: interactive && hydrateOnVisible && !priority,
+      ...ioOptions,
     })
 
-    /* -------- hydrated branch ------------------------------- */
-    if (hasInteraction && (priority || visible)) {
-      return <Client {...(raw as P)} />
-    }
+    const islandName = name.toLowerCase()
 
-    /* -------- static placeholder (HTML identical to server) --- */
-    return (
-      <div ref={ref} data-island={name.toLowerCase()}>
-        <Server {...(raw as P)} />
-      </div>
-    )
+    if (interactive && (priority || visible)) {
+      const clientEl = <Client {...props} />
+      // 1) log which lazy wrapper is rendering:
+      console.log(
+        `[hydrate] createLazyWrapper “${name}” rendering client (priority=${Boolean(
+          priority
+        )}, visible=${visible})`
+      )
+
+      // 2) only pass priority when true:
+      const extra: {'data-island': string; priority?: boolean} = { 'data-island': islandName }
+      if (priority) {
+        extra.priority = priority
+      }
+      return cloneElement(clientEl as ReactElement, extra)
+    } else {
+      const serverEl = <Server {...props} />
+      // 1) log which lazy wrapper is rendering server:
+      console.log(
+        `[hydrate] createLazyWrapper “${name}” rendering server (visible=${visible})`
+      )
+
+      // 2) always attach data-island  ref when rendering server
+      return cloneElement(
+        serverEl as ReactElement,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { 'data-island': islandName, ref } as any
+      )
+    }
   }
 
   LazyWrapper.displayName = `${name}Lazy`

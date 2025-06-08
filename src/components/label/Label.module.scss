@@ -6,7 +6,6 @@
 @include define-block("Label") {
     font-weight: 400;
     display: block;
-    padding-bottom: $space-lg;
     @include text("base/md");
 
     & {

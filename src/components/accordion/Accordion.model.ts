@@ -20,12 +20,20 @@ export type AccordionItem = {
 
 export type AccordionProps = {
   id: string
-  expanded: number | null
+  expanded?: number | null
   className?: string
   variant?: Variants
   titleOptions?: HeadlineProps
   iconProps?: IconProps
   items: AccordionItem[]
   schema?: Schema
-  onChange: (index: number, event?: SyntheticEvent, expanded?: boolean) => void
+  onChange?: (index: number, e?: SyntheticEvent, expanded?: boolean) => void
 } & Omit<HTMLAttributes<HTMLDivElement>, "onChange">
+
+export type AccordionViewProps = Omit<AccordionProps, 'expanded' | 'onChange' | 'onToggle'> & {
+  expandedIndex?: number | null;
+  onToggle?: (
+    index: number,
+    event: SyntheticEvent<HTMLDivElement>
+  ) => void;
+}

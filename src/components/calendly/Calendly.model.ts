@@ -1,5 +1,5 @@
 import type { AnimatedProps } from "../animated"
-import type { HTMLAttributes } from "react"
+import type { ComponentType, HTMLAttributes } from "react"
 
 export type CalendlyColorOptions = {
   text?: string
@@ -24,8 +24,10 @@ export type CalendlyProps = HTMLAttributes<HTMLDivElement> & {
   calendlyId: string
   data?: CalendlyData
   animationProps?: AnimatedProps
-  color?: CalendlyColorOptions
+  colors?: CalendlyColorOptions
+  hideLoading?: boolean
   hideCookieSettings?: boolean
   hideEventTypeDetails?: boolean
   hideDetails?: boolean
+  LoadingComponent?: ComponentType<{}>
 }

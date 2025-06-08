@@ -1,15 +1,13 @@
-"use client"
-import { memo, type FC } from "react"
-
 import { create } from "@/helpers/bem" // BEM helper function for class names
 
 import styles from "./Loading.module.scss" // SCSS module for custom styles
 
 import type { LoadingProps } from "./Loading.model"
+import type { FC } from "react"
 
 const bem = create(styles, "Loading")
 
-export const Loading: FC<LoadingProps> = memo(({ className, size = "sm" }) => (
+export const Loading: FC<LoadingProps> = ({ className, size = "sm" }) => (
   <div
     className={bem(undefined, undefined, className)}
     style={{
@@ -17,7 +15,7 @@ export const Loading: FC<LoadingProps> = memo(({ className, size = "sm" }) => (
       alignItems: "center",
       justifyContent: "center",
       gap: "16px",
-    }} // Replacement for Stack component
+    }}
   >
     {/* SVG Gradient Definition */}
     <svg height={0} style={{ position: "absolute" }} width={0}>
@@ -51,6 +49,6 @@ export const Loading: FC<LoadingProps> = memo(({ className, size = "sm" }) => (
       }}
     />
   </div>
-))
+)
 
 Loading.displayName = "Loading"

@@ -40,7 +40,7 @@ export const Default: Story = {
 export const WithImage: Story = {
   args: {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_60x60.webp",
       alt: "Avatar",
     },
   },
@@ -49,7 +49,7 @@ export const WithImage: Story = {
 export const WithLink: Story = {
   args: {
     image: {
-      src: "./_mocks/placeholder.jpeg",
+      src: "/assets/images/placeholder_60x60.webp",
       alt: "Avatar",
     },
     redirect: {

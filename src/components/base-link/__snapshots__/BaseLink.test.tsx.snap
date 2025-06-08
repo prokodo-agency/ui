@@ -2,6 +2,7 @@
 
 exports[`The BaseLink component should render anchor links 1`] = `
 <a
+  data-island="baselink"
   href="#bottom"
 >
   Bottom
@@ -10,6 +11,7 @@ exports[`The BaseLink component should render anchor links 1`] = `
 
 exports[`The BaseLink component should render disabled links 1`] = `
 <a
+  data-island="baselink"
   href="https://example.com"
   rel="noopener noreferrer"
   style="pointer-events: none;"
@@ -22,6 +24,7 @@ exports[`The BaseLink component should render disabled links 1`] = `
 
 exports[`The BaseLink component should render download links 1`] = `
 <a
+  data-island="baselink"
   download="sample.pdf"
   href="http://www.africau.edu/images/default/sample.pdf"
   rel="noopener noreferrer"
@@ -33,6 +36,7 @@ exports[`The BaseLink component should render download links 1`] = `
 
 exports[`The BaseLink component should render external links 1`] = `
 <a
+  data-island="baselink"
   href="https://example.com"
   rel="noopener noreferrer"
   target="_blank"
@@ -43,6 +47,7 @@ exports[`The BaseLink component should render external links 1`] = `
 
 exports[`The BaseLink component should render internal links 1`] = `
 <a
+  data-island="baselink"
   href="/"
 >
   Home
@@ -51,6 +56,7 @@ exports[`The BaseLink component should render internal links 1`] = `
 
 exports[`The BaseLink component should render locale links 1`] = `
 <a
+  data-island="baselink"
   href="/"
 >
   Home
@@ -59,6 +65,7 @@ exports[`The BaseLink component should render locale links 1`] = `
 
 exports[`The BaseLink component should render mailto links 1`] = `
 <a
+  data-island="baselink"
   href="mailto:foo@example.com"
 >
   foo@example.com

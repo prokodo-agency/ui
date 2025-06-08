@@ -1,57 +1,65 @@
+/* components/icon/Icon.tsx
+   ───────────────────────────────────────── */
 import { PROKODO_UI_VERSION } from "@/constants/project"
 import { create } from "@/helpers/bem"
-
+import { isString } from "@/helpers/validations"
 
 import styles from "./Icon.module.scss"
 
 import type { IconProps, IconSize } from "./Icon.model"
 import type { IconName } from "./IconList"
-import type { FC } from "react"
+import type { FC, CSSProperties } from "react"
 
 const bem = create(styles, "Icon")
 
-// ──────────────────────────────────────────────────────────
-//  Size helper
-// ──────────────────────────────────────────────────────────
-export const getIconSize = (s?: IconSize): number => {
-  switch (s) {
-    case "xs": return 15
-    case "sm": return 20
-    case "md": return 30
-    case "lg": return 40
-    case "xl": return 50
-    default:   return s ?? 16
-  }
-}
+/* ---------- size helper --------------------------------- */
+export const getIconSize = (s?: IconSize): number =>
+  ({ xs: 15, sm: 20, md: 30, lg: 40, xl: 50 } as const)[
+    s as keyof object
+  ] ?? (s ?? 16)
 
-// ──────────────────────────────────────────────────────────
-//  CDN helper
-// ──────────────────────────────────────────────────────────
-const urlFromName = (name: IconName) =>
-  `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${PROKODO_UI_VERSION}/assets/icons/${name
+/* ---------- icon URL (CDN) ------------------------------- */
+const iconUrl = (n: IconName): string =>
+  `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${PROKODO_UI_VERSION}/assets/icons/${n
     .replace(/Icon$/, "")
     .replace(/([a-z])([A-Z0-9])/g, "$1_$2")
     .replace(/([0-9])([a-zA-Z])/g, "$1_$2")
     .toLowerCase()}_icon.svg`
 
-// ──────────────────────────────────────────────────────────
-//  Component
-// ──────────────────────────────────────────────────────────
-export const Icon: FC<IconProps> = ({ name, size, label, className = "", ...rest }) => {
+/* ---------- Component ----------------------------------- */
+export const Icon: FC<IconProps> = ({
+  name,
+  size,
+  label,
+  color,
+  className,
+  ...rest
+}) => {
   if (!name) return null
-
+  const isCustomColor = Boolean(color?.includes("#")) || Boolean(color?.includes("rgb")) || Boolean(color?.includes("rgba"))
   const sizePx = getIconSize(size)
+  const url    = iconUrl(name)
+  const mask: CSSProperties = {
+    width:  sizePx,
+    height: sizePx,
+    backgroundColor: Boolean(isCustomColor) ? color : "currentColor",
+    maskImage:       `url("${url}")`,
+    WebkitMaskImage: `url("${url}")`,
+
+  }
 
   return (
-    <img
-      alt={label ?? ""}
-      aria-hidden={typeof label === "string" ? undefined : "true"}
-      className={bem(undefined, undefined, className)}
-      height={sizePx}
-      role={typeof label === "string" ? "img" : "presentation"}
-      src={urlFromName(name)}
-      width={sizePx}
+    <span
       {...rest}
+      aria-hidden={isString(label) ? undefined : true}
+      aria-label={label}
+      role={isString(label) ? "img" : "presentation"}
+      style={{ ...mask }}
+      className={bem(undefined, {
+        [`${color}`]: Boolean(color),
+      }, className)}
     />
   )
 }
+
+Icon.displayName = "Icon"

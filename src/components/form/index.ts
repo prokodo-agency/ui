@@ -3,6 +3,7 @@ export * from "./FormResponse"
 export type {
   FormProps,
   FormField,
+  FormFieldTypes,
   FormAllowedChildren,
   FormFieldCondition,
   FormFieldDate,

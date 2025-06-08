@@ -1,13 +1,13 @@
-import { createLazyWrapper } from '@/helpers/createLazyWrapper';
+import { createLazyWrapper } from "@/helpers/createLazyWrapper"
 
-import LinkClient from './Link.client';
-import LinkServer from './Link.server';
+import LinkClient from "./Link.client"
+import LinkServer from "./Link.server"
 
-
-import type { LinkProps } from './Link.model';
+import type { LinkProps } from "./Link.model"
 
 export default createLazyWrapper<LinkProps>({
-  name: 'Link',
+  name: "Link",
   Client: LinkClient,
   Server: LinkServer,
-});
+  isInteractive: (p) => typeof p.linkComponent === "function",
+})

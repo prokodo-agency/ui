@@ -1,5 +1,4 @@
-export * from "./Headline.server"
-export * from "./Headline.client"
+export * from "./Headline"
 export type {
   HeadlineProps,
   HeadlineSizeProps,

@@ -33,9 +33,12 @@
         }
 
         &__link {
-            display: flex;
-            align-items: center;
             @include text('base');
+
+            &__header {
+                display: flex;
+                align-items: center;
+            }
         }
 
         &__icon {
@@ -80,8 +83,9 @@
         &__desc {
             color: var(--color-grey-600);
             margin: 0;
-            padding: 0 0 $space-xs $space-sm;
-            display: -webkit-box;
+            padding: $space-xs 0;
+            display: block;
+            width: 100%;
             -webkit-box-orient: vertical;
             line-clamp: 3;
             -webkit-line-clamp: 3; /* Limits the content to 3 lines */
@@ -89,22 +93,27 @@
             text-overflow: ellipsis; /* Adds the ellipsis at the end */
             word-wrap: break-word;
             @include text("base");
+
+            &--card {
+                padding-top: 0;
+                padding-left: $space-sm;
+            }
         }
 
         &--is-clickable {
             cursor: pointer;
             color: var(--color-grey-500);
 
-            @include when-hovered() {
-                a > div div:first-child {
-                    @include gradientBackgroundVar(primary-secondary);
+            a {
+                @include text("headline/xs");
+            }
 
-                    svg {
-                        color: $white;
-                    }
+            @include when-hovered() {
+                span[role="presentation"] {
+                    color: var(--color-primary-500);
                 }
 
-                div > div:last-child span {
+                .list-title {
                     @include gradientTextVar(primary);
                 }
             }

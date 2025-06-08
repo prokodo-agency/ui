@@ -1,9 +1,10 @@
 import type { IconName } from "../icon"
 import type { LabelProps } from "../label"
-import type { SwitchProps as MUISwitchProps } from "@mui/base"
-import type { ChangeEvent } from "react"
+import type { ChangeEvent, HTMLAttributes, FocusEvent } from "react"
 
-// Define the supported colors for the switch component
+/**
+ * Supported color variants (derived from the original "variant" prop).
+ */
 export type SwitchColor =
   | "inherit"
   | "primary"
@@ -13,19 +14,72 @@ export type SwitchColor =
   | "info"
   | "warning"
 
-// Define custom SwitchProps for the refactored Switch component
-export type SwitchProps = Omit<MUISwitchProps, "component" | "onChange"> & {
-  variant?: SwitchColor
-  label?: string
-  labelProps?: Omit<LabelProps, "label" | "require">
+export type SwitchProps = Omit<HTMLAttributes<HTMLInputElement>, "onChange"> & {
+  /** The ID and name of this switch instance (used for Label htmlFor). */
   name: string
+
+  /** The text label displayed next to the switch. */
+  label?: string
+
+  /** If true, the label will be marked as required. */
+  required?: boolean
+
+  /** Color variant—corresponds to the original SCSS class names. */
+  variant?: SwitchColor
+
+  /** Icon name to display when the switch is _not_ checked. */
   icon?: IconName
+
+  /** Icon name to display when the switch is checked. */
   checkedIcon?: IconName
+
+  /** Whether the switch is currently checked (controlled). */
+  checked?: boolean
+
+  /** Disable the switch when true. */
+  disabled?: boolean
+
+  /** Custom error message */
+  errorText?: string;
+
+  /** Custom helper message */
+  helperText?: string;
+
+  /**
+   * Called whenever the switch state changes.
+   * Callback signature: (event, checked) => void.
+   */
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void
+
+  /** Additional CSS class to apply to the outer container div. */
+  className?: string
+
+  /** Additional props forwarded to the `<Label>` (e.g. id, style). */
+  labelProps?: Omit<LabelProps, "label" | "htmlFor" | "required">
+
+  /**
+   * If true, visually hides the label but keeps it in the DOM for screen readers
+   * (visually-hidden) to satisfy AAA requirements.
+   */
+  hideLabel?: boolean
 }
 
-// Define a type for icon rendering
-export type IconRenderProps = {
-  name: IconName
-  isChecked?: boolean
+/**
+ * Internally used prop types to pass current checked state and focus status.
+ */
+export interface SwitchViewProps extends SwitchProps {
+  /** Current internal checked state (true = on). */
+  isChecked: boolean
+
+  /** True if the <input> is currently focused. */
+  isFocused: boolean
+
+  /** Internal change handler: (event) => void. */
+  onChangeInternal: (e: ChangeEvent<HTMLInputElement>) => void
+
+  /** Internal focus handler: (event) => void. */
+  onFocusInternal: (e: FocusEvent<HTMLInputElement>) => void
+
+  /** Internal blur handler: (event) => void. */
+  onBlurInternal: (e: FocusEvent<HTMLInputElement>) => void
 }

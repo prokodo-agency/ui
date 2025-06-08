@@ -5,7 +5,7 @@ import { Switch } from "./Switch"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/common/Switch",
+  title: "prokodo/form/Switch",
   component: Switch,
   parameters: {
     layout: "centered",
@@ -52,9 +52,9 @@ export const WithLabel: Story = {
 export const WithIcon: Story = {
   args: {
     variant: "primary",
-    icon: "Activity02Icon",
+    icon: "CancelCircleIcon",
     name: "switch-3",
-    checkedIcon: "AbsoluteIcon",
+    checkedIcon: "Tick03Icon",
   },
   render: args => {
     const [open, setOpen] = useState(false)

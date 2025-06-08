@@ -4,7 +4,7 @@ import type { MapMarker } from "./Map.model"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/common/Map",
+  title: "prokodo/service/Map",
   component: Map,
   parameters: {
     layout: "centered",

@@ -4,7 +4,15 @@
 
 @include define-block("Form") {
     &__label {
-        @include hidden();
+        padding-bottom: $space-xl;
+
+        &--is-hidden {
+            @include hidden();
+        }
+    }
+
+    &__grid {
+        padding: 0 !important;
     }
 
     &__hp {
@@ -16,8 +24,7 @@
         flex-direction: column;
 
         &__submit {
-            margin-bottom: $space-xl;
-            align-self: center;
+            text-align: center !important;
         }
     }
 }

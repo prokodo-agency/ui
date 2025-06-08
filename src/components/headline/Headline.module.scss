@@ -5,7 +5,6 @@
 
 @include define-block("Headline") {
     margin: 0;
-    white-space: pre-line;
 
     &--is-highlighted {
         background-clip: text;
@@ -107,9 +106,12 @@
 
     &--center {
         text-align: center;
+        justify-content: center;
     }
 
     &--right {
         text-align: right;
+        justify-content: flex-end;
     }
 }
+

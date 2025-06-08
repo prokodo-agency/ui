@@ -1,104 +1,85 @@
-import { type ReactNode, useState } from "react"
+/* components/select/Select.stories.tsx
+   ───────────────────────────────────── */
 
-import { Icon } from "../icon"
+import { Select } from "@/components/select";
 
-import { Select } from "./Select"
+import type { SelectItem } from "./Select.model";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import type { SelectEvent, SelectProps } from "./Select.model"
-import type { Meta, StoryObj } from "@storybook/react"
+/* ---------- sample data ------------------------------------------------ */
+const demoItems: SelectItem[] = [
+  { value: "alpha",   label: "Alpha" },
+  { value: "beta",    label: "Beta" },
+  { value: "gamma",   label: "Gamma" },
+  { value: "delta",   label: "Delta" },
+];
 
+/* ---------- meta ------------------------------------------------------- */
 const meta = {
-  title: "prokodo/common/Select",
+  title: "prokodo/form/Select",
   component: Select,
   parameters: {
     layout: "centered",
+    docs: { description: { component: "Accessible, SSR-safe native `<select>`." } },
   },
   tags: ["autodocs"],
   argTypes: {
-    color: {
-      options: [
-        "inherit",
-        "primary",
-        "secondary",
-        "success",
-        "info",
-        "warning",
-        "error",
-      ],
-      control: { type: "select" },
-      defaultValue: undefined,
-    },
+    multiple:  { control: "boolean" },
+    required:  { control: "boolean" },
+    value:     { table: { disable: true } },   // managed by knob playground
+    items:     { table: { disable: true } },
+    /* hide internal styling/helpers */
+    className:          { table: { disable: true } },
+    fieldClassName:     { table: { disable: true } },
+    selectClassName:    { table: { disable: true } },
+    iconVisible:        { table: { disable: true } },
   },
-} satisfies Meta<typeof Select>
+} satisfies Meta<typeof Select>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const DefaultItems = [
-  { label: "-- Choose --", value: "0" },
-  { label: "Option 2", value: "1" },
-  { label: "Option 3", value: "2" },
-  { label: "Option 4", value: "3" },
-]
-
-const DefaultItemsWithIcon = [
-  {
-    label: "-- Choose --",
-    value: "0",
-    icon: (): ReactNode => <Icon color="red" name="AbacusIcon" size="sm" />,
-  },
-  {
-    label: "Option 2",
-    value: "1",
-    icon: (): ReactNode => <Icon color="yellow" name="AbacusIcon" size="sm" />,
-  },
-  {
-    label: "Option 3",
-    value: "2",
-    icon: (): ReactNode => <Icon color="orange" name="AbacusIcon" size="sm" />,
-  },
-  {
-    label: "Option 4",
-    value: "3",
-    icon: (): ReactNode => <Icon color="blue" name="AbacusIcon" size="sm" />,
-  },
-]
-
-const SelectWithState = (args: SelectProps) => {
-  const [value, setValue] = useState<string | string[] | null>(null)
-
-  return (
-    <Select
-      {...args}
-      value={value}
-      onChange={(_: SelectEvent, value: string | string[] | null) => {
-        console.log("Selected value: ", value)
-        setValue(value)
-      }}
-    />
-  )
-}
-
+/* ---------- stories ---------------------------------------------------- */
 export const Default: Story = {
   args: {
-    id: "example-select",
-    name: "example",
-    label: "Example select",
-    hideLabel: true,
-    items: DefaultItems,
-    onChange: e => console.log(e),
+    id: "select-demo-1",
+    label: "Choose a value",
+    items: demoItems,
+    placeholder: "-- Please choose --",
   },
-  render: args => <SelectWithState {...args} />,
-}
+};
 
-export const WithIcon: Story = {
+export const Disabled: Story = {
   args: {
-    id: "example-select",
-    name: "example",
-    label: "Example select",
-    hideLabel: true,
-    items: DefaultItemsWithIcon,
-    onChange: e => console.log(e),
+    id: "select-demo-1",
+    label: "Choose a value",
+    items: demoItems,
+    disabled: true,
+    placeholder: "-- Please choose --",
   },
-  render: args => <SelectWithState {...args} />,
-}
+};
+
+export const Required: Story = {
+  args: {
+    ...Default.args,
+    id: "select-demo-2",
+    required: true,
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    ...Default.args,
+    id: "select-demo-3",
+    errorText: "This field is required.",
+  },
+};
+
+export const Multiple: Story = {
+  args: {
+    ...Default.args,
+    id: "select-demo-4",
+    multiple: true,
+    placeholder: "-- Select one or more --",
+  },
+};
