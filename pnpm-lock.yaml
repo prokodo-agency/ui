@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@googlemaps/js-api-loader':
         specifier: ^1.16.6
-        version: 1.16.8
+        version: 1.16.10
       '@lottiefiles/dotlottie-react':
         specifier: ^0.7.2
         version: 0.7.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1611,8 +1611,8 @@ packages:
     resolution: {integrity: sha512-4SaFZCNfJqvk/kenHpI8xvN42DMaoycy4PzKc5otHxRswww1kAt82OlBuwRVLofCACCTZEcla2Ydxv8scMXaTg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@googlemaps/js-api-loader@1.16.8':
-    resolution: {integrity: sha512-CROqqwfKotdO6EBjZO/gQGVTbeDps5V7Mt9+8+5Q+jTg5CRMi3Ii/L9PmV3USROrt2uWxtGzJHORmByxyo9pSQ==}
+  '@googlemaps/js-api-loader@1.16.10':
+    resolution: {integrity: sha512-c2erv2k7P2ilYzMmtYcMgAR21AULosQuUHJbStnrvRk2dG93k5cqptDrh9A8p+ZNlyhiqEOgHW7N9PAizdUM7Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -8090,7 +8090,7 @@ snapshots:
       '@eslint/core': 0.15.0
       levn: 0.4.1
 
-  '@googlemaps/js-api-loader@1.16.8': {}
+  '@googlemaps/js-api-loader@1.16.10': {}
 
   '@humanfs/core@0.19.1': {}
 
