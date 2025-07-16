@@ -76,7 +76,7 @@ export const Default: Story = {
     onChange: () => console.log("Changed!"),
   },
   render: (args, { updateArgs }) => {
-    const handleChange = (index: number) => updateArgs({ expanded: index })
+    const handleChange = (index?: number) => updateArgs({ expanded: index })
     return <Accordion {...args} onChange={handleChange} />
   },
 }

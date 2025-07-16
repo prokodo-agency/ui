@@ -4,14 +4,14 @@ import { create } from "@/helpers/bem"
 import styles from "./Label.module.scss"
 
 import type { LabelProps } from "./Label.model"
-import type { FC } from "react"
+import type { FC, LabelHTMLAttributes } from "react"
 
 const bem = create(styles, "Label")
 
 export const Label: FC<LabelProps> =
 ({
+  type = "label",
   className,
-  htmlFor,
   required,
   label,
   contentProps,
@@ -21,13 +21,9 @@ export const Label: FC<LabelProps> =
   ...props
 }) => {
   const splittedLabel = label?.split(" ")
-  if (!splittedLabel) return children
-  return (
-    <label
-      {...props}
-      className={bem(undefined, undefined, className)}
-      htmlFor={htmlFor}
-    >
+
+  const renderContent = () => (
+    <>
       <span {...contentProps}>
         <i
           {...textProps}
@@ -50,6 +46,26 @@ export const Label: FC<LabelProps> =
         </i>
       </span>
       {children}
+    </>
+  )
+
+  if (!splittedLabel) return children
+  if (type === "legend") {
+    return (
+      <legend
+        {...props}
+        className={bem(undefined, undefined, className)}
+      >
+        {renderContent()}
+      </legend>
+    )
+  }
+  return (
+    <label
+      {...props as LabelHTMLAttributes<HTMLLabelElement>}
+      className={bem(undefined, undefined, className)}
+    >
+      {renderContent()}
     </label>
   )
 }

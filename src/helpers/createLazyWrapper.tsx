@@ -51,11 +51,13 @@ export function createLazyWrapper<P extends object>({
     if (interactive && (priority || visible)) {
       const clientEl = <Client {...props} />
       // 1) log which lazy wrapper is rendering:
-      console.log(
-        `[hydrate] createLazyWrapper “${name}” rendering client (priority=${Boolean(
-          priority
-        )}, visible=${visible})`
-      )
+      if (typeof process !== 'undefined' && typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string") {
+        console.debug(
+          `[hydrate] createLazyWrapper “${name}” rendering client (priority=${Boolean(
+            priority
+          )}, visible=${visible})`
+        )
+      }
 
       // 2) only pass priority when true:
       const extra: {'data-island': string; priority?: boolean} = { 'data-island': islandName }
@@ -65,10 +67,12 @@ export function createLazyWrapper<P extends object>({
       return cloneElement(clientEl as ReactElement, extra)
     } else {
       const serverEl = <Server {...props} />
+      if (typeof process !== 'undefined' && typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string") {
       // 1) log which lazy wrapper is rendering server:
-      console.log(
-        `[hydrate] createLazyWrapper “${name}” rendering server (visible=${visible})`
-      )
+        console.debug(
+          `[hydrate] createLazyWrapper “${name}” rendering server (visible=${visible})`
+        )
+      }
 
       // 2) always attach data-island  ref when rendering server
       return cloneElement(

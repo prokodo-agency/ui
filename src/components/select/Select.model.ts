@@ -1,4 +1,5 @@
-import type { ChangeEvent, RefObject, ReactNode, Ref, ComponentProps, MouseEventHandler, KeyboardEventHandler } from "react"
+import type { LabelProps} from "../label"
+import type { ChangeEvent, RefObject, ReactNode, Ref, MouseEventHandler, KeyboardEventHandler } from "react"
 
 /* ---------- basic event --------------------------------------- */
 export type SelectEvent = ChangeEvent<HTMLSelectElement> | null;
@@ -44,7 +45,7 @@ export interface SelectProps<Value extends string = string> {
   className?: string;
   fieldClassName?: string;
   selectClassName?: string;
-  labelProps?: ComponentProps<"label">;
+  labelProps?: LabelProps;
   ref?: Ref<HTMLSelectElement>;
 }
 

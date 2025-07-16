@@ -2,6 +2,8 @@ import type { IconProps, IconName } from "../icon"
 import type { LinkProps } from "../link"
 
 export type SideNavItem = {
+  /** active state of item */
+  active?: boolean
   /** visible text when expanded */
   label: string
   /** icon component props */
@@ -31,6 +33,8 @@ export type SideNavProps = {
   ariaLabel?: string
   /** className passthrough */
   className?: string
+  /** onChange handler of sidenav */
+  onChange?: (e: SideNavItem) => void
 }
 
 export type SideNavViewProps = SideNavProps & {

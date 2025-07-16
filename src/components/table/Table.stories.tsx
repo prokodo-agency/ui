@@ -32,26 +32,26 @@ const sampleHeader: TableHeaderCellProps[] = [
 const sampleBody: TableRowProps[] = [
   {
     cells: [
-      { label: "Apple" },
-      { label: "$1.00" },
-      { label: "3" },
-      { label: "$3.00" },
+      { id: "1-1", label: "Apple" },
+      { id: "1-2", label: "$1.00" },
+      { id: "1-3", label: "3" },
+      { id: "1-4", label: "$3.00" },
     ],
   },
   {
     cells: [
-      { label: "Banana" },
-      { label: "$0.50" },
-      { label: "5" },
-      { label: "$2.50" },
+      { id: "2-1", label: "Banana" },
+      { id: "2-2", label: "$0.50" },
+      { id: "2-3", label: "5" },
+      { id: "2-4", label: "$2.50" },
     ],
   },
   {
     cells: [
-      { label: "Cherry" },
-      { label: "$2.00" },
-      { label: "2" },
-      { label: "$4.00" },
+      { id: "3-1", label: "Cherry" },
+      { id: "3-2", label: "$2.00" },
+      { id: "3-3", label: "2" },
+      { id: "3-4", label: "$4.00" },
     ],
   },
 ]
@@ -61,34 +61,37 @@ const sampleBodyWithIcons: TableRowProps[] = [
   {
     cells: [
       {
+        id: "1-1",
         label: "Apple",
         icon: { name: "StarIcon", color: "#FFD700", className: "" } as IconProps,
       },
-      { label: "$1.00" },
-      { label: "3" },
-      { label: "$3.00" },
+      { id: "1-2",label: "$1.00" },
+      { id: "1-3",label: "3" },
+      { id: "1-4",label: "$3.00" },
     ],
   },
   {
     cells: [
       {
+        id: "2-1",
         label: "Banana",
         icon: { name: "HeartCheckIcon", color: "#0000FF", className: "" } as IconProps,
       },
-      { label: "$0.50" },
-      { label: "5" },
-      { label: "$2.50" },
+      { id: "2-2", label: "$0.50" },
+      { id: "2-3", label: "5" },
+      { id: "2-4", label: "$2.50" },
     ],
   },
   {
     cells: [
       {
+        id: "3-1",
         label: "Cherry",
         icon: { name: "ThumbsDownIcon", color: "#008000", className: "" } as IconProps,
       },
-      { label: "$2.00" },
-      { label: "2" },
-      { label: "$4.00" },
+      { id: "3-2", label: "$2.00" },
+      { id: "3-3", label: "2" },
+      { id: "3-4", label: "$4.00" },
     ],
   },
 ]

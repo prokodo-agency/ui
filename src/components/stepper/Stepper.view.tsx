@@ -14,8 +14,10 @@ export const StepperView: FC<StepperViewProps> = ({
   activeStep,
   translations,
   className,
-  ...rootProps
+  ...props
 }) => {
+  const rootProps = props
+  delete rootProps.stepRefs
   const t = translations ?? {
     stepper: "Stepper Navigation",
     step: "Step",
@@ -36,6 +38,7 @@ export const StepperView: FC<StepperViewProps> = ({
         const {
           key,
           label,
+          innerContainerProps,
           labelProps = {},
           className: liClass,
           ...liRest
@@ -79,7 +82,7 @@ export const StepperView: FC<StepperViewProps> = ({
                   className={bem("icon__container", {
                     "is-active": isActive || isCompleted,
                   })}
-                  {...step?.innerContainerProps}
+                  {...innerContainerProps}
                 >
                   <span
                     className={bem("icon__label", {

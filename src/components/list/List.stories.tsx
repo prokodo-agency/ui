@@ -38,7 +38,8 @@ const defaultItems: ListDefaultItemProps[] = [
 
 const customItems: ListDefaultItemProps[] = [
   {
-    title: "Icon list element (Redirect)",
+    id: "Hello",
+    title: <p>Hello</p>,
     redirect: {
       href: "#",
       target: "_blank",

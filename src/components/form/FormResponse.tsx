@@ -13,6 +13,7 @@ const bem = create(styles, "FormResponse")
 export const FormResponse: FC<FormResponseProps> = ({ className, messages, ...props }) => {
   const errorKeys = Object.keys(messages?.errors || {})
   const listItems: ListDefaultItemProps[] = errorKeys.map(key => ({
+    id: key,
     title: key.charAt(0).toUpperCase() + key.slice(1),
     desc: messages?.errors ? messages.errors?.[key]?.join(", ") : "",
     className: bem("errors__item"),

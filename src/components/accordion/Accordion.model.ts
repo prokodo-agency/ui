@@ -27,7 +27,7 @@ export type AccordionProps = {
   iconProps?: IconProps
   items: AccordionItem[]
   schema?: Schema
-  onChange?: (index: number, e?: SyntheticEvent, expanded?: boolean) => void
+  onChange?: (index?: number, e?: SyntheticEvent, expanded?: boolean) => void
 } & Omit<HTMLAttributes<HTMLDivElement>, "onChange">
 
 export type AccordionViewProps = Omit<AccordionProps, 'expanded' | 'onChange' | 'onToggle'> & {

@@ -32,11 +32,13 @@ export function createIsland<P extends object>({
     ): ReactElement {
       const islandName = name.toLowerCase()
 
-      console.debug(
-        `[hydrate] createIsland “${name}” rendering as interactive=${Boolean(
-          priority
-        )}`
-      )
+      if (typeof process !== 'undefined' && typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string") {
+        console.debug(
+          `[hydrate] createIsland “${name}” rendering as interactive=${Boolean(
+            priority
+          )}`
+        )
+      }
 
       // 2) Only pass `priority` if truthy:
       const extra: {'data-island': string; priority?: boolean} = { 'data-island': islandName }

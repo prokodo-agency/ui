@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.42
+
+### Patch Changes
+
+- New Progress bar, Dynamic list and Snackbar components with included Snackbar Provider
+
 ## 0.0.41
 
 ### Patch Changes

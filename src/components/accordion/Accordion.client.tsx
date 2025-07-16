@@ -13,7 +13,7 @@ export default function AccordionClient(props: AccordionProps): JSX.Element {
     (index: number, e: SyntheticEvent<HTMLDivElement>) => {
       const next = expandedIndex === index ? null : index;
       setExpandedIndex(next);
-      onChange?.(index, e, next !== null);
+      onChange?.(next !== null ? index : undefined, e, next !== null);
     },
     [expandedIndex, onChange],
   );

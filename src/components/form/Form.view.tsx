@@ -1,5 +1,5 @@
 import { create } from "@/helpers/bem"
-import { isArray } from "@/helpers/validations"
+import { isArray, isNull } from "@/helpers/validations"
 
 import { Button } from "../button"
 import { Grid } from "../grid"
@@ -93,9 +93,8 @@ export const FormView: FC<FormViewProps> = ({
         )}
 
         {/* Submit button (only if honeypot is empty) */}
-        {(honeypot?.value as string)?.length === 0 && (
+        {!isNull(button) && (honeypot?.value as string)?.length === 0 && (
           <Button
-            fullWidth
             aria-label="Submit form"
             title="Submit"
             type="submit"

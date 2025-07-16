@@ -14,7 +14,7 @@ export type LinkDefaultProps = BaseLinkProps & {
   classNames?: LinkClassNames
   hasBackground?: boolean
   ariaLabel?: string
-  onPress?: MouseEventHandler<HTMLAnchorElement>
+  onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
 export type LinkHrefProps = LinkDefaultProps & {
@@ -22,7 +22,7 @@ export type LinkHrefProps = LinkDefaultProps & {
 }
 
 export type LinkClickProps = LinkDefaultProps & {
-  onPress: MouseEventHandler<HTMLAnchorElement>
+  onClick: MouseEventHandler<HTMLAnchorElement>
 }
 
 export type LinkProps = LinkHrefProps | LinkClickProps

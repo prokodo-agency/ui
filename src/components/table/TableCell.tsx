@@ -18,6 +18,7 @@ type TableCellProps = TableBodyCellProps & {
 }
 
 export const TableCell: FC<TableCellProps> = ({
+  id,
   type,
   label,
   icon,
@@ -44,12 +45,12 @@ export const TableCell: FC<TableCellProps> = ({
 
   return (
     <td
-      key={`table-body-cell-${label}`}
       {...cellProps}
       className={bem(undefined, { "has-icon": Boolean(icon) }, className)}
+      id={id}
     >
       {redirect?.href !== undefined ?
-        <Link {...redirect} className={bem("inner", {"has-link": true}, redirect?.className ?? classNameInner)}>
+        <Link priority {...redirect} className={bem("inner", {"has-link": true}, redirect?.className ?? classNameInner)}>
           {renderCellContent()}
         </Link>
       : (

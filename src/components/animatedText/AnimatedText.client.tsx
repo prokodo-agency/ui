@@ -24,9 +24,9 @@ export default function AnimatedTextClient(
     const t0 = window.setTimeout(() => {
       const id = window.setInterval(() => {
         setIndex((i) => {
-          if (i + 1 >= children.length) {
+          if (i + 1 >= children?.length) {
             clearInterval(id)
-            return children.length
+            return children?.length
           }
           return i + 1
         })
@@ -34,12 +34,12 @@ export default function AnimatedTextClient(
     }, delay)
 
     return () => clearTimeout(t0)
-  }, [children.length, delay, disabled, speed])
+  }, [children?.length, delay, disabled, speed])
 
   return (
     <AnimatedTextView
       {...rest}
-      text={children.slice(0, index)}
+      text={children?.slice(0, index)}
     />
   )
 }

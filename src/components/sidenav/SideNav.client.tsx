@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, type JSX } from "react"
+import { useState, useEffect, type JSX, useMemo } from "react"
 
 import SideNavView from "./SideNav.view"
 
@@ -8,7 +8,11 @@ import type { SideNavProps } from "./SideNav.model"
 
 const STORAGE_KEY = "prokodo-adminSidebarCollapsed"
 
-export default function SidebarClient(props: SideNavProps): JSX.Element {
+export default function SidebarClient({
+  items,
+  onChange,
+  ...props
+}: SideNavProps): JSX.Element {
   const [collapsed, setCollapsed] = useState(
     props.initialCollapsed ?? false
   )
@@ -26,10 +30,23 @@ export default function SidebarClient(props: SideNavProps): JSX.Element {
     })
   }
 
+  const formatedItems = useMemo(() => items.map((el) => ({
+    ...el,
+    redirect: el?.redirect && {
+      ...el?.redirect,
+      href: el?.redirect?.href ?? "",
+      onClick: (e) => {
+        el?.redirect?.onClick?.(e)
+        onChange?.(el)
+      }
+    }
+  })), [items, onChange])
+
   return (
     <SideNavView
       {...props}
       collapsed={collapsed}
+      items={formatedItems}
       onToggle={handleToggle}
     />
   )

@@ -36,6 +36,7 @@
     position: relative;
     width: 42px;
     height: 26px;
+    min-width: 42px;
     background-color: var(--color-grey-500);
     border-radius: 13px;
     transition: background-color 0.3s ease;
@@ -83,6 +84,7 @@
     /* If checked, shift thumb to the right */
     &--checked {
       transform: translateY(-50%) translateX(13px);
+      left: 5px;
     }
 
     &--disabled {

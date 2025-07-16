@@ -66,6 +66,24 @@
         align-items: center;
         justify-content: space-between;
         padding-bottom: $space-lg;
+
+        &__button {
+            display: flex;
+            align-items: center;
+            border: none;
+            background: none;
+            color: var(--color-grey-900);
+            cursor: pointer;
+            @include text("caption");
+
+            &__icon {
+                margin-right: $space-xs;
+            }
+
+            @include when-focused() {
+                @include use-custom-focus-outline()
+            }
+        }
     }
 
     &__close {

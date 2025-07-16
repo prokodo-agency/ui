@@ -70,6 +70,7 @@ export default function FormFieldServer({
       case "input":
         return renderFieldContainer(
           <Input
+            readOnly
             errorTranslations={messagesFields?.errors?.input}
             {...(props as InputProps)}
           />,
@@ -77,6 +78,7 @@ export default function FormFieldServer({
       case "date":
         return renderFieldContainer(
           <DatePicker
+            readOnly
             {...(props as DatePickerProps)}
             translations={messagesFields?.errors?.date}
           />,

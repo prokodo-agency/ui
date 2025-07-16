@@ -1,5 +1,6 @@
 import { Button } from '@/components/button'
 import { Headline } from '@/components/headline'
+import { Icon } from '@/components/icon'
 import { create } from '@/helpers/bem'
 
 import styles from './Dialog.module.scss'
@@ -28,6 +29,7 @@ export function DialogView({
   titleProps = {},
   children,
   onClose,
+  onCloseKeyDown,
   wrapperProps,
   closeOnBackdropClick = true,
   closeButtonProps,
@@ -68,16 +70,22 @@ export function DialogView({
           </div>
 
           {!Boolean(hideCloseButton) && (
-            <Button
-              aria-label={translations?.close}
-              color="inherit"
-              iconProps={{ name: 'Cancel01Icon', size: 'sm' }}
-              variant="outlined"
+            <button
               {...closeButtonProps}
               ref={closeButtonRef}
-              title={translations?.close ?? "Close"}
+              aria-label={closeButtonProps?.['aria-label'] ?? translations?.close}
+              className={bem("header__button", undefined, closeButtonProps?.className)}
               onClick={onClose}
-            />
+              onKeyDown={onCloseKeyDown}
+            >
+              <Icon
+                name="Cancel01Icon"
+                size="xs"
+                {...closeButtonProps?.iconProps}
+                className={bem("header__button__icon", undefined, closeButtonProps?.iconProps?.className)}
+              />
+              {closeButtonProps?.title ?? translations?.close ?? "Close"}
+            </button>
           )}
         </div>
 
