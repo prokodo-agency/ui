@@ -105,6 +105,12 @@ export const FormClient = memo((props: FormProps) => {
       const idx = formState.findIndex((f) => f.name === field.name)
       if (idx < 0) return
 
+      // If this is a dynamic-list, just update the array directly
+      if (field.fieldType === "dynamic-list") {
+        updateSingleField(idx, { value })
+        return
+      }
+
       // If there are no conditions, update value directly
       if (!field.conditions || field.conditions.length === 0) {
         updateSingleField(idx, { value })

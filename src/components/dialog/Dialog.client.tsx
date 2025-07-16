@@ -100,6 +100,11 @@ function DialogClient(
       }}
       onClose={closeDialog}
       onMouseDown={e => e.stopPropagation()}
+      onCloseKeyDown={(e) => {
+        if (e.key === "Enter") {
+          closeDialog()
+        }
+      }}
     />
   )
 }

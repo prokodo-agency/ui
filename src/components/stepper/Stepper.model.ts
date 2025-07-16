@@ -63,7 +63,7 @@ export interface StepperViewProps extends Omit<StepperViewPropsCommon, "ref"> {
 
 export interface StepperViewPropsCommon extends StepperPropsCommon {}
 export interface StepperPropsCommon {
-  stepRefs: RefObject<Array<HTMLDivElement | null>>
+  stepRefs?: RefObject<Array<HTMLDivElement | null>>
   steps: Step[]
   translations?: StepperTranslations
   className?: string

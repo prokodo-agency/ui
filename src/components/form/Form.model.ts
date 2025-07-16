@@ -8,6 +8,10 @@ import {
   type DatePickerProps,
   type DatePickerErrorTranslations,
 } from "../datePicker"
+import {
+  DynamicList,
+  type DynamicListProps,
+} from "../dynamic-list"
 import { Input, type InputProps, type InputErrorTranslations } from "../input"
 import { InputOTP } from "../inputOTP"
 import { Select, type SelectProps } from "../select"
@@ -25,9 +29,9 @@ export type FormVariants =
   | "info"
   | "warning"
 
-export type FormFieldTypes = "input" | "select" | "switch" | "slider" | "date"
+export type FormFieldTypes = "input" | "select" | "switch" | "slider" | "date" | "dynamic-list"
 
-export type FormFieldValue = string | boolean | string[] | undefined
+export type FormFieldValue = string | boolean | string[] | Record<string, string>[] | undefined
 
 export type FormFieldCondition = {
   fieldId: string
@@ -62,12 +66,17 @@ export type FormFieldDate = FormFieldOptionals & {
   fieldType: "date"
 } & DatePickerProps
 
+export type FormFieldDynamicList = FormFieldOptionals & {
+  fieldType: "dynamic-list"
+} & DynamicListProps
+
 export type FormField =
   | FormFieldInput
   | FormFieldSelect
   | FormFieldSwitch
   | FormFieldSlider
   | FormFieldDate
+  | FormFieldDynamicList
 
 export type FormMessagesErrors = {
   [key: string]: string[]
@@ -98,6 +107,7 @@ export type FormAllowedChildren =
   | ReactElement<typeof Select>
   | ReactElement<typeof Slider>
   | ReactElement<typeof Switch>
+  | ReactElement<typeof DynamicList>
 
 export type ParentComponentProps = {
   children: FormAllowedChildren | FormAllowedChildren[] // Allow one or multiple allowed children
@@ -124,7 +134,7 @@ export type FormProps = {
   defaultFields?: FormField[]
   messages?: FormMessages
   messagesFields?: FormFieldMessages
-  button: FormButton
+  button?: FormButton
   onSubmit?: (fields: FormField[]) => void
   onChangeForm?: OnChangeFormHandler
 } & Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit">

@@ -11,6 +11,8 @@ const FormServer: FC<FormProps> = (props) => {
   const {
     fields,
     messages,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onChangeForm,
     ...rest
   } = props
 

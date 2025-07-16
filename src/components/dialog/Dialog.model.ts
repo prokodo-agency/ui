@@ -1,6 +1,7 @@
 import type { ButtonProps } from "@/components/button"
 import type { HeadlineProps } from "@/components/headline"
-import type { Ref, ReactNode, HTMLAttributes } from "react"
+import type { IconProps } from "@/components/icon"
+import type { Ref, ReactNode, HTMLAttributes, KeyboardEvent } from "react"
 
 export type DialogChangeReson = 'backdropClick' | 'escapeKeyDown'
 
@@ -47,9 +48,12 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
   scroll?: 'paper' | 'body'
   fullScreen?: boolean
   onClose?: () => void
+  onCloseKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void
   children?: ReactNode
   closeOnBackdropClick?: boolean
-  closeButtonProps?: Omit<ButtonProps, "title" | "ref" | "onClick" | "onKeyDown">
+  closeButtonProps?: Omit<HTMLAttributes<HTMLButtonElement>, "ref" | "onClick" | "onKeyDown"> & {
+    iconProps?: IconProps
+  }
   /** focus the “X” button when the dialog opens */
   closeButtonRef?: Ref<HTMLButtonElement>
   /** if you need to trap focus around the whole container */
@@ -62,7 +66,7 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
  */
 export type DialogProps = Omit<
   DialogViewProps,
-  'open' | 'onChange'
+  'open' | 'onChange' | 'onCloseKeyDown'
 > & {
   /** initial open flag from the page or parent */
   open?: boolean

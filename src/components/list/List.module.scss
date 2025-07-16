@@ -17,6 +17,10 @@
         color: var(--color-grey-500);
         @include text("headline/xs");
 
+        &--has-icon {
+            flex-wrap: nowrap;
+        }
+
         &__card {
             margin: $space-md 0;
 

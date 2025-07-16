@@ -1,0 +1,66 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/designsystem/functions/texts" as *;
+@use "@/styles/ui/mixins/bem" as *;
+
+@include define-block("DynamicList") {
+  border: none;
+  padding: 0;
+
+  &__list {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: $space-lg;
+    list-style-type: none;
+    padding: 0;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+
+      &--is-multi {
+        align-items: flex-start;
+      }
+    }
+  }
+
+  &__field--is-multi {
+    margin-bottom: $space-lg;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  &__delete__button--is-multi {
+    margin-top: $space-sm;
+  }
+
+  /* ───────────────── helper / error text */
+  &__helperText {
+    padding-left: $space-xl;
+    padding-top: $space-md;
+    display: flex;
+    color: var(--color-grey-300);
+    width: 80%;
+    @include text("caption");
+
+    html[data-theme='dark'] & {
+      color: var(--color-grey-700);
+    }
+
+    &__content {
+      width: 100%;
+
+      &--is-error {
+        color: var(--color-error);
+      }
+    }
+  }
+}

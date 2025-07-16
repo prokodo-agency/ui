@@ -53,12 +53,12 @@ export default function SideNavView({
 
       <nav id="sidenav">
         <ul className={bem("list")}>
-          {items.map(({ label, icon, redirect,  }: SideNavItem) => (
+          {items.map(({ label, icon, redirect, active }: SideNavItem) => (
             <li key={label}>
               {redirect?.href !== undefined ?
                 <Link
                   {...redirect}
-                  className={bem("link", { collapsed }, redirect?.className)}
+                  className={bem("link", { collapsed, "is-active": Boolean(active) }, redirect?.className)}
                   href={redirect.href}
                 >
                   {renderItem(icon, label)}

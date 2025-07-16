@@ -4,7 +4,7 @@ import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
 import { Card } from "../card"
-import { Icon } from "../icon"
+import { Icon, type IconName } from "../icon"
 import { Link, type LinkProps } from "../link"
 
 import styles from "./List.module.scss"
@@ -46,8 +46,8 @@ export function List({
       {...props}
       className={bem(undefined, undefined, className)}
     >
-      {items.map((item: ListItemProps) => {
-        const { title, desc, icon, redirect, onClick, variant: itemVariant, className: itemClassName } = item
+      {items.map((item: ListItemProps, i: number) => {
+        const { id, title, desc, icon, redirect, onClick, variant: itemVariant, className: itemClassName } = item
         const isClickable = Boolean(onClick || redirect)
 
         // 1) Prepare <li> props for keyboard accessibility if clickable:
@@ -80,6 +80,7 @@ export function List({
           {
             "is-clickable": isClickable,
             [`is-clickable--${itemVariant ?? variant}`]: isClickable,
+            "has-icon": Boolean(item?.icon),
             ...modifier,
           },
           itemClassName
@@ -97,16 +98,18 @@ export function List({
         // 4) Helper to render an optional description <p>:
         const DescParagraph = () => {
           if (!isString(desc as string) && !isValidElement(desc)) return null
-          return <p className={bem("item__desc", {"card": type === "card"}, classNameDesc)}>{desc as string}</p>
+          return <div className={bem("item__desc", {"card": type === "card"}, classNameDesc)}>{desc as string}</div>
         }
 
         // 5) Helper to render an icon (purely decorative):
         const IconWrapper = () => {
-          if (!icon) return null
+          if (icon === undefined || icon === null) return null
           // aria-hidden for decorative icons
           return (
             <div aria-hidden="true" className={bem("item__icon__wrapper")}>
-              <Icon color={variant as Variants} name={icon} {...options.icon} />
+              {isValidElement(icon) ? icon :
+                <Icon color={variant as Variants} name={icon as IconName} {...options.icon} />
+              }
             </div>
           )
         }
@@ -115,7 +118,7 @@ export function List({
         if (type === "card") {
           const cardItem = item as ListCardItemProps
           return (
-            <li key={`list-item-${title}`} className={liClass} {...liHandlers}>
+            <li key={`list-item-${id ?? i}`} className={liClass} {...liHandlers}>
               <Card
                 priority
                 variant="white"
@@ -129,17 +132,19 @@ export function List({
               >
                 <div className={bem("item__inner", undefined, cardItem.innerClassName)}>
                   {/* Decorative Icon */}
-                  {icon && (
+                  {icon !== undefined && icon !== null && (
                     <div
                       aria-hidden="true"
                       className={bem("item__icon", undefined, cardItem.iconProps?.className)}
                     >
-                      <Icon
-                        {...cardItem.iconProps}
-                        className={bem("item__icon__svg")}
-                        name={icon}
-                        size="sm"
-                      />
+                      {isValidElement(icon) ? icon :
+                        <Icon
+                          {...cardItem.iconProps}
+                          className={bem("item__icon__svg")}
+                          name={icon as IconName}
+                          size="sm"
+                        />
+                      }
                     </div>
                   )}
                   <div className={bem("item__content")}>
@@ -157,7 +162,7 @@ export function List({
           // If redirect is present, render a proper <Link> (anchor) inside <li>.
           const linkProps = redirect as LinkProps
           return (
-            <li key={`list-item-${title}`} className={liClass}>
+            <li key={`list-item-${id ?? i}`} className={liClass}>
               <Link
                 className={bem("item__link", undefined, linkProps.className)}
                 variant={variant}
@@ -175,7 +180,7 @@ export function List({
 
         // 8) Finally: a non‐link, potentially clickable <li> that is NOT a card:
         return (
-          <li key={`list-item-${title}`} className={liClass} {...liHandlers}>
+          <li key={`list-item-${id ?? i}`} className={liClass} {...liHandlers}>
             <IconWrapper />
             <TitleSpan />
             <DescParagraph />

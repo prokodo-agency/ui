@@ -80,6 +80,7 @@ export function SelectView<Value extends string = string>({
           htmlFor={id}
           label={label}
           required={required}
+          type="label"
         />
       )}
 
@@ -102,6 +103,17 @@ export function SelectView<Value extends string = string>({
         >
           {display}
         </button>
+
+        {/* hidden value for form submit */}
+        <input
+          name={name}
+          type="hidden"
+          value={
+            Array.isArray(value)
+              ? value.join(",")
+              : value ?? ""
+          }
+        />
 
         {/* --- listbox (static, hidden via CSS – client will unhide) */}
         <ul

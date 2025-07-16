@@ -7,6 +7,10 @@ import {
   type DatePickerProps,
   type DatePickerValue,
 } from "../datePicker"
+import {
+  DynamicList,
+  type DynamicListProps
+} from "../dynamic-list"
 import { GridRow } from "../grid"
 import { Input, type InputProps } from "../input"
 import {
@@ -105,6 +109,27 @@ export default function FormFieldClient({
               onChange?.(
                 props as FormFieldModel,
                 typeof value === "object" ? value?.format("YYYY-MM-DDTHH:mm:ssZ") : value,
+              )
+            }
+          />,
+        )
+      case "dynamic-list":
+        const p  = (props as DynamicListProps)
+        return renderFieldContainer(
+          <DynamicList
+            priority
+            {...p}
+            value={p?.value as Record<string, string>[]}
+            fields={
+              p?.fields?.map(field => ({
+                ...field,
+                onValidate: (_, err) => onValidate?.(p as FormFieldModel, err)
+              }))
+            }
+            onChange={(items: Record<string, string>[] | string[]) =>
+              onChange?.(
+                props as FormFieldModel,
+                items,
               )
             }
           />,

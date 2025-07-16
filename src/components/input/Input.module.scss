@@ -79,7 +79,7 @@
       flex-direction: column;
       height: 100%;
     }
-
+    
     &--focused {
       @include gradientBorderVar(4);
     }

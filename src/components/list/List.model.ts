@@ -8,10 +8,19 @@ export type ListType = "default" | "icon" | "card"
 
 export type ListVariant = Omit<Variants, "white">
 
-export type ListCardItemProps = {
+export type ListItemTitle = {
+  id?: string
   title: string
+}
+
+export type ListItemTitleNode = {
+  id: string
+  title: ReactNode
+}
+
+export type ListCardItemProps = (ListItemTitle | ListItemTitleNode) & {
   desc?: string | ReactNode
-  icon?: IconName
+  icon?: IconName | ReactNode
   variant?: ListVariant
   iconProps?: IconProps
   redirect?: LinkProps
@@ -19,11 +28,10 @@ export type ListCardItemProps = {
   onClick?: (e?: ListCardItemProps) => void
 } & Omit<CardProps, "children">
 
-export type ListDefaultItemProps = {
-  title: string
+export type ListDefaultItemProps = (ListItemTitle | ListItemTitleNode) & {
   desc?: string | ReactNode
   className?: string
-  icon?: IconName
+  icon?: IconName | ReactNode
   variant?: ListVariant
   redirect?: LinkProps
   onClick?: (e?: ListDefaultItemProps) => void

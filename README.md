@@ -21,7 +21,7 @@
 - ✨ **Adaptive Island Components (AIC)**: A rendering strategy where each component loads only the JavaScript it needs — when needed.
 - ⚡️ **Modern stack**: Vite, React 19, TypeScript, and SCSS Modules
 - 💅 **Design consistency**: Theming via design tokens and BEM-style naming
-- 🧩 **Component-rich**: 35+ reusable UI components
+- 🧩 **Component-rich**: 40+ reusable UI components
 - 🧪 **Reliable**: Fully tested with Jest and Testing Library
 - 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
 - 📦 **Ready-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
@@ -131,7 +131,7 @@ export default function GalleryPage() {
 ### Compatibility of the components
 
 - ✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also used as a client‐only entry.
-- \- = RSC (AIC) only; no client‐side bundle. (Useable in both, but best practice to use in RSC only)
+- \- = RSC (AIC) only; no client‐side bundle needed. (Useable in both, but best practice to use in RSC only)
 
 | Component             | ✅ AIC (RSC + optional client)   | ✅ SSR-Compatible (`"use client"`) |
 |-----------------------|:--------------------------------:|:---------------------------------:|
@@ -148,6 +148,7 @@ export default function GalleryPage() {
 | DatePicker            | ✅                               | ✅                                 |
 | Dialog                | ✅                               | ✅                                 |
 | Drawer                | ✅                               | ✅                                 |
+| DynamicList           | ✅                               | ✅                                 |
 | Form                  | ✅                               | ✅                                 |
 | FormResponse          | ✅                               | –                                  |
 | Grid/GridRow          | ✅                               | –                                  |
@@ -166,12 +167,14 @@ export default function GalleryPage() {
 | PostTeaser            | ❌ (Experimental - Coming soon)  | –                                  |
 | PostWidget            | ❌ (Experimental - Coming soon)  | –                                  |
 | PostWidgetCarousel    | ❌ (Experimental - Coming soon)  | -                                  |
+| ProgressBar           | ✅                               | ✅                                 |
 | Quote                 | ✅                               | –                                  |
 | RichText              | ✅                               | ✅                                 |
 | Select                | ✅                               | ✅                                 |
 | SideNav               | ✅                               | ✅                                 |
 | Skeleton              | ✅                               | –                                  |
 | Slider                | ✅                               | ✅                                 |
+| Snackbar & Provider   | ✅                               | ✅                                 |
 | Stepper               | ✅                               | ✅                                 |
 | Switch                | ✅                               | ✅                                 |
 | Table                 | ✅                               | –                                  |

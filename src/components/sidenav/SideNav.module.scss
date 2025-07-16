@@ -92,7 +92,8 @@ $rail-c: 56px;    // Visible toggle width
     border-radius: $space-xs;
     transition: background-color 120ms;
 
-    @include when-hovered() {
+    &--is-active,
+    &:hover {
       text-decoration: none;
       background: var(--color-grey-50);
 

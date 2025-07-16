@@ -25,6 +25,7 @@ type Story = StoryObj<typeof meta>
  * – one switch,
  * – one slider,
  * – one date picker.
+ * – one dynamic-list.
  */
 const exampleFields: FormField[] = [
   {
@@ -71,6 +72,13 @@ const exampleFields: FormField[] = [
     label: "Birth Date",
     value: dayjs().subtract(30, "year").toISOString(),
   },
+  {
+    id: "multiItems",
+    fieldType: "dynamic-list",
+    name: "dynamicList",
+    fields: [{ name: "value", label: "Tag" }],
+    value: ["react", "typescript", "nextjs"],
+  },
 ]
 
 /**
@@ -106,7 +114,7 @@ const initialMessages: FormMessages = {
  * Utility handler for onSubmit: simply logs and shows an alert
  */
 const handleSubmit = (fields: FormField[]) => {
-  console.log("Form submitted with:", fields)
+  console.warn("Form submitted with:", fields)
   alert("Form submitted! Check console for values.")
 }
 
@@ -114,7 +122,7 @@ const handleSubmit = (fields: FormField[]) => {
  * Utility handler for onChangeForm: logs which field changed
  */
 const handleChangeForm: OnChangeFormHandler = (field) => {
-  console.log("Field changed:", field.name, "→", field.value)
+  console.warn("Field changed:", field.name, "→", field.value)
 }
 
 export const Default: Story = {
