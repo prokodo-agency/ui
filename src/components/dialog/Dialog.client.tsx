@@ -15,7 +15,7 @@ import type { DialogRef, DialogChangeReson, DialogProps } from './Dialog.model'
 const FADE_DURATION = 300
 
 function DialogClient(
-  { open = false, closeOnBackdropClick = true, onChange, ...props }: DialogProps,
+  { open = false, closeOnBackdropClick = true, onChange, onClose, ...props }: DialogProps,
   ref: React.Ref<DialogRef>
 ) {
   const triggerRef = useRef<HTMLElement | null>(null)
@@ -36,12 +36,13 @@ function DialogClient(
 
   const closeDialog = useCallback((reson?: DialogChangeReson) => {
     setIsOpen(false)
+    onClose?.()
     setTimeout(() => {
       onChange?.({}, reson ?? "backdropClick", false)
       // restore focus
       triggerRef.current?.focus()
     }, FADE_DURATION)
-  }, [onChange])
+  }, [onChange, onClose])
 
   useImperativeHandle(
     ref,
