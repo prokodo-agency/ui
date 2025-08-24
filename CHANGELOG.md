@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.43
+
+### Patch Changes
+
+- hotfix: onClose handler of Dialog component
+
 ## 0.0.42
 
 ### Patch Changes
