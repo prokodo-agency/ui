@@ -1,10 +1,21 @@
 import type { ButtonProps } from "../button"
 import type { InputProps } from "../input"
 import type { LabelProps } from "../label"
+import type { SelectProps } from "../select"
 import type { MouseEvent } from "react"
 
+export type DynamicListFieldInput = Omit<InputProps, "id"> & {
+  fieldType?: "input"
+  id?: string
+}
+
+export type DynamicListFieldSelect = Omit<SelectProps, "id"> & {
+  fieldType?: "select"
+  id?: string
+}
+
 /** Configuration for a single input field in the list */
-export type DynamicListField = InputProps
+export type DynamicListField = DynamicListFieldInput | DynamicListFieldSelect
 
 export type DynamicListDefault = {
   id?: string

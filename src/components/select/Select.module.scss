@@ -13,6 +13,10 @@
 @include define-block("Select") {
   position: relative;
 
+  &--fullWidth {
+    width: 100%;
+  }
+
   &__label {
     position: absolute;
     left: $space-xl;

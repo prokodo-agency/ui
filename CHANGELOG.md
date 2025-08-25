@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.44
+
+### Patch Changes
+
+- Select field support in Dynamic List component
+
 ## 0.0.42
 
 ### Patch Changes
