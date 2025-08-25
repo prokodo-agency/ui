@@ -7,11 +7,14 @@ import { SelectView } from "./Select.view"
 
 import type {
   SelectProps,
+  SelectEvent,
   SelectValue,
 } from "./Select.model"
 
 /* ---------- helper to normalise outside value ------------ */
 function isMulti<V extends string>(v: unknown): v is V[] { return Array.isArray(v) }
+/* convert kebab to camel (e.g., "row-index" -> "rowIndex") like DOM dataset does */
+const toDatasetKey = (k: string) => k.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 
 function mergeValue<V extends string>(
   oldVal: SelectValue<V>,
@@ -86,14 +89,26 @@ function SelectClient<Value extends string = string>(
     }
   }
 
+  /* collect ALL data-* props into a dataset object once */
+  const dataset = (() => {
+    const d: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(rest)) {
+      if (k.startsWith("data-")) d[toDatasetKey(k.slice(5))] = v;
+    }
+    return d;
+  })();
+
   const clickOption = (opt: Value | null) => {
     const newVal =
       opt === null
         ? (Boolean(multiple) ? [] : "")
         : mergeValue<Value>(val, opt, multiple)
 
+    /* synthesize an event carrying ALL data-* as dataset */
+    const syntheticEvt: SelectEvent = { target: { dataset } };
+
     setVal(newVal)
-    onChange?.(null, newVal)
+    onChange?.(syntheticEvt, newVal)
     if (!Boolean(multiple)) close()
   }
 

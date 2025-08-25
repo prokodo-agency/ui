@@ -14,6 +14,7 @@ export function SelectView<Value extends string = string>({
   disabled,
   name = id,
   label,
+  fullWidth = false,
   hideLabel,
   iconVisible,
   placeholder = "-- Please choose --",
@@ -70,7 +71,9 @@ export function SelectView<Value extends string = string>({
       )
 
   return (
-    <div className={bem(undefined, undefined, className)}>
+    <div className={bem(undefined, {
+      fullWidth: Boolean(fullWidth),
+    }, className)}>
       {/* ------------------------------------------------ label */}
       {!Boolean(hideLabel) && (
         <Label

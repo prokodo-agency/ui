@@ -2,7 +2,11 @@ import type { LabelProps} from "../label"
 import type { ChangeEvent, RefObject, ReactNode, Ref, MouseEventHandler, KeyboardEventHandler } from "react"
 
 /* ---------- basic event --------------------------------------- */
-export type SelectEvent = ChangeEvent<HTMLSelectElement> | null;
+/* allow synthetic events or real ChangeEvents */
+export type SelectEvent =
+  | { target: { dataset?: Record<string, unknown> } }
+  | ChangeEvent<HTMLSelectElement>
+  | null;
 
 /* ---------- option item --------------------------------------- */
 export interface SelectItem<Value extends string = string> {
@@ -23,6 +27,7 @@ export interface SelectProps<Value extends string = string> {
   id: string;
   name?: string;
   items: SelectItem<Value>[];
+  fullWidth?: boolean
 
   /* behaviour */
   multiple?: boolean;

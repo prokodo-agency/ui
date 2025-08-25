@@ -50,6 +50,26 @@ export const MultiField: Story = {
   args: {
     name: "pages",
     fields: [
+      {
+        fieldType: "select",
+        name: "website",
+        label: "Page",
+        placeholder: "e.g. Startseite",
+        items: [
+          {
+            value: "example-1",
+            label: "Example 1"
+          },
+          {
+            value: "example-2",
+            label: "Example 2"
+          },
+          {
+            value: "example-3",
+            label: "Example 3"
+          }
+        ]
+      },
       { name: "name", label: "Page Name", placeholder: "e.g. Startseite" },
       { name: "url",  label: "URL",  type: "url", placeholder: "https://..." },
     ],
@@ -57,6 +77,7 @@ export const MultiField: Story = {
       { name: "Startseite", url: "https://prokodo.de/" },
       { name: "Hausbau",    url: "https://prokodo.de/" },
     ],
+    onChange: (val) => console.log(val)
   },
 }
 
