@@ -67,6 +67,8 @@ exports[`The BaseLink component should render mailto links 1`] = `
 <a
   data-island="baselink"
   href="mailto:foo@example.com"
+  rel="noopener noreferrer"
+  target="_blank"
 >
   foo@example.com
 </a>

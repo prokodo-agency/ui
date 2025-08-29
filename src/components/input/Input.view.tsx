@@ -35,8 +35,9 @@ export function InputView({
   type = "text",
   ...rest
 }: InputProps): JSX.Element {
-  delete rest.onValidate
-  delete rest.errorTranslations
+  delete rest?.onValidate
+  delete rest?.errorTranslations
+  delete rest?.customRegexPattern
 
   const isError = typeof errorText === "string"
   const hasValue = (value !== undefined && value !== "") || Boolean(placeholder)
