@@ -21,21 +21,30 @@ export function BaseLinkView({
   let kind: "url" | "email" | "tel" | "local" = "local";
 
   if (href) {
-    if (href.startsWith("http://") || href.startsWith("https://") || href.startsWith("//")) {
+    const hasProtocol = href.startsWith("http://") || href.startsWith("https://") || href.startsWith("//");
+    const isLocalPath = href.startsWith("/") || href.startsWith("#") || href.startsWith("?");
+    const appProto = /^\w+:/.test(href); // e.g. mailto:, tel:, sms:, custom://
+
+    if (hasProtocol || appProto) {
       kind = "url";
+    } else if (isLocalPath) {
+      kind = "local";
     } else if (emailRE.test(href)) {
       kind = "email";
-      finalHref = `mailto:${href.toLowerCase()}`;
+      finalHref = `mailto:${href}`;
     } else {
-      /* phone? */
-      const digits = href.replace(/[^\d]/g, "");
-      if (digits.length >= 6) {
-        kind = "tel";
-        finalHref = `tel:${digits.startsWith("00")
-          ? `+${digits.slice(2)}`
-          : digits.startsWith("0")
-          ? `+${digits.slice(1)}`
-          : `+${digits}`}`;
+      // Only consider as phone if the WHOLE string looks like a phone, not a path.
+      const phoneLikeRE = /^\+?\d[\d\s().-]*$/; // no slashes or letters
+      if (phoneLikeRE.test(href)) {
+        // normalize to tel:+digits
+        const digits = href.replace(/[^\d]/g, "");
+        if (digits.length >= 6) {
+          kind = "tel";
+          finalHref = `tel:+${digits}`;
+        }
+      } else {
+        // treat everything else as local (e.g. "admin/users/123")
+        kind = "local";
       }
     }
   }

@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.46
+
+### Patch Changes
+
+- hotfix: Bugfix link and base link component
+
 ## 0.0.44
 
 ### Patch Changes
