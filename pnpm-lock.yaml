@@ -239,10 +239,10 @@ importers:
         version: 8.2.9(@babel/preset-env@7.28.0(@babel/core@7.28.3))
       stylelint:
         specifier: ^16.7.0
-        version: 16.23.1(typescript@5.5.3)
+        version: 16.24.0(typescript@5.5.3)
       stylelint-selector-bem-pattern:
         specifier: ^4.0.0
-        version: 4.0.1(stylelint@16.23.1(typescript@5.5.3))
+        version: 4.0.1(stylelint@16.24.0(typescript@5.5.3))
       ts-jest:
         specifier: ^29.2.4
         version: 29.4.1(@babel/core@7.28.3)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.3))(esbuild@0.25.9)(jest-util@29.7.0)(jest@29.7.0(@types/node@22.15.21)(ts-node@10.9.2(@types/node@22.15.21)(typescript@5.5.3)))(typescript@5.5.3)
@@ -257,7 +257,7 @@ importers:
         version: 6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5)
       vite-plugin-checker:
         specifier: ^0.9.3
-        version: 0.9.3(eslint@9.34.0)(meow@13.2.0)(optionator@0.9.4)(stylelint@16.23.1(typescript@5.5.3))(typescript@5.5.3)(vite@6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5))
+        version: 0.9.3(eslint@9.34.0)(meow@13.2.0)(optionator@0.9.4)(stylelint@16.24.0(typescript@5.5.3))(typescript@5.5.3)(vite@6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5))
       vite-plugin-inspect:
         specifier: ^11.1.0
         version: 11.3.3(vite@6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5))
@@ -1290,8 +1290,8 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  '@dual-bundle/import-meta-resolve@4.1.0':
-    resolution: {integrity: sha512-+nxncfwHM5SgAtrVzgpzJOI1ol0PkumhVo469KCf9lUi21IGcY90G98VuHm9VRrUypmAzawAHO9bs6hqeADaVg==}
+  '@dual-bundle/import-meta-resolve@4.2.1':
+    resolution: {integrity: sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==}
 
   '@emnapi/runtime@1.4.5':
     resolution: {integrity: sha512-++LApOtY0pEEz1zrd9vy1/zXVaVJJ/EbAF3u0fXIzPJEDtnITsBGbbK0EkM72amhl/R5b+5xx0Y/QhcVOpuulg==}
@@ -6083,8 +6083,8 @@ packages:
     peerDependencies:
       stylelint: ^16.2.1
 
-  stylelint@16.23.1:
-    resolution: {integrity: sha512-dNvDTsKV1U2YtiUDfe9d2gp902veFeo3ecCWdGlmLm2WFrAV0+L5LoOj/qHSBABQwMsZPJwfC4bf39mQm1S5zw==}
+  stylelint@16.24.0:
+    resolution: {integrity: sha512-7ksgz3zJaSbTUGr/ujMXvLVKdDhLbGl3R/3arNudH7z88+XZZGNLMTepsY28WlnvEFcuOmUe7fg40Q3lfhOfSQ==}
     engines: {node: '>=18.12.0'}
     hasBin: true
 
@@ -7984,7 +7984,7 @@ snapshots:
     dependencies:
       postcss: 8.5.6
 
-  '@dual-bundle/import-meta-resolve@4.1.0': {}
+  '@dual-bundle/import-meta-resolve@4.2.1': {}
 
   '@emnapi/runtime@1.4.5':
     dependencies:
@@ -13491,20 +13491,20 @@ snapshots:
     optionalDependencies:
       '@babel/core': 7.28.3
 
-  stylelint-selector-bem-pattern@4.0.1(stylelint@16.23.1(typescript@5.5.3)):
+  stylelint-selector-bem-pattern@4.0.1(stylelint@16.24.0(typescript@5.5.3)):
     dependencies:
       lodash: 4.17.21
       postcss: 8.5.6
       postcss-bem-linter: 4.0.1(postcss@8.5.6)
-      stylelint: 16.23.1(typescript@5.5.3)
+      stylelint: 16.24.0(typescript@5.5.3)
 
-  stylelint@16.23.1(typescript@5.5.3):
+  stylelint@16.24.0(typescript@5.5.3):
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
       '@csstools/media-query-list-parser': 4.0.3(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)
       '@csstools/selector-specificity': 5.0.0(postcss-selector-parser@7.1.0)
-      '@dual-bundle/import-meta-resolve': 4.1.0
+      '@dual-bundle/import-meta-resolve': 4.2.1
       balanced-match: 2.0.0
       colord: 2.9.3
       cosmiconfig: 9.0.0(typescript@5.5.3)
@@ -13902,7 +13902,7 @@ snapshots:
     dependencies:
       vite: 6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5)
 
-  vite-plugin-checker@0.9.3(eslint@9.34.0)(meow@13.2.0)(optionator@0.9.4)(stylelint@16.23.1(typescript@5.5.3))(typescript@5.5.3)(vite@6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5)):
+  vite-plugin-checker@0.9.3(eslint@9.34.0)(meow@13.2.0)(optionator@0.9.4)(stylelint@16.24.0(typescript@5.5.3))(typescript@5.5.3)(vite@6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5)):
     dependencies:
       '@babel/code-frame': 7.27.1
       chokidar: 4.0.3
@@ -13918,7 +13918,7 @@ snapshots:
       eslint: 9.34.0
       meow: 13.2.0
       optionator: 0.9.4
-      stylelint: 16.23.1(typescript@5.5.3)
+      stylelint: 16.24.0(typescript@5.5.3)
       typescript: 5.5.3
 
   vite-plugin-inspect@11.3.3(vite@6.3.5(@types/node@22.15.21)(sass@1.91.0)(tsx@4.20.5)):
