@@ -111,7 +111,7 @@ export function CardView({
       <Link
         {...redirect}
         aria-disabled={redirect.disabled ?? false}
-        className={bem("link")}
+        className={bem("link", undefined, redirect?.className)}
         role={role}
         tabIndex={tabIndex}
       >

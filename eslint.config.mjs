@@ -131,7 +131,7 @@ export default [
       // TypeScript-specific rules
       "@typescript-eslint/no-unused-vars": [
         "error",
-        { varsIgnorePattern: "^_" },
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/explicit-module-boundary-types": "error",

@@ -52,7 +52,7 @@ export function DynamicListView({
         <Label
           {...labelProps}
           aria-disabled={disabled}
-          className={bem("list-label", undefined, labelProps?.className)}
+          className={bem("label", undefined, labelProps?.className)}
           error={isError}
           id={labelProps?.id ?? `${name}-legend`}
           label={label}

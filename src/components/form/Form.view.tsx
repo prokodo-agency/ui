@@ -29,14 +29,19 @@ export const FormView: FC<FormViewProps> = ({
   button,
   children,
   honeypot,
+  isHoneypotEmpty,
   onFormSubmit,
   isFormValid,
   fieldProps,
   messagesFields,
-  ...props
+  // ⬇️ strip non-DOM props so they don't leak to <form>
+  fields: _fields,
+  defaultFields: _defaultFields,
+  messages: _messages,
+  ...htmlProps
 }) => (
     <form
-      {...props}
+      {...htmlProps}
       noValidate
       action={action}
       aria-labelledby={`${id}-heading`}
@@ -93,7 +98,7 @@ export const FormView: FC<FormViewProps> = ({
         )}
 
         {/* Submit button (only if honeypot is empty) */}
-        {!isNull(button) && (honeypot?.value as string)?.length === 0 && (
+        {!isNull(button) && Boolean(isHoneypotEmpty) && (
           <Button
             aria-label="Submit form"
             title="Submit"

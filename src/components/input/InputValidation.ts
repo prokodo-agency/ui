@@ -76,14 +76,20 @@ export const handleValidation = (
   }
 
   if (customRegexPattern !== undefined) {
-    const regexParts = customRegexPattern.match(/^\/(.*)\/([gimsuy]*)$/)
-    if (regexParts) {
-      const [, pattern = "", flags] = regexParts
-      const customRegex = new RegExp(pattern ?? "", flags)
-      regexPatterns = {
-        ...regexPatterns,
-        [String(type)]: RegExp(customRegex),
-      }
+    let customRegex: RegExp
+    // Accept "/pattern/flags" OR just "pattern"
+    const m = customRegexPattern.match(/^\/([\s\S]*)\/([gimsuy]*)$/);
+    if (m) {
+      const [, pattern = "", flags] = m
+      customRegex = new RegExp(pattern, flags)
+    } else {
+      // If pattern is provided as plain string, it must have escaped backslashes.
+      // e.g. "^[a-zA-Z0-9&.,'\\s-]+$"
+      customRegex = new RegExp(customRegexPattern)
+    }
+    regexPatterns = {
+      ...regexPatterns,
+      [String(type)]: RegExp(customRegex),
     }
   }
   const errorMessages: InputErrorTranslations = {
@@ -99,7 +105,6 @@ export const handleValidation = (
   }
   // Perform regex validation based on field type
   const regex = regexPatterns[type as HTMLInputTypeAttribute]
-
   if (regex && !isValidRegex(regex, value)) {
     return onValidate(name, errorMessages[type as HTMLInputTypeAttribute])
   }

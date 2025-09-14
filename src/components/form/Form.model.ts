@@ -143,6 +143,7 @@ export type FormViewProps = FormProps & {
   formState: Omit<FormField, "onChange">[]
   formMessages?: FormMessages
   honeypot: InputHTMLAttributes<HTMLInputElement>
+  isHoneypotEmpty?: boolean
   fieldProps?: FormFieldProps
   onFormSubmit: (e: FormEvent<HTMLFormElement>) => void
   isFormValid: boolean

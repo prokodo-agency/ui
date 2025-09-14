@@ -83,6 +83,7 @@ export function InputView({
                 name={name}
                 placeholder={placeholder}
                 rows={rows}
+                value={value ?? ""}
               />
             ) : (
               <input
