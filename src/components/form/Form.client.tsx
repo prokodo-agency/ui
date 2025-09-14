@@ -118,11 +118,10 @@ export const FormClient = memo((props: FormProps) => {
       }
 
       // First reset any dependent fields to default
-      defaultFields?.forEach((defField, i) => {
-        if (
-          Boolean(defField.conditions?.some((c) => c.fieldId === field.name))
-        ) {
-          updateSingleField(i, defaultFields[i] as FormField)
+      defaultFields?.forEach((defField) => {
+        if (Boolean(defField.conditions?.some((c) => c.fieldId === field.name))) {
+          const targetIdx = formState.findIndex(f => f.name === (defField as FormField).name)
+          if (targetIdx >= 0) updateSingleField(targetIdx, defField as FormField)
         }
       })
 
@@ -227,14 +226,16 @@ export const FormClient = memo((props: FormProps) => {
       formMessages={formMessages}
       formState={formState}
       isFormValid={isFormValid}
+      isHoneypotEmpty={honeypotValue.length === 0}
       fieldProps={{
         onChange: handleFieldChange,
         onValidate: handleFieldValidate,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }as any}
       honeypot={{
-        value: honeypotValue,
+        defaultValue: "",
         onChange: handleHpChange,
+        autoComplete: "off",
       }}
       onFormSubmit={handleFormSubmit}
     />

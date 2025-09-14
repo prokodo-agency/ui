@@ -55,9 +55,12 @@ export function AccordionView({
                 renderHeader
               ) : (
                 <Headline
-                  className={bem("title", { "is-expanded": isExpanded })}
-                  size="sm"
+                  animated
+                  className={bem("title")}
+                  highlight={isExpanded}
+                  size="xs"
                   type="h3"
+                  variant={isExpanded ? "primary" : "inherit"}
                   {...(item.titleOptions ?? titleOptions)}
                 >
                   {title}
@@ -66,14 +69,14 @@ export function AccordionView({
 
               <Icon
                 className={bem("icon", { "is-hidden": isExpanded })}
-                color="primary"
+                color="inherit"
                 name="PlusSignIcon"
                 size="sm"
                 {...iconProps}
               />
               <Icon
                 className={bem("icon", { "is-hidden": !isExpanded })}
-                color="white"
+                color="inherit"
                 name="MinusSignIcon"
                 size="sm"
                 {...iconProps}

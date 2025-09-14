@@ -15,7 +15,8 @@
         width: 100%;
         margin: $space-xs 0;
         color: var(--color-grey-500);
-        @include text("headline/xs");
+        @include text("base/md");
+        font-weight: 500;
 
         &--has-icon {
             flex-wrap: nowrap;
@@ -76,7 +77,8 @@
             &--card {
                 display: block;
                 padding: $space-md 0 $space-xs $space-sm;
-                @include text("headline/xs");
+                @include text("base/md");
+                font-weight: 500;
             }
         }
 
@@ -109,7 +111,8 @@
             color: var(--color-grey-500);
 
             a {
-                @include text("headline/xs");
+                @include text("base/md");
+                font-weight: 500;
             }
 
             @include when-hovered() {

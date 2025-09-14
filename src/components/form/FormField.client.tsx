@@ -61,10 +61,14 @@ export default function FormFieldClient({
             priority
             color={variant as SwitchColor}
             {...(props as SwitchProps)}
+            // drive the switch from the field's value (boolean)
+            checked={typeof props?.value === "boolean"
+              ? Boolean(props?.value)
+              : (props as SwitchProps).checked}
             onChange={(_: ChangeEvent<HTMLInputElement>, checked: boolean) =>
               onChange?.(props as FormFieldModel, checked)
             }
-          />,
+          />
         )
       case "slider":
         return renderFieldContainer(
