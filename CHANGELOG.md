@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.46
+
+### Patch Changes
+
+- Fixed multiple small bugs in Form and Input, changed eslint config, changed styling of accordion and list component
+
 ## 0.0.45
 
 ### Patch Changes
