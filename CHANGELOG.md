@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.47
+
+### Patch Changes
+
+- Time support for datepicker component
+
 ## 0.0.46
 
 ### Patch Changes
