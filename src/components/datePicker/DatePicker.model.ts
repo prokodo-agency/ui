@@ -14,8 +14,6 @@ export interface DatePickerProps
     InputProps,
     "onChange" | "value" | "errorTranslations" | "type"
   > {
-  /** Always a date field */
-  type?: "date";
   /** Single-line only */
   multiline?: false;
   /** Single-line only */
@@ -44,6 +42,22 @@ export interface DatePickerProps
   onChange?: (value: DatePickerValue) => void;
   /** override default messages */
   translations?: DatePickerErrorTranslations;
-  /** parsing format (defaults to yyyy-MM-dd) */
+  /**
+   * Include time selection (uses <input type="datetime-local"> when true).
+   * Default: false (date only with <input type="date">).
+   */
+  withTime?: boolean;
+
+  /**
+   * Parsing/formatting pattern.
+   * Defaults to "YYYY-MM-DD" for date-only and "YYYY-MM-DDTHH:mm" when withTime=true.
+   */
   format?: string;
+
+  /**
+   * Minute granularity for time part (applies when withTime=true).
+   * Translates to HTML input "step" in seconds. Example: 15 => 900 seconds.
+   * Default: 1 minute.
+   */
+  minuteStep?: number;
 }

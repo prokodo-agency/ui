@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
 } from "react"
 
 import { isNull } from "@/helpers/validations"
@@ -16,24 +17,12 @@ import type {
   DatePickerProps,
   DatePickerValue,
 } from "./DatePicker.model"
-import type {
-  InputChangeEvent
-} from "@/components/input"
+import type { InputChangeEvent } from "@/components/input"
 
-/**
- * Convert a DatePickerValue (string | Dayjs | null | undefined)
- * into either a Dayjs (if valid) or null (if empty/invalid).
- */
+/** Convert incoming value to Dayjs|null */
 function toDayjs(val?: DatePickerValue): Dayjs | null {
-  // If val is null or undefined → no date selected
-  if (isNull(val)) {
-    return null
-  }
-  // If val is already a Dayjs → use it directly
-  if (isDayjs(val)) {
-    return val
-  }
-  // Otherwise try parsing the string
+  if (isNull(val)) return null
+  if (isDayjs(val)) return val
   const d = dayjs(val)
   return d.isValid() ? d : null
 }
@@ -43,16 +32,27 @@ const DatePickerClient: FC<DatePickerProps> = ({
   value,
   onChange,
   onValidate,
-  format = "YYYY-MM-DD",
+  format,
   minDate,
   maxDate,
   translations,
   label,
   helperText,
+  withTime = false,
+  minuteStep = 1,
   ...rest
 }) => {
   const [date, setDate] = useState<Dayjs | null>(toDayjs(value))
   const [error, setError] = useState<string | undefined>(undefined)
+
+  // Choose default format depending on withTime (allow custom override)
+  const fmt = useMemo(
+    () => format ?? (withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD"),
+    [format, withTime]
+  )
+
+  // Comparison unit (day when date-only, minute when datetime)
+  const unit = withTime ? "minute" : "day"
 
   useEffect(() => {
     setDate(toDayjs(value))
@@ -60,10 +60,10 @@ const DatePickerClient: FC<DatePickerProps> = ({
     onValidate?.(name, undefined)
   }, [value, name, onValidate])
 
-  // validate date value and call your logical onChange(DatePickerValue)
   const emitValue = useCallback(
     (e: InputChangeEvent) => {
       const val = e?.target?.value
+
       if (!val) {
         setDate(null)
         setError(undefined)
@@ -71,57 +71,63 @@ const DatePickerClient: FC<DatePickerProps> = ({
         onChange?.(null)
         return
       }
-      const d = dayjs(val, format, true)
+
+      const d = dayjs(val, fmt, true)
       if (!d.isValid()) {
-        const msg = "Invalid date format."
+        const msg = withTime ? "Invalid date/time format." : "Invalid date format."
         setError(msg)
         onValidate?.(name, msg)
         onChange?.(null)
         return
       }
-      if (!isNull(minDate) && d.isBefore(dayjs(minDate), "day")) {
+
+      if (!isNull(minDate) && d.isBefore(dayjs(minDate), unit)) {
         const msg =
-          dayjs(minDate).isSame(dayjs(), "day")
-            ? translations?.minDate ??
-              "Date cannot be in the past."
-            : translations?.minDate ??
-              `Date must be ≥ ${dayjs(minDate).format(format)}`
+          dayjs(minDate).isSame(dayjs(), unit)
+            ? (translations?.minDate ??
+              (withTime ? "Date/time cannot be in the past." : "Date cannot be in the past."))
+            : (translations?.minDate ??
+              `Must be ≥ ${dayjs(minDate).format(fmt)}`)
         setError(msg)
         onValidate?.(name, msg)
         onChange?.(null)
         return
       }
-      if (!isNull(maxDate) && d.isAfter(dayjs(maxDate), "day")) {
+
+      if (!isNull(maxDate) && d.isAfter(dayjs(maxDate), unit)) {
         const msg =
-          dayjs(maxDate).isSame(dayjs(), "day")
-            ? translations?.maxDate ??
-              "Date cannot be in the future."
-            : translations?.maxDate ??
-              `Date must be ≤ ${dayjs(maxDate).format(format)}`
+          dayjs(maxDate).isSame(dayjs(), unit)
+            ? (translations?.maxDate ??
+              (withTime ? "Date/time cannot be in the future." : "Date cannot be in the future."))
+            : (translations?.maxDate ??
+              `Must be ≤ ${dayjs(maxDate).format(fmt)}`)
         setError(msg)
         onValidate?.(name, msg)
         onChange?.(null)
         return
       }
+
       setDate(d)
       setError(undefined)
       onValidate?.(name, undefined)
       onChange?.(d)
     },
-    [format, maxDate, minDate, name, onChange, onValidate, translations]
+    [fmt, maxDate, minDate, name, onChange, onValidate, translations, withTime, unit]
   )
 
   return (
     <DatePickerView
       {...rest}
       errorText={error}
-      format={format}
+      format={fmt}
       helperText={helperText}
       label={label}
       maxDate={maxDate}
       minDate={minDate}
+      minuteStep={minuteStep}
       name={name}
       value={date}
+      withTime={withTime}
       onChange={(value) => emitValue(value)}
       onValidate={onValidate}
     />

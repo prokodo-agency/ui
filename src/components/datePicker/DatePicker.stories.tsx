@@ -51,6 +51,16 @@ const meta = {
       description: "Dayjs parsing format (defaults to YYYY-MM-DD)",
       table: { type: { summary: "string" } }
     },
+    withTime: {
+      control: "boolean",
+      description: "Enable date + time mode (<input type='datetime-local'>).",
+      table: { type: { summary: "boolean" } }
+    },
+    minuteStep: {
+      control: { type: "number", min: 1, step: 1 },
+      description: "Minute granularity for time selection (applies when withTime=true).",
+      table: { type: { summary: "number" } }
+    },
     minDate: {
       table: { disable: true }
     },
@@ -115,5 +125,33 @@ export const WithRange: Story = {
     minDate: dayjs(),
     maxDate: dayjs().add(30, "day"),
     format: "YYYY-MM-DD"
+  }
+}
+
+/** Date + time, 15-minute steps, with min/max */
+export const WithTime: Story = {
+  render: args => {
+    // Start aligned to minute to avoid odd seconds in the control
+    const [value, setValue] = useState<Dayjs | null>(dayjs().second(0).millisecond(0))
+    return renderContainer(
+      <DatePicker
+        {...args}
+        value={value}
+        onChange={(v) => setValue(v as Dayjs | null)}
+      />
+    )
+  },
+  args: {
+    name: "meetingAt",
+    label: "Meeting at",
+    helperText: "Pick date & time (15-minute steps)",
+    required: true,
+    withTime: true,
+    minuteStep: 15,
+    // Allow from now minus 1 hour up to two weeks ahead, 18:00 latest
+    minDate: dayjs().subtract(1, "hour"),
+    maxDate: dayjs().add(14, "day").hour(18).minute(0).second(0).millisecond(0),
+    // Important: use datetime format when withTime=true
+    format: "YYYY-MM-DDTHH:mm"
   }
 }

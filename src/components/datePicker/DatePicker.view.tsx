@@ -13,19 +13,28 @@ export function DatePickerView({
   value,
   helperText,
   errorText,
-  format = "YYYY-MM-DD",
+  format,
   placeholder,
   minDate,
   maxDate,
+  withTime = false,
+  minuteStep = 1,
   ...rest
 }: DatePickerProps & {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   onFocus?: React.FocusEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
 }): JSX.Element {
-  const displayValue = !isNull(value) ? dayjs(value).format(format) : ""
-  const min = !isNull(minDate) ? dayjs(minDate).format("YYYY-MM-DD") : undefined
-  const max = !isNull(maxDate) ? dayjs(maxDate).format("YYYY-MM-DD") : undefined
+  const effectiveFormat = format ?? (withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD")
+  const inputType = withTime ? "datetime-local" : "date"
+  const htmlMinMaxFormat = withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD"
+
+  const displayValue = !isNull(value) ? dayjs(value).format(effectiveFormat) : ""
+  const min = !isNull(minDate) ? dayjs(minDate).format(htmlMinMaxFormat) : undefined
+  const max = !isNull(maxDate) ? dayjs(maxDate).format(htmlMinMaxFormat) : undefined
+
+  // If the caller already passes a step in `rest`, prefer minuteStep only when withTime is true.
+  const step = withTime ? Math.max(1, minuteStep) * 60 : rest?.step
 
   return (
     <InputView
@@ -38,8 +47,9 @@ export function DatePickerView({
       min={min}
       name={name}
       placeholder={placeholder}
-      type="date"
+      type={inputType}
       value={displayValue}
+      {...(withTime ? { step } : {})}
     />
   )
 }
