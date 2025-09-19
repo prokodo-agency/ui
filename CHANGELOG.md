@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.48
+
+### Patch Changes
+
+- Changed README and package.json
+
 ## 0.0.47
 
 ### Patch Changes
