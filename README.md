@@ -8,6 +8,13 @@
 
 **Modern, customizable UI components built with React and TypeScript — developed by [prokodo](https://www.prokodo.com) for high-performance web interfaces.**
 
+[!NOTE]
+> Need help shipping a production **Next.js + Headless CMS** in 4–6 weeks?  
+> **prokodo — Next.js CMS agency** → https://www.prokodo.com/en/solution/next-js-cms?utm_source=github&utm_medium=readme_top
+>
+> Sie suchen eine **Next.js Agentur** (Strapi/Contentful/WP)?  
+> **prokodo — Next.js CMS Agentur** → https://www.prokodo.com/de/loesung/next-js-cms?utm_source=github&utm_medium=readme_top
+
 [![npm](https://img.shields.io/npm/v/@prokodo/ui?style=flat&color=3178c6&label=npm)](https://www.npmjs.com/package/@prokodo/ui)
 [![CI](https://github.com/prokodo-agency/ui/actions/workflows/release.yml/badge.svg)](https://github.com/prokodo-agency/ui/actions/workflows/release.yml)
 [![License: BUSL-1.1](https://img.shields.io/badge/license-BUSL--1.1-blue.svg)](LICENSE)
@@ -29,7 +36,7 @@
 
 ## ⚡ Lightweight by Design
 
-Addaptial Island Components (AIC) are fully modular and optimized for modern frameworks (Next.js, Remix, etc.).  
+Adaptive Island Components (AIC) are fully modular and optimized for modern frameworks (Next.js, Remix, etc.).  
 Each component is built for **lazy loading**, works seamlessly with **React Server Components (RSC)**, and can be **tree-shaken** out when unused.
 
 **Total bundle (all components): ~195 kB gzipped**
@@ -64,7 +71,7 @@ import { Button, type ButtonProps } from "@prokodo/ui/button";
 export default function Layout() {
   // Renders to HTML on the server with zero‐JS.
   // On the client, it will hydrate when scrolled into view or the user interacts.
-  return <Headline title="Click me"/>;
+  return <Button title="Click me"/>;
 }
 ```
 
@@ -77,7 +84,7 @@ import { Button, type ButtonProps } from "@prokodo/ui/button";
 export default function Layout() {
   // Renders to HTML on the server with zero‐JS.
   // On the client, it will hydrate when scrolled into view or the user interacts.
-  return <Headline title="Click me"/>;
+  return <Button title="Click me"/>;
 }
 ```
 
@@ -130,8 +137,8 @@ export default function GalleryPage() {
 
 ### Compatibility of the components
 
-- ✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also used as a client‐only entry.
-- \- = RSC (AIC) only; no client‐side bundle needed. (Useable in both, but best practice to use in RSC only)
+- ✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also be used as a client‐only entry.
+- \- = RSC (AIC) only; no client‐side bundle needed. (Usable in both, but best practice to use in RSC only)
 
 | Component             | ✅ AIC (RSC + optional client)   | ✅ SSR-Compatible (`"use client"`) |
 |-----------------------|:--------------------------------:|:---------------------------------:|
@@ -204,7 +211,7 @@ export const Navbar = createIsland<NavbarProps>({
 
 ```
 
-### 2. Create your lazy wrapper (Navbar.lazy):
+### 2. Create your lazy-hydrate wrapper (Navbar.lazy):
 
 ```tsx
 'use client'
@@ -236,6 +243,14 @@ export default createLazyWrapper<NavbarProps>({
 - [ ] Add more ✨ **fancy styling**, UI polish and properties
 - [ ] Improve **accessibility** to meet **WCAG 2.2 AAA** standards
 - [ ] Detailed Documentation about the components
+
+## Examples (Next.js + Headless CMS)
+
+- Next.js + **Strapi** content models  
+- Next.js + **Contentful** entries & preview  
+- Migration from **Headless WordPress** to Next.js  
+
+Compare CMS options → [Strapi vs Contentful vs Headless WP](https://www.prokodo.com/de/loesung/next-js-cms?utm_source=github&utm_medium=readme_examples)
 
 ## 📘 Documentation
 

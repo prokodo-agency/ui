@@ -28,7 +28,9 @@ const config = {
       },
     })
   },
-  docs: {},
+  docs: {
+    autodocs: true,
+  },
   env: { STORYBOOK: "true" },
   typescript: { reactDocgen: "react-docgen-typescript" },
 }
