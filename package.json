@@ -1,8 +1,8 @@
 {
   "name": "@prokodo/ui",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "type": "module",
-  "description": "Modern, customizable UI components built with React and TypeScript — developed by prokodo for high-performance web interfaces.",
+  "description": "UI components for production-grade Next.js + Headless CMS (Strapi, Contentful, Headless WordPress) websites by prokodo – built for Core Web Vitals & SEO.",
   "sideEffects": false,
   "module": "dist/index.es.js",
   "types": "dist/types/index.d.ts",
@@ -317,16 +317,23 @@
     "react-dom": ">=18"
   },
   "keywords": [
+    "nextjs",
+    "next.js",
+    "headless cms",
+    "strapi",
+    "contentful",
+    "headless wordpress",
     "react",
     "typescript",
     "component-library",
     "ui-components",
     "design-system",
-    "prokodo",
-    "npm-package",
     "css-modules",
     "storybook",
-    "frontend"
+    "frontend",
+    "core web vitals",
+    "seo",
+    "prokodo"
   ],
   "files": [
     "dist",
@@ -335,6 +342,10 @@
   ],
   "author": "prokodo <info@prokodo.com>",
   "license": "BUSL-1.1",
+  "funding": {
+    "type": "other",
+    "url": "https://www.prokodo.com/de/loesung/next-js-cms/?utm_source=npm&utm_medium=funding"
+  },
   "publishConfig": {
     "access": "public"
   }

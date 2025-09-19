@@ -10,6 +10,14 @@ if (typeof window !== 'undefined') {
   document.head.appendChild(link);
 }
 
+const footer = (
+  <div style={{ font: "13px/1.4 system-ui, sans-serif", padding: "8px 12px", textAlign: "center", opacity: 0.8 }}>
+    Next.js CMS: <a href="https://www.prokodo.com/en/solution/next-js-cms?utm_source=storybook&utm_medium=footer" target="_blank" rel="noopener">EN</a>
+    &nbsp;•&nbsp;
+    <a href="https://www.prokodo.com/de/loesung/next-js-cms?utm_source=storybook&utm_medium=footer" target="_blank" rel="noopener">DE</a>
+  </div>
+);
+
 const withThemeWrapper = (Story, context) => {
   const theme = context.globals.theme || "light"
 
@@ -17,7 +25,12 @@ const withThemeWrapper = (Story, context) => {
     document.documentElement.setAttribute("data-theme", theme)
   }, [theme])
 
-  return <Story />
+  return (
+    <>
+      <Story />
+      {footer}
+    </>
+  )
 }
 
 export const decorators = [withThemeWrapper]
