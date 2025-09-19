@@ -8,12 +8,11 @@
 
 **Modern, customizable UI components built with React and TypeScript — developed by [prokodo](https://www.prokodo.com) for high-performance web interfaces.**
 
-[!NOTE]
-> Need help shipping a production **Next.js + Headless CMS** in 4–6 weeks?  
-> **prokodo — Next.js CMS agency** → https://www.prokodo.com/en/solution/next-js-cms?utm_source=github&utm_medium=readme_top
+> 🇺🇸 Need help shipping a production **Next.js + Headless CMS** in 4–6 weeks?  
+> **prokodo — Next.js CMS agency** → [click here](https://www.prokodo.com/en/solution/next-js-cms?utm_source=github&utm_medium=readme_top)
 >
-> Sie suchen eine **Next.js Agentur** (Strapi/Contentful/WP)?  
-> **prokodo — Next.js CMS Agentur** → https://www.prokodo.com/de/loesung/next-js-cms?utm_source=github&utm_medium=readme_top
+> 🇩🇪 Sie suchen eine **Next.js Agentur** (Strapi/Contentful/WP)?  
+> **prokodo — Next.js CMS Agentur** → [hier klicken](https://www.prokodo.com/de/loesung/next-js-cms?utm_source=github&utm_medium=readme_top)
 
 [![npm](https://img.shields.io/npm/v/@prokodo/ui?style=flat&color=3178c6&label=npm)](https://www.npmjs.com/package/@prokodo/ui)
 [![CI](https://github.com/prokodo-agency/ui/actions/workflows/release.yml/badge.svg)](https://github.com/prokodo-agency/ui/actions/workflows/release.yml)
