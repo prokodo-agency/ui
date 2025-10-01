@@ -1,11 +1,10 @@
 /* eslint-disable */
-import { type FC, Fragment, useRef, useState } from 'react'
+import { Fragment, useEffect, useState, type FC } from 'react'
 
 import { Button } from '../button'
-
 import { Drawer } from './Drawer'
 
-import type { DrawerProps, DrawerChangeReason, DrawerRef } from './Drawer.model'
+import type { DrawerProps, DrawerChangeReason } from './Drawer.model'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
@@ -23,7 +22,6 @@ const meta = {
     },
     fullscreen: { control: 'boolean', defaultValue: false },
     closeOnBackdropClick: { control: 'boolean', defaultValue: true },
-    // We’ll log onChange calls in the Actions panel:
     onChange: { action: 'onChange' },
     open: { control: 'boolean' },
     containerClassName: { control: 'text' },
@@ -36,29 +34,28 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const renderContainer = (children) => (
-  <div style={{
-      position: "absolute",
-      left: "50%",
-      top: "50%",
-      transform: "translate(-50%, -50%)"
-  }}>{children}</div>
+const renderContainer = (children: React.ReactNode) => (
+  <div
+    style={{
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+    }}
+  >
+    {children}
+  </div>
 )
 
-//
-// A small wrapper component that holds a ref to <Drawer> and provides
-// an “Open Drawer” button.  Use <DrawerWithRef> in our stories.
-//
-const DrawerWithRef: FC<DrawerProps> = (args) => {
-  const drawerRef = useRef<DrawerRef | null>(null)
-  const [isOpen, setIsOpen] = useState(args.open ?? false)
+/** Controlled helper (no refs, no wrapper changes) */
+const DrawerControlled: FC<DrawerProps> = (args) => {
+  const [isOpen, setIsOpen] = useState<boolean>(Boolean(args.open))
 
-  // Whenever the “open” arg changes, sync local state:
-  if (args.open !== isOpen) {
+  // sync with Storybook controls
+  useEffect(() => {
     setIsOpen(Boolean(args.open))
-  }
+  }, [args.open])
 
-  // Called when Drawer dispatches a close event:
   const handleChange = (e: unknown, reason: DrawerChangeReason) => {
     setIsOpen(false)
     args.onChange?.(e, reason)
@@ -67,52 +64,34 @@ const DrawerWithRef: FC<DrawerProps> = (args) => {
   return (
     <Fragment>
       {renderContainer(
-        <Button
-          title="Open Drawer"
-          onClick={() => {
-            drawerRef.current?.openDrawer()
-          }}
-        />
+        <Button title="Open Drawer" onClick={() => setIsOpen(true)} />
       )}
-      <Drawer
-        {...args}
-        ref={drawerRef}
-        open={isOpen}
-        onChange={handleChange}
-      >
+      <Drawer {...args} open={isOpen} onChange={handleChange}>
         <div style={{ padding: '1rem' }}>
           <h3>Drawer Content</h3>
           <p>
-            This is sample content inside the drawer. Adjust “Anchor” and “Fullscreen” controls
-            in the Storybook panel to see different behaviors.
+            Adjust <strong>Anchor</strong> and <strong>Fullscreen</strong> in
+            the controls to see different behaviors.
           </p>
-          <Button
-            title="Close Drawer"
-            onClick={() => drawerRef.current?.closeDrawer()}
-          />
+          <Button title="Close Drawer" onClick={() => setIsOpen(false)} />
         </div>
       </Drawer>
     </Fragment>
   )
 }
 
-//
-// 1) Default story: left‐anchored, not fullscreen, close on backdrop
-//
+/** 1) Default: left, non-fullscreen, backdrop closes */
 export const Default: Story = {
   args: {
     open: false,
     anchor: 'left',
     fullscreen: false,
     closeOnBackdropClick: true,
-    // onChange is handled by Storybook’s Actions panel
   },
-  render: (args) => <DrawerWithRef {...args} />,
+  render: (args) => <DrawerControlled {...args} />,
 }
 
-//
-// 2) FullscreenTop story: opens fullscreen from top
-//
+/** 2) FullscreenTop: fullscreen from top */
 export const FullscreenTop: Story = {
   args: {
     open: true,
@@ -121,8 +100,11 @@ export const FullscreenTop: Story = {
     closeOnBackdropClick: true,
   },
   render: (args) => {
-    const drawerRef = useRef<DrawerRef | null>(null)
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState<boolean>(Boolean(args.open))
+
+    useEffect(() => {
+      setIsOpen(Boolean(args.open))
+    }, [args.open])
 
     const handleChange = (e: unknown, reason: DrawerChangeReason) => {
       setIsOpen(false)
@@ -134,26 +116,23 @@ export const FullscreenTop: Story = {
         {renderContainer(
           <Button
             title="Toggle Fullscreen Top Drawer"
-            onClick={() => drawerRef.current?.openDrawer()}
+            onClick={() => setIsOpen(true)}
           />
         )}
         <Drawer
           {...args}
-          ref={drawerRef}
-          fullscreen
           anchor="top"
+          fullscreen
           open={isOpen}
           onChange={handleChange}
         >
           <div style={{ padding: '2rem' }}>
             <h2>Fullscreen Top Drawer</h2>
             <p>
-              This drawer is <code>fullscreen</code> and anchored at <code>top</code>.
+              This drawer is <code>fullscreen</code> and anchored at{' '}
+              <code>top</code>.
             </p>
-            <Button
-              title="Close"
-              onClick={() => drawerRef.current?.closeDrawer()}
-            />
+            <Button title="Close" onClick={() => setIsOpen(false)} />
           </div>
         </Drawer>
       </Fragment>
@@ -161,9 +140,7 @@ export const FullscreenTop: Story = {
   },
 }
 
-//
-// 3) Right‐anchored, non‐fullscreen, backdrop clicks disabled
-//
+/** 3) Right, non-fullscreen, backdrop disabled */
 export const RightDisabledBackdrop: Story = {
   args: {
     open: false,
@@ -172,8 +149,11 @@ export const RightDisabledBackdrop: Story = {
     closeOnBackdropClick: false,
   },
   render: (args) => {
-    const drawerRef = useRef<DrawerRef | null>(null)
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState<boolean>(Boolean(args.open))
+
+    useEffect(() => {
+      setIsOpen(Boolean(args.open))
+    }, [args.open])
 
     const handleChange = (e: unknown, reason: DrawerChangeReason) => {
       setIsOpen(false)
@@ -183,14 +163,10 @@ export const RightDisabledBackdrop: Story = {
     return (
       <Fragment>
         {renderContainer(
-          <Button
-            title="Open Right Drawer"
-            onClick={() => drawerRef.current?.openDrawer()}
-          />
+          <Button title="Open Right Drawer" onClick={() => setIsOpen(true)} />
         )}
         <Drawer
           {...args}
-          ref={drawerRef}
           anchor="right"
           closeOnBackdropClick={false}
           fullscreen={false}
@@ -199,11 +175,8 @@ export const RightDisabledBackdrop: Story = {
         >
           <div style={{ padding: '1rem' }}>
             <h3>Right Drawer (Backdrop Disabled)</h3>
-            <p>You must click the “×” icon or the Close button below to dismiss.</p>
-            <Button
-              title="Close"
-              onClick={() => drawerRef.current?.closeDrawer()}
-            />
+            <p>Use the header “×” or the button below to close.</p>
+            <Button title="Close" onClick={() => setIsOpen(false)} />
           </div>
         </Drawer>
       </Fragment>

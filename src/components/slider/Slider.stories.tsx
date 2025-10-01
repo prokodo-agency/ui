@@ -54,3 +54,17 @@ export const WithLabels: Story = {
     onChange: () => undefined,
   },
 }
+
+export const FixedValues: Story = {
+  args: {
+    id: "example2",
+    label: "Temperature",
+    value: 30,
+    step: 5,
+    marks,
+    min: 10,
+    max: 100,
+    snap: "marks",
+    onChange: () => undefined,
+  },
+}

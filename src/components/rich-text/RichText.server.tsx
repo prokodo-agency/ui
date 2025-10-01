@@ -25,8 +25,8 @@ export function RichTextServer(props: RichTextProps): JSX.Element {
     itemProp,
     // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     overrideParagraph,
-    // We ignore `animated`, `linkComponent`, etc. on the server for now.
-    ...restProps
+    linkComponent: _linkComp,      // omit on server (don’t pass to DOM)
+  ...restProps
   } = props
 
   // Dynamically import markdown-it (ESM) on the server:

@@ -1,0 +1,30 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/colors" as *;
+@use "@/styles/ui/mixins/bem" as *;
+
+@include define-block("Headline") {
+  margin: 0;
+
+  /* Basale Farb-Varianten (ohne Gradients) */
+  &--inherit { color: var(--color-grey-700); }
+  &--primary { color: var(--color-primary-500); }
+  &--secondary { color: var(--color-secondary-500); }
+  &--success { color: var(--color-success); }
+  &--info    { color: var(--color-grey-300); }
+  &--warning { color: var(--color-warning); }
+  &--error   { color: var(--color-error); }
+  &--white   { color: #fff; }
+  &--black   { color: var(--color-black); }
+
+  /* Größen */
+  &--xs  { @include text('headline/xs'); }
+  &--sm  { @include text('headline/sm'); }
+  &--md  { @include text('headline/md'); }
+  &--lg  { @include text('headline/lg'); }
+  &--xl  { @include text('headline/2xl'); }
+  &--xxl { @include text('headline/3xl'); }
+
+  /* Alignment */
+  &--center { text-align: center; justify-content: center; }
+  &--right  { text-align: right;  justify-content: flex-end; }
+}

@@ -69,6 +69,14 @@ export interface SliderProps {
 
   /** Optional additional CSS class on the root container */
   className?: string;
+
+  /**
+   * How the thumb snaps when the user drags it.
+   * - "none": free value (default)
+   * - "step": snap to multiples of `step`
+   * - "marks": snap to nearest mark value (from `marks` array or implicit step marks)
+   */
+  snap?: "none" | "step" | "marks";
 }
 
 export interface SliderViewProps extends SliderProps {

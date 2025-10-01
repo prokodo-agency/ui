@@ -1,0 +1,18 @@
+/* Keep all keyframes/effects out of the render-blocking bundle. Make them GLOBAL. */
+:global {
+  /* Left */
+  @keyframes DrawerSlideInLeft   { 0% { transform: translateX(-100%); opacity: 0; } 100% { transform: translateX(0);   opacity: 1; } }
+  @keyframes DrawerSlideOutLeft  { 0% { transform: translateX(0);     opacity: 1; } 100% { transform: translateX(-100%); opacity: 0; } }
+
+  /* Right */
+  @keyframes DrawerSlideInRight  { 0% { transform: translateX(100%); opacity: 0; } 100% { transform: translateX(0);   opacity: 1; } }
+  @keyframes DrawerSlideOutRight { 0% { transform: translateX(0);    opacity: 1; } 100% { transform: translateX(100%); opacity: 0; } }
+
+  /* Top */
+  @keyframes DrawerSlideInTop    { 0% { transform: translateY(-100%); opacity: 0; } 100% { transform: translateY(0);   opacity: 1; } }
+  @keyframes DrawerSlideOutTop   { 0% { transform: translateY(0);     opacity: 1; } 100% { transform: translateY(-100%); opacity: 0; } }
+
+  /* Bottom */
+  @keyframes DrawerSlideInBottom { 0% { transform: translateY(100%); opacity: 0; } 100% { transform: translateY(0);   opacity: 1; } }
+  @keyframes DrawerSlideOutBottom{ 0% { transform: translateY(0);     opacity: 1; } 100% { transform: translateY(100%); opacity: 0; } }
+}

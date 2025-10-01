@@ -8,10 +8,11 @@ export function CalendlyView({
   animationProps,
   hideLoading,
   LoadingComponent = Loading,
+  calendlyId: _calendlyId,
   ...rest
 }: CalendlyProps): JSX.Element {
   const style: CSSProperties = {
-    display: "none",
+    display: "block",
     minWidth: 320,
     height: 700,
   }

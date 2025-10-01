@@ -9,6 +9,5 @@ import type { JSX } from "react"
  * but no interactive logic (focus‐trap, key events).
  */
 export default function DrawerServer(props: DrawerProps): JSX.Element | null {
-  if (Boolean(props?.open)) return null
   return <DrawerView {...props} />
 }

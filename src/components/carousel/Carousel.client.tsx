@@ -17,6 +17,7 @@ import { Lottie } from "@/components/lottie"
 import { Skeleton } from "@/components/skeleton"
 import { create } from "@/helpers/bem"
 import { isNumber } from "@/helpers/validations"
+import { useResponsiveValue } from "@/hooks/useResponsiveValue"
 
 import styles from "./Carousel.module.scss"
 import {
@@ -46,6 +47,8 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
     classNameItem,
     classNameDots,
     classNameDot,
+    classNameDotActive,
+    responsive,
     onKeyDown,
     onMouseEnter,
     onMouseLeave,
@@ -59,14 +62,35 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
   } = props
 
   /* ----- refs & state ------------------------------------ */
-  const containerRef = useRef<HTMLDivElement>(null)
+  const carouselContainerRef = useRef<HTMLDivElement>(null)
+  // Resolve itemsToShow responsively if config provided
+  const { value: resolvedItemsToShow, ref: containerRef } =
+    useResponsiveValue<number>({
+      fallback: responsive?.fallback ?? itemsToShow,
+      breakpoints: responsive?.breakpoints,
+      valuesByBreakpoint: responsive?.valuesByBreakpoint,
+      valuesByQueries: responsive?.valuesByQueries,
+      containerRules: responsive?.containerRules,
+    })
+
+  // Prefer responsive value when provided; else the fixed prop
+  const effectiveItemsToShow = responsive ? resolvedItemsToShow : itemsToShow
+
+  // merge refs so both our internal ref and container-query ref get the element
+  const setHostRef = (el: HTMLDivElement | null) => {
+    // our original container
+    carouselContainerRef.current = el
+    // the hook’s container (only meaningful if containerRules used)
+    containerRef.current = el
+  }
+
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
   const mouseStartX = useRef(0)
   const mouseEndX = useRef(0)
 
   const [mobileHint, setMobileHint] = useState(true)
-  const [current, setCurrent] = useState(itemsToShow)
+  const [current, setCurrent] = useState(effectiveItemsToShow)
   const [transitioning, setTrans] = useState(false)
   const [isPlaying, setPlaying] = useState(Boolean(autoplay))
   const [mouseActive, setMouse] = useState(false)
@@ -76,9 +100,9 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
 
   /* build extended items (head & tail clones) */
   const items = [
-    ...childrenArr.slice(-itemsToShow),
+    ...childrenArr.slice(-effectiveItemsToShow),
     ...childrenArr,
-    ...childrenArr.slice(0, itemsToShow),
+    ...childrenArr.slice(0, effectiveItemsToShow),
   ]
 
   /* hide swipe hint after 1.5 s */
@@ -96,27 +120,27 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
       setCurrent(next)
 
       setTimeout(() => {
-        if (next >= num + itemsToShow) setCurrent(itemsToShow)
-        else if (next < itemsToShow) setCurrent(num)
+        if (next >= num + effectiveItemsToShow) setCurrent(effectiveItemsToShow)
+        else if (next < effectiveItemsToShow) setCurrent(num)
         setTrans(false)
       }, 300)
     },
-    [current, num, itemsToShow, transitioning],
+    [current, num, effectiveItemsToShow, transitioning],
   )
 
   const slideTo = useCallback(
     (i: number) => {
       if (transitioning) return
       setTrans(true)
-      const target = i + itemsToShow
+      const target = i + effectiveItemsToShow
       setCurrent(target)
       setTimeout(() => {
-        if (target >= num + itemsToShow) setCurrent(target - num)
-        else if (target < itemsToShow) setCurrent(num + target)
+        if (target >= num + effectiveItemsToShow) setCurrent(target - num)
+        else if (target < effectiveItemsToShow) setCurrent(num + target)
         setTrans(false)
       }, 300)
     },
-    [itemsToShow, num, transitioning],
+    [effectiveItemsToShow, num, transitioning],
   )
 
   /* autoplay */
@@ -131,11 +155,13 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
   useImperativeHandle(ref, () => ({
     slidePrev: () => slide(PREV),
     slideNext: () => slide(NEXT),
-    carouselContainer: containerRef.current,
+    carouselContainer: carouselContainerRef.current,
   }))
 
-  /* transform offset */
-  const offset = -current * (100 / itemsToShow)
+  const getTransformValue = () => {
+    const offset = -current * (100 / effectiveItemsToShow)
+    return `translateX(${offset}%)`
+  }
 
   /* ------------- render ---------------------------------- */
   if (num === 0) return <Skeleton height="200px" variant="rectangular" width="100%" />
@@ -143,7 +169,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
   return (
     <div
       {...rest}
-      ref={containerRef}
+      ref={setHostRef}
       role="button"
       tabIndex={0}
       className={bem(
@@ -153,8 +179,14 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
       )}
       onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
         onKeyDown?.(e)
-        if (e.key === "ArrowLeft") slide(PREV)
-        if (e.key === "ArrowRight") slide(NEXT)
+        switch (e.key) {
+          case "ArrowLeft":
+            slide("PREV")
+            break
+          case "ArrowRight":
+            slide("NEXT")
+            break
+        }
       }}
       onMouseDown={(e) => {
         onMouseDown?.(e)
@@ -190,7 +222,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
       <div
         className={bem("wrapper", undefined, classNameWrapper)}
         style={{
-          transform: `translateX(${offset}%)`,
+          transform: getTransformValue(),
           transition: transitioning ? "transform 0.3s ease-in-out" : "none",
         }}
       >
@@ -199,7 +231,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
             // eslint-disable-next-line react/no-array-index-key
             key={`cl-${i}`}
             className={bem("item", undefined, classNameItem)}
-            style={{ width: `${100 / itemsToShow}%` }}
+            style={{ width: `${100 / effectiveItemsToShow}%` }}
           >
             {child}
           </div>
@@ -231,12 +263,12 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
 
         <span className={bem("dots", undefined, classNameDots)}>
           {childrenArr.map((_, i) => {
-            const active = i === (current - itemsToShow + num) % num
+            const active = i === (current - effectiveItemsToShow + num) % num
             return (
               <button
                 // eslint-disable-next-line react/no-array-index-key
                 key={`dot-${i}`}
-                className={bem("dots__dot", { "is-active": active }, classNameDot)}
+                className={bem("dots__dot", { "is-active": active }, `${classNameDot} ${active ? (classNameDotActive ?? "") : ""}`)}
                 onClick={() => slideTo(i)}
                 onKeyDown={(e) => e.key === "Enter" && slideTo(i)}
               />

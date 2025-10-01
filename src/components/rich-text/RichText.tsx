@@ -8,6 +8,5 @@ export const RichText = createIsland<RichTextProps>({
   name: "RichText",
   Server: RichTextServer,
   loadLazy: () => import('./RichText.lazy'),
-  isInteractive: (props) =>
-    Boolean(props.overrideParagraph) || Boolean(props.animated),
+  isInteractive: () => true,
 })

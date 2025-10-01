@@ -1,4 +1,3 @@
-// components/animated/Animated.client.tsx
 'use client'
 
 import { useEffect, useState, useRef, type JSX } from 'react'

@@ -1,0 +1,109 @@
+@use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+
+@include define-block("Accordion") {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    border: 1px solid var(--color-grey-200);
+    border-radius: 0.75rem;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: border 0.3s ease;
+    box-shadow: var(--elevation-3);
+
+    &--is-expanded {
+      border-color: var(--color-primary-500);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    cursor: pointer;
+
+    /* reserve space for a “border” without layout jump */
+    border: 2px solid transparent;
+    border-radius: 12px;
+
+    /* two-background trick: inner fill + border gradient */
+    background:
+      /* inner fill (static) */
+      linear-gradient(var(--header-bg, var(--color-white)), var(--header-bg, var(--color-white))) padding-box,
+      /* border gradient (animated layer) */
+      linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500), var(--color-primary-500)) border-box;
+
+    /* hide the border layer initially */
+    background-size: 100% 100%, 0% 100%;
+    background-position: 0 0, 0 0;
+    background-repeat: no-repeat;
+
+    transition: color .3s ease, background-size .35s ease;
+
+    &:hover,
+    &:focus-visible {
+      /* reveal the border layer */
+      background-size: 100% 100%, 200% 100%;
+      /* animation name is defined in the EFFECTS sheet */
+      animation: accordionBorderShift 2s linear;
+      outline: none;
+    }
+
+    &--is-expanded {
+      position: relative;
+      z-index: 2;
+      /* keep border visible and settled */
+      background-size: 100% 100%, 100% 100%;
+      background-position: 0 0, 100% 0;
+      border-radius: 12px 12px 0 0;
+      animation: none !important;
+      box-shadow: var(--elevation-1);
+    }
+  }
+
+  &__title {
+    width: calc(100% - 20px);
+    margin: 0;
+    @include text("base/md", true);
+    & { font-weight: 500; }
+  }
+
+  &__icon {
+    padding-left: $space-lg;
+    transition: transform 0.3s ease;
+
+    &--is-hidden {
+      display: none !important;
+    }
+  }
+
+  &__content {
+    padding: 16px;
+    background-color: var(--color-white);
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    @include text("base");
+
+    &[hidden] {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &--is-expanded {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--color-grey-100);
+    border-top: 1px solid var(--color-grey-200);
+  }
+}

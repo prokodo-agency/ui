@@ -1,0 +1,145 @@
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/ui/mixins/bem" as *;
+
+@include define-block("Drawer") {
+  /* Backdrop */
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1301;
+
+    &--open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none !important;
+    }
+  }
+
+  /* Container */
+  &__container {
+    position: fixed;
+    background-color: var(--color-white);
+    box-shadow: var(--elevation-1);
+    z-index: 1302;
+    pointer-events: none; // until open
+    width: 300px;
+    height: 100%;
+
+    &--open {
+      pointer-events: auto;
+
+      @media (prefers-reduced-motion: reduce) {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    &--fullscreen {
+      width: 100vw !important;
+      height: 100vh !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      right: 0 !important;
+    }
+
+    /* Anchor: left */
+    &--anchor-left {
+      top: 0;
+      left: 0;
+      width: 80vw;
+      height: 100vh;
+      transform: translateX(-100%);
+
+      &--open {
+        animation: DrawerSlideInLeft 0.3s ease forwards;
+      }
+
+      &:not(&--open) {
+        animation: DrawerSlideOutLeft 0.3s ease forwards;
+      }
+    }
+
+    /* Anchor: right */
+    &--anchor-right {
+      top: 0;
+      left: auto;
+      right: 0;
+      width: 80vw;
+      height: 100vh;
+      transform: translateX(100%);
+
+      &--open {
+        animation: DrawerSlideInRight 0.3s ease forwards;
+      }
+
+      &:not(&--open) {
+        animation: DrawerSlideOutRight 0.3s ease forwards;
+      }
+    }
+
+    /* Anchor: top */
+    &--anchor-top {
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 50vh;
+      transform: translateY(-100%);
+
+      &--open {
+        animation: DrawerSlideInTop 0.3s ease forwards;
+      }
+
+      &:not(&--open) {
+        animation: DrawerSlideOutTop 0.3s ease forwards;
+      }
+    }
+
+    /* Anchor: bottom */
+    &--anchor-bottom {
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 50vh;
+      transform: translateY(100%);
+
+      &--open {
+        animation: DrawerSlideInBottom 0.3s ease forwards;
+      }
+
+      &:not(&--open) {
+        animation: DrawerSlideOutBottom 0.3s ease forwards;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Header */
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-grey-200);
+  }
+
+  /* Content */
+  &__content {
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: calc(100% - 3rem);
+  }
+}

@@ -78,6 +78,9 @@
 
       @include screenLargerThan($screen-md) {
         @include visible();
+        text-align: center;
+        margin-left: 50%;
+        min-width: 100px;
       }
     }
   }

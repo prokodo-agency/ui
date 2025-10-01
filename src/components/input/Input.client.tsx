@@ -25,6 +25,7 @@ function InputClient({
   customRegexPattern,
   errorText,
   errorTranslations,
+  readOnly,
   onValidate,
   onChange,
   onFocus,
@@ -95,10 +96,15 @@ function InputClient({
     isFocused: isFocused !== undefined ? Boolean(isFocused) : focused,
     value: val,
     errorText: err,
+    required,      // ← keep required
+    min,           // ← if you want DOM to know about min
+    max,           // ← and max
+    maxLength,     // ← and maxLength (used by view counter)
+    readOnly,      // ← if you ever pass readOnly to client too
     onChange: handleChange,
     onFocus: handleFocus,
     onBlur: handleBlur
-  }), [isFocused, focused, val, err, name, handleChange, handleFocus, handleBlur, rest])
+  }), [isFocused, focused, val, err, name, required, min, max, maxLength, readOnly, handleChange, handleFocus, handleBlur, rest])
 
   const viewProps: InputProps = Boolean(multiline)
     ? {

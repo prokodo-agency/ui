@@ -1,3 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The common drawer component should render drawer 1`] = `null`;
+exports[`The common drawer component should render drawer 1`] = `
+<div
+  class="prokodo-Drawer__backdrop prokodo-Drawer__backdrop--open"
+>
+  <div
+    aria-modal="true"
+    class="prokodo-Drawer__container prokodo-Drawer__container--open prokodo-Drawer__container--anchor-right prokodo-Drawer__container--anchor-right--open"
+    data-island="drawer"
+    role="dialog"
+  >
+    <div
+      class="prokodo-Drawer__header"
+    >
+      <button
+        aria-label="Close drawer"
+        class="prokodo-Button prokodo-Button--has-variant-text prokodo-Button--has-text-primary prokodo-Button--icon-only"
+        data-island="button"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="prokodo-Icon prokodo-Button__icon prokodo-Button__icon--icon-only"
+          role="presentation"
+          style="width: 20px; height: 20px; background-color: currentColor; mask-image: url("https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v0.0.17/assets/icons/cancel_01_icon.svg");"
+        />
+      </button>
+    </div>
+    <div
+      class="prokodo-Drawer__content"
+    />
+  </div>
+</div>
+`;

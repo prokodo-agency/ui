@@ -1,39 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`The Loading component should render Loading 1`] = `
-<div
-  class="prokodo-Loading"
-  style="display: flex; align-items: center; justify-content: center; gap: 16px;"
+<svg
+  aria-label="Loading"
+  height="64"
+  role="status"
+  style="display: inline-block;"
+  viewBox="0 0 64 64"
+  width="64"
 >
-  <svg
-    height="0"
-    style="position: absolute;"
-    width="0"
+  <defs>
+    <lineargradient
+      id="ui-loading-gradient"
+      x1="0%"
+      x2="0%"
+      y1="0%"
+      y2="100%"
+    >
+      <stop
+        offset="0%"
+        stop-color="currentColor"
+        stop-opacity="1"
+      />
+      <stop
+        offset="50%"
+        stop-color="currentColor"
+        stop-opacity="0.4"
+      />
+      <stop
+        offset="100%"
+        stop-color="currentColor"
+        stop-opacity="0.1"
+      />
+    </lineargradient>
+  </defs>
+  <g
+    transform="translate(32 32)"
   >
-    <defs>
-      <lineargradient
-        class="prokodo-Loading__gradient"
-        id="loading-gradient"
-        x1="0%"
-        x2="0%"
-        y1="0%"
-        y2="100%"
-      >
-        <stop
-          offset="0%"
-        />
-        <stop
-          offset="50%"
-        />
-        <stop
-          offset="100%"
-        />
-      </lineargradient>
-    </defs>
-  </svg>
-  <div
-    class="prokodo-Loading__animation prokodo-Loading__animation--size-xl"
-    style="border-radius: 50%; border: 4px solid transparent; border-top: 4px solid; animation: spin 1s linear infinite;"
-  />
-</div>
+    <circle
+      fill="none"
+      r="27"
+      stroke="currentColor"
+      stroke-opacity="0.15"
+      stroke-width="5"
+    />
+    <path
+      d="M -27 3.3065463576978537e-15 A 27 27 0 1 0 -9.234543869793056 -25.37170076121953"
+      fill="none"
+      stroke="url(#ui-loading-gradient)"
+      stroke-linecap="round"
+      stroke-width="5"
+    >
+      <animatetransform
+        attributeName="transform"
+        dur="0.9s"
+        from="0 0 0"
+        repeatCount="indefinite"
+        to="360 0 0"
+        type="rotate"
+      />
+    </path>
+  </g>
+</svg>
 `;

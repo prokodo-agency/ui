@@ -1,6 +1,6 @@
 "use client"
 import { marked } from "marked"
-import { isValidElement, createElement, Fragment, useMemo, type ReactNode, type ReactElement, type JSX } from "react"
+import { Children, isValidElement, createElement, Fragment, useMemo, type ReactNode, type ReactElement, type JSX } from "react"
 import { filterXSS } from "xss"
 
 import { create } from "@/helpers/bem"
@@ -15,6 +15,12 @@ import styles from "./RichText.module.scss"
 import type { RichTextProps } from "./RichText.model"
 
 const bem = create(styles, "RichText")
+
+// Normalize arrays of nodes so React assigns stable keys automatically
+const normalize = (nodes: React.ReactNode[]) => Children.toArray(nodes)
+// Ensure value is a ReactElement and inject a stable key if missing
+const withKey = (el: React.ReactNode, key: string) =>
+  isValidElement(el) ? (el.key == null ? { ...el, key } : el) : el
 
 export function RichTextClient({
   children,
@@ -38,20 +44,26 @@ export function RichTextClient({
   const headlineProps = { animationProps }
 
   // Helper to wrap text in <AnimatedText> if animated=true
-  const renderAnimation = (content: string | React.ReactNode) => {
+  const renderAnimation = (content: React.ReactNode) => {
     if (!Boolean(animated)) return content
-    return <AnimatedText {...animationProps}>{content as string}</AnimatedText>
+    // Only animate plain text nodes, not elements (e.g., <br>, <strong>, etc.)
+    return typeof content === "string" ? <AnimatedText {...animationProps}>{content}</AnimatedText> : content
   }
 
   // 2) Convert markdown & Sanitize the HTML string with xss (works in the browser too)
   const safeHtml = useMemo(() => {
-  marked.setOptions({ gfm: true, breaks: true });
-  return filterXSS(marked.parse((children as string) ?? "") as string);
-}, [children]);
+    marked.setOptions({ gfm: true, breaks: true });
+    return filterXSS(marked.parse((children as string) ?? "") as string);
+  }, [children]);
+
+  const VOID_TAGS = new Set([
+    "area","base","br","col","embed","hr","img","input",
+    "link","meta","param","source","track","wbr"
+  ])
 
   // 3) A utility that will recursively walk a DOM Node and return a React node.
   //    We rely on the browser’s DOMParser to create a Document from htmlString.
-  function domNodeToReact(node: ChildNode): React.ReactNode {
+  function domNodeToReact(node: ChildNode, path = "r"): React.ReactNode {
     // Text node?
     if (node.nodeType === Node.TEXT_NODE) {
       return node.textContent
@@ -63,7 +75,13 @@ export function RichTextClient({
 
     const elem = node as Element
     const tagName = elem.tagName.toLowerCase()
-    const childReactNodes = Array.from(elem.childNodes).map(domNodeToReact)
+    const childReactNodes = Array.from(elem.childNodes).map((child, i) =>
+      domNodeToReact(child, `${path}.${i}`)
+    )
+    // normalize AFTER mapping so React has stable keys for siblings
+    const keyedChildren = normalize(
+      childReactNodes.map((c, i) => (isValidElement(c) ? withKey(c, `${path}.c${i}`) : c))
+    )
 
     switch (tagName) {
       case "h1":
@@ -103,7 +121,7 @@ export function RichTextClient({
         }
         return (
           <Headline {...baseProps} {...headlineProps} size={size} type={type}>
-            {childReactNodes}
+            {keyedChildren}
           </Headline>
         )
       }
@@ -112,7 +130,7 @@ export function RichTextClient({
         const cls = bem("p")
         return (
           <p className={cls} itemProp={itemProp}>
-            {childReactNodes.map(renderAnimation)}
+            {normalize(keyedChildren.map(renderAnimation))}
           </p>
         )
       }
@@ -121,7 +139,7 @@ export function RichTextClient({
         const cls = bem("a")
         const href = elem.getAttribute("href") ?? "#"
         const title = elem.getAttribute("title") ?? undefined
-        const linkText = childReactNodes.map(renderAnimation)
+        const linkText = normalize(keyedChildren.map(renderAnimation))
 
         return (
           <Link
@@ -131,6 +149,7 @@ export function RichTextClient({
             href={href}
             linkComponent={linkComponent}
             title={title}
+            variant="primary"
           >
             {linkText}
           </Link>
@@ -139,44 +158,60 @@ export function RichTextClient({
 
       case "pre": {
         const cls = bem("pre")
-        return <pre className={cls}>{childReactNodes}</pre>
+        return <pre className={cls}>{keyedChildren}</pre>
       }
 
       case "ul": {
         const cls = bem("ul")
-        return <ul className={cls}>{childReactNodes}</ul>
+        return <ul className={cls}>{keyedChildren}</ul>
       }
 
       case "ol": {
         const cls = bem("ol")
-        return <ol className={cls}>{childReactNodes}</ol>
+        return <ol className={cls}>{keyedChildren}</ol>
       }
 
       case "li": {
         const cls = bem("li")
         return (
           <li className={cls}>
-            <Icon
-              className={bem("li__icon")}
-              color={variant}
-              name="ArrowRight01Icon"
-              size={18}
-            />
-            {childReactNodes.map((c, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <span key={i}>{renderAnimation(c)}</span>
-            ))}
+            {normalize([
+              <Icon
+                key={`${path}.icon`}
+                className={bem("li__icon")}
+                color={variant}
+                name="ArrowRight01Icon"
+                size={18}
+              />,
+              ...keyedChildren.map((c, i) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <span key={`${path}.s${i}`}>{renderAnimation(c)}</span>
+              )),
+            ])}
           </li>
         )
       }
 
-      default:
-        // For any other tag (e.g. <strong>, <em>, etc.), just render the default element:
-        return createElement(
-          tagName,
-          { key: Math.random().toString(), className: bem(tagName) },
-          childReactNodes
-        )
+      default: {
+        const props: Record<string, unknown> = { className: bem(tagName) }
+
+        // Optionally map common attributes you care about
+        if (tagName === "img") {
+          props.src = elem.getAttribute("src") ?? ""
+          props.alt = elem.getAttribute("alt") ?? ""
+          props.loading = "lazy"
+        }
+
+        // ❗ React rule: no children for void elements
+        if (VOID_TAGS.has(tagName)) {
+          return createElement(tagName, { ...props, key: path })
+        }
+
+        // For non-void tags, only pass children if there are any
+        return keyedChildren.length
+          ? createElement(tagName, { ...props, key: path }, keyedChildren)
+          : createElement(tagName, { ...props, key: path })
+      }
     }
   }
 
@@ -214,7 +249,7 @@ export function RichTextClient({
       {...(props)}
     >
       {/* eslint-disable-next-line react/no-array-index-key */}
-      {topLevelChildren.map((n, i) => <Fragment key={i}>{domNodeToReact(n)}</Fragment>)}
+      {topLevelChildren.map((n, i) => <Fragment key={`top-level-${i}`}>{domNodeToReact(n)}</Fragment>)}
     </div>
   )
 }
