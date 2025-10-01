@@ -1,0 +1,1 @@
+@keyframes skeleton-pulse{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}@keyframes skeleton-wave{0%{left:-100%}50%{left:100%}100%{left:100%}}@media (prefers-reduced-motion: reduce){*{animation:none!important}}
