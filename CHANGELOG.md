@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.50
+
+### Patch Changes
+
+- Multiple bug fixes and peformance updates
+
 ## 0.0.49
 
 ### Patch Changes
