@@ -14,6 +14,10 @@
         color: var(--color-grey-500);
         @include text("base");
 
+        & {
+            text-align: inherit;
+        }
+
         html[data-theme='dark'] & {
             color: var(--color-grey-700);
         }
@@ -29,6 +33,10 @@
         overflow-x: auto;
         overflow-wrap: break-word;
         @include text("code");
+
+        & {
+            text-align: inherit;
+        }
 
         html[data-theme='dark'] & {
             color: var(--color-grey-300);
@@ -49,12 +57,21 @@
     & li {
         display: flex;
         align-items: flex-start;
+        padding-bottom: $space-xs;
 
         &__icon {
-            min-width: 20px;
-            max-width: 20px;
+            flex: 0 0 20px;
+            width: 20px;
+            height: 20px;
             margin-right: $space-sm;
-            margin-top: $space-xs;
+            line-height: 1;
+        }
+
+        &__content {
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow-wrap: anywhere;
+            display: inline;
         }
     }
 
@@ -72,6 +89,10 @@
             border-radius: 200px;
             margin-right: $space-sm;
             @include text("caption");
+
+            & {
+                text-align: inherit;
+            }
         }
 
         li {

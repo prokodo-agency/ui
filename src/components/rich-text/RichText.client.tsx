@@ -175,19 +175,16 @@ export function RichTextClient({
         const cls = bem("li")
         return (
           <li className={cls}>
-            {normalize([
-              <Icon
-                key={`${path}.icon`}
-                className={bem("li__icon")}
-                color={variant}
-                name="ArrowRight01Icon"
-                size={18}
-              />,
-              ...keyedChildren.map((c, i) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <span key={`${path}.s${i}`}>{renderAnimation(c)}</span>
-              )),
-            ])}
+            <Icon
+              key={`${path}.icon`}
+              className={bem("li__icon")}
+              color={variant}
+              name="ArrowRight01Icon"
+              size={18}
+            />
+            <span className={bem("li__content")}>
+              {normalize(keyedChildren.map(renderAnimation))}
+            </span>
           </li>
         )
       }
