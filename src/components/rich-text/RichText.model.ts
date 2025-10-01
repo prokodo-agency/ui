@@ -2,7 +2,7 @@ import type { AnimatedTextProps } from "@/components/animatedText"
 import type { LinkProps } from "@/components/link"
 import type { Schema } from "@/types/schema"
 import type { Variants } from "@/types/variants"
-import type { ReactNode } from "react"
+import type { ReactNode, HTMLAttributes } from "react"
 
 /**
  * RichTextProps
@@ -44,5 +44,5 @@ export type RichTextProps = {
    * Callback used by RichText when it encounters a <p>…</p>.
    * Should return a React element—here, a heading tag of the right level.
    */
-  overrideParagraph?: (textContent: string) => React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>
+  overrideParagraph?: (textContent: string) => ReactNode;
+} & HTMLAttributes<HTMLDivElement>

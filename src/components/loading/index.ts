@@ -1,2 +1,2 @@
-export * from "./Loading"
-export type { LoadingProps, LoadingSize } from "./Loading.model"
+export { Loading } from "./Loading"
+export type { LoadingProps, LoadingOverlayProps, LoadingSize } from "./Loading.model"

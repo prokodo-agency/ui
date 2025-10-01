@@ -40,6 +40,8 @@ function DrawerClient(
 
   // Same for isOpen: start truthy SSR, but on client start closed until we run effects.
   const [isOpen, setIsOpen] = useState(() => open)
+  // Guard to avoid firing onChange while syncing from parent.
+  const syncingFromPropRef = useRef(false)
 
   /** Imperative handle */
   const openDrawer = useCallback(() => {
@@ -50,16 +52,37 @@ function DrawerClient(
   }, [])
 
   const closeDrawer = useCallback(
-    (reason?: DrawerChangeReason) => {
+     (reason?: DrawerChangeReason) => {
       // Trigger CSS “slide out” by removing `open` class.
       setIsOpen(false)
-      // After animation finishes, unmount and notify parent:
-      onChange?.({}, reason ?? 'backdropClick')
-      // Restore focus to trigger
+      // Notify parent only if this isn't a prop-sync close:
+      if (!syncingFromPropRef.current) {
+        onChange?.({}, reason ?? 'backdropClick')
+      }
+       // Restore focus to trigger
+       triggerRef.current?.focus()
+     },
+     [onChange]
+   )
+
+  // 🔁 Sync internal state with controlled `open` prop
+  useEffect(() => {
+    // Avoid loops: mark that we're syncing due to prop change.
+    syncingFromPropRef.current = true
+    if (open && !isOpen) {
+      // capture current focus for later restore
+      triggerRef.current = document.activeElement as HTMLElement | null
+      setIsOpen(true)
+    } else if (!open && isOpen) {
+      // Close without emitting onChange (parent initiated)
+      setIsOpen(false)
       triggerRef.current?.focus()
-    },
-    [onChange]
-  )
+    }
+    // release the guard in the microtask queue after state flush
+    queueMicrotask(() => {
+      syncingFromPropRef.current = false
+    })
+  }, [open, isOpen])
 
   useImperativeHandle(
     ref,

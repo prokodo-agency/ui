@@ -5,7 +5,8 @@ import { create } from "@/helpers/bem"
 import { AnimatedText } from "../animatedText"
 import { RichText } from "../rich-text"
 
-import styles from "./Headline.module.scss"
+import styles from "./Headline.base.module.scss"
+import { HeadlineEffectsLoader } from "./Headline.effects.client"
 import { POSSIBLE_HIGHLIGHTS } from "./Headline.variants"
 
 import type { HeadlineProps } from "./Headline.model"
@@ -13,6 +14,7 @@ import type { HeadlineProps } from "./Headline.model"
 const bem = create(styles, "Headline")
 
 export const Headline: FC<HeadlineProps> = ({
+  id,
   animated,
   animationProps = {},
   type = "h3",
@@ -26,9 +28,9 @@ export const Headline: FC<HeadlineProps> = ({
   children,
   ...remainingProps
 }) => {
-  // 1) Determine highlight state
   const isHighlighted =
     Boolean(highlight) && POSSIBLE_HIGHLIGHTS.includes(variant)
+  // 1) Determine highlight state
 
   // 2) Build BEM modifier object
   const modifier = {
@@ -55,6 +57,7 @@ export const Headline: FC<HeadlineProps> = ({
 
   // 6) Base props (className, style, aria-label, plus any schema attrs)
   const baseProps = {
+    id,
     "aria-label": ariaLabel,
     className: bemClass,
     style: customStyle,
@@ -76,9 +79,12 @@ export const Headline: FC<HeadlineProps> = ({
     const headingLevel = parseInt(type.charAt(1), 10)
 
     return (
-      <HTag {...baseProps} aria-level={headingLevel}>
-        {animateText(headingChildren)}
-      </HTag>
+      <>
+        {isHighlighted && <HeadlineEffectsLoader />}
+        <HTag {...baseProps} aria-level={headingLevel}>
+          {animateText(headingChildren)}
+        </HTag>
+      </>
     )
   }
 
@@ -86,21 +92,25 @@ export const Headline: FC<HeadlineProps> = ({
   //    and tell it to convert every <p>…</p> into our heading via overrideParagraph
   if (isRichtext) {
     return (
-      <RichText
-        animated={animated}
-        animationProps={animationProps}
-        className={bem("headline", undefined, className)}
-        itemProp={undefined}
-        linkComponent={undefined}
-        schema={schema}
-        variant={variant}
-        {...remainingProps}
-        overrideParagraph={(textContent: string) =>
-          renderHTag({ children: textContent })
-        }
-      >
-        {children as string}
-      </RichText>
+      <>
+        {isHighlighted && <HeadlineEffectsLoader />}
+        <RichText
+          animated={animated}
+          animationProps={animationProps}
+          className={bem("headline", undefined, className)}
+          id={id}
+          itemProp={undefined}
+          linkComponent={undefined}
+          schema={schema}
+          variant={variant}
+          {...remainingProps}
+          overrideParagraph={(textContent: string) =>
+            renderHTag({ children: textContent })
+          }
+        >
+          {children as string}
+        </RichText>
+      </>
     )
   }
 

@@ -9,6 +9,6 @@ export default createLazyWrapper<CarouselProps>({
   name: "Carousel",
   Client: CarouselClient,
   Server: CarouselServer,
-  hydrateOnVisible: true,
+  hydrateOnVisible: false,
   isInteractive: () => true
 })

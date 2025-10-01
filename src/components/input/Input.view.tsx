@@ -10,6 +10,7 @@ import type { JSX, HTMLInputTypeAttribute } from "react"
 const bem = create(styles, "Input")
 
 export function InputView({
+  inputRef,
   name,
   label,
   disabled,
@@ -27,6 +28,7 @@ export function InputView({
   fieldClassName,
   inputContainerClassName,
   inputClassName,
+  hideCounter,
   rows,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   minRows,
@@ -73,7 +75,7 @@ export function InputView({
             {Boolean(multiline) ? (
               <textarea
                 {...rest}
-                // Enforce minRows/maxRows here via styles or JS
+                ref={inputRef as React.Ref<HTMLTextAreaElement>}
                 aria-describedby={describedBy}
                 aria-invalid={isError}
                 aria-required={required}
@@ -82,12 +84,14 @@ export function InputView({
                 id={name}
                 name={name}
                 placeholder={placeholder}
+                required={Boolean(required)}
                 rows={rows}
                 value={value ?? ""}
               />
             ) : (
               <input
                 {...rest}
+                ref={inputRef as React.Ref<HTMLInputElement>}
                 aria-describedby={describedBy}
                 aria-invalid={isError}
                 aria-required={required}
@@ -95,6 +99,7 @@ export function InputView({
                 id={name}
                 name={name}
                 placeholder={placeholder}
+                required={Boolean(required)}
                 type={type as HTMLInputTypeAttribute}
                 value={value ?? ""}
                 className={bem(
@@ -109,7 +114,9 @@ export function InputView({
       </div>
 
       {(isError || hasHelperText || typeof maxLength === "number") && (
-        <div className={bem("footer")}>
+        <div className={bem("footer", {
+          "counter-only": !hasHelperText && typeof maxLength === "number",
+        })}>
           {(isError || hasHelperText) && (
             <div
               aria-live={isError ? "assertive" : "polite"}
@@ -126,7 +133,7 @@ export function InputView({
               </span>
             </div>
           )}
-          {typeof maxLength === "number" && (
+          {(!Boolean(hideCounter) && typeof maxLength === "number") && (
             <div className={bem("counter")}>
               <span>
                 {(value != null ? String(value).length : 0)} / {maxLength}

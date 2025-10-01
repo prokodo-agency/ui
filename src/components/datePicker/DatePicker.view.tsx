@@ -5,7 +5,7 @@ import { isNull } from "@/helpers/validations"
 import { InputView } from "../input/Input.view"
 
 import type { DatePickerProps } from "./DatePicker.model"
-import type { ChangeEvent, JSX } from "react"
+import type { JSX, ChangeEvent, FormEvent } from "react"
 
 export function DatePickerView({
   name,
@@ -19,11 +19,10 @@ export function DatePickerView({
   maxDate,
   withTime = false,
   minuteStep = 1,
+  onChangeInput, // <- string-based adapter
   ...rest
 }: DatePickerProps & {
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
-  onFocus?: React.FocusEventHandler<HTMLInputElement>
-  onBlur?: React.FocusEventHandler<HTMLInputElement>
+  onChangeInput?: (raw: string) => void
 }): JSX.Element {
   const effectiveFormat = format ?? (withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD")
   const inputType = withTime ? "datetime-local" : "date"
@@ -32,13 +31,22 @@ export function DatePickerView({
   const displayValue = !isNull(value) ? dayjs(value).format(effectiveFormat) : ""
   const min = !isNull(minDate) ? dayjs(minDate).format(htmlMinMaxFormat) : undefined
   const max = !isNull(maxDate) ? dayjs(maxDate).format(htmlMinMaxFormat) : undefined
+  const computedStep = withTime ? Math.max(1, minuteStep) * 60 : undefined
 
-  // If the caller already passes a step in `rest`, prefer minuteStep only when withTime is true.
-  const step = withTime ? Math.max(1, minuteStep) * 60 : rest?.step
+  // strip any incoming step for date-only inputs
+  const { step: _ignored, ...restWithoutStep } = rest as { step?: unknown }
+
+  // Adapters that satisfy InputView’s types
+  const handleInput = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    onChangeInput?.((e.currentTarget as HTMLInputElement | HTMLTextAreaElement).value)
+  }
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    onChangeInput?.(e.currentTarget.value)
+  }
 
   return (
     <InputView
-      {...rest}
+      {...restWithoutStep}
       errorText={errorText}
       helperText={helperText}
       isFocused={true}
@@ -49,7 +57,9 @@ export function DatePickerView({
       placeholder={placeholder}
       type={inputType}
       value={displayValue}
-      {...(withTime ? { step } : {})}
+      onChange={handleChange}
+      onInput={handleInput}
+      {...(withTime && computedStep !== undefined ? { step: computedStep } : {})}
     />
   )
 }

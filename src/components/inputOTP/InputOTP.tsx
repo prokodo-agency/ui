@@ -2,14 +2,15 @@ import {
   type FC,
   type ClipboardEvent,
   type ChangeEvent,
-  // type KeyboardEvent,
+  type KeyboardEvent,
   memo,
   useState,
   useRef,
+  useCallback,
+  useEffect,
 } from "react"
 
 import { create } from "@/helpers/bem"
-// import { isArray } from "@/helpers/validations"
 
 import { Input } from "../input"
 
@@ -29,79 +30,156 @@ export const InputOTP: FC<InputOTPProps> = memo(
     onChange,
     ...props
   }) => {
-    const [otp, setOtp] = useState<string[]>(Array(length).fill(""))
-    const inputs = useRef<(HTMLInputElement | null)[]>([])
+    // Controlled digits
+    const [otp, setOtp] = useState<string[]>(() => Array<string>(length).fill(""))
 
-    const handleChange = (value: string, index: number) => {
-      if (value.length > 1) return // Ensure only one character is entered
-
-      const newOtp = [...otp]
-      newOtp[index] = value
-      setOtp(newOtp)
-
-      // Call the onChange callback with the partial OTP
-      if (onChange) onChange(newOtp.join(""))
-
-      // Move focus to the next input if the current input is filled
-      if (value && index < length - 1) {
-        inputs.current[index + 1]?.focus()
-      }
-
-      // If all fields are filled, trigger onComplete callback
-      if (newOtp.every(digit => digit !== "") && onComplete) {
-        onComplete(newOtp.join(""))
-      }
-    }
-
-    // const handleKeyDown = (
-    //   e: KeyboardEvent<HTMLInputElement>,
-    //   index: number,
-    // ) => {
-    //   if (
-    //     e.key === "Backspace" &&
-    //     index > 0 &&
-    //     isArray(otp) &&
-    //     otp[index] !== undefined
-    //   ) {
-    //     inputs.current[index - 1]?.focus() // Focus previous input on backspace
-    //   }
-
-    //   // Arrow keys for navigating between inputs
-    //   if (e.key === "ArrowLeft" && index > 0) {
-    //     inputs.current[index - 1]?.focus()
-    //   } else if (e.key === "ArrowRight" && index < length - 1) {
-    //     inputs.current[index + 1]?.focus()
-    //   }
-    // }
-
-    const handlePaste = (e: ClipboardEvent<HTMLDivElement>) => {
-      const paste = e.clipboardData.getData("text").slice(0, length).split("")
-      const newOtp = [...otp]
-
-      paste.forEach((value, index) => {
-        if (index < length) {
-          newOtp[index] = value
-          if (inputs.current[index]) {
-            inputs.current[index]!.value = value
-          }
-        }
+    // Keep refs array in sync with length
+    const inputs = useRef<Array<HTMLInputElement | null>>([])
+    useEffect(() => {
+      inputs.current = inputs.current.slice(0, length)
+      setOtp(prev => {
+        const next = Array<string>(length).fill("")
+        for (let i = 0; i < Math.min(prev.length, length); i++) next[i] = prev[i] ?? ""
+        return next
       })
+    }, [length])
 
-      setOtp(newOtp)
+    // Ensure onComplete is fired once per “becoming complete”
+    const completedRef = useRef(false)
 
-      // Call onChange with the new OTP
-      if (onChange) onChange(newOtp.join(""))
-
-      // Trigger onComplete if all fields are filled
-      if (paste.length === length && onComplete) {
-        onComplete(newOtp.join(""))
-      } else {
-        const nextIndex = paste.length
-        if (nextIndex < length) {
-          inputs.current[nextIndex]?.focus()
-        }
+    const focusIndex = useCallback((idx: number) => {
+      const el = inputs.current[idx]
+      if (el) {
+        el.focus()
+        el.setSelectionRange?.(0, el.value.length)
       }
-    }
+    }, [])
+
+    const emitChange = useCallback((next: string[]) => {
+      const joined = next.join("")
+      onChange?.(joined)
+
+      const complete = next.every(d => d !== "")
+      if (complete && !completedRef.current) {
+        completedRef.current = true
+        onComplete?.(joined)
+      } else if (!complete && completedRef.current) {
+        completedRef.current = false
+      }
+    }, [onChange, onComplete])
+
+    const setDigit = useCallback((digit: string, index: number) => {
+      const d = digit.replace(/\D/g, "")
+      if (d.length > 1) return
+
+      setOtp(prev => {
+        if (prev[index] === d) return prev
+        const next = [...prev]
+        next[index] = d
+
+        // Move focus forward to the next empty slot
+        if (d !== "" && index < length - 1) {
+          const nextEmpty = next.findIndex((val, i) => i > index && val === "")
+          const to = nextEmpty !== -1 ? nextEmpty : index + 1
+          focusIndex(to)
+        }
+
+        emitChange(next)
+        return next
+      })
+    }, [emitChange, focusIndex, length])
+
+    const handleChange = useCallback(
+      (e: ChangeEvent<HTMLInputElement>, index: number) => {
+        setDigit(e.target.value, index)
+      },
+      [setDigit]
+    )
+
+    // Use widened type to satisfy Input's textarea|input handler union
+    const handleKeyDown = useCallback((
+      e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>,
+      index: number
+    ) => {
+      const {key} = e
+
+      if (key === "Backspace") {
+        e.preventDefault()
+        setOtp(prev => {
+          const next = [...prev]
+          if (next[index] !== "") {
+            next[index] = ""
+            focusIndex(index)
+          } else if (index > 0) {
+            next[index - 1] = ""
+            focusIndex(index - 1)
+          }
+          emitChange(next)
+          return next
+        })
+        return
+      }
+
+      if (key === "ArrowLeft") {
+        e.preventDefault()
+        if (index > 0) focusIndex(index - 1)
+        return
+      }
+      if (key === "ArrowRight") {
+        e.preventDefault()
+        if (index < length - 1) focusIndex(index + 1)
+        return
+      }
+      if (key === "Home") {
+        e.preventDefault()
+        focusIndex(0)
+        return
+      }
+      if (key === "End") {
+        e.preventDefault()
+        focusIndex(length - 1)
+        return
+      }
+
+      // Only allow digits
+      if (key.length === 1 && !/[0-9]/.test(key)) {
+        e.preventDefault()
+      }
+    }, [emitChange, focusIndex, length])
+
+    const handleFocus = useCallback((index: number) => {
+      const el = inputs.current[index]
+      el?.setSelectionRange?.(0, el.value.length)
+    }, [])
+
+    const handlePaste = useCallback((e: ClipboardEvent<HTMLDivElement>) => {
+      e.preventDefault()
+      const digits = (e.clipboardData.getData("text") || "")
+        .replace(/\D/g, "")
+        .slice(0, length)
+        .split("")
+
+      if (digits.length === 0) return
+
+      setOtp(prev => {
+        const next = [...prev]
+        // start at first empty, else 0
+        let writeIndex = next.findIndex(d => d === "")
+        if (writeIndex === -1) writeIndex = 0
+
+        for (let i = 0; i < digits.length && writeIndex < length; i++) {
+          next[writeIndex] = digits[i]!
+          writeIndex++
+        }
+
+        emitChange(next)
+
+        const nextEmpty = next.findIndex(d => d === "")
+        focusIndex(nextEmpty === -1 ? length - 1 : nextEmpty)
+
+        return next
+      })
+    }, [emitChange, focusIndex, length])
 
     return (
       <div
@@ -117,31 +195,30 @@ export const InputOTP: FC<InputOTPProps> = memo(
         <span className={bem("instruction")} id="otp-instructions">
           {groupInstruction ?? "Use the arrow keys to navigate between digits."}
         </span>
+
         {otp.map((value, index) => (
           <Input
-            placeholder="x"
-            {...props}
             // eslint-disable-next-line react/no-array-index-key
             key={`otp-${index}`}
+            {...props}
             hideCounter
             aria-label={`${props?.["aria-label"] ?? "OTP digit"} ${index + 1}`}
+            autoComplete="one-time-code"
             className={bem("input")}
             fieldClassName={bem("field")}
             inputClassName={bem("input__node")}
             inputContainerClassName={bem("input__container")}
+            inputMode="numeric"
+            inputRef={el => { inputs.current[index] = (el as HTMLInputElement) ?? null }}
             maxLength={1}
             name={`otp-${index}`}
+            pattern="\\d*"
+            placeholder="•"
             type="text"
             value={value}
-            inputRef={el => {
-              inputs.current[index] = el as HTMLInputElement | null
-            }}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              handleChange(e.target.value, index)
-            }
-            // onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
-            //   handleKeyDown(e, index)
-            // }
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
+            onFocus={() => handleFocus(index)}
+            onKeyDown={(e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => handleKeyDown(e, index)}
           />
         ))}
       </div>

@@ -3,7 +3,8 @@ import { Headline } from '@/components/headline'
 import { create } from '@/helpers/bem'
 import { isString } from "@/helpers/validations"
 
-import styles from './Drawer.module.scss'
+import styles from './Drawer.base.module.scss'
+import { DrawerEffectsLoader } from './Drawer.effects.client'
 
 import type { DrawerViewProps } from './Drawer.model'
 import type { FC, HTMLAttributes } from 'react'
@@ -33,6 +34,7 @@ export const DrawerView: FC<DrawerViewProps> = ({
       className={bem('backdrop', { open: isOpen })}
       {...backdropProps}
     >
+      <DrawerEffectsLoader useSlide />
       {/*
         Inner container: stops propagation of mousedown so clicks INSIDE
         do not bubble up to backdrop.
@@ -54,28 +56,24 @@ export const DrawerView: FC<DrawerViewProps> = ({
         )}
         {...(rest as HTMLAttributes<HTMLDivElement>)}
       >
-        <div className={bem('header')}>
-          {renderHeader ? (
-            renderHeader()
-          ) : (
-            <>
-              {isString(title) && (
-                <Headline size="md" {...titleProps} id="drawer-title">
-                  {title}
-                </Headline>
-              )}
-              {/* Close‐button always shown in header if no custom renderHeader */}
-              <Button
-                aria-label="Close drawer"
-                iconProps={{ name: 'Cancel01Icon', size: 'sm' }}
-                variant="text"
-                {...closeButtonProps}
-                ref={closeButtonRef}
-                onClick={() => onClose?.('escapeKeyDown')}
-              />
-            </>
-          )}
-        </div>
+        {renderHeader ? renderHeader() : (
+          <div className={bem('header')}>
+            {isString(title) && (
+              <Headline size="md" {...titleProps} id="drawer-title">
+                {title}
+              </Headline>
+            )}
+            {/* Close‐button always shown in header if no custom renderHeader */}
+            <Button
+              aria-label="Close drawer"
+              iconProps={{ name: 'Cancel01Icon', size: 'sm' }}
+              variant="text"
+              {...closeButtonProps}
+              ref={closeButtonRef}
+              onClick={() => onClose?.('escapeKeyDown')}
+            />
+          </div>
+        )}
 
         <div className={bem('content', undefined, className)}>{children}</div>
       </div>

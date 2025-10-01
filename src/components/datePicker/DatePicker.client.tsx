@@ -1,31 +1,22 @@
 "use client"
 
 import dayjs, { isDayjs, type Dayjs } from "dayjs"
-import {
-  type FC,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react"
+import { useState, useEffect, useMemo, useCallback, type FC } from "react"
 
-import { isNull } from "@/helpers/validations"
+import { isString, isNull } from "@/helpers/validations"
 
 import { DatePickerView } from "./DatePicker.view"
 
-import type {
-  DatePickerProps,
-  DatePickerValue,
-} from "./DatePicker.model"
-import type { InputChangeEvent } from "@/components/input"
+import type { DatePickerProps, DatePickerValue } from "./DatePicker.model"
 
-/** Convert incoming value to Dayjs|null */
 function toDayjs(val?: DatePickerValue): Dayjs | null {
   if (isNull(val)) return null
-  if (isDayjs(val)) return val
+  if (isDayjs(val)) return val.isValid() ? val : null
   const d = dayjs(val)
   return d.isValid() ? d : null
 }
+const sameByUnit = (a: Dayjs | null, b: Dayjs | null, unit: "day" | "minute") =>
+  a === null && b === null ? true : a !== null && b !== null && a.isSame(b, unit)
 
 const DatePickerClient: FC<DatePickerProps> = ({
   name,
@@ -42,78 +33,69 @@ const DatePickerClient: FC<DatePickerProps> = ({
   minuteStep = 1,
   ...rest
 }) => {
-  const [date, setDate] = useState<Dayjs | null>(toDayjs(value))
-  const [error, setError] = useState<string | undefined>(undefined)
-
-  // Choose default format depending on withTime (allow custom override)
+  const unit = withTime ? "minute" : "day"
   const fmt = useMemo(
     () => format ?? (withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD"),
     [format, withTime]
   )
 
-  // Comparison unit (day when date-only, minute when datetime)
-  const unit = withTime ? "minute" : "day"
+  const [date, setDate] = useState<Dayjs | null>(toDayjs(value))
+  const [error, setError] = useState<string | undefined>(undefined)
 
   useEffect(() => {
-    setDate(toDayjs(value))
-    setError(undefined)
-    onValidate?.(name, undefined)
-  }, [value, name, onValidate])
+    const incoming = toDayjs(value)
+    if (!sameByUnit(date, incoming, unit)) {
+      setDate(incoming)
+      if (incoming) setError(undefined)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, unit])
 
-  const emitValue = useCallback(
-    (e: InputChangeEvent) => {
-      const val = e?.target?.value
-
-      if (!val) {
-        setDate(null)
-        setError(undefined)
-        onValidate?.(name, undefined)
-        onChange?.(null)
-        return
-      }
-
-      const d = dayjs(val, fmt, true)
-      if (!d.isValid()) {
-        const msg = withTime ? "Invalid date/time format." : "Invalid date format."
-        setError(msg)
-        onValidate?.(name, msg)
-        onChange?.(null)
-        return
-      }
-
-      if (!isNull(minDate) && d.isBefore(dayjs(minDate), unit)) {
-        const msg =
-          dayjs(minDate).isSame(dayjs(), unit)
-            ? (translations?.minDate ??
-              (withTime ? "Date/time cannot be in the past." : "Date cannot be in the past."))
-            : (translations?.minDate ??
-              `Must be ≥ ${dayjs(minDate).format(fmt)}`)
-        setError(msg)
-        onValidate?.(name, msg)
-        onChange?.(null)
-        return
-      }
-
-      if (!isNull(maxDate) && d.isAfter(dayjs(maxDate), unit)) {
-        const msg =
-          dayjs(maxDate).isSame(dayjs(), unit)
-            ? (translations?.maxDate ??
-              (withTime ? "Date/time cannot be in the future." : "Date cannot be in the future."))
-            : (translations?.maxDate ??
-              `Must be ≤ ${dayjs(maxDate).format(fmt)}`)
-        setError(msg)
-        onValidate?.(name, msg)
-        onChange?.(null)
-        return
-      }
-
-      setDate(d)
-      setError(undefined)
+  const emitRaw = useCallback((raw: string) => {
+    if (raw === "") {
+      if (date !== null) setDate(null)
+      if (isString(error)) setError(undefined)
       onValidate?.(name, undefined)
-      onChange?.(d)
-    },
-    [fmt, maxDate, minDate, name, onChange, onValidate, translations, withTime, unit]
-  )
+      onChange?.(null)
+      return
+    }
+
+    const parsed = dayjs(raw, fmt, true)
+    const year = parsed.isValid() ? parsed.year() : dayjs(raw).year()
+
+    if (!parsed.isValid() || year > 9999 || year < 100) {
+      const msg = withTime ? "Invalid date/time format." : "Invalid date format."
+      setError(msg); onValidate?.(name, msg); onChange?.(null); return
+    }
+
+    if (!isNull(minDate) && parsed.isBefore(dayjs(minDate), unit)) {
+      const msg =
+        translations?.minDate ??
+        (dayjs(minDate).isSame(dayjs(), unit)
+          ? (withTime ? "Date/time cannot be in the past." : "Date cannot be in the past.")
+          : `Must be ≥ ${dayjs(minDate).format(fmt)}`)
+      setError(msg); onValidate?.(name, msg); onChange?.(null); return
+    }
+    if (!isNull(maxDate) && parsed.isAfter(dayjs(maxDate), unit)) {
+      const msg =
+        translations?.maxDate ??
+        (dayjs(maxDate).isSame(dayjs(), unit)
+          ? (withTime ? "Date/time cannot be in the future." : "Date cannot be in the future.")
+          : `Must be ≤ ${dayjs(maxDate).format(fmt)}`)
+      setError(msg); onValidate?.(name, msg); onChange?.(null); return
+    }
+
+    const snapped = withTime
+      ? parsed.minute(
+          Math.round(parsed.minute() / Math.max(1, minuteStep)) * Math.max(1, minuteStep)
+        )
+      : parsed
+
+    if (!sameByUnit(date, snapped, unit)) setDate(snapped)
+    if (isString(error)) setError(undefined)
+    onValidate?.(name, undefined)
+    onChange?.(snapped)
+  }, [date, error, fmt, maxDate, minDate, minuteStep, name, onChange, onValidate, translations, unit, withTime])
 
   return (
     <DatePickerView
@@ -128,8 +110,7 @@ const DatePickerClient: FC<DatePickerProps> = ({
       name={name}
       value={date}
       withTime={withTime}
-      onChange={(value) => emitValue(value)}
-      onValidate={onValidate}
+      onChangeInput={emitRaw}   // <- now just a string callback
     />
   )
 }

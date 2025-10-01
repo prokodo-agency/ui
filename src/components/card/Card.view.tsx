@@ -1,15 +1,16 @@
 import { Animated } from "@/components/animated/Animated"
-import { Image }        from "@/components/image"
-import { Link, type LinkProps }         from "@/components/link"
-import { Skeleton }     from "@/components/skeleton"
-import { create }       from "@/helpers/bem"
-import { isString }     from "@/helpers/validations"
+import { Image } from "@/components/image"
+import { Link, type LinkProps } from "@/components/link"
+import { Skeleton } from "@/components/skeleton"
+import { create } from "@/helpers/bem"
+import { isString } from "@/helpers/validations"
 
-import styles           from "./Card.module.scss"
+import styles from "./Card.base.module.scss"
+import { CardEffectsLoader } from "./Card.effects.client"
 
 import type { CardProps } from "./Card.model"
 import type { AnimatedViewProps } from "@/components/animated/Animated.model"
-import type { JSX }     from "react"
+import type { JSX } from "react"
 
 const bem = create(styles, "Card")
 
@@ -44,22 +45,29 @@ export function CardView({
   isClickable?: boolean
   redirect?: LinkProps
 }): JSX.Element {
-  const mod = {
+  const modifiers = {
     [variant]: true,
     "is-clickable": Boolean(isClickable),
     "has-highlight": Boolean(highlight),
     "has-gradiant": Boolean(gradiant),
     "has-background": Boolean(background),
-    "has-shadow":
-      enableShadow !== false && (Boolean(isClickable) || Boolean(enableShadow)),
-    "has-animation": Boolean(animated),
+    "has-shadow": enableShadow !== false && (Boolean(isClickable) || Boolean(enableShadow)),
+    "has-animation": Boolean(animated), // hook only; actual animation rules live in effects sheet
   }
 
-  // 1. Build the “inner card” once:
+  // Lazy-load the effect stylesheet only when needed
+  const effects = (
+    <CardEffectsLoader
+      useGradient={Boolean(gradiant)}
+      useHighlight={Boolean(highlight)}
+      useReveal={Boolean(animated)}
+    />
+  )
+
   const innerCard = (
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     <div
-      className={bem(undefined, mod, className)}
+      className={bem(undefined, modifiers, className)}
       role={!redirect && Boolean(isClickable) ? "button" : undefined}
       tabIndex={!redirect && Boolean(isClickable) ? 0 : -1}
       onClick={Boolean(isClickable) && !redirect ? onClick : undefined}
@@ -67,21 +75,19 @@ export function CardView({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {/* Skeleton if loading */}
+      {effects}
       {Boolean(loading) && (
         <Skeleton
-          className={bem("skeleton", mod)}
+          className={bem("skeleton", modifiers)}
           variant="rectangular"
           {...skeletonProps}
         />
       )}
 
-      {/* Content area, mark “has-link” if redirect exists */}
       <div className={bem("content", { "has-link": Boolean(redirect?.href) }, contentClassName)}>
         {children}
       </div>
 
-      {/* Gradient bar */}
       {Boolean(gradiant) && (
         <div
           className={bem(
@@ -92,7 +98,6 @@ export function CardView({
         />
       )}
 
-      {/* Background image */}
       {isString(background) && (
         <Image
           alt="card background"
@@ -105,25 +110,23 @@ export function CardView({
     </div>
   )
 
-  // 2. Wrap innerCard in <Link> if redirect exists; otherwise, just use innerCard
-  const content = redirect && redirect.href
-    ? (
-      <Link
-        {...redirect}
-        aria-disabled={redirect.disabled ?? false}
-        className={bem("link", undefined, redirect?.className)}
-        role={role}
-        tabIndex={tabIndex}
-      >
-        {innerCard}
-      </Link>
-    )
-    : innerCard
+  const content = redirect && redirect.href ? (
+    <Link
+      {...redirect}
+      aria-disabled={redirect.disabled ?? false}
+      className={bem("link", undefined, redirect?.className)}
+      role={role}
+      tabIndex={tabIndex}
+    >
+      {innerCard}
+    </Link>
+  ) : (
+    innerCard
+  )
 
-  // 3. If animated, wrap that content in a single <AnimatedView>; otherwise return content directly
   if (animated) {
     return (
-      <Animated animation={customAnimation} {...animatedProps}>
+      <Animated animation={customAnimation} {...(animatedProps as AnimatedViewProps | undefined)}>
         {content}
       </Animated>
     )

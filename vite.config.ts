@@ -50,7 +50,6 @@ export default async () => {
           includePaths: [path.resolve(__dirname, 'src')],
           additionalData: `
             @use "@/styles/designsystem/functions.scss" as *;
-            @use "@/styles/designsystem/keyframes.scss" as *;
             @use "@/styles/designsystem/mixins.scss" as *;
             @use "@/styles/designsystem/config.scss" as *;
             @use "@/styles/ui/mixins.scss" as *;

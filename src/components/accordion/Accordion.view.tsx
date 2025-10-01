@@ -5,7 +5,8 @@ import { Icon } from "@/components/icon"
 import { create } from "@/helpers/bem"
 import { isNull } from "@/helpers/validations"
 
-import styles from "./Accordion.module.scss"
+import styles from "./Accordion.base.module.scss"
+import { AccordionEffectsLoader } from "./Accordion.effects.client"
 
 import type { AccordionViewProps } from "./Accordion.model"
 import type { JSX } from "react"
@@ -25,6 +26,9 @@ export function AccordionView({
 }: AccordionViewProps): JSX.Element {
   return (
     <div {...domRest} className={bem(undefined, { [variant]: true }, className)}>
+      {/* lazy-load only the keyframes/effects CSS */}
+      <AccordionEffectsLoader useBorderShift />
+
       {items.map((item, index) => {
         const { title, renderHeader, renderContent, actions, className: itemCls } = item
         const accId = `${id}-${title}`

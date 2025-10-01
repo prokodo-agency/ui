@@ -1,4 +1,4 @@
-import { type JSX, type ReactNode, type ChangeEvent, type FocusEvent, useCallback } from "react"
+import { type JSX, type ReactNode, type ChangeEvent, useCallback } from "react"
 
 import { create } from "@/helpers/bem"
 
@@ -96,7 +96,7 @@ export default function FormFieldClient({
             priority
             errorTranslations={messagesFields?.errors?.input}
             onValidate={(_, err) => onValidate?.(props as FormFieldModel, err)}
-            onChange={(e: FocusEvent<HTMLInputElement>) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onChange?.(props as FormFieldModel, e.target.value)
             }
             {...(props as InputProps)}
