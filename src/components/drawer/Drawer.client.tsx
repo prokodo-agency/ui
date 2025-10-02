@@ -1,6 +1,7 @@
 'use client'
 import {
   forwardRef,
+  useLayoutEffect,
   useState,
   useEffect,
   useCallback,
@@ -11,109 +12,129 @@ import {
 
 import { DrawerView } from './Drawer.view'
 
-import type {
-  DrawerRef,
-  DrawerProps,
-  DrawerChangeReason
-} from './Drawer.model'
+import type { DrawerRef, DrawerProps, DrawerChangeReason } from './Drawer.model'
 
-/**
- * Client‐side wrapper around DrawerView.
- * Manages:
- * - mounting/unmounting (so we can animate open/close)
- * - focus management (trap  restore focus to trigger)
- * - ESC‐key handler
- * - clicking outside (handled in DrawerView)
- */
 function DrawerClient(
   { open = false, closeOnBackdropClick = true, onChange, ...props }: DrawerProps,
   ref: Ref<DrawerRef>
 ) {
-  // The element that triggered open; we restore focus to it when drawer closes.
+  // element to restore focus to on close
   const triggerRef = useRef<HTMLElement | null>(null)
 
-  // Ref to the “×” close button for initial focus.
+  // refs passed to the View
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
-
-  // Ref to the container (used for focus‐trap if desired in future).
   const containerRef = useRef<HTMLDivElement | null>(null)
 
-  // Same for isOpen: start truthy SSR, but on client start closed until we run effects.
-  const [isOpen, setIsOpen] = useState(() => open)
-  // Guard to avoid firing onChange while syncing from parent.
-  const syncingFromPropRef = useRef(false)
+  // internal open state (drives classes/animation)
+  const [isOpen, setIsOpen] = useState<boolean>(() => Boolean(open))
+  // mount state: when false, DrawerView is not rendered at all (no tabbables exist)
+  const [mounted, setMounted] = useState<boolean>(() => Boolean(open))
 
-  /** Imperative handle */
-  const openDrawer = useCallback(() => {
-    // Save the element that had focus, so we can restore later.
-    triggerRef.current = document.activeElement as HTMLElement | null
-    // Then immediately set isOpen=true so CSS animates “slide in”.
-    setIsOpen(true)
-  }, [])
+  // make sure we never “flash” open before styles apply
+  useLayoutEffect(() => {
+    if (!open) {
+      setIsOpen(false)
+      setMounted(false) // if server didn't render (step 1), this is a no-op
+    }
+    // if open === true initially, we want to render immediately
+  }, [open])
+
+  // —— controlled prop sync ——
+  useEffect(() => {
+    if (open) {
+      triggerRef.current = document.activeElement as HTMLElement | null
+      if (!mounted) setMounted(true)
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          containerRef.current?.getBoundingClientRect()
+          setIsOpen(true)
+        })
+      })
+    } else {
+      setIsOpen(false) // slide out; unmount on transitionend
+    }
+
+  }, [open, mounted])
+
+  // unmount after close
+  useEffect(() => {
+    if (isOpen || !mounted) return
+    const node = containerRef.current
+    if (!node) { setMounted(false); return }
+
+    const onEnd = (e: TransitionEvent) => {
+      if (e.target !== node) return        // only the container's own transition
+      node.removeEventListener('transitionend', onEnd)
+      setMounted(false)
+      triggerRef.current?.focus?.()
+    }
+    node.addEventListener('transitionend', onEnd)
+
+    const t = setTimeout(() => {           // fallback
+      node.removeEventListener('transitionend', onEnd)
+      setMounted(false)
+      triggerRef.current?.focus?.()
+    }, 450)
+
+    return () => {
+      node.removeEventListener('transitionend', onEnd)
+      clearTimeout(t)
+    }
+  }, [isOpen, mounted])
 
   const closeDrawer = useCallback(
-     (reason?: DrawerChangeReason) => {
-      // Trigger CSS “slide out” by removing `open` class.
-      setIsOpen(false)
-      // Notify parent only if this isn't a prop-sync close:
-      if (!syncingFromPropRef.current) {
-        onChange?.({}, reason ?? 'backdropClick')
-      }
-       // Restore focus to trigger
-       triggerRef.current?.focus()
-     },
-     [onChange]
-   )
-
-  // 🔁 Sync internal state with controlled `open` prop
-  useEffect(() => {
-    // Avoid loops: mark that we're syncing due to prop change.
-    syncingFromPropRef.current = true
-    if (open && !isOpen) {
-      // capture current focus for later restore
-      triggerRef.current = document.activeElement as HTMLElement | null
-      setIsOpen(true)
-    } else if (!open && isOpen) {
-      // Close without emitting onChange (parent initiated)
-      setIsOpen(false)
-      triggerRef.current?.focus()
-    }
-    // release the guard in the microtask queue after state flush
-    queueMicrotask(() => {
-      syncingFromPropRef.current = false
-    })
-  }, [open, isOpen])
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      openDrawer,
-      closeDrawer
-    }),
-    [openDrawer, closeDrawer]
+    (reason?: DrawerChangeReason) => {
+      setIsOpen(false)      // slide out
+      onChange?.({}, reason ?? 'backdropClick')
+      // focus will be restored after unmount; also do it here as a safety
+      triggerRef.current?.focus?.()
+    },
+    [onChange]
   )
 
-  // Focus the close button when drawer is fully mounted & open.
-  useEffect(() => {
-    if (isOpen) {
-      closeButtonRef.current?.focus()
-    }
-  }, [isOpen])
-
-  // ESC‐key handler (only active while mounted).
+  // —— ESC key while open ——
   useEffect(() => {
     if (!isOpen) return
-    const handleKey = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault()
         closeDrawer('escapeKeyDown')
       }
     }
-    window.addEventListener('keydown', handleKey)
-    return () => {
-      window.removeEventListener('keydown', handleKey)
-    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [isOpen, closeDrawer])
+
+  // —— initial focus when opened ——
+  useEffect(() => {
+    if (!isOpen) return
+    // wait a tick for DrawerView to render content
+    const id = requestAnimationFrame(() => {
+      closeButtonRef.current?.focus?.()
+    })
+    return () => cancelAnimationFrame(id)
+  }, [isOpen])
+
+  // —— imperative API ——
+  const openDrawer = useCallback(() => {
+    triggerRef.current = document.activeElement as HTMLElement | null
+    setMounted(true) // create DOM first
+
+    // wait for DOM to mount & styles to apply, then flip open
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        // tiny reflow ensures initial transform/opacity are committed
+        containerRef.current?.getBoundingClientRect()
+        setIsOpen(true)
+      })
+    })
+  }, [])
+
+  useImperativeHandle(ref, () => ({ openDrawer, closeDrawer }), [openDrawer, closeDrawer])
+
+  // When closed and not animating, render nothing → no tabbables on first load
+  if (!mounted) return null
 
   return (
     <DrawerView
@@ -124,9 +145,9 @@ function DrawerClient(
       backdropProps={{
         onMouseDown: () => {
           if (isOpen && closeOnBackdropClick) {
-            closeDrawer?.('backdropClick')
+            closeDrawer('backdropClick')
           }
-        }
+        },
       }}
       onClose={closeDrawer}
       onMouseDown={e => e.stopPropagation()}
