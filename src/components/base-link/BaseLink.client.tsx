@@ -16,14 +16,14 @@ export default function BaseLinkClient({
   ...rest
 }: BaseLinkProps): JSX.Element {
   const DISABLE: CSSProperties = { pointerEvents: "none" }
-  const isAbsolute  = href?.startsWith("http")
-  const isDownload  = rest.download !== undefined
-  const isAppUrl    = /^\w+:/.test(href)
+  const isAbsolute = href?.startsWith("http")
+  const isDownload = rest.download !== undefined
+  const isAppUrl = /^\w+:/.test(href)
 
   const computedTarget = target ?? (isAbsolute ? "_blank" : undefined)
-  const computedRel    = rel ?? (isAbsolute ? "noopener noreferrer" : undefined)
-  const tabIndex       = !isNull(disabled) ? -1 : undefined
-  const linkStyle      = !isNull(disabled) ? { ...DISABLE, ...style } : style
+  const computedRel = rel ?? (isAbsolute ? "noopener noreferrer" : undefined)
+  const tabIndex = !isNull(disabled) ? -1 : undefined
+  const linkStyle = !isNull(disabled) ? { ...DISABLE, ...style } : style
 
   if (isAbsolute || isDownload || isAppUrl || LinkComponent === undefined) {
     return (

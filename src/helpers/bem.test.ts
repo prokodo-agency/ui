@@ -23,29 +23,27 @@ describe("The bem helper", () => {
       const bem = create(styles, block)
       expect(bem("element")).toBe(`${prefixed}__element`)
       expect(bem("element", "modifier")).toBe(
-        `${prefixed}__element ${prefixed}__element--modifier`
+        `${prefixed}__element ${prefixed}__element--modifier`,
       )
       expect(bem("element", { "is-enabled": true })).toBe(
-        `${prefixed}__element ${prefixed}__element--is-enabled`
+        `${prefixed}__element ${prefixed}__element--is-enabled`,
       )
     })
 
     it("should return classname with modifiers", () => {
       const bem = create(styles, block)
       expect(bem(undefined, "modifier")).toBe(
-        `${prefixed} ${prefixed}--modifier`
+        `${prefixed} ${prefixed}--modifier`,
       )
       expect(bem(undefined, { "is-enabled": true })).toBe(
-        `${prefixed} ${prefixed}--is-enabled`
+        `${prefixed} ${prefixed}--is-enabled`,
       )
     })
 
     it("should use unknown key when not defined in styles", () => {
       const bem = create(styles, block)
       expect(bem("unknown")).toBe(`${prefixed}__unknown`)
-      expect(bem(undefined, "unknown")).toBe(
-        `${prefixed} ${prefixed}--unknown`
-      )
+      expect(bem(undefined, "unknown")).toBe(`${prefixed} ${prefixed}--unknown`)
     })
   })
 })

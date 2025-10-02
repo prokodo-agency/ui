@@ -29,7 +29,6 @@ export const SwitchView: FC<SwitchViewProps> = ({
 
   return (
     <div className={bem(undefined, { [variant]: true }, className)}>
-
       {hasLabel && (
         <Label
           {...labelProps}
@@ -39,7 +38,7 @@ export const SwitchView: FC<SwitchViewProps> = ({
           className={bem(
             "label",
             undefined,
-            hideLabel ? "visually-hidden" : undefined
+            hideLabel ? "visually-hidden" : undefined,
           )}
         />
       )}

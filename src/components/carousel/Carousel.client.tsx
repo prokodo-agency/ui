@@ -39,6 +39,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
     ref,
     autoplay,
     enableControl,
+    enableDots = true,
     itemsToShow = 1,
     className,
     classNameControls,
@@ -48,6 +49,8 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
     classNameDots,
     classNameDot,
     classNameDotActive,
+    prevButton,
+    nextButton,
     responsive,
     onKeyDown,
     onMouseEnter,
@@ -164,19 +167,16 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
   }
 
   /* ------------- render ---------------------------------- */
-  if (num === 0) return <Skeleton height="200px" variant="rectangular" width="100%" />
+  if (num === 0)
+    return <Skeleton height="200px" variant="rectangular" width="100%" />
 
   return (
     <div
       {...rest}
       ref={setHostRef}
+      className={bem(undefined, { "is-active": mouseActive }, className)}
       role="button"
       tabIndex={0}
-      className={bem(
-        undefined,
-        { "is-active": mouseActive },
-        className,
-      )}
       onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
         onKeyDown?.(e)
         switch (e.key) {
@@ -188,29 +188,29 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
             break
         }
       }}
-      onMouseDown={(e) => {
+      onMouseDown={e => {
         onMouseDown?.(e)
         handleMouseDown(e, mouseStartX)
         setMouse(true)
       }}
-      onMouseEnter={(e) => {
+      onMouseEnter={e => {
         onMouseEnter?.(e)
         setPlaying(false)
       }}
-      onMouseLeave={(e) => {
+      onMouseLeave={e => {
         onMouseLeave?.(e)
         setPlaying(true)
       }}
-      onMouseUp={(e) => {
+      onMouseUp={e => {
         onMouseUp?.(e)
         handleMouseUp(e, mouseStartX, mouseEndX, slide)
         setMouse(false)
       }}
-      onTouchEnd={(e) => {
+      onTouchEnd={e => {
         onTouchEnd?.(e)
         handleTouchEnd(touchStartX, touchEndX, slide)
       }}
-      onTouchMove={(e) => {
+      onTouchMove={e => {
         onTouchMove?.(e)
         handleTouchMove(e, touchEndX)
       }}
@@ -254,34 +254,60 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
         {Boolean(enableControl) && (
           <Button
             aria-label="previous"
-            className={bem("button", undefined, classNameButtons)}
-            iconProps={{ name: "ArrowLeft01Icon", size: "md", color: "white" }}
             variant="outlined"
+            {...prevButton}
+            className={bem(
+              "button",
+              undefined,
+              `${classNameButtons} ${prevButton?.className ?? ""}`,
+            )}
+            iconProps={{
+              name: "ArrowLeft01Icon",
+              size: "md",
+              color: "white",
+              ...prevButton?.iconProps,
+            }}
             onClick={() => slide(PREV)}
           />
         )}
 
-        <span className={bem("dots", undefined, classNameDots)}>
-          {childrenArr.map((_, i) => {
-            const active = i === (current - effectiveItemsToShow + num) % num
-            return (
-              <button
-                // eslint-disable-next-line react/no-array-index-key
-                key={`dot-${i}`}
-                className={bem("dots__dot", { "is-active": active }, `${classNameDot} ${active ? (classNameDotActive ?? "") : ""}`)}
-                onClick={() => slideTo(i)}
-                onKeyDown={(e) => e.key === "Enter" && slideTo(i)}
-              />
-            )
-          })}
-        </span>
+        {enableDots && (
+          <span className={bem("dots", undefined, classNameDots)}>
+            {childrenArr.map((_, i) => {
+              const active = i === (current - effectiveItemsToShow + num) % num
+              return (
+                <button
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`dot-${i}`}
+                  className={bem(
+                    "dots__dot",
+                    { "is-active": active },
+                    `${classNameDot} ${active ? (classNameDotActive ?? "") : ""}`,
+                  )}
+                  onClick={() => slideTo(i)}
+                  onKeyDown={e => e.key === "Enter" && slideTo(i)}
+                />
+              )
+            })}
+          </span>
+        )}
 
         {Boolean(enableControl) && (
           <Button
             aria-label="next"
-            className={bem("button", undefined, classNameButtons)}
-            iconProps={{ name: "ArrowRight01Icon", size: "md", color: "white" }}
             variant="outlined"
+            {...nextButton}
+            className={bem(
+              "button",
+              undefined,
+              `${classNameButtons} ${nextButton?.className ?? ""}`,
+            )}
+            iconProps={{
+              name: "ArrowRight01Icon",
+              size: "md",
+              color: "white",
+              ...nextButton?.iconProps,
+            }}
             onClick={() => slide(NEXT)}
           />
         )}

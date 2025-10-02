@@ -22,19 +22,23 @@ export function ChipView({
 }: ChipViewProps & {
   buttonProps?: HTMLAttributes<HTMLButtonElement>
 }): JSX.Element {
-  const isClickable = typeof onClick === "function" || typeof onKeyDown === "function"
+  const isClickable =
+    typeof onClick === "function" || typeof onKeyDown === "function"
   return (
     <div
       {...rest}
       role="button"
       tabIndex={isClickable ? 0 : -1}
-      className={bem(undefined, {
-        [variant]: true,
-        "has-icon": typeof onDelete === "function",
-        "is-clickable":
-          isClickable,
-        [`${variant}--${color}`]: true,
-      }, className)}
+      className={bem(
+        undefined,
+        {
+          [variant]: true,
+          "has-icon": typeof onDelete === "function",
+          "is-clickable": isClickable,
+          [`${variant}--${color}`]: true,
+        },
+        className,
+      )}
       onClick={onClick}
       onKeyDown={onKeyDown}
     >

@@ -7,7 +7,7 @@ import type { FC } from "react"
 
 const bem = create(styles, "Animated")
 
-export const AnimatedView:FC<AnimatedViewProps> = ({
+export const AnimatedView: FC<AnimatedViewProps> = ({
   className,
   disabled = false,
   speed = "normal",
@@ -25,7 +25,7 @@ export const AnimatedView:FC<AnimatedViewProps> = ({
         [`has-${speed}-speed`]: !!speed,
         [`animate-${animation}`]: !!animation,
       },
-      className
+      className,
     )}
     {...domRest}
   >

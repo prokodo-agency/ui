@@ -1,18 +1,18 @@
 /* components/select/Select.stories.tsx
    ───────────────────────────────────── */
 
-import { Select } from "@/components/select";
+import { Select } from "@/components/select"
 
-import type { SelectItem } from "./Select.model";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { SelectItem } from "./Select.model"
+import type { Meta, StoryObj } from "@storybook/react"
 
 /* ---------- sample data ------------------------------------------------ */
 const demoItems: SelectItem[] = [
-  { value: "alpha",   label: "Alpha" },
-  { value: "beta",    label: "Beta" },
-  { value: "gamma",   label: "Gamma" },
-  { value: "delta",   label: "Delta" },
-];
+  { value: "alpha", label: "Alpha" },
+  { value: "beta", label: "Beta" },
+  { value: "gamma", label: "Gamma" },
+  { value: "delta", label: "Delta" },
+]
 
 /* ---------- meta ------------------------------------------------------- */
 const meta = {
@@ -20,24 +20,26 @@ const meta = {
   component: Select,
   parameters: {
     layout: "centered",
-    docs: { description: { component: "Accessible, SSR-safe native `<select>`." } },
+    docs: {
+      description: { component: "Accessible, SSR-safe native `<select>`." },
+    },
   },
   tags: ["autodocs"],
   argTypes: {
-    multiple:  { control: "boolean" },
-    required:  { control: "boolean" },
-    value:     { table: { disable: true } },   // managed by knob playground
-    items:     { table: { disable: true } },
+    multiple: { control: "boolean" },
+    required: { control: "boolean" },
+    value: { table: { disable: true } }, // managed by knob playground
+    items: { table: { disable: true } },
     /* hide internal styling/helpers */
-    className:          { table: { disable: true } },
-    fieldClassName:     { table: { disable: true } },
-    selectClassName:    { table: { disable: true } },
-    iconVisible:        { table: { disable: true } },
+    className: { table: { disable: true } },
+    fieldClassName: { table: { disable: true } },
+    selectClassName: { table: { disable: true } },
+    iconVisible: { table: { disable: true } },
   },
-} satisfies Meta<typeof Select>;
+} satisfies Meta<typeof Select>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 /* ---------- stories ---------------------------------------------------- */
 export const Default: Story = {
@@ -47,7 +49,7 @@ export const Default: Story = {
     items: demoItems,
     placeholder: "-- Please choose --",
   },
-};
+}
 
 export const Disabled: Story = {
   args: {
@@ -57,7 +59,7 @@ export const Disabled: Story = {
     disabled: true,
     placeholder: "-- Please choose --",
   },
-};
+}
 
 export const Required: Story = {
   args: {
@@ -65,7 +67,7 @@ export const Required: Story = {
     id: "select-demo-2",
     required: true,
   },
-};
+}
 
 export const WithError: Story = {
   args: {
@@ -73,7 +75,7 @@ export const WithError: Story = {
     id: "select-demo-3",
     errorText: "This field is required.",
   },
-};
+}
 
 export const Multiple: Story = {
   args: {
@@ -82,4 +84,4 @@ export const Multiple: Story = {
     multiple: true,
     placeholder: "-- Select one or more --",
   },
-};
+}

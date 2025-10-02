@@ -5,5 +5,11 @@ import type { JSX } from "react"
 
 /** Non-interactive SSR fallback – always expanded */
 export default function SideNavServer(props: SideNavProps): JSX.Element {
-  return <SideNavView {...props} collapsed={props.initialCollapsed ?? false} interactive={false} />
+  return (
+    <SideNavView
+      {...props}
+      collapsed={props.initialCollapsed ?? false}
+      interactive={false}
+    />
+  )
 }

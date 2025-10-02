@@ -9,5 +9,5 @@ export default createLazyWrapper<SelectProps>({
   name: "Select",
   Client: SelectClient,
   Server: SelectServer,
-  isInteractive: () => true
+  isInteractive: () => true,
 })

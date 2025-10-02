@@ -1,13 +1,13 @@
-import type { InputProps } from "../input";
-import type { Dayjs } from "dayjs";
+import type { InputProps } from "../input"
+import type { Dayjs } from "dayjs"
 
-export type DatePickerValue = Dayjs | string | null;
+export type DatePickerValue = Dayjs | string | null
 
 export type DatePickerErrorTranslations = {
-  required?: string;
-  minDate?: string;
-  maxDate?: string;
-};
+  required?: string
+  minDate?: string
+  maxDate?: string
+}
 
 export interface DatePickerProps
   extends Omit<
@@ -15,49 +15,49 @@ export interface DatePickerProps
     "onChange" | "value" | "errorTranslations" | "type"
   > {
   /** Single-line only */
-  multiline?: false;
+  multiline?: false
   /** Single-line only */
-  rows?: undefined;
+  rows?: undefined
   /** Single-line only */
-  minRows?: undefined;
+  minRows?: undefined
   /** Single-line only */
-  maxRows?: undefined;
+  maxRows?: undefined
   /** Label text */
-  label: string;
+  label: string
   /** unique name/id */
-  name: string;
+  name: string
   /** required flag */
-  required?: boolean;
+  required?: boolean
   /** error text from parent/form */
-  errorText?: string;
+  errorText?: string
   /** helper/hint text */
-  helperText?: string;
+  helperText?: string
   /** current Dayjs|null value */
-  value?: DatePickerValue;
+  value?: DatePickerValue
   /** minimum allowed date */
-  minDate?: DatePickerValue;
+  minDate?: DatePickerValue
   /** maximum allowed date */
-  maxDate?: DatePickerValue;
+  maxDate?: DatePickerValue
   /** called with Dayjs|null */
-  onChange?: (value: DatePickerValue) => void;
+  onChange?: (value: DatePickerValue) => void
   /** override default messages */
-  translations?: DatePickerErrorTranslations;
+  translations?: DatePickerErrorTranslations
   /**
    * Include time selection (uses <input type="datetime-local"> when true).
    * Default: false (date only with <input type="date">).
    */
-  withTime?: boolean;
+  withTime?: boolean
 
   /**
    * Parsing/formatting pattern.
    * Defaults to "YYYY-MM-DD" for date-only and "YYYY-MM-DDTHH:mm" when withTime=true.
    */
-  format?: string;
+  format?: string
 
   /**
    * Minute granularity for time part (applies when withTime=true).
    * Translates to HTML input "step" in seconds. Example: 15 => 900 seconds.
    * Default: 1 minute.
    */
-  minuteStep?: number;
+  minuteStep?: number
 }

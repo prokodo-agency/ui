@@ -3,3 +3,5 @@ coverage/
 node_modules/
 **/*.scss
 pnpm-lock.yaml
+storybook-static/
+assets/

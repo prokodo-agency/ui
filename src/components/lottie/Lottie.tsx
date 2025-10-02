@@ -1,6 +1,14 @@
 "use client"
 
-import { type FC, memo, useEffect, useRef, useState, lazy, Suspense } from "react"
+import {
+  type FC,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+  lazy,
+  Suspense,
+} from "react"
 
 import { create } from "@/helpers/bem"
 

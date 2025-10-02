@@ -1,8 +1,8 @@
-import { createIsland } from '@/helpers/createIsland'
+import { createIsland } from "@/helpers/createIsland"
 
-import DrawerServer from './Drawer.server'
+import DrawerServer from "./Drawer.server"
 
-import type { DrawerProps } from './Drawer.model'
+import type { DrawerProps } from "./Drawer.model"
 
 /**
  * The “Island” entrypoint.  Consumers import this file:
@@ -12,9 +12,9 @@ import type { DrawerProps } from './Drawer.model'
  * and use <Drawer open={...} ...>...</Drawer> in their JSX.
  */
 export const Drawer = createIsland<DrawerProps>({
-  name: 'Drawer',
+  name: "Drawer",
   Server: DrawerServer,
-  loadLazy: () => import('./Drawer.lazy')
+  loadLazy: () => import("./Drawer.lazy"),
 })
 
 export default Drawer

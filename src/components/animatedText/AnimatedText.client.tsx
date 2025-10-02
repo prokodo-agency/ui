@@ -6,15 +6,13 @@ import { AnimatedTextView } from "./AnimatedText.view"
 
 import type { AnimatedTextProps } from "./AnimatedText.model"
 
-export default function AnimatedTextClient(
-  {
-    speed = 30,
-    delay = 0,
-    disabled,
-    children,
-    ...rest
-  }: AnimatedTextProps,
-): JSX.Element {
+export default function AnimatedTextClient({
+  speed = 30,
+  delay = 0,
+  disabled,
+  children,
+  ...rest
+}: AnimatedTextProps): JSX.Element {
   const [index, setIndex] = useState(0)
 
   /* start typing after the optional delay */
@@ -23,7 +21,7 @@ export default function AnimatedTextClient(
 
     const t0 = window.setTimeout(() => {
       const id = window.setInterval(() => {
-        setIndex((i) => {
+        setIndex(i => {
           if (i + 1 >= children?.length) {
             clearInterval(id)
             return children?.length
@@ -36,10 +34,5 @@ export default function AnimatedTextClient(
     return () => clearTimeout(t0)
   }, [children?.length, delay, disabled, speed])
 
-  return (
-    <AnimatedTextView
-      {...rest}
-      text={children?.slice(0, index)}
-    />
-  )
+  return <AnimatedTextView {...rest} text={children?.slice(0, index)} />
 }

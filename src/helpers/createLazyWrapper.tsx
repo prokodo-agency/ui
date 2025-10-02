@@ -1,12 +1,12 @@
-'use client'
+"use client"
 import {
   type ComponentType,
   type ReactElement,
   type FC,
   cloneElement,
-} from 'react'
+} from "react"
 
-import { useHydrationReady } from '@/hooks/useHydrationReady'
+import { useHydrationReady } from "@/hooks/useHydrationReady"
 
 export interface LazyWrapperOptions<P extends object> {
   name: string
@@ -33,9 +33,8 @@ export function createLazyWrapper<P extends object>({
 
     const autoInteractive =
       Object.entries(props).some(
-        ([k, v]) => k.startsWith('on') && typeof v === 'function',
-      ) ||
-      props.redirect !== undefined
+        ([k, v]) => k.startsWith("on") && typeof v === "function",
+      ) || props.redirect !== undefined
 
     const interactive = customInteractive
       ? customInteractive(props) || autoInteractive
@@ -51,26 +50,34 @@ export function createLazyWrapper<P extends object>({
     if (interactive && (priority || visible)) {
       const clientEl = <Client {...props} />
       // 1) log which lazy wrapper is rendering:
-      if (typeof process !== 'undefined' && typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string") {
+      if (
+        typeof process !== "undefined" &&
+        typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string"
+      ) {
         console.debug(
           `[hydrate] createLazyWrapper “${name}” rendering client (priority=${Boolean(
-            priority
-          )}, visible=${visible})`
+            priority,
+          )}, visible=${visible})`,
         )
       }
 
       // 2) only pass priority when true:
-      const extra: {'data-island': string; priority?: boolean} = { 'data-island': islandName }
+      const extra: { "data-island": string; priority?: boolean } = {
+        "data-island": islandName,
+      }
       if (priority) {
         extra.priority = priority
       }
       return cloneElement(clientEl as ReactElement, extra)
     } else {
       const serverEl = <Server {...props} />
-      if (typeof process !== 'undefined' && typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string") {
-      // 1) log which lazy wrapper is rendering server:
+      if (
+        typeof process !== "undefined" &&
+        typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string"
+      ) {
+        // 1) log which lazy wrapper is rendering server:
         console.debug(
-          `[hydrate] createLazyWrapper “${name}” rendering server (visible=${visible})`
+          `[hydrate] createLazyWrapper “${name}” rendering server (visible=${visible})`,
         )
       }
 
@@ -78,7 +85,7 @@ export function createLazyWrapper<P extends object>({
       return cloneElement(
         serverEl as ReactElement,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        { 'data-island': islandName, ref } as any
+        { "data-island": islandName, ref } as any,
       )
     }
   }

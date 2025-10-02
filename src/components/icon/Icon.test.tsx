@@ -12,9 +12,9 @@ describe("The common Icon component", () => {
     expect(icon).toHaveAttribute("aria-hidden", "true")
 
     // Check inline styles directly
-    expect(icon).toHaveStyle({width:"16px"})
-    expect(icon).toHaveStyle({height:"16px"})
-    expect(icon).toHaveStyle({backgroundColor:"currentColor"})
+    expect(icon).toHaveStyle({ width: "16px" })
+    expect(icon).toHaveStyle({ height: "16px" })
+    expect(icon).toHaveStyle({ backgroundColor: "currentColor" })
     expect(icon.style.maskImage).toContain("abacus_icon.svg")
   })
 
@@ -31,15 +31,15 @@ describe("The common Icon component", () => {
     render(<Icon name="AbsoluteIcon" />)
 
     const icon = screen.getByRole("presentation", { hidden: true })
-    expect(icon).toHaveStyle({width:"16px"})
-    expect(icon).toHaveStyle({height:"16px"})
+    expect(icon).toHaveStyle({ width: "16px" })
+    expect(icon).toHaveStyle({ height: "16px" })
   })
 
   it("applies size `lg` (`40px`)", () => {
     render(<Icon name="AbsoluteIcon" size="lg" />)
 
     const icon = screen.getByRole("presentation", { hidden: true })
-    expect(icon).toHaveStyle({width:"40px"})
-    expect(icon).toHaveStyle({height:"40px"})
+    expect(icon).toHaveStyle({ width: "40px" })
+    expect(icon).toHaveStyle({ height: "40px" })
   })
 })

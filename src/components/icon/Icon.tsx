@@ -14,9 +14,9 @@ const bem = create(styles, "Icon")
 
 /* ---------- size helper --------------------------------- */
 export const getIconSize = (s?: IconSize): number =>
-  ({ xs: 15, sm: 20, md: 30, lg: 40, xl: 50 } as const)[
-    s as keyof object
-  ] ?? (s ?? 16)
+  (({ xs: 15, sm: 20, md: 30, lg: 40, xl: 50 }) as const)[s as keyof object] ??
+  s ??
+  16
 
 /* ---------- icon URL (CDN) ------------------------------- */
 const iconUrl = (n: IconName): string =>
@@ -36,16 +36,18 @@ export const Icon: FC<IconProps> = ({
   ...rest
 }) => {
   if (!name) return null
-  const isCustomColor = Boolean(color?.includes("#")) || Boolean(color?.includes("rgb")) || Boolean(color?.includes("rgba"))
+  const isCustomColor =
+    Boolean(color?.includes("#")) ||
+    Boolean(color?.includes("rgb")) ||
+    Boolean(color?.includes("rgba"))
   const sizePx = getIconSize(size)
-  const url    = iconUrl(name)
+  const url = iconUrl(name)
   const mask: CSSProperties = {
-    width:  sizePx,
+    width: sizePx,
     height: sizePx,
     backgroundColor: Boolean(isCustomColor) ? color : "currentColor",
-    maskImage:       `url("${url}")`,
+    maskImage: `url("${url}")`,
     WebkitMaskImage: `url("${url}")`,
-
   }
 
   return (
@@ -55,9 +57,13 @@ export const Icon: FC<IconProps> = ({
       aria-label={label}
       role={isString(label) ? "img" : "presentation"}
       style={{ ...mask }}
-      className={bem(undefined, {
-        [`${color}`]: Boolean(color),
-      }, className)}
+      className={bem(
+        undefined,
+        {
+          [`${color}`]: Boolean(color),
+        },
+        className,
+      )}
     />
   )
 }

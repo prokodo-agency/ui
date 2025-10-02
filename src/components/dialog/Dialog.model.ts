@@ -3,7 +3,7 @@ import type { HeadlineProps } from "@/components/headline"
 import type { IconProps } from "@/components/icon"
 import type { Ref, ReactNode, HTMLAttributes, KeyboardEvent } from "react"
 
-export type DialogChangeReson = 'backdropClick' | 'escapeKeyDown'
+export type DialogChangeReson = "backdropClick" | "escapeKeyDown"
 
 /** Imperative handle for opening/closing the dialog */
 export type DialogRef = {
@@ -12,7 +12,10 @@ export type DialogRef = {
 }
 
 /** A single action button in the dialog footer */
-export type DialogAction = Omit<ButtonProps, "id" | "title"> & { id: string; title?: string }
+export type DialogAction = Omit<ButtonProps, "id" | "title"> & {
+  id: string
+  title?: string
+}
 
 /** Collection of action buttons */
 export type DialogActions = DialogAction[]
@@ -33,7 +36,7 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
   /** the title text */
   title?: string
   /** passthrough into your `<Headline>` (but *not* its children) */
-  titleProps?: Omit<HeadlineProps, 'children'>
+  titleProps?: Omit<HeadlineProps, "children">
   hideTitle?: boolean
   renderHeader?: () => ReactNode
   hideCloseButton?: boolean
@@ -45,13 +48,16 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
   containerChildren?: ReactNode
   /** extra class on the header region */
   classNameHeader?: string
-  scroll?: 'paper' | 'body'
+  scroll?: "paper" | "body"
   fullScreen?: boolean
   onClose?: () => void
   onCloseKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void
   children?: ReactNode
   closeOnBackdropClick?: boolean
-  closeButtonProps?: Omit<HTMLAttributes<HTMLButtonElement>, "ref" | "onClick" | "onKeyDown"> & {
+  closeButtonProps?: Omit<
+    HTMLAttributes<HTMLButtonElement>,
+    "ref" | "onClick" | "onKeyDown"
+  > & {
     iconProps?: IconProps
   }
   /** focus the “X” button when the dialog opens */
@@ -66,16 +72,12 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
  */
 export type DialogProps = Omit<
   DialogViewProps,
-  'open' | 'onChange' | 'onCloseKeyDown'
+  "open" | "onChange" | "onCloseKeyDown"
 > & {
   /** initial open flag from the page or parent */
   open?: boolean
   /** callback signature */
-  onChange?: (
-    event: unknown,
-    reason: DialogChangeReson,
-    state: boolean
-  ) => void
+  onChange?: (event: unknown, reason: DialogChangeReson, state: boolean) => void
   /** your imperative handle */
   ref?: Ref<DialogRef>
 }

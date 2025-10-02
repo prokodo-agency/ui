@@ -1,5 +1,5 @@
-'use client'
-import { useEffect, useRef } from 'react'
+"use client"
+import { useEffect, useRef } from "react"
 
 import { isString } from "@/helpers/validations"
 
@@ -7,7 +7,7 @@ type Props = {
   isOpen: boolean
   containerRef?: React.RefObject<HTMLDivElement | null>
   closeButtonRef?: React.RefObject<HTMLButtonElement | null>
-  onClose?: (reason: 'backdropClick' | 'escapeKeyDown') => void
+  onClose?: (reason: "backdropClick" | "escapeKeyDown") => void
   useSlide?: boolean
 }
 
@@ -26,7 +26,7 @@ export const DrawerEffectsLoader = ({
     if (!isOpen) return
 
     const { body, documentElement } = document
-    const {scrollY} = window
+    const { scrollY } = window
 
     const prev = {
       overflow: body.style.overflow,
@@ -37,11 +37,11 @@ export const DrawerEffectsLoader = ({
     }
 
     // iOS-safe lock
-    body.style.overflow = 'hidden'
-    body.style.position = 'fixed'
+    body.style.overflow = "hidden"
+    body.style.position = "fixed"
     body.style.top = `-${scrollY}px`
-    body.style.width = '100%'
-    documentElement.style.overscrollBehavior = 'none'
+    body.style.width = "100%"
+    documentElement.style.overscrollBehavior = "none"
 
     return () => {
       body.style.overflow = prev.overflow
@@ -62,7 +62,8 @@ export const DrawerEffectsLoader = ({
       lastFocused.current = (document.activeElement as HTMLElement) ?? null
 
       // Make container programmatically focusable if needed
-      if (!container.hasAttribute('tabindex')) container.setAttribute('tabindex', '-1')
+      if (!container.hasAttribute("tabindex"))
+        container.setAttribute("tabindex", "-1")
 
       // Initial focus: close button or container
       const first =
@@ -83,15 +84,20 @@ export const DrawerEffectsLoader = ({
     if (!container) return
 
     const onKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         e.stopPropagation()
-        onClose?.('escapeKeyDown')
+        onClose?.("escapeKeyDown")
         return
       }
-      if (e.key !== 'Tab') return
+      if (e.key !== "Tab") return
 
-      const nodes = Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE))
-        .filter(el => !Boolean(el.hasAttribute('inert')) && !isString(el.getAttribute('aria-hidden')))
+      const nodes = Array.from(
+        container.querySelectorAll<HTMLElement>(FOCUSABLE),
+      ).filter(
+        el =>
+          !Boolean(el.hasAttribute("inert")) &&
+          !isString(el.getAttribute("aria-hidden")),
+      )
       const [first] = nodes
       const last = nodes.at(-1)
       if (!first || !last) return
@@ -106,8 +112,8 @@ export const DrawerEffectsLoader = ({
       }
     }
 
-    document.addEventListener('keydown', onKeydown, true)
-    return () => document.removeEventListener('keydown', onKeydown, true)
+    document.addEventListener("keydown", onKeydown, true)
+    return () => document.removeEventListener("keydown", onKeydown, true)
   }, [isOpen, containerRef, onClose])
 
   return null

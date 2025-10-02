@@ -28,7 +28,7 @@ export type LinkClickProps = LinkDefaultProps & {
 export type LinkProps = LinkHrefProps | LinkClickProps
 
 export type LinkViewProps = LinkProps & {
-  LinkTag: 'a' | 'span';
+  LinkTag: "a" | "span"
   BaseLinkComponent: ComponentType<BaseLinkProps>
-  hasHandlers: boolean;
-};
+  hasHandlers: boolean
+}

@@ -1,6 +1,6 @@
 import { Children, type JSX } from "react"
 
-import { Skeleton } from "@/components/skeleton"  // optional placeholder
+import { Skeleton } from "@/components/skeleton" // optional placeholder
 import { create } from "@/helpers/bem"
 
 import styles from "./Carousel.module.scss"

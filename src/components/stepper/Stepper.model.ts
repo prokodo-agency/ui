@@ -1,7 +1,16 @@
 // Stepper.model.ts
-import type { Ref, RefObject, HTMLAttributes, KeyboardEvent, FocusEvent, MouseEvent } from "react"
+import type {
+  Ref,
+  RefObject,
+  HTMLAttributes,
+  KeyboardEvent,
+  FocusEvent,
+  MouseEvent,
+} from "react"
 
-export type StepperChangeEvent = MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>
+export type StepperChangeEvent =
+  | MouseEvent<HTMLDivElement>
+  | KeyboardEvent<HTMLDivElement>
 
 export type StepperRef = {
   /** Jump directly to a given step index (0‐based). */

@@ -4,7 +4,7 @@ import type { PostWidgetCarouselItem } from "./PostWidgetCarousel.model"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/🚧 Experimental/blog/PostWidgetCarousel",
+  title: "prokodo/blog/PostWidgetCarousel",
   component: PostWidgetCarousel,
   parameters: {
     layout: "centered",

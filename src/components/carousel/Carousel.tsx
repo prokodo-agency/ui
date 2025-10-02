@@ -8,5 +8,5 @@ export const Carousel = createIsland<CarouselProps>({
   name: "Carousel",
   Server: CarouselServer,
   loadLazy: () => import("./Carousel.lazy"),
-  isInteractive: () => true
+  isInteractive: () => true,
 })

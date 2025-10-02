@@ -1,9 +1,11 @@
+import { isValidElement, type JSX } from "react"
+
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
 import { Animated } from "../animated"
 import { Button } from "../button"
-import { Card } from "../card"
+import { Card, type CardProps } from "../card"
 import { Headline } from "../headline"
 import { RichText } from "../rich-text"
 import { Skeleton } from "../skeleton"
@@ -11,8 +13,8 @@ import { Skeleton } from "../skeleton"
 import styles from "./PostItem.module.scss"
 import { PostItemAuthor } from "./PostItemAuthor"
 
+import type { ImageProps } from "../image"
 import type { PostItemProps, PostItemViewPrivateProps } from "./PostItem.model"
-import type { JSX } from "react"
 
 const bem = create(styles, "PostItem")
 
@@ -21,6 +23,9 @@ export function PostItemView(
 ): JSX.Element {
   const {
     className,
+    classes,
+    componentsProps,
+
     readCount = 0,
     title,
     content,
@@ -43,7 +48,46 @@ export function PostItemView(
     // public opts
     structuredData = true,
     animate = true,
+    ...rest
   } = props
+
+  // Merge Card props without widening variant to string
+  const cardMerged = {
+    ...(componentsProps?.card as Partial<CardProps>),
+    ...(rest as Partial<CardProps>),
+    // keep variant narrow; if none is provided, let Card default handle it
+    variant: (componentsProps?.card?.variant ??
+      (rest as Partial<CardProps>)?.variant ??
+      undefined) as CardProps["variant"],
+  }
+
+  // Prepare merged image props for the client-side ImageComponent branch
+  const baseImg = image as ImageProps | undefined
+  const imageMerged: ImageProps | undefined = baseImg
+    ? ({
+        ...baseImg,
+        ...(componentsProps?.image ?? {}),
+        className: bem(
+          "image",
+          undefined,
+          [baseImg.className, componentsProps?.image?.className, classes?.image]
+            .filter(Boolean)
+            .join(" "),
+        ),
+        // perf-safe defaults (don’t widen the type)
+        decoding:
+          baseImg.decoding ?? componentsProps?.image?.decoding ?? "async",
+        loading: baseImg.loading ?? componentsProps?.image?.loading ?? "lazy",
+        sizes:
+          baseImg.sizes ??
+          componentsProps?.image?.sizes ??
+          "(max-width: 960px) 100vw, 25vw",
+        // IMPORTANT: only include imageComponent if truthy to avoid union-branch issues
+        ...(isValidElement(baseImg?.imageComponent)
+          ? { imageComponent: baseImg.imageComponent }
+          : {}),
+      } as ImageProps)
+    : undefined
 
   const ArticleWrapper = animate
     ? Animated
@@ -54,34 +98,57 @@ export function PostItemView(
         children: React.ReactNode
         className?: string
       }) => <div className={className}>{children}</div>
+
   return (
     <article
       itemScope
-      className={bem(undefined, undefined, className)}
-      itemType="https://schema.org/BlogPosting"
+      className={bem(
+        undefined,
+        undefined,
+        [className, classes?.root].filter(Boolean).join(" "),
+      )}
+      itemType="https://schema.org/BlogPosting
+"
     >
-      <div className={bem("grid")}>
-        <div className={bem("main")}>
-          <ArticleWrapper className={bem("animation")}>
+      <div className={bem("grid", undefined, classes?.grid)}>
+        <div className={bem("main", undefined, classes?.main)}>
+          <ArticleWrapper
+            className={bem("animation", undefined, classes?.animation)}
+          >
             <header>
               <Headline
-                className={bem("headline", undefined, title?.className)}
-                size="lg"
-                type="h2"
-                {...title}
+                {...{ ...title, ...(componentsProps?.headline ?? {}) }}
+                size={title?.size ?? componentsProps?.headline?.size ?? "lg"}
+                type={title?.type ?? componentsProps?.headline?.type ?? "h2"}
+                className={bem(
+                  "headline",
+                  undefined,
+                  [
+                    title?.className,
+                    componentsProps?.headline?.className,
+                    classes?.headline,
+                  ]
+                    .filter(Boolean)
+                    .join(" "),
+                )}
               >
                 {title.content}
               </Headline>
 
-              <div className={bem("info")}>
+              <div className={bem("info", undefined, classes?.info)}>
                 {author && (
-                  <PostItemAuthor avatar={author.avatar} name={author.name} />
+                  <PostItemAuthor
+                    {...author}
+                    {...(componentsProps?.author ?? {})}
+                    avatar={author.avatar}
+                    name={author.name}
+                  />
                 )}
 
                 {isString(date) && (
                   <p
                     aria-label={`Published on ${date}`}
-                    className={bem("date")}
+                    className={bem("date", undefined, classes?.date)}
                   >
                     <time dateTime={metaDate} itemProp="datePublished">
                       {date}
@@ -92,7 +159,11 @@ export function PostItemView(
                 {readMinutes > 0 && (
                   <p
                     aria-label={`${readMinutes} min read`}
-                    className={bem("reading__time")}
+                    className={bem(
+                      "reading__time",
+                      undefined,
+                      classes?.readingTime,
+                    )}
                   >
                     · {readMinutes} min read
                   </p>
@@ -102,9 +173,13 @@ export function PostItemView(
                   <div
                     itemScope
                     aria-label={`${readCount} reads`}
-                    className={bem("read__count")}
                     itemProp="interactionStatistic"
                     itemType="https://schema.org/InteractionCounter"
+                    className={bem(
+                      "read__count",
+                      undefined,
+                      classes?.readCount,
+                    )}
                   >
                     <meta
                       content="https://schema.org/ReadAction"
@@ -118,7 +193,13 @@ export function PostItemView(
 
             {isString(content) && (
               <div itemProp="articleBody">
-                <RichText className={bem("content__paragraph")}>
+                <RichText
+                  className={bem(
+                    "content__paragraph",
+                    undefined,
+                    classes?.contentParagraph,
+                  )}
+                >
                   {content}
                 </RichText>
               </div>
@@ -126,14 +207,30 @@ export function PostItemView(
 
             {button && (
               <Button
-                variant="outlined"
-                {...button}
-                className={bem("button", undefined, button?.className)}
+                {...{ ...button, ...(componentsProps?.button ?? {}) }}
+                className={bem(
+                  "button",
+                  undefined,
+                  [
+                    button?.className,
+                    componentsProps?.button?.className,
+                    classes?.button,
+                  ]
+                    .filter(Boolean)
+                    .join(" "),
+                )}
                 contentClassName={bem(
                   "button__content",
                   undefined,
-                  button?.contentClassName,
+                  [button?.contentClassName, classes?.buttonContent]
+                    .filter(Boolean)
+                    .join(" "),
                 )}
+                variant={
+                  button?.variant ??
+                  componentsProps?.button?.variant ??
+                  "outlined"
+                }
               />
             )}
           </ArticleWrapper>
@@ -141,13 +238,22 @@ export function PostItemView(
 
         {(Boolean(hasImage) ||
           (!Boolean(isClient) && isString(image?.src as string))) && (
-          <aside className={bem("media")}>
+          <aside className={bem("media", undefined, classes?.media)}>
             <Card
-              enableShadow
+              {...cardMerged}
               background={image?.src as string}
-              className={bem("image__wrapper")}
-              contentClassName={bem("image__content__wrapper")}
+              enableShadow={cardMerged.enableShadow ?? true}
               redirect={button?.redirect}
+              className={bem(
+                "image__wrapper",
+                undefined,
+                classes?.imageWrapper,
+              )}
+              contentClassName={bem(
+                "image__content__wrapper",
+                undefined,
+                classes?.imageContentWrapper,
+              )}
             >
               {Boolean(isClient) && !Boolean(imageLoaded) && (
                 <Skeleton
@@ -156,19 +262,13 @@ export function PostItemView(
                   height="275px"
                 />
               )}
+
               {Boolean(isClient) &&
                 Boolean(hasImage) &&
                 ImageComponent &&
-                isString(image?.src as string) && (
-                  <ImageComponent
-                    {...image}
-                    className={bem("image")}
-                    decoding={image?.decoding ?? "async"}
-                    fetchPriority={image?.fetchPriority}
-                    loading={image?.loading ?? "lazy"}
-                    sizes={image?.sizes ?? "(max-width: 960px) 100vw, 25vw"}
-                    onLoad={onImageLoad}
-                  />
+                isString(image?.src as string) &&
+                imageMerged && (
+                  <ImageComponent {...imageMerged} onLoad={onImageLoad} />
                 )}
             </Card>
           </aside>

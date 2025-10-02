@@ -18,14 +18,14 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    name:         { control: "text", description: "Prefix for each field name" },
-    fields:             { table: { disable: true } },
-    value:              { table: { disable: true } },
-    onChange:           { action: "changed", table: { disable: true } },
-    buttonAddProps:     { table: { disable: true } },
-    buttonDeleteProps:  { table: { disable: true } },
-    className:          { table: { disable: true } },
-    classNameList:      { table: { disable: true } },
+    name: { control: "text", description: "Prefix for each field name" },
+    fields: { table: { disable: true } },
+    value: { table: { disable: true } },
+    onChange: { action: "changed", table: { disable: true } },
+    buttonAddProps: { table: { disable: true } },
+    buttonDeleteProps: { table: { disable: true } },
+    className: { table: { disable: true } },
+    classNameList: { table: { disable: true } },
   },
 } satisfies Meta<typeof DynamicList>
 
@@ -38,9 +38,7 @@ type Story = StoryObj<typeof meta>
 export const SingleField: Story = {
   args: {
     name: "values",
-    fields: [
-      { name: "value", label: "Value" },
-    ],
+    fields: [{ name: "value", label: "Value" }],
     value: ["First item", "Second item"],
   },
 }
@@ -58,26 +56,26 @@ export const MultiField: Story = {
         items: [
           {
             value: "example-1",
-            label: "Example 1"
+            label: "Example 1",
           },
           {
             value: "example-2",
-            label: "Example 2"
+            label: "Example 2",
           },
           {
             value: "example-3",
-            label: "Example 3"
-          }
-        ]
+            label: "Example 3",
+          },
+        ],
       },
       { name: "name", label: "Page Name", placeholder: "e.g. Startseite" },
-      { name: "url",  label: "URL",  type: "url", placeholder: "https://..." },
+      { name: "url", label: "URL", type: "url", placeholder: "https://..." },
     ],
     value: [
       { name: "Startseite", url: "https://prokodo.de/" },
-      { name: "Hausbau",    url: "https://prokodo.de/" },
+      { name: "Hausbau", url: "https://prokodo.de/" },
     ],
-    onChange: (val) => console.log(val)
+    onChange: val => console.log(val),
   },
 }
 
@@ -88,6 +86,10 @@ export const CustomButtons: Story = {
     fields: [{ name: "value", label: "Tag" }],
     value: ["react", "typescript"],
     buttonDeleteProps: { iconProps: { name: "AccessIcon" }, variant: "text" },
-    buttonAddProps: { title: "Add new access", variant: "text", color: "success" }
+    buttonAddProps: {
+      title: "Add new access",
+      variant: "text",
+      color: "success",
+    },
   },
 }

@@ -11,7 +11,7 @@ export default createLazyWrapper<RichTextProps>({
   name: "RichText",
   Client: RichTextClient,
   Server: RichTextServer,
-  hydrateOnVisible: true,            // only hydrate when it scrolls into view
+  hydrateOnVisible: true, // only hydrate when it scrolls into view
   ioOptions: { threshold: 0.1 },
   isInteractive: () => true,
 })

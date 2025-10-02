@@ -66,7 +66,9 @@ export const Table: FC<TableProps> = ({
               <tr
                 // eslint-disable-next-line react/no-array-index-key
                 key={`table-body-row-${a}`}
-                className={bem("body__row", {"has-link": isString(row?.redirect?.href)})}
+                className={bem("body__row", {
+                  "has-link": isString(row?.redirect?.href),
+                })}
               >
                 {row?.cells
                   .filter(el => el !== null)

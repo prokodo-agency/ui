@@ -7,18 +7,21 @@ import type { FC } from "react"
 
 const bem = create(styles, "Grid")
 
-export const Grid: FC<GridProps> = (
-  ({ spacing = 2, className, children, ...props }) => (
-    <div
-      className={bem(undefined, undefined, className)}
-      style={{
-        gap: `${spacing * 8}px`,
-      }}
-      {...props}
-    >
-      {children}
-    </div>
-  )
+export const Grid: FC<GridProps> = ({
+  spacing = 2,
+  className,
+  children,
+  ...props
+}) => (
+  <div
+    className={bem(undefined, undefined, className)}
+    style={{
+      gap: `${spacing * 8}px`,
+    }}
+    {...props}
+  >
+    {children}
+  </div>
 )
 
 Grid.displayName = "Grid"

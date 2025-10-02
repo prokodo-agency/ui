@@ -1,5 +1,11 @@
 /* eslint-disable */
-import type { FormEvent, ReactElement, FormHTMLAttributes, HTMLAttributes, InputHTMLAttributes } from "react"
+import type {
+  FormEvent,
+  ReactElement,
+  FormHTMLAttributes,
+  HTMLAttributes,
+  InputHTMLAttributes,
+} from "react"
 import type { ButtonProps } from "../button"
 import type { HeadlineProps } from "../headline"
 
@@ -8,10 +14,7 @@ import {
   type DatePickerProps,
   type DatePickerErrorTranslations,
 } from "../datePicker"
-import {
-  DynamicList,
-  type DynamicListProps,
-} from "../dynamic-list"
+import { DynamicList, type DynamicListProps } from "../dynamic-list"
 import { Input, type InputProps, type InputErrorTranslations } from "../input"
 import { InputOTP } from "../inputOTP"
 import { Select, type SelectProps } from "../select"
@@ -29,9 +32,20 @@ export type FormVariants =
   | "info"
   | "warning"
 
-export type FormFieldTypes = "input" | "select" | "switch" | "slider" | "date" | "dynamic-list"
+export type FormFieldTypes =
+  | "input"
+  | "select"
+  | "switch"
+  | "slider"
+  | "date"
+  | "dynamic-list"
 
-export type FormFieldValue = string | boolean | string[] | Record<string, string>[] | undefined
+export type FormFieldValue =
+  | string
+  | boolean
+  | string[]
+  | Record<string, string>[]
+  | undefined
 
 export type FormFieldCondition = {
   fieldId: string

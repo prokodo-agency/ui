@@ -4,4 +4,6 @@ export type {
   PostTeaserHeadline,
   PostTeaserImage,
   PostTeaserRedirect,
+  PostTeaserClasses,
+  PostTeaserComponentsProps,
 } from "./PostTeaser.model"

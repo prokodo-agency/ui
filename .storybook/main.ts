@@ -10,16 +10,16 @@ const config = {
     "@storybook/addon-essentials",
     "@storybook/addon-themes",
     "@storybook/addon-interactions",
-    "@chromatic-com/storybook"
+    "@chromatic-com/storybook",
   ],
 
   framework: {
     name: "@storybook/react-vite",
     options: {
-      builder: "@storybook/builder-vite"
+      builder: "@storybook/builder-vite",
     },
   },
-  viteFinal: async (config) => {
+  viteFinal: async config => {
     return mergeConfig(config, {
       resolve: {
         alias: {

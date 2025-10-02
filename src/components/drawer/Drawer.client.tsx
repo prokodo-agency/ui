@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import {
   forwardRef,
   useLayoutEffect,
@@ -8,15 +8,20 @@ import {
   useImperativeHandle,
   useRef,
   type Ref,
-} from 'react'
+} from "react"
 
-import { DrawerView } from './Drawer.view'
+import { DrawerView } from "./Drawer.view"
 
-import type { DrawerRef, DrawerProps, DrawerChangeReason } from './Drawer.model'
+import type { DrawerRef, DrawerProps, DrawerChangeReason } from "./Drawer.model"
 
 function DrawerClient(
-  { open = false, closeOnBackdropClick = true, onChange, ...props }: DrawerProps,
-  ref: Ref<DrawerRef>
+  {
+    open = false,
+    closeOnBackdropClick = true,
+    onChange,
+    ...props
+  }: DrawerProps,
+  ref: Ref<DrawerRef>,
 ) {
   // element to restore focus to on close
   const triggerRef = useRef<HTMLElement | null>(null)
@@ -54,56 +59,59 @@ function DrawerClient(
     } else {
       setIsOpen(false) // slide out; unmount on transitionend
     }
-
   }, [open, mounted])
 
   // unmount after close
   useEffect(() => {
     if (isOpen || !mounted) return
     const node = containerRef.current
-    if (!node) { setMounted(false); return }
+    if (!node) {
+      setMounted(false)
+      return
+    }
 
     const onEnd = (e: TransitionEvent) => {
-      if (e.target !== node) return        // only the container's own transition
-      node.removeEventListener('transitionend', onEnd)
+      if (e.target !== node) return // only the container's own transition
+      node.removeEventListener("transitionend", onEnd)
       setMounted(false)
       triggerRef.current?.focus?.()
     }
-    node.addEventListener('transitionend', onEnd)
+    node.addEventListener("transitionend", onEnd)
 
-    const t = setTimeout(() => {           // fallback
-      node.removeEventListener('transitionend', onEnd)
+    const t = setTimeout(() => {
+      // fallback
+      node.removeEventListener("transitionend", onEnd)
       setMounted(false)
       triggerRef.current?.focus?.()
     }, 450)
 
     return () => {
-      node.removeEventListener('transitionend', onEnd)
+      node.removeEventListener("transitionend", onEnd)
       clearTimeout(t)
     }
   }, [isOpen, mounted])
 
   const closeDrawer = useCallback(
     (reason?: DrawerChangeReason) => {
-      setIsOpen(false)      // slide out
-      onChange?.({}, reason ?? 'backdropClick')
+      setIsOpen(false) // slide out
+      onChange?.({}, reason ?? "backdropClick")
       // focus will be restored after unmount; also do it here as a safety
       triggerRef.current?.focus?.()
     },
-    [onChange]
+    [onChange],
   )
 
   // —— ESC key while open ——
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         e.preventDefault()
-        closeDrawer('escapeKeyDown')
+        closeDrawer("escapeKeyDown")
       }
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
   }, [isOpen, closeDrawer])
 
   // —— initial focus when opened ——
@@ -131,7 +139,10 @@ function DrawerClient(
     })
   }, [])
 
-  useImperativeHandle(ref, () => ({ openDrawer, closeDrawer }), [openDrawer, closeDrawer])
+  useImperativeHandle(ref, () => ({ openDrawer, closeDrawer }), [
+    openDrawer,
+    closeDrawer,
+  ])
 
   // When closed and not animating, render nothing → no tabbables on first load
   if (!mounted) return null
@@ -145,7 +156,7 @@ function DrawerClient(
       backdropProps={{
         onMouseDown: () => {
           if (isOpen && closeOnBackdropClick) {
-            closeDrawer('backdropClick')
+            closeDrawer("backdropClick")
           }
         },
       }}

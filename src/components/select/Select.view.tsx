@@ -33,47 +33,53 @@ export function SelectView<Value extends string = string>({
   if (!items?.length) return null
 
   /* a11y helpers ------------------------------------------------------- */
-  const isError   = Boolean(errorText)
+  const isError = Boolean(errorText)
   const hasHelper = Boolean(helperText)
-  const listId    = `${id}-listbox`
-  const errorId   = isError   ? `${id}-error`  : undefined
-  const helperId  = hasHelper ? `${id}-helper` : undefined
+  const listId = `${id}-listbox`
+  const errorId = isError ? `${id}-error` : undefined
+  const helperId = hasHelper ? `${id}-helper` : undefined
 
-  const open    = Boolean(_clientState?.open) ?? false;
-  const btnRef  = _clientState?.buttonRef;
-  const listRef = _clientState?.listRef;
+  const open = Boolean(_clientState?.open) ?? false
+  const btnRef = _clientState?.buttonRef
+  const listRef = _clientState?.listRef
 
   /* figure out the display label (server-side, no interaction yet) ----- */
   const selectedItems = Array.isArray(value)
     ? items.filter(i => value.includes(i.value as Value))
     : items.filter(i => i.value === (value as Value | undefined))
   const display =
-    selectedItems.length === 0
-      ? (
-        <span className={bem("button__inner", {
+    selectedItems.length === 0 ? (
+      <span
+        className={bem("button__inner", {
           "is-placeholder": true,
           "is-placeholder--disabled": Boolean(disabled),
           expanded: open,
-        })}>
-          {placeholder}
-        </span>
-      )
-      : (
-        <span className={bem("button__inner", { expanded: open })}>
-          {selectedItems.map((i, idx) => (
-            <Fragment key={i?.label}>
-              {Boolean(iconVisible) && i.icon?.()}
-              {i.label}
-              {idx < selectedItems.length - 1 && ", "}
-            </Fragment>
-          ))}
-        </span>
-      )
+        })}
+      >
+        {placeholder}
+      </span>
+    ) : (
+      <span className={bem("button__inner", { expanded: open })}>
+        {selectedItems.map((i, idx) => (
+          <Fragment key={i?.label}>
+            {Boolean(iconVisible) && i.icon?.()}
+            {i.label}
+            {idx < selectedItems.length - 1 && ", "}
+          </Fragment>
+        ))}
+      </span>
+    )
 
   return (
-    <div className={bem(undefined, {
-      fullWidth: Boolean(fullWidth),
-    }, className)}>
+    <div
+      className={bem(
+        undefined,
+        {
+          fullWidth: Boolean(fullWidth),
+        },
+        className,
+      )}
+    >
       {/* ------------------------------------------------ label */}
       {!Boolean(hideLabel) && (
         <Label
@@ -111,11 +117,7 @@ export function SelectView<Value extends string = string>({
         <input
           name={name}
           type="hidden"
-          value={
-            Array.isArray(value)
-              ? value.join(",")
-              : value ?? ""
-          }
+          value={Array.isArray(value) ? value.join(",") : (value ?? "")}
         />
 
         {/* --- listbox (static, hidden via CSS – client will unhide) */}
@@ -132,7 +134,7 @@ export function SelectView<Value extends string = string>({
             <li
               key="placeholder"
               aria-selected={selectedItems.length === 0}
-              className={bem("item", { selected:selectedItems.length === 0 })}
+              className={bem("item", { selected: selectedItems.length === 0 })}
               role="option"
               onClick={() => _clientState?.onOptionClick(null)}
               onKeyDown={() => _clientState?.onOptionClick(null)}
@@ -160,7 +162,7 @@ export function SelectView<Value extends string = string>({
                   <input
                     readOnly
                     aria-hidden="true"
-                    className={bem("checkbox", { checked:selected })}
+                    className={bem("checkbox", { checked: selected })}
                     defaultChecked={selected}
                     type="checkbox"
                   />

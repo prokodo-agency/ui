@@ -23,8 +23,7 @@ export const StepperView: FC<StepperViewProps> = ({
     step: "Step",
     status: {
       open: "Open. Future step and therefore disabled.",
-      completed:
-        "Completed. Press Enter to jump back to this step.",
+      completed: "Completed. Press Enter to jump back to this step.",
     },
   }
 
@@ -57,7 +56,7 @@ export const StepperView: FC<StepperViewProps> = ({
             className={bem(
               "step",
               { "is-active": isActive || isCompleted },
-              liClass
+              liClass,
             )}
             {...liRest}
           >
@@ -69,7 +68,7 @@ export const StepperView: FC<StepperViewProps> = ({
                 className={bem(
                   "label",
                   { "is-active": isActive },
-                  labelProps.className
+                  labelProps.className,
                 )}
               >
                 <div

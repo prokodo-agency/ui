@@ -9,5 +9,5 @@ export default createLazyWrapper<SideNavProps>({
   name: "SideNav",
   Client: SideNavClient,
   Server: SideNavServer,
-  isInteractive: () => true
+  isInteractive: () => true,
 })

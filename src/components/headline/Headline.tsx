@@ -46,14 +46,10 @@ export const Headline: FC<HeadlineProps> = ({
   const bemClass = bem(undefined, modifier, className)
 
   // 4) Inline style if size is numeric
-  const customStyle =
-    typeof size === "number"
-      ? { fontSize: `${size}em` }
-      : {}
+  const customStyle = typeof size === "number" ? { fontSize: `${size}em` } : {}
 
   // 5) Compute aria-label if children is plain text
-  const ariaLabel =
-    typeof children === "string" ? children : undefined
+  const ariaLabel = typeof children === "string" ? children : undefined
 
   // 6) Base props (className, style, aria-label, plus any schema attrs)
   const baseProps = {
@@ -73,7 +69,11 @@ export const Headline: FC<HeadlineProps> = ({
   }
 
   // 8) Helper: render a heading tag (h1…h6) with exactly the attributes it needs
-  const renderHTag = ({ children: headingChildren }: { children?: ReactNode }) => {
+  const renderHTag = ({
+    children: headingChildren,
+  }: {
+    children?: ReactNode
+  }) => {
     // Map type = "h2" → actual <h2>...<h2>
     const HTag = type as keyof JSX.IntrinsicElements
     const headingLevel = parseInt(type.charAt(1), 10)

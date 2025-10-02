@@ -1,4 +1,3 @@
-
 import { List, type ListDefaultItemProps } from "@/components/list"
 import { create } from "@/helpers/bem"
 import { isArray, isNull } from "@/helpers/validations"
@@ -10,7 +9,11 @@ import type { FC } from "react"
 
 const bem = create(styles, "FormResponse")
 
-export const FormResponse: FC<FormResponseProps> = ({ className, messages, ...props }) => {
+export const FormResponse: FC<FormResponseProps> = ({
+  className,
+  messages,
+  ...props
+}) => {
   const errorKeys = Object.keys(messages?.errors || {})
   const listItems: ListDefaultItemProps[] = errorKeys.map(key => ({
     id: key,

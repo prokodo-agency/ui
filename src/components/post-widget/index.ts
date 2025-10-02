@@ -1,8 +1,10 @@
 export * from "./PostWidget"
 export type {
   PostWidgetProps,
+  PostWidgetItem,
   PostWidgetHeadline,
   PostWidgetImage,
-  PostWidgetItem,
   PostWidgetRedirect,
+  PostWidgetClasses,
+  PostWidgetComponentsProps,
 } from "./PostWidget.model"

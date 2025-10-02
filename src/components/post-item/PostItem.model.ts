@@ -1,4 +1,5 @@
 import type { ButtonProps } from "../button"
+import type { CardProps } from "../card"
 import type { HeadlineProps } from "../headline"
 import type { ImageProps } from "../image"
 import type { PostItemAuthorProps } from "./PostItemAuthor.model"
@@ -8,11 +9,41 @@ export type PostItemHeadline = {
   content: string
 } & Omit<HeadlineProps, "children">
 
+export type PostItemClasses = {
+  root?: string
+  grid?: string
+  main?: string
+  media?: string
+  animation?: string
+  headline?: string
+  info?: string
+  date?: string
+  readingTime?: string
+  readCount?: string
+  contentParagraph?: string
+  button?: string
+  buttonContent?: string
+  imageWrapper?: string
+  imageContentWrapper?: string
+  image?: string
+}
+
+export type PostItemComponentsProps = {
+  card?: Partial<CardProps>
+  headline?: Partial<HeadlineProps>
+  button?: Partial<ButtonProps>
+  image?: Partial<ImageProps>
+  author?: Partial<PostItemAuthorProps>
+}
+
 // Props visible to users of the component
 export type PostItemProps = {
+  className?: string
+  classes?: PostItemClasses
+  componentsProps?: PostItemComponentsProps
+
   readCount?: number
   title: PostItemHeadline
-  className?: string
   author?: PostItemAuthorProps
   category?: string
   content?: string

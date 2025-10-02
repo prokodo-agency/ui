@@ -2,7 +2,7 @@ import type { SnackbarVariant } from "./Snackbar.model"
 import type { ReactNode } from "react"
 
 export interface SnackbarPayload {
-  id?: string                     // auto-generated if missing
+  id?: string // auto-generated if missing
   className?: string
   message: ReactNode
   variant?: SnackbarVariant
@@ -16,8 +16,8 @@ export interface SnackbarPayload {
 }
 
 export interface SnackbarContextValue {
-  enqueue: (s: SnackbarPayload) => string      // returns id
-  close:   (id: string) => void
+  enqueue: (s: SnackbarPayload) => string // returns id
+  close: (id: string) => void
 }
 
 export type SnackbarProviderProps = {

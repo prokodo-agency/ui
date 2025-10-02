@@ -1,4 +1,4 @@
-(globalThis as any).__PACKAGE_VERSION__ = "0.0.17"
+;(globalThis as any).__PACKAGE_VERSION__ = "0.0.17"
 // Import necessary utilities
 import { TextDecoder, TextEncoder } from "util"
 

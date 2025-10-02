@@ -1,25 +1,25 @@
 import fs from "node:fs"
 import path from "node:path"
-import { defineConfig } from "vite";
+import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import checker from "vite-plugin-checker"
 import pkg from "./package.json"
 
 function getComponentEntries() {
-  const baseDir = path.resolve(__dirname, "src/components");
-  const entries: Record<string, string> = {};
-  fs.readdirSync(baseDir).forEach((name) => {
-    const indexFile = path.join(baseDir, name, "index.ts");
+  const baseDir = path.resolve(__dirname, "src/components")
+  const entries: Record<string, string> = {}
+  fs.readdirSync(baseDir).forEach(name => {
+    const indexFile = path.join(baseDir, name, "index.ts")
     if (fs.existsSync(indexFile)) {
-      const key = `components/${name}/index`;
-      entries[key] = indexFile;
+      const key = `components/${name}/index`
+      entries[key] = indexFile
     }
-  });
-  return entries;
+  })
+  return entries
 }
 
 export default async () => {
-  const { visualizer } = await import("rollup-plugin-visualizer");
+  const { visualizer } = await import("rollup-plugin-visualizer")
 
   return defineConfig({
     define: {
@@ -47,7 +47,7 @@ export default async () => {
       },
       preprocessorOptions: {
         scss: {
-          includePaths: [path.resolve(__dirname, 'src')],
+          includePaths: [path.resolve(__dirname, "src")],
           additionalData: `
             @use "@/styles/designsystem/functions.scss" as *;
             @use "@/styles/designsystem/mixins.scss" as *;
@@ -95,7 +95,7 @@ export default async () => {
         },
         input: {
           index: path.resolve(__dirname, "src/index.ts"),
-          ...getComponentEntries()
+          ...getComponentEntries(),
         },
         output: {
           sourcemap: false,
@@ -110,12 +110,12 @@ export default async () => {
           },
           banner: chunk => {
             // Füge Direktive nur bei Dateien an, deren Pfad ".client." oder ".lazy." enthält
-            return /(\.client\.|\.lazy\.)/.test(chunk.facadeModuleId ?? '')
+            return /(\.client\.|\.lazy\.)/.test(chunk.facadeModuleId ?? "")
               ? '"use client";'
-              : '';
+              : ""
           },
         },
       },
     },
- });
-};
+  })
+}

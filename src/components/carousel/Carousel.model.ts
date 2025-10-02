@@ -1,4 +1,5 @@
 import type { PREV, NEXT } from "./Carousel.services"
+import type { ButtonProps } from "../button"
 import type { Breakpoints, BreakpointKey } from "@/hooks/useResponsiveValue"
 import type { Ref, ReactNode, CSSProperties, HTMLAttributes } from "react"
 
@@ -21,6 +22,7 @@ export type CarouselProps = HTMLAttributes<HTMLDivElement> & {
   ref?: Ref<CarouselRef>
   autoplay?: number
   enableControl?: boolean
+  enableDots?: boolean
   translateX?: string
   itemStyle?: CSSProperties
   itemsToShow?: number
@@ -34,6 +36,8 @@ export type CarouselProps = HTMLAttributes<HTMLDivElement> & {
   classNameDotActive?: string
   responsive?: CarouselResponsiveConfig
   children: ReactNode
+  prevButton?: Partial<ButtonProps>
+  nextButton?: Partial<ButtonProps>
 }
 
 export type CarouselDirection = typeof PREV | typeof NEXT

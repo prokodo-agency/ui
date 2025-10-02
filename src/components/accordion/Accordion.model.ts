@@ -30,10 +30,10 @@ export type AccordionProps = {
   onChange?: (index?: number, e?: SyntheticEvent, expanded?: boolean) => void
 } & Omit<HTMLAttributes<HTMLDivElement>, "onChange">
 
-export type AccordionViewProps = Omit<AccordionProps, 'expanded' | 'onChange' | 'onToggle'> & {
-  expandedIndex?: number | null;
-  onToggle?: (
-    index: number,
-    event: SyntheticEvent<HTMLDivElement>
-  ) => void;
+export type AccordionViewProps = Omit<
+  AccordionProps,
+  "expanded" | "onChange" | "onToggle"
+> & {
+  expandedIndex?: number | null
+  onToggle?: (index: number, event: SyntheticEvent<HTMLDivElement>) => void
 }

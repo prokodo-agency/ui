@@ -23,7 +23,7 @@ Wrapped in a **`SnackbarProvider`** so each story can also enqueue multiple mess
   tags: ["autodocs"],
   /* Wrap ALL stories in the provider */
   decorators: [
-    (Story) => (
+    Story => (
       <SnackbarProvider maxSnack={4}>
         <Story />
       </SnackbarProvider>
@@ -31,21 +31,21 @@ Wrapped in a **`SnackbarProvider`** so each story can also enqueue multiple mess
   ],
   argTypes: {
     /* ---------- Interactive controls --------------------------- */
-    message:          { control: "text" },
-    open:             { control: "boolean" },
+    message: { control: "text" },
+    open: { control: "boolean" },
     autoHideDuration: { control: { type: "number", min: 0, step: 500 } },
     variant: {
       control: "select",
       options: ["default", "success", "error", "warning", "info"],
     },
     anchorOrigin: { table: { disable: true } },
-    action:       { table: { disable: true } },
-    closeable:    { control: "boolean" },
-    elevation:    { control: { type: "number", min: 1, step: 1 } },
+    action: { table: { disable: true } },
+    closeable: { control: "boolean" },
+    elevation: { control: { type: "number", min: 1, step: 1 } },
 
     /* --- Disable non-UX props in the SB UI -------------------- */
     className: { table: { disable: true } },
-    onClose:   { action: "closed", table: { disable: true } },
+    onClose: { action: "closed", table: { disable: true } },
   },
 } satisfies Meta<typeof Snackbar>
 
@@ -141,8 +141,8 @@ function ProviderDemoComponent() {
 
 export const ProviderDemo: Story = {
   args: {
-    open: false,   // not rendered
-    message: "",   // not rendered
+    open: false, // not rendered
+    message: "", // not rendered
   },
   render: () => <ProviderDemoComponent />,
   parameters: {

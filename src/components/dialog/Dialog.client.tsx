@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import {
   forwardRef,
   useState,
@@ -6,21 +6,27 @@ import {
   useCallback,
   useImperativeHandle,
   useRef,
-} from 'react'
+} from "react"
 
-import { DialogView } from './Dialog.view'
+import { DialogView } from "./Dialog.view"
 
-import type { DialogRef, DialogChangeReson, DialogProps } from './Dialog.model'
+import type { DialogRef, DialogChangeReson, DialogProps } from "./Dialog.model"
 
 const FADE_DURATION = 300
 
 function DialogClient(
-  { open = false, closeOnBackdropClick = true, onChange, onClose, ...props }: DialogProps,
-  ref: React.Ref<DialogRef>
+  {
+    open = false,
+    closeOnBackdropClick = true,
+    onChange,
+    onClose,
+    ...props
+  }: DialogProps,
+  ref: React.Ref<DialogRef>,
 ) {
   const triggerRef = useRef<HTMLElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
-  const containerRef   = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(open)
 
   const openDialog = useCallback(() => {
@@ -34,21 +40,23 @@ function DialogClient(
     }
   }, [isOpen])
 
-  const closeDialog = useCallback((reson?: DialogChangeReson) => {
-    setIsOpen(false)
-    onClose?.()
-    setTimeout(() => {
-      onChange?.({}, reson ?? "backdropClick", false)
-      // restore focus
-      triggerRef.current?.focus()
-    }, FADE_DURATION)
-  }, [onChange, onClose])
-
-  useImperativeHandle(
-    ref,
-    () => ({ openDialog, closeDialog }),
-    [openDialog, closeDialog]
+  const closeDialog = useCallback(
+    (reson?: DialogChangeReson) => {
+      setIsOpen(false)
+      onClose?.()
+      setTimeout(() => {
+        onChange?.({}, reson ?? "backdropClick", false)
+        // restore focus
+        triggerRef.current?.focus()
+      }, FADE_DURATION)
+    },
+    [onChange, onClose],
   )
+
+  useImperativeHandle(ref, () => ({ openDialog, closeDialog }), [
+    openDialog,
+    closeDialog,
+  ])
 
   useEffect(() => {
     if (open) openDialog()
@@ -57,18 +65,18 @@ function DialogClient(
   useEffect(() => {
     if (!isOpen) return
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         e.preventDefault()
-        closeDialog('escapeKeyDown')
+        closeDialog("escapeKeyDown")
       }
-      if (e.key === 'Tab' && containerRef.current) {
+      if (e.key === "Tab" && containerRef.current) {
         // Focus-Trap: alle focusable im Container
         const focusable = containerRef.current.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         )
         if (focusable.length > 0) {
           const first = focusable[0]!
-          const last  = focusable[focusable.length - 1]!
+          const last = focusable[focusable.length - 1]!
           if (e.shiftKey) {
             if (document.activeElement === first) {
               e.preventDefault()
@@ -83,8 +91,8 @@ function DialogClient(
         }
       }
     }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
+    window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
   }, [isOpen, closeDialog])
 
   // Hier den transitionState mitgeben!
@@ -96,12 +104,12 @@ function DialogClient(
       open={isOpen}
       wrapperProps={{
         onMouseDown: () => {
-          if (closeOnBackdropClick) closeDialog('backdropClick')
-        }
+          if (closeOnBackdropClick) closeDialog("backdropClick")
+        },
       }}
       onClose={closeDialog}
       onMouseDown={e => e.stopPropagation()}
-      onCloseKeyDown={(e) => {
+      onCloseKeyDown={e => {
         if (e.key === "Enter") {
           closeDialog()
         }

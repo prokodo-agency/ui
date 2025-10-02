@@ -2,7 +2,7 @@ import { within, userEvent } from "@storybook/test"
 
 import { ICON_NAMES } from "../icon/IconList"
 
-import { SideNav }   from "./SideNav"
+import { SideNav } from "./SideNav"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
@@ -14,8 +14,8 @@ const meta: Meta<typeof SideNav> = {
     layout: "fullscreen",
   },
   argTypes: {
-    collapsedIcon:    { control: "select", options: ICON_NAMES },
-    unCollapsedIcon:  { control: "select", options: ICON_NAMES },
+    collapsedIcon: { control: "select", options: ICON_NAMES },
+    unCollapsedIcon: { control: "select", options: ICON_NAMES },
   },
   args: {
     ariaLabel: "Main navigation",

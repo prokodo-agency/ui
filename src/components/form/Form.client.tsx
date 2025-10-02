@@ -21,14 +21,14 @@ import type {
   FormFieldValue,
 } from "./Form.model"
 
-type PartialFormField = { [K in keyof FormField]?: FormField[K] };
+type PartialFormField = { [K in keyof FormField]?: FormField[K] }
 
 // Keep the discriminated union intact when updating a single field.
 // We merge a *partial* patch into the *existing* field variant, and return
 // the same specific variant `T` so TS stays happy.
 function mergeField<T extends FormField>(
   prev: T,
-  patch: Partial<FormField>
+  patch: Partial<FormField>,
 ): T {
   return { ...prev, ...(patch as Partial<T>) } as T
 }
@@ -45,7 +45,9 @@ const useDeferredNotifier = (cb?: (f: FormField) => void) => {
       cb(f)
     }
   })
-  return (f: FormField) => { ref.current = f }
+  return (f: FormField) => {
+    ref.current = f
+  }
 }
 
 export const FormClient = memo((props: FormProps) => {
@@ -62,13 +64,11 @@ export const FormClient = memo((props: FormProps) => {
   } = props
 
   // 1) Local form state
-  const [formState, setFormState] = useState<FormField[]>(
-    () => fields ?? []
-  )
+  const [formState, setFormState] = useState<FormField[]>(() => fields ?? [])
 
   // 2) Local form messages
   const [formMessages, setFormMessages] = useState<FormMessages | undefined>(
-    initialMessages
+    initialMessages,
   )
 
   // 3) Honeypot field
@@ -87,16 +87,19 @@ export const FormClient = memo((props: FormProps) => {
   // 5) Helper to update a single field in state
   const updateSingleField = useCallback(
     (index: number, update: PartialFormField) => {
-      setFormState((prev) => {
+      setFormState(prev => {
         const next = [...prev]
-        const nextField = { ...(next[index] as FormField), ...(update as object) } as FormField
+        const nextField = {
+          ...(next[index] as FormField),
+          ...(update as object),
+        } as FormField
         next[index] = nextField
         // Defer external notification until after commit
         notifyChange(nextField)
         return next
       })
     },
-    [notifyChange]
+    [notifyChange],
   )
 
   // 6) Validate a single field (called by FormField)
@@ -105,12 +108,12 @@ export const FormClient = memo((props: FormProps) => {
       if (field.errorText === err) {
         return
       }
-      const idx = formState.findIndex((f) => f?.name === field?.name)
+      const idx = formState.findIndex(f => f?.name === field?.name)
       if (idx < 0) return
       updateSingleField(idx, { errorText: err })
 
       // Rebuild formMessages.errors
-      setFormMessages((prev) => {
+      setFormMessages(prev => {
         const updatedErrors: Record<string, string[]> = {
           ...(prev?.errors ?? {}),
         }
@@ -121,21 +124,19 @@ export const FormClient = memo((props: FormProps) => {
         }
         return {
           errors:
-            Object.keys(updatedErrors).length > 0
-              ? updatedErrors
-              : undefined,
+            Object.keys(updatedErrors).length > 0 ? updatedErrors : undefined,
         }
       })
     },
-    [formState, updateSingleField]
+    [formState, updateSingleField],
   )
 
   // 7) Handle a change in a single field (include conditional logic)
   const handleFieldChange = useCallback(
     (field: FormField, value?: FormFieldValue) => {
-      setFormState((prev) => {
+      setFormState(prev => {
         const next = [...prev]
-        const srcIdx = next.findIndex((f) => f.name === field.name)
+        const srcIdx = next.findIndex(f => f.name === field.name)
         if (srcIdx < 0) return prev
 
         // If this is a dynamic-list, just update the array directly
@@ -161,12 +162,14 @@ export const FormClient = memo((props: FormProps) => {
           }
           if (Array.isArray(equalTo)) {
             if (typeof v === "string" || typeof v === "number") {
-              return (equalTo as Array<string | number>).includes(v as string | number)
+              return (equalTo as Array<string | number>).includes(
+                v as string | number,
+              )
             }
             if (Array.isArray(v)) {
               const vv = v as Array<string | number>
               const ee = equalTo as Array<string | number>
-              return vv.some((item) => ee.includes(item))
+              return vv.some(item => ee.includes(item))
             }
           }
           return false
@@ -174,17 +177,20 @@ export const FormClient = memo((props: FormProps) => {
 
         // Build quick lookup for defaults by field name
         const defaultsByName = new Map<string, FormField>()
-        for (const df of (defaultFields ?? [])) {
-          if (isString(df?.name)) defaultsByName.set(df.name as string, df as FormField)
+        for (const df of defaultFields ?? []) {
+          if (isString(df?.name))
+            defaultsByName.set(df.name as string, df as FormField)
         }
 
         // Gather *targets* from the source field's own conditions
         const conds = Array.isArray(field.conditions) ? field.conditions : []
-        const targetNames = Array.from(new Set(conds.map(c => c.fieldId).filter(Boolean)))
+        const targetNames = Array.from(
+          new Set(conds.map(c => c.fieldId).filter(Boolean)),
+        )
 
         // 1) Reset each dependent target to its default baseline
         for (const targetName of targetNames) {
-          const depIdx = next.findIndex((f) => f.name === targetName)
+          const depIdx = next.findIndex(f => f.name === targetName)
           if (depIdx < 0) continue
           const prevDep = next[depIdx] as FormField
           const def = defaultsByName.get(targetName)
@@ -199,7 +205,7 @@ export const FormClient = memo((props: FormProps) => {
           let merged = mergeField(prevDep, dfPatch)
           // If (implicit or explicit) default is hidden, clear value & error
           const defaultVisible =
-            (def && typeof def.visible === "boolean") ? def.visible : false
+            def && typeof def.visible === "boolean" ? def.visible : false
           if (defaultVisible === false) {
             merged = mergeField(merged, {
               value: undefined,
@@ -212,7 +218,7 @@ export const FormClient = memo((props: FormProps) => {
         // 2) Apply matching conditions from the changed field onto its targets
         const appliedTargets = new Set<string>()
         for (const c of conds) {
-          const targetIdx = next.findIndex((f) => f.name === c.fieldId)
+          const targetIdx = next.findIndex(f => f.name === c.fieldId)
           if (targetIdx < 0) continue
           const shouldApply =
             typeof c.equalTo === "undefined" ? true : matches(c.equalTo, value)
@@ -228,12 +234,12 @@ export const FormClient = memo((props: FormProps) => {
         // Hide them (or use their explicit default visible when available)
         for (const targetName of targetNames) {
           if (appliedTargets.has(targetName)) continue
-          const targetIdx = next.findIndex((f) => f.name === targetName)
+          const targetIdx = next.findIndex(f => f.name === targetName)
           if (targetIdx < 0) continue
           const prevTarget = next[targetIdx] as FormField
           const def = defaultsByName.get(targetName)
           const defaultVisible =
-            (def && typeof def.visible === "boolean") ? def.visible : false
+            def && typeof def.visible === "boolean" ? def.visible : false
           let merged = mergeField(prevTarget, { visible: defaultVisible })
           if (defaultVisible === false) {
             merged = mergeField(merged, {
@@ -254,22 +260,19 @@ export const FormClient = memo((props: FormProps) => {
         return next
       })
     },
-    [defaultFields, notifyChange]
+    [defaultFields, notifyChange],
   )
 
   // 8) Honeypot change
-  const handleHpChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setHoneypotValue(e.target.value)
-    },
-    []
-  )
+  const handleHpChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setHoneypotValue(e.target.value)
+  }, [])
 
   // 9) Validate the entire form before submit
   const validateFullForm = useCallback(() => {
     const errors: Record<string, string[]> = {}
 
-    formState.forEach((field) => {
+    formState.forEach(field => {
       const visible = field.visible !== false
       const emptyArray = Array.isArray(field.value) && field.value.length === 0
       const emptyScalar = field.value === undefined || field.value === ""
@@ -307,13 +310,13 @@ export const FormClient = memo((props: FormProps) => {
         onSubmit?.(formState)
       }
     },
-    [formState, onSubmit, validateFullForm]
+    [formState, onSubmit, validateFullForm],
   )
 
   // 11) Determine if “Submit” should be disabled (only if hideResponse is true)
   const isFormValid = useMemo(() => {
     if (Boolean(hideResponse)) {
-      return formState.every((f) => {
+      return formState.every(f => {
         if (!Boolean(f.required) || f.visible === false) return true
         if (Array.isArray(f.value)) return f.value.length > 0
         return f.value !== undefined && f.value !== ""
@@ -330,11 +333,13 @@ export const FormClient = memo((props: FormProps) => {
       formState={formState}
       isFormValid={isFormValid}
       isHoneypotEmpty={honeypotValue.length === 0}
-      fieldProps={{
-        onChange: handleFieldChange,
-        onValidate: handleFieldValidate,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }as any}
+      fieldProps={
+        {
+          onChange: handleFieldChange,
+          onValidate: handleFieldValidate,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any
+      }
       honeypot={{
         defaultValue: "",
         onChange: handleHpChange,

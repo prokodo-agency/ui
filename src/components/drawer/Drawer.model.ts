@@ -1,16 +1,16 @@
-import type { ButtonProps } from '../button'
-import type { HeadlineProps } from '../headline'
-import type { HTMLAttributes, MouseEventHandler, ReactNode, Ref } from 'react'
+import type { ButtonProps } from "../button"
+import type { HeadlineProps } from "../headline"
+import type { HTMLAttributes, MouseEventHandler, ReactNode, Ref } from "react"
 
 /**
  * Anchor positions for the drawer.
  */
-export type DrawerAnchor = 'left' | 'right' | 'top' | 'bottom'
+export type DrawerAnchor = "left" | "right" | "top" | "bottom"
 
 /**
  * Reasons the drawer was closed.
  */
-export type DrawerChangeReason = 'backdropClick' | 'escapeKeyDown'
+export type DrawerChangeReason = "backdropClick" | "escapeKeyDown"
 
 /**
  * Imperative ref‐handles for Drawer.
@@ -103,7 +103,7 @@ export interface DrawerProps {
  */
 export interface DrawerViewProps extends DrawerProps {
   open?: boolean
-  onClose?: (reason: 'backdropClick' | 'escapeKeyDown') => void
+  onClose?: (reason: "backdropClick" | "escapeKeyDown") => void
   closeButtonRef?: React.RefObject<HTMLButtonElement | null>
   containerRef?: React.RefObject<HTMLDivElement | null>
   backdropProps?: HTMLAttributes<HTMLDivElement>

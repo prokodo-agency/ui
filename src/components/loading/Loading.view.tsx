@@ -1,8 +1,18 @@
-import type { LoadingBaseProps, LoadingOverlayProps, LoadingSize } from "./Loading.model"
+import type {
+  LoadingBaseProps,
+  LoadingOverlayProps,
+  LoadingSize,
+} from "./Loading.model"
 import type { FC } from "react"
 
 /** px per size */
-const PX: Record<LoadingSize, number> = { xs:16, sm:24, md:32, lg:48, xl:64 }
+const PX: Record<LoadingSize, number> = {
+  xs: 16,
+  sm: 24,
+  md: 32,
+  lg: 48,
+  xl: 64,
+}
 
 export const SpinnerView: FC<LoadingBaseProps> = ({
   className,
@@ -28,13 +38,19 @@ export const SpinnerView: FC<LoadingBaseProps> = ({
       width={s}
       style={{
         display: "inline-block",
-        ...style
+        ...style,
       }}
     >
       <defs>
-        <linearGradient id="ui-loading-gradient" x1="0%" x2="0%" y1="0%" y2="100%">
-          <stop offset="0%"   stopColor="currentColor" stopOpacity="1" />
-          <stop offset="50%"  stopColor="currentColor" stopOpacity="0.4" />
+        <linearGradient
+          id="ui-loading-gradient"
+          x1="0%"
+          x2="0%"
+          y1="0%"
+          y2="100%"
+        >
+          <stop offset="0%" stopColor="currentColor" stopOpacity="1" />
+          <stop offset="50%" stopColor="currentColor" stopOpacity="0.4" />
           <stop offset="100%" stopColor="currentColor" stopOpacity="0.1" />
         </linearGradient>
       </defs>
@@ -82,10 +98,11 @@ export const OverlayView: FC<
   blur = 0,
   zIndex = 9999,
   reducedMotion,
-  resolvedBackdrop
+  resolvedBackdrop,
 }) => {
   if (!show) return null
-  const bg = resolvedBackdrop === "dark" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)"
+  const bg =
+    resolvedBackdrop === "dark" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)"
   return (
     <div
       className={className}
@@ -102,22 +119,32 @@ export const OverlayView: FC<
         backdropFilter: blur ? `blur(${blur}px)` : undefined,
         WebkitBackdropFilter: blur ? `blur(${blur}px)` : undefined,
         zIndex,
-        ...style
+        ...style,
       }}
     >
-      <SpinnerView ariaLabel={ariaLabel} reducedMotion={reducedMotion} size={size} />
+      <SpinnerView
+        ariaLabel={ariaLabel}
+        reducedMotion={reducedMotion}
+        size={size}
+      />
     </div>
   )
 }
 
 /* helpers */
-function polarToCartesian(cx:number, cy:number, r:number, angle:number) {
-  const rad = (angle - 90) * Math.PI / 180
+function polarToCartesian(cx: number, cy: number, r: number, angle: number) {
+  const rad = ((angle - 90) * Math.PI) / 180
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) }
 }
-function describeArc(cx:number, cy:number, r:number, start:number, end:number) {
+function describeArc(
+  cx: number,
+  cy: number,
+  r: number,
+  start: number,
+  end: number,
+) {
   const startPt = polarToCartesian(cx, cy, r, end)
-  const endPt   = polarToCartesian(cx, cy, r, start)
+  const endPt = polarToCartesian(cx, cy, r, start)
   const largeArcFlag = end - start <= 180 ? "0" : "1"
   return `M ${startPt.x} ${startPt.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${endPt.x} ${endPt.y}`
 }

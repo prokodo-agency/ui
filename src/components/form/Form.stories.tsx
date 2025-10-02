@@ -2,7 +2,13 @@ import dayjs from "dayjs"
 
 import { Form } from "./Form"
 
-import type { FormProps, FormField, FormMessages, FormFieldMessages, OnChangeFormHandler } from "./Form.model"
+import type {
+  FormProps,
+  FormField,
+  FormMessages,
+  FormFieldMessages,
+  OnChangeFormHandler,
+} from "./Form.model"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
@@ -121,7 +127,7 @@ const handleSubmit = (fields: FormField[]) => {
 /**
  * Utility handler for onChangeForm: logs which field changed
  */
-const handleChangeForm: OnChangeFormHandler = (field) => {
+const handleChangeForm: OnChangeFormHandler = field => {
   console.warn("Field changed:", field.name, "→", field.value)
 }
 
@@ -135,7 +141,7 @@ export const Default: Story = {
     onSubmit: handleSubmit,
     onChangeForm: handleChangeForm,
   } as FormProps,
-  render: (args) => <Form priority {...args} />,
+  render: args => <Form priority {...args} />,
 }
 
 export const WithInitialMessages: Story = {
@@ -149,7 +155,7 @@ export const WithInitialMessages: Story = {
     onSubmit: handleSubmit,
     onChangeForm: handleChangeForm,
   } as FormProps,
-  render: (args) => <Form priority {...args} />,
+  render: args => <Form priority {...args} />,
 }
 
 export const HideResponse: Story = {
@@ -163,5 +169,5 @@ export const HideResponse: Story = {
     onSubmit: handleSubmit,
     onChangeForm: handleChangeForm,
   } as FormProps,
-  render: (args) => <Form priority {...args} />,
+  render: args => <Form priority {...args} />,
 }

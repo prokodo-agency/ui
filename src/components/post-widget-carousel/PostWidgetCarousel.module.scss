@@ -4,17 +4,24 @@
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("PostWidgetCarousel") {
+    &__card {
+        padding-bottom: 0;
+    }
+
     &__carousel {
         position: relative;
-        width: 100%;
-        overflow: hidden;
         margin-top: $space-xl;
+        
+
+        &__wrapper {
+            padding-bottom: $space-lg;
+        }
 
         &__item {
             &__image__link {
                 position: relative;
                 width: 100%;
-                height: 200px;
+                height: clamp(180px, 30vw, 420px);
                 display: block;
                 line-height: 0;
                 border-radius: $ui-image-border-radius;
@@ -22,7 +29,16 @@
             }
 
             &__image {
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
+
+                &__container {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                }
             }
 
             &__link {
@@ -38,16 +54,17 @@
         &__buttons {
             position: absolute;
             bottom: $space-md;
-            right: $space-lg;
+            right: $space-sm;
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
-            min-width: 100px;
+            max-width: 100px;
+            gap: $space-sm;
+            z-index: 2;
         }
     }
 
     &__headline {
-        width: 75%;
+        
         margin-top: $space-md !important;
         @include textLineClamp(2);
     }

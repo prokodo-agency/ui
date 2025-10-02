@@ -16,11 +16,7 @@ import {
 
 import { StepperView } from "./Stepper.view"
 
-import type {
-  Step,
-  StepperProps,
-  StepperRef,
-} from "./Stepper.model"
+import type { Step, StepperProps, StepperRef } from "./Stepper.model"
 
 const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
   const {
@@ -51,17 +47,17 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
         }
       },
     }),
-    [steps.length]
+    [steps.length],
   )
 
   // 4) Handler: when a step is clicked
   const handleStepClick = useCallback(
-    (e: MouseEvent<HTMLDivElement> ,index: number) => {
+    (e: MouseEvent<HTMLDivElement>, index: number) => {
       setActiveStep(index)
       stepRefs.current[index]?.focus()
       onChange?.(e, index)
     },
-    [onChange]
+    [onChange],
   )
 
   // 5) Handler: keyboard navigation (Left/Right arrow)
@@ -88,7 +84,7 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
         e.preventDefault()
       }
     },
-    [onChange, steps.length, activeStep]
+    [onChange, steps.length, activeStep],
   )
 
   // 7) If initialStep prop ever changes, sync internal state:
@@ -130,17 +126,10 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
             ref: (el: HTMLDivElement | null) => {
               stepRefs.current[i] = el
             },
-          }
+          },
         }
       }),
-    [
-      steps,
-      activeStep,
-      handleStepClick,
-      handleStepKeyDown,
-      onFocus,
-      onBlur,
-    ]
+    [steps, activeStep, handleStepClick, handleStepKeyDown, onFocus, onBlur],
   )
 
   return (

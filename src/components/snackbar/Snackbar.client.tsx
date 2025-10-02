@@ -1,12 +1,5 @@
 "use client"
-import {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  memo,
-  type JSX,
-} from "react"
+import { useEffect, useRef, useState, useCallback, memo, type JSX } from "react"
 
 import { SnackbarView } from "./Snackbar.view"
 

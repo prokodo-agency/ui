@@ -9,7 +9,9 @@ import type { ProgressBarProps } from "./ProgressBar.model"
  * Adds a smooth counting animation from the previous value to the next.
  * If `animated` is false, value jumps immediately.
  */
-export default function ProgressBarClient(props: ProgressBarProps): JSX.Element {
+export default function ProgressBarClient(
+  props: ProgressBarProps,
+): JSX.Element {
   const { value, animated = true, ...rest } = props
   const [displayValue, setDisplayValue] = useState(value)
   const frame = useRef<number>(null)

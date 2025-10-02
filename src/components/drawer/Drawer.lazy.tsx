@@ -1,10 +1,10 @@
-'use client'
-import { createLazyWrapper } from '@/helpers/createLazyWrapper'
+"use client"
+import { createLazyWrapper } from "@/helpers/createLazyWrapper"
 
-import DrawerClient from './Drawer.client'
-import DrawerServer from './Drawer.server'
+import DrawerClient from "./Drawer.client"
+import DrawerServer from "./Drawer.server"
 
-import type { DrawerProps } from './Drawer.model'
+import type { DrawerProps } from "./Drawer.model"
 
 /**
  * We wrap DrawerClient/DrawerServer in a LazyWrapper,
@@ -12,8 +12,8 @@ import type { DrawerProps } from './Drawer.model'
  * on the client we hydrate into <DrawerClient>.
  */
 export default createLazyWrapper<DrawerProps>({
-  name: 'Drawer',
+  name: "Drawer",
   Client: DrawerClient,
   Server: DrawerServer,
-  isInteractive: () => true
+  isInteractive: () => true,
 })

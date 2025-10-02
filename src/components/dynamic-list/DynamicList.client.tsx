@@ -14,7 +14,12 @@ import { isString } from "@/helpers/validations"
 
 import { DynamicListView } from "./DynamicList.view"
 
-import type { DynamicListProps, DynamicListField, DynamicListFieldInput, DynamicListFieldSelect } from "./DynamicList.model"
+import type {
+  DynamicListProps,
+  DynamicListField,
+  DynamicListFieldInput,
+  DynamicListFieldSelect,
+} from "./DynamicList.model"
 import type { SelectValue, SelectProps } from "@/components/select"
 
 function DynamicListClient({
@@ -29,9 +34,7 @@ function DynamicListClient({
 
   // Internal state if uncontrolled
   type Item = string | Record<string, string>
-  const [items, setItems] = useState<Item[]>(() =>
-    controlledItems ?? []
-  )
+  const [items, setItems] = useState<Item[]>(() => controlledItems ?? [])
 
   // Sync internal when controlledItems changes
   useEffect(() => {
@@ -43,9 +46,9 @@ function DynamicListClient({
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const target = e.target as HTMLInputElement
-      const idx   = Number(target.dataset.index)
-      const key   = target.dataset.field
-      const {value} = target
+      const idx = Number(target.dataset.index)
+      const key = target.dataset.field
+      const { value } = target
       if (Number.isNaN(idx) || !isString(key)) return
 
       const next = items.map((it, i) => {
@@ -58,56 +61,62 @@ function DynamicListClient({
       setItems(next)
       onChange?.(next as string[] & Record<string, string>[])
     },
-    [items, onChange, isSingle]
+    [items, onChange, isSingle],
   )
 
   const handleSelectChange = useCallback(
     (idx: number, fieldName: string, v: SelectValue) => {
-      const nextValue =
-        Array.isArray(v) ? String(v[0] ?? "") : v === null ? "" : String(v);
+      const nextValue = Array.isArray(v)
+        ? String(v[0] ?? "")
+        : v === null
+          ? ""
+          : String(v)
 
       const next = items.map((it, i) => {
-        if (i !== idx) return it;
+        if (i !== idx) return it
 
         if (isSingle) {
           // single-field list: empty string clears the row’s value
-          return nextValue === "" ? "" : nextValue;
+          return nextValue === "" ? "" : nextValue
         }
 
         // multi-field: delete the key when empty string
-        const obj = { ...(it as Record<string, string>) };
+        const obj = { ...(it as Record<string, string>) }
         if (nextValue === "") {
-          delete obj[fieldName];
+          delete obj[fieldName]
         } else {
-          obj[fieldName] = nextValue;
+          obj[fieldName] = nextValue
         }
-        return obj;
-      });
+        return obj
+      })
 
       // If you also want to drop rows that become completely empty objects:
       // const compact = next.filter(it => isSingle ? it !== "" : Object.keys(it as Record<string,string>).length > 0);
 
-      setItems(next);
-      onChange?.(next as string[] & Record<string, string>[]);
+      setItems(next)
+      onChange?.(next as string[] & Record<string, string>[])
     },
-    [items, onChange, isSingle]
-  );
+    [items, onChange, isSingle],
+  )
 
   const handleAdd = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       const empty = isSingle
         ? ""
-        : fields.reduce((obj, f) => {
-            obj[f?.name ?? ""] = ""
-            return obj
-          }, {} as Record<string, string>)
+        : fields.reduce(
+            (obj, f) => {
+              obj[f?.name ?? ""] = ""
+              return obj
+            },
+            {} as Record<string, string>,
+          )
 
       const next = [...items, empty]
       setItems(next)
       buttonAddProps?.onClick?.(e)
       onChange?.(next as string[] & Record<string, string>[])
     },
-    [items, onChange, isSingle, fields, buttonAddProps]
+    [items, onChange, isSingle, fields, buttonAddProps],
   )
 
   const handleDelete = useCallback(
@@ -121,46 +130,48 @@ function DynamicListClient({
       buttonDeleteProps?.onClick?.(e, idx)
       onChange?.(next as string[] & Record<string, string>[])
     },
-    [items, onChange, buttonDeleteProps]
+    [items, onChange, buttonDeleteProps],
   )
 
   // Infer Select types safely (avoids importing SelectEvent if not exported)
   type SelectOnChange = NonNullable<SelectProps["onChange"]>
   type SelectEvent = Parameters<SelectOnChange>[0]
-  type SelectVal   = Parameters<SelectOnChange>[1]
+  type SelectVal = Parameters<SelectOnChange>[1]
 
-  const formatedFields = useMemo<DynamicListField[]>(() =>
-    (fields ?? []).map((f) => {
-      if (f.fieldType === "select") {
-        const { ...rest } = f as DynamicListFieldSelect
+  const formatedFields = useMemo<DynamicListField[]>(
+    () =>
+      (fields ?? []).map(f => {
+        if (f.fieldType === "select") {
+          const { ...rest } = f as DynamicListFieldSelect
 
-        // keep Select signature (e, v) close over name read idx from dataset
-        const onChange: SelectOnChange = (e: SelectEvent, v: SelectVal) => {
-          const idx = Number(
-            (e?.target as HTMLSelectElement | null)?.dataset?.index
-          )
-          if (!Number.isNaN(idx)) {
-            handleSelectChange(idx, rest.name ?? "", v)
+          // keep Select signature (e, v) close over name read idx from dataset
+          const onChange: SelectOnChange = (e: SelectEvent, v: SelectVal) => {
+            const idx = Number(
+              (e?.target as HTMLSelectElement | null)?.dataset?.index,
+            )
+            if (!Number.isNaN(idx)) {
+              handleSelectChange(idx, rest.name ?? "", v)
+            }
           }
+
+          // reassemble as a Select field — no union spread left
+          return {
+            fieldType: "select",
+            ...rest,
+            onChange,
+          } satisfies DynamicListFieldSelect
         }
 
-        // reassemble as a Select field — no union spread left
+        // input branch
+        const { ...rest } = f as DynamicListFieldInput
         return {
-          fieldType: "select",
+          fieldType: "input",
           ...rest,
-          onChange,
-        } satisfies DynamicListFieldSelect
-      }
-
-      // input branch
-      const { ...rest } = f as DynamicListFieldInput
-      return {
-        fieldType: "input",
-        ...rest,
-        onChange: handleChange, // matches InputChangeEventHandler
-      } satisfies DynamicListFieldInput
-    }),
-  [fields, handleChange, handleSelectChange])
+          onChange: handleChange, // matches InputChangeEventHandler
+        } satisfies DynamicListFieldInput
+      }),
+    [fields, handleChange, handleSelectChange],
+  )
 
   return (
     <DynamicListView

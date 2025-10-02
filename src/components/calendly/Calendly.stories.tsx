@@ -26,8 +26,7 @@ const meta = {
       description: "Hex colors for text, button & background.",
       table: {
         type: {
-          summary:
-            '{ text?: string button?: string background?: string }',
+          summary: "{ text?: string button?: string background?: string }",
         },
       },
     },
@@ -59,8 +58,7 @@ const meta = {
     },
     LoadingComponent: {
       control: false,
-      description:
-        "Custom React component rendered while the widget loads.",
+      description: "Custom React component rendered while the widget loads.",
       table: { type: { summary: "React.ComponentType" } },
     },
     /* Storybook UI clutter off: hide DOM attrs like `className` */

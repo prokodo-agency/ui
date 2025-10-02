@@ -1,7 +1,9 @@
+import { isValidElement, type JSX } from "react"
+
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
-import { Card } from "../card"
+import { Card, type CardProps } from "../card"
 import { Chip } from "../chip"
 import { Headline } from "../headline"
 import { Icon } from "../icon"
@@ -14,7 +16,6 @@ import type {
   PostTeaserProps,
   PostTeaserViewPrivateProps,
 } from "./PostTeaser.model"
-import type { JSX } from "react"
 
 const bem = create(styles, "PostTeaser")
 
@@ -27,6 +28,9 @@ export function PostTeaserView(
 ): JSX.Element {
   const {
     className,
+    classes,
+    componentsProps,
+
     image,
     readCount,
     title,
@@ -47,19 +51,53 @@ export function PostTeaserView(
     // passthrough hover
     onMouseEnter,
     onMouseLeave,
-    ...cardProps
+    ...cardRest
   } = props
+
+  const cardMerged = {
+    ...(componentsProps?.card as Partial<CardProps>),
+    ...(cardRest as Partial<CardProps>),
+    variant: (componentsProps?.card?.variant ??
+      (cardRest as Partial<CardProps>)?.variant ??
+      "white") as CardProps["variant"],
+  }
+
+  // Prepare Image props; avoid triggering the imageComponent-required branch
+  const baseImg = image as ImageProps | undefined
+  const imageMerged = baseImg
+    ? ({
+        ...baseImg,
+        // classes
+        captionClassName: bem("image__caption"),
+        className: bem("image", undefined, classes?.image),
+        containerClassName: bem(
+          "image__container",
+          undefined,
+          classes?.imageContainer,
+        ),
+        // perf defaults
+        decoding: baseImg.decoding ?? "async",
+        loading: baseImg.loading ?? "lazy",
+        sizes: baseImg.sizes ?? "(max-width: 960px) 100vw, 33vw",
+        // IMPORTANT: do not explicitly set imageComponent if it's falsy
+        ...(isValidElement(baseImg.imageComponent)
+          ? { imageComponent: baseImg.imageComponent }
+          : {}),
+      } as ImageProps)
+    : undefined
 
   return (
     <article
       itemScope
-      className={bem(undefined, undefined, className)}
-      itemType="https://schema.org/BlogPosting
-"
+      itemType="https://schema.org/BlogPosting"
+      className={bem(
+        undefined,
+        undefined,
+        [className, classes?.root].filter(Boolean).join(" "),
+      )}
     >
       <Card
-        variant="white"
-        {...cardProps}
+        {...cardMerged}
         className={bem("card__container")}
         contentClassName={bem("card")}
         highlight={Boolean(isHovered)}
@@ -68,16 +106,27 @@ export function PostTeaserView(
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <header>
+        <header className={classes?.header}>
           {isString((image as ImageProps | undefined)?.src as string) && (
-            <div className={bem("image__wrapper")}>
-              <div className={bem("meta")}>
+            <div
+              className={bem(
+                "image__wrapper",
+                undefined,
+                classes?.imageWrapper,
+              )}
+            >
+              <div className={bem("meta", undefined, classes?.meta)}>
                 {isString(category) && hideCategory === false && (
                   <Chip
                     aria-label={`Category ${category}`}
-                    className={bem("meta__category")}
                     color="primary"
                     label={category}
+                    className={bem(
+                      "meta__category",
+                      undefined,
+                      classes?.metaCategory,
+                    )}
+                    {...componentsProps?.categoryChip}
                   />
                 )}
                 {typeof readCount === "number" && (
@@ -98,48 +147,49 @@ export function PostTeaserView(
                         <span itemProp="userInteractionCount">{readCount}</span>
                       </p>
                     }
+                    {...componentsProps?.readCountChip}
                   />
                 )}
               </div>
-              <Image
-                {...(image as ImageProps)}
-                captionClassName={bem("image__caption")}
-                className={bem("image")}
-                containerClassName={bem("image")}
-                decoding={
-                  (image as ImageProps | undefined)?.decoding ?? "async"
-                }
-                loading={(image as ImageProps | undefined)?.loading ?? "lazy"}
-                sizes={
-                  (image as ImageProps | undefined)?.sizes ??
-                  "(max-width: 960px) 100vw, 33vw"
-                }
-              />
+              <Image {...imageMerged} />
             </div>
           )}
           <Headline
             highlight
             size="md"
             type="h3"
-            {...title}
-            className={bem("headline", title?.className)}
-            variant={title?.variant ?? "secondary"}
+            {...{ ...title, ...(componentsProps?.headline ?? {}) }}
+            className={bem(
+              "headline",
+              undefined,
+              [title?.className, classes?.headline].filter(Boolean).join(" "),
+            )}
+            variant={
+              title?.variant ??
+              componentsProps?.headline?.variant ??
+              "secondary"
+            }
           >
             {title?.content}
           </Headline>
         </header>
 
         {isString(content) && (
-          <div className={bem("card__content")} itemProp="articleBody">
-            <RichText className={bem("content")}>{content}</RichText>
+          <div
+            className={bem("card__content", undefined, classes?.cardContent)}
+            itemProp="articleBody"
+          >
+            <RichText className={bem("content", undefined, classes?.content)}>
+              {content}
+            </RichText>
           </div>
         )}
 
-        <div className={bem("card__footer")}>
+        <div className={bem("card__footer", undefined, classes?.cardFooter)}>
           {isString(date) && (
             <p
               aria-label={`Published at ${date}`}
-              className={bem("date")}
+              className={bem("date", undefined, classes?.date)}
               itemProp="datePublished"
             >
               <time dateTime={metaDate} itemProp="datePublished">
@@ -149,17 +199,24 @@ export function PostTeaserView(
             </p>
           )}
           {isString(redirect?.label) && (
-            <span className={bem("link", { "is-hovered": Boolean(isHovered) })}>
+            <span
+              className={bem(
+                "link",
+                { "is-hovered": Boolean(isHovered) },
+                classes?.link,
+              )}
+            >
               <Icon
+                color="primary"
                 name="ArrowRight01Icon"
                 size="xs"
-                {...redirect?.icon}
-                color="primary"
                 className={bem(
                   "link__icon",
                   { "is-hovered": Boolean(isHovered) },
-                  redirect?.icon?.className,
+                  classes?.linkIcon,
                 )}
+                {...componentsProps?.linkIcon}
+                {...redirect?.icon}
               />
               {redirect?.label}
             </span>

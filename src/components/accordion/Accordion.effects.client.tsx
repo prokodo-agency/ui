@@ -1,5 +1,5 @@
-'use client'
-import { useEffect } from 'react'
+"use client"
+import { useEffect } from "react"
 
 type Flags = {
   /** whether header gradient border sweep is used */
@@ -9,7 +9,7 @@ type Flags = {
 export function AccordionEffectsLoader({ useBorderShift }: Flags): null {
   useEffect(() => {
     if (Boolean(useBorderShift)) {
-      void import('./Accordion.effects.module.scss')
+      void import("./Accordion.effects.module.scss")
     }
   }, [useBorderShift])
 

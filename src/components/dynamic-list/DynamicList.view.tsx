@@ -13,7 +13,10 @@ import type { ReactNode } from "react"
 
 const bem = create(styles, "DynamicList")
 
-type DynamicListViewProps = Omit<DynamicListProps, "onChange" | "buttonAddProps" | "buttonDeleteProps"> & {
+type DynamicListViewProps = Omit<
+  DynamicListProps,
+  "onChange" | "buttonAddProps" | "buttonDeleteProps"
+> & {
   buttonAddProps?: Omit<ButtonProps, "title">
   buttonDeleteProps?: Omit<ButtonProps, "title">
   readOnly?: boolean
@@ -35,12 +38,12 @@ export function DynamicListView({
   errorText,
   helperText,
 }: DynamicListViewProps): ReactNode {
-  const isError   = Boolean(errorText)
-  const hasHelper   = Boolean(helperText)
-  const errorId   = isError   ? `${id}-error`  : undefined
-  const helperId  = hasHelper ? `${id}-helper` : undefined
+  const isError = Boolean(errorText)
+  const hasHelper = Boolean(helperText)
+  const errorId = isError ? `${id}-error` : undefined
+  const helperId = hasHelper ? `${id}-helper` : undefined
   const single = fields.length === 1
-  const mod =  {"is-multi": !Boolean(single)}
+  const mod = { "is-multi": !Boolean(single) }
   return (
     <fieldset
       aria-describedby={isError ? errorId : helperId}
@@ -69,40 +72,52 @@ export function DynamicListView({
           className={bem("list", mod, classNameList)}
         >
           <li className={bem("list__item")}>
-            {fields.map(({fieldType, ...field}: DynamicListField) => {
-              switch(fieldType) {
+            {fields.map(({ fieldType, ...field }: DynamicListField) => {
+              switch (fieldType) {
                 case "select":
-                  return <Select
-                    key={field.name}
-                    fullWidth
-                    {...field as SelectProps}
-                    className={bem("field", mod, field?.className)}
-                    data-field={field?.name}
-                    data-index={idx}
-                    disabled={disabled ?? field?.disabled}
-                    id={`${name}-${idx}-${field.name}`}
-                    name={single ? `${name}[${idx}]` : `${name}[${idx}].${field.name}`}
-                    required={required ?? field?.required}
-                    value={single ? (item as string) : (item as Record<string,string>)[field?.name ?? ""]}
-                  />
+                  return (
+                    <Select
+                      key={field.name}
+                      fullWidth
+                      {...(field as SelectProps)}
+                      className={bem("field", mod, field?.className)}
+                      data-field={field?.name}
+                      data-index={idx}
+                      disabled={disabled ?? field?.disabled}
+                      id={`${name}-${idx}-${field.name}`}
+                      required={required ?? field?.required}
+                      name={
+                        single
+                          ? `${name}[${idx}]`
+                          : `${name}[${idx}].${field.name}`
+                      }
+                      value={
+                        single
+                          ? (item as string)
+                          : (item as Record<string, string>)[field?.name ?? ""]
+                      }
+                    />
+                  )
                 default:
-                  return <Input
-                    key={field.name}
-                    fullWidth
-                    {...field as InputProps}
-                    className={bem("field", mod, field?.className)}
-                    data-field={field?.name}
-                    data-index={idx}
-                    disabled={disabled ?? field?.disabled}
-                    id={`${name}-${idx}-${field.name}`}
-                    required={required ?? field?.required}
-                    value={single ? item : item[field?.name ?? ""]}
-                    name={
-                      single
-                        ? `${name}[${idx}]`
-                        : `${name}[${idx}].${field.name}`
-                    }
-                  />
+                  return (
+                    <Input
+                      key={field.name}
+                      fullWidth
+                      {...(field as InputProps)}
+                      className={bem("field", mod, field?.className)}
+                      data-field={field?.name}
+                      data-index={idx}
+                      disabled={disabled ?? field?.disabled}
+                      id={`${name}-${idx}-${field.name}`}
+                      required={required ?? field?.required}
+                      value={single ? item : item[field?.name ?? ""]}
+                      name={
+                        single
+                          ? `${name}[${idx}]`
+                          : `${name}[${idx}].${field.name}`
+                      }
+                    />
+                  )
               }
             })}
           </li>
@@ -111,7 +126,7 @@ export function DynamicListView({
             color="error"
             data-index={idx}
             iconProps={{
-                name: "Delete02Icon",
+              name: "Delete02Icon",
             }}
             {...buttonDeleteProps}
             className={bem("delete__button", mod, buttonDeleteProps?.className)}

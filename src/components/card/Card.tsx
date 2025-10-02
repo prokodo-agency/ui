@@ -8,5 +8,7 @@ export const Card = createIsland<CardProps>({
   name: "Card",
   Server: CardServer,
   loadLazy: () => import("./Card.lazy"),
-  isInteractive: (p: CardProps) => (!Boolean(p.disabled) && typeof p.onClick === "function") || typeof p.redirect?.href === "string",
+  isInteractive: (p: CardProps) =>
+    (!Boolean(p.disabled) && typeof p.onClick === "function") ||
+    typeof p.redirect?.href === "string",
 })

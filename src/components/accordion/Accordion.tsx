@@ -1,12 +1,12 @@
-import { createIsland } from '@/helpers/createIsland'
+import { createIsland } from "@/helpers/createIsland"
 
-import AccordionServer from './Accordion.server'
+import AccordionServer from "./Accordion.server"
 
-import type { AccordionProps } from './Accordion.model'
+import type { AccordionProps } from "./Accordion.model"
 
 export const Accordion = createIsland<AccordionProps>({
-  name: 'Accordion',
+  name: "Accordion",
   Server: AccordionServer,
-  loadLazy: () => import('./Accordion.lazy'),
+  loadLazy: () => import("./Accordion.lazy"),
   isInteractive: () => true,
 })

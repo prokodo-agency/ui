@@ -18,23 +18,23 @@ export default function ChipClient(props: ChipProps): JSX.Element {
   const clickable = typeof onClick === "function"
 
   const handleKey = useCallback(
-   (e: KeyboardEvent<HTMLDivElement>) => {
-     if ((e.key === "Enter" || e.key === " ") && clickable) {
-       e.preventDefault()
-       onClick?.(e as unknown as MouseEvent<HTMLDivElement>)
-     }
-     onKeyDown?.(e)
-   },
+    (e: KeyboardEvent<HTMLDivElement>) => {
+      if ((e.key === "Enter" || e.key === " ") && clickable) {
+        e.preventDefault()
+        onClick?.(e as unknown as MouseEvent<HTMLDivElement>)
+      }
+      onKeyDown?.(e)
+    },
     [clickable, onClick, onKeyDown],
   )
 
   const handleKeyDelete = useCallback(
-   (e: KeyboardEvent<HTMLButtonElement>) => {
-     if (e.key === "Enter" || e.key === " ") {
-       e.preventDefault()
-       onDelete?.(e as unknown as MouseEvent<HTMLButtonElement>)
-     }
-   },
+    (e: KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault()
+        onDelete?.(e as unknown as MouseEvent<HTMLButtonElement>)
+      }
+    },
     [onDelete],
   )
 
@@ -48,9 +48,7 @@ export default function ChipClient(props: ChipProps): JSX.Element {
       {...dom}
       color={color}
       buttonProps={
-        onDelete
-          ? { onClick: onDelete, onKeyDown: handleKeyDelete }
-          : undefined
+        onDelete ? { onClick: onDelete, onKeyDown: handleKeyDelete } : undefined
       }
       onDelete={onDelete}
       onKeyDown={clickable || onKeyDown ? handleKey : undefined}
