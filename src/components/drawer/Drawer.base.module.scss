@@ -4,14 +4,14 @@
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("Drawer") {
-  /* Backdrop */
+  /* Backdrop (unchanged, fades in) */
   &__backdrop {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.5);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity .3s ease;
     z-index: 1301;
 
     &--open {
@@ -24,7 +24,7 @@
     }
   }
 
-  /* Container */
+  /* Container (slide + fade via transitions) */
   &__container {
     position: fixed;
     background-color: var(--color-white);
@@ -33,97 +33,64 @@
     pointer-events: none; // until open
     width: 300px;
     height: 100%;
+    overscroll-behavior: contain;
+
+    /* The important part: animate transform/opacity */
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: transform .3s ease, opacity .3s ease;
 
     &--open {
       pointer-events: auto;
-
-      @media (prefers-reduced-motion: reduce) {
-        transform: translateX(0) translateY(0);
-        opacity: 1;
-      }
+      opacity: 1;
     }
 
     &--fullscreen {
       width: 100vw !important;
       height: 100vh !important;
-      top: 0 !important;
-      left: 0 !important;
-      bottom: 0 !important;
-      right: 0 !important;
+      top: 0 !important; left: 0 !important; bottom: 0 !important; right: 0 !important;
     }
 
     /* Anchor: left */
     &--anchor-left {
-      top: 0;
-      left: 0;
-      width: 80vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 80vw; height: 100vh;
       transform: translateX(-100%);
 
-      &--open {
-        animation: DrawerSlideInLeft 0.3s ease forwards;
-      }
-
-      &:not(&--open) {
-        animation: DrawerSlideOutLeft 0.3s ease forwards;
-      }
+      &--open { transform: translateX(0); }
     }
 
     /* Anchor: right */
     &--anchor-right {
-      top: 0;
-      left: auto;
-      right: 0;
-      width: 80vw;
-      height: 100vh;
+      top: 0; right: 0;
+      width: 80vw; height: 100vh;
       transform: translateX(100%);
 
-      &--open {
-        animation: DrawerSlideInRight 0.3s ease forwards;
-      }
-
-      &:not(&--open) {
-        animation: DrawerSlideOutRight 0.3s ease forwards;
-      }
+      &--open { transform: translateX(0); }
     }
 
     /* Anchor: top */
     &--anchor-top {
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 50vh;
+      top: 0; left: 0;
+      width: 100vw; height: 50vh;
       transform: translateY(-100%);
 
-      &--open {
-        animation: DrawerSlideInTop 0.3s ease forwards;
-      }
-
-      &:not(&--open) {
-        animation: DrawerSlideOutTop 0.3s ease forwards;
-      }
+      &--open { transform: translateY(0); }
     }
 
     /* Anchor: bottom */
     &--anchor-bottom {
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 50vh;
+      bottom: 0; left: 0;
+      width: 100vw; height: 50vh;
       transform: translateY(100%);
 
-      &--open {
-        animation: DrawerSlideInBottom 0.3s ease forwards;
-      }
-
-      &:not(&--open) {
-        animation: DrawerSlideOutBottom 0.3s ease forwards;
-      }
+      &--open { transform: translateY(0); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      animation: none !important;
       transition: none !important;
+      transform: translateX(0) translateY(0) !important;
+      opacity: 1 !important;
     }
   }
 
@@ -139,7 +106,8 @@
   /* Content */
   &__content {
     padding: 1rem;
+    max-height: calc(100% - 7rem);
     overflow-y: auto;
-    max-height: calc(100% - 3rem);
+    -webkit-overflow-scrolling: touch;
   }
 }

@@ -31,10 +31,17 @@ export const DrawerView: FC<DrawerViewProps> = ({
   const isOpen = Boolean(open)
   return (
     <div
+      aria-hidden={isOpen ? undefined : true}
       className={bem('backdrop', { open: isOpen })}
       {...backdropProps}
     >
-      <DrawerEffectsLoader useSlide />
+      <DrawerEffectsLoader
+        useSlide
+        closeButtonRef={closeButtonRef}
+        containerRef={containerRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       {/*
         Inner container: stops propagation of mousedown so clicks INSIDE
         do not bubble up to backdrop.
@@ -42,8 +49,12 @@ export const DrawerView: FC<DrawerViewProps> = ({
       <div
         ref={containerRef}
         aria-labelledby={isString(title) ? 'drawer-title' : undefined}
-        aria-modal="true"
         role="dialog"
+        {...(isOpen
+          ? { 'aria-modal': 'true' }
+          : { 'aria-hidden': 'true', inert: true }  // presence = true
+        )}
+        aria-modal={isOpen ? 'true' : undefined}
         className={bem(
           'container',
           {
