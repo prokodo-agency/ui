@@ -7,85 +7,108 @@
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("PostItem") {
-    &__grid {
-        align-items: center;
-        justify-content: space-between;
-        flex-direction: column-reverse !important;
+  &__grid {
+    /* Mobile: stacked, image on top via order */
+    display: flex;
+    flex-direction: column-reverse;
+    gap: $space-lg;
+    align-items: stretch;
 
-        @include screenLargerThan($screen-lg) {
-            flex-direction: row-reverse !important;
-        }
+    @include screenLargerThan($screen-lg) {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $space-xl;
     }
+  }
 
-    &__animation {
-        transform: translate(0, 20vh);
+  &__media {
+    order: -1;
+    width: 100%;
+    min-width: 0;
 
-        @include screenLargerThan($screen-md) {
-            transform: translate(20vh, 0);
-        }
+    @include screenLargerThan($screen-lg) {
+      order: 0;
+      flex: 0 1 66.666%;
+      max-width: 66.666%;
+      min-width: 0; /* prevent overflow pushing layout */
     }
+  }
 
-    &__headline {
-        @include textLineClamp(2);
-    }
+  &__main {
+    order: 0;
+    width: 100%;
+    min-width: 0;
 
-    &__info {
-        display: flex;
-        align-items: center;
+    @include screenLargerThan($screen-lg) {
+      order: 1;
+      flex: 0 1 33.333%;
+      max-width: 33.333%;
+      min-width: 0;
     }
+  }
+  
+  &__animation {
+    transform: none;
+  }
 
-    &__date {
-        color: var(--color-grey-300);
-        @include text("base");
-    }
+  &__headline {
+    @include textLineClamp(2);
+  }
 
-    &__read__count {
-        padding-left: $space-md;
-        color: var(--color-grey-300);
-        @include text("base");
+  &__info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__date {
+    color: var(--color-grey-300);
+    @include text("base");
+  }
+
+  &__read__count {
+    padding-left: $space-md;
+    color: var(--color-grey-300);
+    @include text("base");
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    min-width: 0;            /* ← prevent long lines from forcing column wider */
+    overflow-wrap: anywhere; /* ← allow breaking long words/URLs */
+    @include text("base");
+
+    &__paragraph {
+      color: var(--color-grey-500);
+      @include textLineClamp(3);
     }
+  }
+
+  &__image {
+    min-height: 300px;
+    min-height: 300px;
+    object-fit: cover;
+
+    &__wrapper {
+      width: 100%;
+      min-width: 300px;
+      min-height: 300px;
+      border-radius: $ui-background-border-radius;
+      overflow: hidden;
+      transform: none; /* prevent overlay */
+    }
+  }
+
+  &__button {
+    width: 100%;
+    margin-top: $space-lg;
 
     &__content {
-        display: flex;
-        align-items: center;
-        @include text("base");
-
-        &__paragraph {
-            color: var(--color-grey-500);
-            @include textLineClamp(3);
-        }
+      justify-content: flex-start;
     }
 
-    &__image {
-        min-height: 300px;
-        object-fit: cover;
-
-        &__wrapper {
-            width: 100%;
-            min-height: 300px;
-            border-radius: $ui-background-border-radius;
-            overflow: hidden;
-            transform: translate(0, 20vh);
-        
-            @include screenLargerThan($screen-md) {
-                transform: translate(-20vh, 0);
-            }
-        }
-
-        &__content__wrapper {
-            display: block;
-        }
+    @include screenLargerThan($screen-sm) {
+      width: auto;
     }
-
-    &__button {
-        width: 100%;
-
-        &__content {
-            justify-content: flex-start;
-        }
-
-        @include screenLargerThan($screen-sm) {
-            width: auto;
-        }
-    }
+  }
 }

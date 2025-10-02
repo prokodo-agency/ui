@@ -126,14 +126,15 @@ export const PostItem: FC<PostItemProps> = memo(
               redirect={button?.redirect}
             >
               {!imageLoaded && <Skeleton height="275px" />}
-              {ImageComponent !== undefined && isString(image?.src as string) && (
-                <ImageComponent
-                  {...image}
-                  className={bem("image")}
-                  sizes="(max-width: 960px) 100vw, 25vw"
-                  onLoad={() => setImageLoaded(true)}
-                />
-              )}
+              {ImageComponent !== undefined &&
+                isString(image?.src as string) && (
+                  <ImageComponent
+                    {...image}
+                    className={bem("image")}
+                    sizes="(max-width: 960px) 100vw, 25vw"
+                    onLoad={() => setImageLoaded(true)}
+                  />
+                )}
             </Card>
           </GridRow>
         </Grid>

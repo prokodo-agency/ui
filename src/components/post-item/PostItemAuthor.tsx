@@ -14,27 +14,27 @@ const bem = create(styles, "PostItemAuthor")
 
 export const PostItemAuthor: FC<PostItemAuthorProps> = memo(
   ({ className, avatar, avatarProps, name, nameProps }) => {
-    // TODO: TRANSLATION FIX NEEDED
-    // const { t } = useTranslation()
-    const authorName = name // ?? t("components.common.postItem.author.name")
+    const authorName = name
     return (
-      <div className={bem(undefined, undefined, className)}>
+      <div
+        itemScope
+        className={bem(undefined, undefined, className)}
+        itemProp="author"
+        itemType="https://schema.org/Person"
+      >
         <Avatar
           image={
             avatar?.src !== undefined && isString(avatar?.src)
-              ? {
-                  src: avatar?.src,
-                  alt: avatar?.alt ?? "",
-                }
+              ? { src: avatar?.src, alt: avatar?.alt ?? authorName ?? "" }
               : undefined
           }
           {...avatarProps}
         />
         <p
           aria-label={`Author ${authorName}`}
-          itemProp="author"
           {...nameProps}
           className={bem("name", undefined, nameProps?.className)}
+          itemProp="name"
         >
           {authorName}
         </p>

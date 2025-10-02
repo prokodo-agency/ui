@@ -3,7 +3,7 @@ import { PostItem } from "./PostItem"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/🚧 Experimental/blog/PostItem",
+  title: "prokodo/blog/PostItem",
   component: PostItem,
   parameters: {
     layout: "centered",

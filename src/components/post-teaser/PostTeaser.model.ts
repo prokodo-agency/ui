@@ -21,9 +21,18 @@ export type PostTeaserProps = {
   content?: string
   hideCategory?: boolean
   category?: string
-  date?: string
-  metaDate?: string
+  date?: string // human-readable
+  metaDate?: string // ISO 8601
   image?: PostTeaserImage
   onClick?: () => void
   redirect?: PostTeaserRedirect
+  // AIC extras
+  structuredData?: boolean // default true
+  readingWpm?: number // default 200; used for readMinutes
+}
+
+export type PostTeaserViewPrivateProps = {
+  isHovered?: boolean
+  wordCount: number
+  readMinutes: number
 }
