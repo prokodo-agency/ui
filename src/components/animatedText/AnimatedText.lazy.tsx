@@ -9,6 +9,6 @@ export default createLazyWrapper<AnimatedTextProps>({
   name: "AnimatedText",
   Client: AnimatedTextClient,
   Server: AnimatedTextServer,
-  hydrateOnVisible: true,         // wait until it scrolls into view
-  isInteractive: (p) => !Boolean(p.disabled),
+  hydrateOnVisible: true, // wait until it scrolls into view
+  isInteractive: p => !Boolean(p.disabled),
 })

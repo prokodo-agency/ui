@@ -1,13 +1,13 @@
-import { createIsland } from '@/helpers/createIsland'
+import { createIsland } from "@/helpers/createIsland"
 
-import LinkServer from './Link.server'
+import LinkServer from "./Link.server"
 
-import type { LinkProps } from './Link.model'
+import type { LinkProps } from "./Link.model"
 
 export const Link = createIsland<LinkProps>({
-  name: 'Link',
+  name: "Link",
   Server: LinkServer,
-  loadLazy: () => import('./Link.lazy'),
+  loadLazy: () => import("./Link.lazy"),
   // optional: custom predicate (e.g. always interactive if target="_blank")
-  isInteractive: (p) => typeof p.linkComponent === "function",
+  isInteractive: p => typeof p.linkComponent === "function",
 })

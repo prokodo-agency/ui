@@ -23,7 +23,7 @@ const bem = create(styles, "SnackbarProvider")
 
 /* Hook never throws – returns no-op impl on server side */
 export function useSnackbar(): SnackbarContextValue {
-  return useContext(SnackbarCtx);
+  return useContext(SnackbarCtx)
 }
 
 export default function SnackbarProvider({
@@ -38,7 +38,7 @@ export default function SnackbarProvider({
   const enqueue = useCallback(
     (p: SnackbarPayload): string => {
       const id = p.id ?? `snk_${crypto.randomUUID()}`
-      setQueue((q) => {
+      setQueue(q => {
         const next = [
           ...q,
           { ...p, id, anchorOrigin: p.anchorOrigin ?? anchorOrigin },
@@ -52,22 +52,29 @@ export default function SnackbarProvider({
 
   // ── close ─────────────────────────────────────────────────────
   const close = useCallback((id: string): void => {
-    setQueue((q) => q.filter((s) => s.id !== id))
+    setQueue(q => q.filter(s => s.id !== id))
   }, [])
 
   // ── context memo ──────────────────────────────────────────────
-  const ctx = useMemo<SnackbarContextValue>(() => ({ enqueue, close }), [enqueue, close])
+  const ctx = useMemo<SnackbarContextValue>(
+    () => ({ enqueue, close }),
+    [enqueue, close],
+  )
 
   // ── group by anchorOrigin once per render ─────────────────────
-  const grouped = useMemo(() => queue.reduce<Record<string, SnackbarPayload[]>>((acc, s) => {
-      const key = `${s.anchorOrigin?.vertical}-${s.anchorOrigin?.horizontal}`;
-      (acc[key] ??= []).push(s)
-      return acc
-    }, {}), [queue])
+  const grouped = useMemo(
+    () =>
+      queue.reduce<Record<string, SnackbarPayload[]>>((acc, s) => {
+        const key = `${s.anchorOrigin?.vertical}-${s.anchorOrigin?.horizontal}`
+        ;(acc[key] ??= []).push(s)
+        return acc
+      }, {}),
+    [queue],
+  )
 
   // ── render ────────────────────────────────────────────────────
   return (
-     <SnackbarCtx.Provider value={ctx}>
+    <SnackbarCtx.Provider value={ctx}>
       {children}
 
       {Object.entries(grouped).map(([key, snacks]) => {
@@ -77,10 +84,8 @@ export default function SnackbarProvider({
           [`is-${horizontal}`]: true,
         }
         return (
-          <div
-            key={key}
-            className={bem(undefined, mod, className)}>
-            {snacks.map((snk) => (
+          <div key={key} className={bem(undefined, mod, className)}>
+            {snacks.map(snk => (
               <Snackbar
                 key={snk.id}
                 {...snk}
@@ -90,7 +95,7 @@ export default function SnackbarProvider({
               />
             ))}
           </div>
-        );
+        )
       })}
     </SnackbarCtx.Provider>
   )

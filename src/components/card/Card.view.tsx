@@ -51,7 +51,8 @@ export function CardView({
     "has-highlight": Boolean(highlight),
     "has-gradiant": Boolean(gradiant),
     "has-background": Boolean(background),
-    "has-shadow": enableShadow !== false && (Boolean(isClickable) || Boolean(enableShadow)),
+    "has-shadow":
+      enableShadow !== false && (Boolean(isClickable) || Boolean(enableShadow)),
     "has-animation": Boolean(animated), // hook only; actual animation rules live in effects sheet
   }
 
@@ -84,7 +85,13 @@ export function CardView({
         />
       )}
 
-      <div className={bem("content", { "has-link": Boolean(redirect?.href) }, contentClassName)}>
+      <div
+        className={bem(
+          "content",
+          { "has-link": Boolean(redirect?.href) },
+          contentClassName,
+        )}
+      >
         {children}
       </div>
 
@@ -93,7 +100,7 @@ export function CardView({
           className={bem(
             "gradiant",
             { [variant]: variant !== "inherit" && variant !== "white" },
-            gradiantClassName
+            gradiantClassName,
           )}
         />
       )}
@@ -110,23 +117,27 @@ export function CardView({
     </div>
   )
 
-  const content = redirect && redirect.href ? (
-    <Link
-      {...redirect}
-      aria-disabled={redirect.disabled ?? false}
-      className={bem("link", undefined, redirect?.className)}
-      role={role}
-      tabIndex={tabIndex}
-    >
-      {innerCard}
-    </Link>
-  ) : (
-    innerCard
-  )
+  const content =
+    redirect && redirect.href ? (
+      <Link
+        {...redirect}
+        aria-disabled={redirect.disabled ?? false}
+        className={bem("link", undefined, redirect?.className)}
+        role={role}
+        tabIndex={tabIndex}
+      >
+        {innerCard}
+      </Link>
+    ) : (
+      innerCard
+    )
 
   if (animated) {
     return (
-      <Animated animation={customAnimation} {...(animatedProps as AnimatedViewProps | undefined)}>
+      <Animated
+        animation={customAnimation}
+        {...(animatedProps as AnimatedViewProps | undefined)}
+      >
         {content}
       </Animated>
     )

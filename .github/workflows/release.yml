@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -47,7 +47,7 @@ jobs:
 
       - name: 🧾 Version packages (if changeset exists)
         run: pnpm changeset version || echo "No version changes"
-      
+
       - name: 📦 Install updated deps if needed
         run: pnpm install --frozen-lockfile
 

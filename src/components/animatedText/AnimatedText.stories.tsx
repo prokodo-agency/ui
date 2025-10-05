@@ -25,7 +25,7 @@ const meta = {
       description: "Render static text (no animation).",
       table: { type: { summary: "boolean" } },
     },
-  }
+  },
 } satisfies Meta<typeof AnimatedText>
 
 export default meta

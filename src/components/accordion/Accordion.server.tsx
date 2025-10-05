@@ -1,4 +1,3 @@
-
 import { AccordionView } from "./Accordion.view"
 
 import type { AccordionProps } from "./Accordion.model"

@@ -1,10 +1,6 @@
 "use client"
 
-import {
-  useCallback,
-  type JSX,
-  type KeyboardEvent,
-} from "react"
+import { useCallback, type JSX, type KeyboardEvent } from "react"
 
 import { isString } from "@/helpers/validations"
 
@@ -31,14 +27,21 @@ export default function CardClient({
 
   const handleKey = useCallback(
     (e: KeyboardEvent<Element>) => {
-      if (e.code === "Enter" && typeof onClick === "function" && !Boolean(disabled)) onClick()
+      if (
+        e.code === "Enter" &&
+        typeof onClick === "function" &&
+        !Boolean(disabled)
+      )
+        onClick()
       onKeyDown?.(e)
     },
     [onClick, onKeyDown, disabled],
   )
 
-  const linkRole = isString(redirect?.href) && !Boolean(disabled) ? "link" : undefined
-  const linkTabIndex = isString(redirect?.href) && !Boolean(disabled) ? 0 : undefined
+  const linkRole =
+    isString(redirect?.href) && !Boolean(disabled) ? "link" : undefined
+  const linkTabIndex =
+    isString(redirect?.href) && !Boolean(disabled) ? 0 : undefined
 
   return (
     <CardView

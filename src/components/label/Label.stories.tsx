@@ -44,7 +44,7 @@ type Story = StoryObj<typeof meta>
 // 1) Default Label: just renders the text
 // --------------------------------------------------------------------------------
 export const Default: Story = {
-  render: (args) => (
+  render: args => (
     <Fragment>
       <Label {...args} />
       <br />
@@ -62,7 +62,7 @@ export const Default: Story = {
 // 2) Required Label: shows asterisk
 // --------------------------------------------------------------------------------
 export const Required: Story = {
-  render: (args) => (
+  render: args => (
     <Fragment>
       <Label {...args} />
     </Fragment>
@@ -79,7 +79,7 @@ export const Required: Story = {
 // 3) Error Label: highlights the first word in error style
 // --------------------------------------------------------------------------------
 export const ErrorState: Story = {
-  render: (args) => (
+  render: args => (
     <Fragment>
       <Label {...args} />
     </Fragment>

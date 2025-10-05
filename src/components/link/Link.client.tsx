@@ -7,7 +7,7 @@ import { LinkView } from "./Link.view"
 
 import type { LinkProps } from "./Link.model"
 
-const LinkClient: React.FC<LinkProps> = memo((props) => {
+const LinkClient: React.FC<LinkProps> = memo(props => {
   const { href, onClick } = props
 
   const linkTag = onClick && !href ? "span" : "a"

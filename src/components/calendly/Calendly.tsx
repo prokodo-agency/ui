@@ -8,5 +8,5 @@ export const Calendly = createIsland<CalendlyProps>({
   name: "Calendly",
   Server: CalendlyServer,
   loadLazy: () => import("./Calendly.lazy"),
-  isInteractive: () => true
+  isInteractive: () => true,
 })

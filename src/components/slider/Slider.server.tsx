@@ -11,8 +11,8 @@ export default function SliderServer(props: SliderProps): JSX.Element {
     typeof value === "number"
       ? value
       : typeof value === "string"
-      ? Number(value)
-      : min
+        ? Number(value)
+        : min
 
   return (
     <SliderView

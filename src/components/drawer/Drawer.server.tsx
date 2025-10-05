@@ -1,6 +1,6 @@
-import { DrawerView } from './Drawer.view'
+import { DrawerView } from "./Drawer.view"
 
-import type { DrawerProps } from './Drawer.model'
+import type { DrawerProps } from "./Drawer.model"
 import type { JSX } from "react"
 
 /**

@@ -25,12 +25,21 @@ export function AccordionView({
   ...domRest
 }: AccordionViewProps): JSX.Element {
   return (
-    <div {...domRest} className={bem(undefined, { [variant]: true }, className)}>
+    <div
+      {...domRest}
+      className={bem(undefined, { [variant]: true }, className)}
+    >
       {/* lazy-load only the keyframes/effects CSS */}
       <AccordionEffectsLoader useBorderShift />
 
       {items.map((item, index) => {
-        const { title, renderHeader, renderContent, actions, className: itemCls } = item
+        const {
+          title,
+          renderHeader,
+          renderContent,
+          actions,
+          className: itemCls,
+        } = item
         const accId = `${id}-${title}`
         const isExpanded = expandedIndex === index
 
@@ -46,10 +55,10 @@ export function AccordionView({
               id={`${accId}-header`}
               role="button"
               tabIndex={0}
-              onClick={onToggle ? (e) => onToggle(index, e) : undefined}
+              onClick={onToggle ? e => onToggle(index, e) : undefined}
               onKeyDown={
                 onToggle
-                  ? (e) => {
+                  ? e => {
                       if (e.key === "Enter" || e.key === " ") onToggle(index, e)
                     }
                   : undefined
@@ -98,8 +107,11 @@ export function AccordionView({
 
               {actions !== undefined && actions?.length ? (
                 <div className={bem("actions")}>
-                  {actions.map((action) => (
-                    <Button key={`${accId}-action-${action.id}`} {...(action as ButtonProps)} />
+                  {actions.map(action => (
+                    <Button
+                      key={`${accId}-action-${action.id}`}
+                      {...(action as ButtonProps)}
+                    />
                   ))}
                 </div>
               ) : null}

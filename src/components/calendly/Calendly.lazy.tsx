@@ -10,5 +10,5 @@ export default createLazyWrapper<CalendlyProps>({
   Client: CalendlyClient,
   Server: CalendlyServer,
   hydrateOnVisible: true,
-  isInteractive: () => true
+  isInteractive: () => true,
 })

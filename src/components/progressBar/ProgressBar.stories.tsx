@@ -44,7 +44,7 @@ export const AnimatedProgress: StoryObj<typeof meta> = {
   render: (args, { updateArgs }) => {
     // simulate progress increase every second
     const increment = () => {
-      updateArgs((prev) => ({ ...prev, value: (prev.value ?? 0) + 10 }))
+      updateArgs(prev => ({ ...prev, value: (prev.value ?? 0) + 10 }))
     }
     setTimeout(increment, 1000)
     return <ProgressBar {...args} />

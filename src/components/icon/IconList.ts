@@ -1,6 +1,6 @@
 // Auto-generated, do not edit manually.
 
-export const ICON_NAMES =[
+export const ICON_NAMES = [
   "AbacusIcon",
   "AbsoluteIcon",
   "AccelerationIcon",
@@ -4128,4 +4128,4 @@ export const ICON_NAMES =[
   "ZoomSquareIcon",
 ] as const
 
-export type IconName = typeof ICON_NAMES[number]
+export type IconName = (typeof ICON_NAMES)[number]

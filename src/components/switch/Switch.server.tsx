@@ -4,9 +4,7 @@ import type { SwitchProps } from "./Switch.model"
 import type { JSX } from "react"
 
 export default function SwitchServer(props: SwitchProps): JSX.Element {
-  const {
-    checked: controlledChecked,
-  } = props
+  const { checked: controlledChecked } = props
   const isChecked =
     typeof controlledChecked === "boolean" ? controlledChecked : false
   return (

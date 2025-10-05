@@ -1,25 +1,30 @@
 "use client"
 import {
-  useState, useRef, useCallback, useEffect, type KeyboardEvent, memo, type JSX
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  type KeyboardEvent,
+  memo,
+  type JSX,
 } from "react"
 
 import { SelectView } from "./Select.view"
 
-import type {
-  SelectProps,
-  SelectEvent,
-  SelectValue,
-} from "./Select.model"
+import type { SelectProps, SelectEvent, SelectValue } from "./Select.model"
 
 /* ---------- helper to normalise outside value ------------ */
-function isMulti<V extends string>(v: unknown): v is V[] { return Array.isArray(v) }
+function isMulti<V extends string>(v: unknown): v is V[] {
+  return Array.isArray(v)
+}
 /* convert kebab to camel (e.g., "row-index" -> "rowIndex") like DOM dataset does */
-const toDatasetKey = (k: string) => k.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+const toDatasetKey = (k: string) =>
+  k.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
 
 function mergeValue<V extends string>(
   oldVal: SelectValue<V>,
-  newVal : V,
-  multiple = false
+  newVal: V,
+  multiple = false,
 ): SelectValue<V> {
   return multiple
     ? (() => {
@@ -30,23 +35,21 @@ function mergeValue<V extends string>(
     : newVal
 }
 
-function SelectClient<Value extends string = string>(
-  {
-    id,
-    multiple,
-    disabled,
-    required,
-    value: extValue,
-    items,
-    onChange,
-    ...rest
-  }: SelectProps<Value>
-): JSX.Element {
-  const btnRef     = useRef<HTMLButtonElement>(null)
-  const listRef    = useRef<HTMLUListElement>(null)
-  const [open, setOpen]     = useState(false)
-  const [val , setVal] = useState<SelectValue<Value>>(
-    extValue ?? (Boolean(multiple) ? [] : "")
+function SelectClient<Value extends string = string>({
+  id,
+  multiple,
+  disabled,
+  required,
+  value: extValue,
+  items,
+  onChange,
+  ...rest
+}: SelectProps<Value>): JSX.Element {
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const [open, setOpen] = useState(false)
+  const [val, setVal] = useState<SelectValue<Value>>(
+    extValue ?? (Boolean(multiple) ? [] : ""),
   )
 
   /* sync external value */
@@ -57,8 +60,8 @@ function SelectClient<Value extends string = string>(
   const close = useCallback(() => {
     setOpen(false)
     btnRef?.current?.focus()
-  },[])
-  const toggle = useCallback(() => setOpen(o=>!o),[])
+  }, [])
+  const toggle = useCallback(() => setOpen(o => !o), [])
 
   /* close on outside click */
   useEffect(() => {
@@ -91,21 +94,23 @@ function SelectClient<Value extends string = string>(
 
   /* collect ALL data-* props into a dataset object once */
   const dataset = (() => {
-    const d: Record<string, unknown> = {};
+    const d: Record<string, unknown> = {}
     for (const [k, v] of Object.entries(rest)) {
-      if (k.startsWith("data-")) d[toDatasetKey(k.slice(5))] = v;
+      if (k.startsWith("data-")) d[toDatasetKey(k.slice(5))] = v
     }
-    return d;
-  })();
+    return d
+  })()
 
   const clickOption = (opt: Value | null) => {
     const newVal =
       opt === null
-        ? (Boolean(multiple) ? [] : "")
+        ? Boolean(multiple)
+          ? []
+          : ""
         : mergeValue<Value>(val, opt, multiple)
 
     /* synthesize an event carrying ALL data-* as dataset */
-    const syntheticEvt: SelectEvent = { target: { dataset } };
+    const syntheticEvt: SelectEvent = { target: { dataset } }
 
     setVal(newVal)
     onChange?.(syntheticEvt, newVal)
@@ -124,11 +129,11 @@ function SelectClient<Value extends string = string>(
       value={val as Value}
       _clientState={{
         open,
-        buttonRef : btnRef,
-        listRef   : listRef,
-        onButtonClick : toggle,
-        onButtonKey   : handleKey,
-        onOptionClick : clickOption,
+        buttonRef: btnRef,
+        listRef: listRef,
+        onButtonClick: toggle,
+        onButtonKey: handleKey,
+        onOptionClick: clickOption,
       }}
     />
   )

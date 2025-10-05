@@ -11,7 +11,9 @@ const getAutoScheme = (): "light" | "dark" => {
   const attr = html?.getAttribute("data-theme")
   if (attr === "dark" || attr === "light") return attr
   if (typeof window !== "undefined") {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
   }
   return "light"
 }
@@ -29,8 +31,14 @@ const useReducedMotion = (explicit?: boolean): boolean => {
 }
 
 // Child prop types derived from the discriminated union
-type OverlayOnlyProps = Omit<Extract<LoadingProps, { variant: "overlay" }>, "variant">
-type SpinnerOnlyProps = Omit<Exclude<LoadingProps, { variant: "overlay" }>, "variant">
+type OverlayOnlyProps = Omit<
+  Extract<LoadingProps, { variant: "overlay" }>,
+  "variant"
+>
+type SpinnerOnlyProps = Omit<
+  Exclude<LoadingProps, { variant: "overlay" }>,
+  "variant"
+>
 
 const OverlayClient: FC<OverlayOnlyProps & { reducedMotion: boolean }> = ({
   backdrop = "auto",
@@ -42,13 +50,20 @@ const OverlayClient: FC<OverlayOnlyProps & { reducedMotion: boolean }> = ({
   useEffect(() => {
     if (backdrop !== "auto") return
     const mql = window.matchMedia("(prefers-color-scheme: dark)")
-    const onChange = (e: MediaQueryListEvent) => setScheme(e.matches ? "dark" : "light")
+    const onChange = (e: MediaQueryListEvent) =>
+      setScheme(e.matches ? "dark" : "light")
     mql.addEventListener?.("change", onChange)
     return () => mql.removeEventListener?.("change", onChange)
   }, [backdrop])
 
   const resolved = backdrop === "auto" ? scheme : backdrop
-  return <OverlayView {...rest} reducedMotion={reducedMotion} resolvedBackdrop={resolved} />
+  return (
+    <OverlayView
+      {...rest}
+      reducedMotion={reducedMotion}
+      resolvedBackdrop={resolved}
+    />
+  )
 }
 
 const SpinnerClient: FC<SpinnerOnlyProps & { reducedMotion: boolean }> = ({
@@ -56,19 +71,30 @@ const SpinnerClient: FC<SpinnerOnlyProps & { reducedMotion: boolean }> = ({
   ...rest
 }) => <SpinnerView {...rest} reducedMotion={reducedMotion} />
 
-const LoadingClient: FC<LoadingProps> = (props) => {
+const LoadingClient: FC<LoadingProps> = props => {
   const reducedMotion = useReducedMotion(
-    "reducedMotion" in props ? props.reducedMotion : undefined
+    "reducedMotion" in props ? props.reducedMotion : undefined,
   )
 
   if (props.variant === "overlay") {
-    const { variant: _v, ...rest } = props as Extract<LoadingProps, { variant: "overlay" }>
+    const { variant: _v, ...rest } = props as Extract<
+      LoadingProps,
+      { variant: "overlay" }
+    >
     return <OverlayClient {...rest} reducedMotion={reducedMotion} />
   }
 
   // spinner (default)
-  const { variant: _v, ...rest } = props as Exclude<LoadingProps, { variant: "overlay" }>
-  return <SpinnerClient {...(rest as SpinnerOnlyProps)} reducedMotion={reducedMotion} />
+  const { variant: _v, ...rest } = props as Exclude<
+    LoadingProps,
+    { variant: "overlay" }
+  >
+  return (
+    <SpinnerClient
+      {...(rest as SpinnerOnlyProps)}
+      reducedMotion={reducedMotion}
+    />
+  )
 }
 
 export default LoadingClient

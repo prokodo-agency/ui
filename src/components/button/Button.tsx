@@ -1,11 +1,11 @@
-import { createIsland } from '@/helpers/createIsland'
+import { createIsland } from "@/helpers/createIsland"
 
-import ButtonServer from './Button.server'
+import ButtonServer from "./Button.server"
 
-import type { ButtonProps } from './Button.model'
+import type { ButtonProps } from "./Button.model"
 
 export const Button = createIsland<ButtonProps>({
-  name: 'Button',
+  name: "Button",
   Server: ButtonServer,
-  loadLazy: () => import('./Button.lazy'),
+  loadLazy: () => import("./Button.lazy"),
 })

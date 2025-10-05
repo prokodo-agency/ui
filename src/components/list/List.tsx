@@ -47,7 +47,16 @@ export function List({
       className={bem(undefined, undefined, className)}
     >
       {items.map((item: ListItemProps, i: number) => {
-        const { id, title, desc, icon, redirect, onClick, variant: itemVariant, className: itemClassName } = item
+        const {
+          id,
+          title,
+          desc,
+          icon,
+          redirect,
+          onClick,
+          variant: itemVariant,
+          className: itemClassName,
+        } = item
         const isClickable = Boolean(onClick || redirect)
 
         // 1) Prepare <li> props for keyboard accessibility if clickable:
@@ -64,8 +73,9 @@ export function List({
 
           // Only call onClick if this is a “default”‐typed list (not a card).
           if (type === "default" && onClick) {
-            liHandlers.onClick = () => void onClick(item as ListDefaultItemProps)
-            liHandlers.onKeyDown = (e) => {
+            liHandlers.onClick = () =>
+              void onClick(item as ListDefaultItemProps)
+            liHandlers.onKeyDown = e => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault()
                 onClick(item as ListDefaultItemProps)
@@ -83,22 +93,36 @@ export function List({
             "has-icon": Boolean(item?.icon),
             ...modifier,
           },
-          itemClassName
+          itemClassName,
         )
 
         // 3) Helper to render the title <span>:
         const TitleSpan = () => {
-          const titleClass = bem("item__title", {
-            "is-clickable": isClickable,
-            ...modifier,
-          }, "list-title")
+          const titleClass = bem(
+            "item__title",
+            {
+              "is-clickable": isClickable,
+              ...modifier,
+            },
+            "list-title",
+          )
           return <span className={titleClass}>{title}</span>
         }
 
         // 4) Helper to render an optional description <p>:
         const DescParagraph = () => {
           if (!isString(desc as string) && !isValidElement(desc)) return null
-          return <div className={bem("item__desc", {"card": type === "card"}, classNameDesc)}>{desc as string}</div>
+          return (
+            <div
+              className={bem(
+                "item__desc",
+                { card: type === "card" },
+                classNameDesc,
+              )}
+            >
+              {desc as string}
+            </div>
+          )
         }
 
         // 5) Helper to render an icon (purely decorative):
@@ -107,9 +131,15 @@ export function List({
           // aria-hidden for decorative icons
           return (
             <div aria-hidden="true" className={bem("item__icon__wrapper")}>
-              {isValidElement(icon) ? icon :
-                <Icon color={variant as Variants} name={icon as IconName} {...options.icon} />
-              }
+              {isValidElement(icon) ? (
+                icon
+              ) : (
+                <Icon
+                  color={variant as Variants}
+                  name={icon as IconName}
+                  {...options.icon}
+                />
+              )}
             </div>
           )
         }
@@ -118,7 +148,11 @@ export function List({
         if (type === "card") {
           const cardItem = item as ListCardItemProps
           return (
-            <li key={`list-item-${id ?? i}`} className={liClass} {...liHandlers}>
+            <li
+              key={`list-item-${id ?? i}`}
+              className={liClass}
+              {...liHandlers}
+            >
               <Card
                 priority
                 variant="white"
@@ -127,24 +161,36 @@ export function List({
                 contentClassName={bem(
                   "item__card__content",
                   undefined,
-                  cardItem.contentClassName
+                  cardItem.contentClassName,
                 )}
               >
-                <div className={bem("item__inner", undefined, cardItem.innerClassName)}>
+                <div
+                  className={bem(
+                    "item__inner",
+                    undefined,
+                    cardItem.innerClassName,
+                  )}
+                >
                   {/* Decorative Icon */}
                   {icon !== undefined && icon !== null && (
                     <div
                       aria-hidden="true"
-                      className={bem("item__icon", undefined, cardItem.iconProps?.className)}
+                      className={bem(
+                        "item__icon",
+                        undefined,
+                        cardItem.iconProps?.className,
+                      )}
                     >
-                      {isValidElement(icon) ? icon :
+                      {isValidElement(icon) ? (
+                        icon
+                      ) : (
                         <Icon
                           {...cardItem.iconProps}
                           className={bem("item__icon__svg")}
                           name={icon as IconName}
                           size="sm"
                         />
-                      }
+                      )}
                     </div>
                   )}
                   <div className={bem("item__content")}>

@@ -1,29 +1,29 @@
-import { readdirSync, readFileSync, writeFileSync, existsSync } from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { readdirSync, readFileSync, writeFileSync, existsSync } from "fs"
+import path from "path"
+import { fileURLToPath } from "url"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const rootDir = path.resolve(__dirname, '..')
-const componentsDir = path.join(rootDir, 'src/components')
-const packageJsonPath = path.join(rootDir, 'package.json')
+const rootDir = path.resolve(__dirname, "..")
+const componentsDir = path.join(rootDir, "src/components")
+const packageJsonPath = path.join(rootDir, "package.json")
 
 // Load package.json
-const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
+const pkg = JSON.parse(readFileSync(packageJsonPath, "utf-8"))
 
 // Base export
 const exportsField = {
   "./theme.css": "./dist/ui.css",
-  '.': {
-    types: './dist/types/index.d.ts',
-    import: './dist/index.js',
+  ".": {
+    types: "./dist/types/index.d.ts",
+    import: "./dist/index.js",
   },
-  './createIsland': {
-    types: './dist/types/helpers/createIsland.d.ts',
-    import: './dist/helpers/createIsland.js',
+  "./createIsland": {
+    types: "./dist/types/helpers/createIsland.d.ts",
+    import: "./dist/helpers/createIsland.js",
   },
-  './createLazyWrapper': {
-    types: './dist/types/helpers/createLazyWrapper.d.ts',
-    import: './dist/helpers/createLazyWrapper.js',
+  "./createLazyWrapper": {
+    types: "./dist/types/helpers/createLazyWrapper.d.ts",
+    import: "./dist/helpers/createLazyWrapper.js",
   },
 }
 
@@ -33,7 +33,7 @@ const components = readdirSync(componentsDir, { withFileTypes: true })
   .map(dirent => dirent.name)
 
 for (const name of components) {
-  const entryFile = path.join(componentsDir, name, 'index.ts')
+  const entryFile = path.join(componentsDir, name, "index.ts")
   if (!existsSync(entryFile)) continue
 
   exportsField[`./${name}`] = {
@@ -46,5 +46,7 @@ for (const name of components) {
 pkg.exports = exportsField
 
 // Write back
-writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
-console.log(`✅ package.json "exports" updated with ${components.length} components.`)
+writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + "\n")
+console.log(
+  `✅ package.json "exports" updated with ${components.length} components.`,
+)

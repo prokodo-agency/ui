@@ -1,10 +1,9 @@
-import { isNull } from "@/helpers/validations";
+import { isNull } from "@/helpers/validations"
 
-import type { BaseLinkProps } from "./BaseLink.model";
-import type { CSSProperties, JSX } from "react";
+import type { BaseLinkProps } from "./BaseLink.model"
+import type { CSSProperties, JSX } from "react"
 
-const emailRE =
-  /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+const emailRE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 
 export function BaseLinkView({
   href,
@@ -17,58 +16,60 @@ export function BaseLinkView({
 }: BaseLinkProps): JSX.Element {
   /* ------------------------------------------------------------------ */
   /* 1) Decide final href & type                                         */
-  let finalHref = href ?? "#";
-  let kind: "url" | "email" | "tel" | "local" = "local";
+  let finalHref = href ?? "#"
+  let kind: "url" | "email" | "tel" | "local" = "local"
 
   if (href) {
-    const hasProtocol = href.startsWith("http://") || href.startsWith("https://") || href.startsWith("//");
-    const isLocalPath = href.startsWith("/") || href.startsWith("#") || href.startsWith("?");
-    const appProto = /^\w+:/.test(href); // e.g. mailto:, tel:, sms:, custom://
+    const hasProtocol =
+      href.startsWith("http://") ||
+      href.startsWith("https://") ||
+      href.startsWith("//")
+    const isLocalPath =
+      href.startsWith("/") || href.startsWith("#") || href.startsWith("?")
+    const appProto = /^\w+:/.test(href) // e.g. mailto:, tel:, sms:, custom://
 
     if (hasProtocol || appProto) {
-      kind = "url";
+      kind = "url"
     } else if (isLocalPath) {
-      kind = "local";
+      kind = "local"
     } else if (emailRE.test(href)) {
-      kind = "email";
-      finalHref = `mailto:${href}`;
+      kind = "email"
+      finalHref = `mailto:${href}`
     } else {
       // Only consider as phone if the WHOLE string looks like a phone, not a path.
-      const phoneLikeRE = /^\+?\d[\d\s().-]*$/; // no slashes or letters
+      const phoneLikeRE = /^\+?\d[\d\s().-]*$/ // no slashes or letters
       if (phoneLikeRE.test(href)) {
         // normalize to tel:+digits
-        const digits = href.replace(/[^\d]/g, "");
+        const digits = href.replace(/[^\d]/g, "")
         if (digits.length >= 6) {
-          kind = "tel";
-          finalHref = `tel:+${digits}`;
+          kind = "tel"
+          finalHref = `tel:+${digits}`
         }
       } else {
         // treat everything else as local (e.g. "admin/users/123")
-        kind = "local";
+        kind = "local"
       }
     }
   }
 
   /* ------------------------------------------------------------------ */
   /* 2) Compute target / rel                                             */
-  const computedTarget =
-    target ?? (kind === "url" ? "_blank" : undefined);
+  const computedTarget = target ?? (kind === "url" ? "_blank" : undefined)
 
   const computedRel =
-    rel ?? (kind === "url" ? "noopener noreferrer" : undefined);
+    rel ?? (kind === "url" ? "noopener noreferrer" : undefined)
 
   /* 3) Disabled handling                                               */
-  const pointerOff: CSSProperties = { pointerEvents: "none" };
-  const tabIndex = !isNull(disabled) ? -1 : undefined;
-  const linkStyle =
-    !isNull(disabled) ? { ...pointerOff, ...style } : style;
+  const pointerOff: CSSProperties = { pointerEvents: "none" }
+  const tabIndex = !isNull(disabled) ? -1 : undefined
+  const linkStyle = !isNull(disabled) ? { ...pointerOff, ...style } : style
 
   /* ------------------------------------------------------------------ */
   /* 4) Render                                                          */
-  const { linkComponent, ...aProps } = restProps; // strip custom prop
+  const { linkComponent, ...aProps } = restProps // strip custom prop
 
   if (linkComponent) {
-    const LinkTag = linkComponent;
+    const LinkTag = linkComponent
     return (
       <LinkTag
         href={finalHref}
@@ -80,20 +81,22 @@ export function BaseLinkView({
       >
         {children}
       </LinkTag>
-    );
+    )
   }
 
   return (
     <a
       {...aProps}
-      download={kind === "url" ? aProps.download as string | undefined : undefined}
       href={finalHref}
       rel={computedRel}
       style={linkStyle}
       tabIndex={tabIndex}
       target={computedTarget}
+      download={
+        kind === "url" ? (aProps.download as string | undefined) : undefined
+      }
     >
       {children}
     </a>
-  );
+  )
 }

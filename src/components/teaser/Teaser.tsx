@@ -1,4 +1,3 @@
-
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
@@ -16,84 +15,79 @@ import type { FC } from "react"
 
 const bem = create(styles, "Teaser")
 
-export const Teaser: FC<TeaserProps> =
-  ({
-    className,
-    variant = "primary",
-    animation,
-    lineClamp,
-    align,
-    image,
-    title,
-    content,
-    redirect,
-    ...props
-  }) => (
-    <Card
-      variant={variant}
-      {...props}
-      className={bem(undefined, undefined, className)}
-      contentClassName={bem("card")}
-      redirect={redirect}
-    >
-      {animation !== undefined && (
-        <Lottie animation={animation} className={bem("animation")} />
-      )}
-      {image && (
-        <div className={bem("image__wrapper")}>
-          <Image
-            {...(image as ImageProps)}
-            captionClassName={bem("image__caption")}
-            className={bem("image")}
-            containerClassName={bem("image")}
-          />
-        </div>
-      )}
-      <div className={bem("card__content")}>
-        <Headline
-          align={align ?? "center"}
-          size="md"
-          type="h3"
-          {...title}
-          variant={title?.variant ?? variant}
-          className={bem(
-            "headline",
-            {
-              "has-lineClamp": Boolean(lineClamp),
-            },
-            title?.className,
-          )}
-        >
-          {title?.content}
-        </Headline>
-        {isString(content) && (
-          <RichText
-            className={bem("content", {
-              "has-lineClamp": Boolean(lineClamp),
-              [`align-${align}`]: !!align,
-            })}
-          >
-            {content}
-          </RichText>
-        )}
-        {isString(redirect?.label) && (
-          <span className={bem("link")}>
-            <Icon
-              color={variant}
-              name="ArrowRight01Icon"
-              size="xs"
-              {...redirect?.icon}
-              className={bem(
-                "link__icon",
-                undefined,
-                redirect?.icon?.className,
-              )}
-            />
-            {redirect?.label}
-          </span>
-        )}
+export const Teaser: FC<TeaserProps> = ({
+  className,
+  variant = "primary",
+  animation,
+  lineClamp,
+  align,
+  image,
+  title,
+  content,
+  redirect,
+  ...props
+}) => (
+  <Card
+    variant={variant}
+    {...props}
+    className={bem(undefined, undefined, className)}
+    contentClassName={bem("card")}
+    redirect={redirect}
+  >
+    {animation !== undefined && (
+      <Lottie animation={animation} className={bem("animation")} />
+    )}
+    {image && (
+      <div className={bem("image__wrapper")}>
+        <Image
+          {...(image as ImageProps)}
+          captionClassName={bem("image__caption")}
+          className={bem("image")}
+          containerClassName={bem("image")}
+        />
       </div>
-    </Card>
+    )}
+    <div className={bem("card__content")}>
+      <Headline
+        align={align ?? "center"}
+        size="md"
+        type="h3"
+        {...title}
+        variant={title?.variant ?? variant}
+        className={bem(
+          "headline",
+          {
+            "has-lineClamp": Boolean(lineClamp),
+          },
+          title?.className,
+        )}
+      >
+        {title?.content}
+      </Headline>
+      {isString(content) && (
+        <RichText
+          className={bem("content", {
+            "has-lineClamp": Boolean(lineClamp),
+            [`align-${align}`]: !!align,
+          })}
+        >
+          {content}
+        </RichText>
+      )}
+      {isString(redirect?.label) && (
+        <span className={bem("link")}>
+          <Icon
+            color={variant}
+            name="ArrowRight01Icon"
+            size="xs"
+            {...redirect?.icon}
+            className={bem("link__icon", undefined, redirect?.icon?.className)}
+          />
+          {redirect?.label}
+        </span>
+      )}
+    </div>
+  </Card>
 )
 
 Teaser.displayName = "Teaser"

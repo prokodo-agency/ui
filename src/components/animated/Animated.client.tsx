@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { useEffect, useState, useRef, type JSX } from 'react'
+import { useEffect, useState, useRef, type JSX } from "react"
 
-import { isNumber } from '@/helpers/validations'
+import { isNumber } from "@/helpers/validations"
 
-import { AnimatedView } from './Animated.view'
+import { AnimatedView } from "./Animated.view"
 
-import type { AnimatedProps } from './Animated.model'
+import type { AnimatedProps } from "./Animated.model"
 
 export default function AnimatedClient(props: AnimatedProps): JSX.Element {
   const {

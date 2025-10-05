@@ -1,14 +1,14 @@
-import { Button } from '@/components/button'
-import { Headline } from '@/components/headline'
-import { Icon } from '@/components/icon'
-import { create } from '@/helpers/bem'
+import { Button } from "@/components/button"
+import { Headline } from "@/components/headline"
+import { Icon } from "@/components/icon"
+import { create } from "@/helpers/bem"
 
-import styles from './Dialog.module.scss'
+import styles from "./Dialog.module.scss"
 
-import type { DialogViewProps } from './Dialog.model'
-import type { JSX } from 'react'
+import type { DialogViewProps } from "./Dialog.model"
+import type { JSX } from "react"
 
-const bem = create(styles, 'Dialog')
+const bem = create(styles, "Dialog")
 
 export function DialogView({
   open,
@@ -24,7 +24,7 @@ export function DialogView({
   containerChildren,
   className,
   classNameHeader,
-  scroll = 'paper',
+  scroll = "paper",
   fullScreen = false,
   titleProps = {},
   children,
@@ -44,7 +44,7 @@ export function DialogView({
   // Modifikatoren für Wrapper (Animation)
   const wrapperMods = {
     fullScreen,
-    'is-visible': Boolean(open),
+    "is-visible": Boolean(open),
   }
 
   const renderDialog = () => (
@@ -56,12 +56,12 @@ export function DialogView({
       {...rest}
       className={bem(undefined, wrapperMods, className)}
     >
-      <div ref={containerRef} className={bem('container', containerMods)}>
-        <div className={bem('header', undefined, classNameHeader)}>
+      <div ref={containerRef} className={bem("container", containerMods)}>
+        <div className={bem("header", undefined, classNameHeader)}>
           <div>
             <Headline
               {...titleProps}
-              className={bem('title', { 'is-hidden': hideTitle })}
+              className={bem("title", { "is-hidden": hideTitle })}
               id="dialog-title"
             >
               {title}
@@ -73,8 +73,14 @@ export function DialogView({
             <button
               {...closeButtonProps}
               ref={closeButtonRef}
-              aria-label={closeButtonProps?.['aria-label'] ?? translations?.close}
-              className={bem("header__button", undefined, closeButtonProps?.className)}
+              aria-label={
+                closeButtonProps?.["aria-label"] ?? translations?.close
+              }
+              className={bem(
+                "header__button",
+                undefined,
+                closeButtonProps?.className,
+              )}
               onClick={onClose}
               onKeyDown={onCloseKeyDown}
             >
@@ -82,7 +88,11 @@ export function DialogView({
                 name="Cancel01Icon"
                 size="xs"
                 {...closeButtonProps?.iconProps}
-                className={bem("header__button__icon", undefined, closeButtonProps?.iconProps?.className)}
+                className={bem(
+                  "header__button__icon",
+                  undefined,
+                  closeButtonProps?.iconProps?.className,
+                )}
               />
               {closeButtonProps?.title ?? translations?.close ?? "Close"}
             </button>
@@ -97,19 +107,19 @@ export function DialogView({
           ref={contentRef}
           id="dialog-content"
           className={bem(
-            'content',
+            "content",
             { [`scroll-${scroll}`]: true },
-            contentProps.className
+            contentProps.className,
           )}
         >
           {children}
         </div>
 
         {actions.length > 0 && (
-          <div className={bem('actions')}>
+          <div className={bem("actions")}>
             {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
             <div aria-hidden="true" tabIndex={0} />
-            {actions.map((action) => (
+            {actions.map(action => (
               <Button key={action.id} {...action} title={action?.title ?? ""} />
             ))}
             {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
@@ -125,7 +135,7 @@ export function DialogView({
   if (!closeOnBackdropClick || fullScreen) return renderDialog()
   return (
     <div
-      className={bem('backdrop', { 'is-visible': Boolean(open) })}
+      className={bem("backdrop", { "is-visible": Boolean(open) })}
       {...wrapperProps}
     >
       {renderDialog()}

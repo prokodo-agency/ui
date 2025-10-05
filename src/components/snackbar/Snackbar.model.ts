@@ -3,7 +3,12 @@ import type { ReactNode } from "react"
 // ────────────────────────────────────────────────────────────────────────────────
 //  Variants & positions
 // ────────────────────────────────────────────────────────────────────────────────
-export type SnackbarVariant = "default" | "success" | "error" | "warning" | "info"
+export type SnackbarVariant =
+  | "default"
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
 
 export type SnackbarAnchorOrigin = {
   vertical: "top" | "bottom"
@@ -13,8 +18,15 @@ export type SnackbarAnchorOrigin = {
 // ────────────────────────────────────────────────────────────────────────────────
 //  Events
 // ────────────────────────────────────────────────────────────────────────────────
-export type SnackbarCloseReason = "timeout" | "clickaway" | "actionClick" | "closeIcon"
-export type SnackbarCloseHandler = (reason: SnackbarCloseReason, event?: unknown) => void
+export type SnackbarCloseReason =
+  | "timeout"
+  | "clickaway"
+  | "actionClick"
+  | "closeIcon"
+export type SnackbarCloseHandler = (
+  reason: SnackbarCloseReason,
+  event?: unknown,
+) => void
 
 // ────────────────────────────────────────────────────────────────────────────────
 //  Props

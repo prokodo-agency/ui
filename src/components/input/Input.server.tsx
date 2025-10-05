@@ -5,5 +5,5 @@ import type { JSX } from "react"
 
 export default function InputServer(p: InputProps): JSX.Element {
   // const { value, ...rest } = p
-  return <InputView {...p} readOnly  />
+  return <InputView {...p} readOnly />
 }

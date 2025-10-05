@@ -1,9 +1,9 @@
 /* stories/Carousel.stories.tsx
    ─────────────────────────── */
 
-import { Carousel } from "@/components/carousel";
+import { Carousel } from "@/components/carousel"
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
@@ -57,9 +57,9 @@ const meta = {
     onMouseDown: { table: { disable: true } },
     onMouseUp: { table: { disable: true } },
   },
-} satisfies Meta<typeof Carousel>;
+} satisfies Meta<typeof Carousel>
 
-export default meta;
+export default meta
 
 /* ---------- Helpers --------------------------------------------- */
 const slideBase = {
@@ -69,37 +69,28 @@ const slideBase = {
   height: 192, // 48 rem × 4 px
   fontSize: 24,
   color: "#ffffff",
-} as const;
+} as const
 
 /* ---------- Stories --------------------------------------------- */
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Static: Story = {
   args: {
     itemsToShow: 1,
     enableControl: false,
     children: [
-      <div
-        key="1"
-        style={{ ...slideBase, backgroundColor: "#1E90FF"}}
-      >
+      <div key="1" style={{ ...slideBase, backgroundColor: "#1E90FF" }}>
         Slide 1
       </div>,
-      <div
-        key="2"
-        style={{ ...slideBase, backgroundColor: "#00E6FF"}}
-      >
+      <div key="2" style={{ ...slideBase, backgroundColor: "#00E6FF" }}>
         Slide 2
       </div>,
-      <div
-        key="3"
-        style={{ ...slideBase, backgroundColor: "#2393a2"}}
-      >
+      <div key="3" style={{ ...slideBase, backgroundColor: "#2393a2" }}>
         Slide 3
       </div>,
     ],
   },
-};
+}
 
 export const AutoPlay: Story = {
   args: {
@@ -120,7 +111,7 @@ export const AutoPlay: Story = {
       </div>
     )),
   },
-};
+}
 
 export const ThreeAtOnce: Story = {
   args: {
@@ -141,4 +132,4 @@ export const ThreeAtOnce: Story = {
       </div>
     )),
   },
-};
+}

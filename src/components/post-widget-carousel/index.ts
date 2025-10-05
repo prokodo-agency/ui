@@ -1,8 +1,10 @@
 export * from "./PostWidgetCarousel"
 export type {
   PostWidgetCarouselProps,
+  PostWidgetCarouselItem,
   PostWidgetCarouselHeadline,
   PostWidgetCarouselImage,
-  PostWidgetCarouselItem,
   PostWidgetCarouselRedirect,
+  PostWidgetCarouselClasses,
+  PostWidgetCarouselComponentsProps,
 } from "./PostWidgetCarousel.model"

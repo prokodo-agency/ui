@@ -22,7 +22,7 @@ export default [
       "jest.d.ts",
       "postcss.config.js",
       "src/vendor/hugeicons/**",
-      "src/components/icon/loaders/"
+      "src/components/icon/loaders/",
     ],
   },
   {

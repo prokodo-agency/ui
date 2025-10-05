@@ -24,23 +24,36 @@ export function DatePickerView({
 }: DatePickerProps & {
   onChangeInput?: (raw: string) => void
 }): JSX.Element {
-  const effectiveFormat = format ?? (withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD")
+  const effectiveFormat =
+    format ?? (withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD")
   const inputType = withTime ? "datetime-local" : "date"
   const htmlMinMaxFormat = withTime ? "YYYY-MM-DDTHH:mm" : "YYYY-MM-DD"
 
-  const displayValue = !isNull(value) ? dayjs(value).format(effectiveFormat) : ""
-  const min = !isNull(minDate) ? dayjs(minDate).format(htmlMinMaxFormat) : undefined
-  const max = !isNull(maxDate) ? dayjs(maxDate).format(htmlMinMaxFormat) : undefined
+  const displayValue = !isNull(value)
+    ? dayjs(value).format(effectiveFormat)
+    : ""
+  const min = !isNull(minDate)
+    ? dayjs(minDate).format(htmlMinMaxFormat)
+    : undefined
+  const max = !isNull(maxDate)
+    ? dayjs(maxDate).format(htmlMinMaxFormat)
+    : undefined
   const computedStep = withTime ? Math.max(1, minuteStep) * 60 : undefined
 
   // strip any incoming step for date-only inputs
   const { step: _ignored, ...restWithoutStep } = rest as { step?: unknown }
 
   // Adapters that satisfy InputView’s types
-  const handleInput = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    onChangeInput?.((e.currentTarget as HTMLInputElement | HTMLTextAreaElement).value)
+  const handleInput = (
+    e: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    onChangeInput?.(
+      (e.currentTarget as HTMLInputElement | HTMLTextAreaElement).value,
+    )
   }
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     onChangeInput?.(e.currentTarget.value)
   }
 
@@ -59,7 +72,9 @@ export function DatePickerView({
       value={displayValue}
       onChange={handleChange}
       onInput={handleInput}
-      {...(withTime && computedStep !== undefined ? { step: computedStep } : {})}
+      {...(withTime && computedStep !== undefined
+        ? { step: computedStep }
+        : {})}
     />
   )
 }

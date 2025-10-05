@@ -35,7 +35,7 @@ export const Default: Story = {
     // Add this no-op so the island hydrates:
     onChange: (_, index: number) => console.log("Current Index: ", index),
   },
-  render: (args) => <StepperWithState {...args} />,
+  render: args => <StepperWithState {...args} />,
 }
 
 export const WithIcon: Story = {
@@ -43,5 +43,5 @@ export const WithIcon: Story = {
     steps,
     onChange: (_, index: number) => console.log("Current Index: ", index),
   },
-  render: (args) => <StepperWithState {...args} />,
+  render: args => <StepperWithState {...args} />,
 }

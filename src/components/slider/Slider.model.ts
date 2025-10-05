@@ -1,74 +1,74 @@
-import type { LabelProps } from "../label";
-import type { HTMLAttributes, FocusEvent, ChangeEvent } from "react";
+import type { LabelProps } from "../label"
+import type { HTMLAttributes, FocusEvent, ChangeEvent } from "react"
 
 export interface SliderMark {
-  value: number;
-  label?: string;
+  value: number
+  label?: string
 }
 
 export interface SliderProps {
   /** Unique identifier (also used for label htmlFor) */
-  id: string;
+  id: string
 
   /** Current value (controlled) */
-  value?: number | string;
+  value?: number | string
 
   /** Minimum value (default: 0) */
-  min?: number;
+  min?: number
 
   /** Maximum value (default: 100) */
-  max?: number;
+  max?: number
 
   /** Step increment (default: 1) */
-  step?: number;
+  step?: number
 
   /* Name attribute of the field */
   name?: string
 
   /** Custom error message */
-  errorText?: string;
+  errorText?: string
 
   /** Custom helper message */
-  helperText?: string;
+  helperText?: string
 
   /**
    * If true, show tick marks at each step (unstyled; view will position them).
    * Or supply an array of `{ value, label? }` to render custom marks.
    */
-  marks?: boolean | SliderMark[];
+  marks?: boolean | SliderMark[]
 
   /** Label text (renders above the slider) */
-  label?: string;
+  label?: string
 
   /** Hide label */
-  hideLabel?: boolean;
+  hideLabel?: boolean
 
   /** Props forwarded to the Label component */
-  labelProps?: Omit<LabelProps, "htmlFor" | "label" | "required" | "error">;
+  labelProps?: Omit<LabelProps, "htmlFor" | "label" | "required" | "error">
 
   /** Props forwarded to the floating value tooltip <span> */
-  valueLabelProps?: HTMLAttributes<HTMLSpanElement>;
+  valueLabelProps?: HTMLAttributes<HTMLSpanElement>
 
   /** If true, renders *— Required —* on the label */
-  required?: boolean;
+  required?: boolean
 
   /** Disable the slider entirely */
-  disabled?: boolean;
+  disabled?: boolean
 
   /** Called when slider gains focus */
-  onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (e: FocusEvent<HTMLInputElement>) => void
 
   /** Called when slider loses focus */
-  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void
 
   /**
    * Called whenever the value changes.
    * Signature: (e: ChangeEvent<HTMLInputElement>, newValue: number) => void
    */
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>, value: number) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>, value: number) => void
 
   /** Optional additional CSS class on the root container */
-  className?: string;
+  className?: string
 
   /**
    * How the thumb snaps when the user drags it.
@@ -76,7 +76,7 @@ export interface SliderProps {
    * - "step": snap to multiples of `step`
    * - "marks": snap to nearest mark value (from `marks` array or implicit step marks)
    */
-  snap?: "none" | "step" | "marks";
+  snap?: "none" | "step" | "marks"
 }
 
 export interface SliderViewProps extends SliderProps {

@@ -1,13 +1,9 @@
 import { FormView } from "./Form.view"
 
-import type {
-  FormProps,
-  FormField,
-  FormMessages,
-} from "./Form.model"
+import type { FormProps, FormField, FormMessages } from "./Form.model"
 import type { FC } from "react"
 
-const FormServer: FC<FormProps> = (props) => {
+const FormServer: FC<FormProps> = props => {
   const {
     fields,
     messages,

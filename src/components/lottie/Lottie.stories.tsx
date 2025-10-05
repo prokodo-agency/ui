@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    animation: "https://lottie.host/9be763fe-a1be-4789-9e0c-326aa1da26fd/DBJJo3oKXj.lottie",
+    animation:
+      "https://lottie.host/9be763fe-a1be-4789-9e0c-326aa1da26fd/DBJJo3oKXj.lottie",
   },
 }

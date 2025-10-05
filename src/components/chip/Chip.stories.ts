@@ -23,7 +23,7 @@ const meta = {
         "error",
         "info",
         "warning",
-        "white"
+        "white",
       ],
     },
     /* hide styling helpers */

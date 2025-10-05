@@ -9,7 +9,7 @@ import type { RichTextProps } from "./RichText.model"
 import type { JSX } from "react"
 
 const bem = create(styles, "RichText")
-const md = new MarkdownIt({ html: false, linkify: true, breaks: true });
+const md = new MarkdownIt({ html: false, linkify: true, breaks: true })
 
 /**
  * Server‐side fallback: turn Markdown → HTML using markdown-it (ESM),
@@ -25,12 +25,12 @@ export function RichTextServer(props: RichTextProps): JSX.Element {
     itemProp,
     // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     overrideParagraph,
-    linkComponent: _linkComp,      // omit on server (don’t pass to DOM)
-  ...restProps
+    linkComponent: _linkComp, // omit on server (don’t pass to DOM)
+    ...restProps
   } = props
 
   // Dynamically import markdown-it (ESM) on the server:
-  const rawHtml = md.render((children ?? "") as string);
+  const rawHtml = md.render((children ?? "") as string)
 
   // Create a fake window/document via jsdom:
   const safeHtml = filterXSS(rawHtml)
@@ -45,7 +45,7 @@ export function RichTextServer(props: RichTextProps): JSX.Element {
     <div
       className={bem(undefined, undefined, className)}
       {...schema}
-      {...(restProps)}
+      {...restProps}
       dangerouslySetInnerHTML={{ __html: safeHtml }}
     />
   )

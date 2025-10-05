@@ -3,20 +3,41 @@ import type { Preview, ReactRenderer } from "@storybook/react"
 import { withThemeFromJSXProvider } from "@storybook/addon-themes"
 import "../src/styles/theme.scss"
 
-if (typeof window !== 'undefined') {
-  const link = document.createElement('link');
-  link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap';
-  link.rel = 'stylesheet';
-  document.head.appendChild(link);
+if (typeof window !== "undefined") {
+  const link = document.createElement("link")
+  link.href =
+    "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+  link.rel = "stylesheet"
+  document.head.appendChild(link)
 }
 
 const footer = (
-  <div style={{ font: "13px/1.4 system-ui, sans-serif", padding: "8px 12px", textAlign: "center", opacity: 0.8 }}>
-    Next.js CMS: <a href="https://www.prokodo.com/en/solution/next-js-cms?utm_source=storybook&utm_medium=footer" target="_blank" rel="noopener">EN</a>
+  <div
+    style={{
+      font: "13px/1.4 system-ui, sans-serif",
+      padding: "8px 12px",
+      textAlign: "center",
+      opacity: 0.8,
+    }}
+  >
+    Next.js CMS:{" "}
+    <a
+      href="https://www.prokodo.com/en/solution/next-js-cms?utm_source=storybook&utm_medium=footer"
+      target="_blank"
+      rel="noopener"
+    >
+      EN
+    </a>
     &nbsp;•&nbsp;
-    <a href="https://www.prokodo.com/de/loesung/next-js-cms?utm_source=storybook&utm_medium=footer" target="_blank" rel="noopener">DE</a>
+    <a
+      href="https://www.prokodo.com/de/loesung/next-js-cms?utm_source=storybook&utm_medium=footer"
+      target="_blank"
+      rel="noopener"
+    >
+      DE
+    </a>
   </div>
-);
+)
 
 const withThemeWrapper = (Story, context) => {
   const theme = context.globals.theme || "light"

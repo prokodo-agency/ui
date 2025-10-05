@@ -5,8 +5,13 @@ import type { ReactNode } from "react"
 
 export default function DynamicListServer(props: DynamicListProps): ReactNode {
   const { buttonDeleteProps, ...rest } = props
-  return <DynamicListView {...rest} buttonDeleteProps={{
-    ...buttonDeleteProps,
-    onClick: undefined
-  }} />
+  return (
+    <DynamicListView
+      {...rest}
+      buttonDeleteProps={{
+        ...buttonDeleteProps,
+        onClick: undefined,
+      }}
+    />
+  )
 }

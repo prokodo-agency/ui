@@ -44,5 +44,5 @@ export type RichTextProps = {
    * Callback used by RichText when it encounters a <p>…</p>.
    * Should return a React element—here, a heading tag of the right level.
    */
-  overrideParagraph?: (textContent: string) => ReactNode;
+  overrideParagraph?: (textContent: string) => ReactNode
 } & HTMLAttributes<HTMLDivElement>

@@ -78,7 +78,7 @@ export const handleValidation = (
   if (customRegexPattern !== undefined) {
     let customRegex: RegExp
     // Accept "/pattern/flags" OR just "pattern"
-    const m = customRegexPattern.match(/^\/([\s\S]*)\/([gimsuy]*)$/);
+    const m = customRegexPattern.match(/^\/([\s\S]*)\/([gimsuy]*)$/)
     if (m) {
       const [, pattern = "", flags] = m
       customRegex = new RegExp(pattern, flags)

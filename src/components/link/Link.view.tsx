@@ -45,9 +45,11 @@ export function LinkView({
         onClick={hasHandlers ? onClick : undefined}
         onKeyDown={
           hasHandlers
-            ? (e) => {
+            ? e => {
                 if (e.key === "Enter" || e.key === " ") {
-                  (onClick as unknown as (ev: React.SyntheticEvent) => void)?.(e);
+                  ;(onClick as unknown as (ev: React.SyntheticEvent) => void)?.(
+                    e,
+                  )
                 }
               }
             : undefined

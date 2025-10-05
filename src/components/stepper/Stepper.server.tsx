@@ -11,11 +11,11 @@ export default function StepperServer({
   ...rootProps
 }: StepperProps): JSX.Element {
   // 1) Create a shallow copy of steps that strips out any innerContainerProps.
-  const serverSteps: Step[] = steps.map((step) => ({
-      ...step,
-      // no innerContainerProps at all on the server
-      innerContainerProps: {},
-    }))
+  const serverSteps: Step[] = steps.map(step => ({
+    ...step,
+    // no innerContainerProps at all on the server
+    innerContainerProps: {},
+  }))
 
   // 2) Dummy ref object so the view always sees a stepRefs prop.
   const emptyStepRefs = { current: [] as Array<HTMLDivElement | null> }

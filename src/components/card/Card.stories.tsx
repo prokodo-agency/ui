@@ -1,4 +1,3 @@
-
 import { Headline } from "../headline"
 import { RichText } from "../rich-text"
 

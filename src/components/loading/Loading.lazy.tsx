@@ -10,5 +10,5 @@ export default createLazyWrapper<LoadingProps>({
   name: "Loading",
   Client: LoadingClient,
   Server: LoadingServer,
-  isInteractive: () => true
+  isInteractive: () => true,
 })

@@ -20,7 +20,8 @@ export function ProgressBarView({
   ...domRest
 }: ProgressBarViewProps): JSX.Element {
   // Clamp the value so that width never overflows
-  const safeValue = typeof value === "number" ? Math.min(100, Math.max(0, value)) : undefined
+  const safeValue =
+    typeof value === "number" ? Math.min(100, Math.max(0, value)) : undefined
   const isIndeterminate = safeValue === undefined
   return (
     <div
@@ -32,14 +33,16 @@ export function ProgressBarView({
       id={id}
       role="progressbar"
     >
-      <div className={bem("track")}> {/* background track */}
+      <div className={bem("track")}>
+        {" "}
+        {/* background track */}
         <div
           style={!isIndeterminate ? { width: `${safeValue}%` } : undefined}
           className={bem("bar", {
             [`${variant}`]: true,
             indeterminate: isIndeterminate,
             infinity: Boolean(infinity),
-            "indeterminate--infinity": isIndeterminate && Boolean(infinity)
+            "indeterminate--infinity": isIndeterminate && Boolean(infinity),
           })}
         />
       </div>

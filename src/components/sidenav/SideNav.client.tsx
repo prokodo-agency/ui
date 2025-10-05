@@ -13,9 +13,7 @@ export default function SidebarClient({
   onChange,
   ...props
 }: SideNavProps): JSX.Element {
-  const [collapsed, setCollapsed] = useState(
-    props.initialCollapsed ?? false
-  )
+  const [collapsed, setCollapsed] = useState(props.initialCollapsed ?? false)
 
   /*  persist user preference in localStorage  */
   useEffect(() => {
@@ -30,17 +28,21 @@ export default function SidebarClient({
     })
   }
 
-  const formatedItems = useMemo(() => items.map((el) => ({
-    ...el,
-    redirect: el?.redirect && {
-      ...el?.redirect,
-      href: el?.redirect?.href ?? "",
-      onClick: (e) => {
-        el?.redirect?.onClick?.(e)
-        onChange?.(el)
-      }
-    }
-  })), [items, onChange])
+  const formatedItems = useMemo(
+    () =>
+      items.map(el => ({
+        ...el,
+        redirect: el?.redirect && {
+          ...el?.redirect,
+          href: el?.redirect?.href ?? "",
+          onClick: e => {
+            el?.redirect?.onClick?.(e)
+            onChange?.(el)
+          },
+        },
+      })),
+    [items, onChange],
+  )
 
   return (
     <SideNavView

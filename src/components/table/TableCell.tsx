@@ -49,11 +49,19 @@ export const TableCell: FC<TableCellProps> = ({
       className={bem(undefined, { "has-icon": Boolean(icon) }, className)}
       id={id}
     >
-      {redirect?.href !== undefined ?
-        <Link priority {...redirect} className={bem("inner", {"has-link": true}, redirect?.className ?? classNameInner)}>
+      {redirect?.href !== undefined ? (
+        <Link
+          priority
+          {...redirect}
+          className={bem(
+            "inner",
+            { "has-link": true },
+            redirect?.className ?? classNameInner,
+          )}
+        >
           {renderCellContent()}
         </Link>
-      : (
+      ) : (
         <span className={bem("inner", undefined, classNameInner)}>
           {renderCellContent()}
         </span>

@@ -40,10 +40,10 @@ export type SwitchProps = Omit<HTMLAttributes<HTMLInputElement>, "onChange"> & {
   disabled?: boolean
 
   /** Custom error message */
-  errorText?: string;
+  errorText?: string
 
   /** Custom helper message */
-  helperText?: string;
+  helperText?: string
 
   /**
    * Called whenever the switch state changes.

@@ -46,7 +46,7 @@ export function InputView({
 
   // for aria-describedby
   const hasHelperText = isString(helperText)
-  const errorId  = isError ? `${name}-error`  : undefined
+  const errorId = isError ? `${name}-error` : undefined
   const helperId = !isError && hasHelperText ? `${name}-helper` : undefined
   const describedBy = [errorId, helperId].filter(Boolean).join(" ") || undefined
   return (
@@ -59,19 +59,29 @@ export function InputView({
             htmlFor={name}
             label={label}
             required={required}
-            className={bem("label", {
-              "is-focused": Boolean(isFocused) || hasValue,
-            }, labelProps.className)}
+            className={bem(
+              "label",
+              {
+                "is-focused": Boolean(isFocused) || hasValue,
+              },
+              labelProps.className,
+            )}
           />
         )}
 
         <div className={bem("field", undefined, fieldClassName)}>
-          <div className={bem("input", {
-            "is-focused": Boolean(isFocused),
-            disabled: Boolean(disabled),
-            multiline: Boolean(multiline),
-            fullWidth: Boolean(fullWidth),
-          }, inputContainerClassName)}>
+          <div
+            className={bem(
+              "input",
+              {
+                "is-focused": Boolean(isFocused),
+                disabled: Boolean(disabled),
+                multiline: Boolean(multiline),
+                fullWidth: Boolean(fullWidth),
+              },
+              inputContainerClassName,
+            )}
+          >
             {Boolean(multiline) ? (
               <textarea
                 {...rest}
@@ -79,7 +89,6 @@ export function InputView({
                 aria-describedby={describedBy}
                 aria-invalid={isError}
                 aria-required={required}
-                className={bem("input__node", { multiline: true }, inputClassName)}
                 disabled={disabled}
                 id={name}
                 name={name}
@@ -87,6 +96,11 @@ export function InputView({
                 required={Boolean(required)}
                 rows={rows}
                 value={value ?? ""}
+                className={bem(
+                  "input__node",
+                  { multiline: true },
+                  inputClassName,
+                )}
               />
             ) : (
               <input
@@ -105,7 +119,7 @@ export function InputView({
                 className={bem(
                   "input__node",
                   { multiline: false },
-                  inputClassName
+                  inputClassName,
                 )}
               />
             )}
@@ -114,9 +128,11 @@ export function InputView({
       </div>
 
       {(isError || hasHelperText || typeof maxLength === "number") && (
-        <div className={bem("footer", {
-          "counter-only": !hasHelperText && typeof maxLength === "number",
-        })}>
+        <div
+          className={bem("footer", {
+            "counter-only": !hasHelperText && typeof maxLength === "number",
+          })}
+        >
           {(isError || hasHelperText) && (
             <div
               aria-live={isError ? "assertive" : "polite"}
@@ -133,10 +149,10 @@ export function InputView({
               </span>
             </div>
           )}
-          {(!Boolean(hideCounter) && typeof maxLength === "number") && (
+          {!Boolean(hideCounter) && typeof maxLength === "number" && (
             <div className={bem("counter")}>
               <span>
-                {(value != null ? String(value).length : 0)} / {maxLength}
+                {value != null ? String(value).length : 0} / {maxLength}
               </span>
             </div>
           )}

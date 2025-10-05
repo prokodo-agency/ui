@@ -61,12 +61,16 @@ export default function CalendlyClient(props: CalendlyProps): JSX.Element {
     if (Boolean(hideDetails)) p.set("hide_landing_page_details", "1")
     if (Boolean(hideEventTypeDetails)) p.set("hide_event_type_details", "1")
     if (Boolean(hideCookieSettings)) p.set("hide_gdpr_banner", "1")
-    if (isString(colors.background)) p.set("background_color", format(colors?.background)!)
-    if (isString(colors.text))       p.set("text_color", format(colors.text)!)
-    if (isString(colors.button))     p.set("primary_color", format(colors.button)!)
-    if (isString(data?.utm_campaign)) p.set("utm_campaign", data?.utm_campaign ?? "")
-    if (isString(data?.utm_source))   p.set("utm_source", data?.utm_source ?? "")
-    return calendlyId ? `https://calendly.com/${calendlyId}?${p.toString()}` : ""
+    if (isString(colors.background))
+      p.set("background_color", format(colors?.background)!)
+    if (isString(colors.text)) p.set("text_color", format(colors.text)!)
+    if (isString(colors.button)) p.set("primary_color", format(colors.button)!)
+    if (isString(data?.utm_campaign))
+      p.set("utm_campaign", data?.utm_campaign ?? "")
+    if (isString(data?.utm_source)) p.set("utm_source", data?.utm_source ?? "")
+    return calendlyId
+      ? `https://calendly.com/${calendlyId}?${p.toString()}`
+      : ""
   }, [
     calendlyId,
     colors,
@@ -77,45 +81,54 @@ export default function CalendlyClient(props: CalendlyProps): JSX.Element {
   ])
 
   // single place to try initializing the inline widget
-  const tryInit = useCallback((attempt = 0) => {
-    const host = calendlyRef.current
-    if (!host) return
-    // hard guards (dev StrictMode, re-renders, retries)
-    if (didInitRef.current) return
-    if (host.dataset.initialized === "1") return
-    if (widgetInitialized) return
-    if (!calendlyId) { setError("Calendly ID missing."); return }
-    if (!dataUrl) { setError("Calendly URL could not be built."); return }
-    if (window.Calendly) {
-      // clear any stale children (defensive; avoids double iframes)
-      try {
-        host.innerHTML = ""
-      } catch {}
-      host.setAttribute("data-url", dataUrl)
-      window.Calendly.initInlineWidget({
-        url: dataUrl,
-        parentElement: host,
-        prefill: safePrefill(),
-      })
-      setWidgetInitialized(true)
-      // mark initialized in both ref and DOM
-      didInitRef.current = true
-      host.dataset.initialized = "1"
-      setWidgetInitialized(true)
-      if (process.env.NODE_ENV !== "production" && !devWarnedTwice) {
-        devWarnedTwice = true
-
-        console.debug("[Calendly] widget initialized")
+  const tryInit = useCallback(
+    (attempt = 0) => {
+      const host = calendlyRef.current
+      if (!host) return
+      // hard guards (dev StrictMode, re-renders, retries)
+      if (didInitRef.current) return
+      if (host.dataset.initialized === "1") return
+      if (widgetInitialized) return
+      if (!calendlyId) {
+        setError("Calendly ID missing.")
+        return
       }
-      return
-    }
-    if (attempt < 10) {
-      setTimeout(() => tryInit(attempt + 1), 100)
-    } else {
-      console.warn("Calendly widget failed to load.")
-      setError("Calendly widget failed to load.")
-    }
-  }, [dataUrl, safePrefill, widgetInitialized, calendlyId])
+      if (!dataUrl) {
+        setError("Calendly URL could not be built.")
+        return
+      }
+      if (window.Calendly) {
+        // clear any stale children (defensive; avoids double iframes)
+        try {
+          host.innerHTML = ""
+        } catch {}
+        host.setAttribute("data-url", dataUrl)
+        window.Calendly.initInlineWidget({
+          url: dataUrl,
+          parentElement: host,
+          prefill: safePrefill(),
+        })
+        setWidgetInitialized(true)
+        // mark initialized in both ref and DOM
+        didInitRef.current = true
+        host.dataset.initialized = "1"
+        setWidgetInitialized(true)
+        if (process.env.NODE_ENV !== "production" && !devWarnedTwice) {
+          devWarnedTwice = true
+
+          console.debug("[Calendly] widget initialized")
+        }
+        return
+      }
+      if (attempt < 10) {
+        setTimeout(() => tryInit(attempt + 1), 100)
+      } else {
+        console.warn("Calendly widget failed to load.")
+        setError("Calendly widget failed to load.")
+      }
+    },
+    [dataUrl, safePrefill, widgetInitialized, calendlyId],
+  )
 
   /* ---------- init on first visibility ------------------- */
   const onAnimate = useCallback(
@@ -130,7 +143,8 @@ export default function CalendlyClient(props: CalendlyProps): JSX.Element {
   )
 
   // optional cleanup on unmount (helps during hot-reload / route changes in dev)
-  useEffect(() => () => {
+  useEffect(
+    () => () => {
       const host = calendlyRef.current
       if (host) {
         try {
@@ -141,7 +155,9 @@ export default function CalendlyClient(props: CalendlyProps): JSX.Element {
       didInitRef.current = false
       // don't reset scriptAlreadyLoaded/cssAlreadyLoaded – those are global
       setWidgetInitialized(false)
-    }, [])
+    },
+    [],
+  )
 
   /* ---------- load external SDK exactly once -------------- */
   useEffect(() => {
@@ -163,7 +179,8 @@ export default function CalendlyClient(props: CalendlyProps): JSX.Element {
 
     // safety timeout in case onload never fires (CSP/adblock)
     const watchdog = window.setTimeout(() => {
-      if (!scriptAlreadyLoaded) setError("Calendly script did not load (timeout).")
+      if (!scriptAlreadyLoaded)
+        setError("Calendly script did not load (timeout).")
     }, 8000)
     return () => clearTimeout(watchdog)
   }, [])
@@ -204,7 +221,9 @@ export default function CalendlyClient(props: CalendlyProps): JSX.Element {
 
   return (
     <Animated {...animationProps} onAnimate={onAnimate}>
-      {!Boolean(hideLoading) && !Boolean(widgetInitialized) && !isString(error) && <Loading />}
+      {!Boolean(hideLoading) &&
+        !Boolean(widgetInitialized) &&
+        !isString(error) && <Loading />}
       {isString(error) && (
         <div role="alert" style={{ padding: 12 }}>
           <p style={{ margin: 0 }}>{error}</p>

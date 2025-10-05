@@ -1,14 +1,14 @@
-import { create } from '@/helpers/bem'
-import { isString } from '@/helpers/validations'
+import { create } from "@/helpers/bem"
+import { isString } from "@/helpers/validations"
 
-import { Icon } from '../icon'
+import { Icon } from "../icon"
 
-import styles from './Button.module.scss'
+import styles from "./Button.module.scss"
 
-import type { ButtonViewProps, ButtonDefaultProps } from './Button.model'
+import type { ButtonViewProps, ButtonDefaultProps } from "./Button.model"
 import type { FC } from "react"
 
-const bem = create(styles, 'Button')
+const bem = create(styles, "Button")
 
 export const ButtonView: FC<ButtonViewProps> = ({
   buttonRef,
@@ -24,36 +24,36 @@ export const ButtonView: FC<ButtonViewProps> = ({
   LinkComponent,
   ...rest
 }) => {
-  const isOutlined = variant === 'outlined'
-  const iconName   = iconProps?.name
-  const iconMod    = { 'icon-only': isIconOnly }
-  const {title} = (rest as ButtonDefaultProps)
+  const isOutlined = variant === "outlined"
+  const iconName = iconProps?.name
+  const iconMod = { "icon-only": isIconOnly }
+  const { title } = rest as ButtonDefaultProps
 
   const inner = (
     <>
-      {iconName && <Icon className={bem('icon', iconMod)} {...iconProps} />}
+      {iconName && <Icon className={bem("icon", iconMod)} {...iconProps} />}
       {title}
     </>
   )
 
   const variantNode = isOutlined ? (
-    <div className={bem('content', iconMod, contentClassName)}>{inner}</div>
+    <div className={bem("content", iconMod, contentClassName)}>{inner}</div>
   ) : (
     inner
   )
 
   const common = {
     id: rest.id,
-    'aria-label': title ?? undefined,
+    "aria-label": title ?? undefined,
     className: bem(
       undefined,
       {
-        'has-fullWidth': Boolean(fullWidth),
-        'has-icon': !Boolean(isIconOnly) && isString(iconProps?.name),
+        "has-fullWidth": Boolean(fullWidth),
+        "has-icon": !Boolean(isIconOnly) && isString(iconProps?.name),
         [`has-variant-${variant}`]: true,
-        [`has-bg-${color}`]: variant === 'contained',
-        [`has-text-${color}`]: variant === 'text',
-        'is-disabled': Boolean(disabled),
+        [`has-bg-${color}`]: variant === "contained",
+        [`has-text-${color}`]: variant === "text",
+        "is-disabled": Boolean(disabled),
         ...iconMod,
       },
       className,

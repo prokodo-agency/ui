@@ -9,5 +9,7 @@ export default createLazyWrapper<CardProps>({
   name: "Card",
   Client: CardClient,
   Server: CardServer,
-  isInteractive: (p: CardProps) => (!Boolean(p.disabled) && typeof p.onClick === "function") || typeof p.redirect?.href === "string",
+  isInteractive: (p: CardProps) =>
+    (!Boolean(p.disabled) && typeof p.onClick === "function") ||
+    typeof p.redirect?.href === "string",
 })

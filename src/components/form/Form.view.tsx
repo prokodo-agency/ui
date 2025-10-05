@@ -40,75 +40,81 @@ export const FormView: FC<FormViewProps> = ({
   messages: _messages,
   ...htmlProps
 }) => (
-    <form
-      {...htmlProps}
-      noValidate
-      action={action}
-      aria-labelledby={`${id}-heading`}
-      className={bem(undefined, undefined, className)}
-      id={id}
-      onSubmit={typeof action === "function" || typeof action === "string" ? undefined : onFormSubmit}
+  <form
+    {...htmlProps}
+    noValidate
+    action={action}
+    aria-labelledby={`${id}-heading`}
+    className={bem(undefined, undefined, className)}
+    id={id}
+    onSubmit={
+      typeof action === "function" || typeof action === "string"
+        ? undefined
+        : onFormSubmit
+    }
+  >
+    {/* Invisible heading for screen readers */}
+    <Headline
+      type="h2"
+      {...headlineProps}
+      id={`${id}-heading`}
+      className={bem(
+        "label",
+        {
+          "is-hidden": Boolean(hideHeadline),
+        },
+        headlineProps?.className,
+      )}
     >
-      {/* Invisible heading for screen readers */}
-      <Headline
-        type="h2"
-        {...headlineProps}
-        id={`${id}-heading`}
-        className={bem("label", {
-          "is-hidden": Boolean(hideHeadline)
-        }, headlineProps?.className)}
-      >
-        {label}
-      </Headline>
+      {label}
+    </Headline>
 
-      {/* Render each field in a GridRow */}
-      <Grid className={bem("grid")} spacing={2}>
-        {isArray(formState) &&
-          formState.map((field) => (
-            <FormField
-              {...field}
-              key={field.name}
-              messagesFields={messagesFields}
-              variant={variant}
-              disabled={
-                disabled !== undefined ? disabled : field?.disabled
-              }
-              {...fieldProps}
-            />
-          ))}
-
-        {/* Any custom children */}
-        {children}
-
-        {/* Honeypot field (hidden from SR) */}
-        <input
-          aria-hidden="true"
-          className={bem("hp")}
-          id="hp"
-          name="hp"
-          type="text"
-          {...honeypot}
-        />
-      </Grid>
-
-      <div className={bem("footer")}>
-        {/* Response messages (only if not hidden) */}
-        {(hideResponse === false || hideResponse === undefined) && (
-          <FormResponse messages={formMessages} />
-        )}
-
-        {/* Submit button (only if honeypot is empty) */}
-        {!isNull(button) && Boolean(isHoneypotEmpty) && (
-          <Button
-            aria-label="Submit form"
-            title="Submit"
-            type="submit"
-            {...button}
-            className={bem("footer__submit", undefined, button?.className)}
-            color={button?.color ?? variant}
-            disabled={Boolean(formMessages?.errors) || !isFormValid}
+    {/* Render each field in a GridRow */}
+    <Grid className={bem("grid")} spacing={2}>
+      {isArray(formState) &&
+        formState.map(field => (
+          <FormField
+            {...field}
+            key={field.name}
+            disabled={disabled !== undefined ? disabled : field?.disabled}
+            messagesFields={messagesFields}
+            variant={variant}
+            {...fieldProps}
           />
-        )}
-      </div>
-    </form>
-  )
+        ))}
+
+      {/* Any custom children */}
+      {children}
+
+      {/* Honeypot field (hidden from SR) */}
+      <input
+        aria-hidden="true"
+        className={bem("hp")}
+        id="hp"
+        name="hp"
+        type="text"
+        {...honeypot}
+      />
+    </Grid>
+
+    <div className={bem("footer")}>
+      {/* Response messages (only if not hidden) */}
+      {(hideResponse === false || hideResponse === undefined) && (
+        <FormResponse messages={formMessages} />
+      )}
+
+      {/* Submit button (only if honeypot is empty) */}
+      {!isNull(button) && Boolean(isHoneypotEmpty) && (
+        <Button
+          aria-label="Submit form"
+          title="Submit"
+          type="submit"
+          {...button}
+          className={bem("footer__submit", undefined, button?.className)}
+          color={button?.color ?? variant}
+          disabled={Boolean(formMessages?.errors) || !isFormValid}
+        />
+      )}
+    </div>
+  </form>
+)

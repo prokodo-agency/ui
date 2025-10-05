@@ -1,6 +1,15 @@
 "use client"
 import { marked } from "marked"
-import { Children, isValidElement, createElement, Fragment, useMemo, type ReactNode, type ReactElement, type JSX } from "react"
+import {
+  Children,
+  isValidElement,
+  createElement,
+  Fragment,
+  useMemo,
+  type ReactNode,
+  type ReactElement,
+  type JSX,
+} from "react"
 import { filterXSS } from "xss"
 
 import { create } from "@/helpers/bem"
@@ -47,18 +56,34 @@ export function RichTextClient({
   const renderAnimation = (content: React.ReactNode) => {
     if (!Boolean(animated)) return content
     // Only animate plain text nodes, not elements (e.g., <br>, <strong>, etc.)
-    return typeof content === "string" ? <AnimatedText {...animationProps}>{content}</AnimatedText> : content
+    return typeof content === "string" ? (
+      <AnimatedText {...animationProps}>{content}</AnimatedText>
+    ) : (
+      content
+    )
   }
 
   // 2) Convert markdown & Sanitize the HTML string with xss (works in the browser too)
   const safeHtml = useMemo(() => {
-    marked.setOptions({ gfm: true, breaks: true });
-    return filterXSS(marked.parse((children as string) ?? "") as string);
-  }, [children]);
+    marked.setOptions({ gfm: true, breaks: true })
+    return filterXSS(marked.parse((children as string) ?? "") as string)
+  }, [children])
 
   const VOID_TAGS = new Set([
-    "area","base","br","col","embed","hr","img","input",
-    "link","meta","param","source","track","wbr"
+    "area",
+    "base",
+    "br",
+    "col",
+    "embed",
+    "hr",
+    "img",
+    "input",
+    "link",
+    "meta",
+    "param",
+    "source",
+    "track",
+    "wbr",
   ])
 
   // 3) A utility that will recursively walk a DOM Node and return a React node.
@@ -76,11 +101,13 @@ export function RichTextClient({
     const elem = node as Element
     const tagName = elem.tagName.toLowerCase()
     const childReactNodes = Array.from(elem.childNodes).map((child, i) =>
-      domNodeToReact(child, `${path}.${i}`)
+      domNodeToReact(child, `${path}.${i}`),
     )
     // normalize AFTER mapping so React has stable keys for siblings
     const keyedChildren = normalize(
-      childReactNodes.map((c, i) => (isValidElement(c) ? withKey(c, `${path}.c${i}`) : c))
+      childReactNodes.map((c, i) =>
+        isValidElement(c) ? withKey(c, `${path}.c${i}`) : c,
+      ),
     )
 
     switch (tagName) {
@@ -215,13 +242,15 @@ export function RichTextClient({
   // 4) If overrideParagraph is provided, split on <p>…</p> and let overrideParagraph handle each chunk:
   if (overrideParagraph) {
     // Split raw sanitized HTML on <p>…</p> ignoring empty lines:
-    const segments = safeHtml.split(/<\/?p>/g).filter((seg) => seg.trim().length > 0)
+    const segments = safeHtml
+      .split(/<\/?p>/g)
+      .filter(seg => seg.trim().length > 0)
 
     return (
       <div
         className={bem(undefined, undefined, className)}
         {...schema}
-        {...(props)}
+        {...props}
       >
         {segments.map((segment, idx) => {
           // Strip out any HTML tags – we only want the plain text inside <p>…</p>
@@ -243,10 +272,13 @@ export function RichTextClient({
     <div
       className={bem(undefined, undefined, className)}
       {...schema}
-      {...(props)}
+      {...props}
     >
-      {/* eslint-disable-next-line react/no-array-index-key */}
-      {topLevelChildren.map((n, i) => <Fragment key={`top-level-${i}`}>{domNodeToReact(n)}</Fragment>)}
+      {}
+      {topLevelChildren.map((n, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Fragment key={`top-level-${i}`}>{domNodeToReact(n)}</Fragment>
+      ))}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { PostTeaser } from "./PostTeaser"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "prokodo/🚧 Experimental/blog/PostTeaser",
+  title: "prokodo/blog/PostTeaser",
   component: PostTeaser,
   parameters: {
     layout: "centered",
@@ -21,6 +21,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    locale: "de-DE",
     image: {
       src: "/assets/images/placeholder_1000x230.webp",
       alt: "Cover",

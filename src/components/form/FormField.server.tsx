@@ -1,15 +1,9 @@
 import { create } from "@/helpers/bem"
 
-import {
-  DatePicker,
-  type DatePickerProps,
-} from "../datePicker"
+import { DatePicker, type DatePickerProps } from "../datePicker"
 import { GridRow } from "../grid"
 import { Input, type InputProps } from "../input"
-import {
-  Select,
-  type SelectProps,
-} from "../select"
+import { Select, type SelectProps } from "../select"
 import { Slider, type SliderProps } from "../slider"
 import { Switch, type SwitchProps, type SwitchColor } from "../switch"
 
@@ -47,43 +41,32 @@ export default function FormFieldServer({
     </GridRow>
   )
   if (visible === false) return null
-    switch (fieldType) {
-      case "switch":
-        return renderFieldContainer(
-          <Switch
-            color={variant as SwitchColor}
-            {...(props as SwitchProps)}
-          />,
-        )
-      case "slider":
-        return renderFieldContainer(
-          <Slider
-            {...(props as SliderProps)}
-          />,
-        )
-      case "select":
-        return renderFieldContainer(
-          <Select
-            {...(props as SelectProps)}
-          />,
-        )
-      case "input":
-        return renderFieldContainer(
-          <Input
-            readOnly
-            errorTranslations={messagesFields?.errors?.input}
-            {...(props as InputProps)}
-          />,
-        )
-      case "date":
-        return renderFieldContainer(
-          <DatePicker
-            readOnly
-            {...(props as DatePickerProps)}
-            translations={messagesFields?.errors?.date}
-          />,
-        )
-      default:
-        return null
+  switch (fieldType) {
+    case "switch":
+      return renderFieldContainer(
+        <Switch color={variant as SwitchColor} {...(props as SwitchProps)} />,
+      )
+    case "slider":
+      return renderFieldContainer(<Slider {...(props as SliderProps)} />)
+    case "select":
+      return renderFieldContainer(<Select {...(props as SelectProps)} />)
+    case "input":
+      return renderFieldContainer(
+        <Input
+          readOnly
+          errorTranslations={messagesFields?.errors?.input}
+          {...(props as InputProps)}
+        />,
+      )
+    case "date":
+      return renderFieldContainer(
+        <DatePicker
+          readOnly
+          {...(props as DatePickerProps)}
+          translations={messagesFields?.errors?.date}
+        />,
+      )
+    default:
+      return null
   }
 }

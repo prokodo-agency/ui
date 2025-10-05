@@ -3,8 +3,11 @@ export * from "./PostItemAuthor"
 export type {
   PostItemProps,
   PostItemHeadline,
+  PostItemClasses,
+  PostItemComponentsProps,
+  PostItemPropsBase,
+  PostItemWithDate,
+  PostItemWithoutDate,
+  PostItemViewPrivateProps,
 } from "./PostItem.model"
-export type {
-  PostItemAuthorAvatar,
-  PostItemAuthorProps,
-} from "./PostItemAuthor.model"
+export type { PostItemAuthorProps } from "./PostItemAuthor.model"

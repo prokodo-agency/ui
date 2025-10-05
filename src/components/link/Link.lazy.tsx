@@ -9,5 +9,5 @@ export default createLazyWrapper<LinkProps>({
   name: "Link",
   Client: LinkClient,
   Server: LinkServer,
-  isInteractive: (p) => typeof p.linkComponent === "function",
+  isInteractive: p => typeof p.linkComponent === "function",
 })

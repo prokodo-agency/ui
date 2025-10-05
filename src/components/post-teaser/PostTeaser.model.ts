@@ -1,3 +1,5 @@
+import type { CardProps } from "../card"
+import type { ChipProps } from "../chip"
 import type { HeadlineProps } from "../headline"
 import type { IconProps } from "../icon"
 import type { ImageProps } from "../image"
@@ -14,16 +16,72 @@ export type PostTeaserRedirect = LinkProps & {
   icon?: IconProps
 }
 
-export type PostTeaserProps = {
+export type PostTeaserClasses = {
+  root?: string
+  cardContainer?: string
+  card?: string
+  header?: string
+  imageWrapper?: string
+  imageContainer?: string
+  image?: string
+  meta?: string
+  metaCategory?: string
+  headline?: string
+  cardContent?: string
+  content?: string
+  cardFooter?: string
+  date?: string
+  link?: string
+  linkIcon?: string
+}
+
+export type PostTeaserComponentsProps = {
+  card?: Partial<CardProps>
+  image?: Partial<ImageProps>
+  headline?: Partial<HeadlineProps>
+  categoryChip?: Partial<ChipProps>
+  readCountChip?: Partial<ChipProps>
+  linkIcon?: Partial<IconProps>
+}
+
+// --- Conditional date/locale ---
+export type PostTeaserWithDate = {
+  date: string
+  locale: Intl.LocalesArgument
+}
+
+export type PostTeaserWithoutDate = {
+  date?: undefined
+  locale?: never
+}
+// --------------------------------
+
+export type PostTeaserPropsBase = {
   className?: string
+  classes?: PostTeaserClasses
+  componentsProps?: PostTeaserComponentsProps
+
   readCount?: number
   title: PostTeaserHeadline
   content?: string
   hideCategory?: boolean
   category?: string
-  date?: string
-  metaDate?: string
   image?: PostTeaserImage
   onClick?: () => void
   redirect?: PostTeaserRedirect
+
+  // AIC extras
+  structuredData?: boolean // default true
+  readingWpm?: number // default 200; used for readMinutes
+}
+
+export type PostTeaserProps = PostTeaserPropsBase &
+  (PostTeaserWithDate | PostTeaserWithoutDate)
+
+export type PostTeaserViewProps = PostTeaserProps & {
+  isHovered?: boolean
+  wordCount: number
+  readMinutes: number
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 }

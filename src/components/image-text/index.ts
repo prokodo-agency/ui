@@ -3,4 +3,4 @@ export type {
   ImageTextProps,
   ImageTextHeadline,
   ImageTextAnimatedBorder,
-}from "./ImageText.model"
+} from "./ImageText.model"

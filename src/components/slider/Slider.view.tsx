@@ -33,7 +33,8 @@ export const SliderView: FC<SliderViewProps> = ({
   onChangeInternal,
 }) => {
   // Prozentwert (0–100) einfach berechnen, ohne Hook:
-  const clamped = internalValue < min ? min : internalValue > max ? max : internalValue
+  const clamped =
+    internalValue < min ? min : internalValue > max ? max : internalValue
   const pct = max > min ? ((clamped - min) / (max - min)) * 100 : 0
 
   // Markierungen berechnen (ebenfalls direkt):
@@ -79,18 +80,15 @@ export const SliderView: FC<SliderViewProps> = ({
         <div className={bem("rail")} />
 
         {/* 2) Track (bis zum aktuellen Wert) */}
-        <div
-          className={bem("track")}
-          style={{ width: `${pct}%` }}
-        />
+        <div className={bem("track")} style={{ width: `${pct}%` }} />
 
         {/* 3) Tick Marks */}
-        {markPoints.map((m) => {
+        {markPoints.map(m => {
           // Linker Offset in Prozent
           const leftPct =
             max > min
-              ? ((m.value < min ? min : m.value > max ? max : m.value) - min) /
-                (max - min) *
+              ? (((m.value < min ? min : m.value > max ? max : m.value) - min) /
+                  (max - min)) *
                 100
               : 0
 

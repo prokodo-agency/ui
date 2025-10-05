@@ -63,11 +63,15 @@ const sampleBodyWithIcons: TableRowProps[] = [
       {
         id: "1-1",
         label: "Apple",
-        icon: { name: "StarIcon", color: "#FFD700", className: "" } as IconProps,
+        icon: {
+          name: "StarIcon",
+          color: "#FFD700",
+          className: "",
+        } as IconProps,
       },
-      { id: "1-2",label: "$1.00" },
-      { id: "1-3",label: "3" },
-      { id: "1-4",label: "$3.00" },
+      { id: "1-2", label: "$1.00" },
+      { id: "1-3", label: "3" },
+      { id: "1-4", label: "$3.00" },
     ],
   },
   {
@@ -75,7 +79,11 @@ const sampleBodyWithIcons: TableRowProps[] = [
       {
         id: "2-1",
         label: "Banana",
-        icon: { name: "HeartCheckIcon", color: "#0000FF", className: "" } as IconProps,
+        icon: {
+          name: "HeartCheckIcon",
+          color: "#0000FF",
+          className: "",
+        } as IconProps,
       },
       { id: "2-2", label: "$0.50" },
       { id: "2-3", label: "5" },
@@ -87,7 +95,11 @@ const sampleBodyWithIcons: TableRowProps[] = [
       {
         id: "3-1",
         label: "Cherry",
-        icon: { name: "ThumbsDownIcon", color: "#008000", className: "" } as IconProps,
+        icon: {
+          name: "ThumbsDownIcon",
+          color: "#008000",
+          className: "",
+        } as IconProps,
       },
       { id: "3-2", label: "$2.00" },
       { id: "3-3", label: "2" },

@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.53
+
+### Patch Changes
+
+- Beta release of blog components
+
 ## 0.0.52
 
 ### Patch Changes

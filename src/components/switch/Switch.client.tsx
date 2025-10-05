@@ -13,15 +13,10 @@ import { SwitchView } from "./Switch.view"
 import type { SwitchProps } from "./Switch.model"
 
 function SwitchClient(props: SwitchProps) {
-  const {
-    checked: controlledChecked,
-    onChange,
-    onFocus,
-    onBlur,
-  } = props
+  const { checked: controlledChecked, onChange, onFocus, onBlur } = props
 
   const [isChecked, setIsChecked] = useState<boolean>(
-    controlledChecked ?? false
+    controlledChecked ?? false,
   )
 
   useEffect(() => {
@@ -36,7 +31,7 @@ function SwitchClient(props: SwitchProps) {
       setIsChecked(newValue)
       onChange?.(e, newValue)
     },
-    [onChange]
+    [onChange],
   )
 
   const [isFocused, setIsFocused] = useState(false)
@@ -45,14 +40,14 @@ function SwitchClient(props: SwitchProps) {
       setIsFocused(true)
       onFocus?.(e)
     },
-    [onFocus]
+    [onFocus],
   )
   const handleBlur = useCallback(
     (e: FocusEvent<HTMLInputElement>) => {
       setIsFocused(false)
       onBlur?.(e)
     },
-    [onBlur]
+    [onBlur],
   )
 
   return (

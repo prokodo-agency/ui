@@ -51,7 +51,11 @@ export const ImageText: FC<ImageTextProps> = ({
                 type="h3"
                 variant="primary"
                 {...subTitleProps}
-                className={bem("sub__headline", undefined, subTitleProps?.className)}
+                className={bem(
+                  "sub__headline",
+                  undefined,
+                  subTitleProps?.className,
+                )}
               >
                 {subTitle}
               </Headline>

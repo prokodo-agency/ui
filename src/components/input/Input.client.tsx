@@ -1,6 +1,10 @@
 "use client"
 import {
-  useState, useEffect, useCallback, useMemo, memo,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  memo,
   type ChangeEvent,
   type JSX,
 } from "react"
@@ -46,8 +50,8 @@ function InputClient({
       if (isNumber(maxLength) && v.length > (maxLength as number)) return
 
       setVal(v)
-      const minInt = rawType === "number" ? min as number : undefined
-      const maxInt = rawType === "number" ? max as number : undefined
+      const minInt = rawType === "number" ? (min as number) : undefined
+      const maxInt = rawType === "number" ? (max as number) : undefined
       handleValidation(
         Boolean(multiline) ? "text" : rawType,
         name,
@@ -80,31 +84,55 @@ function InputClient({
     ],
   )
 
-  const handleFocus = useCallback((e: InputFocus) => {
-    setFocused(true)
-    onFocus?.(e)
-  }, [onFocus])
+  const handleFocus = useCallback(
+    (e: InputFocus) => {
+      setFocused(true)
+      onFocus?.(e)
+    },
+    [onFocus],
+  )
 
-  const handleBlur = useCallback((e: InputBlur) => {
-    setFocused(false)
-    onBlur?.(e)
-  }, [onBlur])
+  const handleBlur = useCallback(
+    (e: InputBlur) => {
+      setFocused(false)
+      onBlur?.(e)
+    },
+    [onBlur],
+  )
 
-  const viewBase = useMemo(() => ({
-    ...rest,
-    name,
-    isFocused: isFocused !== undefined ? Boolean(isFocused) : focused,
-    value: val,
-    errorText: err,
-    required,      // ← keep required
-    min,           // ← if you want DOM to know about min
-    max,           // ← and max
-    maxLength,     // ← and maxLength (used by view counter)
-    readOnly,      // ← if you ever pass readOnly to client too
-    onChange: handleChange,
-    onFocus: handleFocus,
-    onBlur: handleBlur
-  }), [isFocused, focused, val, err, name, required, min, max, maxLength, readOnly, handleChange, handleFocus, handleBlur, rest])
+  const viewBase = useMemo(
+    () => ({
+      ...rest,
+      name,
+      isFocused: isFocused !== undefined ? Boolean(isFocused) : focused,
+      value: val,
+      errorText: err,
+      required, // ← keep required
+      min, // ← if you want DOM to know about min
+      max, // ← and max
+      maxLength, // ← and maxLength (used by view counter)
+      readOnly, // ← if you ever pass readOnly to client too
+      onChange: handleChange,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
+    }),
+    [
+      isFocused,
+      focused,
+      val,
+      err,
+      name,
+      required,
+      min,
+      max,
+      maxLength,
+      readOnly,
+      handleChange,
+      handleFocus,
+      handleBlur,
+      rest,
+    ],
+  )
 
   const viewProps: InputProps = Boolean(multiline)
     ? {
@@ -116,7 +144,7 @@ function InputClient({
         type: rawType,
         rows: undefined,
         minRows: undefined,
-        maxRows: undefined
+        maxRows: undefined,
       }
 
   return <InputView {...viewProps} />

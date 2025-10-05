@@ -23,13 +23,18 @@ export default function SideNavView({
   ariaLabel = "Main navigation",
   className,
 }: SideNavViewProps): JSX.Element {
-
   const renderItem = (icon: IconProps, label: string) => (
     <>
       <div className={bem("icon__wrapper")}>
-        <Icon size={25} {...icon} className={bem("icon", undefined, icon?.className)} />
+        <Icon
+          size={25}
+          {...icon}
+          className={bem("icon", undefined, icon?.className)}
+        />
       </div>
-      {!collapsed && <span className={bem("label", { collapsed })}>{label}</span>}
+      {!collapsed && (
+        <span className={bem("label", { collapsed })}>{label}</span>
+      )}
     </>
   )
 
@@ -45,8 +50,12 @@ export default function SideNavView({
         type="button"
         onClick={onToggle}
       >
-        <Icon size="md" {...iconProps} name={collapsed ? collapsedIcon : unCollapsedIcon} />
-        <span className={bem("collape__label", {"is-hidden": collapsed})}>
+        <Icon
+          size="md"
+          {...iconProps}
+          name={collapsed ? collapsedIcon : unCollapsedIcon}
+        />
+        <span className={bem("collape__label", { "is-hidden": collapsed })}>
           {collapsed ? collapsedLabel : unCollapsedLabel}
         </span>
       </button>
@@ -55,15 +64,21 @@ export default function SideNavView({
         <ul className={bem("list")}>
           {items.map(({ label, icon, redirect, active }: SideNavItem) => (
             <li key={label}>
-              {redirect?.href !== undefined ?
+              {redirect?.href !== undefined ? (
                 <Link
                   {...redirect}
-                  className={bem("link", { collapsed, "is-active": Boolean(active) }, redirect?.className)}
                   href={redirect.href}
+                  className={bem(
+                    "link",
+                    { collapsed, "is-active": Boolean(active) },
+                    redirect?.className,
+                  )}
                 >
                   {renderItem(icon, label)}
                 </Link>
-              : <>{renderItem(icon, label)}</> }
+              ) : (
+                <>{renderItem(icon, label)}</>
+              )}
             </li>
           ))}
         </ul>
