@@ -1,6 +1,7 @@
 import { isValidElement, type JSX } from "react"
 
 import { create } from "@/helpers/bem"
+import { localizeDate, type LocalizedDate } from "@/helpers/date"
 import { isString } from "@/helpers/validations"
 
 import { Card, type CardProps } from "../card"
@@ -159,7 +160,10 @@ export function PostWidgetView({
                   .join(" "),
               ),
             }
-
+            let formattedDate: LocalizedDate | undefined
+            if (isString(item?.date)) {
+              formattedDate = localizeDate(item?.locale ?? "en-GB", item?.date)
+            }
             return (
               <li
                 key={`post-widget-item-${item.title?.content ?? i}`}
@@ -211,10 +215,9 @@ export function PostWidgetView({
                       </Headline>
                     </Link>
 
-                    {isString(item?.date) && item?.date !== "LL" && (
+                    {isString(formattedDate?.locale) && (
                       <p
-                        aria-label={`Published at ${item.date}`}
-                        itemProp="datePublished"
+                        aria-label={`Published at ${formattedDate?.locale}`}
                         className={bem(
                           "date",
                           undefined,
@@ -224,12 +227,12 @@ export function PostWidgetView({
                         )}
                       >
                         <time
-                          aria-label={`Published at ${item.date}`}
+                          aria-label={`Published at ${formattedDate?.locale}`}
                           className={bem("date")}
                           itemProp="datePublished"
                           {...item?.dateProps}
                         >
-                          {item.date}
+                          {formattedDate?.meta}
                         </time>
                       </p>
                     )}
@@ -253,21 +256,32 @@ export function PostWidgetView({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ItemList",
-              itemListElement: items.map((item, index) => ({
-                "@type": "ListItem",
-                position: index + 1,
-                item: {
-                  "@type": "BlogPosting",
-                  headline: item.title?.content,
-                  datePublished: item.date,
-                  articleSection: item.category,
-                  image: isString(
-                    (item.image as ImageProps | undefined)?.src as string,
+              itemListElement: items.map((item, index) => {
+                let formattedDate: LocalizedDate | undefined
+                if (isString(item?.date)) {
+                  formattedDate = localizeDate(
+                    item?.locale ?? "en-GB",
+                    item?.date,
                   )
-                    ? [(item.image as ImageProps).src]
-                    : undefined,
-                },
-              })),
+                }
+                return {
+                  "@type": "ListItem",
+                  position: index + 1,
+                  item: {
+                    "@type": "BlogPosting",
+                    headline: item.title?.content,
+                    datePublished: isString(formattedDate?.meta)
+                      ? formattedDate?.meta
+                      : undefined,
+                    articleSection: item.category,
+                    image: isString(
+                      (item.image as ImageProps | undefined)?.src as string,
+                    )
+                      ? [(item.image as ImageProps).src]
+                      : undefined,
+                  },
+                }
+              }),
             }),
           }}
         />

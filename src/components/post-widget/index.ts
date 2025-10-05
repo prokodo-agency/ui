@@ -7,4 +7,8 @@ export type {
   PostWidgetRedirect,
   PostWidgetClasses,
   PostWidgetComponentsProps,
+  PostWidgetItemDefault,
+  PostWidgetItemDateProps,
+  PostWidgetItemWithoutDate,
+  PostWidgetItemWithDate,
 } from "./PostWidget.model"

@@ -44,7 +44,19 @@ export type PostTeaserComponentsProps = {
   linkIcon?: Partial<IconProps>
 }
 
-export type PostTeaserProps = {
+// --- Conditional date/locale ---
+export type PostTeaserWithDate = {
+  date: string
+  locale: Intl.LocalesArgument
+}
+
+export type PostTeaserWithoutDate = {
+  date?: undefined
+  locale?: never
+}
+// --------------------------------
+
+export type PostTeaserPropsBase = {
   className?: string
   classes?: PostTeaserClasses
   componentsProps?: PostTeaserComponentsProps
@@ -54,8 +66,6 @@ export type PostTeaserProps = {
   content?: string
   hideCategory?: boolean
   category?: string
-  date?: string // human-readable
-  metaDate?: string // ISO 8601
   image?: PostTeaserImage
   onClick?: () => void
   redirect?: PostTeaserRedirect
@@ -65,8 +75,13 @@ export type PostTeaserProps = {
   readingWpm?: number // default 200; used for readMinutes
 }
 
-export type PostTeaserViewPrivateProps = {
+export type PostTeaserProps = PostTeaserPropsBase &
+  (PostTeaserWithDate | PostTeaserWithoutDate)
+
+export type PostTeaserViewProps = PostTeaserProps & {
   isHovered?: boolean
   wordCount: number
   readMinutes: number
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 }

@@ -6,4 +6,8 @@ export type {
   PostTeaserRedirect,
   PostTeaserClasses,
   PostTeaserComponentsProps,
+  PostTeaserPropsBase,
+  PostTeaserWithDate,
+  PostTeaserWithoutDate,
+  PostTeaserViewProps,
 } from "./PostTeaser.model"

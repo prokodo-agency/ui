@@ -11,16 +11,5 @@ export default function PostItemServer(p: PostItemProps): JSX.Element {
   const readMinutes =
     wordCount > 0 ? Math.max(1, Math.ceil(wordCount / readingWpm)) : 0
   // Server render: no client-only Image component or skeleton state
-  return (
-    <PostItemView
-      {...p}
-      imageLoaded
-      hasImage={false}
-      ImageComponent={undefined}
-      isClient={false}
-      readMinutes={readMinutes}
-      wordCount={wordCount}
-      onImageLoad={undefined}
-    />
-  )
+  return <PostItemView {...p} readMinutes={readMinutes} wordCount={wordCount} />
 }

@@ -5,5 +5,9 @@ export type {
   PostItemHeadline,
   PostItemClasses,
   PostItemComponentsProps,
+  PostItemPropsBase,
+  PostItemWithDate,
+  PostItemWithoutDate,
+  PostItemViewPrivateProps,
 } from "./PostItem.model"
 export type { PostItemAuthorProps } from "./PostItemAuthor.model"

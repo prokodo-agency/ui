@@ -21,6 +21,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    locale: "de-DE",
     image: {
       src: "/assets/images/placeholder_1000x230.webp",
       alt: "Cover",

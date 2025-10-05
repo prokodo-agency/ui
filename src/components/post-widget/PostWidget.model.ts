@@ -11,11 +11,9 @@ export type PostWidgetHeadline = {
 export type PostWidgetImage = ImageProps
 export type PostWidgetRedirect = LinkProps
 
-export type PostWidgetItem = {
+export type PostWidgetItemDefault = {
   title: PostWidgetHeadline
   category?: string
-  date?: string
-  dateProps?: TimeHTMLAttributes<HTMLTimeElement>
   image?: PostWidgetImage
   redirect: PostWidgetRedirect
   // optional per-item class hooks
@@ -36,6 +34,26 @@ export type PostWidgetItem = {
     link?: Partial<LinkProps>
   }
 }
+
+// dateProps stays optional always
+export type PostWidgetItemDateProps = {
+  dateProps?: TimeHTMLAttributes<HTMLTimeElement>
+}
+
+// No date -> locale forbidden
+export type PostWidgetItemWithoutDate = PostWidgetItemDateProps & {
+  date?: undefined
+  locale?: never
+}
+
+// With date -> locale required
+export type PostWidgetItemWithDate = PostWidgetItemDateProps & {
+  date: string
+  locale: Intl.LocalesArgument
+}
+
+export type PostWidgetItem = PostWidgetItemDefault &
+  (PostWidgetItemWithoutDate | PostWidgetItemWithDate)
 
 export type PostWidgetClasses = {
   root?: string

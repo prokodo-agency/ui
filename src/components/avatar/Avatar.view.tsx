@@ -37,7 +37,7 @@ export function AvatarView({
           className={bem("icon", { [variant]: true })}
           color={!["inherit", "white"].includes(variant) ? "white" : undefined}
           name="UserIcon"
-          size={getIconSize(size) * 2}
+          size={getIconSize(size)}
         />
       )}
     </div>

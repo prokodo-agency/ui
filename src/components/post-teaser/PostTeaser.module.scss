@@ -23,7 +23,7 @@
             align-items: center;
             justify-content: space-between;
             margin-top: auto;
-            padding: 0 $space-lg $space-lg $space-lg;
+            padding: $space-lg;
         }
     }
 
@@ -41,6 +41,15 @@
             display: inline-block;
             max-width: 50%;
             @include textLineClamp(1);
+        }
+
+        &__readcount {
+            margin: 0;
+
+            &__wrapper {
+                display: flex;
+                gap: $space-sm;
+            }
         }
     }
 

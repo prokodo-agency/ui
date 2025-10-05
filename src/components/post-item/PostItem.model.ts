@@ -3,7 +3,6 @@ import type { CardProps } from "../card"
 import type { HeadlineProps } from "../headline"
 import type { ImageProps } from "../image"
 import type { PostItemAuthorProps } from "./PostItemAuthor.model"
-import type { ComponentType } from "react"
 
 export type PostItemHeadline = {
   content: string
@@ -25,7 +24,6 @@ export type PostItemClasses = {
   buttonContent?: string
   imageWrapper?: string
   imageContentWrapper?: string
-  image?: string
 }
 
 export type PostItemComponentsProps = {
@@ -36,8 +34,20 @@ export type PostItemComponentsProps = {
   author?: Partial<PostItemAuthorProps>
 }
 
+// --- Conditional date/locale ---
+export type PostItemWithDate = {
+  date: string
+  locale: Intl.LocalesArgument
+}
+
+export type PostItemWithoutDate = {
+  date?: undefined
+  locale?: never
+}
+// --------------------------------
+
 // Props visible to users of the component
-export type PostItemProps = {
+export type PostItemPropsBase = {
   className?: string
   classes?: PostItemClasses
   componentsProps?: PostItemComponentsProps
@@ -47,23 +57,19 @@ export type PostItemProps = {
   author?: PostItemAuthorProps
   category?: string
   content?: string
-  date?: string
   metaDate?: string
-  image?: ImageProps
+  image?: string
   button?: ButtonProps
-  imageComponent?: ComponentType<ImageProps>
   structuredData?: boolean
   readingWpm?: number
   animate?: boolean
 }
 
+export type PostItemProps = PostItemPropsBase &
+  (PostItemWithDate | PostItemWithoutDate)
+
 // Private props only used between Server/Client/View
 export type PostItemViewPrivateProps = {
-  isClient?: boolean
-  hasImage?: boolean
-  imageLoaded?: boolean
-  onImageLoad?: () => void
   wordCount: number
   readMinutes: number
-  ImageComponent?: ComponentType<ImageProps>
 }

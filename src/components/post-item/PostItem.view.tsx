@@ -1,6 +1,5 @@
-import { isValidElement, type JSX } from "react"
-
 import { create } from "@/helpers/bem"
+import { localizeDate, type LocalizedDate } from "@/helpers/date"
 import { isString } from "@/helpers/validations"
 
 import { Animated } from "../animated"
@@ -8,13 +7,12 @@ import { Button } from "../button"
 import { Card, type CardProps } from "../card"
 import { Headline } from "../headline"
 import { RichText } from "../rich-text"
-import { Skeleton } from "../skeleton"
 
 import styles from "./PostItem.module.scss"
 import { PostItemAuthor } from "./PostItemAuthor"
 
-import type { ImageProps } from "../image"
 import type { PostItemProps, PostItemViewPrivateProps } from "./PostItem.model"
+import type { JSX } from "react"
 
 const bem = create(styles, "PostItem")
 
@@ -22,6 +20,7 @@ export function PostItemView(
   props: PostItemProps & PostItemViewPrivateProps,
 ): JSX.Element {
   const {
+    locale,
     className,
     classes,
     componentsProps,
@@ -32,16 +31,10 @@ export function PostItemView(
     category,
     author,
     date,
-    metaDate,
     image,
     button,
-    ImageComponent,
 
     // private from client/server wrappers
-    isClient,
-    hasImage,
-    imageLoaded,
-    onImageLoad,
     wordCount,
     readMinutes,
 
@@ -60,35 +53,6 @@ export function PostItemView(
       (rest as Partial<CardProps>)?.variant ??
       undefined) as CardProps["variant"],
   }
-
-  // Prepare merged image props for the client-side ImageComponent branch
-  const baseImg = image as ImageProps | undefined
-  const imageMerged: ImageProps | undefined = baseImg
-    ? ({
-        ...baseImg,
-        ...(componentsProps?.image ?? {}),
-        className: bem(
-          "image",
-          undefined,
-          [baseImg.className, componentsProps?.image?.className, classes?.image]
-            .filter(Boolean)
-            .join(" "),
-        ),
-        // perf-safe defaults (don’t widen the type)
-        decoding:
-          baseImg.decoding ?? componentsProps?.image?.decoding ?? "async",
-        loading: baseImg.loading ?? componentsProps?.image?.loading ?? "lazy",
-        sizes:
-          baseImg.sizes ??
-          componentsProps?.image?.sizes ??
-          "(max-width: 960px) 100vw, 25vw",
-        // IMPORTANT: only include imageComponent if truthy to avoid union-branch issues
-        ...(isValidElement(baseImg?.imageComponent)
-          ? { imageComponent: baseImg.imageComponent }
-          : {}),
-      } as ImageProps)
-    : undefined
-
   const ArticleWrapper = animate
     ? Animated
     : ({
@@ -98,7 +62,10 @@ export function PostItemView(
         children: React.ReactNode
         className?: string
       }) => <div className={className}>{children}</div>
-
+  let formattedDate: LocalizedDate | undefined
+  if (isString(date)) {
+    formattedDate = localizeDate(locale ?? "en-GB", date)
+  }
   return (
     <article
       itemScope
@@ -118,7 +85,7 @@ export function PostItemView(
             <header>
               <Headline
                 {...{ ...title, ...(componentsProps?.headline ?? {}) }}
-                size={title?.size ?? componentsProps?.headline?.size ?? "lg"}
+                size={title?.size ?? componentsProps?.headline?.size ?? "md"}
                 type={title?.type ?? componentsProps?.headline?.type ?? "h2"}
                 className={bem(
                   "headline",
@@ -145,13 +112,16 @@ export function PostItemView(
                   />
                 )}
 
-                {isString(date) && (
+                {isString(formattedDate?.locale) && (
                   <p
-                    aria-label={`Published on ${date}`}
+                    aria-label={`Published on ${formattedDate?.locale}`}
                     className={bem("date", undefined, classes?.date)}
                   >
-                    <time dateTime={metaDate} itemProp="datePublished">
-                      {date}
+                    <time
+                      dateTime={formattedDate?.meta}
+                      itemProp="datePublished"
+                    >
+                      {formattedDate?.locale}
                     </time>
                   </p>
                 )}
@@ -236,12 +206,11 @@ export function PostItemView(
           </ArticleWrapper>
         </div>
 
-        {(Boolean(hasImage) ||
-          (!Boolean(isClient) && isString(image?.src as string))) && (
+        {isString(image) && (
           <aside className={bem("media", undefined, classes?.media)}>
             <Card
               {...cardMerged}
-              background={image?.src as string}
+              background={image}
               enableShadow={cardMerged.enableShadow ?? true}
               redirect={button?.redirect}
               className={bem(
@@ -255,21 +224,7 @@ export function PostItemView(
                 classes?.imageContentWrapper,
               )}
             >
-              {Boolean(isClient) && !Boolean(imageLoaded) && (
-                <Skeleton
-                  aria-busy={!Boolean(imageLoaded)}
-                  aria-live="polite"
-                  height="275px"
-                />
-              )}
-
-              {Boolean(isClient) &&
-                Boolean(hasImage) &&
-                ImageComponent &&
-                isString(image?.src as string) &&
-                imageMerged && (
-                  <ImageComponent {...imageMerged} onLoad={onImageLoad} />
-                )}
+              <></>
             </Card>
           </aside>
         )}
@@ -291,13 +246,15 @@ export function PostItemView(
               "@context": "https://schema.org",
               "@type": "BlogPosting",
               headline: title?.content,
-              datePublished: metaDate,
+              datePublished: isString(formattedDate?.meta)
+                ? formattedDate?.meta
+                : undefined,
               articleSection: category,
               wordCount,
               author: isString(author?.name)
                 ? { "@type": "Person", name: author?.name }
                 : undefined,
-              image: isString(image?.src as string) ? [image?.src] : undefined,
+              image: isString(image as string) ? [image] : undefined,
             }),
           }}
         />
