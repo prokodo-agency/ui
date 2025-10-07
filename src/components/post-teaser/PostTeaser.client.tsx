@@ -1,19 +1,21 @@
 "use client"
 import { memo, useCallback, useMemo, useState, type FC } from "react"
 
-import { calculateWordCount } from "@/helpers/calculation"
+import { isNumber } from "@/helpers/validations"
 
 import { PostTeaserView } from "./PostTeaser.view"
 
 import type { PostTeaserProps } from "./PostTeaser.model"
 
 const PostTeaserClient: FC<PostTeaserProps> = memo(props => {
-  const { content, readingWpm = 200 } = props
+  const { readCount, readingWpm = 200 } = props
 
-  const wordCount = useMemo(() => calculateWordCount(content), [content])
   const readMinutes = useMemo(
-    () => (wordCount > 0 ? Math.max(1, Math.ceil(wordCount / readingWpm)) : 0),
-    [wordCount, readingWpm],
+    () =>
+      isNumber(readCount) && (readCount as number) > 0
+        ? Math.max(1, Math.ceil((readCount as number) / readingWpm))
+        : 0,
+    [readCount, readingWpm],
   )
 
   const [isHovered, setIsHovered] = useState(false)
@@ -24,8 +26,8 @@ const PostTeaserClient: FC<PostTeaserProps> = memo(props => {
     <PostTeaserView
       {...props}
       isHovered={isHovered}
+      readCount={readCount}
       readMinutes={readMinutes}
-      wordCount={wordCount}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     />

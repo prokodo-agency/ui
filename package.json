@@ -229,8 +229,10 @@
     "@googlemaps/js-api-loader": "^1.16.6",
     "@lottiefiles/dotlottie-react": "^0.7.2",
     "dayjs": "^1.11.13",
+    "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
     "marked": "^15.0.12",
+    "marked-highlight": "^2.2.2",
     "react-bem-helper": "^1.4.1",
     "typescript": "5.5.3",
     "xss": "^1.0.15"

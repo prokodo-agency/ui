@@ -2,7 +2,7 @@ import { isValidElement, type JSX } from "react"
 
 import { create } from "@/helpers/bem"
 import { localizeDate, type LocalizedDate } from "@/helpers/date"
-import { isString } from "@/helpers/validations"
+import { isNumber, isString } from "@/helpers/validations"
 
 import { Card, type CardProps } from "../card"
 import { Chip } from "../chip"
@@ -26,6 +26,7 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
 
     image,
     readCount,
+    wordCount,
     title,
     date,
     hideCategory,
@@ -37,7 +38,6 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
 
     // private
     isHovered,
-    wordCount,
     readMinutes,
 
     // passthrough hover
@@ -221,7 +221,7 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
         </div>
       </Card>
 
-      {wordCount > 0 && (
+      {isNumber(wordCount) && (wordCount as number) > 0 && (
         <meta content={String(wordCount)} itemProp="wordCount" />
       )}
       {isString(category) && (
@@ -240,7 +240,7 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
                 ? formattedDate?.meta
                 : undefined,
               articleSection: category,
-              wordCount,
+              readCount,
               interactionStatistic:
                 typeof readCount === "number"
                   ? {

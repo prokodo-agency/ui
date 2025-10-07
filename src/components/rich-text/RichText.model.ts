@@ -45,4 +45,16 @@ export type RichTextProps = {
    * Should return a React element—here, a heading tag of the right level.
    */
   overrideParagraph?: (textContent: string) => ReactNode
+
+  /**
+   * Control the Highlight.js stylesheet.
+   * - Provide `href` to point to any CSS (absolute URL).
+   * - Or provide `name` (e.g. "github", "atom-one-dark") and optional `version` ("auto" uses installed hljs version).
+   * Default: { name: "github", version: "auto" }
+   */
+  codeTheme?: {
+    href?: string
+    name?: string
+    version?: "auto" | string
+  }
 } & HTMLAttributes<HTMLDivElement>

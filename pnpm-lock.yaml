@@ -17,12 +17,18 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.18
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
       marked:
         specifier: ^15.0.12
         version: 15.0.12
+      marked-highlight:
+        specifier: ^2.2.2
+        version: 2.2.2(marked@15.0.12)
       react-bem-helper:
         specifier: ^1.4.1
         version: 1.4.1
@@ -4277,6 +4283,10 @@ packages:
   hast-util-to-string@3.0.1:
     resolution: {integrity: sha512-XelQVTDWvqcl3axRfI0xSeoVKzyIFPwsAGSLIsKdJKQMXDYJS4WYrBNF/8J7RdhIcFI2BOHgAifggsvsxp/3+A==}
 
+  highlight.js@11.11.1:
+    resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
+    engines: {node: '>=12.0.0'}
+
   hookified@1.12.0:
     resolution: {integrity: sha512-hMr1Y9TCLshScrBbV2QxJ9BROddxZ12MX9KsCtuGGy/3SmmN5H1PllKerrVlSotur9dlE8hmUKAOSa3WDzsZmQ==}
 
@@ -4945,6 +4955,11 @@ packages:
     engines: {node: '>= 10'}
     peerDependencies:
       react: '>= 0.14.0'
+
+  marked-highlight@2.2.2:
+    resolution: {integrity: sha512-KlHOP31DatbtPPXPaI8nx1KTrG3EW0Z5zewCwpUj65swbtKOTStteK3sNAjBqV75Pgo3fNEVNHeptg18mDuWgw==}
+    peerDependencies:
+      marked: '>=4 <17'
 
   marked@15.0.12:
     resolution: {integrity: sha512-8dD6FusOQSrpv9Z1rdNMdlSgQOIP880DHqnohobOmYLElGEqAL/JvxvuxZO16r4HtjTlfPRDC1hbvxC9dPN2nA==}
@@ -10646,7 +10661,7 @@ snapshots:
       debug: 4.4.1
       enhanced-resolve: 5.18.1
       eslint: 9.35.0
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.35.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-plugin-import@2.32.0)(eslint@9.35.0))(eslint@9.35.0)
       fast-glob: 3.3.3
       get-tsconfig: 4.10.1
       is-bun-module: 1.3.0
@@ -10659,7 +10674,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.35.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-plugin-import@2.32.0)(eslint@9.35.0))(eslint@9.35.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -10669,7 +10684,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.35.0):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-plugin-import@2.32.0)(eslint@9.35.0))(eslint@9.35.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -10691,7 +10706,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.35.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.35.0)
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.44.1(eslint@9.35.0)(typescript@5.5.3))(eslint-plugin-import@2.32.0)(eslint@9.35.0))(eslint@9.35.0)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -11279,6 +11294,8 @@ snapshots:
   hast-util-to-string@3.0.1:
     dependencies:
       '@types/hast': 3.0.4
+
+  highlight.js@11.11.1: {}
 
   hookified@1.12.0: {}
 
@@ -12165,6 +12182,10 @@ snapshots:
   markdown-to-jsx@7.7.6(react@19.1.0):
     dependencies:
       react: 19.1.0
+
+  marked-highlight@2.2.2(marked@15.0.12):
+    dependencies:
+      marked: 15.0.12
 
   marked@15.0.12: {}
 

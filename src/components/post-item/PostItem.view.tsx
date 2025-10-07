@@ -1,6 +1,6 @@
 import { create } from "@/helpers/bem"
 import { localizeDate, type LocalizedDate } from "@/helpers/date"
-import { isString } from "@/helpers/validations"
+import { isNumber, isString } from "@/helpers/validations"
 
 import { Animated } from "../animated"
 import { Button } from "../button"
@@ -230,7 +230,7 @@ export function PostItemView(
         )}
       </div>
 
-      {wordCount > 0 && (
+      {isNumber(wordCount) && (wordCount as number) > 0 && (
         <meta content={String(wordCount)} itemProp="wordCount" />
       )}
       {isString(category) && (
