@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.54
+
+### Patch Changes
+
+- feat: Added highlight.js to style code in RichText component and fixed some bugs in blog components
+
 ## 0.0.53
 
 ### Patch Changes

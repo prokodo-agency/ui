@@ -51,7 +51,7 @@ export type PostItemPropsBase = {
   className?: string
   classes?: PostItemClasses
   componentsProps?: PostItemComponentsProps
-
+  wordCount?: number
   readCount?: number
   title: PostItemHeadline
   author?: PostItemAuthorProps
@@ -70,6 +70,5 @@ export type PostItemProps = PostItemPropsBase &
 
 // Private props only used between Server/Client/View
 export type PostItemViewPrivateProps = {
-  wordCount: number
   readMinutes: number
 }

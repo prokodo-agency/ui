@@ -1,17 +1,19 @@
 "use client"
 import { memo, useMemo, type FC } from "react"
 
-import { calculateWordCount } from "@/helpers/calculation"
+import { isNumber } from "@/helpers/validations"
 
 import { PostItemView } from "./PostItem.view"
 
 import type { PostItemProps } from "./PostItem.model"
 
 const PostItemClient: FC<PostItemProps> = memo(props => {
-  const { content, readingWpm = 200 } = props
-  const wordCount = useMemo(() => calculateWordCount(content), [content])
+  const { wordCount, readingWpm = 200 } = props
   const readMinutes = useMemo(
-    () => (wordCount > 0 ? Math.max(1, Math.ceil(wordCount / readingWpm)) : 0),
+    () =>
+      isNumber(wordCount) && (wordCount as number) > 0
+        ? Math.max(1, Math.ceil((wordCount as number) / readingWpm))
+        : 0,
     [wordCount, readingWpm],
   )
   return (

@@ -62,6 +62,7 @@ export type PostTeaserPropsBase = {
   componentsProps?: PostTeaserComponentsProps
 
   readCount?: number
+  wordCount?: number
   title: PostTeaserHeadline
   content?: string
   hideCategory?: boolean
@@ -80,7 +81,6 @@ export type PostTeaserProps = PostTeaserPropsBase &
 
 export type PostTeaserViewProps = PostTeaserProps & {
   isHovered?: boolean
-  wordCount: number
   readMinutes: number
   onMouseEnter?: () => void
   onMouseLeave?: () => void
