@@ -63,6 +63,7 @@
     background-color: #dedede;
     border-radius: 50%;
     top: 50%;
+    text-align: center;
     transform: translateX(-50%) translateY(-50%);
     z-index: 3;
 
@@ -76,11 +77,16 @@
       color: var(--color-grey-300);
       @include text("base");
 
+      & {
+        text-align: center;
+        font-size: 0.8rem;
+      }
+
       @include screenLargerThan($screen-md) {
         @include visible();
-        text-align: center;
         margin-left: 50%;
         min-width: 100px;
+        font-size: 1rem;
       }
     }
   }

@@ -1,8 +1,10 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
@@ -15,31 +17,37 @@
   width: 100%;
 
   &__label {
-    position: absolute;
-    left: $space-xl;
-    top: calc($space-xl + $space-xs);
     transform-origin: top left;
-    /* start centered vertically, at full size */
-    transform: translateY(-50%) scale(1);
     transition:
       transform 0.2s ease,
       color     0.2s ease,
       background-color 0.2s ease;
 
-    padding: 0;
-    font-size: 1rem;
+    padding-bottom: $space-sm;
     color: var(--color-grey-600);
     z-index: 1;
     pointer-events: none;
 
-    &--is-focused {
-      /* lift up and shrink */
-      transform: translateY(-150%) scale(0.75);
-      color: var(--color-primary-500);
+    @include screenLargerThan($screen-lg) {
+      position: absolute;
+      left: $space-xl;
+      font-size: 1.125rem;
+      top: calc($space-xl + $space-xs);
+      /* start centered vertically, at full size */
+      transform: translateY(-50%) scale(1);
+      padding: 0;
+    }
 
-      /* white background behind text so it “floats” */
-      background-color: var(--color-white);
-      padding: 0 $space-xs;
+    &--is-focused {
+      @include screenLargerThan($screen-lg) {
+        /* lift up and shrink */
+        transform: translateY(-150%) scale(0.75);
+        color: var(--color-primary-500);
+
+        /* white background behind text so it “floats” */
+        background-color: var(--color-white);
+        padding: 0 $space-xs;
+      }
     }
   }
 
@@ -101,6 +109,10 @@
       border-radius: $ui-form-element;
       color: var(--color-grey-900);
       @include text("base");
+
+      & {
+        font-size: 1rem;
+      }
       
       html[data-theme='dark'] & {
         background-color: var(--color-grey-200);
