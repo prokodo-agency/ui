@@ -132,10 +132,29 @@ export const SliderView: FC<SliderViewProps> = ({
           <span
             {...valueLabelProps}
             className={bem("valueText", { focused: isFocused })}
-            style={{
-              left: `${pct}%`,
-              transform: "translateX(-50%)",
-            }}
+            style={(() => {
+              // Label an den Rändern im Slider halten, mit kleinem Innenabstand
+              const EDGE_PAD_PX = 8
+
+              if (pct <= 10) {
+                return {
+                  left: "0%",
+                  transform: `translateX(${EDGE_PAD_PX}px)`,
+                } as const
+              }
+
+              if (pct >= 90) {
+                return {
+                  left: "100%",
+                  transform: `translateX(calc(-100% - ${EDGE_PAD_PX}px))`,
+                } as const
+              }
+
+              return {
+                left: `${pct}%`,
+                transform: "translateX(-50%)",
+              } as const
+            })()}
           >
             {internalValue}
           </span>

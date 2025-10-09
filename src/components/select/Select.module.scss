@@ -1,8 +1,10 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
@@ -18,18 +20,24 @@
   }
 
   &__label {
-    position: absolute;
-    left: $space-xl;
-    top: calc($space-xl + $space-xs);
+    position: relative;
     transform-origin: top left;
-    /* start centered vertically, at full size */
-    transform: translateY(-150%) scale(0.75);
-    padding: 0 $space-xs;
+    padding-bottom: $space-sm;
     font-size: 1rem;
     color: var(--color-primary-500);
     z-index: 1;
     pointer-events: none;
-    background-color: var(--color-white);
+
+     @include screenLargerThan($screen-lg) {
+        position: absolute;
+        left: $space-xl;
+        top: calc($space-xl + $space-xs);
+        padding: 0 $space-xs;
+        /* start centered vertically, at full size */
+        transform: translateY(-150%) scale(0.75);
+        background-color: var(--color-white);
+        @include textLineClamp(1);
+     }
   }
 
   /* ───────────────── field (container for button + listbox) */
@@ -96,7 +104,11 @@
 
     /* caret / icon (if you still have one) */
     > svg {
-      position:absolute; top:0; right:10px; font-size:1rem; height:100%;
+      position:absolute;
+      top: 0;
+      right: 10px;
+      font-size: 1rem;
+      height: 100%;
     }
 
     /* inner text */
@@ -108,6 +120,10 @@
       background:var(--color-white);
       border-radius:$ui-form-element;
       @include text("base");
+
+      & {
+        font-size: 1rem;
+      }
 
       html[data-theme='dark'] & {
         background:var(--color-grey-200);
@@ -160,7 +176,8 @@
   /* ───────────────── option item */
   &__item {
     list-style:none;
-    display:flex; align-items:center;
+    display:flex;
+    align-items:center;
     padding:$space-md $space-lg;
     cursor:pointer;
     background:var(--color-white);
@@ -169,6 +186,10 @@
     margin-top: -2px;
     perspective:1000px;
     @include text("base");
+
+    & {
+      font-size: 1rem;
+    }
 
     &:last-child {
       border-bottom-left-radius:px-to-rem(25px);
@@ -196,29 +217,41 @@
 
   /* ───────────────── checkbox for multi-select */
   &__checkbox {
-    width:18px; height:18px; margin-right:$space-md; position:relative;
-    transform:scale(1.2); cursor:pointer; border:none; border-radius:5px;
-    -webkit-appearance:none; appearance:none;
+    position:relative;
+    min-width: 18px;
+    min-height: 18px;
+    margin-right: $space-md;
+    transform: scale(1.2);
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    appearance: none;
     mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite:add;
+    mask-composite: add;
     @include gradientBorderVar(7);
 
     &:before { /* white inner square */
-      content:""; position:absolute; inset:2px; background:var(--color-white);
+      content: "";
+      position: absolute;
+      inset: 2px;
+      background: var(--color-white);
     }
 
     &--checked { /* gradient + tick mark */
       @include gradientBorderVar(4);
 
       &::after {
-        content:""; position:absolute; inset:0;
+        content: "";
+        position: absolute;
+        inset: 0;
         @include gradientBackgroundVar(primary-grey-secondary);
-        -webkit-mask:url('data:image/svg+xml;utf8,\
+        -webkit-mask: url('data:image/svg+xml;utf8,\
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" \
                stroke-width="1.5" fill="none" stroke-linecap="round" \
                stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" \
                stroke="black"/></svg>') no-repeat center / contain;
-        mask:url('data:image/svg+xml;utf8,\
+        mask: url('data:image/svg+xml;utf8,\
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" \
                stroke-width="1.5" fill="none" stroke-linecap="round" \
                stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" \
