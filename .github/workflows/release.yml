@@ -79,12 +79,17 @@ jobs:
           npm config delete //registry.npmjs.org/:_authToken || true
           unset NODE_AUTH_TOKEN || true
 
-      - name: 🚀 Publish to npm
+      - name: 🔐 OIDC check (npm whoami)
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
+        run: npm whoami --registry=https://registry.npmjs.org/ || true
+
+      - name: 🚀 Publish to npm (provenance)
         env:
           NPM_CONFIG_PROVENANCE: "true"
         run: |
           git diff --quiet || { echo "Working tree not clean"; exit 1; }
-          pnpm publish --access public --provenance
+          npm publish --access public --provenance
 
       - name: 📘 Build Storybook
         run: pnpm run storybook:build
