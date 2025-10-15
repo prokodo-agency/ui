@@ -31,6 +31,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
           cache: "pnpm"
 
+      - name: 🔎 Versions
+        run: |
+          node -v
+          npm -v
+          echo "Registry: $(npm config get registry)"
+          npm ping
+
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -70,6 +77,13 @@ jobs:
             echo "Version @prokodo/ui@${{ steps.pkg.outputs.version }} already published. Skipping."
             exit 0
           fi
+
+      - name: 🔒 Ensure tokenless env (no legacy auth)
+        run: |
+          npm config delete //registry.npmjs.org/:_authToken || true
+          unset NODE_AUTH_TOKEN || true
+          echo "NPM_CONFIG_USERCONFIG=$GITHUB_WORKSPACE/.npmrc_publish" >> "$GITHUB_ENV"
+          : > "$GITHUB_WORKSPACE/.npmrc_publish"
 
       - name: 🚀 Publish to npm
         run: npm publish
