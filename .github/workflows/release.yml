@@ -85,8 +85,13 @@ jobs:
           echo "NPM_CONFIG_USERCONFIG=$GITHUB_WORKSPACE/.npmrc_publish" >> "$GITHUB_ENV"
           : > "$GITHUB_WORKSPACE/.npmrc_publish"
 
+      - name: 🔎 Debug workflow identity
+        run: |
+          echo "GITHUB_WORKFLOW_REF=$GITHUB_WORKFLOW_REF"
+          echo "File seen by GitHub: ${GITHUB_WORKFLOW_REF#*/.github/workflows/}" | sed 's/@.*$//'
+
       - name: 🚀 Publish to npm
-        run: npm publish
+        run: npm publish --access public
 
       - name: 📘 Build Storybook
         run: pnpm run storybook:build
