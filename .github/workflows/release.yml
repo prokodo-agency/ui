@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 20
-          registry-url: 'https://registry.npmjs.org/'
+          registry-url: 'https://registry.npmjs.org'
           cache: "pnpm"
 
       - name: 🔎 Versions
@@ -78,20 +78,8 @@ jobs:
             exit 0
           fi
 
-      - name: 🔒 Ensure tokenless env (no legacy auth)
-        run: |
-          npm config delete //registry.npmjs.org/:_authToken || true
-          unset NODE_AUTH_TOKEN || true
-          echo "NPM_CONFIG_USERCONFIG=$GITHUB_WORKSPACE/.npmrc_publish" >> "$GITHUB_ENV"
-          : > "$GITHUB_WORKSPACE/.npmrc_publish"
-
-      - name: 🔎 Debug workflow identity
-        run: |
-          echo "GITHUB_WORKFLOW_REF=$GITHUB_WORKFLOW_REF"
-          echo "File seen by GitHub: ${GITHUB_WORKFLOW_REF#*/.github/workflows/}" | sed 's/@.*$//'
-
       - name: 🚀 Publish to npm
-        run: npm publish --access public
+        run: npm publish
 
       - name: 📘 Build Storybook
         run: pnpm run storybook:build
