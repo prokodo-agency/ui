@@ -8,11 +8,24 @@
 
 **Modern, customizable UI components built with React and TypeScript — developed by [prokodo](https://www.prokodo.com) for high-performance web interfaces.**
 
-> 🇺🇸 Need help shipping a production **Next.js + Headless CMS** in 4–6 weeks?  
-> **prokodo — Next.js CMS agency** → [click here](https://www.prokodo.com/en/solution/next-js-cms?utm_source=github&utm_medium=readme_top)
+> 🇺🇸 Need help shipping production **Next.js (App Router)** fast?  
+> **prokodo — Next.js Agency** → [click here](https://www.prokodo.com/en/next-js-agency/?utm_source=github&utm_medium=readme_top&utm_campaign=ui)
 >
-> 🇩🇪 Sie suchen eine **Next.js Agentur** (Strapi/Contentful/WP)?  
-> **prokodo — Next.js CMS Agentur** → [hier klicken](https://www.prokodo.com/de/loesung/next-js-cms?utm_source=github&utm_medium=readme_top)
+> 🇩🇪 Sie suchen eine **Next.js Agentur** (App Router, SEO, Performance)?  
+> **prokodo — Next.js Agentur** → [hier klicken](https://www.prokodo.com/de/next-js-agentur/?utm_source=github&utm_medium=readme_top&utm_campaign=ui)
+
+<details>
+  <summary><b>Further reading: Next.js guides</b> (SEO · Performance · Migration)</summary>
+
+- SEO (Metadata API, hreflang):  
+  https://www.prokodo.com/en/guide/next-js/next-js-seo/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=seo_en
+
+- Performance (LCP/INP/CLS, Streaming SSR):  
+  https://www.prokodo.com/en/guide/next-js/next-js-performance/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=perf_en
+
+- Migration Playbook (RACI, Canary, Rollback):  
+ https://www.prokodo.com/en/guide/next-js/next-js-migration/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=migration_en
+</details>
 
 [![npm](https://img.shields.io/npm/v/@prokodo/ui?style=flat&color=3178c6&label=npm)](https://www.npmjs.com/package/@prokodo/ui)
 [![CI](https://github.com/prokodo-agency/ui/actions/workflows/release.yml/badge.svg)](https://github.com/prokodo-agency/ui/actions/workflows/release.yml)
@@ -243,11 +256,29 @@ export default createLazyWrapper<NavbarProps>({
 
 ## Examples (Next.js + Headless CMS)
 
+Real-world setups we ship:
+
 - Next.js + **Strapi** content models
 - Next.js + **Contentful** entries & preview
 - Migration from **Headless WordPress** to Next.js
 
-Compare CMS options → [Strapi vs Contentful vs Headless WP](https://www.prokodo.com/de/loesung/next-js-cms?utm_source=github&utm_medium=readme_examples)
+**Need help or a quick scoping?**
+
+- 🇺🇸 **Next.js Agency (EN)** → https://www.prokodo.com/en/next-js-agency/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=examples_cta_en
+- 🇩🇪 **Next.js Agentur (DE)** → https://www.prokodo.com/de/next-js-agentur/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=examples_cta_de
+
+<details>
+  <summary><b>Further reading: Next.js guides</b> (SEO · Performance · Migration)</summary>
+
+- SEO (Metadata API, hreflang):  
+  https://www.prokodo.com/en/guide/next-js/next-js-seo/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=seo_en
+
+- Performance (LCP/INP/CLS, Streaming SSR):  
+  https://www.prokodo.com/en/guide/next-js/next-js-performance/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=perf_en
+
+- Migration Playbook (RACI, Canary, Rollback):  
+ https://www.prokodo.com/en/guide/next-js/next-js-migration/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=migration_en
+</details>
 
 ## 📘 Documentation
 

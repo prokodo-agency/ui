@@ -31,6 +31,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+          scope: "@prokodo"
           cache: "pnpm"
 
       - name: 📦 Install dependencies
@@ -59,10 +60,23 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "ci: version bump"
           git push
 
-      - name: 🚀 Publish to npm
-        run: pnpm publish --access public
+      # --- Trusted Publishing with pnpm (OIDC + provenance, no token) ---
+      - name: 🧭 Read package version
+        id: pkg
+        run: echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+
+      - name: 🚫 Skip if version already on npm
+        run: |
+          if pnpm view @prokodo/ui@${{ steps.pkg.outputs.version }} version >/dev/null 2>&1; then
+            echo "Version @prokodo/ui@${{ steps.pkg.outputs.version }} already published. Skipping."
+            exit 0
+          fi
+
+      - name: 🚀 Publish to npm (provenance)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Tell the registry to generate a provenance attestation
+          NPM_CONFIG_PROVENANCE: "true"
+        run: pnpm publish --access public --provenance
 
       - name: 📘 Build Storybook
         run: pnpm run storybook:build

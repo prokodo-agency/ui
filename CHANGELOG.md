@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.0.56
+
+### Patch Changes
+
+- Added trusted publisher logic to actions
+
 ## 0.0.55
 
 ### Patch Changes

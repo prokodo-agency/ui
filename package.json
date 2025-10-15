@@ -1,6 +1,6 @@
 {
   "name": "@prokodo/ui",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "type": "module",
   "description": "UI components for production-grade Next.js + Headless CMS (Strapi, Contentful, Headless WordPress) websites by prokodo – built for Core Web Vitals & SEO.",
   "sideEffects": false,
@@ -343,11 +343,15 @@
     "README.md",
     "LICENSE"
   ],
-  "author": "prokodo <info@prokodo.com>",
+  "author": {
+    "name": "prokodo",
+    "email": "info@prokodo.com",
+    "url": "https://www.prokodo.com/en/next-js-agency/?utm_source=npm&utm_medium=author&utm_campaign=prokodo_ui"
+  },
   "license": "BUSL-1.1",
   "funding": {
     "type": "other",
-    "url": "https://www.prokodo.com/de/loesung/next-js-cms/?utm_source=npm&utm_medium=funding"
+    "url": "https://www.prokodo.com/en/next-js-agency/?utm_source=npm&utm_medium=funding&utm_campaign=prokodo_ui"
   },
   "publishConfig": {
     "access": "public"
