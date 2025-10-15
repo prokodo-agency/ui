@@ -71,19 +71,6 @@ jobs:
             exit 0
           fi
 
-      # - name: 🔒 Ensure tokenless env (Trusted Publishing)
-      #   run: |
-      #     npm config delete //registry.npmjs.org/:_authToken || true
-      #     unset NODE_AUTH_TOKEN || true
-      #     # Use a completely empty npmrc so npm doesn't look for a token
-      #     echo "" > "$GITHUB_WORKSPACE/.npmrc_publish"
-      #     echo "NPM_CONFIG_USERCONFIG=$GITHUB_WORKSPACE/.npmrc_publish" >> "$GITHUB_ENV"
-
-      # - name: 🔐 OIDC sanity (no auth token present)
-      #   run: |
-      #     test -z "${NODE_AUTH_TOKEN:-}" || { echo "NODE_AUTH_TOKEN still set"; exit 1; }
-      #     npm config list
-
       - name: 🚀 Publish to npm
         run: npm publish
 
