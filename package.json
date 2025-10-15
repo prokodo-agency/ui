@@ -354,6 +354,7 @@
     "url": "https://www.prokodo.com/en/next-js-agency/?utm_source=npm&utm_medium=funding&utm_campaign=prokodo_ui"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   }
 }
