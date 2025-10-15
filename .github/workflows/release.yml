@@ -2,24 +2,22 @@ name: Release
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
   release:
+    name: Version & Publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
       - uses: pnpm/action-setup@v4
         with:
           version: 9
-
       - uses: actions/setup-node@v5
         with:
           node-version: 20
@@ -27,15 +25,24 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run typecheck
-      - run: pnpm run lint
-      - run: pnpm run test:ci
       - run: pnpm run build
 
-      - run: pnpm changeset version || echo "No version changes"
-      - run: pnpm install --frozen-lockfile
+      - name: 🧪 Typecheck, Lint & Test
+        run: |
+          pnpm run typecheck
+          pnpm run lint
+          pnpm run test:ci
 
-      - name: Commit and push version bump
+      - name: 🛠 Build library
+        run: pnpm run build
+
+      - name: 🧾 Version packages (if changeset exists)
+        run: pnpm changeset version || echo "No version changes"
+
+      - name: 📦 Install updated deps if needed
+        run: pnpm install --frozen-lockfile
+
+      - name: ⬆️ Commit and push version bump
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -43,22 +50,14 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "ci: version bump"
           git push
 
-      - name: Read package version
-        id: pkg
-        run: echo "version=$(node -e \"console.log(require('./package.json').version)\")" >> "$GITHUB_OUTPUT"
-
-      - name: Skip if version already on npm
-        run: |
-          if npm view @prokodo/ui@${{ steps.pkg.outputs.version }} version >/dev/null 2>&1; then
-            echo "Version already on npm. Skipping publish."
-            exit 0
-          fi
-
       - name: Publish
-        run: npm publish --access public --registry=https://registry.npmjs.org
+        run: npm publish --access public
 
-      - run: pnpm run storybook:build
-      - uses: peaceiris/actions-gh-pages@v4
+      - name: 📘 Build Storybook
+        run: pnpm run storybook:build
+
+      - name: 🌐 Deploy Storybook to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./storybook-static
