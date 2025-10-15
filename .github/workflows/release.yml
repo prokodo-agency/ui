@@ -2,62 +2,40 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 jobs:
   release:
-    name: Version & Publish
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: 💿 Install pnpm
-        uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      - name: 🧰 Setup Node.js
-        uses: actions/setup-node@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@prokodo'
-          cache: "pnpm"
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
 
-      - name: 🔎 Versions
-        run: |
-          node -v
-          npm -v
-          echo "Registry: $(npm config get registry)"
-          npm ping
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run typecheck
+      - run: pnpm run lint
+      - run: pnpm run test:ci
+      - run: pnpm run build
 
-      - name: 📦 Install dependencies
-        run: pnpm install --frozen-lockfile
+      - run: pnpm changeset version || echo "No version changes"
+      - run: pnpm install --frozen-lockfile
 
-      - name: 🧪 Typecheck, Lint & Test
-        run: |
-          pnpm run typecheck
-          pnpm run lint
-          pnpm run test:ci
-
-      - name: 🛠 Build library
-        run: pnpm run build
-
-      - name: 🧾 Version packages (if changeset exists)
-        run: pnpm changeset version || echo "No version changes"
-
-      - name: 📦 Install updated deps if needed
-        run: pnpm install --frozen-lockfile
-
-      - name: ⬆️ Commit and push version bump
+      - name: Commit and push version bump
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -65,28 +43,22 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "ci: version bump"
           git push
 
-      # --- Trusted Publishing with pnpm (OIDC + provenance, no token) ---
-      - name: 🧭 Read package version
+      - name: Read package version
         id: pkg
-        run: |
-          VERSION=$(node -e "console.log(require('./package.json').version)")
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(node -e \"console.log(require('./package.json').version)\")" >> "$GITHUB_OUTPUT"
 
-      - name: 🚫 Skip if version already on npm
+      - name: Skip if version already on npm
         run: |
-          if pnpm view @prokodo/ui@${{ steps.pkg.outputs.version }} version >/dev/null 2>&1; then
-            echo "Version @prokodo/ui@${{ steps.pkg.outputs.version }} already published. Skipping."
+          if npm view @prokodo/ui@${{ steps.pkg.outputs.version }} version >/dev/null 2>&1; then
+            echo "Version already on npm. Skipping publish."
             exit 0
           fi
 
-      - name: 🚀 Publish to npm
-        run: npm publish --access public
+      - name: Publish
+        run: npm publish --access public --registry=https://registry.npmjs.org
 
-      - name: 📘 Build Storybook
-        run: pnpm run storybook:build
-
-      - name: 🌐 Deploy Storybook to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - run: pnpm run storybook:build
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./storybook-static
