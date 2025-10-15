@@ -5,16 +5,14 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   release:
     name: Version & Publish
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      packages: write
-      id-token: write
-
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v5
@@ -30,6 +28,7 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 20
+          registry-url: 'https://registry.npmjs.org'
           cache: "pnpm"
 
       - name: 📦 Install dependencies
@@ -85,12 +84,8 @@ jobs:
           test -z "${NODE_AUTH_TOKEN:-}" || { echo "NODE_AUTH_TOKEN still set"; exit 1; }
           npm config list
 
-      - name: 🚀 Publish to npm (provenance)
-        env:
-          NPM_CONFIG_PROVENANCE: "true"
-        run: |
-          git diff --quiet || { echo "Working tree not clean"; exit 1; }
-          npm publish --access public --provenance
+      - name: 🚀 Publish to npm
+        run: npm publish
 
       - name: 📘 Build Storybook
         run: pnpm run storybook:build
