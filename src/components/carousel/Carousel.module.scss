@@ -71,7 +71,7 @@
     }
 
     &__dots {
-        display: block;
+        display: flex;
         margin: $space-2xl auto 0 auto;
         text-align: center;
 
