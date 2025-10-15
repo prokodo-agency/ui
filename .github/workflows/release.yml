@@ -30,8 +30,6 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 20
-          registry-url: https://registry.npmjs.org/
-          scope: "@prokodo"
           cache: "pnpm"
 
       - name: 📦 Install dependencies
@@ -78,11 +76,14 @@ jobs:
         run: |
           npm config delete //registry.npmjs.org/:_authToken || true
           unset NODE_AUTH_TOKEN || true
+          # Use a completely empty npmrc so npm doesn't look for a token
+          echo "" > "$GITHUB_WORKSPACE/.npmrc_publish"
+          echo "NPM_CONFIG_USERCONFIG=$GITHUB_WORKSPACE/.npmrc_publish" >> "$GITHUB_ENV"
 
       - name: 🔐 OIDC check (npm whoami)
         env:
           NPM_CONFIG_PROVENANCE: "true"
-        run: npm whoami --registry=https://registry.npmjs.org/ || true
+        run: npm whoami || true
 
       - name: 🚀 Publish to npm (provenance)
         env:
