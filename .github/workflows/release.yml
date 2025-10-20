@@ -13,42 +13,50 @@ jobs:
   release:
     name: Version & Publish
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # full history for changesets/tags
+
+      - name: 💿 Setup pnpm (v9)
+        uses: pnpm/action-setup@v4
         with:
           version: 9
-      - uses: actions/setup-node@v5
+
+      - name: 🧰 Setup Node.js (v20) & npm registry cache
+        uses: actions/setup-node@v5
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org/'
           cache: pnpm
 
-      - name: ⬆️ Upgrade to latest npm
+      - name: ⬆️ Upgrade npm to latest
         run: |
           npm -v
           npm i -g npm@latest
           npm -v
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
+      - name: 📦 Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
 
-      - name: 🧪 Typecheck, Lint & Test
+      - name: 🧪 Typecheck, Lint & Test (CI-safe)
         run: |
           pnpm run typecheck
           pnpm run lint
           pnpm run test:ci
 
-      - name: 🛠 Build library
+      - name: 🛠 Build library (production)
         run: pnpm run build
 
-      - name: 🧾 Version packages (if changeset exists)
+      - name: 🧾 Version packages (apply changesets if present)
         run: pnpm changeset version || echo "No version changes"
 
-      - name: 📦 Install updated deps if needed
+      - name: 🔁 Reinstall after version bump (ensure lockfile integrity)
         run: pnpm install --frozen-lockfile
 
-      - name: ⬆️ Commit and push version bump
+      - name: ⬆️ Commit and push version bump (tags stay in repo)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -56,13 +64,13 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "ci: version bump"
           git push
 
-      - name: Publish
+      - name: 🚀 Publish to npm (latest tag, public access)
         run: npm publish --access public
 
-      - name: 📘 Build Storybook
+      - name: 📘 Build Storybook (static export)
         run: pnpm run storybook:build
 
-      - name: 🌐 Deploy Storybook to GitHub Pages
+      - name: 🌐 Deploy Storybook to GitHub Pages (ui.prokodo.com)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
