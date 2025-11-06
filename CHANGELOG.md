@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.0
+
+### Minor Changes
+
+- chore: Next.js 16 and Turbopack compatibility changes
+
 ## 0.0.56
 
 ### Patch Changes
