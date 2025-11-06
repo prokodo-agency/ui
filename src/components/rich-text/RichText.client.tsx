@@ -487,7 +487,9 @@ export function RichTextClient({
         {...props}
       >
         {segments.map((segment, idx) => {
-          const plainText = segment.replace(/<[^>]+>/g, "")
+          // robust: parse HTML and read textContent
+          const doc = new DOMParser().parseFromString(segment, "text/html")
+          const plainText = (doc.body.textContent ?? "").trim()
           // eslint-disable-next-line react/no-array-index-key
           return <Fragment key={idx}>{overrideParagraph(plainText)}</Fragment>
         })}

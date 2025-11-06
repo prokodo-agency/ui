@@ -7,10 +7,10 @@ import React, {
   type ReactNode,
 } from "react"
 
-type AnyProps = Record<string, unknown>
-
-export type LinkLike = ComponentType<AnyProps>
-export type ImageLike = ComponentType<AnyProps>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type LinkLike = ComponentType<any>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ImageLike = ComponentType<any>
 
 export type UIRuntimeCtx = {
   linkComponent?: LinkLike

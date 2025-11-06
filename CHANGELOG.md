@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.1
+
+### Patch Changes
+
+- Closed security leaks and type fixes
+
 ## 0.1.0
 
 ### Minor Changes
