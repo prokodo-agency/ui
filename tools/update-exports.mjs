@@ -25,6 +25,10 @@ const exportsField = {
     types: "./dist/types/helpers/createLazyWrapper.d.ts",
     import: "./dist/helpers/createLazyWrapper.js",
   },
+  "./runtime": {
+    types: "./dist/types/helpers/runtime.client.d.ts",
+    import: "./dist/helpers/runtime.client.js",
+  },
 }
 
 // Add per-component exports
