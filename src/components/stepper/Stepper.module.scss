@@ -98,7 +98,7 @@
             }
 
             &--is-active {
-                box-shadow: var(elevation-1);
+                box-shadow: var(--elevation-1);
 
                 &::before {
                     @include gradientBorderVar(1);

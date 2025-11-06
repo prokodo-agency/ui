@@ -32,6 +32,8 @@
 [![License: BUSL-1.1](https://img.shields.io/badge/license-BUSL--1.1-blue.svg)](LICENSE)
 [![Storybook](https://img.shields.io/badge/storybook-ui.prokodo.com-ff4785?logo=storybook&logoColor=white)](https://ui.prokodo.com)
 [![bundlephobia](https://img.shields.io/bundlephobia/minzip/@prokodo/ui?label=bundle%20size&style=flat&color=blue)](https://bundlephobia.com/result?p=@prokodo/ui)
+[![Next.js](https://img.shields.io/badge/Next.js-13–16-black)](#)
+[![Turbopack](https://img.shields.io/badge/Works%20with-Turbopack-000)](#)
 
 ---
 
@@ -44,7 +46,9 @@
 - 🧪 **Reliable**: Fully tested with Jest and Testing Library
 - 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
 - 📦 **Ready-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
-- 🧱 **Optimized for SSR**: Works great with Next.js and React Server Components
+- 🚀 **Optimized for Next.js 13–16 out of the box** (App Router, React Server Components)
+- ⚡ **Turbopack compatible** (no config required)
+- 🔗 **Framework adapters** via `UIRuntimeProvider` for `next/link` & `next/image`
 
 ## ⚡ Lightweight by Design
 
@@ -173,7 +177,7 @@ export default function GalleryPage() {
 | Grid/GridRow        |               ✅               |                 –                  |
 | Headline            |               ✅               |                 -                  |
 | Icon                |               ✅               |                 –                  |
-| Image               |               ✅               |                 –                  |
+| Image               |               ✅               |                 ✅                 |
 | ImageText           |               ✅               |                 -                  |
 | Input               |               ✅               |                 ✅                 |
 | Label               |               ✅               |                 –                  |
@@ -198,6 +202,80 @@ export default function GalleryPage() {
 | Switch              |               ✅               |                 ✅                 |
 | Table               |               ✅               |                 –                  |
 | Teaser              |               ✅               |                 -                  |
+
+## Since Next.js 16
+
+- Link/Image runtime provider (required for <Link>/<Image> adapters)
+- For Next.js apps, provide your framework components (next/link, next/image) via a small client provider.
+- Do not pass linkComponent / imageComponent props from pages—use the provider instead.
+
+### 1. Create a client provider
+
+```tsx
+// app/providers/ProkodoUiNextProvider.tsx
+"use client"
+
+import NextLink from "next/link"
+import NextImage from "next/image"
+import { UIRuntimeProvider } from "@prokodo/ui/runtime"
+
+export function ProkodoUiNextProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <UIRuntimeProvider
+      value={{ linkComponent: NextLink, imageComponent: NextImage }}
+    >
+      {children}
+    </UIRuntimeProvider>
+  )
+}
+```
+
+### 2. Wrap your root layout
+
+```tsx
+// app/layout.tsx (server component)
+import { ProkodoUiNextProvider } from "./providers/ProkodoUiNextProvider"
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <ProkodoUiNextProvider>{children}</ProkodoUiNextProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+### 3. Use components normally (no extra props needed)
+
+```tsx
+import { Link } from "@prokodo/ui/link"
+import { Image } from "@prokodo/ui/image"
+
+export default function Page() {
+  return (
+    <>
+      <Link href="/about">About</Link>
+      <Image src="/hero.jpg" alt="Hero" />
+    </>
+  )
+}
+```
+
+**Notes**:
+
+- The provider file must be a "use client" module.
+- Remove any linkComponent / imageComponent props you previously passed from server code.
+- Plain React (non-Next) apps don’t need this; just use <a> / <img> or pass your own adapters inside client components.
 
 ## How to create my own Island Component?
 

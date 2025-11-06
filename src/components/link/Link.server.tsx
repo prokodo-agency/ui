@@ -5,12 +5,31 @@ import { LinkView } from "./Link.view"
 import type { LinkProps } from "./Link.model"
 import type { JSX } from "react"
 
-export default function LinkServer(props: LinkProps): JSX.Element {
-  const hasHandlers = false // server never attaches JS handlers
-  const linkTag = props.onClick && !props.href ? "span" : "a"
+export default function LinkServer(rawProps: LinkProps): JSX.Element {
+  // 🔎 dev guard – help find who still passes linkComponent
+  if (
+    process.env.NODE_ENV !== "production" &&
+    typeof rawProps?.linkComponent === "function"
+  ) {
+    console.error(
+      "[UI] Do not pass function props (linkComponent) to <Link> on the server. " +
+        "Use the UIRuntimeProvider in the parent app instead.",
+      rawProps,
+    )
+  }
+
+  const {
+    onClick,
+    onKeyDown: _onKeyDown,
+    linkComponent: _drop,
+    ...props
+  } = rawProps
+  const hasHandlers = false
+  const linkTag = onClick && !props?.href ? "span" : "a"
+
   return (
     <LinkView
-      {...props}
+      {...(props as LinkProps)}
       BaseLinkComponent={BaseLink}
       hasHandlers={hasHandlers}
       LinkTag={linkTag}

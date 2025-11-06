@@ -16,6 +16,13 @@ export interface IslandOptions<P extends object> {
   isInteractive?: (props: Readonly<P>) => boolean
 }
 
+// Strip function-typed props for server-only fallback renders
+function stripFnProps<T extends Record<string, unknown>>(p: T): T {
+  return Object.fromEntries(
+    Object.entries(p).filter(([, v]) => typeof v !== "function"),
+  ) as T
+}
+
 export function createIsland<P extends object>({
   name,
   Server,
@@ -24,40 +31,25 @@ export function createIsland<P extends object>({
 }: IslandOptions<P>): ComponentType<P & { priority?: boolean }> {
   const LazyComp = lazy(() => loadLazy().then(m => ({ default: m.default })))
 
+  // Preload code on the server to improve TTFB when hydrating on client
   if (typeof window === "undefined") {
-    void loadLazy() // preload on server
+    void loadLazy()
   }
 
   function withIslandAttr(el: ReactElement, priority?: boolean): ReactElement {
     const islandName = name.toLowerCase()
-
-    if (
-      typeof process !== "undefined" &&
-      typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string"
-    ) {
-      console.debug(
-        `[hydrate] createIsland “${name}” rendering as interactive=${Boolean(
-          priority,
-        )}`,
-      )
-    }
-
-    // 2) Only pass `priority` if truthy:
     const extra: { "data-island": string; priority?: boolean } = {
       "data-island": islandName,
     }
-    if (Boolean(priority)) {
-      extra.priority = priority
-    }
+    if (Boolean(priority)) extra.priority = true
     return cloneElement(el as ReactElement, extra)
   }
 
-  const Island: FC<P & { priority?: boolean }> = ({
-    priority = false,
-    ...raw
-  }) => {
+  const Island: FC<P & { priority?: boolean }> = ({ ...raw }) => {
     const props = raw as P & { redirect?: unknown }
 
+    // Heuristic: if any prop is a function (onClick, onKeyDown, …) or a redirect flag,
+    // we consider it interactive.
     const autoInteractive =
       Object.entries(props).some(
         ([k, v]) => k.startsWith("on") && typeof v === "function",
@@ -67,19 +59,21 @@ export function createIsland<P extends object>({
       ? customInteractive(props) || autoInteractive
       : autoInteractive
 
-    if (interactive && priority) {
-      return withIslandAttr(<LazyComp {...props} />)
-    }
+    // 🚫 Never send function props to a Server Component:
+    const serverSafe = stripFnProps(props)
 
+    // SSR path should *not* render the client bundle directly with function props.
+    // We always use a Server fallback on the server, and let the browser hydrate to client.
     if (!interactive) {
-      return withIslandAttr(<Server {...props} />)
+      return withIslandAttr(<Server {...(serverSafe as P)} />)
     }
 
-    const fallback = withIslandAttr(<Server {...props} />)
+    const fallback = withIslandAttr(<Server {...(serverSafe as P)} />)
 
     return (
       <Suspense fallback={fallback}>
-        {withIslandAttr(<LazyComp {...props} />)}
+        {/* ✅ Client path: pass ORIGINAL props (incl. handlers) */}
+        {withIslandAttr(<LazyComp {...(props as P)} />)}
       </Suspense>
     )
   }
