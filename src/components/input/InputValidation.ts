@@ -1,3 +1,5 @@
+import { isString } from "@/helpers/validations"
+
 import type {
   FieldType,
   InputValidateEvent,
@@ -5,13 +7,11 @@ import type {
 } from "./Input.model"
 import type { HTMLInputTypeAttribute } from "react"
 
-// Helper for regex validation
-const isValidRegex = (regex: RegExp, value?: string | number): boolean => {
-  if (typeof value === "undefined") return false
-  return regex.test(String(value))
-}
+/* ── helpers ────────────────────────────────────────────────────────── */
 
-// Validation for min and max values
+const isEmpty = (v?: string | null) => v == null || v === ""
+
+/** Validation for min/max: numeric values or string length fallback */
 const handleValidationMinMax = (
   value?: string | number,
   min?: number,
@@ -19,21 +19,52 @@ const handleValidationMinMax = (
   errorTranslations?: InputErrorTranslations,
 ): string | undefined => {
   let numericValue = Number(value)
-
-  // Handle cases where the value is a string and needs length validation
-  if (typeof value === "string" && isNaN(numericValue)) {
+  if (typeof value === "string" && Number.isNaN(numericValue)) {
     numericValue = value.length
   }
-
   if (min !== undefined && numericValue < min) {
     return `${errorTranslations?.min ?? "Value must be greater than or equal to"} ${min}.`
   }
   if (max !== undefined && numericValue > max) {
     return `${errorTranslations?.max ?? "Value must be less than or equal to"} ${max}.`
   }
-
   return
 }
+
+/* Cheap, safe validators (no catastrophic backtracking) */
+const validateEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(v)
+
+const validateTel = (v: string) => /^\+?[1-9]\d{1,14}$/.test(v) // E.164-ish
+
+const validateURL = (v: string) => {
+  try {
+    const u = new URL(v)
+    return u.protocol === "http:" || u.protocol === "https:"
+  } catch {
+    return false
+  }
+}
+
+const validateNumber = (v: string) => /^-?\d+(\.\d+)?$/.test(v)
+
+const validateColor = (v: string) => /^#([0-9a-f]{6}|[0-9a-f]{3})$/i.test(v)
+
+const validatePassword = (v: string) =>
+  v.length >= 8 &&
+  /[a-z]/.test(v) &&
+  /[A-Z]/.test(v) &&
+  /\d/.test(v) &&
+  /[\W_]/.test(v)
+
+/** optional custom regex (avoid allowing dangerous patterns) */
+const buildCustomRegex = (pattern: string): RegExp => {
+  const m = pattern.match(/^\/([\s\S]*)\/([gimuy]*)$/)
+  const src = m ? m[1] : pattern
+  const flags = m ? m[2]?.replace(/[^gimuy]/g, "") : ""
+  return new RegExp(src ?? "", flags)
+}
+
+/* ── main ───────────────────────────────────────────────────────────── */
 
 export const handleValidation = (
   type: FieldType,
@@ -48,52 +79,23 @@ export const handleValidation = (
 ): void => {
   if (!onValidate) return
 
-  // Check if value is empty and required
-  const valueIsEmpty = value === null || value === undefined || value === ""
-  if (valueIsEmpty && Boolean(required)) {
-    return onValidate(
-      name,
-      errorTranslations?.required ??
-        "This field is required. Please fill it out.",
-    )
-  }
-  if (valueIsEmpty && (required === false || required === undefined))
+  // required
+  if (isEmpty(value)) {
+    if (Boolean(required)) {
+      return onValidate(
+        name,
+        errorTranslations?.required ??
+          "This field is required. Please fill it out.",
+      )
+    }
     return onValidate(name)
-  // Validate min/max values if applicable
+  }
+
+  // min/max
   const minMaxError = handleValidationMinMax(value, min, max, errorTranslations)
-  if (minMaxError !== undefined) return onValidate(name, minMaxError)
+  if (isString(minMaxError)) return onValidate(name, minMaxError)
 
-  // Define regex patterns for different field types
-  let regexPatterns: { [key in HTMLInputTypeAttribute]?: RegExp } = {
-    // text: /^[a-zA-Z\s,.!?'-]+$/,
-    email:
-      /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x21\x23-\x5b\x5d-\x7e]|\\[\x21-\x7e])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}|(?:\[(?:(?:2(?:5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(?:2(?:5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x21-\x5a\x53-\x7e]|\\[\x21-\x7e])+)])$/i,
-    tel: /^\+?[1-9]\d{1,14}$/,
-    url: /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/,
-    number: /^-?\d+(\.\d+)?$/,
-    color: /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-  }
-
-  if (customRegexPattern !== undefined) {
-    let customRegex: RegExp
-    // Accept "/pattern/flags" OR just "pattern"
-    const m = customRegexPattern.match(/^\/([\s\S]*)\/([gimsuy]*)$/)
-    if (m) {
-      const [, pattern = "", flags] = m
-      customRegex = new RegExp(pattern, flags)
-    } else {
-      // If pattern is provided as plain string, it must have escaped backslashes.
-      // e.g. "^[a-zA-Z0-9&.,'\\s-]+$"
-      customRegex = new RegExp(customRegexPattern)
-    }
-    regexPatterns = {
-      ...regexPatterns,
-      [String(type)]: RegExp(customRegex),
-    }
-  }
-  const errorMessages: InputErrorTranslations = {
-    // text: "Text can only include letters and common punctuation.",
+  const msg: InputErrorTranslations = {
     email: "Please enter a valid email address (e.g., name@example.com).",
     tel: "Please enter a valid phone number.",
     url: "Please enter a valid URL.",
@@ -103,12 +105,42 @@ export const handleValidation = (
       "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.",
     ...errorTranslations,
   }
-  // Perform regex validation based on field type
-  const regex = regexPatterns[type as HTMLInputTypeAttribute]
-  if (regex && !isValidRegex(regex, value)) {
-    return onValidate(name, errorMessages[type as HTMLInputTypeAttribute])
+
+  const v = value as string
+
+  // custom pattern (kept, but sanitized)
+  if (isString(customRegexPattern)) {
+    const re = buildCustomRegex(customRegexPattern as string)
+    if (!re.test(v))
+      return onValidate(name, msg[String(type) as keyof typeof msg])
+    return onValidate(name)
   }
 
-  // Call onValidate with no error
+  // built-in types
+  let ok = true
+  switch (type as HTMLInputTypeAttribute) {
+    case "email":
+      ok = validateEmail(v)
+      break
+    case "tel":
+      ok = validateTel(v)
+      break
+    case "url":
+      ok = validateURL(v)
+      break
+    case "number":
+      ok = validateNumber(v)
+      break
+    case "color":
+      ok = validateColor(v)
+      break
+    case "password":
+      ok = validatePassword(v)
+      break
+    default:
+      ok = true
+  }
+
+  if (!ok) return onValidate(name, msg[type as keyof typeof msg])
   return onValidate(name)
 }
