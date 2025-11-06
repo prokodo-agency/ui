@@ -1,20 +1,12 @@
 "use client"
 
-import React, {
-  createContext,
-  useContext,
-  type ComponentType,
-  type ReactNode,
-} from "react"
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type LinkLike = ComponentType<any>
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ImageLike = ComponentType<any>
+import React, { createContext, useContext, type ReactNode } from "react"
 
 export type UIRuntimeCtx = {
-  linkComponent?: LinkLike
-  imageComponent?: ImageLike
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  linkComponent?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  imageComponent?: any
 }
 
 const UIRuntimeContext = createContext<UIRuntimeCtx>({})
