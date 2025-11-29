@@ -4,15 +4,14 @@ import type { LinkProps } from "../link"
 import type { SkeletonProps } from "../skeleton"
 import type { Variants } from "@/types/variants"
 import type { StaticImageData } from "next/image"
-import type { Ref, ReactNode, KeyboardEvent, ElementType } from "react"
+import type { Ref, ReactNode, KeyboardEvent } from "react"
 
 export type CardVariant = Variants
 
 export type CardBackgroundProps = {
-  imageComponent: ElementType
   src?: string | StaticImageData
   alt?: string
-} & Omit<ImageProps, "src" | "alt" | "width" | "height" | "imageComponent">
+} & Omit<ImageProps, "src" | "alt" | "width" | "height">
 
 export type CardProps = {
   ref?: Ref<HTMLDivElement>

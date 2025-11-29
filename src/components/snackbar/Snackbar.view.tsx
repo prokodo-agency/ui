@@ -1,5 +1,7 @@
 import { create } from "@/helpers/bem"
 
+import { Icon } from "../icon"
+
 import styles from "./Snackbar.module.scss"
 
 import type {
@@ -28,6 +30,8 @@ export function SnackbarView({
   className,
   onClose,
   readOnly,
+  closeButtonProps,
+  closeIconProps,
 }: SnackbarViewProps): JSX.Element {
   const pos: SnackbarAnchorOrigin = anchorOrigin
   return (
@@ -51,11 +55,20 @@ export function SnackbarView({
       {closeable && (
         <button
           aria-label="Close"
-          className={bem("close")}
           type="button"
-          onClick={() => onClose?.("closeIcon")}
+          {...closeButtonProps}
+          className={bem("close", undefined, closeButtonProps?.className)}
+          onClick={e => {
+            onClose?.("closeIcon")
+            closeButtonProps?.onClick?.(e)
+          }}
         >
-          <span aria-hidden="true">×</span>
+          <Icon
+            aria-hidden="true"
+            name="Cancel01Icon"
+            size="md"
+            {...closeIconProps}
+          />
         </button>
       )}
     </div>

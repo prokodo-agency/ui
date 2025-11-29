@@ -17,11 +17,11 @@ const ImageClient: FC<ImageProps> = ({
   containerClassName,
   captionClassName,
   className,
-  imageComponent,
   ...props
 }) => {
+  console.log(props)
   const { imageComponent: ctxImage } = useUIRuntime()
-  const CustomImage = imageComponent ?? ctxImage ?? "img"
+  const CustomImage = ctxImage ?? "img"
 
   const renderImage = () => (
     <CustomImage

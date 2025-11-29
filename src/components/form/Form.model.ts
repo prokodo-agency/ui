@@ -20,6 +20,7 @@ import { InputOTP } from "../inputOTP"
 import { Select, type SelectProps } from "../select"
 import { Slider, type SliderProps } from "../slider"
 import { Switch, type SwitchProps } from "../switch"
+import { Rating, type RatingProps } from "../rating"
 import type { FormFieldProps } from "./FormField.client"
 /* eslint-enable */
 
@@ -39,6 +40,7 @@ export type FormFieldTypes =
   | "slider"
   | "date"
   | "dynamic-list"
+  | "rating"
 
 export type FormFieldValue =
   | string
@@ -84,6 +86,10 @@ export type FormFieldDynamicList = FormFieldOptionals & {
   fieldType: "dynamic-list"
 } & DynamicListProps
 
+export type FormFieldRating = FormFieldOptionals & {
+  fieldType: "rating"
+} & RatingProps
+
 export type FormField =
   | FormFieldInput
   | FormFieldSelect
@@ -91,6 +97,7 @@ export type FormField =
   | FormFieldSlider
   | FormFieldDate
   | FormFieldDynamicList
+  | FormFieldRating
 
 export type FormMessagesErrors = {
   [key: string]: string[]
@@ -122,6 +129,7 @@ export type FormAllowedChildren =
   | ReactElement<typeof Slider>
   | ReactElement<typeof Switch>
   | ReactElement<typeof DynamicList>
+  | ReactElement<typeof Rating>
 
 export type ParentComponentProps = {
   children: FormAllowedChildren | FormAllowedChildren[] // Allow one or multiple allowed children

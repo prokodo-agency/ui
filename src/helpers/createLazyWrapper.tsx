@@ -1,4 +1,5 @@
 "use client"
+
 import {
   type ComponentType,
   type ReactElement,
@@ -29,7 +30,14 @@ export function createLazyWrapper<P extends object>({
     priority = false,
     ...raw
   }): ReactElement => {
-    const props = raw as P & { redirect?: unknown }
+    // props WITHOUT priority; priority only affects hydration logic
+    const props = {
+      ...(raw as P),
+      ...(name === "Image" && priority ? { priority } : {}),
+    } as P & {
+      redirect?: unknown
+      priority?: boolean
+    }
 
     const autoInteractive =
       Object.entries(props).some(
@@ -49,7 +57,7 @@ export function createLazyWrapper<P extends object>({
 
     if (interactive && (priority || visible)) {
       const clientEl = <Client {...props} />
-      // 1) log which lazy wrapper is rendering:
+      // Debug logging (optional)
       if (
         typeof process !== "undefined" &&
         typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string"
@@ -61,27 +69,24 @@ export function createLazyWrapper<P extends object>({
         )
       }
 
-      // 2) only pass priority when true:
-      const extra: { "data-island": string; priority?: boolean } = {
-        "data-island": islandName,
-      }
-      if (priority) {
-        extra.priority = priority
-      }
-      return cloneElement(clientEl as ReactElement, extra)
+      // Attach only data-island; do NOT forward priority to DOM
+      return cloneElement(
+        clientEl as ReactElement,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { "data-island": islandName } as any,
+      )
     } else {
       const serverEl = <Server {...props} />
       if (
         typeof process !== "undefined" &&
         typeof process?.env?.PK_ENABLE_DEBUG_LOGS === "string"
       ) {
-        // 1) log which lazy wrapper is rendering server:
         console.debug(
           `[hydrate] createLazyWrapper “${name}” rendering server (visible=${visible})`,
         )
       }
 
-      // 2) always attach data-island  ref when rendering server
+      // Always attach data-island + ref on server render
       return cloneElement(
         serverEl as ReactElement,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -160,6 +160,10 @@
       "import": "./dist/components/quote/index.js",
       "types": "./dist/types/components/quote/index.d.ts"
     },
+    "./rating": {
+      "import": "./dist/components/rating/index.js",
+      "types": "./dist/types/components/rating/index.d.ts"
+    },
     "./rich-text": {
       "import": "./dist/components/rich-text/index.js",
       "types": "./dist/types/components/rich-text/index.d.ts"

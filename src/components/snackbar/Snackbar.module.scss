@@ -26,7 +26,7 @@
   // ——— Variants ————————————————————————————————
   &--success { background-color: var(--color-success); }
   &--error   { background-color: var(--color-error);   }
-  &--warning { background-color: var(--color-warning); }
+  &--warning { background-color: var(--color-warning); color: var(--color-black); }
   &--info    { background-color: var(--color-info);    }
 
   // ——— Elements ————————————————————————————————
@@ -65,36 +65,36 @@
 //    One per anchorOrigin (“top-right”, etc.)
 // ───────────────────────────────────────────────────────────
 @include define-block("SnackbarProvider") {
-  position: "fixed";
-  display: "flex";
-  flex-direction: "column";
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   gap: 8;
   z-index: 9000;
-  pointer-events: "none"; // clicks only inside snackbar
+  pointer-events: none; // clicks only inside snackbar
 
   &--is-top {
-    inset-block-start: 16px;
-    inset-block-end: auto;
+    top: 0;
   }
 
   &--is-bottom {
-    inset-block-start: auto;
-    inset-block-end: 16px;
+    bottom: 0;
+  }
+
+  &--is-center {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   &--is-left {
-    inset-inline-start: 16px;
-    inset-inline-end: auto;
+    left: $space-lg;
   }
 
   &--is-right {
-    inset-inline-start: auto;
-    inset-inline-end: 16px;
+    right: $space-lg;
   }
 
   &__snackbar {
     pointer-events: auto;
-    margin: 0 0 $space-lg 0;
 
     &--is-top {
       margin-top: $space-lg;
@@ -102,14 +102,6 @@
 
     &--is-bottom {
       margin-bottom: $space-lg;
-    }
-
-    &--is-left {
-      margin-left: $space-lg;
-    }
-
-    &--is-right {
-      margin-right: $space-lg;
     }
   }
 }

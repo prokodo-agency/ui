@@ -1,5 +1,3 @@
-import { isValidElement, type JSX } from "react"
-
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
@@ -15,6 +13,7 @@ import type {
   PostWidgetCarouselProps,
   PostWidgetCarouselItem,
 } from "./PostWidgetCarousel.model"
+import type { JSX } from "react"
 
 const bem = create(styles, "PostWidgetCarousel")
 
@@ -160,9 +159,6 @@ export function PostWidgetCarouselView(
                       componentsProps?.image?.sizes ??
                       imgBase.sizes ??
                       "(max-width: 960px) 100vw, 100vw",
-                    ...(isValidElement(imgBase?.imageComponent)
-                      ? { imageComponent: imgBase.imageComponent }
-                      : {}),
                   } as ImageProps)
                 : undefined
 
