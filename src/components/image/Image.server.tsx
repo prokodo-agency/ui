@@ -15,22 +15,19 @@ type ImgOnlyProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
 }
 
 /** Convert union ImageProps -> safe <img> props */
-function toImgOnlyProps(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  p: Record<string, any>,
-): ImgOnlyProps {
+function toImgOnlyProps(p: Record<string, string | number>): ImgOnlyProps {
   const {
     // Strip next/image-only props so they don't leak onto <img>
     _fill: _fill, // intentionally unused (name the same to show intent)
     _loader: _loader,
     _placeholder: _placeholder,
     _blurDataURL: _blurDataURL,
-    _priority: _priority,
+    _priority: _priority, // internal next/image flag – ignorieren
+    // unsere öffentliche API: <Image priority /> → auf <img> mappen
+    priority,
     _quality: _quality,
     // Note: sizes *is* valid on <img> when it's a string, so we won't strip it
     _onLoadingComplete: _onLoadingComplete,
-    // our runtime wiring we never want on <img>
-    _imageComponent: _imageComponent,
     ...rest
   } = p
 
@@ -67,6 +64,15 @@ function toImgOnlyProps(
     height,
   }
 
+  if (Boolean(priority)) {
+    // eager laden statt lazy
+    imgProps.loading = "eager"
+    // fetchPriority ist (noch) nicht im TS-Typ, aber im DOM erlaubt
+    ;(
+      imgProps as ImgOnlyProps & { fetchPriority?: "high" | "low" | "auto" }
+    ).fetchPriority = "high"
+  }
+
   return imgProps
 }
 
@@ -78,28 +84,15 @@ const ImageServer: FC<ImageProps> = ({
   className,
   ...rawProps
 }) => {
-  // Dev guard – identify accidental function/adapter props on server
-  if (
-    process.env.NODE_ENV !== "production" &&
-    typeof (rawProps as Record<string, unknown>).imageComponent === "function"
-  ) {
-    console.error(
-      "[UI] Do not pass function props (imageComponent) to <Image> on the server. " +
-        "Use UIRuntimeProvider in the parent app instead.",
-      rawProps,
-    )
-  }
-
   // Drop function-ish wiring on server so nothing attempts to serialize
   const {
-    imageComponent: _dropImageComponent,
     onClick: _dropClick,
     onKeyDown: _dropKey,
     ...rest
   } = rawProps as Record<string, unknown>
 
   const CustomImage: ElementType = "img"
-  const imgProps = toImgOnlyProps(rest)
+  const imgProps = toImgOnlyProps(rest as Record<string, string | number>)
 
   const renderImage = () => (
     <CustomImage

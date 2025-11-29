@@ -109,7 +109,6 @@ export function CardView({
         <Image
           alt="card background"
           className={bem("background", undefined, backgroundProps?.className)}
-          imageComponent={backgroundProps?.imageComponent ?? "img"}
           src={background as string}
           {...backgroundProps}
         />

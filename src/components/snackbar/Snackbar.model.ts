@@ -1,4 +1,5 @@
-import type { ReactNode } from "react"
+import type { IconProps } from "../icon"
+import type { HTMLAttributes, ReactNode } from "react"
 
 // ────────────────────────────────────────────────────────────────────────────────
 //  Variants & positions
@@ -52,4 +53,8 @@ export interface SnackbarProps {
   onClose?: SnackbarCloseHandler
   /** Extra className on the root element */
   className?: string
+  /** Overwrite props of close button */
+  closeButtonProps?: HTMLAttributes<HTMLButtonElement>
+  /** Overwrite props of close icon */
+  closeIconProps?: IconProps
 }

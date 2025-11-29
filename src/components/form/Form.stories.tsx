@@ -35,6 +35,13 @@ type Story = StoryObj<typeof meta>
  */
 const exampleFields: FormField[] = [
   {
+    id: "rating",
+    label: "Rating",
+    fieldType: "rating",
+    name: "rating",
+    value: "3",
+  },
+  {
     id: "firstName",
     fieldType: "input",
     name: "firstName",

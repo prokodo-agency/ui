@@ -10,5 +10,5 @@ export default createLazyWrapper<ImageProps>({
   Client: ImageClient,
   Server: ImageServer,
   // treat as interactive if a custom image component is a function (e.g. NextImage)
-  isInteractive: p => typeof p.imageComponent === "function",
+  isInteractive: () => true,
 })

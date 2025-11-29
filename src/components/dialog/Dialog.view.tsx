@@ -2,6 +2,7 @@ import { Button } from "@/components/button"
 import { Headline } from "@/components/headline"
 import { Icon } from "@/components/icon"
 import { create } from "@/helpers/bem"
+import { isNumber } from "@/helpers/validations"
 
 import styles from "./Dialog.module.scss"
 
@@ -24,6 +25,7 @@ export function DialogView({
   containerChildren,
   className,
   classNameHeader,
+  height,
   scroll = "paper",
   fullScreen = false,
   titleProps = {},
@@ -46,6 +48,12 @@ export function DialogView({
     fullScreen,
     "is-visible": Boolean(open),
   }
+  // Modifier for dialog max height
+  const styleModifier = isNumber(height)
+    ? {
+        maxHeight: `${height}px`,
+      }
+    : undefined
 
   const renderDialog = () => (
     <div
@@ -55,8 +63,13 @@ export function DialogView({
       role="dialog"
       {...rest}
       className={bem(undefined, wrapperMods, className)}
+      style={styleModifier}
     >
-      <div ref={containerRef} className={bem("container", containerMods)}>
+      <div
+        ref={containerRef}
+        className={bem("container", containerMods)}
+        style={styleModifier}
+      >
         <div className={bem("header", undefined, classNameHeader)}>
           <div>
             <Headline

@@ -3,13 +3,13 @@ import { Button, type ButtonProps } from "@/components/button"
 import { Headline } from "@/components/headline"
 import { Icon } from "@/components/icon"
 import { create } from "@/helpers/bem"
-import { isNull } from "@/helpers/validations"
+import { isArray, isNull } from "@/helpers/validations"
 
 import styles from "./Accordion.base.module.scss"
 import { AccordionEffectsLoader } from "./Accordion.effects.client"
 
 import type { AccordionViewProps } from "./Accordion.model"
-import type { JSX } from "react"
+import type { HTMLAttributes, JSX } from "react"
 
 const bem = create(styles, "Accordion")
 
@@ -36,12 +36,28 @@ export function AccordionView({
         const {
           title,
           renderHeader,
+          renderHeaderActions,
           renderContent,
           actions,
           className: itemCls,
         } = item
+
         const accId = `${id}-${title}`
         const isExpanded = expandedIndex === index
+
+        // props for header button area
+        const accHeaderProps: HTMLAttributes<HTMLDivElement> = {
+          "aria-controls": `${accId}-content`,
+          "aria-expanded": isExpanded,
+          role: "button",
+          tabIndex: 0,
+          onClick: onToggle ? e => onToggle(index, e) : undefined,
+          onKeyDown: onToggle
+            ? e => {
+                if (e.key === "Enter" || e.key === " ") onToggle(index, e)
+              }
+            : undefined,
+        }
 
         return (
           <div
@@ -49,53 +65,69 @@ export function AccordionView({
             className={bem("item", { "is-expanded": isExpanded }, itemCls)}
           >
             <div
-              aria-controls={`${accId}-content`}
-              aria-expanded={isExpanded}
-              className={bem("header", { "is-expanded": isExpanded })}
-              id={`${accId}-header`}
-              role="button"
-              tabIndex={0}
-              onClick={onToggle ? e => onToggle(index, e) : undefined}
-              onKeyDown={
-                onToggle
-                  ? e => {
-                      if (e.key === "Enter" || e.key === " ") onToggle(index, e)
-                    }
-                  : undefined
-              }
+              className={bem("header__wrapper", { "is-expanded": isExpanded })}
             >
-              {!isNull(renderHeader) ? (
-                renderHeader
-              ) : (
-                <Headline
-                  animated
-                  className={bem("title")}
-                  highlight={isExpanded}
-                  size="xs"
-                  type="h3"
-                  variant={isExpanded ? "primary" : "inherit"}
-                  {...(item.titleOptions ?? titleOptions)}
-                >
-                  {title}
-                </Headline>
-              )}
+              {/* TOGGLE ZONE */}
+              <div
+                {...accHeaderProps}
+                className={bem("header__toggle", { "is-expanded": isExpanded })}
+                id={`${accId}-header`}
+              >
+                {/* TITLE */}
+                {!isNull(renderHeader) ? (
+                  renderHeader
+                ) : (
+                  <Headline
+                    animated
+                    className={bem("title")}
+                    highlight={isExpanded}
+                    size="xs"
+                    type="h3"
+                    variant={isExpanded ? "primary" : "inherit"}
+                    {...(item.titleOptions ?? titleOptions)}
+                  >
+                    {title}
+                  </Headline>
+                )}
 
-              <Icon
-                className={bem("icon", { "is-hidden": isExpanded })}
-                color="inherit"
-                name="PlusSignIcon"
-                size="sm"
-                {...iconProps}
-              />
-              <Icon
-                className={bem("icon", { "is-hidden": !isExpanded })}
-                color="inherit"
-                name="MinusSignIcon"
-                size="sm"
-                {...iconProps}
-              />
+                <div className={bem("header__actions__wrapper")}>
+                  {/* ACTIONS — now INSIDE the toggle row but NOT clickable */}
+                  {!isNull(renderHeaderActions) && (
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                    <div
+                      className={bem("header__actions")}
+                      onClick={e => e.stopPropagation()}
+                      onMouseDown={e => e.stopPropagation()}
+                      onKeyDown={e =>
+                        e.key === "Enter" ? e.stopPropagation() : undefined
+                      }
+                    >
+                      {renderHeaderActions}
+                    </div>
+                  )}
+
+                  {/* ICONS */}
+                  <div className={bem("header__icons")}>
+                    <Icon
+                      className={bem("icon", { "is-hidden": isExpanded })}
+                      color="inherit"
+                      name="PlusSignIcon"
+                      size="sm"
+                      {...iconProps}
+                    />
+                    <Icon
+                      className={bem("icon", { "is-hidden": !isExpanded })}
+                      color="inherit"
+                      name="MinusSignIcon"
+                      size="sm"
+                      {...iconProps}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
+            {/* CONTENT */}
             <div
               aria-labelledby={`${accId}-header`}
               className={bem("content", { "is-expanded": isExpanded })}
@@ -105,7 +137,7 @@ export function AccordionView({
             >
               {!isNull(renderContent) && <Animated>{renderContent}</Animated>}
 
-              {actions !== undefined && actions?.length ? (
+              {isArray(actions) ? (
                 <div className={bem("actions")}>
                   {actions.map(action => (
                     <Button

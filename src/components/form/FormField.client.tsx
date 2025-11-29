@@ -10,6 +10,7 @@ import {
 import { DynamicList, type DynamicListProps } from "../dynamic-list"
 import { GridRow } from "../grid"
 import { Input, type InputProps } from "../input"
+import { Rating, type RatingProps, type RatingChangeEvent } from "../rating"
 import { Select, type SelectEvent, type SelectProps } from "../select"
 import { Slider, type SliderProps } from "../slider"
 import { Switch, type SwitchProps, type SwitchColor } from "../switch"
@@ -131,6 +132,18 @@ export default function FormFieldClient({
           }))}
           onChange={(items: Record<string, string>[] | string[]) =>
             onChange?.(props as FormFieldModel, items)
+          }
+        />,
+      )
+    case "rating":
+      return renderFieldContainer(
+        <Rating
+          priority
+          {...(props as RatingProps)}
+          errorTranslations={messagesFields?.errors?.input}
+          onValidate={(_, err) => onValidate?.(props as FormFieldModel, err)}
+          onChange={(e: RatingChangeEvent) =>
+            onChange?.(props as FormFieldModel, e?.value?.toString())
           }
         />,
       )

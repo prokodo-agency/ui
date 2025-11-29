@@ -37,6 +37,7 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
   title?: string
   /** passthrough into your `<Headline>` (but *not* its children) */
   titleProps?: Omit<HeadlineProps, "children">
+  height?: number
   hideTitle?: boolean
   renderHeader?: () => ReactNode
   hideCloseButton?: boolean

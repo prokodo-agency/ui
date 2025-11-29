@@ -36,17 +36,30 @@ export function createIsland<P extends object>({
     void loadLazy()
   }
 
-  function withIslandAttr(el: ReactElement, priority?: boolean): ReactElement {
+  function withIslandAttr(el: ReactElement): ReactElement {
     const islandName = name.toLowerCase()
-    const extra: { "data-island": string; priority?: boolean } = {
-      "data-island": islandName,
-    }
-    if (Boolean(priority)) extra.priority = true
-    return cloneElement(el as ReactElement, extra)
+    // TS doesn’t know about arbitrary data-* on cloneElement → cast to any
+    return cloneElement(
+      el as ReactElement,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { "data-island": islandName } as any,
+    )
   }
 
-  const Island: FC<P & { priority?: boolean }> = ({ ...raw }) => {
+  const Island: FC<P & { priority?: boolean }> = ({
+    priority = false,
+    ...raw
+  }) => {
+    // props WITHOUT priority (used for Server + interactivity heuristic)
     const props = raw as P & { redirect?: unknown }
+
+    const serverBaseProps =
+      name === "Image" && priority
+        ? ({
+            ...props,
+            priority,
+          } as P & { priority?: boolean })
+        : (props as P)
 
     // Heuristic: if any prop is a function (onClick, onKeyDown, …) or a redirect flag,
     // we consider it interactive.
@@ -59,21 +72,26 @@ export function createIsland<P extends object>({
       ? customInteractive(props) || autoInteractive
       : autoInteractive
 
-    // 🚫 Never send function props to a Server Component:
-    const serverSafe = stripFnProps(props)
+    // Never send function props to a Server Component:
+    const serverSafe = stripFnProps(serverBaseProps as Record<string, unknown>)
 
-    // SSR path should *not* render the client bundle directly with function props.
-    // We always use a Server fallback on the server, and let the browser hydrate to client.
+    // Prepare props for the lazy client component (it *can* see `priority`)
+    const clientProps: P & { priority?: boolean } = priority
+      ? ({ ...props, priority } as P & { priority?: boolean })
+      : ({ ...props } as P & { priority?: boolean })
+
+    // Non-interactive: always render Server-only fallback
     if (!interactive) {
       return withIslandAttr(<Server {...(serverSafe as P)} />)
     }
 
+    // Interactive: Server fallback + lazy client
     const fallback = withIslandAttr(<Server {...(serverSafe as P)} />)
 
     return (
       <Suspense fallback={fallback}>
-        {/* ✅ Client path: pass ORIGINAL props (incl. handlers) */}
-        {withIslandAttr(<LazyComp {...(props as P)} />)}
+        {/* Client path: pass original props (+ priority) to lazy wrapper */}
+        {withIslandAttr(<LazyComp {...clientProps} />)}
       </Suspense>
     )
   }

@@ -16,7 +16,10 @@
         margin: $space-xs 0;
         color: var(--color-grey-500);
         @include text("base/md");
-        font-weight: 500;
+
+        & {
+            font-weight: 500;
+        }
 
         &--has-icon {
             flex-wrap: nowrap;
@@ -74,7 +77,9 @@
                 display: block;
                 padding: $space-md 0 $space-xs $space-sm;
                 @include text("base/md");
-                font-weight: 500;
+                & {
+                    font-weight: 500;
+                }
             }
         }
 
@@ -108,7 +113,9 @@
 
             a {
                 @include text("base/md");
-                font-weight: 500;
+                & {
+                    font-weight: 500;
+                }
             }
 
             @include when-hovered() {

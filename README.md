@@ -192,6 +192,7 @@ export default function GalleryPage() {
 | PostWidgetCarousel  |               ✅               |                 ✅                 |
 | ProgressBar         |               ✅               |                 ✅                 |
 | Quote               |               ✅               |                 –                  |
+| Rating              |               ✅               |                 ✅                 |
 | RichText            |               ✅               |                 ✅                 |
 | Select              |               ✅               |                 ✅                 |
 | SideNav             |               ✅               |                 ✅                 |

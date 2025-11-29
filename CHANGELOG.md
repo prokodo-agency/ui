@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.3
+
+### Patch Changes
+
+- New input rating component, changed image provider and some bug resolvements
+
 ## 0.1.2
 
 ### Patch Changes

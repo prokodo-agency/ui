@@ -133,8 +133,8 @@ $rail-c: 56px;    // Visible toggle width
   }
 
   &__label  {
-    @include text("base");
     animation: label-in 150ms ease forwards;
+    @include text("base");
 
     &--collapsed & {
       animation: label-out 150ms ease forwards;

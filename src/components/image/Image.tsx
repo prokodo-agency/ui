@@ -8,5 +8,5 @@ export const Image = createIsland<ImageProps>({
   name: "Image",
   Server: ImageServer,
   loadLazy: () => import("./Image.lazy"),
-  isInteractive: p => typeof p.imageComponent === "function",
+  isInteractive: () => true,
 })

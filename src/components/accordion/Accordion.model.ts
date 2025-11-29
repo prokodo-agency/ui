@@ -13,6 +13,7 @@ export type AccordionItem = {
   title: string
   titleOptions?: HeadlineProps
   renderHeader?: ReactNode
+  renderHeaderActions?: ReactNode
   renderContent: ReactNode
   actions?: AccordionAction[]
   className?: string

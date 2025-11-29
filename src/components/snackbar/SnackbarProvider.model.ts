@@ -1,18 +1,8 @@
-import type { SnackbarVariant } from "./Snackbar.model"
+import type { SnackbarProps } from "./Snackbar.model"
 import type { ReactNode } from "react"
 
-export interface SnackbarPayload {
+export type SnackbarPayload = SnackbarProps & {
   id?: string // auto-generated if missing
-  className?: string
-  message: ReactNode
-  variant?: SnackbarVariant
-  autoHideDuration?: number
-  action?: ReactNode
-  anchorOrigin?: {
-    vertical: "top" | "bottom"
-    horizontal: "left" | "center" | "right"
-  }
-  closeable?: boolean
 }
 
 export interface SnackbarContextValue {

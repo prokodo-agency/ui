@@ -1,5 +1,3 @@
-import { isValidElement, type JSX } from "react"
-
 import { create } from "@/helpers/bem"
 import { localizeDate, type LocalizedDate } from "@/helpers/date"
 import { isString } from "@/helpers/validations"
@@ -12,6 +10,7 @@ import { Link } from "../link"
 import styles from "./PostWidget.module.scss"
 
 import type { PostWidgetProps, PostWidgetItem } from "./PostWidget.model"
+import type { JSX } from "react"
 
 const bem = create(styles, "PostWidget")
 
@@ -117,9 +116,6 @@ export function PostWidgetView({
                     componentsProps?.image?.sizes ??
                     imgBase.sizes ??
                     "(max-width: 960px) 100vw, 20vw",
-                  ...(isValidElement(imgBase?.imageComponent)
-                    ? { imageComponent: imgBase.imageComponent }
-                    : {}),
                 } as ImageProps)
               : undefined
 

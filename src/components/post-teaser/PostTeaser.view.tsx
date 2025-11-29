@@ -1,5 +1,3 @@
-import { isValidElement, type JSX } from "react"
-
 import { create } from "@/helpers/bem"
 import { localizeDate, type LocalizedDate } from "@/helpers/date"
 import { isNumber, isString } from "@/helpers/validations"
@@ -14,6 +12,7 @@ import { RichText } from "../rich-text"
 import styles from "./PostTeaser.module.scss"
 
 import type { PostTeaserViewProps } from "./PostTeaser.model"
+import type { JSX } from "react"
 
 const bem = create(styles, "PostTeaser")
 
@@ -54,7 +53,7 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
       "white") as CardProps["variant"],
   }
 
-  // Prepare Image props; avoid triggering the imageComponent-required branch
+  // Prepare Image props
   const baseImg = image as ImageProps | undefined
   const imageMerged = baseImg
     ? ({
@@ -71,10 +70,6 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
         decoding: baseImg.decoding ?? "async",
         loading: baseImg.loading ?? "lazy",
         sizes: baseImg.sizes ?? "(max-width: 960px) 100vw, 33vw",
-        // IMPORTANT: do not explicitly set imageComponent if it's falsy
-        ...(isValidElement(baseImg.imageComponent)
-          ? { imageComponent: baseImg.imageComponent }
-          : {}),
       } as ImageProps)
     : undefined
   let formattedDate: LocalizedDate | undefined
@@ -148,7 +143,11 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
                   />
                 )}
               </div>
-              <Image {...imageMerged} />
+              <Image
+                {...imageMerged}
+                alt={imageMerged?.alt ?? ""}
+                src={imageMerged?.src ?? ""}
+              />
             </div>
           )}
           <Headline
