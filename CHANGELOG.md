@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.4
+
+### Patch Changes
+
+- Hotfix image component
+
 ## 0.1.3
 
 ### Patch Changes
