@@ -9,38 +9,37 @@ import type { FC, ElementType, ImgHTMLAttributes } from "react"
 
 const bem = create(styles, "Image")
 
-/** Keep only what <img> actually accepts and force src:string */
 type ImgOnlyProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
   src?: string
 }
 
-/** Convert union ImageProps -> safe <img> props */
-function toImgOnlyProps(p: Record<string, string | number>): ImgOnlyProps {
+/**
+ * Convert the general ImageProps union into safe <img> props.
+ * Strips all next/image specific props so they do not leak into the DOM.
+ */
+function toImgOnlyProps(p: Record<string, unknown>): ImgOnlyProps {
   const {
-    // Strip next/image-only props so they don't leak onto <img>
-    _fill: _fill, // intentionally unused (name the same to show intent)
-    _loader: _loader,
-    _placeholder: _placeholder,
-    _blurDataURL: _blurDataURL,
-    _priority: _priority, // internal next/image flag – ignorieren
-    // unsere öffentliche API: <Image priority /> → auf <img> mappen
+    // Strip next/image-specific props
+    fill: _fill,
+    loader: _loader,
+    placeholder: _placeholder,
+    blurDataURL: _blurDataURL,
     priority,
-    _quality: _quality,
-    // Note: sizes *is* valid on <img> when it's a string, so we won't strip it
-    _onLoadingComplete: _onLoadingComplete,
+    quality: _quality,
+    onLoadingComplete: _onLoadingComplete,
+    loading: _loading,
+    decoding: _decoding,
     ...rest
   } = p
 
-  // Normalize src to a string (handle StaticImageData)
   let src: string | undefined
-  const rawSrc = rest?.src as unknown
+  const rawSrc = (rest as Record<string, unknown>).src
 
   if (typeof rawSrc === "string") {
     src = rawSrc
   } else if (
     typeof rawSrc === "object" &&
     rawSrc !== null &&
-    // explicit property check to satisfy strict-boolean-expressions
     Object.prototype.hasOwnProperty.call(
       rawSrc as Record<string, unknown>,
       "src",
@@ -53,21 +52,21 @@ function toImgOnlyProps(p: Record<string, string | number>): ImgOnlyProps {
     src = undefined
   }
 
-  // width/height can be numbers or strings; both are accepted by <img>
-  const { width, height } = rest
+  const { width, height } = rest as {
+    width?: number | string
+    height?: number | string
+  }
 
-  // Build only <img>-legal props (rest may include other valid img attrs)
   const imgProps: ImgOnlyProps = {
-    ...rest,
+    ...(rest as ImgOnlyProps),
     src,
     width,
     height,
   }
 
+  // Public API: <Image priority /> → eager load in server markup too
   if (Boolean(priority)) {
-    // eager laden statt lazy
     imgProps.loading = "eager"
-    // fetchPriority ist (noch) nicht im TS-Typ, aber im DOM erlaubt
     ;(
       imgProps as ImgOnlyProps & { fetchPriority?: "high" | "low" | "auto" }
     ).fetchPriority = "high"
@@ -84,7 +83,7 @@ const ImageServer: FC<ImageProps> = ({
   className,
   ...rawProps
 }) => {
-  // Drop function-ish wiring on server so nothing attempts to serialize
+  // Drop function props so nothing serialises across the RSC boundary
   const {
     onClick: _dropClick,
     onKeyDown: _dropKey,
@@ -92,7 +91,7 @@ const ImageServer: FC<ImageProps> = ({
   } = rawProps as Record<string, unknown>
 
   const CustomImage: ElementType = "img"
-  const imgProps = toImgOnlyProps(rest as Record<string, string | number>)
+  const imgProps = toImgOnlyProps(rest)
 
   const renderImage = () => (
     <CustomImage
