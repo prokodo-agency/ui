@@ -3,8 +3,8 @@ import { Headline } from "@/components/headline"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
-import styles from "./Drawer.base.module.scss"
 import { DrawerEffectsLoader } from "./Drawer.effects.client"
+import styles from "./Drawer.module.scss"
 
 import type { DrawerViewProps } from "./Drawer.model"
 import type { FC, HTMLAttributes } from "react"

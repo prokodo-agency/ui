@@ -4,7 +4,7 @@ import { isString } from "@/helpers/validations"
 import { Icon } from "../icon"
 import { Link, type LinkProps } from "../link"
 
-import styles from "./TableCell.module.scss"
+import styles from "./Table.module.scss"
 
 import type { TableBodyCellProps, TableType } from "./Table.model"
 import type { FC } from "react"

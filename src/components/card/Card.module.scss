@@ -3,6 +3,23 @@
 @use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
+/**
+* Fade in
+*/
+
+@keyframes Card_fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes Card_fadeInMask {
+  to { opacity: 1; }
+}
+
 @include define-block("Card") {
   position: relative;
   color: var(--color-white);
@@ -68,18 +85,38 @@
     &--warning   { @include gradientBackgroundVar("warning"); }
   }
 
-  &--has-highlight { position: relative; }
+  &--has-highlight {
+    position: relative;
+
+    /* Highlight border fade-in that previously defined @keyframes inline */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      /* If gradientBorderVar injects animated gradient, it's fine here */
+      @include gradientBorderVar(4);
+
+      animation: Card_fadeInMask 0.5s ease forwards;
+    }
+  }
   &--has-gradiant  { position: relative; }
   &--has-gradiant,
   &--has-background { color: var(--color-white); }
 
   &--has-shadow { box-shadow: var(--elevation-1); }
 
-  /* IMPORTANT: no animations in base
-     - remove fadeInAnimation()
-     - remove local @keyframes
-     - keep hooks only; effects sheet will add behavior
-  */
+  /* Reveal animation (what used to be &--has-animation + fadeInAnimation) */
+  &--has-animation {
+    animation: Card_fadeInAnimation 0.5s;
+  }
+
   &--is-clickable {
     cursor: pointer;
 

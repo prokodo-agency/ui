@@ -1,7 +1,6 @@
 import { create } from "@/helpers/bem"
 
-import styles from "./Skeleton.base.module.scss"
-import { SkeletonEffectsLoader } from "./Skeleton.effects.client"
+import styles from "./Skeleton.module.scss"
 
 import type { SkeletonProps } from "./Skeleton.model"
 import type { FC } from "react"
@@ -15,20 +14,15 @@ export const Skeleton: FC<SkeletonProps> = ({
   animation = "wave", // "wave" | "pulse" | "none"
   className,
 }) => (
-  <>
-    {/* only loads the keyframes when animation !== none */}
-    <SkeletonEffectsLoader animation={animation} />
-
-    <div
-      style={{ width, height }}
-      className={bem(
-        undefined,
-        {
-          [variant]: true,
-          [animation]: true, // adds --wave / --pulse / --none
-        },
-        className,
-      )}
-    />
-  </>
+  <div
+    style={{ width, height }}
+    className={bem(
+      undefined,
+      {
+        [variant]: true,
+        [animation]: true, // adds --wave / --pulse / --none
+      },
+      className,
+    )}
+  />
 )
