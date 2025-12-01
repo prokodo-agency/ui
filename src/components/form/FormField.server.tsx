@@ -7,7 +7,7 @@ import { Select, type SelectProps } from "../select"
 import { Slider, type SliderProps } from "../slider"
 import { Switch, type SwitchProps, type SwitchColor } from "../switch"
 
-import styles from "./FormField.module.scss"
+import styles from "./Form.module.scss"
 
 import type {
   FormVariants,

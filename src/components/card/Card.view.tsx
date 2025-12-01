@@ -5,8 +5,7 @@ import { Skeleton } from "@/components/skeleton"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
-import styles from "./Card.base.module.scss"
-import { CardEffectsLoader } from "./Card.effects.client"
+import styles from "./Card.module.scss"
 
 import type { CardProps } from "./Card.model"
 import type { AnimatedViewProps } from "@/components/animated/Animated.model"
@@ -56,15 +55,6 @@ export function CardView({
     "has-animation": Boolean(animated), // hook only; actual animation rules live in effects sheet
   }
 
-  // Lazy-load the effect stylesheet only when needed
-  const effects = (
-    <CardEffectsLoader
-      useGradient={Boolean(gradiant)}
-      useHighlight={Boolean(highlight)}
-      useReveal={Boolean(animated)}
-    />
-  )
-
   const innerCard = (
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     <div
@@ -76,7 +66,6 @@ export function CardView({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {effects}
       {Boolean(loading) && (
         <Skeleton
           className={bem("skeleton", modifiers)}

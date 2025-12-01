@@ -1,3 +1,4 @@
+@use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/ui/mixins/bem" as *;
@@ -15,6 +16,21 @@
   &--error   { color: var(--color-error); }
   &--white   { color: #fff; }
   &--black   { color: var(--color-black); }
+
+  /* Highlight-Grundlage */
+  &--is-highlighted {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Varianten mit Highlight (mit Gradients/Shadow) */
+  &--inherit--highlighted   { @include gradientTextVar("grey"); }
+  &--primary--highlighted   { @include gradientTextVar("primary-secondary"); filter: drop-shadow(var(--elevation-1--text)); }
+  &--secondary--highlighted { @include gradientTextVar("primary");           filter: drop-shadow(var(--elevation-1--text)); }
+  &--success--highlighted   { @include gradientTextVar("success");           filter: drop-shadow(var(--elevation-1--text)); }
+  &--warning--highlighted   { @include gradientTextVar("warning");           filter: drop-shadow(var(--elevation-1--text)); }
+  &--error--highlighted     { @include gradientTextVar("error");             filter: drop-shadow(var(--elevation-1--text)); }
 
   /* Größen */
   &--xs  { @include text('headline/xs'); }

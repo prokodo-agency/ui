@@ -5,8 +5,7 @@ import { create } from "@/helpers/bem"
 import { AnimatedText } from "../animatedText"
 import { RichText } from "../rich-text"
 
-import styles from "./Headline.base.module.scss"
-import { HeadlineEffectsLoader } from "./Headline.effects.client"
+import styles from "./Headline.module.scss"
 import { POSSIBLE_HIGHLIGHTS } from "./Headline.variants"
 
 import type { HeadlineProps } from "./Headline.model"
@@ -80,7 +79,6 @@ export const Headline: FC<HeadlineProps> = ({
 
     return (
       <>
-        {isHighlighted && <HeadlineEffectsLoader />}
         <HTag {...baseProps} aria-level={headingLevel}>
           {animateText(headingChildren)}
         </HTag>
@@ -93,7 +91,6 @@ export const Headline: FC<HeadlineProps> = ({
   if (isRichtext) {
     return (
       <>
-        {isHighlighted && <HeadlineEffectsLoader />}
         <RichText
           animated={animated}
           animationProps={animationProps}

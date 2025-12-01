@@ -3,11 +3,14 @@
   "version": "0.1.4",
   "type": "module",
   "description": "UI components for production-grade Next.js + Headless CMS (Strapi, Contentful, Headless WordPress) websites by prokodo – built for Core Web Vitals & SEO.",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "module": "dist/index.es.js",
   "types": "dist/types/index.d.ts",
   "exports": {
-    "./theme.css": "./dist/ui.css",
+    "./theme.css": "./dist/theme.css",
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js"
@@ -28,10 +31,12 @@
       "import": "./dist/components/accordion/index.js",
       "types": "./dist/types/components/accordion/index.d.ts"
     },
+    "./accordion.css": "./dist/components/accordion/Accordion.css",
     "./animated": {
       "import": "./dist/components/animated/index.js",
       "types": "./dist/types/components/animated/index.d.ts"
     },
+    "./animated.css": "./dist/components/animated/Animated.css",
     "./animatedText": {
       "import": "./dist/components/animatedText/index.js",
       "types": "./dist/types/components/animatedText/index.d.ts"
@@ -40,6 +45,7 @@
       "import": "./dist/components/avatar/index.js",
       "types": "./dist/types/components/avatar/index.d.ts"
     },
+    "./avatar.css": "./dist/components/avatar/Avatar.css",
     "./base-link": {
       "import": "./dist/components/base-link/index.js",
       "types": "./dist/types/components/base-link/index.d.ts"
@@ -48,6 +54,7 @@
       "import": "./dist/components/button/index.js",
       "types": "./dist/types/components/button/index.d.ts"
     },
+    "./button.css": "./dist/components/button/Button.css",
     "./calendly": {
       "import": "./dist/components/calendly/index.js",
       "types": "./dist/types/components/calendly/index.d.ts"
@@ -56,14 +63,17 @@
       "import": "./dist/components/card/index.js",
       "types": "./dist/types/components/card/index.d.ts"
     },
+    "./card.css": "./dist/components/card/Card.css",
     "./carousel": {
       "import": "./dist/components/carousel/index.js",
       "types": "./dist/types/components/carousel/index.d.ts"
     },
+    "./carousel.css": "./dist/components/carousel/Carousel.css",
     "./chip": {
       "import": "./dist/components/chip/index.js",
       "types": "./dist/types/components/chip/index.d.ts"
     },
+    "./chip.css": "./dist/components/chip/Chip.css",
     "./datePicker": {
       "import": "./dist/components/datePicker/index.js",
       "types": "./dist/types/components/datePicker/index.d.ts"
@@ -72,58 +82,72 @@
       "import": "./dist/components/dialog/index.js",
       "types": "./dist/types/components/dialog/index.d.ts"
     },
+    "./dialog.css": "./dist/components/dialog/Dialog.css",
     "./drawer": {
       "import": "./dist/components/drawer/index.js",
       "types": "./dist/types/components/drawer/index.d.ts"
     },
+    "./drawer.css": "./dist/components/drawer/Drawer.css",
     "./dynamic-list": {
       "import": "./dist/components/dynamic-list/index.js",
       "types": "./dist/types/components/dynamic-list/index.d.ts"
     },
+    "./dynamic-list.css": "./dist/components/dynamic-list/DynamicList.css",
     "./form": {
       "import": "./dist/components/form/index.js",
       "types": "./dist/types/components/form/index.d.ts"
     },
+    "./form.css": "./dist/components/form/Form.css",
     "./grid": {
       "import": "./dist/components/grid/index.js",
       "types": "./dist/types/components/grid/index.d.ts"
     },
+    "./grid.css": "./dist/components/grid/Grid.css",
     "./headline": {
       "import": "./dist/components/headline/index.js",
       "types": "./dist/types/components/headline/index.d.ts"
     },
+    "./headline.css": "./dist/components/headline/Headline.css",
     "./icon": {
       "import": "./dist/components/icon/index.js",
       "types": "./dist/types/components/icon/index.d.ts"
     },
+    "./icon.css": "./dist/components/icon/Icon.css",
     "./image": {
       "import": "./dist/components/image/index.js",
       "types": "./dist/types/components/image/index.d.ts"
     },
+    "./image.css": "./dist/components/image/Image.css",
     "./image-text": {
       "import": "./dist/components/image-text/index.js",
       "types": "./dist/types/components/image-text/index.d.ts"
     },
+    "./image-text.css": "./dist/components/image-text/ImageText.css",
     "./input": {
       "import": "./dist/components/input/index.js",
       "types": "./dist/types/components/input/index.d.ts"
     },
+    "./input.css": "./dist/components/input/Input.css",
     "./inputOTP": {
       "import": "./dist/components/inputOTP/index.js",
       "types": "./dist/types/components/inputOTP/index.d.ts"
     },
+    "./inputOTP.css": "./dist/components/inputOTP/InputOTP.css",
     "./label": {
       "import": "./dist/components/label/index.js",
       "types": "./dist/types/components/label/index.d.ts"
     },
+    "./label.css": "./dist/components/label/Label.css",
     "./link": {
       "import": "./dist/components/link/index.js",
       "types": "./dist/types/components/link/index.d.ts"
     },
+    "./link.css": "./dist/components/link/Link.css",
     "./list": {
       "import": "./dist/components/list/index.js",
       "types": "./dist/types/components/list/index.d.ts"
     },
+    "./list.css": "./dist/components/list/List.css",
     "./loading": {
       "import": "./dist/components/loading/index.js",
       "types": "./dist/types/components/loading/index.d.ts"
@@ -132,6 +156,7 @@
       "import": "./dist/components/lottie/index.js",
       "types": "./dist/types/components/lottie/index.d.ts"
     },
+    "./lottie.css": "./dist/components/lottie/Lottie.css",
     "./map": {
       "import": "./dist/components/map/index.js",
       "types": "./dist/types/components/map/index.d.ts"
@@ -140,70 +165,87 @@
       "import": "./dist/components/post-item/index.js",
       "types": "./dist/types/components/post-item/index.d.ts"
     },
+    "./post-item.css": "./dist/components/post-item/PostItem.css",
     "./post-teaser": {
       "import": "./dist/components/post-teaser/index.js",
       "types": "./dist/types/components/post-teaser/index.d.ts"
     },
+    "./post-teaser.css": "./dist/components/post-teaser/PostTeaser.css",
     "./post-widget": {
       "import": "./dist/components/post-widget/index.js",
       "types": "./dist/types/components/post-widget/index.d.ts"
     },
+    "./post-widget.css": "./dist/components/post-widget/PostWidget.css",
     "./post-widget-carousel": {
       "import": "./dist/components/post-widget-carousel/index.js",
       "types": "./dist/types/components/post-widget-carousel/index.d.ts"
     },
+    "./post-widget-carousel.css": "./dist/components/post-widget-carousel/PostWidgetCarousel.css",
     "./progressBar": {
       "import": "./dist/components/progressBar/index.js",
       "types": "./dist/types/components/progressBar/index.d.ts"
     },
+    "./progressBar.css": "./dist/components/progressBar/ProgressBar.css",
     "./quote": {
       "import": "./dist/components/quote/index.js",
       "types": "./dist/types/components/quote/index.d.ts"
     },
+    "./quote.css": "./dist/components/quote/Quote.css",
     "./rating": {
       "import": "./dist/components/rating/index.js",
       "types": "./dist/types/components/rating/index.d.ts"
     },
+    "./rating.css": "./dist/components/rating/Rating.css",
     "./rich-text": {
       "import": "./dist/components/rich-text/index.js",
       "types": "./dist/types/components/rich-text/index.d.ts"
     },
+    "./rich-text.css": "./dist/components/rich-text/RichText.css",
     "./select": {
       "import": "./dist/components/select/index.js",
       "types": "./dist/types/components/select/index.d.ts"
     },
+    "./select.css": "./dist/components/select/Select.css",
     "./sidenav": {
       "import": "./dist/components/sidenav/index.js",
       "types": "./dist/types/components/sidenav/index.d.ts"
     },
+    "./sidenav.css": "./dist/components/sidenav/SideNav.css",
     "./skeleton": {
       "import": "./dist/components/skeleton/index.js",
       "types": "./dist/types/components/skeleton/index.d.ts"
     },
+    "./skeleton.css": "./dist/components/skeleton/Skeleton.css",
     "./slider": {
       "import": "./dist/components/slider/index.js",
       "types": "./dist/types/components/slider/index.d.ts"
     },
+    "./slider.css": "./dist/components/slider/Slider.css",
     "./snackbar": {
       "import": "./dist/components/snackbar/index.js",
       "types": "./dist/types/components/snackbar/index.d.ts"
     },
+    "./snackbar.css": "./dist/components/snackbar/Snackbar.css",
     "./stepper": {
       "import": "./dist/components/stepper/index.js",
       "types": "./dist/types/components/stepper/index.d.ts"
     },
+    "./stepper.css": "./dist/components/stepper/Stepper.css",
     "./switch": {
       "import": "./dist/components/switch/index.js",
       "types": "./dist/types/components/switch/index.d.ts"
     },
+    "./switch.css": "./dist/components/switch/Switch.css",
     "./table": {
       "import": "./dist/components/table/index.js",
       "types": "./dist/types/components/table/index.d.ts"
     },
+    "./table.css": "./dist/components/table/Table.css",
     "./teaser": {
       "import": "./dist/components/teaser/index.js",
       "types": "./dist/types/components/teaser/index.d.ts"
-    }
+    },
+    "./teaser.css": "./dist/components/teaser/Teaser.css"
   },
   "repository": {
     "type": "git",
@@ -215,7 +257,7 @@
   },
   "scripts": {
     "dev": "PK_ENABLE_DEBUG_LOGS=true vite",
-    "build": "vite build && pnpm build:types && node tools/update-exports.mjs",
+    "build": "vite build && pnpm build:types && node tools/duplicate-css-modules.mjs && node tools/update-exports.mjs",
     "build:types": "tsc --project tsconfig.build.json",
     "typecheck": "tsc --project tsconfig.typecheck.json",
     "test": "NODE_ENV=test jest --coverage --verbose && pnpm format && pnpm lint && pnpm typecheck",
@@ -298,6 +340,7 @@
     "eslint-plugin-unused-imports": "^4.1.4",
     "fs-extra": "^11.3.0",
     "gh-pages": "^6.3.0",
+    "glob": "^13.0.0",
     "globals": "^15.8.0",
     "husky": "^9.1.6",
     "identity-obj-proxy": "^3.0.0",

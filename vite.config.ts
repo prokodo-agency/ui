@@ -69,6 +69,7 @@ export default async () => {
     build: {
       minify: false,
       sourcemap: false,
+      cssCodeSplit: true,
       lib: {
         entry: path.resolve(__dirname, "src/index.ts"),
         name: "prokodo-ui",
@@ -91,10 +92,14 @@ export default async () => {
           "@lottiefiles/dotlottie-react",
         ],
         treeshake: {
-          moduleSideEffects: false,
+          moduleSideEffects: id =>
+            id?.endsWith(".css") ||
+            id?.endsWith(".scss") ||
+            id?.includes("/ui.ts"),
         },
         input: {
           index: path.resolve(__dirname, "src/index.ts"),
+          theme: path.resolve(__dirname, "src/theme.scss"),
           ...getComponentEntries(),
         },
         output: {
@@ -104,6 +109,7 @@ export default async () => {
           preserveModulesRoot: "src",
           entryFileNames: "[name].js",
           chunkFileNames: "[name].js",
+          assetFileNames: "[name][extname]",
           globals: {
             react: "React",
             "react-dom": "ReactDOM",

@@ -1,6 +1,0 @@
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/ui/mixins/bem" as *;
-
-@include define-block("FormField") {
-    padding-bottom: $space-lg;
-}

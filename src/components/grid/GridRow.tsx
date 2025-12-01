@@ -1,6 +1,6 @@
 import { create } from "@/helpers/bem"
 
-import styles from "./GridRow.module.scss"
+import styles from "./Grid.module.scss"
 
 import type { GridRowProps } from "./Grid.model"
 import type { FC } from "react"
