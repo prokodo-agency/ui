@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.5
+
+### Patch Changes
+
+- Single import possiblity of css files
+
 ## 0.1.4
 
 ### Patch Changes
