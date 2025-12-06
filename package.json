@@ -276,13 +276,13 @@
     "release": "pnpm build && pnpm changeset && pnpm changeset version && pnpm install && git add . && git commit -m 'ci: version bump' && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags"
   },
   "dependencies": {
-    "@googlemaps/js-api-loader": "^1.16.6",
-    "@lottiefiles/dotlottie-react": "^0.7.2",
-    "dayjs": "^1.11.13",
+    "@googlemaps/js-api-loader": "^2.0.2",
+    "@lottiefiles/dotlottie-react": "^0.17.8",
+    "dayjs": "^1.11.19",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
-    "marked": "^15.0.12",
-    "marked-highlight": "^2.2.2",
+    "marked": "^17.0.1",
+    "marked-highlight": "^2.2.3",
     "react-bem-helper": "^1.4.1",
     "typescript": "5.5.3",
     "xss": "^1.0.15"

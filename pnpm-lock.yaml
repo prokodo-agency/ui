@@ -9,14 +9,19 @@ importers:
   .:
     dependencies:
       '@googlemaps/js-api-loader':
-        specifier: ^1.16.6
-        version: 1.16.6
+        specifier: ^2.0.2
+        version: 2.0.2
       '@lottiefiles/dotlottie-react':
+<<<<<<< Updated upstream
         specifier: ^0.7.2
         version: 0.7.2(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+=======
+        specifier: ^0.17.8
+        version: 0.17.8(react@19.2.0)
+>>>>>>> Stashed changes
       dayjs:
-        specifier: ^1.11.13
-        version: 1.11.13
+        specifier: ^1.11.19
+        version: 1.11.19
       highlight.js:
         specifier: ^11.11.1
         version: 11.11.1
@@ -24,11 +29,11 @@ importers:
         specifier: ^14.1.0
         version: 14.1.0
       marked:
-        specifier: ^15.0.12
-        version: 15.0.12
+        specifier: ^17.0.1
+        version: 17.0.1
       marked-highlight:
-        specifier: ^2.2.2
-        version: 2.2.2(marked@15.0.12)
+        specifier: ^2.2.3
+        version: 2.2.3(marked@17.0.1)
       react-bem-helper:
         specifier: ^1.4.1
         version: 1.4.1
@@ -1608,8 +1613,8 @@ packages:
     resolution: {integrity: sha512-autAXT203ixhqei9xt+qkYOvY8l6LAFIdT2UXc/RPNeUVfqRF1BV94GTJyVPFKT8nFM6MyVJhjLj9E8JWvf5zQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@googlemaps/js-api-loader@1.16.6':
-    resolution: {integrity: sha512-V8p5W9DbPQx74jWUmyYJOerhiB4C+MHekaO0ZRmc6lrOYrvY7+syLhzOWpp55kqSPeNb+qbC2h8i69aLIX6krQ==}
+  '@googlemaps/js-api-loader@2.0.2':
+    resolution: {integrity: sha512-bKVuTqatS8Jven5aFqVB7rCHF1VFEzpzyi0ruzO0GUR+A7m9oMqMgtnmpANj7kMYEvvhty8Fk7TnJ1MKjWHu+Q==}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -1852,14 +1857,13 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@lottiefiles/dotlottie-react@0.7.2':
-    resolution: {integrity: sha512-gYVFCzl2fD15/OHWv4dB+PolNH0VKJlPqP1ty3DHGxkSr7bzBDNHXGzw8hHD0a4+zoc2s0p1fofWaCaiJc7IFg==}
+  '@lottiefiles/dotlottie-react@0.17.8':
+    resolution: {integrity: sha512-Hk0bISNURSqL7t+H7S5lW2NQVa1hiibnqRRg6kOWZpswBxfQk+/6WBPc9EfuetdoZmiMoDsmcI0HR4I20oTBRg==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^17 || ^18 || ^19
 
-  '@lottiefiles/dotlottie-web@0.28.0':
-    resolution: {integrity: sha512-erAHr4VJl/Mbsur/ydOXEc0jSOkGpwM2WsprMGRlUsvyZvtv/URefj/CsovoKc9rsbUafEt2fjYkENs9IC332w==}
+  '@lottiefiles/dotlottie-web@0.57.0':
+    resolution: {integrity: sha512-gcgvu9T21YzeY3JjHCZrxftucsxzMH6e9h+8NMv8mbfo1y1M9/jdcsdu40S+pnSLz9/OyiSBQ/EjDsbSOHZy0w==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -3412,12 +3416,8 @@ packages:
     resolution: {integrity: sha512-BS8PfmtDGnrgYdOonGZQdLZslWIeCGFP9tpan0hi1Co2Zr2NKADsvGYA8XxuG/4UWgJ6Cjtv+YJnB6MM69QGlQ==}
     engines: {node: '>= 0.4'}
 
-  dayjs@1.11.13:
-    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
-
-  debounce@2.2.0:
-    resolution: {integrity: sha512-Xks6RUDLZFdz8LIdR6q0MTH44k7FikOmnh5xkSjMig6ch45afc8sjTjRQf3P6ax8dMgcQrYO/AR2RGWURrruqw==}
-    engines: {node: '>=18'}
+  dayjs@1.11.19:
+    resolution: {integrity: sha512-t5EcLVS6QPBNqM2z8fakk/NKel+Xzshgt8FFKAn+qwlD1pzZWxh0nVCrvFK7ZDb6XucZeF9z8C7CBWTRIVApAw==}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -4920,14 +4920,14 @@ packages:
       react:
         optional: true
 
-  marked-highlight@2.2.2:
-    resolution: {integrity: sha512-KlHOP31DatbtPPXPaI8nx1KTrG3EW0Z5zewCwpUj65swbtKOTStteK3sNAjBqV75Pgo3fNEVNHeptg18mDuWgw==}
+  marked-highlight@2.2.3:
+    resolution: {integrity: sha512-FCfZRxW/msZAiasCML4isYpxyQWKEEx44vOgdn5Kloae+Qc3q4XR7WjpKKf8oMLk7JP9ZCRd2vhtclJFdwxlWQ==}
     peerDependencies:
-      marked: '>=4 <17'
+      marked: '>=4 <18'
 
-  marked@15.0.12:
-    resolution: {integrity: sha512-8dD6FusOQSrpv9Z1rdNMdlSgQOIP880DHqnohobOmYLElGEqAL/JvxvuxZO16r4HtjTlfPRDC1hbvxC9dPN2nA==}
-    engines: {node: '>= 18'}
+  marked@17.0.1:
+    resolution: {integrity: sha512-boeBdiS0ghpWcSwoNm/jJBwdpFaMnZWRzjA6SkUMYb40SVaN1x7mmfGKp0jvexGcx+7y2La5zRZsYFZI6Qpypg==}
+    engines: {node: '>= 20'}
     hasBin: true
 
   math-intrinsics@1.1.0:
@@ -8110,9 +8110,9 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@googlemaps/js-api-loader@1.16.6':
+  '@googlemaps/js-api-loader@2.0.2':
     dependencies:
-      fast-deep-equal: 3.1.3
+      '@types/google.maps': 3.55.11
 
   '@humanwhocodes/module-importer@1.0.1': {}
 
@@ -8414,14 +8414,21 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
+<<<<<<< Updated upstream
   '@lottiefiles/dotlottie-react@0.7.2(react-dom@19.2.1(react@19.2.1))(react@19.2.1)':
     dependencies:
       '@lottiefiles/dotlottie-web': 0.28.0
       debounce: 2.2.0
       react: 19.2.1
       react-dom: 19.2.1(react@19.2.1)
+=======
+  '@lottiefiles/dotlottie-react@0.17.8(react@19.2.0)':
+    dependencies:
+      '@lottiefiles/dotlottie-web': 0.57.0
+      react: 19.2.0
+>>>>>>> Stashed changes
 
-  '@lottiefiles/dotlottie-web@0.28.0': {}
+  '@lottiefiles/dotlottie-web@0.57.0': {}
 
   '@manypkg/find-root@1.1.0':
     dependencies:
@@ -10181,9 +10188,7 @@ snapshots:
       es-errors: 1.3.0
       is-data-view: 1.0.2
 
-  dayjs@1.11.13: {}
-
-  debounce@2.2.0: {}
+  dayjs@1.11.19: {}
 
   debug@2.6.9:
     dependencies:
@@ -12111,11 +12116,11 @@ snapshots:
     optionalDependencies:
       react: 19.2.1
 
-  marked-highlight@2.2.2(marked@15.0.12):
+  marked-highlight@2.2.3(marked@17.0.1):
     dependencies:
-      marked: 15.0.12
+      marked: 17.0.1
 
-  marked@15.0.12: {}
+  marked@17.0.1: {}
 
   math-intrinsics@1.1.0: {}
 
