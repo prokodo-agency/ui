@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.6
+
+### Patch Changes
+
+- Upgraded react to latest version, because of critical RCE vulnerability CVE-2025-55182 and resolved some style bugs
+
 ## 0.1.5
 
 ### Patch Changes

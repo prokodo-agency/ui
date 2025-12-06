@@ -130,7 +130,8 @@ export function InputView({
       {(isError || hasHelperText || typeof maxLength === "number") && (
         <div
           className={bem("footer", {
-            "counter-only": !hasHelperText && typeof maxLength === "number",
+            "counter-only":
+              !isError && !hasHelperText && typeof maxLength === "number",
           })}
         >
           {(isError || hasHelperText) && (

@@ -147,6 +147,7 @@
   &--has-variant-outlined {
     position: relative;
     background: none;
+    color: var(--color-black) !important;
 
     &::before {
       content: "";

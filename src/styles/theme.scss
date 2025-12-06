@@ -95,7 +95,7 @@
   
   // Dark Theme Variables
 :root[data-theme='dark'] {
-  --color-white: #1f1f1f;
+  --color-white: $black;
   --color-black: #{$dark--grey-900};
 
   // Dark theme greys mapped to CSS variables

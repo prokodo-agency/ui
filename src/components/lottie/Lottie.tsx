@@ -60,7 +60,6 @@ export const Lottie: FC<LottieProps> = memo(
           >
             <DotLottieReact
               autoplay
-              autoResizeCanvas
               loop
               className={bem(undefined, undefined, className)}
               renderConfig={{ devicePixelRatio: 0.9 }}

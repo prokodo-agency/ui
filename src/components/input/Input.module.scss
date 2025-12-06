@@ -74,6 +74,54 @@
     border-radius: $ui-form-element;
     @include gradientBorderVar(7);
 
+    /* Standard :autofill selector (supported in modern browsers) */
+    input:autofill,
+    textarea:autofill {
+      background-color: var(--color-white);
+      color: var(--color-grey-900);
+    }
+
+    /* Chrome / Edge / Opera / Safari (WebKit/Blink) */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus {
+      /* Paint over the browser’s autofill background */
+      -webkit-box-shadow: 0 0 0 1000px var(--color-white) inset;
+      box-shadow: 0 0 0 1000px var(--color-white) inset;
+
+      /* Text color inside autofilled field */
+      -webkit-text-fill-color: var(--color-grey-900);
+
+      /* Long transition hack so the yellow flash is not visible */
+      transition: background-color 9999s ease-out, color 9999s ease-out;
+    }
+
+    /* Firefox (legacy) */
+    input:-moz-autofill,
+    textarea:-moz-autofill {
+      box-shadow: 0 0 0 1000px var(--color-white) inset;
+      background-color: var(--color-white);
+      color: var(--color-grey-900);
+    }
+
+    /* Optional: border style when autofilled */
+    input:is(:autofill, :-webkit-autofill),
+    textarea:is(:autofill, :-webkit-autofill) {
+      border-color: none; /* adjust as needed */
+    }
+
+    /* Optional: gleiche Styles für Textareas, falls autocomplete genutzt wird */
+    textarea:-webkit-autofill,
+    textarea:-moz-autofill {
+      -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+      box-shadow: 0 0 0 1000px #ffffff inset;
+      -webkit-text-fill-color: #000000;
+      color: #000000 !important;
+    }
+
      &--is-focused {
       @include gradientBorderVar(4);
     }
@@ -108,14 +156,11 @@
       outline: none;
       border-radius: $ui-form-element;
       color: var(--color-grey-900);
+      background-color: var(--color-white);
       @include text("base");
 
       & {
         font-size: 1rem;
-      }
-      
-      html[data-theme='dark'] & {
-        background-color: var(--color-grey-200);
       }
 
       &--multiline {

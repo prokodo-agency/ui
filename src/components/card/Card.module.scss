@@ -26,13 +26,12 @@
   background-color: var(--color-white);
   border-radius: 2rem;
 
-  html[data-theme='dark'] & { background-color: var(--color-grey-200); }
-
   &--inherit { background-color: var(--color-grey-100); }
 
   &--white {
     background-color: var(--color-white);
-    html[data-theme='dark'] & { background-color: var(--color-grey-200); }
+
+    html[data-theme='dark'] & { background-color: transparent; }
   }
 
   &__skeleton {
