@@ -119,14 +119,11 @@
       margin:2px;
       background:var(--color-white);
       border-radius:$ui-form-element;
+      background-color: var(--color-white);
       @include text("base");
 
       & {
         font-size: 1rem;
-      }
-
-      html[data-theme='dark'] & {
-        background:var(--color-grey-200);
       }
 
       &--expanded {

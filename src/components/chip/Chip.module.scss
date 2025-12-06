@@ -66,8 +66,7 @@
   &--outlined {
     border: 1px solid;
     background-color: transparent;
-    border-color: inherit;
-    color: inherit;
+    color: var(--color-black);
 
     &--primary {
       border-color: var(--color-primary-300);
