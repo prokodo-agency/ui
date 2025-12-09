@@ -65,7 +65,7 @@
 //    One per anchorOrigin (“top-right”, etc.)
 // ───────────────────────────────────────────────────────────
 @include define-block("SnackbarProvider") {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   gap: 8;

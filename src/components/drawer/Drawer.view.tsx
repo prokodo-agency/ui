@@ -17,6 +17,7 @@ export const DrawerView: FC<DrawerViewProps> = ({
   titleProps,
   anchor = "left",
   fullscreen = false,
+  hideHeader = false,
   renderHeader,
   closeButtonRef,
   closeButtonProps,
@@ -68,26 +69,26 @@ export const DrawerView: FC<DrawerViewProps> = ({
         )}
         {...(rest as HTMLAttributes<HTMLDivElement>)}
       >
-        {renderHeader ? (
-          renderHeader()
-        ) : (
-          <div className={bem("header")}>
-            {isString(title) && (
-              <Headline size="md" {...titleProps} id="drawer-title">
-                {title}
-              </Headline>
+        {renderHeader !== undefined
+          ? renderHeader()
+          : !Boolean(hideHeader) && (
+              <div className={bem("header")}>
+                {isString(title) && (
+                  <Headline size="md" {...titleProps} id="drawer-title">
+                    {title}
+                  </Headline>
+                )}
+                {/* Close‐button always shown in header if no custom renderHeader */}
+                <Button
+                  aria-label="Close drawer"
+                  iconProps={{ name: "Cancel01Icon", size: "sm" }}
+                  variant="text"
+                  {...closeButtonProps}
+                  ref={closeButtonRef}
+                  onClick={() => onClose?.("escapeKeyDown")}
+                />
+              </div>
             )}
-            {/* Close‐button always shown in header if no custom renderHeader */}
-            <Button
-              aria-label="Close drawer"
-              iconProps={{ name: "Cancel01Icon", size: "sm" }}
-              variant="text"
-              {...closeButtonProps}
-              ref={closeButtonRef}
-              onClick={() => onClose?.("escapeKeyDown")}
-            />
-          </div>
-        )}
 
         <div className={bem("content", undefined, className)}>{children}</div>
       </div>
