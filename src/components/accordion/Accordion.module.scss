@@ -18,7 +18,7 @@
     margin-bottom: 8px;
     overflow: hidden;
     transition: border 0.3s ease;
-    box-shadow: var(--elevation-3);
+    box-shadow: var(--elevation-1);
 
     &--is-expanded {
       border-color: var(--color-primary-500);
@@ -107,6 +107,10 @@
     margin: 0;
     @include text("base/md", true);
     & { font-weight: 500; }
+
+    html[data-theme='dark'] & {
+      color: var(--color-grey-900)
+    }
   }
 
   &__icon {
@@ -115,6 +119,10 @@
 
     &--is-hidden {
       display: none !important;
+    }
+
+    html[data-theme='dark'] & {
+      color: var(--color-grey-900);
     }
   }
 

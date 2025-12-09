@@ -181,10 +181,6 @@
     align-items: center;
     border-radius: 10000px;
     padding: $space-md;
-
-    html[data-theme='dark'] & {
-      background: none;
-    }
   }
 
   &--has-fullWidth {

@@ -70,6 +70,9 @@ export interface DrawerProps {
    */
   onChange?: (event: unknown, reason: DrawerChangeReason) => void
 
+  /* Hides the header */
+  hideHeader?: boolean
+
   /**
    * Optional custom header component. If omitted, View renders a simple
    * H2 + close‐button if `title` is provided.

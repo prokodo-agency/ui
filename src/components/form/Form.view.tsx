@@ -112,7 +112,7 @@ export const FormView: FC<FormViewProps> = ({
 
       <div className={bem("footer")}>
         {/* Response messages (only if not hidden) */}
-        {(hideResponse === false || hideResponse === undefined) && (
+        {hideResponse !== false && hideResponse !== undefined && (
           <FormResponse messages={formMessages} />
         )}
 
@@ -125,7 +125,7 @@ export const FormView: FC<FormViewProps> = ({
             {...button}
             className={bem("footer__submit", undefined, button?.className)}
             color={button?.color ?? variant}
-            disabled={Boolean(formMessages?.errors) || !isFormValid}
+            disabled={!isFormValid}
           />
         )}
       </div>
