@@ -171,6 +171,7 @@
     }
   }
 
+  &--has-image,
   &--has-icon {
     align-items: center;
   }
@@ -199,8 +200,12 @@
     align-items: center;
   }
 
+  &__image {
+    margin-right: $space-sm;
+  }
+
   &__icon {
-    margin-right: 5px;
+    margin-right: $space-sm;
 
     &--icon-only {
       margin-right: 0;

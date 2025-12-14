@@ -1,4 +1,5 @@
 import type { IconProps } from "../icon"
+import type { ImageProps } from "../image"
 import type { LinkProps } from "../link"
 import type { Ref, ButtonHTMLAttributes, ComponentType, ReactNode } from "react"
 
@@ -25,6 +26,7 @@ export type ButtonProperties = Omit<
   loading?: boolean
   redirect?: LinkProps
   disabled?: boolean
+  image?: ImageProps
   variant?: "contained" | "outlined" | "text"
 }
 
@@ -37,11 +39,11 @@ export type ButtonDefaultProps = Omit<ButtonProperties, "title"> & {
 
 // Icon button
 export type ButtonIconProps =
-  | (Omit<ButtonProperties, "title" | "aria-label"> & {
+  | (Omit<ButtonProperties, "title" | "aria-label" | "image"> & {
       iconProps: IconProps
       "aria-label": string
     })
-  | (Omit<ButtonProperties, "title" | "aria-label"> & {
+  | (Omit<ButtonProperties, "title" | "aria-label" | "image"> & {
       iconProps: IconProps
       inert: boolean
     })
@@ -50,6 +52,7 @@ export type ButtonProps = ButtonIconProps | ButtonDefaultProps
 
 export type ButtonViewProps = ButtonProps & {
   isIconOnly: boolean
+  image?: ImageProps
   LinkComponent: ComponentType<{
     href: string
     className: string
