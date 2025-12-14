@@ -1,3 +1,4 @@
+import { Image } from "@/components/image"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
@@ -19,6 +20,7 @@ export const ButtonView: FC<ButtonViewProps> = ({
   contentClassName,
   disabled,
   redirect,
+  image,
   iconProps = {},
   isIconOnly,
   LinkComponent,
@@ -31,6 +33,14 @@ export const ButtonView: FC<ButtonViewProps> = ({
 
   const inner = (
     <>
+      {image?.src !== undefined && (
+        <Image
+          height={20}
+          width={20}
+          {...image}
+          className={bem("image", undefined, image?.className)}
+        />
+      )}
       {iconName && <Icon className={bem("icon", iconMod)} {...iconProps} />}
       {title}
     </>
@@ -49,6 +59,7 @@ export const ButtonView: FC<ButtonViewProps> = ({
       undefined,
       {
         "has-fullWidth": Boolean(fullWidth),
+        "has-image": image?.src !== undefined,
         "has-icon": !Boolean(isIconOnly) && isString(iconProps?.name),
         [`has-variant-${variant}`]: true,
         [`has-bg-${color}`]: variant === "contained",

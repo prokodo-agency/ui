@@ -20,6 +20,10 @@
         font-style: normal;
         @include gradientTextVar("primary", transparent);
 
+        html[data-theme='dark'] & {
+            @include gradientTextVar("primary", var(--color-grey-800));
+        }
+
         &--error {
             @include gradientTextVar("error", null);
         }
@@ -30,7 +34,7 @@
         font-style: normal;
 
         html[data-theme='dark'] & {
-            color: var(--color-grey-700);
+            color: var(--color-grey-800);
         }
     }
 }

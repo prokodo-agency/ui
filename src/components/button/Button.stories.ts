@@ -74,3 +74,15 @@ export const WithLink: Story = {
     },
   },
 }
+
+export const WithImage: Story = {
+  args: {
+    title: "Button with Image",
+    variant: "outlined",
+    color: "primary",
+    image: {
+      src: "/assets/images/github_logo.webp",
+      alt: "Github icon",
+    },
+  },
+}
