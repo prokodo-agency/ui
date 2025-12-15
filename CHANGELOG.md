@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.9
+
+### Patch Changes
+
+- Updated icons
+
 ## 0.1.8
 
 ### Patch Changes
