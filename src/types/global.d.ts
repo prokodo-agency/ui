@@ -14,6 +14,7 @@ declare global {
     }
   }
   interface ImportMeta {
+    readonly env: ImportMetaEnv
     glob<T = unknown>(
       glob: string,
       options?: {
@@ -22,5 +23,11 @@ declare global {
         import?: string
       },
     ): Record<string, () => Promise<T>>
+  }
+
+  interface ImportMetaEnv {
+    readonly DEV: boolean
+    readonly PROD: boolean
+    readonly MODE: string
   }
 }

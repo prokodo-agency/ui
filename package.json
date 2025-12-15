@@ -1,6 +1,6 @@
 {
   "name": "@prokodo/ui",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "type": "module",
   "description": "UI components for production-grade Next.js + Headless CMS (Strapi, Contentful, Headless WordPress) websites by prokodo – built for Core Web Vitals & SEO.",
   "sideEffects": [
@@ -298,6 +298,7 @@
     "@chromatic-com/storybook": "^3",
     "@csstools/css-color-parser": "^3.1.0",
     "@eslint/compat": "^1.2.0",
+    "@hugeicons/core-free-icons": "^2.0.0",
     "@jest/globals": "^29.7.0",
     "@jest/types": "^29.6.3",
     "@storybook/addon-essentials": "8.2.9",
