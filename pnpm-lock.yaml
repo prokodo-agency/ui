@@ -69,6 +69,9 @@ importers:
       '@eslint/compat':
         specifier: ^1.2.0
         version: 1.2.0(eslint@9.10.0)
+      '@hugeicons/core-free-icons':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -1610,6 +1613,9 @@ packages:
 
   '@googlemaps/js-api-loader@2.0.2':
     resolution: {integrity: sha512-bKVuTqatS8Jven5aFqVB7rCHF1VFEzpzyi0ruzO0GUR+A7m9oMqMgtnmpANj7kMYEvvhty8Fk7TnJ1MKjWHu+Q==}
+
+  '@hugeicons/core-free-icons@2.0.0':
+    resolution: {integrity: sha512-OSfv5k0iB0yG61dcfK7jcf00AIK8EXyQOgtcNJzSBFvm88n9VOelkxihZHJnNwDUFpO/jZI3vZSVp6i1dmRvJQ==}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -8108,6 +8114,8 @@ snapshots:
   '@googlemaps/js-api-loader@2.0.2':
     dependencies:
       '@types/google.maps': 3.55.11
+
+  '@hugeicons/core-free-icons@2.0.0': {}
 
   '@humanwhocodes/module-importer@1.0.1': {}
 

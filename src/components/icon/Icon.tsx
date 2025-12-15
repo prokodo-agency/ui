@@ -1,5 +1,6 @@
 /* components/icon/Icon.tsx
    ───────────────────────────────────────── */
+import { ENVIRONMENT } from "@/constants/environment"
 import { PROKODO_UI_VERSION } from "@/constants/project"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
@@ -18,12 +19,19 @@ export const getIconSize = (s?: IconSize): number =>
   s ??
   16
 
+const baseUrl =
+  ENVIRONMENT !== "development"
+    ? `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${PROKODO_UI_VERSION}/assets/icons`
+    : "/assets/icons"
+
 /* ---------- icon URL (CDN) ------------------------------- */
 const iconUrl = (n: IconName): string =>
-  `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${PROKODO_UI_VERSION}/assets/icons/${n
+  `${baseUrl}/${n
     .replace(/Icon$/, "")
-    .replace(/([a-z])([A-Z0-9])/g, "$1_$2")
-    .replace(/([0-9])([a-zA-Z])/g, "$1_$2")
+    // fooBar → foo_Bar
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    // foo1 → foo_1
+    .replace(/([a-zA-Z])([0-9])/g, "$1_$2")
     .toLowerCase()}_icon.svg`
 
 /* ---------- Component ----------------------------------- */

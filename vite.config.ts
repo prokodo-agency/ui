@@ -3,6 +3,7 @@ import path from "node:path"
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import checker from "vite-plugin-checker"
+import { visualizer } from "rollup-plugin-visualizer"
 import pkg from "./package.json"
 
 function getComponentEntries() {
@@ -18,11 +19,10 @@ function getComponentEntries() {
   return entries
 }
 
-export default async () => {
-  const { visualizer } = await import("rollup-plugin-visualizer")
-
-  return defineConfig({
+export default defineConfig(({ mode }) => {
+  return {
     define: {
+      "process.env.MODE": JSON.stringify(mode),
       __PACKAGE_VERSION__: JSON.stringify(pkg.version),
     },
     plugins: [
@@ -49,11 +49,11 @@ export default async () => {
         scss: {
           includePaths: [path.resolve(__dirname, "src")],
           additionalData: `
-            @use "@/styles/designsystem/functions.scss" as *;
-            @use "@/styles/designsystem/mixins.scss" as *;
-            @use "@/styles/designsystem/config.scss" as *;
-            @use "@/styles/ui/mixins.scss" as *;
-          `,
+              @use "@/styles/designsystem/functions.scss" as *;
+              @use "@/styles/designsystem/mixins.scss" as *;
+              @use "@/styles/designsystem/config.scss" as *;
+              @use "@/styles/ui/mixins.scss" as *;
+            `,
         },
       },
     },
@@ -123,5 +123,5 @@ export default async () => {
         },
       },
     },
-  })
-}
+  }
+})
