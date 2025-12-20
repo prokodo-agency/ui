@@ -2,7 +2,7 @@
 
 exports[`The common link component should render primary 1`] = `
 <a
-  class="prokodo-Link"
+  class="prokodo-Link prokodo-Link--has-no-background prokodo-Link--has-no-background--primary"
   data-island="link"
   href="/"
 >
@@ -12,7 +12,7 @@ exports[`The common link component should render primary 1`] = `
 
 exports[`The common link component should render secondary 1`] = `
 <a
-  class="prokodo-Link"
+  class="prokodo-Link prokodo-Link--has-no-background prokodo-Link--has-no-background--secondary"
   data-island="link"
   href="/"
 >
