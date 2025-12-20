@@ -15,6 +15,7 @@ const bem = create(styles, "Table")
 
 export const Table: FC<TableProps> = ({
   id,
+  containerClassName,
   title,
   titleProps,
   content,
@@ -27,7 +28,7 @@ export const Table: FC<TableProps> = ({
 }) => {
   const ariaLabelId = `Table-${id}`
   return (
-    <div className={bem()}>
+    <div className={bem(undefined, undefined, containerClassName)}>
       {isString(title) && (
         <Animated animation="left-right" className={bem("header")}>
           <Headline

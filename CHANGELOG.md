@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.10
+
+### Patch Changes
+
+- Multiple style and js bug resolvements
+
 ## 0.1.9
 
 ### Patch Changes

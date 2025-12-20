@@ -22,6 +22,7 @@ export default function SideNavView({
   interactive = true,
   ariaLabel = "Main navigation",
   className,
+  renderFooter,
 }: SideNavViewProps): JSX.Element {
   const renderItem = (icon: IconProps, label: string) => (
     <>
@@ -53,9 +54,10 @@ export default function SideNavView({
         <Icon
           size="md"
           {...iconProps}
+          className={bem("collapse__icon", undefined, iconProps?.className)}
           name={collapsed ? collapsedIcon : unCollapsedIcon}
         />
-        <span className={bem("collape__label", { "is-hidden": collapsed })}>
+        <span className={bem("collapse__label", { "is-hidden": collapsed })}>
           {collapsed ? collapsedLabel : unCollapsedLabel}
         </span>
       </button>
@@ -83,6 +85,8 @@ export default function SideNavView({
           ))}
         </ul>
       </nav>
+
+      {renderFooter !== undefined && !collapsed && renderFooter()}
     </aside>
   )
 }

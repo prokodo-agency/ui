@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import type { Preview, ReactRenderer } from "@storybook/react"
 import { withThemeFromJSXProvider } from "@storybook/addon-themes"
 import "../src/styles/theme.scss"
@@ -40,12 +40,10 @@ const footer = (
 )
 
 const withThemeWrapper = (Story, context) => {
-  const theme = context.globals.theme || "light"
-
-  useEffect(() => {
+  const theme = context.globals.theme ?? "light"
+  if (typeof document !== "undefined") {
     document.documentElement.setAttribute("data-theme", theme)
-  }, [theme])
-
+  }
   return (
     <>
       <Story />
@@ -85,6 +83,7 @@ const preview: Preview = {
     },
   },
   decorators: [
+    ...decorators,
     withThemeFromJSXProvider<ReactRenderer>({
       defaultTheme: "light",
       GlobalStyles: undefined,
