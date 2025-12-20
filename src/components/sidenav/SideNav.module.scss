@@ -32,14 +32,6 @@ $rail-c: 56px;    // Visible toggle width
     width: $rail-c;
   }
 
-  &__collape__label {
-    @include text("caption");
-
-    &--is-hidden {
-    @include hidden();
-    }
-  }
-
   /* toggle button (always visible!) ------------------------------------- */
   &__toggle {
     position: relative;
@@ -95,7 +87,7 @@ $rail-c: 56px;    // Visible toggle width
     &--is-active,
     &:hover {
       text-decoration: none;
-      background: var(--color-grey-50);
+      background: var(--color-primary-100);
 
       & > div:first-of-type {
         position: relative;
@@ -123,16 +115,36 @@ $rail-c: 56px;    // Visible toggle width
     }
   }
 
-  &__icon__wrapper  {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: $space-xs;
-    background: var(--color-grey-50);
-    border-radius: $ui-image-border-radius;
+  &__icon {
+    color: var(--color-grey-900);
+
+    &__wrapper  {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $space-xs;
+      background: var(--color-grey-50);
+      border-radius: $ui-image-border-radius;
+    }
+  }
+
+  &__collapse {
+    &__icon {
+      color: var(--color-grey-700);
+    }
+
+    &__label {
+      color: var(--color-grey-700);
+      @include text("caption");
+
+      &--is-hidden {
+        @include hidden();
+      }
+    }
   }
 
   &__label  {
+    color: var(--color-grey-900);
     animation: label-in 150ms ease forwards;
     @include text("base");
 

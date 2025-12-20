@@ -26,6 +26,9 @@ const meta = {
       ],
       control: { type: "select" },
     },
+    loading: {
+      control: { type: "boolean" },
+    },
     disabled: {
       control: { type: "boolean" },
     },

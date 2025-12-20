@@ -1,5 +1,6 @@
 import type { IconProps, IconName } from "../icon"
 import type { LinkProps } from "../link"
+import type { ReactNode } from "react"
 
 export type SideNavItem = {
   /** active state of item */
@@ -33,6 +34,8 @@ export type SideNavProps = {
   ariaLabel?: string
   /** className passthrough */
   className?: string
+  /** Optional footer node of sidenav */
+  renderFooter?: () => ReactNode
   /** onChange handler of sidenav */
   onChange?: (e: SideNavItem) => void
 }

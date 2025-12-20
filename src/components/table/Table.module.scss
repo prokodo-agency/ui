@@ -63,11 +63,11 @@
 
       &--has-link {
         @include when-hovered() {
-          background: var(--color-grey-50);
+          background: var(--color-primary-20);
         }
 
         @include when-focused() {
-          background: var(--color-grey-50);
+          background: var(--color-primary-20);
         }
       }
     }
@@ -92,6 +92,7 @@
     justify-content: center;
     align-items: center;
     padding: $space-xl $space-sm;
+    color: var(--color-grey-900);
     @include text("base");
   }
 

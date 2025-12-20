@@ -17,6 +17,7 @@ export type TableBodyCellProps = {
   id?: string
   label?: string | ReactNode
   icon?: IconProps
+  className?: string
   classNameInner?: string
 }
 
@@ -31,6 +32,7 @@ export type TableData = {
 }
 
 export type TableProps = TableHTMLAttributes<HTMLTableElement> & {
+  containerClassName?: string
   content?: string | null
   type?: TableType
   caption: string

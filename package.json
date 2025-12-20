@@ -349,7 +349,7 @@
     "jest-canvas-mock": "^2.5.2",
     "jest-css-modules": "^2.1.0",
     "jest-environment-jsdom": "^29.7.0",
-    "next": "^16.0.7",
+    "next": "^16.0.10",
     "postcss": "^8.4.39",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^10.0.2",

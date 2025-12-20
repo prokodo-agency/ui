@@ -23,11 +23,12 @@ export function AvatarView({
     { [variant]: true, [`has-size-${size}`]: true },
     className,
   )
-
+  const defaultSide = getIconSize(size)
   const inner = (
     <div {...rest} className={rootClass} tabIndex={-1}>
       {image ? (
         <Image
+          fill
           {...image}
           className={bem("image", undefined, image.className)}
           tabIndex={0}
@@ -37,7 +38,7 @@ export function AvatarView({
           className={bem("icon", { [variant]: true })}
           color={!["inherit", "white"].includes(variant) ? "white" : undefined}
           name="UserIcon"
-          size={getIconSize(size)}
+          size={defaultSide}
         />
       )}
     </div>

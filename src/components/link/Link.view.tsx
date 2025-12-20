@@ -15,7 +15,7 @@ export function LinkView({
   style,
   target,
   itemProp,
-  hasBackground,
+  hasBackground = false,
   ariaLabel,
   LinkTag,
   hasHandlers,
