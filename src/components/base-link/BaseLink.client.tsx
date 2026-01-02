@@ -41,7 +41,13 @@ export default function BaseLinkClient({
   }
 
   return (
-    <LinkComponent {...rest} href={href} style={linkStyle} tabIndex={tabIndex}>
+    <LinkComponent
+      {...rest}
+      href={href}
+      rel={computedRel}
+      style={linkStyle}
+      tabIndex={tabIndex}
+    >
       {children}
     </LinkComponent>
   )

@@ -3,7 +3,7 @@ import type { LinkProps } from "../link"
 import type { Variants } from "@/types/variants"
 import type { ReactNode, HTMLAttributes } from "react"
 
-export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl"
+export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl" | number
 
 export type AvatarProps = {
   priority?: boolean

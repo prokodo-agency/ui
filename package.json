@@ -27,6 +27,11 @@
       "types": "./dist/types/helpers/runtime.client.d.ts",
       "import": "./dist/helpers/runtime.client.js"
     },
+    "./RTE": {
+      "import": "./dist/components/RTE/index.js",
+      "types": "./dist/types/components/RTE/index.d.ts"
+    },
+    "./RTE.css": "./dist/components/RTE/RTE.css",
     "./accordion": {
       "import": "./dist/components/accordion/index.js",
       "types": "./dist/types/components/accordion/index.d.ts"
@@ -283,6 +288,7 @@
     "markdown-it": "^14.1.0",
     "marked": "^17.0.1",
     "marked-highlight": "^2.2.3",
+    "quill": "^2.0.3",
     "react-bem-helper": "^1.4.1",
     "typescript": "5.9.3",
     "xss": "^1.0.15"

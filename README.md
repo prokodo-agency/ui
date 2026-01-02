@@ -194,6 +194,7 @@ export default function GalleryPage() {
 | Quote               |               ✅               |                 –                  |
 | Rating              |               ✅               |                 ✅                 |
 | RichText            |               ✅               |                 ✅                 |
+| RTE (Beta)          |               ✅               |                 ✅                 |
 | Select              |               ✅               |                 ✅                 |
 | SideNav             |               ✅               |                 ✅                 |
 | Skeleton            |               ✅               |                 –                  |

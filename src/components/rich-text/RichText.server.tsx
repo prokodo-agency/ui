@@ -26,6 +26,7 @@ export function RichTextServer(props: RichTextProps): JSX.Element {
     // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     overrideParagraph,
     linkComponent: _linkComp, // omit on server (don’t pass to DOM)
+    linkPolicy: _linkPolicy,
     ...restProps
   } = props
 

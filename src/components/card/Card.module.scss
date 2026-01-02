@@ -58,7 +58,9 @@
 
   &__link {
     align-items: center;
-    @include when-hovered() { text-decoration: none; }
+    @include when-hovered() {
+      text-decoration: none !important;
+    }
   }
 
   &__content {

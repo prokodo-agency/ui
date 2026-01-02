@@ -23,6 +23,7 @@ import { isString } from "@/helpers/validations"
 import { AnimatedText } from "../animatedText"
 import { Headline } from "../headline"
 import { Icon } from "../icon"
+import { Image } from "../image"
 import { Link } from "../link"
 
 import styles from "./RichText.module.scss"
@@ -140,6 +141,7 @@ export function RichTextClient({
   className,
   overrideParagraph,
   codeTheme,
+  linkPolicy = "trusted",
   ...props
 }: RichTextProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -352,6 +354,22 @@ export function RichTextClient({
         const title = elem.getAttribute("title") ?? undefined
         const linkText = normalize(keyedChildren.map(renderAnimation))
 
+        const isHttp = /^https?:\/\//i.test(href)
+        const isExternalHttp = isHttp
+
+        let target: string | undefined = undefined
+        let rel: string | undefined = undefined
+
+        if (linkPolicy === "ugc") {
+          rel = isExternalHttp ? "ugc nofollow noopener" : "ugc nofollow"
+          target = isExternalHttp ? "_blank" : undefined
+        } else {
+          const htmlTarget = elem.getAttribute("target") ?? undefined
+          const wantsBlank = htmlTarget === "_blank"
+          target = wantsBlank ? "_blank" : undefined
+          rel = wantsBlank ? "noopener" : undefined
+        }
+
         return (
           <Link
             {...baseProps}
@@ -359,6 +377,8 @@ export function RichTextClient({
             className={cls}
             href={href}
             linkComponent={linkComponent}
+            rel={rel}
+            target={target}
             title={title}
             variant="primary"
           >
@@ -393,6 +413,22 @@ export function RichTextClient({
           >
             {keyedChildren}
           </blockquote>
+        )
+      }
+
+      case "img": {
+        const existing = elem.getAttribute("class")
+        const src = elem.getAttribute("src")
+        const alt = elem.getAttribute("alt")
+        return (
+          <span className={bem("image__wrapper")}>
+            <Image
+              fill
+              alt={alt ?? ""}
+              className={[bem("image"), existing].filter(Boolean).join(" ")}
+              src={src ?? ""}
+            />
+          </span>
         )
       }
 
