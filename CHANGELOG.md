@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.11
+
+### Patch Changes
+
+- New RTE component (beta), image support for RichText component and resolved styling bugs
+
 ## 0.1.10
 
 ### Patch Changes
