@@ -8,7 +8,7 @@ import type { JSX } from "react"
 function stripHtml(html?: string): string {
   if (!isString(html)) return ""
   return html
-    .replace(/<[^>]*>/g, "")
+    .replace(/[<>]/g, "")
     .replace(/\s+/g, " ")
     .trim()
 }
