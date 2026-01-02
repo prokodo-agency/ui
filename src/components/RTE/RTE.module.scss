@@ -1,0 +1,129 @@
+@use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+
+@include define-block("RTE") {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__surface {
+    position: relative;
+    width: calc(100% - 4px);
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--color-primary-40);
+
+    &::after {
+      content: none;
+    }
+  }
+
+  &__toolbar {
+    border: none !important;
+    background-color: var(--color-primary-50);
+
+    &__icon__part__stroke,
+    &__icon__part__stroke__miter {
+      stroke: var(--color-grey-900) !important;
+      opacity: 0.7;
+    }
+
+    &__icon__part__fill {
+      fill: var(--color-grey-900) !important;
+      opacity: 0.7;
+    }
+  }
+
+  &__resize {
+    position: absolute;
+    right: $space-sm;
+    bottom: $space-sm;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--color-grey-900);
+    cursor: ns-resize;
+    opacity: 0.55;
+  }
+
+  &__mount {
+    position: relative;
+    height: 200px;
+    border: none;
+    background: transparent;
+    width: 100%;
+    border: none !important;
+
+    &--disabled {
+      cursor: not-allowed;
+      opacity: 0.85;
+    }
+  }
+
+  &__tooltip {
+    max-width: calc(100% - $space-md - $space-md);
+    box-sizing: border-box;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  &__editor {
+    height: 100%;
+    padding: $space-md;
+    outline: none;
+    overflow-y: auto;
+    @include text("base");
+
+    p {
+      margin: 0 0 $space-sm 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 $space-sm 1.25rem;
+      padding: 0;
+    }
+
+    pre {
+      margin: $space-sm 0;
+      padding: $space-sm;
+      border-radius: 14px;
+      overflow: auto;
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    code {
+      background: rgba(0, 0, 0, 0.06);
+      padding: 0 6px;
+      border-radius: 8px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 14px;
+      display: block;
+      margin: $space-sm 0;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.9;
+  }
+
+  &--readonly {
+    opacity: 0.95;
+  }
+
+  &__hidden {
+    @include hidden();
+  }
+}

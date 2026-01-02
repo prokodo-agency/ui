@@ -24,8 +24,11 @@ export const ButtonView: FC<ButtonViewProps> = ({
   iconProps = {},
   isIconOnly,
   LinkComponent,
+  loading,
   ...rest
 }) => {
+  void loading
+
   const isOutlined = variant === "outlined"
   const iconName = iconProps?.name
   const iconMod = { "icon-only": isIconOnly }

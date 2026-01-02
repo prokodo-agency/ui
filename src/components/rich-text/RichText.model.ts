@@ -40,6 +40,8 @@ export type RichTextProps = {
   /** Optional CSS class on wrapper */
   className?: string
 
+  linkPolicy?: "ugc" | "trusted"
+
   /**
    * Callback used by RichText when it encounters a <p>…</p>.
    * Should return a React element—here, a heading tag of the right level.

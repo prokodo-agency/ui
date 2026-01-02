@@ -2,6 +2,7 @@ import { Icon, getIconSize } from "@/components/icon"
 import { Image } from "@/components/image"
 import { Link } from "@/components/link"
 import { create } from "@/helpers/bem"
+import { isNumber } from "@/helpers/validations"
 
 import styles from "./Avatar.module.scss"
 
@@ -12,7 +13,7 @@ const bem = create(styles, "Avatar")
 
 export function AvatarView({
   className,
-  variant = "primary",
+  variant = "inherit",
   size = "sm",
   image,
   redirect,
@@ -23,9 +24,21 @@ export function AvatarView({
     { [variant]: true, [`has-size-${size}`]: true },
     className,
   )
-  const defaultSide = getIconSize(size)
+  const iconSize = getIconSize(size)
   const inner = (
-    <div {...rest} className={rootClass} tabIndex={-1}>
+    <div
+      {...rest}
+      className={rootClass}
+      tabIndex={-1}
+      style={
+        isNumber(size as number)
+          ? {
+              width: size,
+              height: size,
+            }
+          : undefined
+      }
+    >
       {image ? (
         <Image
           fill
@@ -38,7 +51,7 @@ export function AvatarView({
           className={bem("icon", { [variant]: true })}
           color={!["inherit", "white"].includes(variant) ? "white" : undefined}
           name="UserIcon"
-          size={defaultSide}
+          size={iconSize}
         />
       )}
     </div>

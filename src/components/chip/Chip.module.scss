@@ -11,6 +11,7 @@
   border-radius: $ui-background-border-radius;
   padding: $space-xs $space-md;
   user-select: none;
+  gap: $space-sm;
   transition: background-color 0.3s ease, color 0.3s ease;
   border-color: var(--color-grey-500);
   color: var(--color-black);
@@ -40,7 +41,7 @@
 
     &--info {
       background-color: var(--color-grey-300);
-      color: var(--color-white);
+      color: var(--color-grey-700);
     }
 
     &--success {
@@ -110,7 +111,6 @@
     cursor: pointer;
     padding: 0;
     line-height: 1;
-    margin-left: 8px;
     transition: color 0.3s ease;
     background-color: var(--color-grey-50);
 

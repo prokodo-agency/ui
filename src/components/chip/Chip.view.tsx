@@ -53,7 +53,7 @@ export function ChipView({
           })}
           {...buttonProps}
         >
-          <Icon name="Delete01Icon" />
+          <Icon color="error" name="Delete01Icon" />
         </button>
       )}
     </div>

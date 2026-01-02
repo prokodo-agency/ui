@@ -7,6 +7,7 @@ import type {
   HTMLInputTypeAttribute,
   TextareaHTMLAttributes,
   InputHTMLAttributes,
+  ReactNode,
 } from "react"
 
 /* ---------- Basistypen ---------------------------------- */
@@ -33,6 +34,18 @@ export type InputBlur = InputFocus
 export type InputBlurEventHandler = ChangeEventHandler<
   HTMLTextAreaElement | HTMLInputElement
 >
+
+export type InputRenderNodeArgs = {
+  id: string
+  name: string
+  disabled?: boolean
+  required?: boolean
+  readOnly?: boolean
+  placeholder?: string
+  isError: boolean
+  describedBy?: string
+  nodeClassName: string
+}
 
 export type InputErrorTranslations = {
   required?: string
@@ -74,6 +87,11 @@ export type InputProps = {
   onValidate?: InputValidateEvent
   onFocus?: InputFocusEventHandler
   onBlur?: InputBlurEventHandler
+  /**
+   * Optional: Render a custom field node instead of input/textarea.
+   * Keeps label/footer/error/counter layout of Input intact.
+   */
+  renderNode?: (args: InputRenderNodeArgs) => ReactNode
 } & (
   | {
       /* ---------- Single-line --------------------------- */

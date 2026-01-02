@@ -1,7 +1,7 @@
 /**
  * Checks if a given value is a non-null, non-undefined, non-empty string.
  */
-export const isString = (e?: string | null): boolean =>
+export const isString = (e?: string | null): e is string =>
   typeof e === "string" && e.trim() !== ""
 
 /**
@@ -12,7 +12,8 @@ export const isEqual = (a?: string, b?: string): boolean => a === b
 /**
  * Checks if a given value is a non-null, non-undefined, non-empty number.
  */
-export const isNumber = (e?: number | null): boolean => typeof e === "number"
+export const isNumber = (e?: number | null): e is number =>
+  typeof e === "number"
 
 /**
  * Checks if a given value is a valid array with at least one element.

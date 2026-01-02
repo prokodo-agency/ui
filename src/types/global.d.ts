@@ -1,6 +1,11 @@
 import "@types/google.maps"
 
 declare global {
+  declare module "*.css?inline" {
+    const css: string
+    export default css
+  }
+
   interface Window {
     dataLayer: Record<string, unknown>[]
     gtag: (...args: unknown[]) => void

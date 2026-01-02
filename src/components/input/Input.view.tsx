@@ -35,6 +35,7 @@ export function InputView({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   maxRows,
   type = "text",
+  renderNode,
   ...rest
 }: InputProps): JSX.Element {
   delete rest?.onValidate
@@ -49,6 +50,11 @@ export function InputView({
   const errorId = isError ? `${name}-error` : undefined
   const helperId = !isError && hasHelperText ? `${name}-helper` : undefined
   const describedBy = [errorId, helperId].filter(Boolean).join(" ") || undefined
+  const nodeClassName = bem(
+    "input__node",
+    { multiline: Boolean(multiline) },
+    inputClassName,
+  )
   return (
     <div className={bem(undefined, undefined, className)}>
       <div className={bem("inner")}>
@@ -82,13 +88,26 @@ export function InputView({
               inputContainerClassName,
             )}
           >
-            {Boolean(multiline) ? (
+            {typeof renderNode === "function" ? (
+              renderNode({
+                id: name,
+                name,
+                disabled,
+                required,
+                readOnly: rest?.readOnly,
+                placeholder,
+                isError,
+                describedBy,
+                nodeClassName,
+              })
+            ) : Boolean(multiline) ? (
               <textarea
                 {...rest}
                 ref={inputRef as React.Ref<HTMLTextAreaElement>}
                 aria-describedby={describedBy}
                 aria-invalid={isError}
                 aria-required={required}
+                className={nodeClassName}
                 disabled={disabled}
                 id={name}
                 name={name}
@@ -96,11 +115,6 @@ export function InputView({
                 required={Boolean(required)}
                 rows={rows}
                 value={value ?? ""}
-                className={bem(
-                  "input__node",
-                  { multiline: true },
-                  inputClassName,
-                )}
               />
             ) : (
               <input
@@ -109,6 +123,7 @@ export function InputView({
                 aria-describedby={describedBy}
                 aria-invalid={isError}
                 aria-required={required}
+                className={nodeClassName}
                 disabled={disabled}
                 id={name}
                 name={name}
@@ -116,11 +131,6 @@ export function InputView({
                 required={Boolean(required)}
                 type={type as HTMLInputTypeAttribute}
                 value={value ?? ""}
-                className={bem(
-                  "input__node",
-                  { multiline: false },
-                  inputClassName,
-                )}
               />
             )}
           </div>
