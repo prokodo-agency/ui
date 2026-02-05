@@ -8,15 +8,24 @@ import type {
   MouseEvent,
 } from "react"
 
+/**
+ * Change event union for stepper interactions.
+ */
 export type StepperChangeEvent =
   | MouseEvent<HTMLDivElement>
   | KeyboardEvent<HTMLDivElement>
 
+/**
+ * Imperative ref handle for Stepper.
+ */
 export type StepperRef = {
   /** Jump directly to a given step index (0‐based). */
   jumpToStep: (index: number) => void
 }
 
+/**
+ * i18n strings for Stepper ARIA labels and status messages.
+ */
 export type StepperTranslations = {
   /** ARIA label for the entire stepper nav. */
   stepper: string
@@ -24,11 +33,16 @@ export type StepperTranslations = {
   step: string
   /** Status messages for screen reader (completed vs. open). */
   status: {
-    open: string // e.g. “Open. Future step, disabled.”
-    completed: string // e.g. “Completed. Press Enter to return.”
+    /** Open status message. */
+    open: string
+    /** Completed status message. */
+    completed: string
   }
 }
 
+/**
+ * Single step configuration.
+ */
 export type Step = HTMLAttributes<HTMLLIElement> & {
   /** Unique key for this step (falls back to index if not provided). */
   key?: string
@@ -36,10 +50,17 @@ export type Step = HTMLAttributes<HTMLLIElement> & {
   label?: string
   /** Props forwarded to the inner label wrapper. */
   labelProps?: HTMLAttributes<HTMLDivElement>
-
+  /** Props forwarded to inner container. */
   innerContainerProps?: HTMLAttributes<HTMLDivElement>
 }
 
+/**
+ * Stepper component props.
+ * Renders a list of steps with keyboard navigation support.
+ *
+ * @example
+ * <Stepper steps={[{ label: "One" }, { label: "Two" }]} />
+ */
 export type StepperProps = Omit<
   HTMLAttributes<HTMLOListElement>,
   "children" | "onChange" | "onFocus" | "onBlur"
@@ -52,7 +73,9 @@ export type StepperProps = Omit<
 
   /** Callback when the active step changes. */
   onChange?: (e: StepperChangeEvent, index: number) => void
+  /** Focus handler for step buttons. */
   onFocus?: (e: FocusEvent<HTMLDivElement>, index: number) => void
+  /** Blur handler for step buttons. */
   onBlur?: (e: FocusEvent<HTMLDivElement>, index: number) => void
 
   /** Initial active step index (0‐based, defaults to 0). */
@@ -72,8 +95,12 @@ export interface StepperViewProps extends Omit<StepperViewPropsCommon, "ref"> {
 
 export interface StepperViewPropsCommon extends StepperPropsCommon {}
 export interface StepperPropsCommon {
+  /** Refs for step elements. */
   stepRefs?: RefObject<Array<HTMLDivElement | null>>
+  /** Step definitions. */
   steps: Step[]
+  /** Optional translations. */
   translations?: StepperTranslations
+  /** Root class name. */
   className?: string
 }

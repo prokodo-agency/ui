@@ -16,6 +16,7 @@ const meta = {
     variant: {
       options: [
         "inherit",
+        "panel",
         "white",
         "primary",
         "secondary",

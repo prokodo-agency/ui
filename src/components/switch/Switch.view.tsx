@@ -24,6 +24,7 @@ export const SwitchView: FC<SwitchViewProps> = ({
   onChangeInternal,
   onFocusInternal,
   onBlurInternal,
+  ...props
 }) => {
   const hasLabel = typeof label === "string" && label.length > 0
 
@@ -58,6 +59,7 @@ export const SwitchView: FC<SwitchViewProps> = ({
         />
 
         <input
+          {...props}
           aria-checked={isChecked}
           aria-disabled={disabled || undefined}
           aria-required={required || undefined}

@@ -9,13 +9,30 @@ import { isNull, isString } from "@/helpers/validations"
 import styles from "./RTE.module.scss"
 import { ensureQuillSnowStyles } from "./RTE.styles"
 import themeCSS from "./RTE.theme"
-import { addClasses, decorateToolbar, cleanupQuill } from "./RTE.utils"
+import {
+  addClasses,
+  decorateToolbar,
+  syncPickerSelected,
+  cleanupQuill,
+} from "./RTE.utils"
 import { RTEView } from "./RTE.view"
 
 import type { RTEProps } from "./RTE.model"
 import type Quill from "quill"
 
 export const bem = create(styles, "RTE")
+
+const ALLOWED_FORMATS = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "list",
+  "link",
+  "code-block",
+  "image",
+]
 
 function RTEClient(props: RTEProps): JSX.Element {
   const {
@@ -212,6 +229,7 @@ function RTEClient(props: RTEProps): JSX.Element {
       const extraToolbar = rteToolbarRef.current
 
       const baseToolbar = [
+        [{ header: [3, 4, false] }],
         ["bold", "italic", "underline", "strike"],
         [{ list: "ordered" }, { list: "bullet" }],
         ["link", "code-block", "image"],
@@ -228,6 +246,7 @@ function RTEClient(props: RTEProps): JSX.Element {
         ...opts,
         theme: "snow",
         placeholder: placeholder ?? "",
+        formats: ALLOWED_FORMATS,
         modules: {
           history: {
             delay: 1000,
@@ -245,6 +264,43 @@ function RTEClient(props: RTEProps): JSX.Element {
 
       quillRef.current = q
 
+      const Keyboard = q.getModule("keyboard") as {
+        addBinding?: (
+          binding: Record<string, unknown>,
+          handler: (
+            range: { index: number; length: number },
+            ctx: any,
+          ) => boolean | void,
+        ) => void
+      } | null
+
+      Keyboard?.addBinding?.(
+        {
+          key: 13, // Enter
+          shiftKey: false,
+          collapsed: true,
+        },
+        (range, ctx) => {
+          // ctx.format contains current formats at cursor
+          const header = ctx?.format?.header
+
+          // Only intervene when user is currently inside a header (2/3/4)
+          if (!header) return true
+
+          // Let Quill insert a normal newline first
+          q.insertText(range.index, "\n", "user")
+
+          // Ensure the new line is NOT a header anymore (paragraph)
+          q.formatLine(range.index + 1, 1, { header: false }, "user")
+
+          // Put cursor on the new line
+          q.setSelection(range.index + 1, 0, "silent")
+
+          // Prevent Quill's default Enter handling (which can keep header formatting)
+          return false
+        },
+      )
+
       // expose instance to consumer (app wrapper)
       opts?.onInit?.(q)
 
@@ -255,7 +311,19 @@ function RTEClient(props: RTEProps): JSX.Element {
       } | null
       addClasses(toolbarModule?.container ?? null, bem("toolbar"))
       const toolbarEl = toolbarModule?.container ?? null
-      if (toolbarEl) decorateToolbar(toolbarEl)
+      if (toolbarEl) {
+        decorateToolbar(toolbarEl)
+        syncPickerSelected(toolbarEl)
+
+        const obs = new MutationObserver(() => syncPickerSelected(toolbarEl))
+        obs.observe(toolbarEl, {
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["class"],
+        })
+
+        // store obs if you want cleanup later, or disconnect in your effect cleanup
+      }
 
       const tooltipEl = (q.container as HTMLElement).querySelector(
         ".ql-tooltip",

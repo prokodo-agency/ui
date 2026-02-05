@@ -3,112 +3,144 @@ import type { HeadlineProps } from "../headline"
 import type { HTMLAttributes, MouseEventHandler, ReactNode, Ref } from "react"
 
 /**
- * Anchor positions for the drawer.
+ * Drawer anchor position (edge where drawer slides from).
  */
 export type DrawerAnchor = "left" | "right" | "top" | "bottom"
 
 /**
- * Reasons the drawer was closed.
+ * Reasons for drawer closure.
+ * Passed to onChange callback to distinguish close triggers.
  */
 export type DrawerChangeReason = "backdropClick" | "escapeKeyDown"
 
 /**
- * Imperative ref‐handles for Drawer.
+ * Imperative ref handle for Drawer.
+ * Allows programmatic open/close control.
  */
 export type DrawerRef = {
-  /** Open the drawer programmatically */
+  /** Open drawer programmatically. */
   openDrawer: () => void
-  /** Close the drawer programmatically, with optional reason */
+  /** Close drawer programmatically with optional reason. */
   closeDrawer: (reason?: DrawerChangeReason) => void
 }
 
 /**
- * Props for DrawerView & DrawerServer/Client.
+ * Drawer component props.
+ * Renders a slide-out panel (sidebar) from edge with optional header and content.
+ *
+ * @example
+ * // Basic drawer
+ * <Drawer
+ *   title="Menu"
+ *   anchor="left"
+ *   open={isOpen}
+ *   onChange={(e, reason) => setIsOpen(false)}
+ * >
+ *   <nav>Navigation items</nav>
+ * </Drawer>
+ *
+ * @example
+ * // Full-screen drawer with actions
+ * <Drawer
+ *   ref={drawerRef}
+ *   title="Edit Profile"
+ *   fullscreen
+ *   anchor="left"
+ *   actions={[
+ *     { id: "cancel", title: "Cancel" },
+ *     { id: "save", title: "Save", color: "primary" }
+ *   ]}
+ * >
+ *   <EditForm />
+ * </Drawer>
+ *
+ * @a11y Keyboard navigation (Escape closes). Focus management within drawer.
+ * @ssr Client-side rendering required for animations.
  */
 export interface DrawerProps {
   /**
-   * Imperative ref to open/close.
+   * Imperative ref to open/close drawer programmatically.
    */
   ref?: Ref<DrawerRef>
 
   /**
-   * If true, initial drawer is open.
+   * Initially open (true) or closed (false). Controlled prop.
    */
   open?: boolean
 
   /**
-   * A heading/title for the drawer (optional).
-   * If provided, View will render it with an <h2> via Headline.
+   * Drawer title/heading text.
+   * If provided, header renders with title + close button.
    */
   title?: string
+  /** Headline component props for title styling (variant, size, weight). */
   titleProps?: HeadlineProps
 
   /**
-   * If true, drawer takes full screen (height or width depending on anchor).
+   * Drawer takes full screen height (vertical) or width (horizontal).
+   * Default: false (sized to content).
    */
   fullscreen?: boolean
 
   /**
-   * Which edge to anchor the drawer on.
-   * Defaults to "left".
+   * Which edge the drawer slides from.
+   * Default: "left".
    */
   anchor?: DrawerAnchor
 
   /**
-   * Control whether clicking on the backdrop closes the drawer.
-   * Defaults to true.
+   * Close when clicking outside (backdrop).
+   * Default: true.
    */
   closeOnBackdropClick?: boolean
 
   /**
-   * Option overwrittes for the close button
+   * Props for close button (X icon).
+   * Override color, variant, size, etc.
    */
   closeButtonProps?: ButtonProps
 
   /**
-   * Callback when open‐state changes. Receives (event, reason).
+   * Open state change callback.
+   * Receives: (event, reason) where reason = "backdropClick" | "escapeKeyDown".
    */
   onChange?: (event: unknown, reason: DrawerChangeReason) => void
 
-  /* Hides the header */
+  /** Hide header section (title + close button). */
   hideHeader?: boolean
 
   /**
-   * Optional custom header component. If omitted, View renders a simple
-   * H2 + close‐button if `title` is provided.
+   * Custom header content node.
+   * Takes precedence over default title + close button header.
+   * Use for complex header layouts.
    */
   renderHeader?: () => ReactNode
 
-  /**
-   * Extra CSS class for the outermost <div> (backdrop + wrapper).
-   */
+  /** Root container (backdrop + wrapper) class name. */
   className?: string
 
-  /**
-   * Extra CSS class for the inner container (sliding panel).
-   */
+  /** Inner sliding panel class name. */
   containerClassName?: string
 
-  /**
-   * Anything you want rendered inside the drawer body.
-   */
+  /** Drawer content (rendered inside panel body). */
   children?: ReactNode
 }
 
 /**
- * Props are exactly `DrawerProps` plus some internal refs.
- *
- * - `open`: whether drawer is visible (controls CSS classes).
- * - `onClose`: callback (closeDrawer) coming from Client.
- * - `closeButtonRef`: ref to the “×” button for focus‐management.
- * - `containerRef`: ref to the sliding container to trap focus inside.
- * - `closeOnBackdropClick`: whether backdrop mousedown should close.
+ * Internal type for Drawer view layer.
+ * Extends DrawerProps with view-specific state and handlers.
  */
 export interface DrawerViewProps extends DrawerProps {
+  /** Current open/closed state (managed by client component). */
   open?: boolean
+  /** Close handler (called by view when close triggered). */
   onClose?: (reason: "backdropClick" | "escapeKeyDown") => void
+  /** Ref to close button element (for focus management). */
   closeButtonRef?: React.RefObject<HTMLButtonElement | null>
+  /** Ref to sliding container (for focus trap). */
   containerRef?: React.RefObject<HTMLDivElement | null>
+  /** Backdrop div props (HTMLAttributes). */
   backdropProps?: HTMLAttributes<HTMLDivElement>
+  /** Backdrop mouse down handler. */
   onMouseDown?: MouseEventHandler<HTMLDivElement>
 }

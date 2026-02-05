@@ -186,6 +186,7 @@ export default function GalleryPage() {
 | Loading             |               ✅               |                 –                  |
 | Lottie              |               ❌               |                 ✅                 |
 | Map                 |               ❌               |                 ✅                 |
+| Pagination          |               ✅               |                 ✅                 |
 | PostItem            |               ✅               |                 ✅                 |
 | PostTeaser          |               ✅               |                 ✅                 |
 | PostWidget          |               ✅               |                 ✅                 |
@@ -204,6 +205,7 @@ export default function GalleryPage() {
 | Switch              |               ✅               |                 ✅                 |
 | Table               |               ✅               |                 –                  |
 | Teaser              |               ✅               |                 -                  |
+| Tooltip             |               ✅               |                 ✅                 |
 
 ## Since Next.js 16
 

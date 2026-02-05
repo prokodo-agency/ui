@@ -1,0 +1,120 @@
+@use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+
+@include define-block("Tooltip") {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &--disabled {
+    pointer-events: none;
+  }
+
+  /* Visually hidden described-by node (portal a11y). */
+  &__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+  }
+
+  &__trigger {
+    width: max-content !important;
+    flex: 0 0 auto !important;
+  }
+
+  &__bubble {
+    $arrow-size: 8px;
+
+    /* Make sizing measurable and stable. */
+    display: block;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    /* ✅ Position via CSS vars, but NO animated transform/scale */
+    transform: translate3d(var(--pk-tt-x, 0px), var(--pk-tt-y, 0px), 0);
+
+    /* ✅ Only opacity changes for animation */
+    will-change: opacity;
+
+    z-index: var(--pk-tt-z, 2147483647);
+
+    max-width: min(360px, calc(100vw - 16px));
+    white-space: normal;
+    overflow-wrap: anywhere;
+
+    padding: $space-xs $space-sm;
+    border-radius: 10px;
+    box-shadow: var(--elevation-2);
+    background: var(--color-grey-900);
+    color: var(--color-white);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* fade only */
+    transition:
+      opacity 120ms ease,
+      visibility 120ms ease;
+    @include text("caption");
+
+    &--open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+
+    &--top::after {
+      left: var(--pk-tt-arrow-x, 50%);
+      top: 100%;
+      transform: translateX(-50%);
+      border-width: $arrow-size $arrow-size 0 $arrow-size;
+      border-color: var(--color-grey-900) transparent transparent transparent;
+    }
+
+    &--bottom::after {
+      left: var(--pk-tt-arrow-x, 50%);
+      bottom: 100%;
+      transform: translateX(-50%);
+      border-width: 0 $arrow-size $arrow-size $arrow-size;
+      border-color: transparent transparent var(--color-grey-900) transparent;
+    }
+
+    &--left::after {
+      top: var(--pk-tt-arrow-y, 50%);
+      left: 100%;
+      transform: translateY(-50%);
+      border-width: $arrow-size 0 $arrow-size $arrow-size;
+      border-color: transparent transparent transparent var(--color-grey-900);
+    }
+
+    &--right::after {
+      top: var(--pk-tt-arrow-y, 50%);
+      right: 100%;
+      transform: translateY(-50%);
+      border-width: $arrow-size $arrow-size $arrow-size 0;
+      border-color: transparent var(--color-grey-900) transparent transparent;
+    }
+  }
+
+  /* CSS-only fallback (only works for inline mode). */
+  &:hover &__bubble,
+  &:focus-within &__bubble {
+    opacity: 1;
+    visibility: visible;
+  }
+}

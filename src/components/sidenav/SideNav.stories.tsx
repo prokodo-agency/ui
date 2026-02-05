@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 /* ---------- meta ---------- */
 const meta: Meta<typeof SideNav> = {
-  title: "prokodo/common/Sidenav",
+  title: "prokodo/navigation/Sidenav",
   component: SideNav,
   parameters: {
     layout: "fullscreen",

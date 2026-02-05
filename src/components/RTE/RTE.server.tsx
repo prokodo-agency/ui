@@ -7,10 +7,7 @@ import type { JSX } from "react"
 
 function stripHtml(html?: string): string {
   if (!isString(html)) return ""
-  return html
-    .replace(/[<>]/g, "")
-    .replace(/\s+/g, " ")
-    .trim()
+  return html.replace(/[<>]/g, "").replace(/\s+/g, " ").trim()
 }
 
 export default function RTEServer(props: RTEProps): JSX.Element {
