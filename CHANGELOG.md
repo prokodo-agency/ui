@@ -4,7 +4,9 @@
 
 ### Patch Changes
 
-- New tooltip and pagination component
+- Added comprehensive TypeScript documentation across all components
+- Added Tooltip and Pagination components
+- Added new tests for `Accordion`, `Animated`, `AnimatedText`, and `BaseLink`
 
 ## 0.1.11
 
