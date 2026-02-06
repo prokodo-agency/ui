@@ -34,6 +34,67 @@
       fill: var(--color-grey-900) !important;
       opacity: 0.7;
     }
+
+    // Header picker label text based on its current data-value
+    &__picker__label {
+      position: relative;
+      padding-right: calc(#{$space-sm} + 18px);
+
+      &::before {
+        content: "Normal";
+        color: var(--color-grey-900);
+        opacity: 0.85;
+        margin-right: $space-xs;
+        white-space: nowrap;
+        @include text("caption");
+      }
+
+      &[data-value="2"]::before { content: "H2"; }
+      &[data-value="3"]::before { content: "H3"; }
+    }
+
+    &__picker__options {
+      margin-top: $space-xs;
+      padding: $space-xs;
+      border-radius: 14px;
+      background: var(--color-white) !important;
+      border-color: var(--color-grey-500) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      min-width: 180px;
+      z-index: 20;
+    }
+
+    &__picker__item {
+      border-radius: 12px;
+      padding: $space-xs $space-sm;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &::before {
+        content: "Normal";
+        color: var(--color-grey-900);
+        opacity: 0.85;
+        @include text("caption");
+      }
+
+      &[data-value="2"]::before { content: "H2"; }
+      &[data-value="3"]::before { content: "H3"; }
+
+      &:hover {
+        background: var(--color-primary-50) !important;
+      }
+
+      &[data-selected="true"] {
+        background: var(--color-primary-100) !important;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-primary-100);
+        outline-offset: 2px;
+      }
+    }
   }
 
   &__resize {
@@ -79,21 +140,21 @@
     @include text("base");
 
     p {
-      margin: 0 0 $space-sm 0;
+      margin: $space-md 0 !important;
     }
 
     p:last-child {
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
     }
 
     ul,
     ol {
-      margin: 0 0 $space-sm 1.25rem;
-      padding: 0;
+      margin: 0 0 $space-sm 1.25rem !important;
+      padding: 0 !important;
     }
 
     pre {
-      margin: $space-sm 0;
+      margin: $space-sm 0 !important;
       padding: $space-sm;
       border-radius: 14px;
       overflow: auto;
@@ -102,7 +163,7 @@
 
     code {
       background: rgba(0, 0, 0, 0.06);
-      padding: 0 6px;
+      padding: 0 6px !important;
       border-radius: 8px;
     }
 
@@ -112,6 +173,49 @@
       border-radius: 14px;
       display: block;
       margin: $space-sm 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: $space-lg 0 $space-sm 0 !important;
+    }
+
+    // Reduce top margin if heading is first element
+    > h1:first-child,
+    > h2:first-child,
+    > h3:first-child,
+    > h4:first-child,
+    > h5:first-child,
+    > h6:first-child {
+      margin-top: 0 !important;
+    }
+
+    h1 {
+      @include text('headline/3xl');
+    }
+
+    h2 {
+      @include text('headline/2xl');
+    }
+
+    h3 {
+      @include text('headline/lg');
+    }
+
+    h4 {
+      @include text('headline/md');
+    }
+
+    h5 {
+      @include text('headline/sm');
+    }
+
+    h6 {
+      @include text('headline/xs');
     }
   }
 

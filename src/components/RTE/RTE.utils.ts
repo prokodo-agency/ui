@@ -41,6 +41,33 @@ export function decorateToolbar(toolbarEl: HTMLElement): void {
       addClasses(el, bem("toolbar__icon__part__stroke__miter"))
     }
   })
+
+  // Picker styling (header dropdown e. g.)
+  toolbarEl.querySelectorAll(".ql-picker").forEach(picker => {
+    addClasses(picker, bem("toolbar__picker"))
+
+    const label = picker.querySelector(".ql-picker-label") as HTMLElement | null
+    const options = picker.querySelector(
+      ".ql-picker-options",
+    ) as HTMLElement | null
+
+    addClasses(label, bem("toolbar__picker__label"))
+    addClasses(options, bem("toolbar__picker__options"))
+
+    picker.querySelectorAll(".ql-picker-item").forEach(item => {
+      addClasses(item, bem("toolbar__picker__item"))
+    })
+  })
+}
+
+export function syncPickerSelected(toolbarEl: HTMLElement): void {
+  toolbarEl.querySelectorAll(".ql-picker-item").forEach(el => {
+    const item = el as HTMLElement
+    // read Quill state
+    const selected = item.classList.contains("ql-selected")
+    if (selected) item.setAttribute("data-selected", "true")
+    else item.removeAttribute("data-selected")
+  })
 }
 
 export function cleanupQuill(

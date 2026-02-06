@@ -41,7 +41,6 @@ export function SelectView<Value extends string = string>({
 
   const open = Boolean(_clientState?.open) ?? false
   const btnRef = _clientState?.buttonRef
-  const listRef = _clientState?.listRef
 
   /* figure out the display label (server-side, no interaction yet) ----- */
   const selectedItems = Array.isArray(value)
@@ -121,58 +120,23 @@ export function SelectView<Value extends string = string>({
         />
 
         {/* --- listbox (static, hidden via CSS – client will unhide) */}
-        <ul
-          ref={listRef}
-          className={bem("listbox", { "is-open": open, "is-closed": !open })}
-          hidden={!open}
-          id={listId}
-          role="listbox"
-          tabIndex={-1}
-        >
-          {/* optional placeholder when the field is not required */}
-          {!Boolean(required) && !Boolean(multiple) && (
-            <li
-              key="placeholder"
-              aria-selected={selectedItems.length === 0}
-              className={bem("item", { selected: selectedItems.length === 0 })}
-              role="option"
-              onClick={() => _clientState?.onOptionClick(null)}
-              onKeyDown={() => _clientState?.onOptionClick(null)}
-            >
-              {placeholder}
-            </li>
-          )}
-
-          {/* actual options */}
-          {items.map(opt => {
-            const selected = Array.isArray(value)
-              ? value.includes(opt.value as Value)
-              : opt.value === value
-
-            return (
-              <li
-                key={`${id}-${opt.value}`}
-                aria-selected={selected}
-                className={bem("item", { selected })}
-                role="option"
-                onClick={() => _clientState?.onOptionClick(opt.value)}
-                onKeyDown={() => _clientState?.onOptionClick(opt.value)}
-              >
-                {Boolean(multiple) && (
-                  <input
-                    readOnly
-                    aria-hidden="true"
-                    className={bem("checkbox", { checked: selected })}
-                    defaultChecked={selected}
-                    type="checkbox"
-                  />
-                )}
-                {Boolean(iconVisible) && opt.icon?.()}
-                {opt.label}
-              </li>
-            )
-          })}
-        </ul>
+        {/* --- listbox is rendered by the client (portal) to avoid stacking-context issues */}
+        {_clientState?.renderListbox?.({
+          id: listId,
+          className: bem("listbox", { "is-open": open, "is-closed": !open }),
+          open,
+          required,
+          multiple,
+          placeholder,
+          items,
+          value: (value ?? (Boolean(multiple) ? [] : "")) as Value,
+          onOptionClick: (opt: Value | null) =>
+            _clientState?.onOptionClick?.(opt),
+          iconVisible,
+          bemItem: (mods?: Record<string, boolean>) => bem("item", mods),
+          bemCheckbox: (mods?: Record<string, boolean>) =>
+            bem("checkbox", mods),
+        })}
       </div>
 
       {/* ------------------------------------------------ helper / error */}

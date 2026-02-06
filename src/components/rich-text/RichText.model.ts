@@ -16,30 +16,34 @@ import type { ReactNode, HTMLAttributes } from "react"
  * - All other props (`...props`) are spread onto the outer <div>.
  */
 export type RichTextProps = {
-  /** Raw Markdown source */
+  /** Raw Markdown source. */
   children: ReactNode
 
-  /** If true, wrap text in <AnimatedText>; otherwise render directly */
+  /** If true, wrap text in <AnimatedText>; otherwise render directly. */
   animated?: boolean
 
-  /** Props forwarded to AnimatedText */
+  /** Props forwarded to AnimatedText. */
   animationProps?: Omit<AnimatedTextProps, "children">
 
-  /** BEM-variant for coloring (e.g. primary, secondary, etc.) */
+  /** BEM-variant for coloring (e.g. primary, secondary, etc.). */
   variant?: Variants
 
-  /** Microdata attributes to spread on wrapper <div> */
+  /** Microdata attributes to spread on wrapper <div>. */
   schema?: Schema
 
-  /** If provided, each <p> will include itemprop="..." */
+  /** If provided, each <p> will include itemprop="...". */
   itemProp?: string
 
-  /** Custom Link component (e.g. NextLink) to use instead of default <a> */
+  /** Custom Link component (e.g. NextLink) to use instead of default <a>. */
   linkComponent?: LinkProps["linkComponent"]
 
-  /** Optional CSS class on wrapper */
+  /** Optional CSS class on wrapper. */
   className?: string
 
+  /**
+   * Rel policy for links inside rich text.
+   * Use "ugc" for user-generated content.
+   */
   linkPolicy?: "ugc" | "trusted"
 
   /**
@@ -55,8 +59,11 @@ export type RichTextProps = {
    * Default: { name: "github", version: "auto" }
    */
   codeTheme?: {
+    /** Custom CSS URL for syntax highlighting. */
     href?: string
+    /** Theme name (e.g. "github", "atom-one-dark"). */
     name?: string
+    /** Theme version or "auto" to match installed HLJS. */
     version?: "auto" | string
   }
 } & HTMLAttributes<HTMLDivElement>

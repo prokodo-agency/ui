@@ -9,8 +9,8 @@
 @use "@/styles/ui/mixins/bem" as *;
 
 /* fade-in / out for the popup ------------------------------------------------ */
-@keyframes fade-in  { 0% {opacity:.0; transform:scale(.95,.8)} 100% {opacity:1} }
-@keyframes fade-out { 0% {opacity:1 ; transform:scale(1 ,1 )} 100% {opacity:0; transform:scale(.95,.8)} }
+@keyframes fade-in  { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fade-out { from { opacity: 1 } to { opacity: 0 } }
 
 @include define-block("Select") {
   position: relative;
@@ -37,18 +37,23 @@
         transform: translateY(-150%) scale(0.75);
         background-color: var(--color-white);
         @include textLineClamp(1);
+
+        html[data-theme='dark'] & {
+          background-color: rgb(16, 19, 27);
+        }
      }
   }
 
   /* ───────────────── field (container for button + listbox) */
   &__field {
-    position:relative;
-    box-shadow:var(--elevation-1);
-    border-radius:$ui-form-element;
+    position: relative;
+    box-shadow: var(--elevation-1);
+    border-radius: $ui-form-element;
 
     /*   ‘expanded’ state is now driven by a class your JS toggles */
     &--expanded {
         box-shadow:none;
+        z-index: 100;
     }
   }
 
@@ -76,7 +81,7 @@
     }
 
     &:disabled {
-      color: var(--color-grey-300);
+      color: var(--color-grey-700);
       cursor: default;
       @include gradientBorderVar(8);
 
@@ -117,10 +122,13 @@
       align-items:center;
       padding:px-to-rem(14px) $space-lg;
       margin:2px;
-      background:var(--color-white);
+      background-color:var(--color-white);
       border-radius:$ui-form-element;
-      background-color: var(--color-white);
       @include text("base");
+
+      html[data-theme='dark'] & {
+        background-color: rgb(16, 19, 27);
+      }
 
       & {
         font-size: 1rem;
@@ -138,14 +146,14 @@
       }
 
       &--is-placeholder--disabled {
-        color:var(--color-grey-300);
+        color: var(--color-grey-500);
       }
     }
   }
 
   /* ───────────────── listbox (popup) */
   &__listbox {
-    position: absolute;
+    // position: absolute;
     box-sizing:border-box;
     padding: 2px;
     margin: -2px 0 0 0;
@@ -159,7 +167,7 @@
     @include gradientBorderVar(4);
     box-shadow:var(--elevation-3);
     scrollbar-width: none;
-    z-index: 10;
+    z-index: 2147483647;
 
     /* animation – your JS toggles .is-open / .is-closed */
     &--is-open   {
@@ -184,6 +192,10 @@
     perspective:1000px;
     @include text("base");
 
+    html[data-theme='dark'] & {
+      background: rgb(16, 19, 27);
+    }
+
     & {
       font-size: 1rem;
     }
@@ -195,17 +207,47 @@
 
     /* hover / focus */
     @include when-hovered() {
-      background-color:var(--color-grey-50);
+      background:var(--color-primary-50);
+
+      html[data-theme='dark'] & {
+        background:var(--color-primary-50);
+      }
     }
 
     @include when-focuse-visible() {
       outline:0;
-      background:var(--color-primary-100);
+      background:var(--color-primary-50);
+
+      html[data-theme='dark'] & {
+        background:var(--color-primary-50);
+      }
     }
 
     /* selected */
     &--selected {
-      background-color:var(--color-primary-50);
+      background:var(--color-primary-100);
+
+      html[data-theme='dark'] & {
+        background:var(--color-primary-100);
+      }
+    }
+
+    /* keyboard "active" option (aria-activedescendant) */
+    &--active {
+      background: var(--color-primary-100);
+
+      html[data-theme='dark'] & {
+        background: var(--color-primary-100);
+      }
+    }
+
+    /* if both selected + active, keep it clearly active */
+    &--selected--active {
+      background: var(--color-primary-100);
+
+      html[data-theme='dark'] & {
+        background: var(--color-primary-100);
+      }
     }
 
     /* disabled (if you add aria-disabled) */
@@ -233,6 +275,10 @@
       position: absolute;
       inset: 2px;
       background: var(--color-white);
+
+      html[data-theme='dark'] & {
+        background-color: rgb(16, 19, 27);
+      }
     }
 
     &--checked { /* gradient + tick mark */

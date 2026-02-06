@@ -1,34 +1,46 @@
 import type { LabelProps } from "../label"
 import type { HTMLAttributes, FocusEvent, ChangeEvent } from "react"
 
+/**
+ * A labeled mark on the slider track.
+ */
 export interface SliderMark {
+  /** Numeric value for the mark. */
   value: number
+  /** Optional label shown at the mark. */
   label?: string
 }
 
+/**
+ * Slider component props.
+ * Renders a single-value range input with optional marks and labels.
+ *
+ * @example
+ * <Slider id="price" label="Price" min={0} max={100} />
+ */
 export interface SliderProps {
-  /** Unique identifier (also used for label htmlFor) */
+  /** Unique identifier (also used for label htmlFor). */
   id: string
 
-  /** Current value (controlled) */
+  /** Current value (controlled). */
   value?: number | string
 
-  /** Minimum value (default: 0) */
+  /** Minimum value (default: 0). */
   min?: number
 
-  /** Maximum value (default: 100) */
+  /** Maximum value (default: 100). */
   max?: number
 
-  /** Step increment (default: 1) */
+  /** Step increment (default: 1). */
   step?: number
 
-  /* Name attribute of the field */
+  /** Name attribute of the field. */
   name?: string
 
-  /** Custom error message */
+  /** Custom error message. */
   errorText?: string
 
-  /** Custom helper message */
+  /** Custom helper message. */
   helperText?: string
 
   /**
@@ -37,28 +49,28 @@ export interface SliderProps {
    */
   marks?: boolean | SliderMark[]
 
-  /** Label text (renders above the slider) */
+  /** Label text (renders above the slider). */
   label?: string
 
-  /** Hide label */
+  /** Hide label. */
   hideLabel?: boolean
 
-  /** Props forwarded to the Label component */
+  /** Props forwarded to the Label component. */
   labelProps?: Omit<LabelProps, "htmlFor" | "label" | "required" | "error">
 
-  /** Props forwarded to the floating value tooltip <span> */
+  /** Props forwarded to the floating value tooltip <span>. */
   valueLabelProps?: HTMLAttributes<HTMLSpanElement>
 
-  /** If true, renders *— Required —* on the label */
+  /** If true, renders *— Required —* on the label. */
   required?: boolean
 
-  /** Disable the slider entirely */
+  /** Disable the slider entirely. */
   disabled?: boolean
 
-  /** Called when slider gains focus */
+  /** Called when slider gains focus. */
   onFocus?: (e: FocusEvent<HTMLInputElement>) => void
 
-  /** Called when slider loses focus */
+  /** Called when slider loses focus. */
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void
 
   /**
@@ -67,7 +79,7 @@ export interface SliderProps {
    */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>, value: number) => void
 
-  /** Optional additional CSS class on the root container */
+  /** Optional additional CSS class on the root container. */
   className?: string
 
   /**
@@ -79,19 +91,22 @@ export interface SliderProps {
   snap?: "none" | "step" | "marks"
 }
 
+/**
+ * Internal view props for Slider rendering.
+ */
 export interface SliderViewProps extends SliderProps {
-  /** Internal controlled numeric value */
+  /** Internal controlled numeric value. */
   internalValue: number
 
-  /** Whether the input is currently focused */
+  /** Whether the input is currently focused. */
   isFocused: boolean
 
-  /** Focus handler */
+  /** Focus handler. */
   onFocusInternal: (e: React.FocusEvent<HTMLInputElement>) => void
 
-  /** Blur handler */
+  /** Blur handler. */
   onBlurInternal: (e: React.FocusEvent<HTMLInputElement>) => void
 
-  /** Change handler */
+  /** Change handler. */
   onChangeInternal: (e: ChangeEvent<HTMLInputElement>) => void
 }

@@ -1,6 +1,6 @@
 {
   "name": "@prokodo/ui",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "type": "module",
   "description": "UI components for production-grade Next.js + Headless CMS (Strapi, Contentful, Headless WordPress) websites by prokodo – built for Core Web Vitals & SEO.",
   "sideEffects": [
@@ -166,6 +166,11 @@
       "import": "./dist/components/map/index.js",
       "types": "./dist/types/components/map/index.d.ts"
     },
+    "./pagination": {
+      "import": "./dist/components/pagination/index.js",
+      "types": "./dist/types/components/pagination/index.d.ts"
+    },
+    "./pagination.css": "./dist/components/pagination/Pagination.css",
     "./post-item": {
       "import": "./dist/components/post-item/index.js",
       "types": "./dist/types/components/post-item/index.d.ts"
@@ -250,7 +255,12 @@
       "import": "./dist/components/teaser/index.js",
       "types": "./dist/types/components/teaser/index.d.ts"
     },
-    "./teaser.css": "./dist/components/teaser/Teaser.css"
+    "./teaser.css": "./dist/components/teaser/Teaser.css",
+    "./tooltip": {
+      "import": "./dist/components/tooltip/index.js",
+      "types": "./dist/types/components/tooltip/index.d.ts"
+    },
+    "./tooltip.css": "./dist/components/tooltip/Tooltip.css"
   },
   "repository": {
     "type": "git",
@@ -320,6 +330,7 @@
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/google.maps": "^3.55.11",
     "@types/hast": "^3.0.4",
     "@types/jest": "^29.5.13",

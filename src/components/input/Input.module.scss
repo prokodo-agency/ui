@@ -12,7 +12,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   height: 100%;
   width: 100%;
 
@@ -47,6 +46,10 @@
         /* white background behind text so it “floats” */
         background-color: var(--color-white);
         padding: 0 $space-xs;
+
+        html[data-theme='dark'] & {
+          background-color: rgb(16, 19, 27);
+        }
       }
     }
   }
@@ -79,6 +82,10 @@
     textarea:autofill {
       background-color: var(--color-white);
       color: var(--color-grey-900);
+
+      html[data-theme='dark'] & {
+        background-color: rgb(16, 19, 27);
+      }
     }
 
     /* Chrome / Edge / Opera / Safari (WebKit/Blink) */
@@ -105,6 +112,10 @@
       box-shadow: 0 0 0 1000px var(--color-white) inset;
       background-color: var(--color-white);
       color: var(--color-grey-900);
+
+      html[data-theme='dark'] & {
+        background-color: rgb(16, 19, 27);
+      }
     }
 
     /* Optional: border style when autofilled */
@@ -159,6 +170,10 @@
       background-color: var(--color-white);
       @include text("base");
 
+      html[data-theme='dark'] & {
+        background-color: rgb(16, 19, 27);
+      }
+
       & {
         font-size: 1rem;
       }
@@ -191,8 +206,12 @@
       }
 
       &:disabled {
-        color: var(--color-grey-300);
+        color: var(--color-grey-700);
         background: var(--color-white);
+
+        html[data-theme='dark'] & {
+          background-color: rgb(16, 19, 27);
+        }
       }
     }
 
