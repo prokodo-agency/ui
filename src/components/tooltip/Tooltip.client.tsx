@@ -441,7 +441,6 @@ function TooltipClient(props: TooltipProps): JSX.Element {
     offset,
     zIndex,
     mobileBreakpoint,
-    anchor,
   ])
 
   useLayoutEffect(() => {

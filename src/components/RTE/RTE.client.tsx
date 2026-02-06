@@ -269,7 +269,7 @@ function RTEClient(props: RTEProps): JSX.Element {
           binding: Record<string, unknown>,
           handler: (
             range: { index: number; length: number },
-            ctx: any,
+            ctx: { format?: Record<string, unknown> },
           ) => boolean | void,
         ) => void
       } | null

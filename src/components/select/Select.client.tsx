@@ -237,6 +237,13 @@ function SelectClient<Value extends string = string>({
     if (!Boolean(multiple)) close()
   }
 
+  const onOptionKeyDown = (e: React.KeyboardEvent, v: Value | null) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      clickOption(v)
+    }
+  }
+
   return (
     <SelectView
       {...rest}
@@ -313,6 +320,7 @@ function SelectClient<Value extends string = string>({
                   key="placeholder"
                   id={`${args.id}-opt-0`}
                   role="option"
+                  tabIndex={-1}
                   aria-selected={
                     Array.isArray(args.value)
                       ? args.value.length === 0
@@ -325,6 +333,7 @@ function SelectClient<Value extends string = string>({
                     active: activeIndex === 0,
                   })}
                   onClick={() => args.onOptionClick(null)}
+                  onKeyDown={e => onOptionKeyDown(e, null)}
                   onMouseMove={() => setActiveIndex(0)}
                 >
                   {args.placeholder}
@@ -345,11 +354,13 @@ function SelectClient<Value extends string = string>({
                     aria-selected={selected}
                     id={`${args.id}-opt-${index}`}
                     role="option"
+                    tabIndex={-1}
                     className={args.bemItem({
                       selected,
                       active: activeIndex === index,
                     })}
                     onClick={() => args.onOptionClick(opt.value as Value)}
+                    onKeyDown={e => onOptionKeyDown(e, opt.value as Value)}
                     onMouseMove={() => setActiveIndex(index)}
                   >
                     {Boolean(args.multiple) && (

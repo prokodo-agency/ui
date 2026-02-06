@@ -89,20 +89,36 @@ export function TooltipView(props: TooltipViewProps): JSX.Element {
 
     // ✅ critical: prevent full-width triggers (global button resets, flex rules, etc.)
     display:
-      (triggerProps?.style as any)?.display ??
-      (childProps.style as any)?.display ??
+      ((triggerProps?.style as Record<string, unknown>)?.display as
+        | string
+        | undefined) ??
+      ((childProps.style as Record<string, unknown>)?.display as
+        | string
+        | undefined) ??
       "inline-flex",
     width:
-      (triggerProps?.style as any)?.width ??
-      (childProps.style as any)?.width ??
+      ((triggerProps?.style as Record<string, unknown>)?.width as
+        | string
+        | undefined) ??
+      ((childProps.style as Record<string, unknown>)?.width as
+        | string
+        | undefined) ??
       "max-content",
     maxWidth:
-      (triggerProps?.style as any)?.maxWidth ??
-      (childProps.style as any)?.maxWidth ??
+      ((triggerProps?.style as Record<string, unknown>)?.maxWidth as
+        | string
+        | undefined) ??
+      ((childProps.style as Record<string, unknown>)?.maxWidth as
+        | string
+        | undefined) ??
       "max-content",
     flex:
-      (triggerProps?.style as any)?.flex ??
-      (childProps.style as any)?.flex ??
+      ((triggerProps?.style as Record<string, unknown>)?.flex as
+        | string
+        | undefined) ??
+      ((childProps.style as Record<string, unknown>)?.flex as
+        | string
+        | undefined) ??
       "0 0 auto",
   }
 
@@ -118,7 +134,9 @@ export function TooltipView(props: TooltipViewProps): JSX.Element {
     ),
 
     "aria-describedby": mergeClassName(
-      (childProps as any)["aria-describedby"],
+      (childProps as Record<string, unknown>)["aria-describedby"] as
+        | string
+        | undefined,
       describedBy,
     ),
 
@@ -129,7 +147,7 @@ export function TooltipView(props: TooltipViewProps): JSX.Element {
     onKeyDown: compose(childProps.onKeyDown, triggerProps?.onKeyDown),
 
     ref: (node: HTMLElement | null) => {
-      setRef((childProps as any).ref, node)
+      setRef(childProps.ref, node)
       if (__triggerRef) __triggerRef.current = node
     },
   }

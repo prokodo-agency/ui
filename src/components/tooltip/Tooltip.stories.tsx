@@ -221,16 +221,18 @@ export const InlineTextTrigger: Story = {
     <p style={{ maxWidth: 520, lineHeight: 1.6 }}>
       You can attach a tooltip to{" "}
       <Tooltip {...args}>
-        <span
-          tabIndex={0}
+        <button
           style={{
+            all: "unset",
+            display: "inline",
             textDecoration: "underline",
             textUnderlineOffset: 3,
             cursor: "help",
           }}
+          onClick={() => console.log("CLICKED")}
         >
           inline text
-        </span>
+        </button>
       </Tooltip>{" "}
       as long as the trigger is a single element. Add <code>tabIndex=0</code> if
       it should be focusable.

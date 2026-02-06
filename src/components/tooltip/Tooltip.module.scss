@@ -39,10 +39,10 @@
     left: 0;
     top: 0;
 
-    /* ✅ Position via CSS vars, but NO animated transform/scale */
+    /* Position via CSS vars, but NO animated transform/scale */
     transform: translate3d(var(--pk-tt-x, 0px), var(--pk-tt-y, 0px), 0);
 
-    /* ✅ Only opacity changes for animation */
+    /* Only opacity changes for animation */
     will-change: opacity;
 
     z-index: var(--pk-tt-z, 2147483647);

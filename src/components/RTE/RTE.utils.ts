@@ -60,7 +60,7 @@ export function decorateToolbar(toolbarEl: HTMLElement): void {
   })
 }
 
-export function syncPickerSelected(toolbarEl: HTMLElement) {
+export function syncPickerSelected(toolbarEl: HTMLElement): void {
   toolbarEl.querySelectorAll(".ql-picker-item").forEach(el => {
     const item = el as HTMLElement
     // read Quill state

@@ -330,6 +330,7 @@
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/google.maps": "^3.55.11",
     "@types/hast": "^3.0.4",
     "@types/jest": "^29.5.13",

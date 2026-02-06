@@ -59,11 +59,14 @@ export function PaginationView({
         }
       />
 
-      <ul className={bem("list")} role="list">
-        {items.map((it, idx) => {
+      <ul className={bem("list")}>
+        {items.map(it => {
           if (it.type === "ellipsis") {
             return (
-              <li key={`${it.key}-${idx}`} className={bem("item")}>
+              <li
+                key={`${safePage}-${safeTotal}-${it.key}`}
+                className={bem("item")}
+              >
                 <span aria-hidden="true" className={bem("ellipsis")}>
                   …
                 </span>

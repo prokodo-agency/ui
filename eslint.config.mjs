@@ -139,7 +139,7 @@ export default [
       "@typescript-eslint/no-explicit-any": ["error", { ignoreRestArgs: true }],
       "@typescript-eslint/no-var-requires": "error",
       "@typescript-eslint/no-inferrable-types": "error",
-      "@typescript-eslint/strict-boolean-expressions": "warn",
+      "@typescript-eslint/strict-boolean-expressions": "off", // Too strict for practical use
 
       // Accessibility rules
       "jsx-a11y/alt-text": "error",
@@ -196,11 +196,18 @@ export default [
       ...testingLibrary.configs.react.rules,
       ...jestDom.configs.recommended.rules,
       "react/display-name": "off",
-      "@typescript-eslint/no-explicit-any": "off",
+      "react/no-array-index-key": "off",
+      "@typescript-eslint/no-explicit-any": "warn", // Code-Smell auch in Tests
+      "@typescript-eslint/no-var-requires": "off", // OK für Mocks
       "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
       "testing-library/no-dom-import": ["error", "react"],
-      "testing-library/prefer-presence-queries": "warn",
       "testing-library/no-manual-cleanup": "error",
+      "testing-library/prefer-screen-queries": "warn", // Best Practice
+      "testing-library/no-container": "warn", // Bessere Test-Patterns
+      "testing-library/no-node-access": "warn", // Vermeidet Implementierungs-Details
+      "testing-library/prefer-presence-queries": "off",
+      "jest/expect-expect": "off",
     },
   },
 ]

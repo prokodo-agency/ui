@@ -129,8 +129,9 @@ export function SelectView<Value extends string = string>({
           multiple,
           placeholder,
           items,
-          value: (value ?? (Boolean(multiple) ? [] : "")) as any,
-          onOptionClick: (opt: any) => _clientState?.onOptionClick?.(opt),
+          value: (value ?? (Boolean(multiple) ? [] : "")) as Value,
+          onOptionClick: (opt: Value | null) =>
+            _clientState?.onOptionClick?.(opt),
           iconVisible,
           bemItem: (mods?: Record<string, boolean>) => bem("item", mods),
           bemCheckbox: (mods?: Record<string, boolean>) =>

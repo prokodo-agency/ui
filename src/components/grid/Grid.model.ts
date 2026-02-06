@@ -106,6 +106,13 @@ export interface GridProps {
    */
   autoFlow?: CSSProperties["gridAutoFlow"]
 
+  /**
+   * Gap spacing multiplier (deprecated - use gap instead).
+   * Multiplied by 8px for actual spacing.
+   * @deprecated Use gap property instead
+   */
+  spacing?: number
+
   /** Root container class name. */
   className?: string
 
@@ -168,5 +175,38 @@ export interface GridItemProps {
   style?: CSSProperties
 
   /** Item content. */
+  children?: ReactNode
+}
+
+/**
+ * Grid row props.
+ * Used for responsive grid row layout.
+ */
+export interface GridRowProps {
+  /** Horizontal alignment of row items. */
+  align?: "left" | "center" | "right"
+
+  /** Extra small breakpoint column span. */
+  xs?: number
+
+  /** Small breakpoint column span. */
+  sm?: number
+
+  /** Medium breakpoint column span. */
+  md?: number
+
+  /** Large breakpoint column span. */
+  lg?: number
+
+  /** Extra large breakpoint column span. */
+  xl?: number
+
+  /** Row container class name. */
+  className?: string
+
+  /** Row inline styles. */
+  style?: CSSProperties
+
+  /** Row content. */
   children?: ReactNode
 }
