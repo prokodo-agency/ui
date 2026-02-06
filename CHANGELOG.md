@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.12
+
+### Patch Changes
+
+- New tooltip and pagination component
+
 ## 0.1.11
 
 ### Patch Changes
