@@ -14,6 +14,9 @@ const bem = create(styles, "Accordion")
 
 export function AccordionView({
   id,
+  type = "card",
+  headerWrapperClassName,
+  headerToggleClassName,
   variant = "primary",
   className,
   items,
@@ -26,7 +29,7 @@ export function AccordionView({
   return (
     <div
       {...domRest}
-      className={bem(undefined, { [variant]: true }, className)}
+      className={bem(undefined, { [variant]: true, [type]: true }, className)}
     >
       {items.map((item, index) => {
         const {
@@ -58,16 +61,32 @@ export function AccordionView({
         return (
           <div
             key={accId}
-            className={bem("item", { "is-expanded": isExpanded }, itemCls)}
+            className={bem(
+              "item",
+              { "is-expanded": isExpanded, [type]: true },
+              itemCls,
+            )}
           >
             <div
-              className={bem("header__wrapper", { "is-expanded": isExpanded })}
+              className={bem(
+                "header__wrapper",
+                {
+                  "is-expanded": isExpanded,
+                  [type]: true,
+                  [`${type}--is-expanded`]: isExpanded,
+                },
+                headerWrapperClassName,
+              )}
             >
               {/* TOGGLE ZONE */}
               <div
-                {...accHeaderProps}
-                className={bem("header__toggle", { "is-expanded": isExpanded })}
                 id={`${accId}-header`}
+                className={bem(
+                  "header__toggle",
+                  { "is-expanded": isExpanded },
+                  headerToggleClassName,
+                )}
+                {...accHeaderProps}
               >
                 {/* TITLE */}
                 {!isNull(renderHeader) ? (
@@ -125,6 +144,7 @@ export function AccordionView({
 
             {/* CONTENT */}
             <div
+              aria-label={title}
               aria-labelledby={`${accId}-header`}
               className={bem("content", { "is-expanded": isExpanded })}
               hidden={!isExpanded}

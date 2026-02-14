@@ -302,6 +302,8 @@ function TooltipClient(props: TooltipProps): JSX.Element {
         onMouseLeave: openOnHover
           ? (e: React.MouseEvent<HTMLElement>) => {
               triggerProps?.onMouseLeave?.(e)
+              const nextTarget = e.relatedTarget as Node | null
+              if (nextTarget && bubbleRef.current?.contains(nextTarget)) return
               if (anchor === "pointer") lastPointer.current = null
               scheduleClose()
             }
@@ -497,6 +499,21 @@ function TooltipClient(props: TooltipProps): JSX.Element {
               style={bubbleStyle}
               className={
                 bubbleStyle ? portalBubbleClassFinal : portalBubbleClassBase
+              }
+              onMouseEnter={
+                openOnHover
+                  ? () => {
+                      clearTimers()
+                      setOpen(true)
+                    }
+                  : undefined
+              }
+              onMouseLeave={
+                openOnHover
+                  ? () => {
+                      scheduleClose()
+                    }
+                  : undefined
               }
             >
               {content}

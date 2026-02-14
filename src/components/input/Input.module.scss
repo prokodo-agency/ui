@@ -160,8 +160,8 @@
     }
 
     &__node {
-      width: calc(100% - $space-xl - $space-xl - $space-xs);
-      padding: px-to-rem(14px) $space-xl;
+      width: calc(100% - $space-lg - $space-lg - $space-xs);
+      padding: px-to-rem(14px) $space-lg;
       margin: 2px;
       border: none;
       outline: none;

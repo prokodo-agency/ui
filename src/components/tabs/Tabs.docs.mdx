@@ -1,0 +1,88 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as TabsStories from "./Tabs.stories"
+
+<Meta of={TabsStories} />
+
+# Tabs
+
+Accessible tab navigation component with island architecture and design-system styling.
+
+## When to use
+
+Use `Tabs` when users need to switch between sibling content sections without leaving the current page context.
+
+## Accessibility (WCAG 2.2)
+
+`Tabs` follows the ARIA tabs pattern:
+
+- `role="tablist"` container with tab buttons
+- each tab uses `role="tab"`, `aria-selected`, and `aria-controls`
+- each panel uses `role="tabpanel"` and `aria-labelledby`
+- full keyboard support (`Arrow` keys, `Home`, `End`, `Enter`, `Space`)
+
+### Keyboard behavior
+
+- **Arrow Left/Right** (or Up/Down in vertical mode): move tab focus
+- **Home/End**: jump to first/last enabled tab
+- **Enter/Space**: activate focused tab
+- In `activationMode="automatic"`, focus movement activates immediately
+- In `activationMode="manual"`, activation happens on `Enter` or `Space`
+
+## API updates
+
+- `TabsItem.label` accepts `ReactNode` (not only plain text)
+- `TabsProps.badgeChipProps` sets global Chip props for all badges
+- `TabsItem.badgeChipProps` overrides global badge chip props per tab item
+- `TabsItem.badge` accepts `ReactNode`
+- `TabsItem.className` allows per-panel custom class names
+
+### Badge Chip precedence
+
+1. Internal defaults (`outlined`, `primary`)
+2. Global `badgeChipProps`
+3. Per-item `item.badgeChipProps` (highest priority)
+
+## ✅ Do
+
+- Provide concise, unique tab labels
+- Keep tab order stable (do not reorder dynamically)
+- Use `ariaLabel` for context when the visual title is not explicit
+- Prefer `manual` activation when panel content is expensive to load
+- Ensure each tab has meaningful panel content
+
+## ❌ Don’t
+
+- Don’t use tabs for sequential steps (use Stepper instead)
+- Don’t hide critical validation/errors only in inactive panels without indication
+- Don’t put too many tabs in one row without clear grouping
+- Don’t use vague labels like “Tab 1/Tab 2”
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={TabsStories.Default} />
+</Canvas>
+
+### Manual activation
+
+<Canvas>
+  <Story of={TabsStories.ManualActivation} />
+</Canvas>
+
+### Vertical layout
+
+<Canvas>
+  <Story of={TabsStories.Vertical} />
+</Canvas>
+
+### ReactNode labels + badge chip props
+
+<Canvas>
+  <Story of={TabsStories.BadgeChipProps} />
+</Canvas>
+
+### Props
+
+<Controls of={TabsStories.Default} />

@@ -46,6 +46,11 @@
       "import": "./dist/components/animatedText/index.js",
       "types": "./dist/types/components/animatedText/index.d.ts"
     },
+    "./autocomplete": {
+      "import": "./dist/components/autocomplete/index.js",
+      "types": "./dist/types/components/autocomplete/index.d.ts"
+    },
+    "./autocomplete.css": "./dist/components/autocomplete/Autocomplete.css",
     "./avatar": {
       "import": "./dist/components/avatar/index.js",
       "types": "./dist/types/components/avatar/index.d.ts"
@@ -251,6 +256,11 @@
       "types": "./dist/types/components/table/index.d.ts"
     },
     "./table.css": "./dist/components/table/Table.css",
+    "./tabs": {
+      "import": "./dist/components/tabs/index.js",
+      "types": "./dist/types/components/tabs/index.d.ts"
+    },
+    "./tabs.css": "./dist/components/tabs/Tabs.css",
     "./teaser": {
       "import": "./dist/components/teaser/index.js",
       "types": "./dist/types/components/teaser/index.d.ts"

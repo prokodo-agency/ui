@@ -242,11 +242,12 @@ describe("AccordionView", () => {
   })
 
   it("should apply correct classes for expanded state", () => {
-    render(
+    const { container } = render(
       <AccordionView
         className="custom-class"
         expandedIndex={0}
         id="test-classes"
+        type="panel"
         variant="secondary"
         items={[
           {
@@ -266,6 +267,8 @@ describe("AccordionView", () => {
     // Verify the item is expanded
     const button = screen.getByRole("button")
     expect(button).toHaveAttribute("aria-expanded", "true")
+
+    expect(container).toBeInTheDocument()
   })
 
   it("should set correct accessibility attributes", () => {
@@ -298,18 +301,16 @@ describe("AccordionView", () => {
     expect(firstControls).toBeTruthy()
     expect(secondControls).toBeTruthy()
 
-    // Check that controlled regions exist
-    const firstRegion = firstControls
-      ? // eslint-disable-next-line testing-library/no-node-access
-        document.getElementById(firstControls)
-      : null
-    const secondRegion = secondControls
-      ? // eslint-disable-next-line testing-library/no-node-access
-        document.getElementById(secondControls)
-      : null
+    const regions = screen.getAllByRole("region", { hidden: true })
+    const firstRegion = regions.find(
+      region => region.getAttribute("id") === firstControls,
+    )
+    const secondRegion = regions.find(
+      region => region.getAttribute("id") === secondControls,
+    )
 
-    expect(firstRegion).toBeInTheDocument()
-    expect(secondRegion).toBeInTheDocument()
+    expect(firstRegion).toBeTruthy()
+    expect(secondRegion).toBeTruthy()
 
     // Verify they have the region role
     expect(firstRegion).toHaveAttribute("role", "region")
@@ -320,5 +321,20 @@ describe("AccordionView", () => {
 
     // Second region should be hidden (collapsed)
     expect(secondRegion).toHaveAttribute("hidden")
+  })
+
+  it("should apply custom header wrapper and toggle classes", () => {
+    render(
+      <AccordionView
+        expandedIndex={0}
+        headerToggleClassName="custom-toggle-class"
+        headerWrapperClassName="custom-wrapper-class"
+        id="test-custom-header-classes"
+        items={[{ title: "Item 1", renderContent: <div>Content 1</div> }]}
+      />,
+    )
+
+    const toggle = screen.getByRole("button", { name: "Item 1" })
+    expect(toggle).toHaveClass("custom-toggle-class")
   })
 })
