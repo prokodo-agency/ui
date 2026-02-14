@@ -1,0 +1,182 @@
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/ui/mixins/bem" as *;
+
+@include define-block("Tabs") {
+  width: 100%;
+
+  &--vertical {
+    display: grid;
+    gap: $space-lg;
+    grid-template-columns: minmax(px-to-rem(180px), px-to-rem(260px)) 1fr;
+  }
+
+  &__list {
+    align-items: stretch;
+    border-bottom: 1px solid var(--color-grey-200);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0;
+    position: relative;
+    scrollbar-width: none;
+
+    html[data-theme='dark'] & {
+      border-bottom-color: var(--color-grey-700);
+    }
+
+    &--vertical {
+      border-bottom: none;
+      border-right: 1px solid var(--color-grey-200);
+      flex-direction: column;
+      overflow-x: visible;
+
+      html[data-theme='dark'] & {
+        border-right-color: var(--color-grey-700);
+      }
+    }
+
+    &--disabled {
+      opacity: 0.7;
+    }
+  }
+
+  &__tab {
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-top-left-radius: $ui-form-element;
+    border-top-right-radius: $ui-form-element;
+    box-shadow: none;
+    color: var(--color-grey-700);
+    cursor: pointer;
+    display: inline-flex;
+    gap: $space-sm;
+    justify-content: center;
+    min-height: px-to-rem(44px);
+    padding: $space-md $space-lg;
+    position: relative;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      opacity 160ms ease;
+    @include text("base");
+
+    &--vertical {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    @include when-hovered() {
+        background: var(--color-primary-50);
+    }
+
+    @include when-focuse-visible() {
+      outline: 0;
+      background: var(--color-primary-50);
+    }    
+
+    &::after {
+      background: transparent;
+      bottom: 0;
+      content: "";
+      height: 3px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      transform: scaleX(0.35);
+      transform-origin: center;
+      transition:
+        background-color 180ms ease,
+        transform 180ms ease;
+    }
+
+    &--fullWidth {
+      flex: 1 1 0;
+    }
+
+    &--selected {
+      color: var(--color-primary-900);
+
+      &::after {
+        @include gradientBorderVar(4);
+        transform: scaleX(1);
+      }
+    }
+
+    &--disabled {
+      color: var(--color-grey-500);
+      cursor: not-allowed;
+      opacity: 0.58;
+
+      @include when-hovered() {
+        background: transparent;
+      }
+
+      &::after {
+        background: transparent;
+      }
+    }
+  }
+
+  &__list--vertical &__tab {
+    justify-content: flex-start;
+    text-align: left;
+
+    &::after {
+      bottom: 0;
+      height: auto;
+      left: 0;
+      right: auto;
+      top: 0;
+      transform: scaleY(0.35);
+      transform-origin: center;
+      width: 3px;
+    }
+
+    &--selected::after {
+      transform: scaleY(1);
+    }
+  }
+
+  &__tabLabel {
+    @include textLineClamp(1);
+  }
+
+  &__badge {
+    align-items: center;
+    background: var(--color-grey-200);
+    border-radius: px-to-rem(999px);
+    color: var(--color-grey-700);
+    display: inline-flex;
+    justify-content: center;
+    min-width: px-to-rem(20px);
+    padding: 0 $space-xs;
+    font-size: px-to-rem(12px);
+    @include text("base");
+  }
+
+  &__badgeChip {
+    pointer-events: none;
+    @include text("caption");
+  }
+
+  &__panel {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: $space-lg;
+
+    &[hidden] {
+      display: none !important;
+    }
+
+    @include when-focuse-visible() {
+      outline: 0;
+      @include gradientBorderVar(4);
+    }
+  }
+}

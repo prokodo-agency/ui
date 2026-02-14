@@ -42,7 +42,7 @@
 - ✨ **Adaptive Island Components (AIC)**: A rendering strategy where each component loads only the JavaScript it needs — when needed.
 - ⚡️ **Modern stack**: Vite, React 19, TypeScript, and SCSS Modules
 - 💅 **Design consistency**: Theming via design tokens and BEM-style naming
-- 🧩 **Component-rich**: 40+ reusable UI components
+- 🧩 **Component-rich**: 50+ reusable UI components
 - 🧪 **Reliable**: Fully tested with Jest and Testing Library
 - 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
 - 📦 **Ready-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
@@ -161,6 +161,7 @@ export default function GalleryPage() {
 | Accordion           |               ✅               |                 ✅                 |
 | Animated            |               ✅               |                 ✅                 |
 | AnimatedText        |               ✅               |                 ✅                 |
+| Autocomplete        |               ✅               |                 ✅                 |
 | Avatar              |               ✅               |                 ✅                 |
 | BaseLink            |               ✅               |                 ✅                 |
 | Button              |               ✅               |                 ✅                 |
@@ -204,6 +205,7 @@ export default function GalleryPage() {
 | Stepper             |               ✅               |                 ✅                 |
 | Switch              |               ✅               |                 ✅                 |
 | Table               |               ✅               |                 –                  |
+| Tabs                |               ✅               |                 ✅                 |
 | Teaser              |               ✅               |                 -                  |
 | Tooltip             |               ✅               |                 ✅                 |
 
@@ -335,6 +337,7 @@ export default createLazyWrapper<NavbarProps>({
 - [ ] Add more ✨ **fancy styling**, UI polish and properties
 - [ ] Improve **accessibility** to meet **WCAG 2.2 AAA** standards
 - [ ] Detailed Documentation about the components
+- [x] Detailed Typescript-Model-Documentation about the components
 
 ## Examples (Next.js + Headless CMS)
 

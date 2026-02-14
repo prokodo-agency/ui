@@ -69,6 +69,12 @@ export type AccordionItem = {
 export type AccordionProps = {
   /** Unique accordion ID. Required for internal state management and DOM reference (aria-controls). */
   id: string
+  /** Visual container style. `card` keeps elevated cards, `panel` renders flatter panel rows. */
+  type?: "card" | "panel"
+  /** Additional class name for every accordion header wrapper (`Accordion__header__wrapper`). */
+  headerWrapperClassName?: string
+  /** Additional class name for every accordion header toggle zone (`Accordion__header__toggle`). */
+  headerToggleClassName?: string
   /** Initially expanded panel index (0-based). `null` = all collapsed. Controlled prop (overrides internal state). */
   expanded?: number | null
   /** Root element class name. */

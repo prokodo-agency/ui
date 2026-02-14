@@ -4,6 +4,7 @@
 // Component UI
 @use "./components/accordion/Accordion.module.scss";
 @use "./components/animated/Animated.module.scss";
+@use "./components/autocomplete/Autocomplete.module.scss";
 @use "./components/avatar/Avatar.module.scss";
 @use "./components/button/Button.module.scss";
 @use "./components/card/Card.module.scss";
@@ -42,5 +43,6 @@
 @use "./components/stepper/Stepper.module.scss";
 @use "./components/switch/Switch.module.scss";
 @use "./components/table/Table.module.scss";
+@use "./components/tabs/Tabs.module.scss";
 @use "./components/teaser/Teaser.module.scss";
 @use "./components/tooltip/Tooltip.module.scss";

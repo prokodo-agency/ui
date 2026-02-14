@@ -13,6 +13,12 @@ const meta = {
   parameters: { layout: "centered" },
   tags: ["autodocs"],
   argTypes: {
+    headerWrapperClassName: { control: "text" },
+    headerToggleClassName: { control: "text" },
+    type: {
+      options: ["card", "panel"],
+      control: { type: "select" },
+    },
     variant: {
       options: [
         "inherit",
@@ -73,6 +79,7 @@ const items: AccordionItem[] = [
 export const Default: Story = {
   args: {
     id: "example",
+    type: "card",
     expanded: null,
     items,
   },

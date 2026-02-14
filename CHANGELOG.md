@@ -1,5 +1,15 @@
 # @prokodo/ui
 
+## 0.1.13
+
+### Patch Changes
+
+- Added new `Autocomplete` component (AIC setup with server/client/lazy entrypoints), including keyboard navigation, async/loading states, listbox accessibility, styles, stories, and public exports.
+- Added new `Tabs` component (AIC setup with server/client/lazy entrypoints), including ARIA tab pattern support, keyboard navigation (`Arrow`, `Home`, `End`, `Enter`, `Space`), vertical mode, badge chip support, docs, stories, and public exports.
+- Extended `Accordion` with new `type` variants (`card`/`panel`) and new style hooks (`headerWrapperClassName`, `headerToggleClassName`), including related style and story updates.
+- Improved tooltip hover behavior so moving the pointer from trigger to tooltip bubble does not close it prematurely.
+- Updated package/entry exports and theme imports for `Autocomplete` and `Tabs`, plus README component matrix/count updates.
+
 ## 0.1.12
 
 ### Patch Changes

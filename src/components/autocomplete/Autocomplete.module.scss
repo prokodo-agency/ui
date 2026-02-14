@@ -1,0 +1,162 @@
+@use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/config/radials" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@include define-block("Autocomplete") {
+  position: relative;
+
+  &__inputWrap {
+    position: relative;
+    z-index: 41;
+    border-radius: $ui-form-element;
+  }
+
+  &__input {
+    width: 100%;
+
+    &__inner--is-open,
+    &__node--is-open {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+
+    &__inner--is-open {
+      @include gradientBorderVar(4);
+    }
+  }
+
+  &__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: calc(100% - 4px);
+    margin: 0;
+    padding: 0 2px 2px;
+    list-style: none;
+    transform: none;
+    border-bottom-left-radius: $ui-form-element;
+    border-bottom-right-radius: $ui-form-element;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    @include gradientBorderVar(4);
+    margin-top: -2px;
+    box-shadow: var(--elevation-3);
+    max-height: 260px;
+    overflow: auto;
+    z-index: 50;
+    animation: fade-in 180ms ease-out;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__state {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin: 0;
+    padding: $space-sm $space-lg $space-lg $space-lg;
+    background: var(--color-white);
+    color: var(--color-grey-700);
+    border-bottom-left-radius: $ui-form-element;
+    border-bottom-right-radius: $ui-form-element;
+    @include text("caption");
+
+    html[data-theme="dark"] & {
+      background: rgb(16, 19, 27);
+      color: var(--color-grey-500);
+    }
+  }
+
+  &__itemRow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &--is-last {
+        border-bottom-left-radius: $ui-form-element;
+        border-bottom-right-radius: $ui-form-element;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    border: none;
+    background: var(--color-white);
+    color: inherit;
+    text-align: left;
+    display: grid;
+    gap: $space-xs;
+    padding: $space-sm $space-lg;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+
+    html[data-theme="dark"] & {
+      background: rgb(16, 19, 27);
+    }
+
+    @include when-hovered() {
+      background: var(--color-primary-50);
+
+      html[data-theme="dark"] & {
+        background: var(--color-primary-50);
+      }
+    }
+
+    @include when-focuse-visible() {
+      outline: 0;
+      background: var(--color-primary-50);
+
+      html[data-theme="dark"] & {
+        background: var(--color-primary-50);
+      }
+    }
+
+    &--is-first {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    &--is-last {
+        border-bottom-left-radius: $ui-form-element;
+        border-bottom-right-radius: $ui-form-element;
+    }
+
+    &--is-active {
+      background: var(--color-primary-100);
+
+      html[data-theme="dark"] & {
+        background: var(--color-primary-100);
+      }
+    }
+  }
+
+  &__itemLabel {
+    margin: 0;
+    color: var(--color-grey-900);
+    @include text("caption");
+  }
+
+  &__itemDescription {
+    margin: 0;
+    color: var(--color-grey-700);
+    @include text("caption");
+  }
+}
