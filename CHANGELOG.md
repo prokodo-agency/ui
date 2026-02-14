@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.13
+
+### Patch Changes
+
+- Strong feature release in prokodo-ui focused on new navigation/input primitives plus accordion hardening; main scope is Autocomplete + Tabs, with supporting styling, exports, docs, and test updates.
+
 ## 0.1.12
 
 ### Patch Changes
