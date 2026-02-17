@@ -1,0 +1,156 @@
+@use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/config/spaces" as *;
+
+@include define-block("Checkbox") {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $space-md;
+
+  padding: $space-sm 0;
+  border-radius: 12px;
+
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+
+  cursor: pointer;
+  user-select: none;
+
+  &--disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  @include when-focused-within() {
+    @include use-custom-focus-outline();
+  }
+
+  &--card {
+    padding: $space-sm 0;
+    border-radius: 12px;
+    background: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+  }
+
+  &__left {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  &__control {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    position: relative;
+
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: var(--inner-elevation-1);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: border-color 140ms ease, background 140ms ease;
+
+    &::after {
+      content: "";
+      width: 9px;
+      height: 5px;
+      border-left: 2px solid var(--color-primary-500, #2f6bff);
+      border-bottom: 2px solid var(--color-primary-500, #2f6bff);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%) rotate(-45deg) scale(0.6);
+      opacity: 0;
+
+      transition: transform 140ms ease, opacity 140ms ease;
+    }
+
+    &--checked {
+      border-color: rgba(255, 255, 255, 0.32);
+
+      &::after {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+      }
+    }
+
+    &--card {
+      box-shadow: var(--inner-elevation-1);
+    }
+
+    &--card#{&}--checked {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &__body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+  }
+
+  &__row {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    min-width: 0;
+  }
+
+  &__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-grey-900);
+    margin: 0;
+    @include text("base");
+  }
+
+  &__requiredMark {
+    color: var(--color-error);
+    line-height: 1;
+    @include text("base");
+  }
+
+  &__desc {
+    color: var(--color-grey-700);
+    opacity: 0.82;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    @include text("caption");
+  }
+
+  &__right {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    align-self: start;
+    margin-top: 2px;
+  }
+
+  &__rightIcon {
+    color: var(--color-grey-700);
+    opacity: 0.9;
+  }
+}

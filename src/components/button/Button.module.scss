@@ -35,39 +35,77 @@
 
   &--has-bg-primary,
   &--has-bg-secondary,
-  &--has-bg-info,
-  &--has-bg-error {
-    color: $white !important;
-  }
-
   &--has-bg-success,
   &--has-bg-warning {
-    color: var(--color-black);
+    color: $black;
+  }
+
+  &--has-bg-info,
+  &--has-bg-error {
+    color: $white;
   }
 
   &--has-bg-primary {
     @include gradientBackgroundVar("primary");
+    color: $black;
+
+    html[data-theme='dark'] & {
+      color: $white;
+    }
+  }
+
+  &--has-bg-inherit {
+    html[data-theme='dark'] & {
+      color: var(--color-grey-900);
+      background: linear-gradient(112deg, var(--color-grey-200) 0%, var(--color-grey-300) 100%);
+      background-color: var(--color-grey-300);
+    }
   }
 
   &--has-bg-secondary {
     @include gradientBackgroundVar("secondary");
+    color: $black;
+
+    html[data-theme='dark'] & {
+      color: $white;
+    }
   }
 
   &--is-disabled,
   &--has-bg-info {
     @include gradientBackgroundVar("info");
+    color: $white;
+
+    html[data-theme='dark'] & {
+      color: var(--color-grey-700);
+    }
   }
 
   &--has-bg-success {
     @include gradientBackgroundVar("success");
+    color: $black;
+
+    html[data-theme='dark'] & {
+      color: $black;
+    }
   }
 
   &--has-bg-warning {
     @include gradientBackgroundVar("warning");
+    color: $black;
+
+    html[data-theme='dark'] & {
+      color: $black;
+    }
   }
 
   &--has-bg-error {
     @include gradientBackgroundVar("error");
+    color: $white;
+
+    html[data-theme='dark'] & {
+      color: $white;
+    }
   }
 
   &--has-text-inherit,
@@ -147,7 +185,7 @@
   &--has-variant-outlined {
     position: relative;
     background: none;
-    color: var(--color-black) !important;
+    color: var(--color-black);
 
     &::before {
       content: "";
@@ -168,6 +206,86 @@
 
     html[data-theme='dark'] & {
       background: none;
+    }
+  }
+
+  &--has-variant-outlined--has-outline-inherit {
+    color: var(--color-black);
+
+    &::before {
+      @include gradientBorderVar(8);
+    }
+  }
+
+  &--has-variant-outlined--has-outline-primary {
+    color: var(--color-black);
+
+    &::before {
+      @include gradientBorderVar(4);
+    }
+
+    html[data-theme='dark'] & {
+      color: var(--color-primary-500);
+    }
+  }
+
+  &--has-variant-outlined--has-outline-secondary {
+    color: var(--color-black);
+
+    &::before {
+      @include gradientBorderVar(2);
+    }
+
+    html[data-theme='dark'] & {
+      color: var(--color-secondary-500);
+    }
+  }
+
+  &--has-variant-outlined--has-outline-info {
+    color: var(--color-black);
+
+    &::before {
+      @include gradientBorderVar("info");
+    }
+
+    html[data-theme='dark'] & {
+      color: $white;
+    }
+  }
+
+  &--has-variant-outlined--has-outline-success {
+    color: var(--color-black);
+
+    &::before {
+      @include gradientBorderVar("success");
+    }
+
+    html[data-theme='dark'] & {
+      color: var(--color-success);
+    }
+  }
+
+  &--has-variant-outlined--has-outline-warning {
+    color: var(--color-black);
+
+    &::before {
+      @include gradientBorderVar("warning");
+    }
+
+    html[data-theme='dark'] & {
+      color: var(--color-warning);
+    }
+  }
+
+  &--has-variant-outlined--has-outline-error {
+    color: var(--color-black);
+
+    &::before {
+      @include gradientBorderVar("error");
+    }
+
+    html[data-theme='dark'] & {
+      color: var(--color-error);
     }
   }
 
@@ -193,6 +311,30 @@
 
   &--is-disabled {
     cursor: default;
+    box-shadow: none;
+    color: var(--color-grey-500);
+    background: var(--color-grey-100);
+    background-color: var(--color-grey-100);
+
+    &::before {
+      @include gradientBorderVar(8);
+    }
+
+    @include when-hovered() {
+      color: var(--color-grey-500);
+      background: var(--color-grey-100);
+      background-color: var(--color-grey-100);
+    }
+
+    html[data-theme='dark'] & {
+      color: var(--color-grey-600);
+      background: linear-gradient(112deg, var(--color-grey-200) 0%, var(--color-grey-300) 100%);
+      background-color: var(--color-grey-300);
+
+      &::before {
+        background: linear-gradient(112deg, var(--color-grey-300) 0%, var(--color-grey-500) 100%);
+      }
+    }
   }
 
   &__title {
@@ -236,7 +378,6 @@
     width: 100%;
 
     &--icon-only {
-      padding: 0.5rem;
       border-radius: 2000rem;
     }
   }

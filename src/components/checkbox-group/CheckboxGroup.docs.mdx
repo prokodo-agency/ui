@@ -1,0 +1,88 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as CheckboxGroupStories from "./CheckboxGroup.stories"
+
+<Meta of={CheckboxGroupStories} />
+
+# CheckboxGroup
+
+Accessible multi-select checkbox list with island architecture and native form semantics.
+
+## When to use
+
+Use `CheckboxGroup` when users can select none, one, or multiple options from the same category.
+
+## Accessibility (WCAG 2.2)
+
+`CheckboxGroup` follows semantic grouping with native checkboxes:
+
+- uses `fieldset` and optional `legend` to describe option group meaning
+- each option remains a native checkbox for reliable assistive technology behavior
+- supports hidden legend for visual minimal layouts while preserving accessibility
+- supports group-level `required` behavior by enforcing at least one selected option
+
+### Keyboard behavior
+
+- **Tab**: enters and moves through each checkbox option
+- **Space**: toggles currently focused checkbox
+- **Shift + Tab**: navigates backward through controls
+
+## API notes
+
+- `values` enables controlled mode
+- `defaultValues` enables uncontrolled mode
+- `onChange(nextValues)` emits all selected values after each toggle
+- `layout` supports `stack` and `grid`
+- `variant` supports `plain` and `card` styles
+- `hiddenInputName` mirrors selection as comma-separated string for non-JS form posts
+- `required` enforces group-level requirement (legend shows `*`)
+- `options[].required` enforces item-level requirement (checkbox label shows `*`)
+
+## ✅ Do
+
+- Provide a meaningful `legend` for grouped context
+- Keep option labels concise and specific
+- Use `grid` only when option cards are short and balanced
+- Use `required` only when one selection is mandatory
+
+## ❌ Don’t
+
+- Don’t use CheckboxGroup for single-choice scenarios (use RadioGroup)
+- Don’t mix unrelated categories in one group
+- Don’t overload descriptions with long paragraphs
+- Don’t hide critical requirements outside visible labels/descriptions
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={CheckboxGroupStories.Default} />
+</Canvas>
+
+### Controlled
+
+<Canvas>
+  <Story of={CheckboxGroupStories.Controlled} />
+</Canvas>
+
+### Grid plain layout
+
+<Canvas>
+  <Story of={CheckboxGroupStories.GridPlain} />
+</Canvas>
+
+### Required
+
+<Canvas>
+  <Story of={CheckboxGroupStories.Required} />
+</Canvas>
+
+### Option required
+
+<Canvas>
+  <Story of={CheckboxGroupStories.OptionRequired} />
+</Canvas>
+
+### Props
+
+<Controls of={CheckboxGroupStories.Default} />

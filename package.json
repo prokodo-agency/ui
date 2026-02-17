@@ -79,6 +79,16 @@
       "types": "./dist/types/components/carousel/index.d.ts"
     },
     "./carousel.css": "./dist/components/carousel/Carousel.css",
+    "./checkbox": {
+      "import": "./dist/components/checkbox/index.js",
+      "types": "./dist/types/components/checkbox/index.d.ts"
+    },
+    "./checkbox.css": "./dist/components/checkbox/Checkbox.css",
+    "./checkbox-group": {
+      "import": "./dist/components/checkbox-group/index.js",
+      "types": "./dist/types/components/checkbox-group/index.d.ts"
+    },
+    "./checkbox-group.css": "./dist/components/checkbox-group/CheckboxGroup.css",
     "./chip": {
       "import": "./dist/components/chip/index.js",
       "types": "./dist/types/components/chip/index.d.ts"

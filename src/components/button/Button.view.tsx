@@ -66,6 +66,8 @@ export const ButtonView: FC<ButtonViewProps> = ({
         "has-icon": !Boolean(isIconOnly) && isString(iconProps?.name),
         [`has-variant-${variant}`]: true,
         [`has-bg-${color}`]: variant === "contained",
+        [`has-variant-${variant}--has-outline-${color}`]:
+          variant === "outlined",
         [`has-text-${color}`]: variant === "text",
         "is-disabled": Boolean(disabled),
         ...iconMod,
