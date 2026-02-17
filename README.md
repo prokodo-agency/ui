@@ -168,6 +168,8 @@ export default function GalleryPage() {
 | Calendly            |               ✅               |                 ✅                 |
 | Card                |               ✅               |                 ✅                 |
 | Carousel            |               ✅               |                 ✅                 |
+| Checkbox            |               ✅               |                 ✅                 |
+| CheckboxGroup       |               ✅               |                 ✅                 |
 | Chip                |               ✅               |                 ✅                 |
 | DatePicker          |               ✅               |                 ✅                 |
 | Dialog              |               ✅               |                 ✅                 |

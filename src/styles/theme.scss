@@ -84,6 +84,10 @@
   --gradient-border-6: linear-gradient(90deg, var(--color-secondary-500) 4.63%, var(--color-primary-500) 100%);
   --gradient-border-7: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500), var(--color-primary-500));
   --gradient-border-8: linear-gradient(90deg, var(--color-grey-100) 4.63%, var(--color-grey-300) 100%);
+  --gradient-border-info: linear-gradient(112deg, var(--color-grey-100) 0%, var(--color-grey-300) 100%);
+  --gradient-border-success: linear-gradient(112deg, #20E381 0%, #10CCB8 100%);
+  --gradient-border-warning: linear-gradient(112deg, #FFCC00 0%, #CCA300 100%);
+  --gradient-border-error: linear-gradient(112deg, #EB5550 0%, #FF4444 100%);
 
   // Text Gradients
   --gradient-text-primary-secondary: linear-gradient(90deg, var(--color-primary-500) 0%, var(--color-primary-800) 50%, var(--color-secondary-500) 100%);
@@ -175,6 +179,11 @@
   --gradient-border-4: linear-gradient(112.34deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
   --gradient-border-5: linear-gradient(90deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
   --gradient-border-7: linear-gradient(180deg, var(--color-grey-400) 0%, var(--color-grey-600) 100%);
+  --gradient-border-8: linear-gradient(90deg, var(--color-grey-100) 4.63%, var(--color-grey-300) 100%);
+  --gradient-border-info: linear-gradient(112deg, var(--color-grey-100) 0%, var(--color-grey-300) 100%);
+  --gradient-border-success: linear-gradient(112deg, #20E381 0%, #10CCB8 100%);
+  --gradient-border-warning: linear-gradient(112deg, #FFCC00 0%, #CCA300 100%);
+  --gradient-border-error: linear-gradient(112deg, #EB5550 0%, #FF4444 100%);
 
   // Text Gradients
   --gradient-text-primary-secondary: linear-gradient(90deg, var(--color-primary-500) 0%, var(--color-primary-800) 50%, var(--color-secondary-500) 100%);

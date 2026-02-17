@@ -1,5 +1,18 @@
 # @prokodo/ui
 
+## 0.1.14
+
+### Patch Changes
+
+- Added new `Checkbox` component (AIC setup with server/client/lazy entrypoints), including controlled/uncontrolled mode, `required`/`showRequiredMark` support, `plain`/`card` variants, accessible native `input[type="checkbox"]`, icon and description slots, docs, stories, and full test coverage.
+- Added new `CheckboxGroup` component (AIC setup with server/client/lazy entrypoints), including multi-select with `fieldset`/`legend` semantics, controlled/uncontrolled mode, `stack`/`grid` layouts, `plain`/`card` variants, group-level and option-level `required`, hidden input mirror for non-JS form posts, docs, stories, and full test coverage.
+- Extended `Button` styles with explicit dark-mode color overrides per color variant (`primary`, `secondary`, `info`, `success`, `warning`, `error`), per-color outlined border gradients, and dedicated disabled styling with dark-mode support.
+- Extended `Dialog` with new `actionsClassName` prop for custom actions region styling.
+- Updated `Snackbar` info variant to use neutral grey background with dark-mode override.
+- Updated design-system success color token (`$light--success`, `$dark--success`) to `#20E381`.
+- Added new gradient border tokens (`info`, `success`, `warning`, `error`) to light and dark themes.
+- Updated package exports, theme imports, and README component matrix for `Checkbox` and `CheckboxGroup`.
+
 ## 0.1.13
 
 ### Patch Changes

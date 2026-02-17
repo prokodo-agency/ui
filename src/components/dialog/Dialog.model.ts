@@ -70,6 +70,8 @@ export type DialogViewProps = HTMLAttributes<HTMLDivElement> & {
   containerChildren?: ReactNode
   /** Header region class name. */
   classNameHeader?: string
+  /** Actions region class name. */
+  actionsClassName?: string
   /** Scroll behavior: "paper" (dialog scrolls) or "body" (background scrolls). */
   scroll?: "paper" | "body"
   /** Full-screen dialog (ignores height, fills viewport). */

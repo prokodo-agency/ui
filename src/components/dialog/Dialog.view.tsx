@@ -25,6 +25,7 @@ export function DialogView({
   containerChildren,
   className,
   classNameHeader,
+  actionsClassName,
   height,
   scroll = "paper",
   fullScreen = false,
@@ -129,7 +130,7 @@ export function DialogView({
         </div>
 
         {actions.length > 0 && (
-          <div className={bem("actions")}>
+          <div className={bem("actions", undefined, actionsClassName)}>
             {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
             <div aria-hidden="true" tabIndex={0} />
             {actions.map(action => (

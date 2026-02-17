@@ -1,0 +1,80 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as CheckboxStories from "./Checkbox.stories"
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+Accessible single-option checkbox with island architecture and design-system styling.
+
+## When to use
+
+Use `Checkbox` for independent yes/no selections, optional user preferences, and consent toggles.
+
+## Accessibility (WCAG 2.2)
+
+`Checkbox` uses native form semantics and keeps browser-default interaction behavior:
+
+- native `input[type="checkbox"]` for robust keyboard/screen-reader support
+- label wrapping for large click target
+- supports `required`, `disabled`, `name`, and `value` for forms
+- works in controlled and uncontrolled mode
+
+### Keyboard behavior
+
+- **Tab**: moves focus to checkbox
+- **Space**: toggles checked state
+- **Shift + Tab**: moves focus back to previous control
+
+## API notes
+
+- `checked` enables controlled mode
+- `defaultChecked` enables uncontrolled mode
+- `onChange(event, checked)` emits normalized checked state
+- `title` is required for visible primary label
+- `description` and `icon` are optional helpers
+- `iconLabel` provides an accessible label for the optional icon
+
+## ✅ Do
+
+- Keep labels short and action-oriented
+- Use `description` only when it adds real context
+- Use `required` only for mandatory user actions
+- Keep checkbox order stable in forms
+
+## ❌ Don’t
+
+- Don’t use checkboxes for mutually exclusive choices (use RadioGroup)
+- Don’t use vague labels like “Option A”
+- Don’t rely only on color to communicate state
+- Don’t hide legal implications in unclear helper text
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={CheckboxStories.Default} />
+</Canvas>
+
+### With description
+
+<Canvas>
+  <Story of={CheckboxStories.WithDescription} />
+</Canvas>
+
+### Controlled
+
+<Canvas>
+  <Story of={CheckboxStories.Controlled} />
+</Canvas>
+
+### Required
+
+<Canvas>
+  <Story of={CheckboxStories.Required} />
+</Canvas>
+
+### Props
+
+<Controls of={CheckboxStories.Default} />
