@@ -7,5 +7,5 @@ import type { CheckboxProps } from "./Checkbox.model"
 export const Checkbox = createIsland<CheckboxProps<string>>({
   name: "Checkbox",
   Server: CheckboxServer,
-  loadLazy: () => import("./Checkbox.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Checkbox.lazy"),
 })

@@ -18,7 +18,9 @@ export const FormResponse: FC<FormResponseProps> = ({
   const listItems: ListDefaultItemProps[] = errorKeys.map(key => ({
     id: key,
     title: key.charAt(0).toUpperCase() + key.slice(1),
-    desc: messages?.errors ? messages.errors?.[key]?.join(", ") : "",
+    desc: messages?.errors
+      ? messages.errors?.[key]?.join(", ")
+      : /* istanbul ignore next */ "",
     className: bem("errors__item"),
   }))
   if (!isArray(listItems)) return null

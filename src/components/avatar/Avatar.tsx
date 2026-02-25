@@ -7,5 +7,5 @@ import type { AvatarProps } from "./Avatar.model"
 export const Avatar = createIsland<AvatarProps>({
   name: "Avatar",
   Server: AvatarServer,
-  loadLazy: () => import("./Avatar.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Avatar.lazy"),
 })

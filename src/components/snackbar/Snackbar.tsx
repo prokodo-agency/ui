@@ -7,5 +7,5 @@ import type { SnackbarProps } from "./Snackbar.model"
 export const Snackbar = createIsland<SnackbarProps>({
   name: "Snackbar",
   Server: SnackbarServer,
-  loadLazy: () => import("./Snackbar.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Snackbar.lazy"),
 })

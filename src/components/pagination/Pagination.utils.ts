@@ -72,6 +72,7 @@ export function buildPaginationItems(args: {
   const seen = new Set<string>()
   return items.filter(it => {
     const key = it.type === "page" ? `p-${it.value}` : `e-${it.key}`
+    /* istanbul ignore next */
     if (seen.has(key)) return false
     seen.add(key)
     return true

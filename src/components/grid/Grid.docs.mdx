@@ -1,0 +1,63 @@
+import { Canvas, Controls, Meta } from "@storybook/blocks"
+import * as GridStories from "./Grid.stories"
+
+<Meta of={GridStories} />
+
+# Grid
+
+Layout utility components (`Grid` and `GridRow`) for building responsive grid layouts. Based on CSS Grid with design-system column tokens.
+
+## When to use
+
+Use `Grid` and `GridRow` to arrange sibling components into a column-based layout that adapts to different screen sizes. Prefer Grid over custom CSS Grid or Flexbox when the layout must follow the design system's column grid.
+
+## Components
+
+| Component | Purpose                                                             |
+| --------- | ------------------------------------------------------------------- |
+| `Grid`    | Outer grid container — sets column count and gap                    |
+| `GridRow` | Single row inside the grid — configures column spans per breakpoint |
+
+## Accessibility (WCAG 2.2)
+
+- Grid renders a plain `<div>` container — no semantics are added or removed
+- Ensure the reading order in the DOM matches the visual order for keyboard and screen-reader users
+- Do not use Grid to reorder content visually while keeping a different DOM order
+
+## ✅ Do
+
+- Use only within the established design-system layout boundaries
+- Define responsive column spans at the `GridRow` level for each breakpoint
+- Test at all target breakpoints (mobile, tablet, desktop)
+
+## ❌ Don't
+
+- Don't use Grid for micro-layout within a component (use Flexbox or component-level CSS)
+- Don't nest Grid containers more than two levels deep
+- Don't rely on visual order for focus order — keep DOM order meaningful
+
+## Examples
+
+### Default (three columns)
+
+<Canvas of={GridStories.Default} />
+
+### Two columns
+
+<Canvas of={GridStories.TwoColumns} />
+
+### Four columns (responsive)
+
+<Canvas of={GridStories.FourColumns} />
+
+### Centred row
+
+<Canvas of={GridStories.CenteredRow} />
+
+### No gap
+
+<Canvas of={GridStories.NoGap} />
+
+### Props
+
+<Controls of={GridStories.Default} />

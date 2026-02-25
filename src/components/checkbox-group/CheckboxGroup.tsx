@@ -9,5 +9,5 @@ export const CheckboxGroup = createIsland<CheckboxGroupProps<string>>({
   name: "CheckboxGroup",
   Server: CheckboxGroupServer,
   /* istanbul ignore next */
-  loadLazy: () => import("./CheckboxGroup.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./CheckboxGroup.lazy"),
 })

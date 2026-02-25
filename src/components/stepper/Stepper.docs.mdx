@@ -1,0 +1,53 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as StepperStories from "./Stepper.stories"
+
+<Meta of={StepperStories} />
+
+# Stepper
+
+A step-by-step wizard that guides the user through a sequential multi-stage process. Each step has a label, optional icon, and can carry a completion or error state.
+
+## When to use
+
+Use `Stepper` for multi-page forms, onboarding flows, and checkout sequences where each stage must be completed in order and progress needs to be visible. For independent sections use `Tabs`.
+
+## Accessibility (WCAG 2.2)
+
+- The step list has `role="list"` with each step as `role="listitem"`
+- The current step is communicated via `aria-current="step"`
+- Completed steps have `aria-label="[Step name] – completed"`
+- Navigation buttons (`Next`, `Back`) are standard `<button>` elements with descriptive labels
+
+### Keyboard behavior
+
+- **Tab**: navigate between the action buttons
+- **Enter / Space**: activate the focused button
+- Navigation through locked future steps is prevented
+
+## ✅ Do
+
+- Display a persistent summary of completed data so users can verify before the final step
+- Allow users to go back to earlier steps to correct mistakes
+
+## ❌ Don't
+
+- Don't split a single form field across multiple stepper steps — keep related fields together
+- Don't use more than seven steps — beyond that, reconsider the information architecture
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={StepperStories.Default} />
+</Canvas>
+
+### With icon
+
+<Canvas>
+  <Story of={StepperStories.WithIcon} />
+</Canvas>
+
+### Props
+
+<Controls of={StepperStories.Default} />

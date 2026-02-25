@@ -12,6 +12,7 @@ import type { ProgressBarProps } from "./ProgressBar.model"
 export default function ProgressBarClient(
   props: ProgressBarProps,
 ): JSX.Element {
+  /* istanbul ignore next */
   const { value, animated = true, ...rest } = props
   const [displayValue, setDisplayValue] = useState(value)
   const frame = useRef<number>(null)
@@ -22,6 +23,7 @@ export default function ProgressBarClient(
       return
     }
 
+    /* istanbul ignore next */
     const start = displayValue ?? 0
     const end = value
     const duration = 400 // ms

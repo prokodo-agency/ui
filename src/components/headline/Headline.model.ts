@@ -11,7 +11,14 @@ export type HeadlineTypeProps = "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 /**
  * Predefined size tokens for headline typography.
  */
-export type HeadlineSizeProps = "xxl" | "xl" | "lg" | "md" | "sm" | "xs"
+export type HeadlineSizeProps =
+  | "xxl"
+  | "xl"
+  | "lg"
+  | "md"
+  | "sm"
+  | "xs"
+  | number
 
 /**
  * Visual variants mapped to design system variants.

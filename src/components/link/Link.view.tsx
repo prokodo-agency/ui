@@ -60,6 +60,8 @@ export function LinkView({
       </span>
     )
   }
+  /* istanbul ignore next */
+  const clickProps = hasHandlers ? { onClick } : null
   return (
     <BaseLinkComponent
       {...common}
@@ -67,7 +69,7 @@ export function LinkView({
       href={href}
       linkComponent={linkComponent}
       target={target}
-      {...(hasHandlers ? { onClick } : null)}
+      {...clickProps}
     >
       {children}
     </BaseLinkComponent>

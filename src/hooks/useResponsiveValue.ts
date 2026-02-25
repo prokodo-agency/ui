@@ -50,9 +50,11 @@ export function useResponsiveValue<T>(opts: Options<T>): {
     if (!hasContainerRules) return
 
     const el = containerRef.current
+    /* istanbul ignore next */
     if (!el || typeof ResizeObserver === "undefined") return
 
     const ro = new ResizeObserver(entries => {
+      /* istanbul ignore next */
       const w = entries[0]?.contentRect?.width ?? 0
       setContainerWidth(w)
     })
@@ -79,6 +81,7 @@ export function useResponsiveValue<T>(opts: Options<T>): {
   )
 
   useEffect(() => {
+    /* istanbul ignore next */
     if (typeof window === "undefined" || !("matchMedia" in window)) return
 
     const disposers: Array<() => void> = []

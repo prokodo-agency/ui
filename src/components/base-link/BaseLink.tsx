@@ -10,6 +10,6 @@ const isInteractive = (p: BaseLinkProps) =>
 export const BaseLink = createIsland<BaseLinkProps>({
   name: "BaseLink",
   Server: BaseLinkServer,
-  loadLazy: () => import("./BaseLink.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./BaseLink.lazy"),
   isInteractive,
 })

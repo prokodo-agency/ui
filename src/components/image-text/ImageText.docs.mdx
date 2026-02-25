@@ -1,0 +1,48 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as ImageTextStories from "./ImageText.stories"
+
+<Meta of={ImageTextStories} />
+
+# ImageText
+
+Two-column layout combining an image and text content side by side. Used for feature sections, service descriptions, and editorial hero blocks.
+
+## When to use
+
+Use `ImageText` for marketing or editorial sections that pair a visual with explanatory copy and an optional call-to-action. Prefer this over hand-rolled two-column layouts for consistency.
+
+## Layout
+
+- Default: image on the left, text on the right
+- `reverse={true}`: image on the right, text on the left
+- Stacks vertically on mobile
+
+## Accessibility (WCAG 2.2)
+
+- The image `alt` text must describe the visual content (not the article topic)
+- CTA button/link must have a descriptive label — avoid "Click here" or "Read more" alone
+- Maintain logical heading hierarchy: `subTitle` renders before `title`, both anchored to surrounding page structure
+
+## ✅ Do
+
+- Keep `title` and `content` concise for above-the-fold usage
+- Use `reverse` to alternate layout direction in list-of-features sections
+- Provide `button.href` for the CTA whenever possible so it is accessible as a native link
+
+## ❌ Don't
+
+- Don't use as a full-page layout wrapper — embed inside a page section
+- Don't use an decorative image without setting `alt=""`
+- Don't use both `subTitle` and a section heading at the same level above this component
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={ImageTextStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={ImageTextStories.Default} />

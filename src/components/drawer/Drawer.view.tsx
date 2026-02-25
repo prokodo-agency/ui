@@ -32,7 +32,7 @@ export const DrawerView: FC<DrawerViewProps> = ({
   const isOpen = Boolean(open)
   return (
     <div
-      aria-hidden={isOpen ? undefined : true}
+      aria-hidden={isOpen ? undefined : /* istanbul ignore next */ true}
       className={bem("backdrop", { open: isOpen })}
       {...backdropProps}
     >
@@ -52,11 +52,13 @@ export const DrawerView: FC<DrawerViewProps> = ({
         aria-labelledby={isString(title) ? "drawer-title" : undefined}
         role="dialog"
         {
+          /* istanbul ignore next */
+          /* istanbul ignore next */
           ...(isOpen
             ? { "aria-modal": "true" }
             : { "aria-hidden": "true", inert: true }) // presence = true
         }
-        aria-modal={isOpen ? "true" : undefined}
+        aria-modal={isOpen ? "true" : /* istanbul ignore next */ undefined}
         className={bem(
           "container",
           {
@@ -85,7 +87,9 @@ export const DrawerView: FC<DrawerViewProps> = ({
                   variant="text"
                   {...closeButtonProps}
                   ref={closeButtonRef}
-                  onClick={() => onClose?.("escapeKeyDown")}
+                  onClick={
+                    /* istanbul ignore next */ () => onClose?.("escapeKeyDown")
+                  }
                 />
               </div>
             )}

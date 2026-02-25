@@ -45,7 +45,10 @@ export const Headline: FC<HeadlineProps> = ({
   const bemClass = bem(undefined, modifier, className)
 
   // 4) Inline style if size is numeric
-  const customStyle = typeof size === "number" ? { fontSize: `${size}em` } : {}
+  const customStyle =
+    typeof size === "number"
+      ? { fontSize: `${size}em` }
+      : /* istanbul ignore next */ {}
 
   // 5) Compute aria-label if children is plain text
   const ariaLabel = typeof children === "string" ? children : undefined
@@ -101,8 +104,9 @@ export const Headline: FC<HeadlineProps> = ({
           schema={schema}
           variant={variant}
           {...remainingProps}
-          overrideParagraph={(textContent: string) =>
-            renderHTag({ children: textContent })
+          overrideParagraph={
+            /* istanbul ignore next */ (textContent: string) =>
+              renderHTag({ children: textContent })
           }
         >
           {children as string}

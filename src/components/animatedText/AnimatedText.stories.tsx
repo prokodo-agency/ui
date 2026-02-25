@@ -34,7 +34,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     style: {
-      fontFamily: "Orbitron",
+      fontFamily: "Montserrat",
       fontSize: 24,
     },
     children: "Do you want to write some text?",

@@ -1,0 +1,62 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as LabelStories from "./Label.stories"
+
+<Meta of={LabelStories} />
+
+# Label
+
+Form label component that renders either a `<label>` (for individual inputs) or a `<legend>` (for fieldsets). Handles required asterisks and error styling consistently.
+
+## When to use
+
+Use `Label` directly when building custom form controls. Inside `Input`, `Select`, `Switch`, and other form components, labels are rendered automatically via the `label` prop.
+
+## Variants
+
+| `type`              | Renders    | Use for                                         |
+| ------------------- | ---------- | ----------------------------------------------- |
+| `"label"` (default) | `<label>`  | Single input fields                             |
+| `"legend"`          | `<legend>` | Fieldset groups (checkbox groups, radio groups) |
+
+## Accessibility (WCAG 2.2)
+
+- Use `htmlFor` to associate a `<label>` with its input by `id`
+- `<legend>` must be a direct child of `<fieldset>` — enforced by HTML spec
+- `required` adds a visible asterisk and communicates requirement to assistive tech
+- `error` applies error styling; pair with an error message linked via `aria-describedby`
+
+## ✅ Do
+
+- Always link `Label` to its control via `htmlFor` (for `type="label"`)
+- Keep label text short and action-oriented: "Email address", not "Please enter your email"
+- Use `type="legend"` inside `<fieldset>` for grouped controls
+
+## ❌ Don't
+
+- Don't use `<label>` as a visual heading — use `Headline`
+- Don't use `error` styling without also providing an error message to the user
+- Don't nest interactive elements inside `Label`
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={LabelStories.Default} />
+</Canvas>
+
+### Required
+
+<Canvas>
+  <Story of={LabelStories.Required} />
+</Canvas>
+
+### Error state
+
+<Canvas>
+  <Story of={LabelStories.ErrorState} />
+</Canvas>
+
+### Props
+
+<Controls of={LabelStories.Default} />

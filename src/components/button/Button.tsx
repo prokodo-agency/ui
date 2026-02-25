@@ -7,5 +7,5 @@ import type { ButtonProps } from "./Button.model"
 export const Button = createIsland<ButtonProps>({
   name: "Button",
   Server: ButtonServer,
-  loadLazy: () => import("./Button.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Button.lazy"),
 })

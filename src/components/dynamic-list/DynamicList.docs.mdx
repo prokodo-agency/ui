@@ -1,0 +1,59 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as DynamicListStories from "./DynamicList.stories"
+
+<Meta of={DynamicListStories} />
+
+# DynamicList
+
+Repeatable field list for forms. Allows users to add and remove rows of one or more fields. Supports text inputs and select dropdowns within each row.
+
+## When to use
+
+Use `DynamicList` when the number of values in a form field is unknown at design time — e.g. a list of email addresses, URLs, or team members with multiple attributes per entry.
+
+- **Single-field mode**: `fields` array of length 1 → `onChange` receives `string[]`
+- **Multi-field mode**: `fields` array of length ≥ 2 → `onChange` receives `Record<string, string>[]`
+
+## Accessibility (WCAG 2.2)
+
+- Each field carries its own `label` and is associated via `htmlFor`/`id`
+- Delete buttons include an accessible label via `iconProps.label` or `title`
+- Error and helper text are linked via `aria-describedby`
+- Keyboard-navigable: all Add/Delete buttons are standard `<button>` elements
+
+## ✅ Do
+
+- Always set a meaningful `name` prop (used as field name prefix)
+- Provide `label` on each field definition for accessibility
+- Limit the maximum number of rows when there is a business constraint
+- Use `buttonAddProps` to give the add action a descriptive label
+
+## ❌ Don't
+
+- Don't mix single and multi-field mode in one instance
+- Don't use `DynamicList` for fixed-length lists — use individual `Input` fields instead
+- Don't omit `onChange` — without it the list is read-only and uncontrolled
+
+## Examples
+
+### Single field
+
+<Canvas>
+  <Story of={DynamicListStories.SingleField} />
+</Canvas>
+
+### Multi field
+
+<Canvas>
+  <Story of={DynamicListStories.MultiField} />
+</Canvas>
+
+### Custom add / delete buttons
+
+<Canvas>
+  <Story of={DynamicListStories.CustomButtons} />
+</Canvas>
+
+### Props
+
+<Controls of={DynamicListStories.SingleField} />

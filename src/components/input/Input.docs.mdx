@@ -1,0 +1,76 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as InputStories from "./Input.stories"
+
+<Meta of={InputStories} />
+
+# Input
+
+Native text input and textarea component with built-in validation, character counter, helper text, and a custom render-node API. Follows the island architecture for progressive enhancement.
+
+## When to use
+
+Use `Input` for any single-line text entry (text, email, password, URL, number, etc.) or multi-line textarea. For date/time pickers use `DatePicker`. For OTP codes use `InputOTP`.
+
+## Single-line vs. multiline
+
+| Mode                    | Prop                          | Extra props                  |
+| ----------------------- | ----------------------------- | ---------------------------- |
+| Single-line `<input>`   | `multiline={false}` (default) | `type`, `min`, `max`         |
+| Multi-line `<textarea>` | `multiline={true}`            | `rows`, `minRows`, `maxRows` |
+
+The two modes are mutually exclusive — TypeScript enforces this at compile time.
+
+## Validation
+
+Built-in validation runs on blur for: `required`, `email`, `tel`, `url`, `number`, `password`, `color`, `min`, `max`.  
+Override messages via `errorTranslations`. Custom patterns via `customRegexPattern`.
+
+## Accessibility (WCAG 2.2)
+
+- Every `Input` with a `label` renders an associated `<label htmlFor={id}>`
+- Error text is linked via `aria-describedby`
+- `required` fields carry `aria-required="true"`
+- Helper text is also linked via `aria-describedby` when present
+
+## ✅ Do
+
+- Always provide `name` — used for form submission and validation callbacks
+- Use `errorTranslations` to supply language-appropriate messages
+- Set `required` on mandatory fields and handle `onValidate` on the form level
+- Use `helperText` to communicate format expectations proactively
+
+## ❌ Don't
+
+- Don't set `errorText` and let `onValidate` silently override it — choose one source of truth
+- Don't use `Input` for date/time entry — use `DatePicker`
+- Don't hide the label (`hideLegend`) without providing an `aria-label` alternative
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={InputStories.Default} />
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story of={InputStories.Disabled} />
+</Canvas>
+
+### With validation
+
+<Canvas>
+  <Story of={InputStories.WithValidation} />
+</Canvas>
+
+### Multiline
+
+<Canvas>
+  <Story of={InputStories.Multiline} />
+</Canvas>
+
+### Props
+
+<Controls of={InputStories.Default} />

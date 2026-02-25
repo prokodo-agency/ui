@@ -68,4 +68,19 @@ describe("CheckboxView", () => {
 
     expect(screen.queryByText("*")).not.toBeInTheDocument()
   })
+
+  it("renders icon without name prop (icon.name falsy branch)", () => {
+    render(
+      <CheckboxView
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        icon={{} as any}
+        isChecked={false}
+        name="icon-no-name"
+        title="Icon no name"
+        value="yes"
+      />,
+    )
+    // icon.name is undefined so Icon is not rendered
+    expect(screen.queryByRole("img")).not.toBeInTheDocument()
+  })
 })

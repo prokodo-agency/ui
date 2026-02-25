@@ -1,0 +1,55 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as ListStories from "./List.stories"
+
+<Meta of={ListStories} />
+
+# List
+
+Flexible list component rendering an array of items as styled `<ul>/<ol>` with support for icons, actions, cards layout, and custom item render functions.
+
+## When to use
+
+Use `List` for displaying a set of related items — feature lists, navigation menus, settings options, or content feeds. For tabular data use `Table`.
+
+## Accessibility (WCAG 2.2)
+
+- Renders a semantic `<ul>` or `<ol>` with `<li>` elements
+- Interactive items (links, buttons) carry appropriate roles and focus styles
+- Icon-only items require `aria-label` on the icon or a visually hidden text label
+- List `aria-label` is recommended when multiple lists appear on the same page
+
+## ✅ Do
+
+- Use ordered lists (`ol`) when sequence matters (steps, rankings)
+- Provide `aria-label` on the list element when context is not clear from surrounding headings
+- Group related lists with a visible heading
+
+## ❌ Don't
+
+- Don't use `List` purely for visual spacing — use layout components
+- Don't place block-level elements (headings, sections) inside list items
+- Don't mix interactive and non-interactive items in the same list without visual distinction
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={ListStories.Default} />
+</Canvas>
+
+### Custom items
+
+<Canvas>
+  <Story of={ListStories.Custom} />
+</Canvas>
+
+### Card layout
+
+<Canvas>
+  <Story of={ListStories.Cards} />
+</Canvas>
+
+### Props
+
+<Controls of={ListStories.Default} />

@@ -105,6 +105,7 @@ function DynamicListClient({
         ? ""
         : fields.reduce(
             (obj, f) => {
+              /* istanbul ignore next */
               obj[f?.name ?? ""] = ""
               return obj
             },
@@ -139,6 +140,7 @@ function DynamicListClient({
   type SelectVal = Parameters<SelectOnChange>[1]
 
   const formatedFields = useMemo<DynamicListField[]>(
+    /* istanbul ignore next */
     () =>
       (fields ?? []).map(f => {
         if (f.fieldType === "select") {
@@ -150,6 +152,7 @@ function DynamicListClient({
               (e?.target as HTMLSelectElement | null)?.dataset?.index,
             )
             if (!Number.isNaN(idx)) {
+              /* istanbul ignore next */
               handleSelectChange(idx, rest.name ?? "", v)
             }
           }

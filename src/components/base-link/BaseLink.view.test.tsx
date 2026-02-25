@@ -1,5 +1,6 @@
 import { expect } from "@jest/globals"
 import { render, screen } from "@testing-library/react"
+import { axe } from "jest-axe"
 
 import { BaseLinkView } from "./BaseLink.view"
 
@@ -604,6 +605,43 @@ describe("BaseLinkView", () => {
       const link = screen.getByRole("link")
       expect(link).toHaveAttribute("data-ref-test", "test")
       expect(link).toBeInTheDocument()
+    })
+  })
+
+  // -------------------------------------------------------------------------
+  // Accessibility (WCAG 2.2)
+  // -------------------------------------------------------------------------
+  describe("Accessibility (axe WCAG 2.2)", () => {
+    it("internal link has no axe violations", async () => {
+      const { container } = render(
+        <BaseLinkView href="/about">About us</BaseLinkView>,
+      )
+      expect(await axe(container)).toHaveNoViolations()
+    })
+
+    it("external link has no axe violations", async () => {
+      const { container } = render(
+        <BaseLinkView href="https://example.com">Visit example</BaseLinkView>,
+      )
+      expect(await axe(container)).toHaveNoViolations()
+    })
+
+    it("link with aria-label has no axe violations", async () => {
+      const { container } = render(
+        <BaseLinkView aria-label="Learn more about prokodo" href="/prokodo">
+          Learn more
+        </BaseLinkView>,
+      )
+      expect(await axe(container)).toHaveNoViolations()
+    })
+
+    it("disabled link has no axe violations", async () => {
+      const { container } = render(
+        <BaseLinkView disabled href="/disabled">
+          Disabled link
+        </BaseLinkView>,
+      )
+      expect(await axe(container)).toHaveNoViolations()
     })
   })
 })

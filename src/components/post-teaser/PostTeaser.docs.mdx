@@ -1,0 +1,40 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as PostTeaserStories from "./PostTeaser.stories"
+
+<Meta of={PostTeaserStories} />
+
+# PostTeaser
+
+A featured blog-post card displaying a hero image, headline, excerpt, reading time, publish date, and structured SEO metadata. Used in listing pages and editorial feeds.
+
+## When to use
+
+Use `PostTeaser` as the primary card for editorial content previews in a grid or feed layout. For compact list rows use `PostItem`; for a sidebar summary widget use `PostWidget`.
+
+## Accessibility (WCAG 2.2)
+
+- The headline link has a unique, descriptive accessible name that matches the post title
+- Reading time and publish date are surfaced in `<time>` elements
+- Structured data (`structuredData`) is injected via a `<script type="application/ld+json">` and does not affect DOM focus
+
+## ✅ Do
+
+- Always provide `locale` so dates are formatted in the reader's language
+- Include `structuredData` for SEO-rich snippets in search results
+
+## ❌ Don't
+
+- Don't omit the hero image alt text — it is a primary visual anchor
+- Don't render more than one `PostTeaser` per row on mobile without a responsive grid
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={PostTeaserStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={PostTeaserStories.Default} />

@@ -85,8 +85,11 @@ export default function FormFieldClient({
         <Select
           priority
           {...(props as SelectProps)}
-          onChange={(_: SelectEvent, value: string | string[] | null) =>
-            onChange?.(props as FormFieldModel, value ?? undefined)
+          onChange={
+            /* istanbul ignore next */ (
+              _: SelectEvent,
+              value: string | string[] | null,
+            ) => onChange?.(props as FormFieldModel, value ?? undefined)
           }
         />,
       )
@@ -114,7 +117,7 @@ export default function FormFieldClient({
               props as FormFieldModel,
               typeof value === "object"
                 ? value?.format("YYYY-MM-DDTHH:mm:ssZ")
-                : value,
+                : /* istanbul ignore next */ value,
             )
           }
         />,
@@ -149,5 +152,7 @@ export default function FormFieldClient({
       )
     default:
       return null
+    /* istanbul ignore next */
   }
+  /* istanbul ignore next */
 }

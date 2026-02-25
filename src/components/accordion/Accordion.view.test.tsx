@@ -1,5 +1,6 @@
 import { expect } from "@jest/globals"
 import { render, screen, fireEvent } from "@testing-library/react"
+import { axe } from "jest-axe"
 
 import { AccordionView } from "./Accordion.view"
 
@@ -41,9 +42,21 @@ jest.mock("@/components/button", () => ({
 }))
 
 jest.mock("@/components/headline", () => ({
-  Headline: (props: MockHeadlineProps) => (
-    <div data-testid="headline" {...props}>
-      {props.children}
+  Headline: ({
+    children,
+    animated: _animated,
+    highlight: _highlight,
+    animationProps: _animationProps,
+    type: _type,
+    size: _size,
+    schema: _schema,
+    variant: _variant,
+    isRichtext: _isRichtext,
+    align: _align,
+    ...domProps
+  }: MockHeadlineProps) => (
+    <div data-testid="headline" {...domProps}>
+      {children}
     </div>
   ),
 }))
@@ -239,6 +252,10 @@ describe("AccordionView", () => {
     // Test keydown event with Enter
     fireEvent.keyDown(headerAction, { key: "Enter" })
     expect(headerAction).toBeInTheDocument()
+
+    // Test keydown event with non-Enter key (covers else branch)
+    fireEvent.keyDown(headerAction, { key: "Tab" })
+    expect(headerAction).toBeInTheDocument()
   })
 
   it("should apply correct classes for expanded state", () => {
@@ -336,5 +353,33 @@ describe("AccordionView", () => {
 
     const toggle = screen.getByRole("button", { name: "Item 1" })
     expect(toggle).toHaveClass("custom-toggle-class")
+  })
+
+  // -------------------------------------------------------------------------
+  // Accessibility (WCAG 2.2)
+  // -------------------------------------------------------------------------
+  it("collapsed accordion has no axe violations", async () => {
+    const { container } = render(
+      <AccordionView
+        expandedIndex={null}
+        id="a11y-test"
+        items={[
+          { title: "Panel 1", renderContent: <p>Content 1</p> },
+          { title: "Panel 2", renderContent: <p>Content 2</p> },
+        ]}
+      />,
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it("expanded accordion has no axe violations", async () => {
+    const { container } = render(
+      <AccordionView
+        expandedIndex={0}
+        id="a11y-expanded-test"
+        items={[{ title: "Panel1", renderContent: <p>Content 1</p> }]}
+      />,
+    )
+    expect(await axe(container)).toHaveNoViolations()
   })
 })

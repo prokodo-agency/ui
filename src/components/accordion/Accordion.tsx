@@ -7,6 +7,6 @@ import type { AccordionProps } from "./Accordion.model"
 export const Accordion = createIsland<AccordionProps>({
   name: "Accordion",
   Server: AccordionServer,
-  loadLazy: () => import("./Accordion.lazy"),
-  isInteractive: () => true,
+  loadLazy: /* istanbul ignore next */ () => import("./Accordion.lazy"),
+  isInteractive: /* istanbul ignore next */ () => true,
 })

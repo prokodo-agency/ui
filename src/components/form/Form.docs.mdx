@@ -1,0 +1,81 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as FormStories from "./Form.stories"
+
+<Meta of={FormStories} />
+
+# Form
+
+Server-driven form component. Renders a complete, validated form from a field configuration array. Supports conditional field visibility, multiple field types, and async submission.
+
+## When to use
+
+Use `Form` when you need a fully managed, accessible form without wiring up each field individually. Suitable for contact forms, checkout flows, settings pages, and any multi-field user input.
+
+## Supported field types
+
+| `fieldType`    | Renders       | Value type                               |
+| -------------- | ------------- | ---------------------------------------- |
+| `input`        | `Input`       | `string`                                 |
+| `select`       | `Select`      | `string`                                 |
+| `switch`       | `Switch`      | `boolean`                                |
+| `slider`       | `Slider`      | `string`                                 |
+| `date`         | `DatePicker`  | `string`                                 |
+| `dynamic-list` | `DynamicList` | `string[]` or `Record<string, string>[]` |
+| `rating`       | `Rating`      | `string`                                 |
+
+## Accessibility (WCAG 2.2)
+
+- All fields are associated with labels via `htmlFor`/`id`
+- Error messages are linked via `aria-describedby`
+- Required fields are marked with `aria-required="true"`
+- Submit button communicates loading state via `aria-busy`
+- Conditional fields are hidden with `hidden` attribute (not `display:none`) so they remain in the DOM but excluded from tab order
+
+## Conditional fields
+
+Fields can show/hide or update props based on sibling field values using the `conditions` array:
+
+```tsx
+{
+  fieldType: "input",
+  fieldId: "vatField",
+  conditions: [{ fieldId: "isCompany", equalTo: true, updateProps: { visible: true } }]
+}
+```
+
+## ✅ Do
+
+- Use `fieldId` for every field to enable condition targeting
+- Provide `errorTranslations` for localised validation messages
+- Set `onSubmit` to handle async submission with loading feedback
+- Keep forms short — split long flows into steps using `Stepper`
+
+## ❌ Don't
+
+- Don't mix server-rendered Form with manually wired client fields
+- Don't rely on `conditions` for security-critical field hiding (they are client-side only)
+- Don't use `Form` for single-field inline editing — use `Input` directly
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={FormStories.Default} />
+</Canvas>
+
+### With initial response messages
+
+<Canvas>
+  <Story of={FormStories.WithInitialMessages} />
+</Canvas>
+
+### Hidden response section
+
+<Canvas>
+  <Story of={FormStories.HideResponse} />
+</Canvas>
+
+### Props
+
+<Controls of={FormStories.Default} />

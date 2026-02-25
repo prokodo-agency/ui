@@ -7,6 +7,6 @@ import type { CarouselProps } from "./Carousel.model"
 export const Carousel = createIsland<CarouselProps>({
   name: "Carousel",
   Server: CarouselServer,
-  loadLazy: () => import("./Carousel.lazy"),
-  isInteractive: () => true,
+  loadLazy: /* istanbul ignore next */ () => import("./Carousel.lazy"),
+  isInteractive: /* istanbul ignore next */ () => true,
 })

@@ -41,6 +41,7 @@ function toPlainImgProps(p: Record<string, unknown>): PlainImgProps {
   if (typeof rawSrc === "string") {
     src = rawSrc
   } else if (
+    /* istanbul ignore next */
     typeof rawSrc === "object" &&
     rawSrc !== null &&
     Object.prototype.hasOwnProperty.call(
@@ -52,6 +53,7 @@ function toPlainImgProps(p: Record<string, unknown>): PlainImgProps {
     const rs = rawSrc as StaticImageData
     ;({ src } = rs)
   } else {
+    /* istanbul ignore next */
     src = undefined
   }
 
@@ -96,7 +98,7 @@ const ImageClient: FC<ImageProps> = ({
       return (
         <CustomImage
           // @ts-expect-error: custom image component prop typing is external
-          alt={alt ?? ""}
+          alt={alt ?? /* istanbul ignore next */ ""}
           className={bem("image", undefined, className)}
           {...rawProps}
         />

@@ -7,7 +7,7 @@ import type { DatePickerProps } from "./DatePicker.model"
 export const DatePicker = createIsland<DatePickerProps>({
   name: "DatePicker",
   Server: DatePickerServer,
-  loadLazy: () => import("./DatePicker.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./DatePicker.lazy"),
 })
 
 DatePicker.displayName = "DatePicker"

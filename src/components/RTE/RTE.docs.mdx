@@ -1,0 +1,102 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as RTEStories from "./RTE.stories"
+
+<Meta of={RTEStories} />
+
+# RTE (Rich Text Editor) <span style={{ display: "inline-block", background: "#f0a500", color: "#fff", borderRadius: "4px", padding: "2px 8px", fontSize: "0.65em", fontWeight: 700, verticalAlign: "middle", marginLeft: "8px" }}>BETA</span>
+
+> ⚠️ **This component is currently in beta.** The API may change between minor versions. Avoid using it in production without pinning the exact version.
+
+A full-featured rich-text editor built on Tiptap. Supports configurable toolbar items, character counter, min/maxLength validation, and keyboard shortcuts.
+
+## When to use
+
+Use `RTE` in forms where users need to author formatted content — blog drafts, email templates, case-study descriptions. For displaying CMS-authored content use `RichText`.
+
+## Accessibility (WCAG 2.2)
+
+- The editable area has `role="textbox"` and `aria-multiline="true"`
+- The toolbar is a `role="toolbar"` with grouped controls (`role="group"`)
+- Each toolbar button has an accessible label and a visible tooltip
+- Error messages are linked via `aria-describedby`
+- Keyboard shortcuts are documented in the toolbar tooltip (e.g. **⌘ B** for bold)
+
+### Keyboard shortcuts
+
+| Action    | Shortcut           |
+| --------- | ------------------ |
+| Bold      | ⌘/Ctrl + B         |
+| Italic    | ⌘/Ctrl + I         |
+| Underline | ⌘/Ctrl + U         |
+| Undo      | ⌘/Ctrl + Z         |
+| Redo      | ⌘/Ctrl + Shift + Z |
+
+## ✅ Do
+
+- Use `minLength` / `maxLength` with the character counter for UGC fields
+- Prefer `MinimalToolbar` or `LinksOnly` configs for simple input fields
+
+## ❌ Don't
+
+- Don't use `RTE` when plain text is sufficient — use `Input` with `multiline`
+- Don't omit a field label; the editor `aria-label` alone is not sufficient for sighted users
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={RTEStories.Default} />
+</Canvas>
+
+### With initial content
+
+<Canvas>
+  <Story of={RTEStories.WithInitialContent} />
+</Canvas>
+
+### Required
+
+<Canvas>
+  <Story of={RTEStories.Required} />
+</Canvas>
+
+### With counter
+
+<Canvas>
+  <Story of={RTEStories.WithCounter} />
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story of={RTEStories.Disabled} />
+</Canvas>
+
+### Read only
+
+<Canvas>
+  <Story of={RTEStories.ReadOnly} />
+</Canvas>
+
+### Minimal toolbar
+
+<Canvas>
+  <Story of={RTEStories.MinimalToolbar} />
+</Canvas>
+
+### Links only
+
+<Canvas>
+  <Story of={RTEStories.LinksOnly} />
+</Canvas>
+
+### With error text
+
+<Canvas>
+  <Story of={RTEStories.WithErrorText} />
+</Canvas>
+
+### Props
+
+<Controls of={RTEStories.Default} />

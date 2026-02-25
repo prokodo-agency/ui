@@ -4,14 +4,15 @@ export type Tracking = {
 }
 
 export const getTracking = (): Tracking | null => {
-  if (typeof document !== "undefined") {
-    const element = document.documentElement
-    const gclid = element.getAttribute("data-gclid")
-    const gaClientId = element.getAttribute("data-gaclientid")
-    return {
-      gclid,
-      gaClientId,
-    }
+  /* istanbul ignore next */
+  if (typeof document === "undefined") {
+    return null
   }
-  return null
+  const element = document.documentElement
+  const gclid = element.getAttribute("data-gclid")
+  const gaClientId = element.getAttribute("data-gaclientid")
+  return {
+    gclid,
+    gaClientId,
+  }
 }

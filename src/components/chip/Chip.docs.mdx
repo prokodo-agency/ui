@@ -1,0 +1,67 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as ChipStories from "./Chip.stories"
+
+<Meta of={ChipStories} />
+
+# Chip
+
+Compact label element with optional click and delete interactions, using island architecture and design-system styling.
+
+## When to use
+
+Use `Chip` to represent discrete values such as tags, filters, selected items, or status badges. Use `Clickable` for selectable filter chips; use `Deletable` for chips that can be removed from a list.
+
+## Accessibility (WCAG 2.2)
+
+- Default chip is a non-interactive `<span>` and is `aria-hidden` unless it carries independent meaning
+- Clickable chip renders as a `<button>` with the chip label as its accessible name
+- Deletable chip has a separate delete `<button>` with `aria-label="Remove [label]"`
+- Selected state is conveyed via `aria-pressed` on clickable chips
+
+### Keyboard behavior
+
+| Key               | Action                            |
+| ----------------- | --------------------------------- |
+| **Tab**           | Focus clickable or deletable chip |
+| **Enter / Space** | Activate click / delete action    |
+
+## API notes
+
+- Default chips are purely visual — no interactive prop required
+- `Clickable` chips accept an `onClick` callback and can receive `selected`/`aria-pressed` state
+- `Deletable` chips accept an `onDelete` callback; the delete button is only visible when `onDelete` is provided
+- Size and colour map to design-system tokens
+
+## ✅ Do
+
+- Use chips in groups with a clear group label (e.g. "Active filters:")
+- Announce chip removal to screen readers by updating the list ARIA structure or using a live region
+
+## ❌ Don't
+
+- Don't use chips as primary navigation — use `Tabs` or `Link` instead
+- Don't put too many deletable chips in one line — wrap and paginate large sets
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={ChipStories.Default} />
+</Canvas>
+
+### Clickable
+
+<Canvas>
+  <Story of={ChipStories.Clickable} />
+</Canvas>
+
+### Deletable
+
+<Canvas>
+  <Story of={ChipStories.Deletable} />
+</Canvas>
+
+### Props
+
+<Controls of={ChipStories.Default} />

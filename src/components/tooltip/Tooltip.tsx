@@ -7,9 +7,9 @@ import type { TooltipProps } from "./Tooltip.model"
 export const Tooltip = createIsland<TooltipProps>({
   name: "Tooltip",
   Server: TooltipServer,
-  loadLazy: () => import("./Tooltip.client"),
+  loadLazy: /* istanbul ignore next */ () => import("./Tooltip.client"),
   // Hydrate only when you actually need JS timing/controlled state/etc.
-  isInteractive: p =>
+  isInteractive: /* istanbul ignore next */ p =>
     Boolean(
       (p.portal ?? true) ||
         p.preventOverflow ||

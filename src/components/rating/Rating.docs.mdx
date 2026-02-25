@@ -1,0 +1,77 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as RatingStories from "./Rating.stories"
+
+<Meta of={RatingStories} />
+
+# Rating
+
+An interactive 1–5 star rating input with optional validation, disabled/read-only modes, and configurable bounds.
+
+## When to use
+
+Use `Rating` on review forms, satisfaction surveys, and product feedback flows where a numeric score 1–5 (or custom range) is required.
+
+## Accessibility (WCAG 2.2)
+
+- Each star is a radio-button input with a visible and accessible label (`aria-label="Rate 1 of 5"`)
+- The group is wrapped in `<fieldset>` + `<legend>` so screen readers announce the question
+- Error messages are linked via `aria-describedby`
+- Disabled and read-only states are expressed via `disabled` / `aria-disabled` attributes
+
+### Keyboard behavior
+
+- **Tab**: enter/exit the group
+- **← / → Arrow keys**: move between stars inside the group
+- **Space / Enter**: select the focused star
+
+## ✅ Do
+
+- Always supply a visible or screen-reader `legend` that describes what is being rated
+- Use `onComplete` to detect when the user has confirmed a choice (vs. `onChange` for hover preview)
+
+## ❌ Don't
+
+- Don't disable the field after submission without explaining why
+- Don't use `CustomBounds` below 2 or above 10 — it defeats the star metaphor
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={RatingStories.Default} />
+</Canvas>
+
+### With initial value
+
+<Canvas>
+  <Story of={RatingStories.WithInitialValue} />
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story of={RatingStories.Disabled} />
+</Canvas>
+
+### Read only
+
+<Canvas>
+  <Story of={RatingStories.ReadOnly} />
+</Canvas>
+
+### With validation
+
+<Canvas>
+  <Story of={RatingStories.WithValidation} />
+</Canvas>
+
+### Custom bounds
+
+<Canvas>
+  <Story of={RatingStories.CustomBounds} />
+</Canvas>
+
+### Props
+
+<Controls of={RatingStories.Default} />

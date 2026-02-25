@@ -1,0 +1,61 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as PaginationStories from "./Pagination.stories"
+
+<Meta of={PaginationStories} />
+
+# Pagination
+
+Navigation controls for paginated content lists. Renders page number buttons, previous/next arrows, and an optional items-per-page selector.
+
+## When to use
+
+Use `Pagination` below any list or grid that loads data in pages. For infinite-scroll patterns use a "Load more" button with `Loading` instead.
+
+## Accessibility (WCAG 2.2)
+
+- The pagination `<nav>` carries `aria-label="Pagination"` (or equivalent)
+- The current page button carries `aria-current="page"`
+- Previous/next buttons are disabled (not hidden) when at the boundary
+- All page buttons have accessible labels ("Page 1", "Next page", etc.)
+- Focus is managed after page change to announce the new state
+
+### Keyboard behavior
+
+- **Tab**: move between page buttons
+- **Enter / Space**: activate the focused page button
+
+## ✅ Do
+
+- Always show the total number of pages or items when known
+- Disable (not hide) previous/next at the boundaries
+- Use ellipsis (`…`) for large page ranges with an accessible label
+
+## ❌ Don't
+
+- Don't use Pagination for sequential steps — use `Stepper`
+- Don't remove visited page indicators when the user navigates back
+- Don't reset focus to the top of the page on every page change
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={PaginationStories.Default} />
+</Canvas>
+
+### Pending state
+
+<Canvas>
+  <Story of={PaginationStories.Pending} />
+</Canvas>
+
+### Small variant
+
+<Canvas>
+  <Story of={PaginationStories.Small} />
+</Canvas>
+
+### Props
+
+<Controls of={PaginationStories.Default} />

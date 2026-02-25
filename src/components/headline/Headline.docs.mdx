@@ -1,0 +1,50 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as HeadlineStories from "./Headline.stories"
+
+<Meta of={HeadlineStories} />
+
+# Headline
+
+Semantic heading component mapping heading levels to design-system typography variants. Decouples visual style from HTML element to keep the DOM hierarchy meaningful for accessibility.
+
+## When to use
+
+Use `Headline` for every heading in the product — page titles, section headings, card headers, and widget titles. Never use raw `<h1>`–`<h6>` elements or utility classes for headings outside of this component.
+
+## Variants vs. levels
+
+`variant` controls the **visual** size/style (`h1`–`h6`, `subtitle1`, `subtitle2`, etc.).  
+`tag` controls the **semantic** HTML element rendered in the DOM.
+
+Always choose a `tag` that reflects the correct document outline, independent of how large the heading looks visually.
+
+## Accessibility (WCAG 2.2)
+
+- Renders the correct `<h1>`–`<h6>` element for screen readers and landmark navigation
+- Do not skip heading levels in the document outline (e.g. `h1` → `h3`)
+- Use only one `h1` per page
+- `ariaLabel` provides an accessible name override when the visible text is insufficient
+
+## ✅ Do
+
+- Keep heading text concise and descriptive
+- Maintain a logical heading hierarchy on every page
+- Use `variant` to match the design specification while keeping `tag` semantically correct
+
+## ❌ Don't
+
+- Don't use `Headline` purely for font size — use `Typography` or CSS instead
+- Don't use `h1` for decorative/marketing slogans that are not meaningful headings
+- Don't duplicate `h1` within a page
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={HeadlineStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={HeadlineStories.Default} />

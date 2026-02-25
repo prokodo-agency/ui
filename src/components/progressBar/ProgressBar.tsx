@@ -7,6 +7,6 @@ import type { ProgressBarProps } from "./ProgressBar.model"
 export const ProgressBar = createIsland<ProgressBarProps>({
   name: "ProgressBar",
   Server: ProgressBarServer,
-  loadLazy: () => import("./ProgressBar.lazy"),
-  isInteractive: () => true,
+  loadLazy: /* istanbul ignore next */ () => import("./ProgressBar.lazy"),
+  isInteractive: /* istanbul ignore next */ () => true,
 })

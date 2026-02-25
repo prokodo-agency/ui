@@ -7,8 +7,10 @@ import { AnimatedTextView } from "./AnimatedText.view"
 import type { AnimatedTextProps } from "./AnimatedText.model"
 
 export default function AnimatedTextClient({
-  speed = 30,
-  delay = 0,
+  /* istanbul ignore next */
+  speed = /* istanbul ignore next */ 30,
+  /* istanbul ignore next */
+  delay = /* istanbul ignore next */ 0,
   disabled,
   children,
   ...rest

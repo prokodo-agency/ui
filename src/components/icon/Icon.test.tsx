@@ -1,3 +1,5 @@
+import { axe } from "jest-axe"
+
 import { render, screen } from "@/tests"
 
 import { Icon } from "./Icon"
@@ -41,5 +43,20 @@ describe("The common Icon component", () => {
     const icon = screen.getByRole("presentation", { hidden: true })
     expect(icon).toHaveStyle({ width: "40px" })
     expect(icon).toHaveStyle({ height: "40px" })
+  })
+
+  // -------------------------------------------------------------------------
+  // Accessibility (WCAG 2.2)
+  // -------------------------------------------------------------------------
+  it("decorative icon has no axe violations", async () => {
+    const { container } = render(<Icon name="AbacusIcon" />)
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it("accessible icon with label has no axe violations", async () => {
+    const { container } = render(
+      <Icon label="Settings" name="Settings01Icon" />,
+    )
+    expect(await axe(container)).toHaveNoViolations()
   })
 })

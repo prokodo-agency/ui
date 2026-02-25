@@ -7,7 +7,8 @@ import type { PostWidgetCarouselProps } from "./PostWidgetCarousel.model"
 export const PostWidgetCarousel = createIsland<PostWidgetCarouselProps>({
   name: "PostWidgetCarousel",
   Server: PostWidgetCarouselServer,
-  loadLazy: () => import("./PostWidgetCarousel.lazy"),
+  loadLazy: /* istanbul ignore next */ () =>
+    import("./PostWidgetCarousel.lazy"),
   // Carousel is interactive; render server first then hydrate when visible
-  isInteractive: () => true,
+  isInteractive: /* istanbul ignore next */ () => true,
 })

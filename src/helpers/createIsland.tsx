@@ -10,7 +10,7 @@ import {
 export interface IslandOptions<P extends object> {
   name: string
   Server: ComponentType<P>
-  loadLazy: () => Promise<{
+  loadLazy: /* istanbul ignore next */ () => Promise<{
     default: ComponentType<P & { priority?: boolean }>
   }>
   isInteractive?: (props: Readonly<P>) => boolean
@@ -27,6 +27,7 @@ export function createIsland<P extends object>({
   name,
   Server,
   loadLazy,
+  /* istanbul ignore next */
   isInteractive: customInteractive,
 }: IslandOptions<P>): ComponentType<P & { priority?: boolean }> {
   const LazyComp = lazy(() => loadLazy().then(m => ({ default: m.default })))

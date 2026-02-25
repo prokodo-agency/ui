@@ -7,5 +7,5 @@ import type { PaginationProps } from "./Pagination.model"
 export const Pagination = createIsland<PaginationProps>({
   name: "Pagination",
   Server: PaginationServer,
-  loadLazy: () => import("./Pagination.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Pagination.lazy"),
 })

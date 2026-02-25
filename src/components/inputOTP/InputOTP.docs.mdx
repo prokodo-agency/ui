@@ -1,0 +1,67 @@
+import { Canvas, Controls, Meta } from "@storybook/blocks"
+import * as InputOTPStories from "./InputOTP.stories"
+
+<Meta of={InputOTPStories} />
+
+# InputOTP
+
+Grouped input for one-time passwords (OTP) and PIN codes. Renders individual digit fields that auto-advance focus on entry and supports paste of the full code.
+
+## When to use
+
+Use `InputOTP` for authentication flows that require a numeric or alphanumeric code — SMS verification, email confirmation codes, and two-factor authentication prompts.
+
+## Props overview
+
+| Prop               | Description                                                     |
+| ------------------ | --------------------------------------------------------------- |
+| `length`           | Number of OTP digits                                            |
+| `groupLabel`       | Accessible label for the group                                  |
+| `groupInstruction` | Helper text displayed with the group                            |
+| `onChange`         | Called on every change with the current partial/full OTP string |
+| `onComplete`       | Called only when all digits are filled                          |
+
+## Accessibility (WCAG 2.2)
+
+- Inputs are grouped with a `<fieldset>` and `<legend>` using `groupLabel`
+- Each individual input carries a positional `aria-label` (e.g. "Digit 1 of 6")
+- `groupInstruction` is linked via `aria-describedby` on the group
+- Paste support: user can paste the full code into the first field and all digits are distributed automatically
+
+## ✅ Do
+
+- Always provide `groupLabel` for screen reader context
+- Handle `onComplete` rather than `onChange` for submission to avoid premature API calls
+- Display the full `groupInstruction` so users know where the code was sent
+
+## ❌ Don't
+
+- Don't use `InputOTP` for free-text codes of variable length — use `Input` instead
+- Don't trigger verification on every `onChange` — wait for `onComplete`
+- Don't block paste — users rely on it from password managers and SMS apps
+
+## Examples
+
+### Default (6-digit OTP)
+
+<Canvas of={InputOTPStories.Default} />
+
+### Four-digit PIN
+
+<Canvas of={InputOTPStories.FourDigit} />
+
+### Eight-digit security code
+
+<Canvas of={InputOTPStories.EightDigit} />
+
+### Disabled
+
+<Canvas of={InputOTPStories.Disabled} />
+
+### Required
+
+<Canvas of={InputOTPStories.Required} />
+
+### Props
+
+<Controls of={InputOTPStories.Default} />

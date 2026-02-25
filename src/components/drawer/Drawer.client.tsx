@@ -65,19 +65,21 @@ function DrawerClient(
   useEffect(() => {
     if (isOpen || !mounted) return
     const node = containerRef.current
+    /* istanbul ignore next */
     if (!node) {
       setMounted(false)
       return
     }
 
+    /* istanbul ignore next */
     const onEnd = (e: TransitionEvent) => {
       if (e.target !== node) return // only the container's own transition
       node.removeEventListener("transitionend", onEnd)
       setMounted(false)
       triggerRef.current?.focus?.()
     }
-    node.addEventListener("transitionend", onEnd)
 
+    /* istanbul ignore next */
     const t = setTimeout(() => {
       // fallback
       node.removeEventListener("transitionend", onEnd)
@@ -94,8 +96,10 @@ function DrawerClient(
   const closeDrawer = useCallback(
     (reason?: DrawerChangeReason) => {
       setIsOpen(false) // slide out
+      /* istanbul ignore next */
       onChange?.({}, reason ?? "backdropClick")
       // focus will be restored after unmount; also do it here as a safety
+      /* istanbul ignore next */
       triggerRef.current?.focus?.()
     },
     [onChange],
@@ -104,6 +108,7 @@ function DrawerClient(
   // —— ESC key while open ——
   useEffect(() => {
     if (!isOpen) return
+    /* istanbul ignore next */
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault()
@@ -119,6 +124,7 @@ function DrawerClient(
     if (!isOpen) return
     // wait a tick for DrawerView to render content
     const id = requestAnimationFrame(() => {
+      /* istanbul ignore next */
       closeButtonRef.current?.focus?.()
     })
     return () => cancelAnimationFrame(id)

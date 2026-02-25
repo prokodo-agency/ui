@@ -1,0 +1,69 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as AvatarStories from "./Avatar.stories"
+
+<Meta of={AvatarStories} />
+
+# Avatar
+
+Circular user avatar with image, fallback icon, size presets, and optional link.
+
+## When to use
+
+Use `Avatar` to represent a user, organisation, or entity visually — profile headers, comment threads, member lists. Use the `redirect` prop to make it navigable.
+
+## Accessibility (WCAG 2.2)
+
+`Avatar` delegates accessibility to its child `Image` and `Link` components:
+
+- `image.alt` is required when an image is shown — describe who or what is depicted
+- when `redirect` is set the avatar becomes a focusable `<a>` element with an announced destination
+- without a redirect the avatar is `aria-hidden` unless it carries meaningful image alt text
+
+### Keyboard behavior
+
+- Without `redirect`: not focusable
+- With `redirect`: focusable via **Tab**, activated by **Enter**
+
+## API notes
+
+- `size` accepts presets `"xs"` | `"sm"` | `"md"` | `"lg"` | `"xl"` or a pixel number
+- `image` maps to `ImageProps` — pass `priority` for above-fold avatars
+- `redirect` maps to `LinkProps` and wraps the avatar in a link
+- `iconOverride` replaces the default fallback icon with a custom `ReactNode`
+- `variant` applies the design-system colour token
+
+## ✅ Do
+
+- Always supply `image.alt` with the person's name or a descriptive string
+- Use `priority` for avatars in the initial viewport (prevents LCP penalty)
+- Use `redirect` to link avatars to profile pages
+
+## ❌ Don't
+
+- Don't use `Avatar` for logos or brand marks — use `Image` directly
+- Don't omit `alt` when the image conveys the user's identity
+- Don't pass very large pixel sizes without also providing an appropriately sized image source
+
+## Examples
+
+### Default (icon fallback)
+
+<Canvas>
+  <Story of={AvatarStories.Default} />
+</Canvas>
+
+### With image
+
+<Canvas>
+  <Story of={AvatarStories.WithImage} />
+</Canvas>
+
+### With link
+
+<Canvas>
+  <Story of={AvatarStories.WithLink} />
+</Canvas>
+
+### Props
+
+<Controls of={AvatarStories.Default} />

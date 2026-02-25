@@ -24,6 +24,7 @@ export const SwitchView: FC<SwitchViewProps> = ({
   onChangeInternal,
   onFocusInternal,
   onBlurInternal,
+  isFocused: _isFocused,
   ...props
 }) => {
   const hasLabel = typeof label === "string" && label.length > 0

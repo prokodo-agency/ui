@@ -1,0 +1,68 @@
+import { Canvas, Controls, Meta } from "@storybook/blocks"
+import * as SkeletonStories from "./Skeleton.stories"
+
+<Meta of={SkeletonStories} />
+
+# Skeleton
+
+A loading-state placeholder that mirrors the shape of the content it replaces. Renders animated rectangular or circular blocks while data is being fetched.
+
+## When to use
+
+Use `Skeleton` in place of text, images, cards, or list items while asynchronous content loads. Show it only for the initial load; for user-triggered refreshes prefer `Loading`.
+
+## Architecture
+
+- **`Skeleton.server.tsx`** — server component; renders the placeholder in the initial HTML so there is no layout shift on first paint
+- **`Skeleton.client.tsx`** — client component; used inside client islands where data is fetched on the client
+- **`Skeleton.lazy.tsx`** — lazily hydrated wrapper for below-the-fold skeletons
+
+## Accessibility (WCAG 2.2)
+
+- The skeleton container has `aria-busy="true"` and `aria-label="Loading…"` (or equivalent locale string)
+- Animation respects `prefers-reduced-motion` — the shimmer is replaced by a static muted fill when the preference is set
+- Skeletons are not focusable; they are hidden from the accessibility tree until content replaces them
+
+## ✅ Do
+
+- Match the skeleton shape closely to the real content to minimise layout shift (CLS)
+- Remove skeletons immediately once data is available and replace with real content
+
+## ❌ Don't
+
+- Don't show skeletons for operations faster than ~300 ms — a brief flash of placeholder is more jarring than no indicator
+- Don't nest skeletons inside each other; keep them flat at the leaf level
+
+## Examples
+
+### Default (rectangular wave)
+
+<Canvas of={SkeletonStories.Default} />
+
+### Text row
+
+<Canvas of={SkeletonStories.TextRow} />
+
+### Text paragraph (multiple rows)
+
+<Canvas of={SkeletonStories.TextParagraph} />
+
+### Circular avatar
+
+<Canvas of={SkeletonStories.CircularAvatar} />
+
+### Card skeleton (avatar + text)
+
+<Canvas of={SkeletonStories.CardSkeleton} />
+
+### Pulse animation
+
+<Canvas of={SkeletonStories.PulseAnimation} />
+
+### No animation
+
+<Canvas of={SkeletonStories.NoAnimation} />
+
+### Props
+
+<Controls of={SkeletonStories.Default} />

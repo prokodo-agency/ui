@@ -7,8 +7,8 @@ import type { CardProps } from "./Card.model"
 export const Card = createIsland<CardProps>({
   name: "Card",
   Server: CardServer,
-  loadLazy: () => import("./Card.lazy"),
-  isInteractive: (p: CardProps) =>
+  loadLazy: /* istanbul ignore next */ () => import("./Card.lazy"),
+  isInteractive: /* istanbul ignore next */ (p: CardProps) =>
     (!Boolean(p.disabled) && typeof p.onClick === "function") ||
     typeof p.redirect?.href === "string",
 })

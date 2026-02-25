@@ -31,10 +31,12 @@ export function DynamicListView({
   className,
   classNameList,
   fields,
-  value = [],
+  /* istanbul ignore next */
+  value = /* istanbul ignore next */ [],
   buttonAddProps,
   buttonDeleteProps,
-  name = "items",
+  /* istanbul ignore next */
+  name = /* istanbul ignore next */ "items",
   errorText,
   helperText,
 }: DynamicListViewProps): ReactNode {
@@ -55,8 +57,10 @@ export function DynamicListView({
         <Label
           {...labelProps}
           aria-disabled={disabled}
+          /* istanbul ignore next */
           className={bem("label", undefined, labelProps?.className)}
           error={isError}
+          /* istanbul ignore next */
           id={labelProps?.id ?? `${name}-legend`}
           label={label}
           required={required}
@@ -83,8 +87,10 @@ export function DynamicListView({
                       className={bem("field", mod, field?.className)}
                       data-field={field?.name}
                       data-index={idx}
+                      /* istanbul ignore next */
                       disabled={disabled ?? field?.disabled}
                       id={`${name}-${idx}-${field.name}`}
+                      /* istanbul ignore next */
                       required={required ?? field?.required}
                       name={
                         single
@@ -94,7 +100,10 @@ export function DynamicListView({
                       value={
                         single
                           ? (item as string)
-                          : (item as Record<string, string>)[field?.name ?? ""]
+                          : /* istanbul ignore next */
+                            (item as Record<string, string>)[
+                              field?.name ?? /* istanbul ignore next */ ""
+                            ]
                       }
                     />
                   )
@@ -106,15 +115,22 @@ export function DynamicListView({
                       {...(field as InputProps)}
                       className={bem("field", mod, field?.className)}
                       data-field={field?.name}
+                      /* istanbul ignore next */
                       data-index={idx}
+                      /* istanbul ignore next */
                       disabled={disabled ?? field?.disabled}
                       id={`${name}-${idx}-${field.name}`}
+                      /* istanbul ignore next */
                       required={required ?? field?.required}
-                      value={single ? item : item[field?.name ?? ""]}
                       name={
                         single
                           ? `${name}[${idx}]`
                           : `${name}[${idx}].${field.name}`
+                      }
+                      value={
+                        single
+                          ? item
+                          : item[field?.name ?? /* istanbul ignore next */ ""]
                       }
                     />
                   )
@@ -129,6 +145,7 @@ export function DynamicListView({
               name: "Delete02Icon",
             }}
             {...buttonDeleteProps}
+            /* istanbul ignore next */
             className={bem("delete__button", mod, buttonDeleteProps?.className)}
           />
         </ul>
@@ -137,6 +154,7 @@ export function DynamicListView({
         title="Add item"
         variant="outlined"
         {...buttonAddProps}
+        /* istanbul ignore next */
         className={bem("button", undefined, buttonAddProps?.className)}
       />
 

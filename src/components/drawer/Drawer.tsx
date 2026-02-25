@@ -14,7 +14,7 @@ import type { DrawerProps } from "./Drawer.model"
 export const Drawer = createIsland<DrawerProps>({
   name: "Drawer",
   Server: DrawerServer,
-  loadLazy: () => import("./Drawer.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Drawer.lazy"),
 })
 
 export default Drawer

@@ -35,7 +35,7 @@ export type DynamicListField = DynamicListFieldInput | DynamicListFieldSelect
 export type DynamicListDefault = {
   id?: string
   /** Prefix used for each input’s `name` attribute, e.g. `"pages"` → `pages[0].name` */
-  name: string
+  name?: string
   /** Optional wrapper CSS class */
   className?: string
   /** Optional CSS class for each row container */

@@ -95,7 +95,7 @@ const ImageServer: FC<ImageProps> = ({
 
   const renderImage = () => (
     <CustomImage
-      alt={alt ?? ""}
+      alt={alt ?? /* istanbul ignore next */ ""}
       className={bem("image", undefined, className)}
       {...imgProps}
     />

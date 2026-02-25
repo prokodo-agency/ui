@@ -5,7 +5,7 @@ import SideNavServer from "./SideNav.server"
 export const SideNav = createIsland({
   name: "SideNav",
   Server: SideNavServer,
-  loadLazy: () => import("./SideNav.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./SideNav.lazy"),
   // Sidebar is *always* interactive (toggle button)
-  isInteractive: () => true,
+  isInteractive: /* istanbul ignore next */ () => true,
 })

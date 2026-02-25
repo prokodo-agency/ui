@@ -41,7 +41,7 @@ export function AccordionView({
           className: itemCls,
         } = item
 
-        const accId = `${id}-${title}`
+        const accId = `${id}-${index}`
         const isExpanded = expandedIndex === index
 
         // props for header button area

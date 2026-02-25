@@ -30,14 +30,38 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
+      - name: � Cache Cypress binary
+        id: cypress-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: 🔧 Install Cypress binary
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+        run: npx cypress install
+
       - name: 🧪 Typecheck, Lint & Test
-        run: |
-          pnpm run typecheck
-          pnpm run lint
-          pnpm run test:ci
+        run: pnpm format && pnpm lint && pnpm typecheck && pnpm test:unit:ci
 
       - name: 🛠 Build library (fail fast if broken)
         run: pnpm run build
+
+      - name: 🎨 Visual regression – Light theme (Chromatic)
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        run: |
+          ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
+            npx cypress run --component --headless --env theme=light
+          npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
+
+      - name: 🎨 Visual regression – Dark theme (Chromatic)
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        run: |
+          ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
+            npx cypress run --component --headless --env theme=dark
+          npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes

@@ -24,7 +24,9 @@ describe("AnimatedClient", () => {
   })
 
   afterEach(() => {
-    jest.runOnlyPendingTimers()
+    act(() => {
+      jest.runOnlyPendingTimers()
+    })
     jest.useRealTimers()
   })
 
@@ -163,5 +165,21 @@ describe("AnimatedClient", () => {
 
     expect(mockOnAnimate).toHaveBeenCalledWith(true)
     expect(mockOnAnimate).toHaveBeenCalledTimes(1)
+  })
+
+  it("should use default delay of 0 when delay is not provided", () => {
+    const mockOnAnimate = jest.fn()
+
+    render(
+      <AnimatedClient onAnimate={mockOnAnimate}>
+        <div>Content</div>
+      </AnimatedClient>,
+    )
+
+    act(() => {
+      jest.advanceTimersByTime(0)
+    })
+
+    expect(mockOnAnimate).toHaveBeenCalledWith(true)
   })
 })

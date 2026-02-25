@@ -7,6 +7,6 @@ import type { TabsProps } from "./Tabs.model"
 export const Tabs = createIsland<TabsProps>({
   name: "Tabs",
   Server: TabsServer,
-  loadLazy: () => import("./Tabs.lazy"),
-  isInteractive: () => true,
+  loadLazy: /* istanbul ignore next */ () => import("./Tabs.lazy"),
+  isInteractive: /* istanbul ignore next */ () => true,
 })

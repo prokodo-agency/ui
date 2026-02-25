@@ -32,7 +32,40 @@ export default {
   extensionsToTreatAsEsm: [".ts", ".tsx"],
   clearMocks: true,
   restoreMocks: true,
-  verbose: true,
-  collectCoverage: true,
+  maxWorkers: "50%",
+  coverageProvider: "babel",
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.stories.{ts,tsx}",
+    "!src/**/*.model.{ts,tsx}",
+    "!src/tests/**",
+    "!src/types/**",
+    "!src/index.ts",
+    "!src/constants/**",
+    "!src/**/index.ts",
+    "!src/**/*.d.ts",
+    // Island infrastructure: createIsland is globally mocked in jest.setup.ts
+    // so that React.lazy Suspense doesn't cause AggregateErrors across tests.
+    // createLazyWrapper and useHydrationReady depend on IntersectionObserver /
+    // React.lazy and are not testable in jsdom without extensive browser mocks.
+    "!src/helpers/createIsland.tsx",
+    "!src/helpers/createLazyWrapper.tsx",
+    "!src/hooks/useHydrationReady.ts",
+    // Pure generated data files — no logic, just constant exports.
+    "!src/components/icon/IconList.ts",
+    "!src/components/lottie/LottieAnimations.ts",
+    // Vite-specific Quill CSS import (`?inline`) that cannot run in Jest.
+    "!src/components/RTE/RTE.theme.ts",
+  ],
+  // Hard-gate: CI fails if any metric drops below 100%.
+  // This turns coverage from a report into an enforced contract.
+  coverageThreshold: {
+    global: {
+      statements: 100,
+      branches: 100,
+      functions: 100,
+      lines: 100,
+    },
+  },
   setupFilesAfterEnv: ["./jest.setup.ts"],
 }

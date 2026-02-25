@@ -1,5 +1,6 @@
 import { expect } from "@jest/globals"
 import { render, screen } from "@testing-library/react"
+import { axe } from "jest-axe"
 
 import { AnimatedView } from "./Animated.view"
 
@@ -208,5 +209,26 @@ describe("AnimatedView", () => {
     expect(element).toHaveClass("Animated--has-normal-speed")
     expect(element).toHaveClass("Animated--animate-fade-in")
     expect(element).not.toHaveClass("Animated--is-disabled")
+  })
+
+  // -------------------------------------------------------------------------
+  // Accessibility (WCAG 2.2)
+  // -------------------------------------------------------------------------
+  it("visible animated view has no axe violations", async () => {
+    const { container } = render(
+      <AnimatedView isVisible={true}>
+        <p>Animated content</p>
+      </AnimatedView>,
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it("hidden animated view has no axe violations", async () => {
+    const { container } = render(
+      <AnimatedView isVisible={false}>
+        <p>Not yet visible</p>
+      </AnimatedView>,
+    )
+    expect(await axe(container)).toHaveNoViolations()
   })
 })

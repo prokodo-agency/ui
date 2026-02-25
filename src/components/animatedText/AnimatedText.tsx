@@ -7,6 +7,6 @@ import type { AnimatedTextProps } from "./AnimatedText.model"
 export const AnimatedText = createIsland<AnimatedTextProps>({
   name: "AnimatedText",
   Server: AnimatedTextServer,
-  loadLazy: () => import("./AnimatedText.lazy"),
-  isInteractive: p => !Boolean(p.disabled),
+  loadLazy: /* istanbul ignore next */ () => import("./AnimatedText.lazy"),
+  isInteractive: /* istanbul ignore next */ p => !Boolean(p.disabled),
 })

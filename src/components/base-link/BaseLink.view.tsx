@@ -63,6 +63,7 @@ export function BaseLinkView({
   const pointerOff: CSSProperties = { pointerEvents: "none" }
   const tabIndex = !isNull(disabled) ? -1 : undefined
   const linkStyle = !isNull(disabled) ? { ...pointerOff, ...style } : style
+  const ariaDisabled = !isNull(disabled) ? true : undefined
 
   /* ------------------------------------------------------------------ */
   /* 4) Render                                                          */
@@ -72,6 +73,7 @@ export function BaseLinkView({
     const LinkTag = linkComponent
     return (
       <LinkTag
+        aria-disabled={ariaDisabled}
         href={finalHref}
         rel={computedRel}
         style={linkStyle}
@@ -87,6 +89,7 @@ export function BaseLinkView({
   return (
     <a
       {...aProps}
+      aria-disabled={ariaDisabled}
       href={finalHref}
       rel={computedRel}
       style={linkStyle}

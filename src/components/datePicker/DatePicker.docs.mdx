@@ -1,0 +1,71 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as DatePickerStories from "./DatePicker.stories"
+
+<Meta of={DatePickerStories} />
+
+# DatePicker
+
+Calendar-based date and time selector with single-date, range, and time modes, using island architecture and design-system styling.
+
+## When to use
+
+Use `DatePicker` wherever a user must select a specific date or date range — booking forms, event creation, report filters. Use `WithTime` when time precision is required.
+
+## Accessibility (WCAG 2.2)
+
+- Implements the ARIA `dialog` pattern for the calendar popup with focus trap
+- Calendar grid uses `role="grid"` with labelled columns and rows
+- Selected date announced via `aria-selected`; today's date marked with `aria-current="date"`
+- Keyboard navigation stays within the popup while it is open (WCAG 2.1.2)
+
+### Keyboard behavior
+
+| Key                     | Action                                 |
+| ----------------------- | -------------------------------------- |
+| **Enter / Space**       | Open calendar; select focused date     |
+| **Arrow keys**          | Navigate days within the calendar grid |
+| **Page Up / Page Down** | Navigate months                        |
+| **Home / End**          | Jump to first / last day of week       |
+| **Escape**              | Close calendar without selecting       |
+
+## API notes
+
+- Default mode: single date selection
+- `WithRange` enables start/end date selection — returns an object with `from` and `to` properties
+- `WithTime` adds an hour/minute picker below the calendar
+- Pass `minDate` / `maxDate` to restrict selectable range
+- `value` / `onChange` follow controlled component conventions
+
+## ✅ Do
+
+- Always pair `DatePicker` with a visible label (use `Label` component or wrapping form group)
+- Provide `minDate` / `maxDate` to prevent logically invalid selections
+
+## ❌ Don't
+
+- Don't use `DatePicker` for relative time inputs ("in 3 days") — use a `Select` instead
+- Don't rely solely on date formatting to convey selected state — announce changes to screen readers
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={DatePickerStories.Default} />
+</Canvas>
+
+### With range
+
+<Canvas>
+  <Story of={DatePickerStories.WithRange} />
+</Canvas>
+
+### With time
+
+<Canvas>
+  <Story of={DatePickerStories.WithTime} />
+</Canvas>
+
+### Props
+
+<Controls of={DatePickerStories.Default} />

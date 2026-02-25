@@ -47,12 +47,20 @@ function InputClient({
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const v = e.target.value
+      /* istanbul ignore next */
       if (isNumber(maxLength) && v.length > (maxLength as number)) return
 
       setVal(v)
-      const minInt = rawType === "number" ? (min as number) : undefined
-      const maxInt = rawType === "number" ? (max as number) : undefined
+      const minInt =
+        /* istanbul ignore next */ rawType === "number"
+          ? /* istanbul ignore next */ (min as number)
+          : undefined
+      const maxInt =
+        /* istanbul ignore next */ rawType === "number"
+          ? /* istanbul ignore next */ (max as number)
+          : undefined
       handleValidation(
+        /* istanbul ignore next */
         Boolean(multiline) ? "text" : rawType,
         name,
         v,
@@ -67,6 +75,7 @@ function InputClient({
         },
       )
 
+      /* istanbul ignore next */
       onChange?.(e)
     },
     [

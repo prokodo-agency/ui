@@ -7,7 +7,7 @@ import type { FormProps } from "./Form.model"
 export const Form = createIsland<FormProps>({
   name: "Form",
   Server: FormServer,
-  loadLazy: () => import("./Form.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Form.lazy"),
 })
 
 Form.displayName = "Form"

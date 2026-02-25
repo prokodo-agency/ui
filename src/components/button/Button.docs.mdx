@@ -1,0 +1,79 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as ButtonStories from "./Button.stories"
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Interactive call-to-action element supporting contained, outlined, and text variants with icon, link, and loading states.
+
+## When to use
+
+Use `Button` for any primary or secondary user action — form submission, navigation triggers, modal openers. Use `variant="text"` for low-prominence actions in toolbars or dialogs.
+
+## Accessibility (WCAG 2.2)
+
+- Renders a native `<button>` (or `<a>` when `redirect` is set), correctly conveying role to assistive technology
+- Icon-only buttons **must** have a visible `aria-label` or be wrapped in an `inert` container — `title` alone is insufficient
+- Loading state sets `aria-busy="true"` and visually replaces button text with a spinner
+- Disabled buttons keep `aria-disabled="true"` and maintain tab stop (WCAG 2.1 SC 4.1.2)
+- Meets 3:1 minimum contrast on colour tokens in all variants
+
+### Keyboard behavior
+
+| Key                 | Action                           |
+| ------------------- | -------------------------------- |
+| **Tab / Shift+Tab** | Move focus to / away from button |
+| **Enter / Space**   | Activate button                  |
+
+## API notes
+
+- `title` is required for default buttons — visually rendered and used as accessible label
+- `variant` controls visual weight: `"contained"` (filled) | `"outlined"` (border) | `"text"` (minimal)
+- `color` maps to design-system tokens: `"primary"` | `"secondary"` | `"success"` | `"error"` | `"info"` | `"warning"` | `"inherit"`
+- `iconProps` renders an icon inside the button; omit `title` for icon-only buttons and provide `aria-label`
+- `loading` shows a spinner and prevents interaction
+- `redirect` wraps the button in `BaseLink` and switches the root element to `<a>`
+- `fullWidth` stretches the button to 100% of its container
+
+## ✅ Do
+
+- Use clear, action-oriented labels: "Save changes", "Delete project"
+- Always supply `aria-label` when `title` is absent (icon-only)
+- Use `loading` to give feedback during async operations
+
+## ❌ Don't
+
+- Don't use a `<button>` for navigation without `redirect` — use `redirect` so an `<a>` is rendered
+- Don't disable buttons without explaining why; prefer validation error messages instead
+- Don't mix `variant="contained"` for more than one primary action per screen
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={ButtonStories.Default} />
+</Canvas>
+
+### Icon only
+
+<Canvas>
+  <Story of={ButtonStories.IconOnly} />
+</Canvas>
+
+### With link
+
+<Canvas>
+  <Story of={ButtonStories.WithLink} />
+</Canvas>
+
+### With image
+
+<Canvas>
+  <Story of={ButtonStories.WithImage} />
+</Canvas>
+
+### Props
+
+<Controls of={ButtonStories.Default} />

@@ -7,5 +7,5 @@ import type { RatingProps } from "./Rating.model"
 export const Rating = createIsland<RatingProps>({
   name: "Rating",
   Server: RatingServer,
-  loadLazy: () => import("./Rating.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Rating.lazy"),
 })

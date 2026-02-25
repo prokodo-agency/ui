@@ -21,7 +21,9 @@ export function RichTextServer(props: RichTextProps): JSX.Element {
     children,
     className,
     schema = {},
-    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
+    animated: _animated,
+    animationProps: _animationProps,
+    variant: _variant, // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     itemProp,
     // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     overrideParagraph,

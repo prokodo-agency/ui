@@ -7,7 +7,7 @@ import type { FormFieldProps } from "./FormField.client"
 export const FormField = createIsland<FormFieldProps>({
   name: "FormField",
   Server: FormFieldServer,
-  loadLazy: () => import("./FormField.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./FormField.lazy"),
 })
 
 FormField.displayName = "FormField"

@@ -1,0 +1,86 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as AutocompleteStories from "./Autocomplete.stories"
+
+<Meta of={AutocompleteStories} />
+
+# Autocomplete
+
+Accessible text-input with dynamic suggestion listbox and keyboard navigation.
+
+## When to use
+
+Use `Autocomplete` when users must pick from a large or remote set of options — package search, user lookup, or address completion. For small static lists prefer `Select`.
+
+## Accessibility (WCAG 2.2)
+
+`Autocomplete` follows the ARIA combobox pattern (ARIA 1.2):
+
+- input uses `role="combobox"`, `aria-expanded`, `aria-controls`, and `aria-activedescendant`
+- listbox uses `role="listbox"`; each option uses `role="option"` with `aria-selected`
+- empty state and loading state are announced via live regions
+- `name` is required for native form submission and label association
+
+### Keyboard behavior
+
+- **ArrowDown / ArrowUp**: navigate the option list
+- **Enter**: select the currently highlighted option
+- **Escape**: close the listbox and return to input
+- **Tab**: closes listbox and moves focus forward
+
+## API notes
+
+- `value` + `onChange` enables controlled mode for the query string
+- `onSelect(item)` fires when an option is confirmed (click or Enter)
+- `items` is the suggestion list rendered drive from outside (remote or filtered)
+- `loading` + `loadingText` show a spinner row while results are fetched
+- `emptyText` is shown when `items` is empty and the query exceeds `minQueryLength`
+- `minQueryLength` + `minQueryLengthText` gate search until sufficient input
+- `inputProps` passes-through advanced `Input` props like `hideLabel`, `helperText`
+
+## ✅ Do
+
+- Debounce the `onChange` handler when triggering remote calls
+- Always provide `emptyText` so users know when there are no results
+- Use `minQueryLength` (usually 2–3) to avoid triggering on every keystroke
+
+## ❌ Don't
+
+- Don't use `Autocomplete` for pre-known static short lists — use `Select`
+- Don't omit `name` — it breaks form association and a11y
+- Don't manipulate `items` synchronously inside the `onSelect` handler — it may briefly show stale results
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={AutocompleteStories.Default} />
+</Canvas>
+
+### Loading state
+
+<Canvas>
+  <Story of={AutocompleteStories.Loading} />
+</Canvas>
+
+### Empty state
+
+<Canvas>
+  <Story of={AutocompleteStories.EmptyState} />
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story of={AutocompleteStories.Disabled} />
+</Canvas>
+
+### Minimum query length
+
+<Canvas>
+  <Story of={AutocompleteStories.MinQueryLengthOne} />
+</Canvas>
+
+### Props
+
+<Controls of={AutocompleteStories.Default} />

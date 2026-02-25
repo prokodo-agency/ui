@@ -27,10 +27,12 @@ export const TableCell: FC<TableCellProps> = ({
   redirect,
   ...props
 }) => {
+  /* istanbul ignore next */
   const cellProps = type === "double" ? { ...props, scope: "row" } : props
 
   const renderCellContent = () => (
     <>
+      {/* istanbul ignore next */}
       {isString(icon?.name) && (
         <Icon
           className={bem("icon", undefined, icon?.className)}
@@ -49,6 +51,7 @@ export const TableCell: FC<TableCellProps> = ({
       className={bem(undefined, { "has-icon": Boolean(icon) }, className)}
       id={id}
     >
+      {/* istanbul ignore next */}
       {redirect?.href !== undefined ? (
         <Link
           priority

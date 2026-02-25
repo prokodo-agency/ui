@@ -203,9 +203,9 @@ export default [
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "testing-library/no-dom-import": ["error", "react"],
       "testing-library/no-manual-cleanup": "error",
-      "testing-library/prefer-screen-queries": "warn", // Best Practice
-      "testing-library/no-container": "warn", // Bessere Test-Patterns
-      "testing-library/no-node-access": "warn", // Vermeidet Implementierungs-Details
+      "testing-library/prefer-screen-queries": "error",
+      "testing-library/no-container": "error",
+      "testing-library/no-node-access": "error",
       "testing-library/prefer-presence-queries": "off",
       "jest/expect-expect": "off",
     },

@@ -1,0 +1,40 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as PostItemStories from "./PostItem.stories"
+
+<Meta of={PostItemStories} />
+
+# PostItem
+
+A compact blog list entry showing a thumbnail, category chip, title, date, and a redirect link. Intended for use inside post archives or search results.
+
+## When to use
+
+Use `PostItem` inside a vertically stacked list of posts. For a larger card-style teaser use `PostTeaser`; for a widget sidebar use `PostWidget`.
+
+## Accessibility (WCAG 2.2)
+
+- The redirect link wraps the entire card or has a clearly labelled `aria-label` with the post title to avoid duplicate link text
+- Images carry descriptive `alt` text from the CMS entry; decorative images use `alt=""`
+- Date strings are wrapped in `<time dateTime="…">` for machine-readable semantics
+
+## ✅ Do
+
+- Supply a canonical redirect URL — never an empty `href`
+- Provide a meaningful category label to orient the reader
+
+## ❌ Don't
+
+- Don't render `PostItem` without a title — it is the primary accessible label
+- Don't truncate the title at fewer than two lines; readers need enough context
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={PostItemStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={PostItemStories.Default} />

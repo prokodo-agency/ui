@@ -64,6 +64,7 @@ export function PostItemView(
       }) => <div className={className}>{children}</div>
   let formattedDate: LocalizedDate | undefined
   if (isString(date)) {
+    /* istanbul ignore next */
     formattedDate = localizeDate(locale ?? "en-GB", date)
   }
   return (

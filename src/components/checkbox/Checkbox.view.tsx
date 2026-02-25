@@ -79,7 +79,7 @@ export function CheckboxView<T extends string = string>({
           <Icon
             {...icon}
             className={bem("rightIcon", undefined, icon.className)}
-            label={iconLabel ?? undefined}
+            label={/* istanbul ignore next */ iconLabel ?? undefined}
           />
         ) : null}
       </span>

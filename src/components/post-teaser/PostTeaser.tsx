@@ -7,5 +7,5 @@ import type { PostTeaserProps } from "./PostTeaser.model"
 export const PostTeaser = createIsland<PostTeaserProps>({
   name: "PostTeaser",
   Server: PostTeaserServer,
-  loadLazy: () => import("./PostTeaser.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./PostTeaser.lazy"),
 })

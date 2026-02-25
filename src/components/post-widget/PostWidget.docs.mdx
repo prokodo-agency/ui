@@ -1,0 +1,46 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as PostWidgetStories from "./PostWidget.stories"
+
+<Meta of={PostWidgetStories} />
+
+# PostWidget
+
+A sidebar or inline content widget presenting a curated list of posts as compact cards. Supports a full-width layout variant and optional structured-data injection.
+
+## When to use
+
+Use `PostWidget` in sidebar areas, article bottoms ("Related posts"), and landing page sections where a condensed list of posts should appear as a cohesive card group.
+
+## Accessibility (WCAG 2.2)
+
+- The widget title acts as an implicit `<h>` landmark; set the heading level to match document outline
+- Each post item link has a unique accessible name (the post title)
+- Structured data (`structuredData`) is rendered as non-interactive `<script>` and does not impact keyboard navigation
+
+## ✅ Do
+
+- Provide at least two `items` so the widget reads as a list
+- Use `fullWidth` only when the widget spans the full content column
+
+## ❌ Don't
+
+- Don't reuse the same link text for different posts within one widget
+- Don't nest `PostWidget` inside another card without adequate visual separation
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={PostWidgetStories.Default} />
+</Canvas>
+
+### Full width
+
+<Canvas>
+  <Story of={PostWidgetStories.FullWidth} />
+</Canvas>
+
+### Props
+
+<Controls of={PostWidgetStories.Default} />

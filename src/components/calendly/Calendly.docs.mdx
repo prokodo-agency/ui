@@ -1,0 +1,51 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as CalendlyStories from "./Calendly.stories"
+
+<Meta of={CalendlyStories} />
+
+# Calendly
+
+Embeds a Calendly scheduling widget inline within the page, using island architecture and design-system styling.
+
+## When to use
+
+Use `Calendly` on landing pages, contact sections, or anywhere a visitor should be able to book a meeting directly without leaving the page.
+
+## Accessibility (WCAG 2.2)
+
+- The widget is rendered inside an `<iframe>` — Calendly's own accessibility support applies inside the frame
+- Provide a descriptive `title` attribute on the iframe (set via the component's title prop if exposed) for screen-reader users
+- Ensure surrounding page context explains the purpose of the booking widget
+
+### Keyboard behavior
+
+- Focus enters the iframe via **Tab**
+- All interactions within the booking flow are managed by Calendly's own keyboard handling
+
+## API notes
+
+- The component lazy-loads the Calendly embed script to avoid blocking page render
+- Configure your Calendly URL via the component's URL prop
+- Inline mode fills the parent container — set a min-height on the wrapper to avoid layout collapse
+
+## ✅ Do
+
+- Wrap `Calendly` in a container with an explicit height to prevent layout shift
+- Use inline mode for seamless in-page scheduling experience
+
+## ❌ Don't
+
+- Don't render `Calendly` inside a hidden container — it may fail to initialise
+- Don't load multiple Calendly widgets on the same page simultaneously
+
+## Examples
+
+### Inline demo
+
+<Canvas>
+  <Story of={CalendlyStories.InlineDemo} />
+</Canvas>
+
+### Props
+
+<Controls of={CalendlyStories.InlineDemo} />
