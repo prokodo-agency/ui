@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## 0.1.15
+
+### Patch Changes
+
+- Integrated unit and E2E tests
+
 ## 0.1.14
 
 ### Patch Changes
