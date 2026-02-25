@@ -50,24 +50,18 @@ jobs:
       - name: 🛠 Build library (fail fast if broken)
         run: pnpm run build
 
-      - name: 🎨 Visual regression – Cypress snapshots (Chromatic)
+      - name: 🎨 Visual regression – Light theme (Chromatic)
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         run: |
-          ARCHIVES=cypress/downloads/chromatic-archives
-
-          # --- Light mode pass ---
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
             npx cypress run --component --headless --env theme=light
-          # Backup light archives (content-addressed filenames – no conflicts with dark pass)
-          cp -r "$ARCHIVES" "${ARCHIVES}-light"
+          npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
 
-          # --- Dark mode pass ---
+      - name: 🎨 Visual regression – Dark theme (Chromatic)
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        run: |
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
             npx cypress run --component --headless --env theme=dark
-          # Merge light archives into the dark-mode archive directory
-          cp -r "${ARCHIVES}-light"/.  "$ARCHIVES"/
-          rm -rf "${ARCHIVES}-light"
-
-          # Upload both theme snapshots in a single Chromatic build
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
