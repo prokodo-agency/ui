@@ -55,7 +55,7 @@ jobs:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         run: |
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
-            npx cypress run --component --headless --env theme=light
+            npx cypress run --component --headless --expose theme=light
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
 
       - name: 🎨 Visual regression – Dark theme (Chromatic)
@@ -63,5 +63,5 @@ jobs:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         run: |
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
-            npx cypress run --component --headless --env theme=dark
+            npx cypress run --component --headless --expose theme=dark
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes

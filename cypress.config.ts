@@ -4,6 +4,8 @@ import { installPlugin, onBeforeBrowserLaunch } from "@chromatic-com/cypress"
 export default defineConfig({
   component: {
     watchForFileChanges: false,
+    // allowCypressEnv: false — enable once @chromatic-com/cypress/support no longer
+    // calls Cypress.env("assetDomains") internally (tracked upstream).
     devServer: {
       framework: "react",
       bundler: "vite",

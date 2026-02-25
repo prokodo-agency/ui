@@ -13,7 +13,10 @@ import "./commands"
 // The CI workflow runs the suite twice – once per theme – then merges the
 // content-hashed archives before uploading to Chromatic, giving dual-mode
 // visual-regression coverage without needing native Chromatic mode support.
-const chromaticTheme = (Cypress.env("theme") as string) || "light"
+// theme is non-sensitive public config → Cypress.expose() (safe for browser context)
+// Once @chromatic-com/cypress/support migrates away from Cypress.env(), we can
+// set allowCypressEnv: false in cypress.config.ts to fully lock down the env.
+const chromaticTheme = (Cypress.expose("theme") as string) || "light"
 document.documentElement.setAttribute("data-theme", chromaticTheme)
 
 import { mount } from "cypress/react"

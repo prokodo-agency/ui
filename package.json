@@ -317,7 +317,7 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^2.0.2",
-    "@lottiefiles/dotlottie-react": "^0.17.8",
+    "@lottiefiles/dotlottie-react": "^0.18.2",
     "dayjs": "^1.11.19",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
