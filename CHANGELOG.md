@@ -4,7 +4,12 @@
 
 ### Patch Changes
 
-- Integrated unit and E2E tests
+- **Unit tests**: Added comprehensive unit test coverage across all components, reaching 100% coverage threshold (204 test suites, 1 690 tests). Every component — including `Accordion`, `Animated`, `AnimatedText`, `Autocomplete`, `BaseLink`, `Button`, `Checkbox`, `CheckboxGroup`, `Dialog`, `Drawer`, `Image`, `Input`, `Lottie`, `Map`, `Pagination`, `PostItem`, `ProgressBar`, `RTE`, `Rating`, `RichText`, `Select`, `SideNav`, `Skeleton`, `Slider`, `Snackbar`, `Stepper`, `Switch`, `Table`, `Tabs`, `Teaser`, `Tooltip`, and all layout/provider modules — has dedicated test suites using Vitest and React Testing Library.
+- **E2E / component tests**: Added Cypress component tests for all 354 component specs, running headlessly in CI via `pnpm test:e2e:ci`.
+- **Storybook stories & MDX docs**: Added or extended Storybook stories and MDX documentation pages for every component matching the unit-test surface.
+- **Chromatic visual regression**: Integrated `@chromatic-com/cypress` plugin for DOM-snapshot-based visual regression in CI; plugin is gated on the presence of `ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=<port>` so local headless runs remain unaffected.
+- **CI pipeline**: Added GitHub Actions workflow (`.github/workflows/pr.yml`) that runs format checks, linting, type-checking, unit tests with coverage enforcement, and E2E tests (both light and dark themes) on every pull request.
+- **Test quality**: Eliminated all console warnings and errors emitted during the test run — every `jest.spyOn(console, …)` assertion is satisfied with zero noise.
 
 ## 0.1.14
 
