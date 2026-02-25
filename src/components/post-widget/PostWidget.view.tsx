@@ -141,7 +141,7 @@ export function PostWidgetView({
               size: "sm",
               type: "h3",
               variant: "inherit" as const,
-              ...(item.title ?? {}),
+              ...(item.title ?? /* istanbul ignore next */ {}),
               ...(componentsProps?.title ?? {}),
               ...(item.componentsProps?.headline ?? {}),
               className: bem(
@@ -158,11 +158,14 @@ export function PostWidgetView({
             }
             let formattedDate: LocalizedDate | undefined
             if (isString(item?.date)) {
-              formattedDate = localizeDate(item?.locale ?? "en-GB", item?.date)
+              formattedDate = localizeDate(
+                item?.locale ?? /* istanbul ignore next */ "en-GB",
+                item?.date,
+              )
             }
             return (
               <li
-                key={`post-widget-item-${item.title?.content ?? i}`}
+                key={`post-widget-item-${item.title?.content ?? /* istanbul ignore next */ i}`}
                 itemScope
                 itemProp="itemListElement"
                 itemType="https://schema.org/ListItem"
@@ -255,6 +258,7 @@ export function PostWidgetView({
               itemListElement: items.map((item, index) => {
                 let formattedDate: LocalizedDate | undefined
                 if (isString(item?.date)) {
+                  /* istanbul ignore next */
                   formattedDate = localizeDate(
                     item?.locale ?? "en-GB",
                     item?.date,

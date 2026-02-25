@@ -33,11 +33,19 @@ export default defineConfig(({ mode }) => {
         open: !process.env.CI || process.env.CI === "false",
         filename: "stats.html",
       }),
-      checker({
-        typescript: {
-          tsconfigPath: path.resolve(__dirname, "tsconfig.typecheck.json"),
-        },
-      }),
+      // Skip TypeScript checker in test/Cypress mode to prevent HMR-triggered spec re-runs
+      ...(mode !== "test" && !process.env.CYPRESS
+        ? [
+            checker({
+              typescript: {
+                tsconfigPath: path.resolve(
+                  __dirname,
+                  "tsconfig.typecheck.json",
+                ),
+              },
+            }),
+          ]
+        : []),
     ],
     assetsInclude: ["**/*.webp"],
     css: {
@@ -65,6 +73,19 @@ export default defineConfig(({ mode }) => {
     esbuild: {
       keepNames: true,
       minifySyntax: false,
+    },
+    // Pre-bundle all external/heavy deps so Vite never needs to reload mid-run
+    // (especially important for Cypress component tests)
+    optimizeDeps: {
+      include: [
+        "react",
+        "react-dom",
+        "dayjs",
+        "markdown-it",
+        "xss",
+        "@lottiefiles/dotlottie-react",
+        "@googlemaps/js-api-loader",
+      ],
     },
     build: {
       minify: false,

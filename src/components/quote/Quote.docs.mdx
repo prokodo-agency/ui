@@ -1,0 +1,52 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as QuoteStories from "./Quote.stories"
+
+<Meta of={QuoteStories} />
+
+# Quote
+
+A styled blockquote for pull quotes, testimonials, and editorial callouts. Optionally includes an author attribution line, an avatar image, and a title.
+
+## When to use
+
+Use `Quote` to highlight a significant statement from an article, case study, or customer testimonial. For inline citations use a standard `<blockquote>` element.
+
+## Accessibility (WCAG 2.2)
+
+- Content is rendered inside `<blockquote cite="…">` when a source URL is known
+- Author attribution uses `<cite>` for semantic meaning
+- Avatar images have meaningful `alt` text (author name) or `alt=""` when purely decorative
+
+## ✅ Do
+
+- Attribute every quote to a real author or source
+- Keep quote text under ~200 characters for readability at display sizes
+
+## ❌ Don't
+
+- Don't use `Quote` for long body passages — use standard prose or a callout box
+- Don't omit author attribution in customer-testimonial contexts where trust is critical
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={QuoteStories.Default} />
+</Canvas>
+
+### With avatar
+
+<Canvas>
+  <Story of={QuoteStories.WithAvatar} />
+</Canvas>
+
+### With title
+
+<Canvas>
+  <Story of={QuoteStories.WithTitle} />
+</Canvas>
+
+### Props
+
+<Controls of={QuoteStories.Default} />

@@ -1,0 +1,49 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as LoadingStories from "./Loading.stories"
+
+<Meta of={LoadingStories} />
+
+# Loading
+
+Animated loading indicator (spinner / skeleton placeholder). Used to communicate that content or an action is in progress.
+
+## When to use
+
+Use `Loading` when:
+
+- Data is being fetched and no content is available yet
+- A form submission or async action is processing
+- A lazy-loaded component is hydrating
+
+For inline text-skeleton placeholders composable with specific layouts, use `Skeleton` instead.
+
+## Accessibility (WCAG 2.2)
+
+- The spinner is announced with `role="status"` and an `aria-label` (e.g. "Loading…")
+- Avoid causing layout shifts when the `Loading` component appears or disappears
+- In async contexts, use `aria-busy="true"` on the container being updated
+- Motion: respects `prefers-reduced-motion` — animation is suppressed or slowed
+
+## ✅ Do
+
+- Provide a meaningful `label` prop for screen reader announcement
+- Replace `Loading` with the actual content as soon as it is available
+- Show a `Loading` state immediately — don't delay by more than 200 ms
+
+## ❌ Don't
+
+- Don't use `Loading` as a permanent placeholder or decorative element
+- Don't block the entire viewport with a full-page spinner for sub-section updates
+- Don't show two nested `Loading` indicators simultaneously
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={LoadingStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={LoadingStories.Default} />

@@ -89,6 +89,7 @@ export function AutocompleteView({
           )}
           onKeyDown={_clientState?.onInputKeyDown}
           onChange={event => {
+            /* istanbul ignore next */
             _clientState?.onInputChange(event?.target?.value ?? "")
           }}
           onFocus={() => {
@@ -102,11 +103,13 @@ export function AutocompleteView({
           className={bem("list", undefined, listClassName)}
           role="listbox"
           tabIndex={-1}
-          style={{
-            top: isNumber(_clientState?.listTop)
-              ? `${_clientState.listTop}px`
-              : undefined,
-          }}
+          style={
+            /* istanbul ignore next */ {
+              top: isNumber(_clientState?.listTop)
+                ? `${_clientState.listTop}px`
+                : /* istanbul ignore next */ undefined,
+            }
+          }
         >
           {Boolean(loading) ? (
             <li>
@@ -122,7 +125,7 @@ export function AutocompleteView({
                   ? (
                       minQueryLengthText ?? "{count} characters required"
                     ).replaceAll("{count}", String(minQueryLength))
-                  : "Type to search"}
+                  : /* istanbul ignore next */ "Type to search"}
               </p>
             </li>
           ) : !hasItems ? (

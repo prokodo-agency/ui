@@ -73,11 +73,13 @@ function RatingClient({
   const runValidation = useCallback(
     (newVal: RatingValue | undefined) => {
       // validation works on numeric value (or null for "no value")
-      const numeric = isNumber(newVal as number)
-        ? newVal
-        : isString(newVal as string)
-          ? Number(newVal)
-          : undefined
+      let numeric: number | undefined
+      /* istanbul ignore else */
+      if (isNumber(newVal as number)) {
+        numeric = newVal as number
+      } else {
+        numeric = isString(newVal as string) ? Number(newVal) : undefined
+      }
 
       handleRatingValidation(
         name,
@@ -88,6 +90,7 @@ function RatingClient({
         errorTranslations,
         (n, error) => {
           setErr(error)
+          /* istanbul ignore next */
           onValidate?.(n, error)
         },
       )

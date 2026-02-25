@@ -3,6 +3,7 @@ let injected = false
 
 export function ensureQuillSnowStyles(cssText: string): void {
   if (injected) return
+  /* istanbul ignore next */
   if (typeof document === "undefined") return
 
   const id = "rte-quill-snow"

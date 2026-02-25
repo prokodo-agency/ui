@@ -41,10 +41,8 @@ jobs:
       - name: 📦 Install dependencies (frozen lockfile)
         run: pnpm install --frozen-lockfile
 
-      - name: 🧪 Typecheck, Lint & Test (CI-safe)
+      - name: 🧪 Typecheck, Lint & Test (CI-safe, Unit & E2E)
         run: |
-          pnpm run typecheck
-          pnpm run lint
           pnpm run test:ci
 
       - name: 🛠 Build library (production)

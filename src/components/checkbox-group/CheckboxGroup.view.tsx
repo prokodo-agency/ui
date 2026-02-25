@@ -27,7 +27,8 @@ export function CheckboxGroupView<T extends string>({
 }: CheckboxGroupViewProps<T>): JSX.Element | null {
   if (!options?.length) return null
 
-  const label = ariaLabel ?? t?.ariaLabel ?? "Options"
+  const label =
+    /* istanbul ignore next */ ariaLabel ?? t?.ariaLabel ?? "Options"
   const isGroupRequiredActive = Boolean(required) && selectedValues.length === 0
 
   return (

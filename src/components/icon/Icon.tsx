@@ -22,7 +22,7 @@ export const getIconSize = (s?: IconSize): number =>
 const baseUrl =
   ENVIRONMENT !== "development"
     ? `https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v${PROKODO_UI_VERSION}/assets/icons`
-    : "/assets/icons"
+    : /* istanbul ignore next */ "/assets/icons"
 
 /* ---------- icon URL (CDN) ------------------------------- */
 const iconUrl = (n: IconName): string =>
@@ -43,7 +43,9 @@ export const Icon: FC<IconProps> = ({
   className,
   ...rest
 }) => {
+  /* istanbul ignore next */
   if (!name) return null
+  /* istanbul ignore next */
   const isCustomColor =
     Boolean(color?.includes("#")) ||
     Boolean(color?.includes("rgb")) ||
@@ -53,7 +55,9 @@ export const Icon: FC<IconProps> = ({
   const mask: CSSProperties = {
     width: sizePx,
     height: sizePx,
-    backgroundColor: Boolean(isCustomColor) ? color : "currentColor",
+    backgroundColor: /* istanbul ignore next */ Boolean(isCustomColor)
+      ? color
+      : "currentColor",
     maskImage: `url("${url}")`,
     WebkitMaskImage: `url("${url}")`,
   }

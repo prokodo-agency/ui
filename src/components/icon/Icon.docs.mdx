@@ -1,0 +1,47 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as IconStories from "./Icon.stories"
+
+<Meta of={IconStories} />
+
+# Icon
+
+SVG icon component backed by the Prokodo icon set. Renders a single named icon with controlled size, color, and accessibility attributes.
+
+## When to use
+
+Use `Icon` whenever you need a standalone icon glyph — inside buttons, navigation items, status indicators, or decorative contexts. Pass `aria-hidden="true"` for purely decorative icons; provide `aria-label` or surrounding text for meaningful ones.
+
+## Icon names
+
+All available icon names are listed in `IconList.ts`. Icons are referenced by name string, e.g. `"StarIcon"`, `"CheckmarkIcon"`.
+
+## Accessibility (WCAG 2.2)
+
+- Decorative icons: set `aria-hidden="true"` so screen readers skip them
+- Meaningful icons without visible label: provide `aria-label` on the `Icon` or its parent button
+- `role="img"` is not applied automatically — add it explicitly when the icon conveys standalone meaning
+- Color alone must not convey information (pair with text or shape)
+
+## ✅ Do
+
+- Always decide whether an icon is decorative or meaningful before rendering
+- Use consistent icon sizes across related UI elements
+- Pair icons with visible labels for first-time-user contexts
+
+## ❌ Don't
+
+- Don't rely on icon color alone to communicate status (use text labels or patterns)
+- Don't use a non-existent icon name — TypeScript will surface the error but double-check at runtime
+- Don't override icon stroke/fill via global CSS — use `color` and `size` props instead
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={IconStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={IconStories.Default} />

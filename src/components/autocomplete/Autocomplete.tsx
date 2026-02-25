@@ -7,5 +7,5 @@ import type { AutocompleteProps } from "./Autocomplete.model"
 export const Autocomplete = createIsland<AutocompleteProps>({
   name: "Autocomplete",
   Server: AutocompleteServer,
-  loadLazy: () => import("./Autocomplete.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Autocomplete.lazy"),
 })

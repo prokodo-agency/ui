@@ -1,0 +1,44 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as MapStories from "./Map.stories"
+
+<Meta of={MapStories} />
+
+# Map
+
+Embeds an interactive or static map (e.g. Google Maps, Mapbox) as a configurable component. Used for location-based content such as contact pages, store finders, and event detail pages.
+
+## When to use
+
+Use `Map` when you need to display a geographic location or route. For decorative map graphics use `Image` instead.
+
+## Accessibility (WCAG 2.2)
+
+- Always provide a text alternative for the map location (address, description) near the component
+- The `<iframe>` or canvas element must have a meaningful `title` attribute
+- Interactive map controls must be keyboard accessible
+- Color contrast of map overlays and annotations must meet 3:1 ratio (WCAG 1.4.11)
+- Provide a fallback link to an external map service for users who cannot interact with the embedded map
+
+## ✅ Do
+
+- Include a plain-text address alongside the map for users who cannot view it
+- Set a descriptive `title` so screen readers announce the map context
+- Lazy-load the map to avoid blocking page render
+
+## ❌ Don't
+
+- Don't rely solely on the map to communicate location — always include a text address
+- Don't embed maps in modals without explicit scroll-lock handling
+- Don't autoload heavy map SDKs on pages where the map is below the fold
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={MapStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={MapStories.Default} />

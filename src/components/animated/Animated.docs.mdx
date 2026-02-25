@@ -1,0 +1,57 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as AnimatedStories from "./Animated.stories"
+
+<Meta of={AnimatedStories} />
+
+# Animated
+
+Scroll-triggered entrance animation wrapper using the Intersection Observer API.
+
+## When to use
+
+Use `Animated` to reveal content progressively as users scroll down the page — hero sections, feature cards, or call-to-action blocks. Avoid animating interactive elements that users may need to interact with immediately.
+
+## Accessibility (WCAG 2.2)
+
+`Animated` respects the `prefers-reduced-motion` media query:
+
+- animations are disabled when the OS has reduced-motion enabled
+- the `disabled` prop provides explicit programmatic opt-out
+- content is always accessible to screen readers regardless of animation state — the element is present in the DOM before the animation triggers
+
+### Keyboard behavior
+
+No interactive elements — `Animated` is a pure visual wrapper. Focus order is unaffected.
+
+## API notes
+
+- `animation` controls direction: `"bottom-top"`, `"top-bottom"`, `"left-right"`, `"right-left"`
+- `delay` (ms) staggers multiple animated siblings
+- `threshold` (0–1) sets the viewport visibility fraction that triggers the animation
+- `speed` sets duration to `"fast"` or `"slow"` preset
+- `onAnimate(visible)` fires when the observed visibility changes
+- `disabled` bypasses all animation logic and renders children immediately
+
+## ✅ Do
+
+- Use `delay` to stagger cards or list items for a cascade effect
+- Set `threshold` lower (e.g. `0.1`) for tall content blocks
+- Use `disabled` in unit tests or when animations are production-toggled off
+
+## ❌ Don't
+
+- Don't wrap the entire page layout in a single `Animated` — animate at the section or card level
+- Don't set very high `delay` values (> 1000 ms) — users may miss content
+- Don't rely on animation to reveal critical information (it may be skipped)
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={AnimatedStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={AnimatedStories.Default} />

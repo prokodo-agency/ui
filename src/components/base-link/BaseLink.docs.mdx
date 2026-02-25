@@ -1,0 +1,84 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as BaseLinkStories from "./BaseLink.stories"
+
+<Meta of={BaseLinkStories} />
+
+# BaseLink
+
+Primitive link wrapper that bridges the design system to any routing library via the `linkComponent` prop.
+
+## When to use
+
+Use `BaseLink` as the foundational building block when creating higher-level link or navigation components. Prefer the `Link` component for standard prose links; reach for `BaseLink` when you need full control over the rendered anchor element or want to inject a custom router.
+
+## Accessibility (WCAG 2.2)
+
+- Renders a native `<a>` or the provided `linkComponent`, preserving browser/screen-reader link semantics
+- Disabled state sets `aria-disabled="true"` and suppresses pointer events — do **not** simply render a `<span>` instead
+- Ensure every `BaseLink` has a visible, descriptive text label or an `aria-label`
+
+### Keyboard behavior
+
+| Key       | Action                             |
+| --------- | ---------------------------------- |
+| **Tab**   | Move focus to / away from the link |
+| **Enter** | Activate the link                  |
+
+## API notes
+
+- `href` is required — the destination URL
+- `disabled` renders the link visually and semantically disabled without removing it from the DOM
+- `linkComponent` accepts any `ComponentType` (e.g. Next.js `Link`, React Router `Link`) enabling SSR-friendly navigation
+
+## ✅ Do
+
+- Provide meaningful link text visible on screen or via `aria-label`
+- Use `linkComponent` to inject your app router once globally and inherit everywhere
+
+## ❌ Don't
+
+- Don't use `BaseLink` directly in page content — prefer `Link` for styled prose links
+- Don't pass `javascript:void(0)` as `href` — use a `<button>` for actions
+- Don't suppress all keyboard focus styling
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={BaseLinkStories.Default} />
+</Canvas>
+
+### Disabled link
+
+<Canvas>
+  <Story of={BaseLinkStories.DisabledLink} />
+</Canvas>
+
+### External link
+
+<Canvas>
+  <Story of={BaseLinkStories.ExternalLink} />
+</Canvas>
+
+### App link
+
+<Canvas>
+  <Story of={BaseLinkStories.AppLink} />
+</Canvas>
+
+### Locale link
+
+<Canvas>
+  <Story of={BaseLinkStories.LocaleLink} />
+</Canvas>
+
+### Target blank link
+
+<Canvas>
+  <Story of={BaseLinkStories.TargetBlankLink} />
+</Canvas>
+
+### Props
+
+<Controls of={BaseLinkStories.Default} />

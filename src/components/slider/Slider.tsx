@@ -7,5 +7,5 @@ import type { SliderProps } from "./Slider.model"
 export const Slider = createIsland<SliderProps>({
   name: "Slider",
   Server: SliderServer,
-  loadLazy: () => import("./Slider.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Slider.lazy"),
 })

@@ -6,7 +6,8 @@ import { SnackbarView } from "./Snackbar.view"
 import type { SnackbarProps, SnackbarCloseReason } from "./Snackbar.model"
 
 function SnackbarClient({
-  open: openProp = false,
+  /* istanbul ignore next */
+  open: openProp = /* istanbul ignore next */ false,
   autoHideDuration = 6_000,
   onClose,
   ...rest
@@ -34,6 +35,7 @@ function SnackbarClient({
 
     // cleanup (always returns void, never null)
     return () => {
+      /* istanbul ignore next */
       if (timer.current) clearTimeout(timer.current)
     }
   }, [open, autoHideDuration, handleClose])

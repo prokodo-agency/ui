@@ -89,6 +89,7 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
 
   // 7) If initialStep prop ever changes, sync internal state:
   useEffect(() => {
+    /* istanbul ignore else */
     if (initialStep >= 0 && initialStep < steps.length) {
       setActiveStep(initialStep)
     }
@@ -123,7 +124,7 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
               steps?.[i]?.innerContainerProps?.onBlur?.(e)
             },
             // Capture the <div role="button"> element in stepRefs.current[i]
-            ref: (el: HTMLDivElement | null) => {
+            ref: /* istanbul ignore next */ (el: HTMLDivElement | null) => {
               stepRefs.current[i] = el
             },
           },

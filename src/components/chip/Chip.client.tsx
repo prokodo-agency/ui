@@ -21,6 +21,7 @@ export default function ChipClient(props: ChipProps): JSX.Element {
     (e: KeyboardEvent<HTMLDivElement>) => {
       if ((e.key === "Enter" || e.key === " ") && clickable) {
         e.preventDefault()
+        /* istanbul ignore next */
         onClick?.(e as unknown as MouseEvent<HTMLDivElement>)
       }
       onKeyDown?.(e)

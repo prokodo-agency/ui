@@ -59,9 +59,11 @@ export const DrawerEffectsLoader = ({
     if (!container) return
 
     if (isOpen) {
+      /* istanbul ignore next */
       lastFocused.current = (document.activeElement as HTMLElement) ?? null
 
       // Make container programmatically focusable if needed
+      /* istanbul ignore next */
       if (!container.hasAttribute("tabindex"))
         container.setAttribute("tabindex", "-1")
 
@@ -103,6 +105,7 @@ export const DrawerEffectsLoader = ({
       if (!first || !last) return
 
       // wrap
+      /* istanbul ignore else */
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault()
         last.focus()

@@ -1,0 +1,63 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as DialogStories from "./Dialog.stories"
+
+<Meta of={DialogStories} />
+
+# Dialog
+
+Modal overlay component for confirmations, forms, and focused interactions. Traps focus inside and blocks interaction with the page behind the backdrop.
+
+## When to use
+
+Use `Dialog` when you need to:
+
+- Confirm a destructive or irreversible action
+- Collect focused input without navigating away
+- Display information that requires an explicit user response
+
+For non-blocking, dismissible side content prefer `Drawer` instead.
+
+## Accessibility (WCAG 2.2)
+
+- Uses `role="dialog"` with `aria-modal="true"`
+- `aria-labelledby` links the header to the dialog role
+- Focus is trapped inside the dialog while it is open
+- `Escape` key closes the dialog (unless `disableEscapeKeyDown` is set)
+- Focus returns to the trigger element on close
+
+### Keyboard behavior
+
+- **Tab / Shift+Tab**: cycle focus through focusable elements inside the dialog
+- **Escape**: close the dialog
+
+## ✅ Do
+
+- Always provide a descriptive title
+- Include a clear primary action and an explicit cancel/close affordance
+- Keep content concise — dialogs should not scroll unless absolutely necessary
+- Return focus to the triggering element after close
+
+## ❌ Don't
+
+- Don't nest dialogs
+- Don't use dialogs for passive notifications (use `Snackbar` instead)
+- Don't open a dialog on page load without a user action
+- Don't disable `Escape` unless the action genuinely cannot be cancelled
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={DialogStories.Default} />
+</Canvas>
+
+### Full-screen
+
+<Canvas>
+  <Story of={DialogStories.FullScreen} />
+</Canvas>
+
+### Props
+
+<Controls of={DialogStories.Default} />

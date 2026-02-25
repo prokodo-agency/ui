@@ -155,4 +155,32 @@ describe("CheckboxGroupView", () => {
       "true",
     )
   })
+
+  it("uses t.ariaLabel as fallback label and renders legend with custom legendProps className", () => {
+    render(
+      <CheckboxGroupView
+        isChecked={() => false}
+        legend="My legend"
+        legendProps={{ className: "custom-legend" }}
+        name="roles"
+        options={[{ value: "x", title: "X" }]}
+        selectedValues={[]}
+        translations={{ ariaLabel: "Translated label" }}
+      />,
+    )
+    expect(screen.getByText("My legend")).toBeInTheDocument()
+  })
+
+  it("renders without legend (covers legend = falsy branch)", () => {
+    render(
+      <CheckboxGroupView
+        isChecked={() => false}
+        name="roles"
+        options={[{ value: "a", title: "A" }]}
+        selectedValues={[]}
+      />,
+    )
+    // no legend element rendered when legend prop is not passed
+    expect(screen.queryByRole("legend")).not.toBeInTheDocument()
+  })
 })

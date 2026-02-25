@@ -17,6 +17,7 @@ export function AvatarView({
   size = "sm",
   image,
   redirect,
+  iconOverride,
   ...rest
 }: AvatarProps): JSX.Element {
   const rootClass = bem(
@@ -32,7 +33,7 @@ export function AvatarView({
       tabIndex={-1}
       style={
         isNumber(size as number)
-          ? {
+          ? /* istanbul ignore next */ {
               width: size,
               height: size,
             }
@@ -46,6 +47,8 @@ export function AvatarView({
           className={bem("image", undefined, image.className)}
           tabIndex={0}
         />
+      ) : /* istanbul ignore next */ iconOverride ? (
+        iconOverride
       ) : (
         <Icon
           className={bem("icon", { [variant]: true })}

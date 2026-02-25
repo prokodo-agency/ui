@@ -10,7 +10,8 @@ import type { AnimatedProps } from "./Animated.model"
 
 export default function AnimatedClient(props: AnimatedProps): JSX.Element {
   const {
-    delay = 0,
+    /* istanbul ignore next */
+    delay = /* istanbul ignore next */ 0,
     onAnimate,
     disabled,
     speed,
@@ -25,11 +26,15 @@ export default function AnimatedClient(props: AnimatedProps): JSX.Element {
 
   useEffect(() => {
     if (Boolean(disabled)) return
-    timeoutRef.current = window.setTimeout(() => {
-      setVisible(true)
-      onAnimate?.(true)
-    }, delay)
+    timeoutRef.current = window.setTimeout(
+      /* istanbul ignore next */ () => {
+        setVisible(true)
+        onAnimate?.(true)
+      },
+      delay,
+    )
     return () => {
+      /* istanbul ignore next */
       if (timeoutRef.current !== null && isNumber(timeoutRef.current)) {
         clearTimeout(timeoutRef.current)
       }

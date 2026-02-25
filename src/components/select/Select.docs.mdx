@@ -1,0 +1,74 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as SelectStories from "./Select.stories"
+
+<Meta of={SelectStories} />
+
+# Select
+
+A styled single or multi-select dropdown backed by a native `<select>` or a custom listbox. Supports required validation, error states, and disabled items.
+
+## When to use
+
+Use `Select` when the user must choose from a predefined list of options. For free-text search with suggestions use `Autocomplete`. For boolean toggles use `Switch`.
+
+## Accessibility (WCAG 2.2)
+
+- The trigger has an accessible name via `<label>` + `htmlFor`
+- The listbox has `role="listbox"` with `aria-expanded` on the trigger
+- Selected options carry `aria-selected="true"`
+- Error messages are linked via `aria-describedby`
+- Required state is communicated via `aria-required="true"`
+
+### Keyboard behavior
+
+- **Tab**: focus the trigger
+- **Enter / Space / ↓**: open the dropdown
+- **↑ / ↓**: navigate options
+- **Enter / Space**: select the focused option
+- **Escape**: close without selecting
+
+## ✅ Do
+
+- Always pair `Select` with a visible `<label>` — never rely on placeholder text alone
+- Use the `multiple` prop when the user legitimately needs to choose more than one value
+
+## ❌ Don't
+
+- Don't mix required and optional selects in the same form without clear visual distinction
+- Don't list more than ~20 options without grouping (`<optgroup>`) or switching to `Autocomplete`
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={SelectStories.Default} />
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story of={SelectStories.Disabled} />
+</Canvas>
+
+### Required
+
+<Canvas>
+  <Story of={SelectStories.Required} />
+</Canvas>
+
+### With error
+
+<Canvas>
+  <Story of={SelectStories.WithError} />
+</Canvas>
+
+### Multiple
+
+<Canvas>
+  <Story of={SelectStories.Multiple} />
+</Canvas>
+
+### Props
+
+<Controls of={SelectStories.Default} />

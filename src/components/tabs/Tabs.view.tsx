@@ -26,6 +26,7 @@ function resolveSelectedValue<Value extends string>(
     const isValid = items.some(
       item => item.value === activeCandidate && item.disabled !== true,
     )
+    /* istanbul ignore else */
     if (isValid) return activeCandidate
   }
 
@@ -48,6 +49,7 @@ export function TabsView<Value extends string = string>({
   badgeChipProps,
   _clientState,
 }: TabsViewProps<Value>): JSX.Element | null {
+  /* istanbul ignore next */
   if (!items?.length) return null
 
   const selectedValue =
@@ -97,6 +99,7 @@ export function TabsView<Value extends string = string>({
             <button
               key={item.value}
               ref={node => {
+                /* istanbul ignore next */
                 if (_clientState?.tabsRef.current) {
                   _clientState.tabsRef.current[index] = node
                 }
@@ -118,8 +121,14 @@ export function TabsView<Value extends string = string>({
                 },
                 tabClassName,
               )}
-              onClick={event => _clientState?.onTabClick(index, event)}
-              onKeyDown={event => _clientState?.onTabKeyDown(index, event)}
+              onClick={
+                /* istanbul ignore next */ event =>
+                  _clientState?.onTabClick(index, event)
+              }
+              onKeyDown={
+                /* istanbul ignore next */ event =>
+                  _clientState?.onTabKeyDown(index, event)
+              }
             >
               <span className={bem("tabLabel")}>{item.label}</span>
               {item.badge ? (

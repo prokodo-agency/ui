@@ -87,8 +87,10 @@ export function PaginationView({
                 aria-label={
                   isActive
                     ? (t?.pageCurrent?.replace("{page}", String(it.value)) ??
+                      /* istanbul ignore next */
                       `Current page ${it.value}`)
                     : (t?.pageGoTo?.replace("{page}", String(it.value)) ??
+                      /* istanbul ignore next */
                       `Go to page ${it.value}`)
                 }
                 onClick={

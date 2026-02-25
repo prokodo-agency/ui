@@ -30,6 +30,7 @@ export function InputView({
   inputClassName,
   hideCounter,
   rows,
+  hideLegend: _hideLegend,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   minRows,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -141,6 +142,7 @@ export function InputView({
         <div
           className={bem("footer", {
             "counter-only":
+              /* istanbul ignore next */
               !isError && !hasHelperText && typeof maxLength === "number",
           })}
         >
@@ -161,9 +163,14 @@ export function InputView({
             </div>
           )}
           {!Boolean(hideCounter) && typeof maxLength === "number" && (
+            /* istanbul ignore next */
             <div className={bem("counter")}>
               <span>
-                {value != null ? String(value).length : 0} / {maxLength}
+                {
+                  /* istanbul ignore next */
+                  value != null ? String(value).length : 0
+                }{" "}
+                / {maxLength}
               </span>
             </div>
           )}

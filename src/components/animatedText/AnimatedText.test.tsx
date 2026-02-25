@@ -1,4 +1,5 @@
 import { expect } from "@jest/globals"
+import { axe } from "jest-axe"
 
 import { render, screen } from "@/tests"
 
@@ -88,5 +89,13 @@ describe("AnimatedText", () => {
       '[data-island="animatedtext"]',
     )
     expect(animatedTexts.length).toBeGreaterThanOrEqual(9)
+  })
+
+  // -------------------------------------------------------------------------
+  // Accessibility (WCAG 2.2)
+  // -------------------------------------------------------------------------
+  it("animated text island has no axe violations", async () => {
+    const { container } = render(<AnimatedText>Hello World</AnimatedText>)
+    expect(await axe(container)).toHaveNoViolations()
   })
 })

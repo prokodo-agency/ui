@@ -46,6 +46,7 @@
   ],
   "exclude": [
     "./node_modules/**/*",
+    "./dist/**/*",
     "vite.config.ts",
     "svgo.config.ts",
     "tools",

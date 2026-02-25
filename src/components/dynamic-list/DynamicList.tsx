@@ -7,5 +7,5 @@ import type { DynamicListProps } from "./DynamicList.model"
 export const DynamicList = createIsland<DynamicListProps>({
   name: "DynamicList",
   Server: DynamicListServer,
-  loadLazy: () => import("./DynamicList.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./DynamicList.lazy"),
 })

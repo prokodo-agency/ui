@@ -7,6 +7,6 @@ import type { RichTextProps } from "./RichText.model"
 export const RichText = createIsland<RichTextProps>({
   name: "RichText",
   Server: RichTextServer,
-  loadLazy: () => import("./RichText.lazy"),
-  isInteractive: () => true,
+  loadLazy: /* istanbul ignore next */ () => import("./RichText.lazy"),
+  isInteractive: /* istanbul ignore next */ () => true,
 })

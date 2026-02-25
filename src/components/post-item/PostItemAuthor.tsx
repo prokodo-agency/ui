@@ -24,6 +24,7 @@ export const PostItemAuthor: FC<PostItemAuthorProps> = memo(
       >
         <Avatar
           image={
+            /* istanbul ignore next */
             avatar?.src !== undefined && isString(avatar?.src)
               ? { src: avatar?.src, alt: avatar?.alt ?? authorName ?? "" }
               : undefined

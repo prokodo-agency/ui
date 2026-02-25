@@ -7,5 +7,5 @@ import type { StepperProps } from "./Stepper.model"
 export const Stepper = createIsland<StepperProps>({
   name: "Stepper",
   Server: StepperServer,
-  loadLazy: () => import("./Stepper.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Stepper.lazy"),
 })

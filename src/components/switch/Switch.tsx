@@ -7,5 +7,5 @@ import type { SwitchProps } from "./Switch.model"
 export const Switch = createIsland<SwitchProps>({
   name: "Switch",
   Server: SwitchServer,
-  loadLazy: () => import("./Switch.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Switch.lazy"),
 })

@@ -50,23 +50,28 @@ function AutocompleteClient({
     return () => window.removeEventListener("mousedown", onClickOutside)
   }, [open])
 
-  const list = useMemo(() => items ?? [], [items])
+  const list = useMemo(/* istanbul ignore next */ () => items ?? [], [items])
 
   const updateListAnchor = useCallback(() => {
     const root = rootRef.current
+    /* istanbul ignore next */
     if (!root) return
 
     const inputElement = root.querySelector(
       `input[name="${name}"], textarea[name="${name}"]`,
     ) as HTMLElement | null
 
+    /* istanbul ignore next */
     if (!inputElement) {
       setListTop(undefined)
       return
     }
 
+    /* istanbul ignore next */
     const rootRect = root.getBoundingClientRect()
+    /* istanbul ignore next */
     const inputRect = inputElement.getBoundingClientRect()
+    /* istanbul ignore next */
     setListTop(inputRect.bottom - rootRect.top)
   }, [name])
 

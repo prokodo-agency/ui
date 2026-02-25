@@ -18,10 +18,12 @@ import type { LottieProps } from "./Lottie.model"
 
 const bem = create(styles, "Lottie")
 
-const DotLottieReact = lazy(() =>
-  import("@lottiefiles/dotlottie-react").then(mod => ({
-    default: mod.DotLottieReact,
-  })),
+const DotLottieReact = lazy(
+  /* istanbul ignore next */
+  () =>
+    import("@lottiefiles/dotlottie-react").then(mod => ({
+      default: mod.DotLottieReact,
+    })),
 )
 
 export const Lottie: FC<LottieProps> = memo(
@@ -30,12 +32,14 @@ export const Lottie: FC<LottieProps> = memo(
     const containerRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry?.isIntersecting === true) {
-          setIsInView(true)
-          observer.disconnect()
-        }
-      })
+      const observer = new IntersectionObserver(
+        /* istanbul ignore next */ ([entry]) => {
+          if (entry?.isIntersecting === true) {
+            setIsInView(true)
+            observer.disconnect()
+          }
+        },
+      )
 
       const el = containerRef.current
       if (el) observer.observe(el)

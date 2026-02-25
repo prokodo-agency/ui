@@ -1,0 +1,68 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as DrawerStories from "./Drawer.stories"
+
+<Meta of={DrawerStories} />
+
+# Drawer
+
+Slide-in panel anchored to a screen edge. Used for navigation, settings, filters, or supplementary detail without losing context of the current page.
+
+## When to use
+
+Use `Drawer` when you need to:
+
+- Show a side navigation menu or mobile nav
+- Reveal contextual detail or filters alongside the main content
+- Display a form that does not require full-page focus
+
+For blocking, confirmation-type interactions use `Dialog` instead.
+
+## Accessibility (WCAG 2.2)
+
+- Uses `role="dialog"` with `aria-modal="true"` while open
+- Focus is trapped inside the drawer when open
+- `Escape` key closes the drawer
+- Backdrop click closes the drawer unless `closeOnBackdropClick={false}`
+- Focus returns to the trigger element on close
+
+### Keyboard behavior
+
+- **Tab / Shift+Tab**: cycle focus within the open drawer
+- **Escape**: close the drawer
+
+## ✅ Do
+
+- Provide a visible close button inside the drawer
+- Use `anchor` consistently within your product (left for nav, right for detail)
+- Set `aria-label` or a visible heading so screen readers announce context
+- Test that the trigger element receives focus back after close
+
+## ❌ Don't
+
+- Don't open a drawer without a user action
+- Don't nest drawers
+- Don't disable backdrop-click without providing another obvious dismiss control
+
+## Examples
+
+### Default (left anchor)
+
+<Canvas>
+  <Story of={DrawerStories.Default} />
+</Canvas>
+
+### Full-screen (top anchor)
+
+<Canvas>
+  <Story of={DrawerStories.FullscreenTop} />
+</Canvas>
+
+### Right anchor — backdrop disabled
+
+<Canvas>
+  <Story of={DrawerStories.RightDisabledBackdrop} />
+</Canvas>
+
+### Props
+
+<Controls of={DrawerStories.Default} />

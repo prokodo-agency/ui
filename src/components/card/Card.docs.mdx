@@ -1,0 +1,82 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as CardStories from "./Card.stories"
+
+<Meta of={CardStories} />
+
+# Card
+
+Flexible content container with variants for highlight, background, gradient, and clickable cards using island architecture and design-system styling.
+
+## When to use
+
+Use `Card` to group related content — blog teasers, product listings, feature highlights, pricing tiers. Choose a variant to convey visual hierarchy or interactivity.
+
+## Accessibility (WCAG 2.2)
+
+- Clickable cards must have a focusable element (`<a>` or `<button>`) as the primary interaction target; avoid making the entire `<div>` interactive
+- Provide meaningful heading text inside the card — don't rely on visual styling alone to convey hierarchy
+- Ensure sufficient colour contrast for all card background/text combinations (WCAG 1.4.3 AA)
+
+### Keyboard behavior
+
+| Key               | Action                                                         |
+| ----------------- | -------------------------------------------------------------- |
+| **Tab**           | Move focus into / through interactive elements inside the card |
+| **Enter / Space** | Activate a clickable card's primary action                     |
+
+## API notes
+
+- Default variant renders a standard elevated surface
+- `CardHighlight` applies brand accent styling
+- `CardBackground` renders a full-bleed background image or colour
+- `CardGradiant` applies a gradient overlay
+- `CardClickHandler` wraps the entire card in an accessible interactive region — provide keyboard and screen-reader support via the built-in handler props
+- Pass children as normal React nodes to compose card content freely
+
+## ✅ Do
+
+- Use `CardHighlight` sparingly — reserve it for the most important item on a page
+- Provide a heading element as the first meaningful child inside each card
+- Use `CardClickHandler` instead of an `onClick` on the raw wrapper div
+
+## ❌ Don't
+
+- Don't nest interactive elements inside `CardClickHandler` without managing focus correctly
+- Don't use gradient cards on backgrounds that already have strong visual texture
+- Don't omit alt text for background images used in `CardBackground`
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={CardStories.Default} />
+</Canvas>
+
+### Card highlight
+
+<Canvas>
+  <Story of={CardStories.CardHighlight} />
+</Canvas>
+
+### Card background
+
+<Canvas>
+  <Story of={CardStories.CardBackground} />
+</Canvas>
+
+### Card gradient
+
+<Canvas>
+  <Story of={CardStories.CardGradiant} />
+</Canvas>
+
+### Card click handler
+
+<Canvas>
+  <Story of={CardStories.CardClickHandler} />
+</Canvas>
+
+### Props
+
+<Controls of={CardStories.Default} />

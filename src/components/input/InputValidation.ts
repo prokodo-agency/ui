@@ -60,8 +60,10 @@ const validatePassword = (v: string) =>
 const buildCustomRegex = (pattern: string): RegExp => {
   const m = pattern.match(/^\/([\s\S]*)\/([gimuy]*)$/)
   const src = m ? m[1] : pattern
-  const flags = m ? m[2]?.replace(/[^gimuy]/g, "") : ""
-  return new RegExp(src ?? "", flags)
+  const flags = m
+    ? /* istanbul ignore next */ m[2]?.replace(/[^gimuy]/g, "")
+    : ""
+  return new RegExp(src ?? /* istanbul ignore next */ "", flags)
 }
 
 /* ── main ───────────────────────────────────────────────────────────── */

@@ -1,0 +1,71 @@
+import { Canvas, Controls, Meta } from "@storybook/blocks"
+import * as ImageStories from "./Image.stories"
+
+<Meta of={ImageStories} />
+
+# Image
+
+Optimised image component with lazy loading, responsive `srcSet`, caption support, and Next.js `Image` integration via the island architecture.
+
+## When to use
+
+Use `Image` for all content images — hero sections, cards, blog posts, and product visuals. Do not use raw `<img>` tags in the product.
+
+## Props overview
+
+| Prop               | Description                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| `src`              | Image URL (required)                                                |
+| `alt`              | Accessible alternative text (required)                              |
+| `caption`          | Optional visible caption rendered below the image                   |
+| `width` / `height` | Explicit dimensions for layout stability                            |
+| `fill`             | Fill the parent container (requires `position: relative` on parent) |
+| `priority`         | Disable lazy loading for above-the-fold images                      |
+| `sizes`            | Responsive size hints for `srcSet`                                  |
+
+## Accessibility (WCAG 2.2)
+
+- Always provide a meaningful `alt` text that describes the image content
+- For decorative images pass `alt=""` to hide them from screen readers
+- Captions are rendered as a visible `<figcaption>` inside a `<figure>`
+- Avoid using text in images — if unavoidable, repeat the text in `alt`
+
+## ✅ Do
+
+- Set `priority` for the largest contentful paint (LCP) image on each page
+- Define `width` and `height` (or `fill`) to prevent layout shift (CLS)
+- Use descriptive `alt` text that conveys image meaning, not file names
+- Provide `sizes` when the image is displayed at different widths across breakpoints
+
+## ❌ Don't
+
+- Don't use `alt` as a file name or URL
+- Don't omit `alt` — even decorative images should have `alt=""`
+- Don't use `fill` without a positioned parent container
+- Don't set `priority` on every image — reserve it for above-the-fold content only
+
+## Examples
+
+### Default
+
+<Canvas of={ImageStories.Default} />
+
+### With caption
+
+<Canvas of={ImageStories.WithCaption} />
+
+### Square crop
+
+<Canvas of={ImageStories.Square} />
+
+### Decorative (empty alt)
+
+<Canvas of={ImageStories.Decorative} />
+
+### Priority (LCP)
+
+<Canvas of={ImageStories.Priority} />
+
+### Props
+
+<Controls of={ImageStories.Default} />

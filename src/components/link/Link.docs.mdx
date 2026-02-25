@@ -1,0 +1,43 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as LinkStories from "./Link.stories"
+
+<Meta of={LinkStories} />
+
+# Link
+
+Themed anchor/navigation link component. Wraps Next.js `Link` with design-system typography, color variants, and island architecture support for client-side navigation.
+
+## When to use
+
+Use `Link` for inline text links within prose, navigation lists, and CTAs where a button is semantically incorrect. For primary actions use `Button`.
+
+## Accessibility (WCAG 2.2)
+
+- Renders a native `<a>` element — fully keyboard and screen-reader accessible
+- `aria-label` overrides the visible text for screen readers when needed
+- `rel="noopener noreferrer"` is applied automatically for external links
+- Meaningful link text: describe the destination, not the action ("View pricing" not "Click here")
+
+## ✅ Do
+
+- Use descriptive link text that makes sense out of context (screen reader list view)
+- Set `external` or `target="_blank"` for links that open in a new tab and inform users
+- Use `variant` to align the link color with its surrounding context
+
+## ❌ Don't
+
+- Don't use `Link` to trigger JavaScript actions — use `Button` with `variant="text"`
+- Don't use vague text like "here", "click here", or "read more" without surrounding context
+- Don't open links in a new tab without warning
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={LinkStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={LinkStories.Default} />

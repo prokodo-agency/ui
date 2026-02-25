@@ -1,0 +1,53 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as SideNavStories from "./SideNav.stories"
+
+<Meta of={SideNavStories} />
+
+# SideNav
+
+A persistent vertical navigation sidebar for application dashboards and portals. Supports expanded and collapsed states with icon-only display in the collapsed mode.
+
+## When to use
+
+Use `SideNav` as the primary navigation surface in multi-section app layouts. For top-bar navigation use a `<nav>` with horizontal links; for contextual in-page navigation use anchor-tabs.
+
+## Accessibility (WCAG 2.2)
+
+- The `<nav>` landmark has `aria-label="Main navigation"` (or equivalent)
+- The toggle button has `aria-expanded` reflecting the current state and `aria-controls` pointing to the nav panel
+- Active items carry `aria-current="page"`
+- Icon-only items in collapsed mode have `aria-label` or `title` attributes for screen-reader access
+
+### Keyboard behavior
+
+- **Tab**: move through nav items
+- **Enter / Space**: activate the focused item or toggle collapse
+- **Escape**: collapse an expanded sub-menu (if any)
+
+## ✅ Do
+
+- Persist the expanded/collapsed preference to `localStorage` across sessions
+- Provide icons alongside labels in expanded mode so users can re-learn them in collapsed mode
+
+## ❌ Don't
+
+- Don't hide the nav completely on desktop — at minimum show the icon-only collapsed rail
+- Don't use `SideNav` for pagination or step sequences — use `Stepper`
+
+## Examples
+
+### Expanded
+
+<Canvas>
+  <Story of={SideNavStories.Expanded} />
+</Canvas>
+
+### Collapsed
+
+<Canvas>
+  <Story of={SideNavStories.Collapsed} />
+</Canvas>
+
+### Props
+
+<Controls of={SideNavStories.Expanded} />

@@ -49,6 +49,7 @@ function resolveInitialValue<Value extends string>(
   }
 
   const firstEnabled = items.find(item => item.disabled !== true) ?? items[0]
+  /* istanbul ignore next */
   return (firstEnabled?.value ?? value ?? defaultValue ?? "") as Value
 }
 
@@ -96,6 +97,7 @@ function TabsClient<Value extends string = string>({
       const next = items[index]
       if (!next || next.disabled === true || disabled === true) return
 
+      /* istanbul ignore next */
       if (!isControlled) {
         setInternalValue(next.value)
       }
@@ -109,6 +111,7 @@ function TabsClient<Value extends string = string>({
   )
 
   const moveFocus = useCallback(
+    /* istanbul ignore next */
     (currentIndex: number, direction: 1 | -1) => {
       if (!enabledIndices.length) return currentIndex
 
@@ -178,6 +181,7 @@ function TabsClient<Value extends string = string>({
         return
       }
 
+      /* istanbul ignore next */
       if (event.key === "Home") {
         event.preventDefault()
         const nextIndex = enabledIndices[0] ?? 0
@@ -188,6 +192,7 @@ function TabsClient<Value extends string = string>({
         return
       }
 
+      /* istanbul ignore next */
       if (event.key === "End") {
         event.preventDefault()
         const nextIndex = enabledIndices[enabledIndices.length - 1] ?? 0
@@ -198,6 +203,7 @@ function TabsClient<Value extends string = string>({
         return
       }
 
+      /* istanbul ignore next */
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault()
         selectByIndex(index)

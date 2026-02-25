@@ -1,0 +1,52 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as TableStories from "./Table.stories"
+
+<Meta of={TableStories} />
+
+# Table
+
+A semantic HTML table with styled header, body, optional caption, and configurable border type. Supports single-border and double-border display variants.
+
+## When to use
+
+Use `Table` to display structured, relational data where rows and columns have logical meaning. For lists of similar items without column relationships use `List`.
+
+## Accessibility (WCAG 2.2)
+
+- The table has an accessible name via `<caption>` or `aria-label` / `aria-labelledby`
+- Header cells use `<th>` with `scope="col"` or `scope="row"` to associate them with data cells
+- The table element has an enclosing scrollable container so it does not overflow on narrow viewports without losing focus visibility
+
+## ✅ Do
+
+- Always supply a `caption` or `aria-label` describing the table's purpose
+- Mark row headers with `scope="row"` when rows have a logical header cell
+
+## ❌ Don't
+
+- Don't use a `Table` for layout — use CSS Grid or Flexbox
+- Don't omit column headers (`<th scope="col">`) even if they are visually hidden
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={TableStories.Default} />
+</Canvas>
+
+### With icons
+
+<Canvas>
+  <Story of={TableStories.WithIcons} />
+</Canvas>
+
+### Double type
+
+<Canvas>
+  <Story of={TableStories.DoubleType} />
+</Canvas>
+
+### Props
+
+<Controls of={TableStories.Default} />

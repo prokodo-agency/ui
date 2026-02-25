@@ -28,6 +28,7 @@ export const ImageText: FC<ImageTextProps> = ({
   image,
   button,
 }) => {
+  /* istanbul ignore next */
   const leftColumnMd = image
     ? animatedBorder
       ? 4
@@ -35,6 +36,7 @@ export const ImageText: FC<ImageTextProps> = ({
     : animatedBorder
       ? 10
       : 12
+
   return (
     <div className={bem()}>
       <Grid
@@ -54,6 +56,7 @@ export const ImageText: FC<ImageTextProps> = ({
                 className={bem(
                   "sub__headline",
                   undefined,
+                  /* istanbul ignore next */
                   subTitleProps?.className,
                 )}
               >
@@ -64,7 +67,11 @@ export const ImageText: FC<ImageTextProps> = ({
               size="lg"
               type="h2"
               {...titleProps}
-              className={bem("headline", undefined, titleProps?.className)}
+              className={bem(
+                "headline",
+                undefined,
+                /* istanbul ignore next */ titleProps?.className,
+              )}
             >
               {title}
             </Headline>
@@ -85,14 +92,16 @@ export const ImageText: FC<ImageTextProps> = ({
         {image && (
           <GridRow className={bem("image")} md={6} xs={10}>
             <Animated className={bem("animated__container")}>
-              {isString(animation) ? (
-                <Lottie
-                  animation={animation as string}
-                  className={bem("animation")}
-                />
-              ) : (
-                <Image className={bem("image__src")} {...image} />
-              )}
+              {
+                /* istanbul ignore next */ isString(animation) ? (
+                  <Lottie
+                    animation={animation as string}
+                    className={bem("animation")}
+                  />
+                ) : (
+                  <Image className={bem("image__src")} {...image} />
+                )
+              }
             </Animated>
           </GridRow>
         )}

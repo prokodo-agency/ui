@@ -124,9 +124,10 @@ export function PostWidgetCarouselView(
             }}
           >
             {items.map((item: PostWidgetCarouselItem, idx: number) => {
-              const key = `carousel-item-${item.title?.content ?? idx}`
+              const key = `carousel-item-${item.title?.content ?? /* istanbul ignore next */ idx}`
 
               const imgBase = item.image as ImageProps | undefined
+              /* istanbul ignore next */
               const imgMerged: ImageProps | undefined = imgBase
                 ? ({
                     ...imgBase,

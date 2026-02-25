@@ -1,0 +1,55 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as AnimatedTextStories from "./AnimatedText.stories"
+
+<Meta of={AnimatedTextStories} />
+
+# AnimatedText
+
+Character-by-character typing-effect text reveal component.
+
+## When to use
+
+Use `AnimatedText` for hero taglines, loading placeholders, or anywhere a typewriter reveal adds engagement without overwhelming the user.
+
+## Accessibility (WCAG 2.2)
+
+`AnimatedText` keeps full content available to assistive technology:
+
+- the complete text string is present in the DOM immediately via `aria-label`
+- visual reveal is purely cosmetic — screen readers announce the full text at once
+- respects `prefers-reduced-motion`: when reduced motion is preferred, the full text renders without animation
+
+### Keyboard behavior
+
+No interactive elements — `AnimatedText` is a presentational `<span>`. Focus order is unaffected.
+
+## API notes
+
+- `children` must be a plain string (not `ReactNode`)
+- `delay` (ms) sets the pause before the first character appears
+- `speed` (ms per character) controls typing tempo — lower is faster
+- `disabled` renders the full string immediately with no animation
+
+## ✅ Do
+
+- Keep strings short (< 80 characters) for readable animation
+- Use `delay` when the component mounts before the user's attention arrives
+- Combine with `Animated` for entrance + typing double effect
+
+## ❌ Don't
+
+- Don't animate critical body text or instructions — animation slows reading
+- Don't pass `ReactNode` as children; only plain strings are supported
+- Don't use very low `speed` (< 10 ms) — it reads faster than users can follow
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={AnimatedTextStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={AnimatedTextStories.Default} />

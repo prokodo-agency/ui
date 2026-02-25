@@ -103,10 +103,12 @@ export const FormView: FC<FormViewProps> = ({
           className={bem("hp")}
           id="hp"
           name="hp"
+          tabIndex={-1}
           type="text"
           {...honeypotRest}
           readOnly={honeypotReadOnly}
           value={hpValue}
+          onChange={hpOnChange}
         />
       </Grid>
 

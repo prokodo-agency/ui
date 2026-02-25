@@ -7,14 +7,17 @@ import type { LoadingProps } from "./Loading.model"
 
 // Helpers
 const getAutoScheme = (): "light" | "dark" => {
+  /* istanbul ignore next */
   const html = typeof document !== "undefined" ? document.documentElement : null
   const attr = html?.getAttribute("data-theme")
   if (attr === "dark" || attr === "light") return attr
+  /* istanbul ignore else */
   if (typeof window !== "undefined") {
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light"
   }
+  /* istanbul ignore next */
   return "light"
 }
 

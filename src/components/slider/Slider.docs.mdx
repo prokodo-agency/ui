@@ -1,0 +1,59 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as SliderStories from "./Slider.stories"
+
+<Meta of={SliderStories} />
+
+# Slider
+
+A draggable range input for selecting a numeric value within a defined min/max range. Supports labelled tick marks, discrete fixed values, and custom step sizes.
+
+## When to use
+
+Use `Slider` for continuous or stepped numeric input where direct keyboard entry is impractical — budget filters, volume controls, date-range selectors. For precise numeric input use a number `Input`.
+
+## Accessibility (WCAG 2.2)
+
+- The thumb is a native `<input type="range">` with `aria-label`, `aria-valuemin`, `aria-valuemax`, and `aria-valuenow`
+- Tick labels are linked via `<datalist>` so screen readers can announce them
+- Current value is announced on change via `aria-valuetext` with the formatted value and unit
+
+### Keyboard behavior
+
+- **Tab**: focus the slider thumb
+- **← / → Arrow keys**: decrease / increase the value by one step
+- **Home**: jump to minimum
+- **End**: jump to maximum
+
+## ✅ Do
+
+- Always display the current value numerically alongside the thumb
+- Use `fixedValues` to constrain selection to meaningful breakpoints (e.g. pricing tiers)
+
+## ❌ Don't
+
+- Don't use `Slider` as the sole input for fine numeric precision — pair it with a read-out or allow direct input
+- Don't rely on colour alone to indicate the filled track portion
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={SliderStories.Default} />
+</Canvas>
+
+### With labels
+
+<Canvas>
+  <Story of={SliderStories.WithLabels} />
+</Canvas>
+
+### Fixed values
+
+<Canvas>
+  <Story of={SliderStories.FixedValues} />
+</Canvas>
+
+### Props
+
+<Controls of={SliderStories.Default} />

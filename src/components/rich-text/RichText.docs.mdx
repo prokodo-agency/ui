@@ -1,0 +1,70 @@
+import { Canvas, Controls, Meta } from "@storybook/blocks"
+import * as RichTextStories from "./RichText.stories"
+
+<Meta of={RichTextStories} />
+
+# RichText
+
+A server-rendered HTML renderer for CMS-authored rich text content. Converts structured or raw HTML from Strapi (or another headless CMS) into safe, styled markup.
+
+## When to use
+
+Use `RichText` wherever long-form editorial content, authored in a CMS rich-text field, needs to be displayed. For an editable rich-text input in forms use `RTE`.
+
+## Architecture
+
+`RichText` follows the Island Architecture pattern:
+
+- **`RichText.server.tsx`** — server component; renders the sanitised HTML string at request time for maximum performance and SEO
+- **`RichText.client.tsx`** — client component; used when the content must be hydrated (e.g. inside a client island)
+- **`RichText.lazy.tsx`** — lazily hydrated wrapper for below-the-fold content
+
+## Content sanitisation
+
+All HTML is sanitised before injection via `dangerouslySetInnerHTML` to prevent XSS. Only an allowlist of semantic tags (headings, paragraphs, lists, tables, links, images, etc.) is permitted.
+
+## Accessibility (WCAG 2.2)
+
+- The rendered HTML inherits document heading hierarchy — ensure CMS authors start at `<h2>` inside body content so the page outline remains logical
+- Link underlines are preserved by default (do not override with CSS unless focus styles are maintained)
+- Images inside rich text must carry alt text entered by the author in the CMS
+
+## ✅ Do
+
+- Always sanitise CMS content server-side before passing it to `RichText`
+- Use the server component (`RichText.server.tsx`) by default for SEO and performance
+
+## ❌ Don't
+
+- Don't bypass sanitisation to allow arbitrary HTML from user input
+- Don't nest `RichText` inside another `RichText` — it will double-render heading levels
+
+## Examples
+
+### Default
+
+<Canvas of={RichTextStories.Default} />
+
+### Primary variant
+
+<Canvas of={RichTextStories.PrimaryVariant} />
+
+### Secondary variant
+
+<Canvas of={RichTextStories.SecondaryVariant} />
+
+### With link
+
+<Canvas of={RichTextStories.WithLink} />
+
+### UGC link policy
+
+<Canvas of={RichTextStories.UGCLinkPolicy} />
+
+### With inline code
+
+<Canvas of={RichTextStories.WithInlineCode} />
+
+### Props
+
+<Controls of={RichTextStories.Default} />

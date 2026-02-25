@@ -1,0 +1,47 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as LottieStories from "./Lottie.stories"
+
+<Meta of={LottieStories} />
+
+# Lottie
+
+Renders a Lottie JSON animation using `lottie-web`. Provides controls for autoplay, loop, speed, and programmatic play/pause via ref.
+
+## When to use
+
+Use `Lottie` for high-quality, scalable micro-animations — loading states, empty states, success/error feedback, and decorative illustrations. For simple CSS transitions do not use Lottie.
+
+## Available animations
+
+All animation names are defined in `LottieAnimations.ts`. Reference them via the `name` prop.
+
+## Accessibility (WCAG 2.2)
+
+- Wrap `Lottie` in an element with `role="img"` and `aria-label` when the animation conveys meaning
+- Set `aria-hidden="true"` for purely decorative animations
+- Respect `prefers-reduced-motion`: set `autoplay={false}` and avoid looping when motion is reduced
+- Do not use flashing animations that exceed 3 flashes per second (WCAG 2.3.1)
+
+## ✅ Do
+
+- Keep animation files small (< 100 KB JSON) for performance
+- Use `loop={false}` for one-shot feedback animations (success, error)
+- Provide a static fallback image for environments where JavaScript is disabled
+
+## ❌ Don't
+
+- Don't autoplay looping animations on pages with rich visual content — they compete for attention
+- Don't use Lottie for animations achievable with CSS (fade, slide, pulse)
+- Don't forget to check `prefers-reduced-motion` in your implementation
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={LottieStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={LottieStories.Default} />

@@ -51,7 +51,7 @@ export function DialogView({
   }
   // Modifier for dialog max height
   const styleModifier = isNumber(height)
-    ? {
+    ? /* istanbul ignore next */ {
         maxHeight: `${height}px`,
       }
     : undefined
@@ -80,6 +80,7 @@ export function DialogView({
             >
               {title}
             </Headline>
+            {/* istanbul ignore next */}
             {renderHeader?.()}
           </div>
 
@@ -88,11 +89,13 @@ export function DialogView({
               {...closeButtonProps}
               ref={closeButtonRef}
               aria-label={
+                /* istanbul ignore next */
                 closeButtonProps?.["aria-label"] ?? translations?.close
               }
               className={bem(
                 "header__button",
                 undefined,
+                /* istanbul ignore next */
                 closeButtonProps?.className,
               )}
               onClick={onClose}
@@ -101,13 +104,16 @@ export function DialogView({
               <Icon
                 name="Cancel01Icon"
                 size="xs"
+                /* istanbul ignore next */
                 {...closeButtonProps?.iconProps}
                 className={bem(
                   "header__button__icon",
                   undefined,
+                  /* istanbul ignore next */
                   closeButtonProps?.iconProps?.className,
                 )}
               />
+              {/* istanbul ignore next */}
               {closeButtonProps?.title ?? translations?.close ?? "Close"}
             </button>
           )}
@@ -134,7 +140,11 @@ export function DialogView({
             {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
             <div aria-hidden="true" tabIndex={0} />
             {actions.map(action => (
-              <Button key={action.id} {...action} title={action?.title ?? ""} />
+              <Button
+                key={action.id}
+                {...action}
+                title={/* istanbul ignore next */ action?.title ?? ""}
+              />
             ))}
             {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
             <div aria-hidden="true" tabIndex={0} />

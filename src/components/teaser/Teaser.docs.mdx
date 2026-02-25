@@ -1,0 +1,46 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as TeaserStories from "./Teaser.stories"
+
+<Meta of={TeaserStories} />
+
+# Teaser
+
+A marketing card combining an image, headline, body copy, and a CTA redirect link. Supports an `animated` entrance variant for scroll-triggered reveals.
+
+## When to use
+
+Use `Teaser` on landing pages, service overview sections, and promotional areas where a visually rich card must communicate a value proposition and drive a click-through action.
+
+## Accessibility (WCAG 2.2)
+
+- The redirect link wraps or is associated with the card headline for a clear accessible name
+- Image `alt` text describes the subject, not the design ("Two colleagues reviewing analytics" rather than "Marketing image")
+- The animated entrance is a CSS transform — it respects `prefers-reduced-motion`; at reduced-motion the card is shown immediately without animation
+
+## ✅ Do
+
+- Keep the headline under ten words so it reads as a scannable title
+- Ensure the CTA redirect target is meaningful when read out of context ("Learn more about SEO services", not just "Learn more")
+
+## ❌ Don't
+
+- Don't stack more than four Teasers in a single row — readability degrades
+- Don't auto-play the entrance animation on repeat (e.g. on tab re-focus)
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={TeaserStories.Default} />
+</Canvas>
+
+### Animated
+
+<Canvas>
+  <Story of={TeaserStories.Animated} />
+</Canvas>
+
+### Props
+
+<Controls of={TeaserStories.Default} />

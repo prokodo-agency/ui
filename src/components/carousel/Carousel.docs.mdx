@@ -1,0 +1,69 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as CarouselStories from "./Carousel.stories"
+
+<Meta of={CarouselStories} />
+
+# Carousel
+
+Horizontally scrollable slide container with optional auto-play and multi-item display, using island architecture and design-system styling.
+
+## When to use
+
+Use `Carousel` to display a sequence of related content items — image galleries, testimonials, product shots, blog post teasers — where horizontal scrolling is preferable to a grid.
+
+## Accessibility (WCAG 2.2)
+
+- Implements the ARIA carousel pattern with `role="region"` and `aria-label` on the container
+- Navigation arrows have accessible labels (`aria-label="Previous"` / `aria-label="Next"`)
+- Auto-play pauses on hover and on keyboard focus (WCAG 2.2.2 Pause, Stop, Hide)
+- Each slide is a `role="group"` with `aria-label="Slide N of M"` for screen-reader context
+
+### Keyboard behavior
+
+| Key               | Action                                                         |
+| ----------------- | -------------------------------------------------------------- |
+| **Tab**           | Move focus to prev/next controls and interactive slide content |
+| **Enter / Space** | Activate prev/next button                                      |
+| **Arrow keys**    | Navigate slides when a control has focus                       |
+
+## API notes
+
+- Static mode: slides are shown without auto-advance
+- `AutoPlay` enables timed advancement — configure interval via `autoPlayInterval` (ms)
+- `ThreeAtOnce` sets `slidesPerView` to 3; combine with responsive breakpoints for narrower viewports
+- Navigation arrows are rendered by default; set `arrows={false}` to hide them
+- Pass an array of `ReactNode` children — each child becomes one slide
+
+## ✅ Do
+
+- Always provide a visible carousel label (heading or `aria-label`) so screen-reader users know the region's purpose
+- Test with reduced-motion preference — disable auto-play when `prefers-reduced-motion: reduce` is set
+
+## ❌ Don't
+
+- Don't auto-play carousels with critical content — users may miss items
+- Don't rely solely on dot indicators; always keep arrow navigation available
+
+## Examples
+
+### Static
+
+<Canvas>
+  <Story of={CarouselStories.Static} />
+</Canvas>
+
+### Auto play
+
+<Canvas>
+  <Story of={CarouselStories.AutoPlay} />
+</Canvas>
+
+### Three at once
+
+<Canvas>
+  <Story of={CarouselStories.ThreeAtOnce} />
+</Canvas>
+
+### Props
+
+<Controls of={CarouselStories.Static} />

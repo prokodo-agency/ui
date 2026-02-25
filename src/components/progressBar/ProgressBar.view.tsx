@@ -4,7 +4,7 @@ import { isString } from "@/helpers/validations"
 import styles from "./ProgressBar.module.scss"
 
 import type { ProgressBarViewProps } from "./ProgressBar.model"
-import type { JSX } from "react"
+import type { HTMLAttributes, JSX } from "react"
 
 const bem = create(styles, "ProgressBar")
 
@@ -23,9 +23,15 @@ export function ProgressBarView({
   const safeValue =
     typeof value === "number" ? Math.min(100, Math.max(0, value)) : undefined
   const isIndeterminate = safeValue === undefined
+  // Build aria-label: prefer explicit `label` prop, fall back to any aria-label from domRest
+  const { "aria-label": ariaLabelFromRest, ...restWithoutAriaLabel } =
+    domRest as HTMLAttributes<HTMLDivElement>
+  const computedAriaLabel = isString(label) ? label : ariaLabelFromRest
+
   return (
     <div
-      {...domRest}
+      {...restWithoutAriaLabel}
+      aria-label={computedAriaLabel}
       aria-valuemax={100}
       aria-valuemin={0}
       aria-valuenow={safeValue ?? undefined}

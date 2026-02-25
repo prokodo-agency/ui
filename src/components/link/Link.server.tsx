@@ -7,6 +7,7 @@ import type { JSX } from "react"
 
 export default function LinkServer(rawProps: LinkProps): JSX.Element {
   // 🔎 dev guard – help find who still passes linkComponent
+  /* istanbul ignore next */
   if (
     process.env.NODE_ENV !== "production" &&
     typeof rawProps?.linkComponent === "function"
@@ -25,6 +26,7 @@ export default function LinkServer(rawProps: LinkProps): JSX.Element {
     ...props
   } = rawProps
   const hasHandlers = false
+  /* istanbul ignore next */
   const linkTag = onClick && !props?.href ? "span" : "a"
 
   return (

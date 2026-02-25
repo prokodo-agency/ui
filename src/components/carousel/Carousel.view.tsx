@@ -17,7 +17,17 @@ export function CarouselView({
   classNameItem,
   classNameDots,
   classNameDot,
+  classNameDotActive: _classNameDotActive,
+  classNameButtons: _classNameButtons,
+  classNameControls: _classNameControls,
   enableControl,
+  enableDots: _enableDots,
+  autoplay: _autoplay,
+  translateX: _translateX,
+  itemStyle: _itemStyle,
+  responsive: _responsive,
+  nextButton: _nextButton,
+  prevButton: _prevButton,
   children,
   ...rest
 }: CarouselProps): JSX.Element {

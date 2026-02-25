@@ -45,6 +45,7 @@ function DialogClient(
       setIsOpen(false)
       onClose?.()
       setTimeout(() => {
+        /* istanbul ignore next */
         onChange?.({}, reson ?? "backdropClick", false)
         // restore focus
         triggerRef.current?.focus()
@@ -64,6 +65,7 @@ function DialogClient(
 
   useEffect(() => {
     if (!isOpen) return
+    /* istanbul ignore next */
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault()

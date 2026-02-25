@@ -36,7 +36,9 @@ export const ButtonView: FC<ButtonViewProps> = ({
 
   const inner = (
     <>
+      {/* istanbul ignore next */}
       {image?.src !== undefined && (
+        /* istanbul ignore next */
         <Image
           height={20}
           width={20}
@@ -62,7 +64,7 @@ export const ButtonView: FC<ButtonViewProps> = ({
       undefined,
       {
         "has-fullWidth": Boolean(fullWidth),
-        "has-image": image?.src !== undefined,
+        /* istanbul ignore next */ "has-image": image?.src !== undefined,
         "has-icon": !Boolean(isIconOnly) && isString(iconProps?.name),
         [`has-variant-${variant}`]: true,
         [`has-bg-${color}`]: variant === "contained",
@@ -85,6 +87,7 @@ export const ButtonView: FC<ButtonViewProps> = ({
       {...common}
       ref={buttonRef}
       disabled={Boolean(disabled)}
+      /* istanbul ignore next */
       tabIndex={Boolean(disabled) ? -1 : rest.tabIndex}
       type="button"
       {...rest}

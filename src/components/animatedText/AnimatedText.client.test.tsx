@@ -24,7 +24,9 @@ describe("AnimatedTextClient", () => {
   })
 
   afterEach(() => {
-    jest.runOnlyPendingTimers()
+    act(() => {
+      jest.runOnlyPendingTimers()
+    })
     jest.useRealTimers()
   })
 
@@ -212,5 +214,17 @@ describe("AnimatedTextClient", () => {
       jest.advanceTimersByTime(250) // 5 more characters
     })
     expect(view).toHaveTextContent(/Hello/)
+  })
+
+  it("should use default speed of 30 when speed is not provided", () => {
+    render(<AnimatedTextClient delay={0}>Hi</AnimatedTextClient>)
+
+    const view = screen.getByTestId("animated-text-view")
+
+    // After default speed (30ms), first character should appear
+    act(() => {
+      jest.advanceTimersByTime(30)
+    })
+    expect(view).toHaveTextContent("H")
   })
 })

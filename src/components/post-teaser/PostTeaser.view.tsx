@@ -74,6 +74,7 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
     : undefined
   let formattedDate: LocalizedDate | undefined
   if (isString(date)) {
+    /* istanbul ignore next */
     formattedDate = localizeDate(locale ?? "en-GB", date)
   }
   return (
@@ -145,8 +146,8 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
               </div>
               <Image
                 {...imageMerged}
-                alt={imageMerged?.alt ?? ""}
-                src={imageMerged?.src ?? ""}
+                alt={imageMerged?.alt ?? /* istanbul ignore next */ ""}
+                src={imageMerged?.src ?? /* istanbul ignore next */ ""}
               />
             </div>
           )}

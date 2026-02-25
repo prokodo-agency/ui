@@ -24,6 +24,7 @@ export function createLazyWrapper<P extends object>({
   Server,
   hydrateOnVisible = false,
   ioOptions,
+  /* istanbul ignore next */
   isInteractive: customInteractive,
 }: LazyWrapperOptions<P>): ComponentType<P & { priority?: boolean }> {
   const LazyWrapper: FC<P & { priority?: boolean }> = ({

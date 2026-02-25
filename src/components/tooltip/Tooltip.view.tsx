@@ -25,6 +25,7 @@ function mergeClassName(a?: string, b?: string): string | undefined {
 
 function compose<T>(a?: T, b?: T): T | undefined {
   if (!a && !b) return
+  /* istanbul ignore next */
   return ((...args: unknown[]) => {
     if (typeof a === "function") (a as (...xs: unknown[]) => void)(...args)
     if (typeof b === "function") (b as (...xs: unknown[]) => void)(...args)
@@ -33,6 +34,7 @@ function compose<T>(a?: T, b?: T): T | undefined {
 
 function setRef<T>(ref: unknown, value: T) {
   if (!ref) return
+  /* istanbul ignore next */
   if (typeof ref === "function") {
     ref(value)
     return
@@ -88,6 +90,7 @@ export function TooltipView(props: TooltipViewProps): JSX.Element {
     ...(triggerProps?.style ?? {}),
 
     // ✅ critical: prevent full-width triggers (global button resets, flex rules, etc.)
+    /* istanbul ignore next */
     display:
       ((triggerProps?.style as Record<string, unknown>)?.display as
         | string
@@ -148,6 +151,7 @@ export function TooltipView(props: TooltipViewProps): JSX.Element {
 
     ref: (node: HTMLElement | null) => {
       setRef(childProps.ref, node)
+      /* istanbul ignore next */
       if (__triggerRef) __triggerRef.current = node
     },
   }

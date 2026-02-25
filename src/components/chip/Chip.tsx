@@ -7,5 +7,5 @@ import type { ChipProps } from "./Chip.model"
 export const Chip = createIsland<ChipProps>({
   name: "Chip",
   Server: ChipServer,
-  loadLazy: () => import("./Chip.lazy"),
+  loadLazy: /* istanbul ignore next */ () => import("./Chip.lazy"),
 })

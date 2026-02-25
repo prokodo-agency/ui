@@ -1,11 +1,12 @@
 "use client"
 
 export const getTheme = (): "light" | "dark" | null => {
-  if (typeof document !== "undefined") {
-    return document.documentElement.getAttribute("data-theme") as
-      | "light"
-      | "dark"
-      | null
+  /* istanbul ignore next */
+  if (typeof document === "undefined") {
+    return null
   }
-  return null
+  return document.documentElement.getAttribute("data-theme") as
+    | "light"
+    | "dark"
+    | null
 }

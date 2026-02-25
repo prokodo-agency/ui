@@ -1,0 +1,75 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as AccordionStories from "./Accordion.stories"
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+Accessible expandable/collapsible panel component with animated transitions and island architecture.
+
+## When to use
+
+Use `Accordion` when content needs to be grouped into collapsible sections to reduce visual noise — FAQs, settings panels, or progressive disclosure of detail.
+
+## Accessibility (WCAG 2.2)
+
+`Accordion` follows the ARIA disclosure pattern:
+
+- toggle button uses `aria-expanded` and `aria-controls` linked to the panel ID
+- panel uses `role="region"` and `aria-labelledby` pointing back to its header button
+- supports both single and multi-panel expansion
+- `id` prop is required — it drives `aria-controls` / `aria-labelledby` wiring
+
+### Keyboard behavior
+
+- **Tab / Shift+Tab**: move focus to or away from toggle buttons
+- **Enter / Space**: toggle the focused panel open or closed
+- Custom action buttons in the header are independently focusable
+
+## API notes
+
+- `type` switches between `"card"` (elevated) and `"panel"` (flat row) appearance
+- `expanded` (number | null) enables controlled mode; omit for uncontrolled
+- `onChange(index, event, expanded)` fires on every toggle
+- `items[].renderHeader` takes precedence over `title` + `titleOptions`
+- `items[].renderHeaderActions` renders right-aligned controls in the header
+- `items[].actions` renders footer-level action buttons (each requires unique `id`)
+- `variant` propagates the design-system colour token to header borders
+
+## ✅ Do
+
+- Provide a concise, descriptive `title` or `renderHeader` for every panel
+- Give every action button a stable, unique `id`
+- Use `expanded={null}` to start all panels collapsed in controlled mode
+- Prefer `type="panel"` in dense layouts; `type="card"` for standalone content blocks
+
+## ❌ Don't
+
+- Don't use Accordion for sequential steps (use Stepper instead)
+- Don't nest accordions more than one level deep
+- Don't hide required form fields only in collapsed panels without visual indication
+- Don't set `expanded` without also handling `onChange` — that creates a read-only accordion
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={AccordionStories.Default} />
+</Canvas>
+
+### Custom header
+
+<Canvas>
+  <Story of={AccordionStories.CustomHeader} />
+</Canvas>
+
+### Custom header with actions
+
+<Canvas>
+  <Story of={AccordionStories.CustomHeaderWithActions} />
+</Canvas>
+
+### Props
+
+<Controls of={AccordionStories.Default} />

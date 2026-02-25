@@ -1,0 +1,46 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as ProgressBarStories from "./ProgressBar.stories"
+
+<Meta of={ProgressBarStories} />
+
+# ProgressBar
+
+A visual indicator of task completion. Renders a filled track whose width reflects the current progress value (0–100).
+
+## When to use
+
+Use `ProgressBar` to communicate deterministic progress — file uploads, multi-step form completion, or onboarding sequences. For indeterminate loading use the `Loading` spinner.
+
+## Accessibility (WCAG 2.2)
+
+- The element has `role="progressbar"`, `aria-valuenow`, `aria-valuemin="0"`, and `aria-valuemax="100"`
+- Screen-reader text describes the operation in progress (e.g. "Uploading: 42 %")
+- Animated variants respect `prefers-reduced-motion` — the fill transition is disabled when the media query fires
+
+## ✅ Do
+
+- Label the progress bar with the task name via `aria-label` or `aria-labelledby`
+- Update `aria-valuenow` in sync with the displayed percentage
+
+## ❌ Don't
+
+- Don't rely solely on colour to communicate progress — always pair with a percentage or label
+- Don't animate rapidly for small increments on slow connections
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={ProgressBarStories.Default} />
+</Canvas>
+
+### Animated progress
+
+<Canvas>
+  <Story of={ProgressBarStories.AnimatedProgress} />
+</Canvas>
+
+### Props
+
+<Controls of={ProgressBarStories.Default} />

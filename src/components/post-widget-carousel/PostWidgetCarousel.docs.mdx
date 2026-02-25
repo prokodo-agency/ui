@@ -1,0 +1,47 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as PostWidgetCarouselStories from "./PostWidgetCarousel.stories"
+
+<Meta of={PostWidgetCarouselStories} />
+
+# PostWidgetCarousel
+
+An auto-playing carousel of post cards. Extends `PostWidget` with swipeable slides, autoplay controls, and locale-aware date formatting.
+
+## When to use
+
+Use `PostWidgetCarousel` when you need to surface several posts in limited horizontal space — e.g. a "Latest articles" strip on a landing page. For static lists prefer `PostWidget`.
+
+## Accessibility (WCAG 2.2)
+
+- The carousel exposes `role="region"` with an `aria-label`
+- Autoplay is paused on focus and on hover per WCAG 2.2 SC 2.2.2
+- Previous/Next controls have accessible labels and are keyboard-reachable
+- Each slide is announced when it becomes active via `aria-live="polite"`
+
+### Keyboard behavior
+
+- **Tab**: move into the carousel controls
+- **←** / **→**: navigate slides when a control is focused
+- **Space**: pause / resume autoplay
+
+## ✅ Do
+
+- Provide `locale` so dates render in the user's language
+- Ensure every item has a unique, descriptive title as the accessible name
+
+## ❌ Don't
+
+- Don't set very short autoplay intervals (< 4 s) — it prevents reading
+- Don't hide navigation arrows on touch devices; swipe is not universally available
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={PostWidgetCarouselStories.Default} />
+</Canvas>
+
+### Props
+
+<Controls of={PostWidgetCarouselStories.Default} />

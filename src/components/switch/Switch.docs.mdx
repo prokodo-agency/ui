@@ -1,0 +1,59 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as SwitchStories from "./Switch.stories"
+
+<Meta of={SwitchStories} />
+
+# Switch
+
+A toggle control for binary on/off settings. Extends a checkbox with a visual sliding thumb and optional label, icon, and checked-state icon.
+
+## When to use
+
+Use `Switch` for settings that apply immediately without a submit action (e.g. dark mode, notifications, feature flags). For confirmation-required toggles in forms use `Checkbox`.
+
+## Accessibility (WCAG 2.2)
+
+- The underlying control is `<input type="checkbox">` with `role="switch"` and `aria-checked`
+- The visible label is associated via `<label htmlFor="…">` or `aria-labelledby`
+- `hideLabel` still renders the label off-screen (not `display:none`) so screen readers can still announce it
+- The component is operable by touch with a minimum target size of 24×24 CSS px (WCAG 2.5.8)
+
+### Keyboard behavior
+
+- **Tab**: focus the switch
+- **Space**: toggle the switch state
+- **Enter**: does not toggle (consistent with native checkbox semantics)
+
+## ✅ Do
+
+- Write labels in the form of a statement ("Enable notifications") not a question
+- Make the effect of toggling clear and immediate
+
+## ❌ Don't
+
+- Don't use a `Switch` within a `<form>` that requires a submit action — use `Checkbox` instead
+- Don't hide the label entirely (use `hideLabel` instead of removing it from the DOM)
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={SwitchStories.Default} />
+</Canvas>
+
+### With label
+
+<Canvas>
+  <Story of={SwitchStories.WithLabel} />
+</Canvas>
+
+### With icon
+
+<Canvas>
+  <Story of={SwitchStories.WithIcon} />
+</Canvas>
+
+### Props
+
+<Controls of={SwitchStories.Default} />

@@ -1,0 +1,91 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as SnackbarStories from "./Snackbar.stories"
+
+<Meta of={SnackbarStories} />
+
+# Snackbar
+
+A lightweight toast notification system. Messages are dispatched via the `useSnackbar` hook and rendered by the `SnackbarProvider` context — no prop-drilling required.
+
+## When to use
+
+Use `Snackbar` for transient feedback about an operation — "Saved successfully", "Network error", "Link copied". For blocking errors that require user action use a `Dialog`.
+
+## Setup
+
+Wrap your app (or the relevant subtree) with `SnackbarProvider` once:
+
+```tsx
+import { SnackbarProvider } from "@prokodo/ui/snackbar"
+
+export default function RootLayout({ children }) {
+  return <SnackbarProvider>{children}</SnackbarProvider>
+}
+```
+
+Then dispatch notifications from any component:
+
+```tsx
+import { useSnackbar } from "@prokodo/ui/snackbar"
+
+const { enqueue } = useSnackbar()
+enqueue({ message: "Saved!", severity: "success" })
+```
+
+## Accessibility (WCAG 2.2)
+
+- The snackbar region has `role="status"` (`aria-live="polite"`) for non-critical messages and `role="alert"` (`aria-live="assertive"`) for errors
+- Close buttons have `aria-label="Close notification"`
+- Snackbars auto-dismiss after a configurable timeout; they stay open while focused or hovered (WCAG 2.2 SC 2.2.4)
+
+## ✅ Do
+
+- Keep messages under two lines and one sentence wherever possible
+- Always provide a `severity` so colour-blind users receive a semantic cue
+
+## ❌ Don't
+
+- Don't stack more than three snackbars simultaneously — queue them
+- Don't use `role="alert"` for purely informational toasts — it interrupts screen readers mid-sentence
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={SnackbarStories.Default} />
+</Canvas>
+
+### Success
+
+<Canvas>
+  <Story of={SnackbarStories.Success} />
+</Canvas>
+
+### Error with close icon
+
+<Canvas>
+  <Story of={SnackbarStories.ErrorWithCloseIcon} />
+</Canvas>
+
+### With action
+
+<Canvas>
+  <Story of={SnackbarStories.WithAction} />
+</Canvas>
+
+### Top left position
+
+<Canvas>
+  <Story of={SnackbarStories.TopLeft} />
+</Canvas>
+
+### Provider demo
+
+<Canvas>
+  <Story of={SnackbarStories.ProviderDemo} />
+</Canvas>
+
+### Props
+
+<Controls of={SnackbarStories.Default} />

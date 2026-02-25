@@ -51,6 +51,10 @@ export function ChipView({
           className={bem("delete", {
             [color]: true,
           })}
+          onClick={e => {
+            e.stopPropagation()
+            onDelete(e)
+          }}
           {...buttonProps}
         >
           <Icon color="error" name="Delete01Icon" />

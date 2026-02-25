@@ -1,4 +1,5 @@
 import { expect } from "@jest/globals"
+import { axe } from "jest-axe"
 
 import { render } from "@/tests"
 
@@ -84,5 +85,39 @@ describe("Accordion", () => {
 
     // Verify the Accordion was rendered
     expect(element).toBeInTheDocument()
+  })
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <Accordion
+        id="axe-test"
+        items={[
+          { title: "Question 1", renderContent: <div>Answer 1</div> },
+          { title: "Question 2", renderContent: <div>Answer 2</div> },
+        ]}
+      />,
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it("should configure island with loadLazy and isInteractive", async () => {
+    jest.resetModules()
+    const mockCreateIsland = jest.fn((config: unknown) => config)
+    jest.doMock("@/helpers/createIsland", () => ({
+      createIsland: mockCreateIsland,
+    }))
+    jest.doMock("./Accordion.lazy", () => ({
+      __esModule: true,
+      default: () => null,
+    }))
+    jest.isolateModules(() => {
+      require("./Accordion")
+    })
+    const config = mockCreateIsland.mock.calls[0]?.[0] as {
+      isInteractive: () => boolean
+      loadLazy: () => Promise<unknown>
+    }
+    expect(config.isInteractive()).toBe(true)
+    await config.loadLazy()
   })
 })

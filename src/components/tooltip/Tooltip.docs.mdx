@@ -1,0 +1,84 @@
+import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import * as TooltipStories from "./Tooltip.stories"
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+A contextual text bubble revealed on hover or keyboard focus. Supports eight placement options, configurable open/close delays, a fully controlled mode, and inline text triggers.
+
+## When to use
+
+Use `Tooltip` to provide brief supplemental information about an element — icon button labels, field hints, abbreviation expansions. For rich interactive content use a `Popover` or `Dialog`.
+
+## Accessibility (WCAG 2.2)
+
+- The tooltip content is linked to its trigger via `aria-describedby`
+- The tooltip is triggered by both `focus` and `hover` (WCAG 1.3.1, 2.1.1)
+- Hoverable tooltips remain visible when the pointer moves over them (WCAG 2.5.3 / SC 1.4.13)
+- Pressing **Escape** dismisses the tooltip without moving focus (WCAG SC 1.4.13)
+- The `disabled` prop also removes the tooltip from the accessibility tree
+
+### Keyboard behavior
+
+- **Tab**: focus the trigger → tooltip appears
+- **Escape**: dismiss the tooltip while keeping focus on the trigger
+- **Tab away**: tooltip dismisses
+
+## ✅ Do
+
+- Keep tooltip text to a single short phrase (< 80 characters)
+- Use `Tooltip` on icon-only buttons to provide the accessible label
+
+## ❌ Don't
+
+- Don't place interactive elements (links, buttons) inside a tooltip — use `Popover`
+- Don't rely on tooltip text as the sole label for a form control — use a visible `Label`
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story of={TooltipStories.Default} />
+</Canvas>
+
+### Placements
+
+<Canvas>
+  <Story of={TooltipStories.Placements} />
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story of={TooltipStories.Disabled} />
+</Canvas>
+
+### With delay
+
+<Canvas>
+  <Story of={TooltipStories.WithDelay} />
+</Canvas>
+
+### Controlled
+
+<Canvas>
+  <Story of={TooltipStories.Controlled} />
+</Canvas>
+
+### Keyboard and Escape
+
+<Canvas>
+  <Story of={TooltipStories.KeyboardAndEscape} />
+</Canvas>
+
+### Inline text trigger
+
+<Canvas>
+  <Story of={TooltipStories.InlineTextTrigger} />
+</Canvas>
+
+### Props
+
+<Controls of={TooltipStories.Default} />
