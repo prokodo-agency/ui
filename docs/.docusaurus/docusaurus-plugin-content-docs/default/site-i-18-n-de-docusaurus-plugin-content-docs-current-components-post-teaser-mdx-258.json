@@ -1,0 +1,29 @@
+{
+  "id": "components/post-teaser",
+  "title": "PostTeaser",
+  "description": "Card-style blog post teaser with cover image, category, title, excerpt, and author attribution.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/post-teaser.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/post-teaser",
+  "permalink": "/de/docs/components/post-teaser",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/post-teaser.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "post-teaser",
+    "title": "PostTeaser",
+    "sidebar_label": "PostTeaser",
+    "description": "Card-style blog post teaser with cover image, category, title, excerpt, and author attribution."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "PostItem",
+    "permalink": "/de/docs/components/post-item"
+  },
+  "next": {
+    "title": "PostWidget",
+    "permalink": "/de/docs/components/post-widget"
+  }
+}

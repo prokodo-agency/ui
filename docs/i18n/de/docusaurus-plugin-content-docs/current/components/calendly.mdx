@@ -1,0 +1,87 @@
+---
+id: calendly
+title: Calendly
+sidebar_label: Calendly
+description: Embeds a Calendly scheduling widget as a lazy-loaded inline or popup frame.
+---
+
+# Calendly
+
+`Calendly` bindet Calendly-Buchungsflows als Komponente ein und ermöglicht Terminvereinbarungen direkt im UI-Kontext.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Calendly } from '@prokodo/ui/calendly'
+
+<Calendly url="https://calendly.com/your-org/30min" mode="inline" />
+```
+
+<StorybookEmbed id="prokodo-service-calendly--inline-demo" height={520} />
+
+
+---
+
+## Import
+
+```ts
+import { Calendly } from '@prokodo/ui/calendly'
+```
+
+Styling is handled via design tokens — no additional CSS import required.
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `url` | `string` | — | ✅ | Calendly scheduling link. |
+| `mode` | `"inline" \| "popup"` | `"inline"` | — | Display mode. |
+| `height` | `number` | `630` | — | Iframe height in pixels (inline mode). |
+| `hideDetails` | `boolean` | `false` | — | Hide event details in the widget. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/calendly/Calendly.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/calendly/Calendly.model.ts) für den vollständigen `CalendlyProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Calendly } from '@prokodo/ui/calendly'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.1.1** | **Nicht-Text-Inhalt** (A) | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **2.1.1** | **Tastatur** (A) | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.4.1** | **Blöcke überspringen** (A) | 🔍 Manuell prüfen | Eingebettete Frames oder wiederholte Navigationsblöcke müssen einen Skip-to-Content-Mechanismus bieten (z. B. iframe-Titel, Skip-Link). |
+| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 4 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Calendly in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-media-calendly--docs)
+
+---
+
+## Quellcode
+
+[`src/components/calendly/Calendly.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/calendly/Calendly.model.ts)

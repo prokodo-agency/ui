@@ -1,0 +1,99 @@
+---
+id: card
+title: Card
+sidebar_label: Card
+description: Versatile container component with panel, list-item, and elevated variants — supports animated entrance and click handling.
+---
+
+# Card
+
+`Card` is a multipurpose container that groups related content. It supports multiple visual variants (`panel`, `list-item`), optional shadow, animated entrance, and a clickable mode via `redirect` or `onClick`.
+
+
+---
+
+## Overview
+
+```tsx
+import { Card } from '@prokodo/ui/card'
+
+<Card variant="panel" enableShadow animated={false}>
+  <h2>Title</h2>
+  <p>Card content goes here.</p>
+</Card>
+```
+
+<StorybookEmbed id="prokodo-common-card--card-highlight" height={320} />
+
+
+---
+
+## Import
+
+```ts
+import { Card } from '@prokodo/ui/card'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/card.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `children` | `ReactNode` | — | ✅ | Card body content. |
+| `variant` | `"panel" \| "list-item"` | `"panel"` | — | Visual card type. |
+| `enableShadow` | `boolean` | `false` | — | Add drop shadow. |
+| `animated` | `boolean` | `true` | — | Enable entrance animation. |
+| `redirect` | `LinkProps` | — | — | Make the card a link (SSR-safe). |
+| `onClick` | `MouseEventHandler` | — | — | Click handler (makes card interactive). |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/card/Card.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/card/Card.model.ts) for the full `CardProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Card } from '@prokodo/ui/card'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **2.5.8** | **Target Size (Minimum)** (AA) | 🔍 Manual review | Interactive target areas must be at least 24 × 24 CSS pixels. Verify in the integrated product UI. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Card in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-card--docs)
+
+---
+
+## Source
+
+[`src/components/card/Card.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/card/Card.model.ts)

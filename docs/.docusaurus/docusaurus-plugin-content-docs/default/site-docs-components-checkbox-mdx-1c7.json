@@ -1,0 +1,29 @@
+{
+  "id": "components/checkbox",
+  "title": "Checkbox",
+  "description": "Accessible checkbox input with label, error state, and controlled/uncontrolled modes.",
+  "source": "@site/docs/components/checkbox.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/checkbox",
+  "permalink": "/docs/components/checkbox",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/checkbox.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "checkbox",
+    "title": "Checkbox",
+    "sidebar_label": "Checkbox",
+    "description": "Accessible checkbox input with label, error state, and controlled/uncontrolled modes."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Autocomplete",
+    "permalink": "/docs/components/autocomplete"
+  },
+  "next": {
+    "title": "CheckboxGroup",
+    "permalink": "/docs/components/checkbox-group"
+  }
+}

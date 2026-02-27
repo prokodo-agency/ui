@@ -1,0 +1,109 @@
+---
+id: input
+title: Input
+sidebar_label: Input
+description: Versatile text input with label, helper text, error feedback, start/end adornments, and all HTML input types.
+---
+
+# Input
+
+`Input` renders a styled `<input>` with an associated label, optional helper text below the field, error feedback, and support for leading/trailing adornments (icons or buttons).
+
+
+---
+
+## Overview
+
+```tsx
+import { Input } from '@prokodo/ui/input'
+
+<Input
+  name="email"
+  label="Email address"
+  type="email"
+  placeholder="you@example.com"
+  required
+/>
+```
+
+<StorybookEmbed id="prokodo-form-input--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Input } from '@prokodo/ui/input'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/input.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `name` | `string` | — | ✅ | Input `name` attribute. |
+| `label` | `string` | — | — | Visible label text. |
+| `type` | `HTMLInputElement["type"]` | `"text"` | — | Input type (`email`, `password`, `tel`, …). |
+| `value` | `string` | — | — | Controlled input value. |
+| `onChange` | `ChangeEventHandler<HTMLInputElement>` | — | — | Change handler. |
+| `placeholder` | `string` | — | — | Placeholder text. |
+| `helperText` | `string` | — | — | Small text shown below the input. |
+| `error` | `string` | — | — | Error message (overrides `helperText`). |
+| `disabled` | `boolean` | `false` | — | Disable the input. |
+| `required` | `boolean` | `false` | — | Mark as required (adds `*` indicator). |
+| `startAdornment` | `ReactNode` | — | — | Element rendered at the start of the input. |
+| `endAdornment` | `ReactNode` | — | — | Element rendered at the end of the input. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/input/Input.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/input/Input.model.ts) for the full `InputProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Input } from '@prokodo/ui/input'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.5** | **Identify Input Purpose** (AA) | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute. |
+| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **3.3.1** | **Error Identification** (A) | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone. |
+| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled | Every form input requires a programmatically associated label or a visible instruction. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 6 jest-axe assertion(s) across 5 test file(s) · 7 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Input in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-input--docs)
+
+---
+
+## Source
+
+[`src/components/input/Input.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/input/Input.model.ts)

@@ -1,0 +1,29 @@
+{
+  "id": "components/teaser",
+  "title": "Teaser",
+  "description": "Versatile content teaser card with image, category, headline, body, and CTA — the building block for marketing sections.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/teaser.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/teaser",
+  "permalink": "/de/docs/components/teaser",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/teaser.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "teaser",
+    "title": "Teaser",
+    "sidebar_label": "Teaser",
+    "description": "Versatile content teaser card with image, category, headline, body, and CTA — the building block for marketing sections."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "RichText",
+    "permalink": "/de/docs/components/rich-text"
+  },
+  "next": {
+    "title": "Dialog",
+    "permalink": "/de/docs/components/dialog"
+  }
+}

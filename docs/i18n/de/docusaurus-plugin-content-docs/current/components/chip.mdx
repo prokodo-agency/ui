@@ -1,0 +1,81 @@
+---
+id: chip
+title: Chip
+sidebar_label: Chip
+description: Compact label component for tags, statuses, and inline annotations — unterstützt color variants and deletable mode.
+---
+
+# Chip
+
+`Chip` rendert ein kompaktes Inline-Label. Häufige Einsatzzwecke sind Tags, Status-Badges, Filter-Pills und ausgewählte Werte in Formular-Komponenten.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Chip } from '@prokodo/ui/chip'
+
+<Chip label="Published" color="success" variant="outlined" />
+<Chip label="Draft" color="warning" onDelete={() => handleDelete()} />
+```
+
+<StorybookEmbed id="prokodo-common-chip--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Chip } from '@prokodo/ui/chip'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/chip.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `label` | `string` | — | ✅ | Chip label text. |
+| `variant` | `"filled" \| "outlined"` | `"filled"` | — | Visual style variant. |
+| `color` | `"primary" \| "secondary" \| "success" \| "warning" \| "error"` | `"primary"` | — | Semantic color. |
+| `onDelete` | `() => void` | — | — | Show a delete icon and call handler on click. |
+| `onClick` | `MouseEventHandler` | — | — | Make chip interactive (clickable). |
+| `disabled` | `boolean` | `false` | — | Deaktiviere all interaction. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/chip/Chip.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/chip/Chip.model.ts) für den vollständigen `ChipProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **1.4.1** | **Verwendung von Farbe** (A) | 🔍 Manuell prüfen | Farbe darf nicht das einzige Mittel zur Informationsvermittlung sein (z. B. Fehlerhinweise, Pflichtfeldmarkierungen). |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.5.8** | **Zielgröße (Minimum)** (AA) | 🔍 Manuell prüfen | Interaktive Zielbereiche müssen mindestens 24 × 24 CSS-Pixel groß sein. Prüfung in der integrierten Produkt-UI erforderlich. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 4 Testdatei(en) · 1 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Chip in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-chip--docs)
+
+---
+
+## Quellcode
+
+[`src/components/chip/Chip.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/chip/Chip.model.ts)

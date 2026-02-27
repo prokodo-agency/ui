@@ -1,0 +1,100 @@
+---
+id: pagination
+title: Pagination
+sidebar_label: Pagination
+description: Page navigation component with first/prev/next/last controls, configurable page window, and accessible ARIA labels.
+---
+
+# Pagination
+
+`Pagination` rendert eine Seitennavigations-Leiste. Sie unterstützt große Seitenzahlen über ein konfigurierbares Fenster von Seiten mit Auslassungspunkten auf beiden Seiten.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Pagination } from '@prokodo/ui/pagination'
+
+<Pagination
+  page={currentPage}
+  count={totalPages}
+  onChange={(page) => setCurrentPage(page)}
+/>
+```
+
+<StorybookEmbed id="prokodo-navigation-pagination--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Pagination } from '@prokodo/ui/pagination'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/pagination.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `page` | `number` | — | ✅ | Current active page (1-based). |
+| `count` | `number` | — | ✅ | Total number of pages. |
+| `onChange` | `(page: number) => void` | — | ✅ | Called when the user selects a page. |
+| `siblingCount` | `number` | `1` | — | Pages shown on each side of the active page. |
+| `showFirstLast` | `boolean` | `true` | — | Show first/last page jump buttons. |
+| `disabled` | `boolean` | `false` | — | Deaktiviere all controls. |
+| `className` | `string` | — | — | CSS class on root `<nav>` element. |
+
+> Siehe [`src/components/pagination/Pagination.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/pagination/Pagination.model.ts) für den vollständigen `PaginationProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Pagination } from '@prokodo/ui/pagination'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.4.4** | **Linkzweck (im Kontext)** (A) | 🔍 Manuell prüfen | Der Zweck jedes Links muss allein aus dem Linktext oder aus dem umgebenden Kontext bestimmbar sein. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein. |
+| **2.5.8** | **Zielgröße (Minimum)** (AA) | 🔍 Manuell prüfen | Interaktive Zielbereiche müssen mindestens 24 × 24 CSS-Pixel groß sein. Prüfung in der integrierten Produkt-UI erforderlich. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 5 Testdatei(en) · 6 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Pagination in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-navigation-pagination--docs)
+
+---
+
+## Quellcode
+
+[`src/components/pagination/Pagination.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/pagination/Pagination.model.ts)

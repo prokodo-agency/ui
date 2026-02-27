@@ -1,0 +1,29 @@
+{
+  "id": "components/lottie",
+  "title": "Lottie",
+  "description": "Lottie JSON animation player component with play/pause control, loop, and autoplay support.",
+  "source": "@site/docs/components/lottie.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/lottie",
+  "permalink": "/docs/components/lottie",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/lottie.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "lottie",
+    "title": "Lottie",
+    "sidebar_label": "Lottie",
+    "description": "Lottie JSON animation player component with play/pause control, loop, and autoplay support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Calendly",
+    "permalink": "/docs/components/calendly"
+  },
+  "next": {
+    "title": "Map",
+    "permalink": "/docs/components/map"
+  }
+}

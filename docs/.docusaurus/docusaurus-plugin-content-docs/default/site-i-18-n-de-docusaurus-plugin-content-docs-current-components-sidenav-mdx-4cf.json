@@ -1,0 +1,29 @@
+{
+  "id": "components/sidenav",
+  "title": "Sidenav",
+  "description": "Collapsible side navigation component with nested menu items, icons, and active state tracking.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/sidenav.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/sidenav",
+  "permalink": "/de/docs/components/sidenav",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/sidenav.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "sidenav",
+    "title": "Sidenav",
+    "sidebar_label": "Sidenav",
+    "description": "Collapsible side navigation component with nested menu items, icons, and active state tracking."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Pagination",
+    "permalink": "/de/docs/components/pagination"
+  },
+  "next": {
+    "title": "Tabs",
+    "permalink": "/de/docs/components/tabs"
+  }
+}

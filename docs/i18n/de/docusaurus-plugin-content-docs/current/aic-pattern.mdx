@@ -1,0 +1,138 @@
+---
+id: aic-pattern
+title: AIC Muster
+sidebar_label: AIC Muster
+description: Deep Dive in die Async/Interactive/Client (AIC) Architektur von prokodo UI.
+---
+
+# AIC Muster
+
+Das **AIC Muster** (Async · Interactive · Client) ist die Architekturkonvention von prokodo UI, um über verschiedene Laufzeitumgebungen hinweg eine einheitliche Developer-API bereitzustellen.
+
+Der zentrale Vorteil für Nutzer:innen der Library:
+
+- **Immer den Standard-Import verwenden** (z. B. `@prokodo/ui/button`)
+- **Keine manuelle Laufzeit-Entscheidung erforderlich**
+- **Keine separaten Export-Varianten, die in App-Code ausgewählt werden müssen**
+
+---
+
+## Das Problem
+
+Reacts App-Router-Modell trennt Komponenten in zwei Welten:
+
+- **Server Components** — werden auf dem Server gerendert; können `async` Daten laden; können keine Hooks, Effekte oder Browser-APIs verwenden
+- **Client Components** — laufen im Browser; haben Zugriff auf Hooks, Events und DOM-APIs; werden mit `"use client"` markiert
+
+Eine naive UI-Library, die alles als `"use client"` ausliefert, verliert die Vorteile von Server Components — selbst bei rein präsentativen Inhalten.
+
+---
+
+## Die Lösung
+
+prokodo UI kapselt die Runtime-Kompatibilität hinter einem einzigen primären Importpfad:
+
+```
+@prokodo/ui/{name}          ← Immer diesen Import im Anwendungscode verwenden
+```
+
+Diesen Import nutzt du überall — in Server Components, Client Components und in normalem React-Code.
+
+```tsx
+import { Button } from '@prokodo/ui/button'
+
+export default function Beispiel() {
+  return <Button>Weiter</Button>
+}
+```
+
+---
+
+## Eigene AIC-Komponenten bauen
+
+Wenn du eigene Komponenten innerhalb dieser Codebase baust, kannst du dieselbe AIC-Architektur mit zwei Helpers verwenden:
+
+- `createIsland` — definiert den öffentlichen Komponenten-Entry und entscheidet zwischen Server-Fallback und Client-Hydration
+- `createLazyWrapper` — verbindet Server-/Client-Varianten und steuert den Zeitpunkt der Hydration
+
+### 1) Öffentliche Komponente mit `createIsland`
+
+```tsx
+import { createIsland } from '@prokodo/ui/createIsland'
+import WidgetServer from './Widget.server'
+import type { WidgetProps } from './Widget.model'
+
+export const Widget = createIsland<WidgetProps>({
+  name: 'Widget',
+  Server: WidgetServer,
+  loadLazy: () => import('./Widget.lazy'),
+})
+```
+
+`createIsland` hält eine einheitliche Komponenten-API aufrecht und rendert einen server-sicheren Fallback, wenn keine Interaktivität benötigt wird.
+
+### 2) Lazy-Wrapper mit `createLazyWrapper`
+
+```tsx
+import { createLazyWrapper } from '@prokodo/ui/createLazyWrapper'
+import WidgetClient from './Widget.client'
+import WidgetServer from './Widget.server'
+import type { WidgetProps } from './Widget.model'
+
+export default createLazyWrapper<WidgetProps>({
+  name: 'Widget',
+  Client: WidgetClient,
+  Server: WidgetServer,
+  hydrateOnVisible: true,
+})
+```
+
+Nutze `hydrateOnVisible` für schwere oder initial nicht sichtbare UI, um die Hydration bis zum Sichtbarkeitszeitpunkt zu verzögern.
+
+### 3) `priority` für Above-the-fold-Rendering
+
+Die Helpers unterstützen zusätzlich ein `priority`-Flag für kritische UI oberhalb der Fold.
+
+- In `createLazyWrapper` überspringt `priority` das Warten auf Sichtbarkeit und hydratisiert sofort.
+- Für `Image` wird `priority` zusätzlich an das Server-/Client-Rendering-Verhalten des Bildes weitergegeben.
+
+```tsx
+import { Image } from '@prokodo/ui/image'
+import '@prokodo/ui/image.css'
+
+<Image
+  src="/hero.jpg"
+  alt="Homepage Hero"
+  width={1200}
+  height={630}
+  priority
+/>
+```
+
+Bei `Image` führt das in Server- und Client-Pfad zu eager Loading mit hoher Fetch-Priorität (`loading="eager"` und `fetchpriority="high"`).
+
+---
+
+## Komponenten ohne AIC-Eintrag
+
+Rein präsentative oder nicht-interaktive Komponenten — z. B. `Headline`, `Grid`, `Image`, `List` und `Teaser` — folgen derselben Developer Experience:
+
+- gleicher Standard-Importpfad
+- keine laufzeitspezifischen Import-Entscheidungen
+
+---
+
+## Warum das wichtig ist
+
+- Klarere API für Produktteams
+- Weniger Migration- und Onboarding-Probleme
+- Runtime-Details bleiben in der Library statt im App-Code
+
+---
+
+## Hinweis für Maintainer
+
+Die Bezeichnung AIC beschreibt die interne Runtime-Architektur der Library.
+Sie ist **kein** Consumer-Importmodell.
+
+Für Anwendungscode gilt weiterhin: **immer `@prokodo/ui/{name}` verwenden**.

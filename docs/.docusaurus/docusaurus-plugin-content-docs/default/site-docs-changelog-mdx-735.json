@@ -1,0 +1,25 @@
+{
+  "id": "changelog",
+  "title": "Changelog",
+  "description": "Release history for @prokodo/ui — a record of all new features, fixes, and breaking changes.",
+  "source": "@site/docs/changelog.mdx",
+  "sourceDirName": ".",
+  "slug": "/changelog",
+  "permalink": "/de/docs/changelog",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/changelog.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "changelog",
+    "title": "Changelog",
+    "sidebar_label": "Changelog",
+    "description": "Release history for @prokodo/ui — a record of all new features, fixes, and breaking changes."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Versions",
+    "permalink": "/de/docs/versions"
+  }
+}

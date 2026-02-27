@@ -1,0 +1,89 @@
+---
+id: migration
+title: Migration Guide
+sidebar_label: Migration
+description: Step-by-step guide for upgrading between major prokodo UI versions.
+---
+
+# Migration Guide
+
+This guide covers breaking changes and migration steps for each major version of `@prokodo/ui`.
+
+---
+
+## v2 → v3
+
+### Import paths renamed
+
+In v3, component entry-point paths changed from PascalCase to kebab-case to align with the Node module resolution spec.
+
+| Before (v2) | After (v3) |
+|-------------|-----------|
+| `@prokodo/ui/Button` | `@prokodo/ui/button` |
+| `@prokodo/ui/Dialog` | `@prokodo/ui/dialog` |
+| `@prokodo/ui/PostTeaser` | `@prokodo/ui/post-teaser` |
+
+**Codemod available:**
+
+```bash
+npx @prokodo/codemod v2-to-v3-imports ./src
+```
+
+### CSS import required
+
+v3 no longer auto-injects component CSS. You must import it explicitly:
+
+```ts
+// v2 — CSS injected automatically
+import { Button } from '@prokodo/ui/Button'
+
+// v3 — import both
+import { Button } from '@prokodo/ui/button'
+import '@prokodo/ui/button.css'
+```
+
+### Token namespace changed
+
+All CSS variables are now prefixed `--pk-` (previously `--prokodo-`).
+
+```css
+/* Before */
+--prokodo-color-primary: #6366f1;
+
+/* After */
+--pk-color-primary: #6366f1;
+```
+
+---
+
+## v1 → v2
+
+### Peer dependency upgrade
+
+v2 requires React 18 and Next.js 14+.
+
+```bash
+pnpm add react@^18 react-dom@^18 next@^14
+```
+
+### AIC imports introduced
+
+v2 introduced the `/client` and `/lazy` variants. The bare import (`@prokodo/ui/{name}`) now resolves to the Server Component variant. If you were using interactive props (event handlers, state-dependent behaviour), switch to `/client`:
+
+```ts
+// Before
+import { Button } from '@prokodo/ui/button'
+
+// After — if the Button is inside a "use client" component
+import { Button } from '@prokodo/ui/button/client'
+```
+
+Static usages (links, display buttons) continue to work unchanged with the default import.
+
+---
+
+## Getting help
+
+- [GitHub Discussions ↗](https://github.com/prokodo-agency/ui/discussions)
+- [Changelog](/docs/changelog)
+- [Versions](/docs/versions)

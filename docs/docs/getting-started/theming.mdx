@@ -1,0 +1,107 @@
+---
+id: theming
+title: Theming
+sidebar_label: Theming
+description: Override prokodo UI design tokens to apply your brand colours, typography, and spacing.
+---
+
+# Theming
+
+prokodo UI is built on a CSS custom property (design token) system. Theming means overriding `--pk-*` variables — no JavaScript required, no build step, no theme provider.
+
+---
+
+## How tokens work
+
+All design decisions — color, spacing, typography, border-radius, shadow — are expressed as `--pk-*` CSS variables defined in `@prokodo/ui/theme.css`. Components consume these variables directly from their CSS Modules.
+
+Override any token in your global stylesheet **after** the `theme.css` import:
+
+```css title="app/globals.css"
+@import '@prokodo/ui/theme.css';
+
+:root {
+  /* Brand colours */
+  --pk-color-primary:     #7c3aed;
+  --pk-color-primary-100: #ede9fe;
+  --pk-color-primary-500: #7c3aed;
+  --pk-color-primary-900: #2e1065;
+
+  /* Typography scale */
+  --pk-font-family-base:  'Inter', sans-serif;
+  --pk-font-size-base:    1rem;
+
+  /* Border radius */
+  --pk-radius-sm:  4px;
+  --pk-radius-md:  8px;
+  --pk-radius-lg: 16px;
+
+  /* Spacing */
+  --pk-spacing-1:  4px;
+  --pk-spacing-2:  8px;
+  --pk-spacing-4: 16px;
+  --pk-spacing-8: 32px;
+}
+```
+
+---
+
+## Dark mode
+
+prokodo UI supports dark mode via the `data-theme="dark"` attribute on `<html>` (or via `prefers-color-scheme` media query):
+
+```css
+:root[data-theme='dark'] {
+  --pk-color-background: #0f0f0f;
+  --pk-color-surface:    #1a1a1a;
+  --pk-color-text:       #f5f5f5;
+}
+```
+
+Toggle dark mode by setting `document.documentElement.dataset.theme = 'dark'` in your client code.
+
+---
+
+## Token reference
+
+See [Design Tokens](/docs/design-tokens) for a full listing of all available `--pk-*` custom properties.
+
+---
+
+## Scoped theming
+
+Tokens can be scoped to a subtree by applying overrides to a wrapper element instead of `:root`:
+
+```css
+.marketing-section {
+  --pk-color-primary: #f97316; /* orange for this section only */
+}
+```
+
+---
+
+## Font loading
+
+prokodo UI does **not** bundle fonts. Import your typeface in the root layout and set `--pk-font-family-base`:
+
+```tsx title="app/layout.tsx"
+import { Inter } from 'next/font/google'
+import '@prokodo/ui/theme.css'
+import './globals.css' /* contains --pk-font-family-base override */
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+```css title="app/globals.css"
+:root {
+  --pk-font-family-base: var(--font-inter), sans-serif;
+}
+```

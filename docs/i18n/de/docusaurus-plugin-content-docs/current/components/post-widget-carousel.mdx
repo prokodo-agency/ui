@@ -1,0 +1,95 @@
+---
+id: post-widget-carousel
+title: PostWidgetCarousel
+sidebar_label: PostWidgetCarousel
+description: Horizontally scrollable post widget carousel for showcasing multiple blog posts in a compact strip.
+---
+
+# PostWidgetCarousel
+
+`PostWidgetCarousel` rendert Beiträge als horizontalen Slider und kombiniert Post-Teaser mit Carousel-Navigation.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { PostWidgetCarousel } from '@prokodo/ui/post-widget-carousel'
+
+<PostWidgetCarousel
+  title="You might also like"
+  posts={relatedPosts}
+/>
+```
+
+<StorybookEmbed id="prokodo-blog-postwidgetcarousel--default" height={380} />
+
+
+---
+
+## Import
+
+```ts
+import { PostWidgetCarousel } from '@prokodo/ui/post-widget-carousel'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/post-widget-carousel.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `posts` | `PostWidgetItem[]` | — | ✅ | Array von post items (shared type with `PostWidget`). |
+| `title` | `string` | — | — | Section heading text. |
+| `autoplay` | `boolean` | `false` | — | Aktiviere carousel autoplay. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/post-widget-carousel/PostWidgetCarousel.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-widget-carousel/PostWidgetCarousel.model.ts) für den vollständigen `PostWidgetCarouselProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { PostWidgetCarousel } from '@prokodo/ui/post-widget-carousel'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **2.1.1** | **Tastatur** (A) | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.2.2** | **Pausieren, Beenden, Ausblenden** (A) | 🔍 Manuell prüfen | Animationen oder automatisch rotierende Inhalte, die länger als 5 s laufen, müssen einen Pause-/Stopp-Schalter bieten. |
+| **2.4.3** | **Fokusreihenfolge** (A) | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 1 jest-axe-Assertion(s) in 4 Testdatei(en) · 1 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [PostWidgetCarousel in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-postwidgetcarousel--docs)
+
+---
+
+## Quellcode
+
+[`src/components/post-widget-carousel/PostWidgetCarousel.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-widget-carousel/PostWidgetCarousel.model.ts)

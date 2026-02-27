@@ -1,0 +1,121 @@
+---
+id: button
+title: Button
+sidebar_label: Button
+description: The prokodo UI Button component — a fully typed, AIC-ready interactive element with icon support, loading state, and redirect capability.
+---
+
+# Button
+
+The `Button` component is the core interactive element in `@prokodo/ui`. It supports text labels, icon-only mode, loading states, full-width layout, and seamless redirect (SSR-safe link conversion).
+
+
+---
+
+## Overview
+
+```tsx
+import { Button } from '@prokodo/ui/button'
+
+<Button title="Click Me" color="primary" variant="contained" onClick={handleClick} />
+```
+
+<StorybookEmbed id="prokodo-common-button--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Button } from '@prokodo/ui/button'
+```
+
+CSS (import once at app root):
+
+```ts
+import '@prokodo/ui/button.css'
+```
+
+---
+
+## Props
+
+`ButtonProps` is a discriminated union of `ButtonDefaultProps` (labeled button) and `ButtonIconProps` (icon-only button).
+
+### `ButtonDefaultProps`
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `title` | `string` | — | ✅ | Button label text (also used as fallback `aria-label`). |
+| `variant` | `"contained" \| "outlined" \| "text"` | `"contained"` | — | Visual style variant. |
+| `color` | `"primary" \| "secondary" \| "success" \| "error" \| "info" \| "warning" \| "inherit"` | `"inherit"` | — | Semantic color token. |
+| `priority` | `boolean` | `false` | — | Emphasize the button (higher visual weight). |
+| `fullWidth` | `boolean` | `false` | — | Stretch button to 100% of parent width. |
+| `loading` | `boolean` | `false` | — | Show loading spinner and disable interaction. |
+| `disabled` | `boolean` | `false` | — | Disable all interaction. |
+| `iconProps` | `IconProps` | — | — | Icon to display left of (or alongside) the label. |
+| `redirect` | `LinkProps` | — | — | Convert button into an SSR-safe link. |
+| `aria-label` | `string` | `title` | — | Override accessible label. |
+| `ref` | `ButtonRef` | — | — | Ref to the underlying `<button>` element. |
+| `contentClassName` | `string` | — | — | CSS class on the inner content wrapper. |
+| `className` | `string` | — | — | CSS class on the root element. |
+| `onClick` | `MouseEventHandler` | — | — | Click handler. |
+| `image` | `ImageProps` | — | — | Background image (alternative to icon). |
+
+### `ButtonIconProps`
+
+Icon-only variant. Requires either `aria-label` (interactive) or `inert` (decorative).
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `iconProps` | `IconProps` | — | ✅ | Icon to render. |
+| `aria-label` | `string` | — | ✅* | Accessible label for screen readers. |
+| `inert` | `boolean` | — | ✅* | Mark as decorative (no a11y label needed). |
+
+\* Either `aria-label` or `inert` must be provided (not both).
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Button } from '@prokodo/ui/button'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **2.5.3** | **Label in Name** (A) | ✅ Fulfilled | For components with a visible label, the accessible name must contain or match the visible label text. |
+| **2.5.8** | **Target Size (Minimum)** (AA) | 🔍 Manual review | Interactive target areas must be at least 24 × 24 CSS pixels. Verify in the integrated product UI. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 5 jest-axe assertion(s) across 4 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+Explore all `Button` variants, controls, and a11y annotations live:
+
+👉 [Open Button in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-button--docs)
+
+---
+
+## Source
+
+TypeScript types: [`src/components/button/Button.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/button/Button.model.ts)

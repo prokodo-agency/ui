@@ -1,0 +1,76 @@
+---
+id: lottie
+title: Lottie
+sidebar_label: Lottie
+description: Lottie JSON animation player component with play/pause control, loop, and autoplay support.
+---
+
+# Lottie
+
+`Lottie` renders Lottie JSON animations. Supports autoplay, loop, and programmatic play/pause control. Animations are loaded from a URL or inline JSON data.
+
+---
+
+## Overview
+
+```tsx
+import { Lottie } from '@prokodo/ui/lottie'
+
+<Lottie src="/animations/hero.json" loop autoplay />
+```
+
+<StorybookEmbed id="prokodo-common-lottie--default" height={340} />
+
+
+---
+
+## Import
+
+```ts
+import { Lottie } from '@prokodo/ui/lottie'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/lottie.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `src` | `string \| object` | — | ✅ | URL to a `.json` file or an inline animation object. |
+| `loop` | `boolean` | `true` | — | Loop the animation. |
+| `autoplay` | `boolean` | `true` | — | Start playing on mount. |
+| `width` | `number \| string` | `"100%"` | — | Container width. |
+| `height` | `number \| string` | `"auto"` | — | Container height. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/lottie/Lottie.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/lottie/Lottie.model.ts) for the full `LottieProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.1.1** | **Non-text Content** (A) | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.2.2** | **Pause, Stop, Hide** (A) | 🔍 Manual review | Animations or auto-rotating content lasting more than 5 s must provide a pause/stop control. |
+| **2.3.1** | **Three Flashes or Below Threshold** (A) | 🔍 Manual review | Animated content must not flash more than 3 times per second. |
+| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 1 jest-axe assertion(s) across 1 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Lottie in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-media-lottie--docs)
+
+---
+
+## Source
+
+[`src/components/lottie/Lottie.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/lottie/Lottie.model.ts)

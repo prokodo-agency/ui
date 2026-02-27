@@ -1,0 +1,29 @@
+{
+  "id": "components/autocomplete",
+  "title": "Autocomplete",
+  "description": "Searchable input with suggestion dropdown, async loading, free-text mode, and multi-select support.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/autocomplete.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/autocomplete",
+  "permalink": "/de/docs/components/autocomplete",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/autocomplete.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "autocomplete",
+    "title": "Autocomplete",
+    "sidebar_label": "Autocomplete",
+    "description": "Searchable input with suggestion dropdown, async loading, free-text mode, and multi-select support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Übersicht",
+    "permalink": "/de/docs/components/overview"
+  },
+  "next": {
+    "title": "Checkbox",
+    "permalink": "/de/docs/components/checkbox"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "components/input",
+  "title": "Input",
+  "description": "Versatile text input with label, helper text, error feedback, start/end adornments, and all HTML input types.",
+  "source": "@site/docs/components/input.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/input",
+  "permalink": "/docs/components/input",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/input.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "input",
+    "title": "Input",
+    "sidebar_label": "Input",
+    "description": "Versatile text input with label, helper text, error feedback, start/end adornments, and all HTML input types."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Form",
+    "permalink": "/docs/components/form"
+  },
+  "next": {
+    "title": "InputOTP",
+    "permalink": "/docs/components/input-otp"
+  }
+}

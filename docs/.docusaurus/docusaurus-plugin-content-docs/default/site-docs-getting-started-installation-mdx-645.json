@@ -1,0 +1,29 @@
+{
+  "id": "getting-started/installation",
+  "title": "Installation",
+  "description": "Install prokodo UI with pnpm, npm, or yarn and add global styles to your Next.js project.",
+  "source": "@site/docs/getting-started/installation.mdx",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/installation",
+  "permalink": "/docs/getting-started/installation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/getting-started/installation.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "installation",
+    "title": "Installation",
+    "sidebar_label": "Installation",
+    "description": "Install prokodo UI with pnpm, npm, or yarn and add global styles to your Next.js project."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/"
+  },
+  "next": {
+    "title": "Quick Start",
+    "permalink": "/docs/getting-started/quick-start"
+  }
+}

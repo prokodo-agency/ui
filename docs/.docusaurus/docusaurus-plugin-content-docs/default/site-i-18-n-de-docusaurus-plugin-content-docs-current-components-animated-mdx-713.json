@@ -1,0 +1,29 @@
+{
+  "id": "components/animated",
+  "title": "Animated",
+  "description": "Wrapper component that applies entrance animations to any child element using prokodo design tokens.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/animated.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/animated",
+  "permalink": "/de/docs/components/animated",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/animated.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "animated",
+    "title": "Animated",
+    "sidebar_label": "Animated",
+    "description": "Wrapper component that applies entrance animations to any child element using prokodo design tokens."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Tabs",
+    "permalink": "/de/docs/components/tabs"
+  },
+  "next": {
+    "title": "AnimatedText",
+    "permalink": "/de/docs/components/animated-text"
+  }
+}

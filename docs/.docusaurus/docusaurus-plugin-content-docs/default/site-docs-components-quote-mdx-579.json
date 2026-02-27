@@ -1,0 +1,29 @@
+{
+  "id": "components/quote",
+  "title": "Quote",
+  "description": "Styled blockquote component for pull-quotes, testimonials, and highlighted citations.",
+  "source": "@site/docs/components/quote.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/quote",
+  "permalink": "/docs/components/quote",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/quote.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "quote",
+    "title": "Quote",
+    "sidebar_label": "Quote",
+    "description": "Styled blockquote component for pull-quotes, testimonials, and highlighted citations."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "PostWidgetCarousel",
+    "permalink": "/docs/components/post-widget-carousel"
+  },
+  "next": {
+    "title": "RichText",
+    "permalink": "/docs/components/rich-text"
+  }
+}

@@ -1,0 +1,82 @@
+---
+id: label
+title: Label
+sidebar_label: Label
+description: Accessible form label component that correctly associates with any control via htmlFor.
+---
+
+# Label
+
+`Label` renders an accessible `<label>` element. It can stand alone as a visible descriptor or be composed inside other form components to reduce boilerplate.
+
+---
+
+## Overview
+
+```tsx
+import { Label } from '@prokodo/ui/label'
+
+<Label htmlFor="email" required>
+  Email address
+</Label>
+<input id="email" type="email" />
+```
+
+<StorybookEmbed id="prokodo-form-label--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Label } from '@prokodo/ui/label'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/label.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `children` | `ReactNode` | — | ✅ | Label text. |
+| `htmlFor` | `string` | — | — | Associates the label with a form control `id`. |
+| `required` | `boolean` | `false` | — | Append a `*` indicator to signal the field is required. |
+| `disabled` | `boolean` | `false` | — | Apply disabled visual style. |
+| `className` | `string` | — | — | CSS class on `<label>` element. |
+
+> See [`src/components/label/Label.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/label/Label.model.ts) for the full `LabelProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.5** | **Identify Input Purpose** (AA) | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute. |
+| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **3.3.1** | **Error Identification** (A) | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone. |
+| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled | Every form input requires a programmatically associated label or a visible instruction. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 3 jest-axe assertion(s) across 1 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Label in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-label--docs)
+
+---
+
+## Source
+
+[`src/components/label/Label.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/label/Label.model.ts)

@@ -1,0 +1,104 @@
+---
+id: dialog
+title: Dialog
+sidebar_label: Dialog
+description: Modal dialog overlay with accessible focus trap, ESC-to-close, and configurable size variants.
+---
+
+# Dialog
+
+`Dialog` rendert einen modalen Overlay-Dialog mit Focus-Trap, ESC-Close und flexiblen Größen-/Layout-Optionen.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Dialog } from '@prokodo/ui/dialog'
+
+<Dialog
+  open={isOpen}
+  title="Confirm action"
+  onClose={() => setIsOpen(false)}
+>
+  <p>Are you sure you want to delete this item?</p>
+</Dialog>
+```
+
+<StorybookEmbed id="prokodo-common-dialog--default" height={380} />
+
+
+---
+
+## Import
+
+```ts
+import { Dialog } from '@prokodo/ui/dialog'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/dialog.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `open` | `boolean` | — | ✅ | Whether the dialog is visible. |
+| `onClose` | `() => void` | — | ✅ | Called when the dialog should close (ESC / backdrop click). |
+| `children` | `ReactNode` | — | ✅ | Dialog body content. |
+| `title` | `string` | — | — | Dialog title shown in the header. |
+| `size` | `"sm" \| "md" \| "lg" \| "fullscreen"` | `"md"` | — | Dialog width variant. |
+| `closeOnBackdrop` | `boolean` | `true` | — | Close when clicking the backdrop. |
+| `showClose` | `boolean` | `true` | — | Render an explicit close (×) button. |
+| `className` | `string` | — | — | CSS class on the dialog panel. |
+
+> Siehe [`src/components/dialog/Dialog.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dialog/Dialog.model.ts) für den vollständigen `DialogProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Dialog } from '@prokodo/ui/dialog'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.1.2** | **Keine Tastaturfalle** (A) | 🔍 Manuell prüfen | Der Tastaturfokus darf niemals innerhalb einer Komponente eingeschlossen sein; Nutzer müssen immer mit Standardtasten navigieren können. |
+| **2.4.3** | **Fokusreihenfolge** (A) | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| **4.1.3** | **Statusmeldungen** (AA) | 🔍 Manuell prüfen | Statusmeldungen (Laden, Erfolg, Fehler, Fortschritt) müssen assistiven Technologien ohne Fokusverschiebung mitgeteilt werden (aria-live oder role='status'). |
+
+> **Testabdeckung:** 1 jest-axe-Assertion(s) in 4 Testdatei(en) · 7 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Dialog in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-dialog--docs)
+
+---
+
+## Quellcode
+
+[`src/components/dialog/Dialog.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dialog/Dialog.model.ts)

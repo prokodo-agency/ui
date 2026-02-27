@@ -1,0 +1,29 @@
+{
+  "id": "components/date-picker",
+  "title": "DatePicker",
+  "description": "Calendar-based date selection input with localization, range support, and accessible keyboard navigation.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/date-picker.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/date-picker",
+  "permalink": "/de/docs/components/date-picker",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/date-picker.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "date-picker",
+    "title": "DatePicker",
+    "sidebar_label": "DatePicker",
+    "description": "Calendar-based date selection input with localization, range support, and accessible keyboard navigation."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "CheckboxGroup",
+    "permalink": "/de/docs/components/checkbox-group"
+  },
+  "next": {
+    "title": "DynamicList",
+    "permalink": "/de/docs/components/dynamic-list"
+  }
+}

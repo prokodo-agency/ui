@@ -309,11 +309,15 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build && echo 'ui.prokodo.com' > storybook-static/CNAME",
+    "storybook:build": "storybook build",
     "storybook:deploy": "gh-pages -d storybook-static",
     "export-icons": "tsx tools/export-icons.ts",
     "prepare": "husky",
-    "release": "pnpm build && pnpm changeset && pnpm changeset version && pnpm install && git add . && git commit -m 'ci: version bump' && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags"
+    "release": "pnpm build && pnpm changeset && pnpm changeset version && pnpm install && git add . && git commit -m 'ci: version bump' && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags",
+    "docs:start": "cd docs && pnpm start",
+    "docs:build": "cd docs && pnpm build",
+    "docs:serve": "cd docs && pnpm serve",
+    "docs:typecheck": "cd docs && pnpm typecheck"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^2.0.2",

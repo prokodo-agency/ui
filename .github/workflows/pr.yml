@@ -65,3 +65,12 @@ jobs:
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
             npx cypress run --component --headless --expose theme=dark
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
+
+      - name: 📝 Check docs overview is up to date
+        run: |
+          cd docs && node scripts/generate-overview.mjs
+          git diff --exit-code docs/docs/components/overview.mdx \
+            || (echo "::error::overview.mdx is stale — run 'node docs/scripts/generate-overview.mjs' and commit" && exit 1)
+
+      - name: 🌍 Check translation drift (DE)
+        run: cd docs && node scripts/check-translation-drift.mjs

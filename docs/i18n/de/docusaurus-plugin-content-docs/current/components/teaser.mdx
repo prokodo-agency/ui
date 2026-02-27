@@ -1,0 +1,84 @@
+---
+id: teaser
+title: Teaser
+sidebar_label: Teaser
+description: Versatile content teaser card with image, category, headline, body, and CTA — the building block for marketing sections.
+---
+
+# Teaser
+
+`Teaser` ist die primäre Marketing-Karten-Komponente. Sie kombiniert Bild, Kategorien-Label, Überschrift, Beschreibungstext und Call-to-Action-Link in einer einzigen, flexibel kombinierbaren Einheit. Wird häufig in Landingpages und Section-Grids verwendet.
+
+---
+
+## Übersicht
+
+```tsx
+import { Teaser } from '@prokodo/ui/teaser'
+
+<Teaser
+  headline="Build faster with prokodo UI"
+  body="A fully typed component library built for Next.js App Router."
+  image={{ src: '/teaser.jpg', alt: 'prokodo UI' }}
+  cta={{ label: 'Get started', href: '/docs/intro' }}
+  category="Library"
+/>
+```
+
+<StorybookEmbed id="prokodo-common-teaser--default" height={380} />
+
+
+---
+
+## Import
+
+```ts
+import { Teaser } from '@prokodo/ui/teaser'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/teaser.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `headline` | `string` | — | ✅ | Main heading text. |
+| `body` | `string` | — | — | Body copy shown beneath the headline. |
+| `image` | `ImageProps` | — | — | Teaser image props. |
+| `cta` | `{ label: string; href: string }` | — | — | Call-to-action link rendered as a `Button`. |
+| `category` | `string` | — | — | Category label shown as a `Chip`. |
+| `reverse` | `boolean` | `false` | — | Flip image and content order. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/teaser/Teaser.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/teaser/Teaser.model.ts) für den vollständigen `TeaserProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A) | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen. |
+| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
+| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 1 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Teaser in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-teaser--docs)
+
+---
+
+## Quellcode
+
+[`src/components/teaser/Teaser.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/teaser/Teaser.model.ts)

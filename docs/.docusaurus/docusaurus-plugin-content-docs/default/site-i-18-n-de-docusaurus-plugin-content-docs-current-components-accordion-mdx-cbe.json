@@ -1,0 +1,29 @@
+{
+  "id": "components/accordion",
+  "title": "Accordion",
+  "description": "Collapsible accordion component with animated expand/collapse and accessible ARIA attributes.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/accordion.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/accordion",
+  "permalink": "/de/docs/components/accordion",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/accordion.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "accordion",
+    "title": "Accordion",
+    "sidebar_label": "Accordion",
+    "description": "Collapsible accordion component with animated expand/collapse and accessible ARIA attributes."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Switch",
+    "permalink": "/de/docs/components/switch"
+  },
+  "next": {
+    "title": "Card",
+    "permalink": "/de/docs/components/card"
+  }
+}

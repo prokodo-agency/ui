@@ -1,0 +1,29 @@
+{
+  "id": "components/grid",
+  "title": "Grid",
+  "description": "Responsive CSS grid container with configurable columns, gap, and breakpoint overrides.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/grid.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/grid",
+  "permalink": "/de/docs/components/grid",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/grid.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "grid",
+    "title": "Grid",
+    "sidebar_label": "Grid",
+    "description": "Responsive CSS grid container with configurable columns, gap, and breakpoint overrides."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Carousel",
+    "permalink": "/de/docs/components/carousel"
+  },
+  "next": {
+    "title": "ImageText",
+    "permalink": "/de/docs/components/image-text"
+  }
+}

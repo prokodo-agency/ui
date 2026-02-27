@@ -1,0 +1,78 @@
+---
+id: grid
+title: Grid
+sidebar_label: Grid
+description: Responsive CSS grid container with configurable columns, gap, and breakpoint overrides.
+---
+
+# Grid
+
+`Grid` renders a responsive CSS grid container. Column count and gap are configurable per breakpoint, making it easy to build multi-column page sections.
+
+---
+
+## Overview
+
+```tsx
+import { Grid } from '@prokodo/ui/grid'
+
+<Grid cols={3} gap="lg">
+  <Card>Item 1</Card>
+  <Card>Item 2</Card>
+  <Card>Item 3</Card>
+</Grid>
+```
+
+<StorybookEmbed id="prokodo-common-grid--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Grid } from '@prokodo/ui/grid'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/grid.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `children` | `ReactNode` | — | ✅ | Grid cell content. |
+| `cols` | `number \| GridCols` | `1` | — | Column count or responsive breakpoint map. |
+| `gap` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | — | Grid gap using design-token spacing. |
+| `align` | `"start" \| "center" \| "end" \| "stretch"` | `"stretch"` | — | Vertical alignment of child cells. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/grid/Grid.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/grid/Grid.model.ts) for the full `GridProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.2** | **Meaningful Sequence** (A) | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order. |
+| **1.4.4** | **Resize Text** (AA) | 🔍 Manual review | Text must remain readable and functional when scaled to 200% without assistive technology. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 1 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Grid in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-layout-grid--docs)
+
+---
+
+## Source
+
+[`src/components/grid/Grid.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/grid/Grid.model.ts)

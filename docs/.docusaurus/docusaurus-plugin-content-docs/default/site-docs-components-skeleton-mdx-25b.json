@@ -1,0 +1,29 @@
+{
+  "id": "components/skeleton",
+  "title": "Skeleton",
+  "description": "Animated content placeholder component for loading states — text, circle, and rectangle variants.",
+  "source": "@site/docs/components/skeleton.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/skeleton",
+  "permalink": "/docs/components/skeleton",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/skeleton.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "skeleton",
+    "title": "Skeleton",
+    "sidebar_label": "Skeleton",
+    "description": "Animated content placeholder component for loading states — text, circle, and rectangle variants."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "ProgressBar",
+    "permalink": "/docs/components/progress-bar"
+  },
+  "next": {
+    "title": "Snackbar",
+    "permalink": "/docs/components/snackbar"
+  }
+}

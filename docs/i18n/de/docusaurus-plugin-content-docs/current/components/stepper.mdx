@@ -1,0 +1,100 @@
+---
+id: stepper
+title: Stepper
+sidebar_label: Stepper
+description: Multi-step wizard component with linear and non-linear navigation, step validation, and progress tracking.
+---
+
+# Stepper
+
+`Stepper` rendert eine mehrstufige Navigation für lineare oder nicht-lineare Prozesse mit Statusanzeige und Fortschrittskontext.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Stepper } from '@prokodo/ui/stepper'
+
+<Stepper
+  activeStep={step}
+  steps={[
+    { label: 'Personal info' },
+    { label: 'Address' },
+    { label: 'Confirm' },
+  ]}
+/>
+```
+
+<StorybookEmbed id="prokodo-common-stepper--default" height={260} />
+
+
+---
+
+## Import
+
+```ts
+import { Stepper } from '@prokodo/ui/stepper'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/stepper.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `steps` | `StepperStep[]` | — | ✅ | Array von steps with `label` and optional `description`. |
+| `activeStep` | `number` | — | ✅ | Index of the currently active step (0-based). |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | — | Layout direction. |
+| `nonLinear` | `boolean` | `false` | — | Allow clicking any step regardless of completion. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/stepper/Stepper.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/stepper/Stepper.model.ts) für den vollständigen `StepperProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Stepper } from '@prokodo/ui/stepper'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.4.3** | **Fokusreihenfolge** (A) | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| **4.1.3** | **Statusmeldungen** (AA) | ✅ Erfüllt | Statusmeldungen (Laden, Erfolg, Fehler, Fortschritt) müssen assistiven Technologien ohne Fokusverschiebung mitgeteilt werden (aria-live oder role='status'). |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 4 Testdatei(en) · 6 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Stepper in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-layout-stepper--docs)
+
+---
+
+## Quellcode
+
+[`src/components/stepper/Stepper.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/stepper/Stepper.model.ts)

@@ -1,0 +1,29 @@
+{
+  "id": "components/avatar",
+  "title": "Avatar",
+  "description": "User avatar component with image, initials fallback, and size/shape variants.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/avatar.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/avatar",
+  "permalink": "/de/docs/components/avatar",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/avatar.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "avatar",
+    "title": "Avatar",
+    "sidebar_label": "Avatar",
+    "description": "User avatar component with image, initials fallback, and size/shape variants."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "AnimatedText",
+    "permalink": "/de/docs/components/animated-text"
+  },
+  "next": {
+    "title": "Button",
+    "permalink": "/de/docs/components/button"
+  }
+}

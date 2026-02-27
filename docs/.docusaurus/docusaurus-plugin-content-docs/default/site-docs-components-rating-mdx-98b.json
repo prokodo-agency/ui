@@ -1,0 +1,29 @@
+{
+  "id": "components/rating",
+  "title": "Rating",
+  "description": "Star rating input component with read-only display mode, half-star support, and accessible keyboard navigation.",
+  "source": "@site/docs/components/rating.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/rating",
+  "permalink": "/docs/components/rating",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/rating.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "rating",
+    "title": "Rating",
+    "sidebar_label": "Rating",
+    "description": "Star rating input component with read-only display mode, half-star support, and accessible keyboard navigation."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Label",
+    "permalink": "/docs/components/label"
+  },
+  "next": {
+    "title": "RTE",
+    "permalink": "/docs/components/rte"
+  }
+}

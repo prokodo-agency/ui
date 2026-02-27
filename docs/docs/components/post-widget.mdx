@@ -1,0 +1,94 @@
+---
+id: post-widget
+title: PostWidget
+sidebar_label: PostWidget
+description: Sidebar widget listing the latest or related posts with thumbnail and date.
+---
+
+# PostWidget
+
+`PostWidget` renders a compact sidebar panel listing recent or related posts. Each entry shows a thumbnail, title, and date.
+
+
+---
+
+## Overview
+
+```tsx
+import { PostWidget } from '@prokodo/ui/post-widget'
+
+<PostWidget
+  title="Recent posts"
+  posts={latestPosts}
+/>
+```
+
+<StorybookEmbed id="prokodo-blog-postwidget--default" height={340} />
+
+
+---
+
+## Import
+
+```ts
+import { PostWidget } from '@prokodo/ui/post-widget'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/post-widget.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `posts` | `PostWidgetItem[]` | — | ✅ | Array of posts with `title`, `slug`, `date`, and optional `image`. |
+| `title` | `string` | — | — | Widget heading text. |
+| `maxItems` | `number` | `5` | — | Maximum posts to display. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/post-widget/PostWidget.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-widget/PostWidget.model.ts) for the full `PostWidgetProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { PostWidget } from '@prokodo/ui/post-widget'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.2** | **Meaningful Sequence** (A) | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order. |
+| **1.4.3** | **Contrast (Minimum)** (AA) | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme. |
+| **2.4.6** | **Headings and Labels** (AA) | 🔍 Manual review | Headings and labels must describe the topic or purpose of their associated content. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open PostWidget in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-postwidget--docs)
+
+---
+
+## Source
+
+[`src/components/post-widget/PostWidget.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-widget/PostWidget.model.ts)

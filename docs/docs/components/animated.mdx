@@ -1,0 +1,78 @@
+---
+id: animated
+title: Animated
+sidebar_label: Animated
+description: Wrapper component that applies entrance animations to any child element using prokodo design tokens.
+---
+
+# Animated
+
+The `Animated` component wraps any React child and applies a CSS entrance animation. Animation direction, delay, and duration are controlled via props and design tokens.
+
+
+---
+
+## Overview
+
+```tsx
+import { Animated } from '@prokodo/ui/animated'
+
+<Animated direction="up">
+  <p>This content fades in from below.</p>
+</Animated>
+```
+
+<StorybookEmbed id="prokodo-common-animated--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Animated } from '@prokodo/ui/animated'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/animated.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `children` | `ReactNode` | — | ✅ | Content to animate. |
+| `direction` | `"up" \| "down" \| "left" \| "right" \| "fade"` | `"up"` | — | Entrance animation direction. |
+| `delay` | `number` | `0` | — | Animation delay in milliseconds. |
+| `duration` | `number` | `400` | — | Animation duration in milliseconds. |
+| `className` | `string` | — | — | CSS class on root wrapper. |
+
+> See [`src/components/animated/Animated.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animated/Animated.model.ts) for the full `AnimatedProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.1.1** | **Non-text Content** (A) | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.2.2** | **Pause, Stop, Hide** (A) | 🔍 Manual review | Animations or auto-rotating content lasting more than 5 s must provide a pause/stop control. |
+| **2.3.1** | **Three Flashes or Below Threshold** (A) | 🔍 Manual review | Animated content must not flash more than 3 times per second. |
+| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 5 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Animated in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-animated--docs)
+
+---
+
+## Source
+
+[`src/components/animated/Animated.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animated/Animated.model.ts)

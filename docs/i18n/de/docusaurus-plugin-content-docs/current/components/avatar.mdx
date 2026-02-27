@@ -1,0 +1,80 @@
+---
+id: avatar
+title: Avatar
+sidebar_label: Avatar
+description: User avatar component with image, initials fallback, and size/shape variants.
+---
+
+# Avatar
+
+`Avatar` rendert ein Profilbild mit automatischem Fallback auf Initialen, wenn kein Bild vorhanden ist. Unterstützt mehrere Formen und Größen.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Avatar } from '@prokodo/ui/avatar'
+
+<Avatar src="/profile.jpg" alt="Jane Doe" size="md" />
+<Avatar initials="JD" color="primary" size="lg" />
+```
+
+<StorybookEmbed id="prokodo-common-avatar--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Avatar } from '@prokodo/ui/avatar'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/avatar.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `src` | `string` | — | — | Image URL. Falls back to `initials` when omitted. |
+| `alt` | `string` | — | — | Image alt text for accessibility. |
+| `initials` | `string` | — | — | 1–2 character initials shown when no `src` is available. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | — | Avatar size. |
+| `shape` | `"circle" \| "rounded" \| "square"` | `"circle"` | — | Avatar shape variant. |
+| `color` | `"primary" \| "secondary" \| "success" \| "error"` | `"primary"` | — | Background color for initials fallback. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/avatar/Avatar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/avatar/Avatar.model.ts) für den vollständigen `AvatarProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.1.1** | **Nicht-Text-Inhalt** (A) | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
+| **1.4.5** | **Bilder von Text** (AA) | 🔍 Manuell prüfen | Text sollte als echter Text gerendert werden, nicht als Bild, außer wenn unvermeidbar (z. B. Logo, Markenzeichen). |
+| **1.4.11** | **Nicht-Text-Kontrast** (AA) | 🔍 Manuell prüfen | Ränder von UI-Komponenten und Icons müssen mindestens 3:1 Kontrast zu angrenzenden Farben aufweisen. Prüfung im Produkt-Theme erforderlich. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 4 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Avatar in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-avatar--docs)
+
+---
+
+## Quellcode
+
+[`src/components/avatar/Avatar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/avatar/Avatar.model.ts)

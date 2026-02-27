@@ -1,0 +1,29 @@
+{
+  "id": "getting-started/theming",
+  "title": "Theming",
+  "description": "Überschreibe prokodo UI Design-Tokens, um deine eigenen Markenfarben, Typografie und Abstände anzuwenden.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/getting-started/theming.mdx",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/theming",
+  "permalink": "/de/docs/getting-started/theming",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/getting-started/theming.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "theming",
+    "title": "Theming",
+    "sidebar_label": "Theming",
+    "description": "Überschreibe prokodo UI Design-Tokens, um deine eigenen Markenfarben, Typografie und Abstände anzuwenden."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Schnellstart",
+    "permalink": "/de/docs/getting-started/quick-start"
+  },
+  "next": {
+    "title": "Übersicht",
+    "permalink": "/de/docs/components/overview"
+  }
+}

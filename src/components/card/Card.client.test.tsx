@@ -86,10 +86,17 @@ describe("Card.client", () => {
       expect(onClickMock).not.toHaveBeenCalled()
     })
 
-    it("does not fire onClick on non-Enter keys", () => {
+    it("fires onClick on Space key press when not disabled", () => {
       const onClickMock = jest.fn()
       render(<CardClient onClick={onClickMock} />)
       fireEvent.keyDown(screen.getByTestId("card-view"), { code: "Space" })
+      expect(onClickMock).toHaveBeenCalledTimes(1)
+    })
+
+    it("does not fire onClick on non-activation keys", () => {
+      const onClickMock = jest.fn()
+      render(<CardClient onClick={onClickMock} />)
+      fireEvent.keyDown(screen.getByTestId("card-view"), { code: "Tab" })
       expect(onClickMock).not.toHaveBeenCalled()
     })
 

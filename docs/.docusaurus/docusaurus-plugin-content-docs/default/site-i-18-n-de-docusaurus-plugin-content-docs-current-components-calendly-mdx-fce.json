@@ -1,0 +1,29 @@
+{
+  "id": "components/calendly",
+  "title": "Calendly",
+  "description": "Embeds a Calendly scheduling widget as a lazy-loaded inline or popup frame.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/calendly.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/calendly",
+  "permalink": "/de/docs/components/calendly",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/calendly.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "calendly",
+    "title": "Calendly",
+    "sidebar_label": "Calendly",
+    "description": "Embeds a Calendly scheduling widget as a lazy-loaded inline or popup frame."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Tooltip",
+    "permalink": "/de/docs/components/tooltip"
+  },
+  "next": {
+    "title": "Lottie",
+    "permalink": "/de/docs/components/lottie"
+  }
+}

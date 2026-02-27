@@ -1,0 +1,95 @@
+---
+id: tooltip
+title: Tooltip
+sidebar_label: Tooltip
+description: Accessible tooltip component anchored to any trigger — supports hover, focus, and click activation with configurable placement.
+---
+
+# Tooltip
+
+`Tooltip` displays a small informational popup anchored to a trigger element. It activates on hover and focus (keyboard accessible) and supports all four placement directions.
+
+
+---
+
+## Overview
+
+```tsx
+import { Tooltip } from '@prokodo/ui/tooltip'
+
+<Tooltip content="This action cannot be undone" placement="top">
+  <button>Delete</button>
+</Tooltip>
+```
+
+<StorybookEmbed id="prokodo-feedback-tooltip--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Tooltip } from '@prokodo/ui/tooltip'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/tooltip.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `children` | `ReactElement` | — | ✅ | Trigger element — must be a single element that forwards a `ref`. |
+| `content` | `ReactNode` | — | ✅ | Tooltip content. |
+| `placement` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | — | Preferred placement relative to the trigger. |
+| `trigger` | `"hover" \| "focus" \| "click" \| "both"` | `"both"` | — | What user interaction opens the tooltip. |
+| `delay` | `number` | `200` | — | Open delay in milliseconds. |
+| `disabled` | `boolean` | `false` | — | Disable tooltip display. |
+| `className` | `string` | — | — | CSS class on the tooltip popover element. |
+
+> See [`src/components/tooltip/Tooltip.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tooltip/Tooltip.model.ts) for the full `TooltipProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Tooltip } from '@prokodo/ui/tooltip'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.4.3** | **Contrast (Minimum)** (AA) | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 5 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Tooltip in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-tooltip--docs)
+
+---
+
+## Source
+
+[`src/components/tooltip/Tooltip.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tooltip/Tooltip.model.ts)

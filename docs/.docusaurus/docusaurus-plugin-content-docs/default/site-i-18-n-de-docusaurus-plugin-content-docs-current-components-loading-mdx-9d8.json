@@ -1,0 +1,29 @@
+{
+  "id": "components/loading",
+  "title": "Loading",
+  "description": "Full-screen or inline loading indicator with spinner, skeleton pulse, or progress variants.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/loading.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/loading",
+  "permalink": "/de/docs/components/loading",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/loading.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "loading",
+    "title": "Loading",
+    "sidebar_label": "Loading",
+    "description": "Full-screen or inline loading indicator with spinner, skeleton pulse, or progress variants."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Drawer",
+    "permalink": "/de/docs/components/drawer"
+  },
+  "next": {
+    "title": "ProgressBar",
+    "permalink": "/de/docs/components/progress-bar"
+  }
+}

@@ -55,7 +55,9 @@ describe("Chip", () => {
 
     it("applies custom className", () => {
       render(<Chip className="custom-chip" label="Class" />)
-      expect(screen.getByRole("button")).toHaveClass("custom-chip")
+      expect(screen.getByText("Class").closest("div")).toHaveClass(
+        "custom-chip",
+      )
     })
   })
 

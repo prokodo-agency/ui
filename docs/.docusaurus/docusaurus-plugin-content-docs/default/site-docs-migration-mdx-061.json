@@ -1,0 +1,29 @@
+{
+  "id": "migration",
+  "title": "Migration Guide",
+  "description": "Step-by-step guide for upgrading between major prokodo UI versions.",
+  "source": "@site/docs/migration.mdx",
+  "sourceDirName": ".",
+  "slug": "/migration",
+  "permalink": "/de/docs/migration",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/migration.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "migration",
+    "title": "Migration Guide",
+    "sidebar_label": "Migration",
+    "description": "Step-by-step guide for upgrading between major prokodo UI versions."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "AIC Muster",
+    "permalink": "/de/docs/aic-pattern"
+  },
+  "next": {
+    "title": "Versions",
+    "permalink": "/de/docs/versions"
+  }
+}

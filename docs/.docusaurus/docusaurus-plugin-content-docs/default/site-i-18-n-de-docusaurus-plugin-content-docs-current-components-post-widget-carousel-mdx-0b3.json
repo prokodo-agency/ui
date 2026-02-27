@@ -1,0 +1,29 @@
+{
+  "id": "components/post-widget-carousel",
+  "title": "PostWidgetCarousel",
+  "description": "Horizontally scrollable post widget carousel for showcasing multiple blog posts in a compact strip.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/post-widget-carousel.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/post-widget-carousel",
+  "permalink": "/de/docs/components/post-widget-carousel",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/post-widget-carousel.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "post-widget-carousel",
+    "title": "PostWidgetCarousel",
+    "sidebar_label": "PostWidgetCarousel",
+    "description": "Horizontally scrollable post widget carousel for showcasing multiple blog posts in a compact strip."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "PostWidget",
+    "permalink": "/de/docs/components/post-widget"
+  },
+  "next": {
+    "title": "Quote",
+    "permalink": "/de/docs/components/quote"
+  }
+}

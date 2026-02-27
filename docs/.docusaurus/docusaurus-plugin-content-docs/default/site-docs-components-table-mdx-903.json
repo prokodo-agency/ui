@@ -1,0 +1,29 @@
+{
+  "id": "components/table",
+  "title": "Table",
+  "description": "Accessible HTML table with sortable columns, striped rows, sticky header, and responsive scroll container.",
+  "source": "@site/docs/components/table.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/table",
+  "permalink": "/docs/components/table",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/table.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "table",
+    "title": "Table",
+    "sidebar_label": "Table",
+    "description": "Accessible HTML table with sortable columns, striped rows, sticky header, and responsive scroll container."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Stepper",
+    "permalink": "/docs/components/stepper"
+  },
+  "next": {
+    "title": "BaseLink",
+    "permalink": "/docs/components/base-link"
+  }
+}

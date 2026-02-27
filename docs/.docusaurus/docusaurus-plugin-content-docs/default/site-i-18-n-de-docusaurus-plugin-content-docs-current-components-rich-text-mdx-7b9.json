@@ -1,0 +1,29 @@
+{
+  "id": "components/rich-text",
+  "title": "RichText",
+  "description": "Renders sanitised HTML or structured rich-text content with prokodo typography styles applied.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/rich-text.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/rich-text",
+  "permalink": "/de/docs/components/rich-text",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/rich-text.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "rich-text",
+    "title": "RichText",
+    "sidebar_label": "RichText",
+    "description": "Renders sanitised HTML or structured rich-text content with prokodo typography styles applied."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Quote",
+    "permalink": "/de/docs/components/quote"
+  },
+  "next": {
+    "title": "Teaser",
+    "permalink": "/de/docs/components/teaser"
+  }
+}

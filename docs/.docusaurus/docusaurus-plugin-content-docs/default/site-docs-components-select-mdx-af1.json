@@ -1,0 +1,29 @@
+{
+  "id": "components/select",
+  "title": "Select",
+  "description": "Dropdown select input with search/filter, grouped options, multi-select, and async loading support.",
+  "source": "@site/docs/components/select.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/select",
+  "permalink": "/docs/components/select",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/select.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "select",
+    "title": "Select",
+    "sidebar_label": "Select",
+    "description": "Dropdown select input with search/filter, grouped options, multi-select, and async loading support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "RTE",
+    "permalink": "/docs/components/rte"
+  },
+  "next": {
+    "title": "Slider",
+    "permalink": "/docs/components/slider"
+  }
+}

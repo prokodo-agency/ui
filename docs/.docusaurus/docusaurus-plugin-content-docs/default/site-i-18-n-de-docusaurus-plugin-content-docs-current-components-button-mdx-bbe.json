@@ -1,0 +1,29 @@
+{
+  "id": "components/button",
+  "title": "Button",
+  "description": "The prokodo UI Button component — a fully typed, AIC-ready interactive element with icon support, loading state, and redirect capability.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/button.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/button",
+  "permalink": "/de/docs/components/button",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/button.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "button",
+    "title": "Button",
+    "sidebar_label": "Button",
+    "description": "The prokodo UI Button component — a fully typed, AIC-ready interactive element with icon support, loading state, and redirect capability."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Avatar",
+    "permalink": "/de/docs/components/avatar"
+  },
+  "next": {
+    "title": "Chip",
+    "permalink": "/de/docs/components/chip"
+  }
+}

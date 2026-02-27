@@ -1,0 +1,102 @@
+---
+id: rating
+title: Rating
+sidebar_label: Rating
+description: Star rating input component with read-only display mode, half-star support, and accessible keyboard navigation.
+---
+
+# Rating
+
+`Rating` renders a star-based rating input. Supports interactive selection, read-only display, half-star precision, and accessible ARIA role `slider`.
+
+
+---
+
+## Overview
+
+```tsx
+import { Rating } from '@prokodo/ui/rating'
+
+<Rating
+  name="product-rating"
+  value={rating}
+  onChange={setRating}
+  max={5}
+/>
+```
+
+<StorybookEmbed id="prokodo-form-rating--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Rating } from '@prokodo/ui/rating'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/rating.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `name` | `string` | — | ✅ | Input name for form submission. |
+| `value` | `number` | — | — | Controlled rating value. |
+| `onChange` | `(value: number) => void` | — | — | Called when a star is selected. |
+| `max` | `number` | `5` | — | Maximum number of stars. |
+| `precision` | `0.5 \| 1` | `1` | — | Allow half-star increments. |
+| `readOnly` | `boolean` | `false` | — | Display only — no interaction. |
+| `disabled` | `boolean` | `false` | — | Disable the rating input. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/rating/Rating.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/rating/Rating.model.ts) for the full `RatingProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Rating } from '@prokodo/ui/rating'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.4.1** | **Use of Color** (A) | 🔍 Manual review | Color must not be the only means of conveying information (e.g. error states, required field markers). |
+| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.5.3** | **Label in Name** (A) | ✅ Fulfilled | For components with a visible label, the accessible name must contain or match the visible label text. |
+| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled | Every form input requires a programmatically associated label or a visible instruction. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 3 jest-axe assertion(s) across 5 test file(s) · 8 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Rating in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-rating--docs)
+
+---
+
+## Source
+
+[`src/components/rating/Rating.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/rating/Rating.model.ts)

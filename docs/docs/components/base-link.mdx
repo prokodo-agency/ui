@@ -1,0 +1,79 @@
+---
+id: base-link
+title: BaseLink
+sidebar_label: BaseLink
+description: Low-level SSR-safe link primitive used internally by Button, Card, and other interactive components.
+---
+
+# BaseLink
+
+`BaseLink` is the foundational link primitive in `@prokodo/ui`. It renders as `<a>` in server contexts and handles both internal and external navigation. Used internally by `Button`, `Card`, and other components that support `redirect` props.
+
+
+---
+
+## Overview
+
+```tsx
+import { BaseLink } from '@prokodo/ui/base-link'
+
+<BaseLink href="/docs/intro" className="my-link">
+  Read the docs
+</BaseLink>
+```
+
+<StorybookEmbed id="prokodo-common-baselink--default" />
+
+
+---
+
+## Import
+
+```ts
+import { BaseLink } from '@prokodo/ui/base-link'
+```
+
+Styling is handled via design tokens — no additional CSS import required.
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `href` | `string` | — | ✅ | Destination URL (relative or absolute). |
+| `children` | `ReactNode` | — | ✅ | Link content. |
+| `className` | `string` | — | — | CSS class on `<a>` element. |
+| `disabled` | `boolean` | `false` | — | Visually disable and prevent navigation. |
+| `id` | `string` | — | — | HTML `id` attribute. |
+| `target` | `string` | — | — | Link target (e.g. `"_blank"`). |
+| `rel` | `string` | — | — | Link `rel` attribute. |
+
+> See [`src/components/base-link/BaseLink.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/base-link/BaseLink.model.ts) for the full `BaseLinkProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.4** | **Link Purpose (In Context)** (A) | 🔍 Manual review | The purpose of every link must be determinable from the link text alone, or from its surrounding context. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **2.5.3** | **Label in Name** (A) | ✅ Fulfilled | For components with a visible label, the accessible name must contain or match the visible label text. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 4 jest-axe assertion(s) across 5 test file(s) · 2 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open BaseLink in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-baselink--docs)
+
+---
+
+## Source
+
+[`src/components/base-link/BaseLink.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/base-link/BaseLink.model.ts)

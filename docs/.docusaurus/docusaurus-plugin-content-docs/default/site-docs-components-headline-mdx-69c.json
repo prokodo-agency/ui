@@ -1,0 +1,29 @@
+{
+  "id": "components/headline",
+  "title": "Headline",
+  "description": "Typographic heading component mapping semantic levels (h1–h6) to the prokodo type scale.",
+  "source": "@site/docs/components/headline.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/headline",
+  "permalink": "/docs/components/headline",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/headline.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "headline",
+    "title": "Headline",
+    "sidebar_label": "Headline",
+    "description": "Typographic heading component mapping semantic levels (h1–h6) to the prokodo type scale."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Chip",
+    "permalink": "/docs/components/chip"
+  },
+  "next": {
+    "title": "Icon",
+    "permalink": "/docs/components/icon"
+  }
+}

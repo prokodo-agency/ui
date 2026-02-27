@@ -1,0 +1,29 @@
+{
+  "id": "components/autocomplete",
+  "title": "Autocomplete",
+  "description": "Searchable input with suggestion dropdown, async loading, free-text mode, and multi-select support.",
+  "source": "@site/docs/components/autocomplete.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/autocomplete",
+  "permalink": "/docs/components/autocomplete",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/autocomplete.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "autocomplete",
+    "title": "Autocomplete",
+    "sidebar_label": "Autocomplete",
+    "description": "Searchable input with suggestion dropdown, async loading, free-text mode, and multi-select support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Overview",
+    "permalink": "/docs/components/overview"
+  },
+  "next": {
+    "title": "Checkbox",
+    "permalink": "/docs/components/checkbox"
+  }
+}

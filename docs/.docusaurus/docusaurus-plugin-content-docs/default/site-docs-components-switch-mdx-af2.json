@@ -1,0 +1,29 @@
+{
+  "id": "components/switch",
+  "title": "Switch",
+  "description": "Toggle switch input component with label, disabled state, and accessible ARIA role=switch.",
+  "source": "@site/docs/components/switch.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/switch",
+  "permalink": "/docs/components/switch",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/switch.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "switch",
+    "title": "Switch",
+    "sidebar_label": "Switch",
+    "description": "Toggle switch input component with label, disabled state, and accessible ARIA role=switch."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Slider",
+    "permalink": "/docs/components/slider"
+  },
+  "next": {
+    "title": "Accordion",
+    "permalink": "/docs/components/accordion"
+  }
+}

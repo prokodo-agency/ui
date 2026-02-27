@@ -1,0 +1,29 @@
+{
+  "id": "components/input-otp",
+  "title": "InputOTP",
+  "description": "One-time password input with configurable digit count and automatic focus advancement.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/input-otp.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/input-otp",
+  "permalink": "/de/docs/components/input-otp",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/input-otp.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "input-otp",
+    "title": "InputOTP",
+    "sidebar_label": "InputOTP",
+    "description": "One-time password input with configurable digit count and automatic focus advancement."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Input",
+    "permalink": "/de/docs/components/input"
+  },
+  "next": {
+    "title": "Label",
+    "permalink": "/de/docs/components/label"
+  }
+}

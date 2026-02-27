@@ -1,0 +1,29 @@
+{
+  "id": "components/tooltip",
+  "title": "Tooltip",
+  "description": "Accessible tooltip component anchored to any trigger — supports hover, focus, and click activation with configurable placement.",
+  "source": "@site/docs/components/tooltip.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/tooltip",
+  "permalink": "/docs/components/tooltip",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/tooltip.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "tooltip",
+    "title": "Tooltip",
+    "sidebar_label": "Tooltip",
+    "description": "Accessible tooltip component anchored to any trigger — supports hover, focus, and click activation with configurable placement."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Snackbar",
+    "permalink": "/docs/components/snackbar"
+  },
+  "next": {
+    "title": "Calendly",
+    "permalink": "/docs/components/calendly"
+  }
+}

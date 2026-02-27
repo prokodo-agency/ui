@@ -1,0 +1,29 @@
+{
+  "id": "components/label",
+  "title": "Label",
+  "description": "Accessible form label component that correctly associates with any control via htmlFor.",
+  "source": "@site/docs/components/label.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/label",
+  "permalink": "/docs/components/label",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/label.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "label",
+    "title": "Label",
+    "sidebar_label": "Label",
+    "description": "Accessible form label component that correctly associates with any control via htmlFor."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "InputOTP",
+    "permalink": "/docs/components/input-otp"
+  },
+  "next": {
+    "title": "Rating",
+    "permalink": "/docs/components/rating"
+  }
+}

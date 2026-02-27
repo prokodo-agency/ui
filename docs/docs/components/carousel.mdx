@@ -1,0 +1,86 @@
+---
+id: carousel
+title: Carousel
+sidebar_label: Carousel
+description: Horizontal sliding carousel with configurable autoplay, loop, and navigation controls.
+---
+
+# Carousel
+
+`Carousel` renders a horizontal sliding view of items with optional autoplay, loop, navigation arrows, and pagination dots.
+
+
+---
+
+## Overview
+
+```tsx
+import { Carousel } from '@prokodo/ui/carousel'
+
+<Carousel
+  items={[
+    { key: '1', content: <img src="/slide1.jpg" alt="Slide 1" /> },
+    { key: '2', content: <img src="/slide2.jpg" alt="Slide 2" /> },
+  ]}
+  autoplay
+/>
+```
+
+<StorybookEmbed id="prokodo-common-carousel--static" height={380} />
+
+
+---
+
+## Import
+
+```ts
+import { Carousel } from '@prokodo/ui/carousel'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/carousel.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `items` | `CarouselItem[]` | — | ✅ | Array of slides, each with `key` and `content`. |
+| `autoplay` | `boolean` | `false` | — | Automatically advance slides. |
+| `autoplayInterval` | `number` | `4000` | — | Autoplay interval in milliseconds. |
+| `loop` | `boolean` | `true` | — | Loop from last slide back to first. |
+| `showDots` | `boolean` | `true` | — | Show pagination dots. |
+| `showArrows` | `boolean` | `true` | — | Show previous/next arrow buttons. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/carousel/Carousel.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/carousel/Carousel.model.ts) for the full `CarouselProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.2.2** | **Pause, Stop, Hide** (A) | 🔍 Manual review | Animations or auto-rotating content lasting more than 5 s must provide a pause/stop control. |
+| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 5 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Carousel in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-carousel--docs)
+
+---
+
+## Source
+
+[`src/components/carousel/Carousel.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/carousel/Carousel.model.ts)

@@ -1,0 +1,97 @@
+---
+id: accordion
+title: Accordion
+sidebar_label: Accordion
+description: Collapsible accordion component with animated expand/collapse and accessible ARIA attributes.
+---
+
+# Accordion
+
+Die `Accordion`-Komponente rendert eine list of collapsible panels. Jedes Panel kann unabhängig umgeschaltet oder gesteuert werden. Unterstützt animated expansion and full ARIA disclosure pattern.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Accordion } from '@prokodo/ui/accordion'
+
+<Accordion
+  items={[
+    { title: 'Panel 1', content: <p>Content A</p> },
+    { title: 'Panel 2', content: <p>Content B</p> },
+  ]}
+/>
+```
+
+<StorybookEmbed id="prokodo-common-accordion--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Accordion } from '@prokodo/ui/accordion'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/accordion.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `items` | `AccordionItem[]` | — | ✅ | Array von accordion panels with `title` and `content`. |
+| `defaultOpen` | `number \| number[]` | — | — | Index(es) of panels open by default. |
+| `animated` | `boolean` | `true` | — | Aktiviere expand/collapse animation. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/accordion/Accordion.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/accordion/Accordion.model.ts) für den vollständigen `AccordionProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Accordion } from '@prokodo/ui/accordion'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.4.3** | **Fokusreihenfolge** (A) | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 5 Testdatei(en) · 4 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Accordion in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-accordion--docs)
+
+---
+
+## Quellcode
+
+[`src/components/accordion/Accordion.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/accordion/Accordion.model.ts)

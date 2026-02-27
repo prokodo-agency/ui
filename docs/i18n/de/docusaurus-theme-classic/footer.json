@@ -1,0 +1,42 @@
+{
+  "link.item.label.Introduction": {
+    "message": "Einführung",
+    "description": "The label of footer link: Introduction"
+  },
+  "link.item.label.Quick Start": {
+    "message": "Schnellstart",
+    "description": "The label of footer link: Quick Start"
+  },
+  "link.item.label.Installation": {
+    "message": "Installation",
+    "description": "The label of footer link: Installation"
+  },
+  "link.item.label.Theming": {
+    "message": "Theming",
+    "description": "The label of footer link: Theming"
+  },
+  "link.item.label.AIC Pattern": {
+    "message": "AIC Muster",
+    "description": "The label of footer link: AIC Pattern"
+  },
+  "link.item.label.Design Tokens": {
+    "message": "Design-Tokens",
+    "description": "The label of footer link: Design Tokens"
+  },
+  "link.item.label.Storybook": {
+    "message": "Storybook",
+    "description": "The label of footer link: Storybook"
+  },
+  "link.item.label.npm": {
+    "message": "npm",
+    "description": "The label of footer link: npm"
+  },
+  "link.item.label.Website": {
+    "message": "Website",
+    "description": "The label of footer link: Website"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link: GitHub"
+  }
+}

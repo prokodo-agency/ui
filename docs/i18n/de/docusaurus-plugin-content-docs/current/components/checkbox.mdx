@@ -1,0 +1,101 @@
+---
+id: checkbox
+title: Checkbox
+sidebar_label: Checkbox
+description: Accessible checkbox input with label, error state, and controlled/uncontrolled modes.
+---
+
+# Checkbox
+
+`Checkbox` rendert ein barrierefreies `<input type="checkbox">` mit zugehörigem Label, optionalem Hilfetext und Fehlerfeedback. Funktioniert in kontrollierten und unkontrollierten Modi.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Checkbox } from '@prokodo/ui/checkbox'
+
+<Checkbox
+  name="terms"
+  label="I accept the terms and conditions"
+  checked={accepted}
+  onChange={(e) => setAccepted(e.target.checked)}
+/>
+```
+
+<StorybookEmbed id="prokodo-form-checkbox--controlled" />
+
+
+---
+
+## Import
+
+```ts
+import { Checkbox } from '@prokodo/ui/checkbox'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/checkbox.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `name` | `string` | — | ✅ | Input `name` attribute. |
+| `label` | `string` | — | — | Visible label text. |
+| `checked` | `boolean` | — | — | Controlled checked state. |
+| `defaultChecked` | `boolean` | `false` | — | Uncontrolled default checked state. |
+| `onChange` | `ChangeEventHandler<HTMLInputElement>` | — | — | Change handler. |
+| `disabled` | `boolean` | `false` | — | Deaktiviere the input. |
+| `error` | `string` | — | — | Error message shown below the input. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/checkbox/Checkbox.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/checkbox/Checkbox.model.ts) für den vollständigen `CheckboxProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Checkbox } from '@prokodo/ui/checkbox'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **1.4.1** | **Verwendung von Farbe** (A) | 🔍 Manuell prüfen | Farbe darf nicht das einzige Mittel zur Informationsvermittlung sein (z. B. Fehlerhinweise, Pflichtfeldmarkierungen). |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **3.3.2** | **Bezeichnungen oder Anweisungen** (A) | ✅ Erfüllt | Jedes Formularfeld benötigt ein programmatisch verknüpftes Label oder eine sichtbare Anweisung. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 5 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Checkbox in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-checkbox--docs)
+
+---
+
+## Quellcode
+
+[`src/components/checkbox/Checkbox.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/checkbox/Checkbox.model.ts)

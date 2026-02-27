@@ -72,7 +72,7 @@ describe("LinkView span branch", () => {
     </a>
   )
 
-  it("renders span with role=button", () => {
+  it("renders non-interactive span without button role when hasHandlers=false", () => {
     render(
       <LinkView
         BaseLinkComponent={FakeBase as never}
@@ -83,7 +83,8 @@ describe("LinkView span branch", () => {
         Click me
       </LinkView>,
     )
-    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.queryByRole("button")).not.toBeInTheDocument()
+    expect(screen.getByText("Click me")).toBeInTheDocument()
   })
 
   it("fires onClick when span is clicked and hasHandlers=true", () => {
@@ -167,7 +168,7 @@ describe("LinkView span branch", () => {
         Span link
       </LinkView>,
     )
-    screen.getByRole("button").click()
+    screen.getByText("Span link").click()
     // onClick is undefined when hasHandlers=false, so it should not be called
     expect(onClick).not.toHaveBeenCalled()
   })

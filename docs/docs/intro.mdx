@@ -1,0 +1,64 @@
+---
+id: intro
+title: Introduction
+sidebar_label: Introduction
+description: Overview of prokodo UI — a fully typed, AIC-ready React component library built for Next.js App Router.
+slug: /
+---
+
+# prokodo UI
+
+**prokodo UI** is a fully typed, production-ready React component library built from the ground up for [Next.js App Router](https://nextjs.org/docs/app). It ships 52 components across 6 categories, all styled with a design-token-driven CSS system and zero runtime style injection.
+
+---
+
+## What makes it different
+
+### AIC Pattern — server, client, lazy
+
+Every interactive component ships in three variants:
+
+| Import | Environment | When to use |
+|--------|-------------|-------------|
+| `@prokodo/ui/{name}` | Server Component (RSC) | Default — works in App Router layouts and pages |
+| `@prokodo/ui/{name}/client` | Client Component | Inside `"use client"` boundaries |
+| `@prokodo/ui/{name}/lazy` | Lazy (dynamic) | Heavy components loaded below the fold |
+
+See [AIC Pattern](/docs/aic-pattern) for the full explanation.
+
+### TypeScript first
+
+Every component exposes a typed `{Name}Props` interface exported from its model file:
+
+```ts
+import type { ButtonDefaultProps } from '@prokodo/ui/button'
+```
+
+### Design tokens
+
+All spacing, color, typography, and motion values are exported as CSS custom properties under the `--pk-*` namespace. Override them once in your global stylesheet to apply your brand across every component.
+
+See [Design Tokens](/docs/design-tokens) for the reference.
+
+---
+
+## Package info
+
+| Detail | Value |
+|--------|-------|
+| Package | `@prokodo/ui` |
+| Registry | [npm](https://www.npmjs.com/package/@prokodo/ui) |
+| Required peer | `react >= 18`, `next >= 14` |
+| Bundle format | ESM, tree-shakable per component |
+| Styling | CSS Modules + design tokens (no CSS-in-JS) |
+
+---
+
+## Quick links
+
+- [Installation](/docs/getting-started/installation)
+- [Quick Start](/docs/getting-started/quick-start)
+- [Theming](/docs/getting-started/theming)
+- [All Components](/docs/components/overview)
+- [Storybook ↗](https://ui.prokodo.com/storybook)
+- [GitHub ↗](https://github.com/prokodo-agency/ui)

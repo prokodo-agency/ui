@@ -1,0 +1,104 @@
+---
+id: dialog
+title: Dialog
+sidebar_label: Dialog
+description: Modal dialog overlay with accessible focus trap, ESC-to-close, and configurable size variants.
+---
+
+# Dialog
+
+`Dialog` renders an accessible modal overlay. Focus is trapped inside while open; pressing `Escape` closes it. Supports multiple size variants and an optional close button.
+
+
+---
+
+## Overview
+
+```tsx
+import { Dialog } from '@prokodo/ui/dialog'
+
+<Dialog
+  open={isOpen}
+  title="Confirm action"
+  onClose={() => setIsOpen(false)}
+>
+  <p>Are you sure you want to delete this item?</p>
+</Dialog>
+```
+
+<StorybookEmbed id="prokodo-common-dialog--default" height={380} />
+
+
+---
+
+## Import
+
+```ts
+import { Dialog } from '@prokodo/ui/dialog'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/dialog.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `open` | `boolean` | — | ✅ | Whether the dialog is visible. |
+| `onClose` | `() => void` | — | ✅ | Called when the dialog should close (ESC / backdrop click). |
+| `children` | `ReactNode` | — | ✅ | Dialog body content. |
+| `title` | `string` | — | — | Dialog title shown in the header. |
+| `size` | `"sm" \| "md" \| "lg" \| "fullscreen"` | `"md"` | — | Dialog width variant. |
+| `closeOnBackdrop` | `boolean` | `true` | — | Close when clicking the backdrop. |
+| `showClose` | `boolean` | `true` | — | Render an explicit close (×) button. |
+| `className` | `string` | — | — | CSS class on the dialog panel. |
+
+> See [`src/components/dialog/Dialog.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dialog/Dialog.model.ts) for the full `DialogProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Dialog } from '@prokodo/ui/dialog'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.1.2** | **No Keyboard Trap** (A) | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys. |
+| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| **4.1.3** | **Status Messages** (AA) | 🔍 Manual review | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+
+> **Test coverage:** 1 jest-axe assertion(s) across 4 test file(s) · 7 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Dialog in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-dialog--docs)
+
+---
+
+## Source
+
+[`src/components/dialog/Dialog.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dialog/Dialog.model.ts)

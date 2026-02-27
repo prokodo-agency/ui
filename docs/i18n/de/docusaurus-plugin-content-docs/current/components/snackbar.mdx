@@ -1,0 +1,100 @@
+---
+id: snackbar
+title: Snackbar
+sidebar_label: Snackbar
+description: Auto-dismissing notification toast with severity variants, action button support, and smooth enter/exit animation.
+---
+
+# Snackbar
+
+`Snackbar` rendert temporäre Benachrichtigungen (Toast) mit Varianten, Actions und optionalem Auto-Dismiss.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Snackbar } from '@prokodo/ui/snackbar'
+
+<Snackbar
+  open={showSnack}
+  message="Changes saved successfully"
+  severity="success"
+  onClose={() => setShowSnack(false)}
+/>
+```
+
+<StorybookEmbed id="prokodo-feedback-snackbar--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Snackbar } from '@prokodo/ui/snackbar'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/snackbar.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `open` | `boolean` | — | ✅ | Whether the snackbar is visible. |
+| `message` | `string` | — | ✅ | Notification message text. |
+| `onClose` | `() => void` | — | ✅ | Called when the snackbar auto-closes or is dismissed. |
+| `severity` | `"success" \| "error" \| "warning" \| "info"` | `"info"` | — | Semantic severity level. |
+| `duration` | `number` | `4000` | — | Auto-dismiss delay in milliseconds. `0` to disable. |
+| `action` | `ReactNode` | — | — | Optional action element (e.g. an `<Undo>` button). |
+| `position` | `"bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-left"` | — | Screen position. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/snackbar/Snackbar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/snackbar/Snackbar.model.ts) für den vollständigen `SnackbarProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Snackbar } from '@prokodo/ui/snackbar'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **1.4.1** | **Verwendung von Farbe** (A) | 🔍 Manuell prüfen | Farbe darf nicht das einzige Mittel zur Informationsvermittlung sein (z. B. Fehlerhinweise, Pflichtfeldmarkierungen). |
+| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
+| **2.2.1** | **Zeitsteuerung anpassbar** (A) | 🔍 Manuell prüfen | Automatisch schließende Benachrichtigungen müssen einen Weg bieten, das Timeout zu verlängern oder zu deaktivieren, oder mindestens 20 s angezeigt bleiben. |
+| **4.1.3** | **Statusmeldungen** (AA) | ✅ Erfüllt | Statusmeldungen (Laden, Erfolg, Fehler, Fortschritt) müssen assistiven Technologien ohne Fokusverschiebung mitgeteilt werden (aria-live oder role='status'). |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 6 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Snackbar in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-snackbar--docs)
+
+---
+
+## Quellcode
+
+[`src/components/snackbar/Snackbar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/snackbar/Snackbar.model.ts)

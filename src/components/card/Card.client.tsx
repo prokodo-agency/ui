@@ -27,12 +27,23 @@ export default function CardClient({
 
   const handleKey = useCallback(
     (e: KeyboardEvent<Element>) => {
+      const isActivationKey =
+        e.key === "Enter" ||
+        e.key === " " ||
+        e.key === "Spacebar" ||
+        e.code === "Enter" ||
+        e.code === "Space"
+
       if (
-        e.code === "Enter" &&
+        isActivationKey &&
         typeof onClick === "function" &&
         !Boolean(disabled)
-      )
+      ) {
+        if (e.key === " " || e.key === "Spacebar" || e.code === "Space") {
+          e.preventDefault()
+        }
         onClick()
+      }
       onKeyDown?.(e)
     },
     [onClick, onKeyDown, disabled],

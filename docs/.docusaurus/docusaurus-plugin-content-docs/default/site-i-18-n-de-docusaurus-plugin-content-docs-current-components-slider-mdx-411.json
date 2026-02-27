@@ -1,0 +1,29 @@
+{
+  "id": "components/slider",
+  "title": "Slider",
+  "description": "Range slider input with single value and range (min/max) modes, configurable step, and accessible keyboard control.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/slider.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/slider",
+  "permalink": "/de/docs/components/slider",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/slider.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "slider",
+    "title": "Slider",
+    "sidebar_label": "Slider",
+    "description": "Range slider input with single value and range (min/max) modes, configurable step, and accessible keyboard control."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Select",
+    "permalink": "/de/docs/components/select"
+  },
+  "next": {
+    "title": "Switch",
+    "permalink": "/de/docs/components/switch"
+  }
+}

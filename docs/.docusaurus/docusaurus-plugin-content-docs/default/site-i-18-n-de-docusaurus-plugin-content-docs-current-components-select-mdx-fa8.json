@@ -1,0 +1,29 @@
+{
+  "id": "components/select",
+  "title": "Select",
+  "description": "Dropdown select input with search/filter, grouped options, multi-select, and async loading support.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/select.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/select",
+  "permalink": "/de/docs/components/select",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/select.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "select",
+    "title": "Select",
+    "sidebar_label": "Select",
+    "description": "Dropdown select input with search/filter, grouped options, multi-select, and async loading support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "RTE",
+    "permalink": "/de/docs/components/rte"
+  },
+  "next": {
+    "title": "Slider",
+    "permalink": "/de/docs/components/slider"
+  }
+}

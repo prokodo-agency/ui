@@ -1,0 +1,125 @@
+---
+id: image
+title: Image
+sidebar_label: Image
+description: Optimised image component wrapping Next.js Image with lazy loading, blur placeholder, and aspect-ratio control.
+---
+
+# Image
+
+`Image` wraps `next/image` providing lazy loading, automatic blur placeholder generation, aspect-ratio containers, and a consistent API across all prokodo components.
+
+
+---
+
+## Overview
+
+```tsx
+import { Image } from '@prokodo/ui/image'
+
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  width={1200}
+  height={630}
+  priority
+/>
+```
+
+<StorybookEmbed id="prokodo-common-image--default" height={340} />
+
+
+---
+
+## Import
+
+```ts
+import { Image } from '@prokodo/ui/image'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/image.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `src` | `string` | — | ✅ | Image URL or server-side imported static. |
+| `alt` | `string` | — | ✅ | Alt text. |
+| `width` | `number` | — | — | Intrinsic width for layout calculation. |
+| `height` | `number` | — | — | Intrinsic height for layout calculation. |
+| `fill` | `boolean` | `false` | — | Fill the parent element (requires `position: relative` parent). |
+| `priority` | `boolean` | `false` | — | Disable lazy loading; preload for LCP images. |
+| `quality` | `number` | `75` | — | Image compression quality (1–100). |
+| `className` | `string` | — | — | CSS class on root wrapper. |
+
+> See [`src/components/image/Image.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/image/Image.model.ts) for the full `ImageProps` type.
+
+---
+
+## Above-the-fold optimization (`priority`)
+
+Use `priority` for images that are visible immediately on first paint (for example, hero/LCP images):
+
+```tsx
+<Image
+  src="/hero.jpg"
+  alt="Homepage hero"
+  width={1200}
+  height={630}
+  priority
+/>
+```
+
+What `priority` does in this library:
+
+- Sets `loading="eager"`
+- Sets `fetchpriority="high"`
+- Applies the behavior in both server and client rendering paths
+
+Use it sparingly for truly critical above-the-fold images only.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Image } from '@prokodo/ui/image'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.1.1** | **Non-text Content** (A) | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **1.4.3** | **Contrast (Minimum)** (AA) | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme. |
+| **1.4.5** | **Images of Text** (AA) | 🔍 Manual review | Text should be rendered as real text rather than as an image, unless unavoidable (e.g. logo, brand mark). |
+| **1.4.11** | **Non-text Contrast** (AA) | 🔍 Manual review | UI component boundaries and icons must achieve at least 3:1 contrast against adjacent colours. Verify in the product theme. |
+| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 3 jest-axe assertion(s) across 4 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Image in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-image--docs)
+
+---
+
+## Source
+
+[`src/components/image/Image.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/image/Image.model.ts)

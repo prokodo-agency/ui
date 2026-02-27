@@ -1,0 +1,29 @@
+{
+  "id": "aic-pattern",
+  "title": "AIC Pattern",
+  "description": "Deep dive into the Async/Interactive/Client (AIC) architecture that makes prokodo UI RSC-compatible.",
+  "source": "@site/docs/aic-pattern.mdx",
+  "sourceDirName": ".",
+  "slug": "/aic-pattern",
+  "permalink": "/docs/aic-pattern",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/aic-pattern.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "aic-pattern",
+    "title": "AIC Pattern",
+    "sidebar_label": "AIC Pattern",
+    "description": "Deep dive into the Async/Interactive/Client (AIC) architecture that makes prokodo UI RSC-compatible."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Design Tokens",
+    "permalink": "/docs/design-tokens"
+  },
+  "next": {
+    "title": "Migration",
+    "permalink": "/docs/migration"
+  }
+}

@@ -1,0 +1,78 @@
+---
+id: headline
+title: Headline
+sidebar_label: Headline
+description: Typografische Überschriften-Komponente, die semantische Ebenen (h1–h6) auf die prokodo Typografie-Skala abbildet.
+---
+
+# Headline
+
+`Headline` rendert eine typografische Überschrift (`h1`–`h6`) mit angewendeter Design-Token-Typografie. Unterstützt visuelle Größen-Overrides, die die visuelle Darstellung von der semantischen Ebene entkoppeln.
+
+---
+
+## Übersicht
+
+```tsx
+import { Headline } from '@prokodo/ui/headline'
+
+<Headline level={1} size="h2" animated>
+  Willkommen bei prokodo UI
+</Headline>
+```
+
+<StorybookEmbed id="prokodo-common-headline--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Headline } from '@prokodo/ui/headline'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/headline.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `children` | `ReactNode` | — | ✅ | Heading text content. |
+| `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | — | ✅ | Semantic heading level (rendert `h1`–`h6`). |
+| `size` | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"` | — | — | Override visual size independent of semantic level. |
+| `animated` | `boolean` | `false` | — | Apply entrance animation. |
+| `className` | `string` | — | — | CSS class on the heading element. |
+
+> Siehe [`src/components/headline/Headline.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/headline/Headline.model.ts) für den vollständigen `HeadlineProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A) | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen. |
+| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
+| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 1 Testdatei(en) · 1 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Headline in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-headline--docs)
+
+---
+
+## Quellcode
+
+[`src/components/headline/Headline.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/headline/Headline.model.ts)

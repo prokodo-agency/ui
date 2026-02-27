@@ -1,0 +1,29 @@
+{
+  "id": "components/base-link",
+  "title": "BaseLink",
+  "description": "Low-level SSR-safe link primitive used internally by Button, Card, and other interactive components.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/base-link.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/base-link",
+  "permalink": "/de/docs/components/base-link",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/base-link.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "base-link",
+    "title": "BaseLink",
+    "sidebar_label": "BaseLink",
+    "description": "Low-level SSR-safe link primitive used internally by Button, Card, and other interactive components."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Table",
+    "permalink": "/de/docs/components/table"
+  },
+  "next": {
+    "title": "Link",
+    "permalink": "/de/docs/components/link"
+  }
+}

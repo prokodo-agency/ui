@@ -1,0 +1,29 @@
+{
+  "id": "components/progress-bar",
+  "title": "ProgressBar",
+  "description": "Linear progress indicator with determinate, indeterminate, and stepped variants.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/progress-bar.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/progress-bar",
+  "permalink": "/de/docs/components/progress-bar",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/progress-bar.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "progress-bar",
+    "title": "ProgressBar",
+    "sidebar_label": "ProgressBar",
+    "description": "Linear progress indicator with determinate, indeterminate, and stepped variants."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Loading",
+    "permalink": "/de/docs/components/loading"
+  },
+  "next": {
+    "title": "Skeleton",
+    "permalink": "/de/docs/components/skeleton"
+  }
+}

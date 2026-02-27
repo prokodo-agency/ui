@@ -1,0 +1,82 @@
+---
+id: skeleton
+title: Skeleton
+sidebar_label: Skeleton
+description: Animated content placeholder component for loading states — text, circle, and rectangle variants.
+---
+
+# Skeleton
+
+`Skeleton` renders an animated pulsing placeholder to prevent layout shift during content loading. Supports text, circular, and rectangular variants.
+
+---
+
+## Overview
+
+```tsx
+import { Skeleton } from '@prokodo/ui/skeleton'
+
+{/* Text placeholder */}
+<Skeleton variant="text" lines={3} />
+
+{/* Avatar circle */}
+<Skeleton variant="circle" width={48} height={48} />
+
+{/* Card rectangle */}
+<Skeleton variant="rect" width="100%" height={200} />
+```
+
+<StorybookEmbed id="prokodo-common-skeleton--card-skeleton" height={260} />
+
+
+---
+
+## Import
+
+```ts
+import { Skeleton } from '@prokodo/ui/skeleton'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/skeleton.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `variant` | `"text" \| "circle" \| "rect"` | `"rect"` | — | Shape variant. |
+| `width` | `number \| string` | `"100%"` | — | Width of the skeleton. |
+| `height` | `number \| string` | — | — | Height of the skeleton. |
+| `lines` | `number` | `1` | — | Number of text lines (only with `variant="text"`). |
+| `animated` | `boolean` | `true` | — | Enable pulse animation. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/skeleton/Skeleton.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/skeleton/Skeleton.model.ts) for the full `SkeletonProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+
+> **Test coverage:** 3 jest-axe assertion(s) across 1 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Skeleton in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-skeleton--docs)
+
+---
+
+## Source
+
+[`src/components/skeleton/Skeleton.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/skeleton/Skeleton.model.ts)

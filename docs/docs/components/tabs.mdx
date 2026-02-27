@@ -1,0 +1,101 @@
+---
+id: tabs
+title: Tabs
+sidebar_label: Tabs
+description: Tab panel component with keyboard navigation, animated panel switching, and accessible ARIA roles.
+---
+
+# Tabs
+
+`Tabs` renders a tabbed interface with accessible keyboard navigation (arrow keys), animated panel transitions, and correct ARIA `tablist`/`tab`/`tabpanel` roles.
+
+
+---
+
+## Overview
+
+```tsx
+import { Tabs } from '@prokodo/ui/tabs'
+
+<Tabs
+  tabs={[
+    { label: 'Overview', content: <OverviewPanel /> },
+    { label: 'Details', content: <DetailsPanel /> },
+    { label: 'Reviews', content: <ReviewsPanel /> },
+  ]}
+  defaultTab={0}
+/>
+```
+
+<StorybookEmbed id="prokodo-navigation-tabs--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Tabs } from '@prokodo/ui/tabs'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/tabs.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `tabs` | `Tab[]` | — | ✅ | Array of tab definitions with `label` and `content`. |
+| `defaultTab` | `number` | `0` | — | Index of the initially active tab. |
+| `activeTab` | `number` | — | — | Controlled active tab index. |
+| `onChange` | `(index: number) => void` | — | — | Called when the active tab changes. |
+| `variant` | `"default" \| "enclosed" \| "pills"` | `"default"` | — | Visual tab strip style. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/tabs/Tabs.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tabs/Tabs.model.ts) for the full `TabsProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Tabs } from '@prokodo/ui/tabs'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 3 test file(s) · 5 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Tabs in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-navigation-tabs--docs)
+
+---
+
+## Source
+
+[`src/components/tabs/Tabs.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tabs/Tabs.model.ts)
