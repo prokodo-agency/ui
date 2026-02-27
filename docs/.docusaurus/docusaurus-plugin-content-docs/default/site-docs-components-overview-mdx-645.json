@@ -1,0 +1,29 @@
+{
+  "id": "components/overview",
+  "title": "Component Overview",
+  "description": "Full matrix of all 52 prokodo UI components — category, type, CSS approach, and Storybook links.",
+  "source": "@site/docs/components/overview.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/overview",
+  "permalink": "/docs/components/overview",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/overview.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "overview",
+    "title": "Component Overview",
+    "sidebar_label": "Overview",
+    "description": "Full matrix of all 52 prokodo UI components — category, type, CSS approach, and Storybook links."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Theming",
+    "permalink": "/docs/getting-started/theming"
+  },
+  "next": {
+    "title": "Autocomplete",
+    "permalink": "/docs/components/autocomplete"
+  }
+}

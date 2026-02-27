@@ -1,0 +1,112 @@
+---
+id: autocomplete
+title: Autocomplete
+sidebar_label: Autocomplete
+description: Searchable input with suggestion dropdown, async loading, free-text mode, and multi-select support.
+---
+
+# Autocomplete
+
+`Autocomplete` kombiniert ein Texteingabefeld mit einem gefilterten Vorschlags-Dropdown. Unterstützt statische Options-Arrays, asynchrones Laden aus Remote-Quellen, freie Texteingabe und Multi-Select mit Chip-Anzeige.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Autocomplete } from '@prokodo/ui/autocomplete'
+
+<Autocomplete
+  name="city"
+  label="City"
+  options={cities}
+  value={selectedCity}
+  onChange={setSelectedCity}
+  placeholder="Search cities…"
+/>
+```
+
+<StorybookEmbed id="prokodo-form-autocomplete--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Autocomplete } from '@prokodo/ui/autocomplete'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/autocomplete.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `name` | `string` | — | ✅ | Input `name` attribute. |
+| `options` | `AutocompleteOption[] \| ((query: string) => Promise<AutocompleteOption[]>)` | — | ✅ | Static option array or async loader function. |
+| `label` | `string` | — | — | Visible label text. |
+| `value` | `string \| string[]` | — | — | Controlled selected value(s). |
+| `onChange` | `(value: string \| string[]) => void` | — | — | Called when the selection changes. |
+| `multiple` | `boolean` | `false` | — | Allow multi-select; selected values rendered as `Chip`s. |
+| `freeSolo` | `boolean` | `false` | — | Allow free-form text that doesn't match options. |
+| `loading` | `boolean` | `false` | — | Show loading spinner while async options load. |
+| `disabled` | `boolean` | `false` | — | Deaktiviere the input. |
+| `error` | `string` | — | — | Error message shown below the input. |
+| `placeholder` | `string` | — | — | Input placeholder text. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/autocomplete/Autocomplete.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/autocomplete/Autocomplete.model.ts) für den vollständigen `AutocompleteProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Autocomplete } from '@prokodo/ui/autocomplete'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **1.3.5** | **Eingabezweck identifizieren** (AA) | 🔍 Manuell prüfen | Formularfelder, die persönliche Daten erfassen, müssen ihren Zweck via HTML-autocomplete-Attribut kommunizieren. |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.1.2** | **Keine Tastaturfalle** (A) | 🔍 Manuell prüfen | Der Tastaturfokus darf niemals innerhalb einer Komponente eingeschlossen sein; Nutzer müssen immer mit Standardtasten navigieren können. |
+| **2.4.3** | **Fokusreihenfolge** (A) | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein. |
+| **3.3.1** | **Fehlererkennung** (A) | 🔍 Manuell prüfen | Eingabefehler müssen in Textform identifiziert und dem Nutzer beschrieben werden, nicht nur durch Farbe. |
+| **3.3.2** | **Bezeichnungen oder Anweisungen** (A) | ✅ Erfüllt | Jedes Formularfeld benötigt ein programmatisch verknüpftes Label oder eine sichtbare Anweisung. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| **4.1.3** | **Statusmeldungen** (AA) | ✅ Erfüllt | Statusmeldungen (Laden, Erfolg, Fehler, Fortschritt) müssen assistiven Technologien ohne Fokusverschiebung mitgeteilt werden (aria-live oder role='status'). |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 4 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Autocomplete in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-autocomplete--docs)
+
+---
+
+## Quellcode
+
+[`src/components/autocomplete/Autocomplete.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/autocomplete/Autocomplete.model.ts)

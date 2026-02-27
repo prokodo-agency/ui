@@ -1,0 +1,29 @@
+{
+  "id": "components/drawer",
+  "title": "Drawer",
+  "description": "Slide-in side panel (off-canvas) with configurable placement, width, and accessible focus management.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/drawer.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/drawer",
+  "permalink": "/de/docs/components/drawer",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/drawer.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "drawer",
+    "title": "Drawer",
+    "sidebar_label": "Drawer",
+    "description": "Slide-in side panel (off-canvas) with configurable placement, width, and accessible focus management."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Dialog",
+    "permalink": "/de/docs/components/dialog"
+  },
+  "next": {
+    "title": "Loading",
+    "permalink": "/de/docs/components/loading"
+  }
+}

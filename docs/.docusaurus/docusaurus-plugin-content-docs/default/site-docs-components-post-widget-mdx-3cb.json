@@ -1,0 +1,29 @@
+{
+  "id": "components/post-widget",
+  "title": "PostWidget",
+  "description": "Sidebar widget listing the latest or related posts with thumbnail and date.",
+  "source": "@site/docs/components/post-widget.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/post-widget",
+  "permalink": "/docs/components/post-widget",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/post-widget.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "post-widget",
+    "title": "PostWidget",
+    "sidebar_label": "PostWidget",
+    "description": "Sidebar widget listing the latest or related posts with thumbnail and date."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "PostTeaser",
+    "permalink": "/docs/components/post-teaser"
+  },
+  "next": {
+    "title": "PostWidgetCarousel",
+    "permalink": "/docs/components/post-widget-carousel"
+  }
+}

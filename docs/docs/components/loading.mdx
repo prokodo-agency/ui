@@ -1,0 +1,87 @@
+---
+id: loading
+title: Loading
+sidebar_label: Loading
+description: Full-screen or inline loading indicator with spinner, skeleton pulse, or progress variants.
+---
+
+# Loading
+
+`Loading` renders a loading state indicator. It supports a full-screen overlay mode for page transitions and inline modes for lazy-loaded content regions.
+
+
+---
+
+## Overview
+
+```tsx
+import { Loading } from '@prokodo/ui/loading'
+
+{isFetching && <Loading variant="spinner" fullscreen />}
+```
+
+<StorybookEmbed id="prokodo-common-loading--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Loading } from '@prokodo/ui/loading'
+```
+
+Styling is handled via design tokens — no additional CSS import required.
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `variant` | `"spinner" \| "dots" \| "pulse"` | `"spinner"` | — | Visual style of the loading indicator. |
+| `fullscreen` | `boolean` | `false` | — | Mount as a full-screen overlay. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | — | Size of the indicator. |
+| `color` | `string` | `"primary"` | — | Design token color. |
+| `label` | `string` | — | — | Accessible label for screen readers. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/loading/Loading.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/loading/Loading.model.ts) for the full `LoadingProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Loading } from '@prokodo/ui/loading'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Loading in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-loading--docs)
+
+---
+
+## Source
+
+[`src/components/loading/Loading.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/loading/Loading.model.ts)

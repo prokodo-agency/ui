@@ -1,0 +1,134 @@
+---
+id: design-tokens
+title: Design Tokens
+sidebar_label: Design Tokens
+description: Full reference for all prokodo UI CSS custom properties (--pk-*) covering colour, spacing, typography, radius, shadow, and motion.
+---
+
+# Design Tokens
+
+All design decisions in prokodo UI are expressed as CSS custom properties under the `--pk-*` namespace. Override any token in your global CSS to apply your brand.
+
+Import the token definitions:
+
+```ts
+import '@prokodo/ui/theme.css'
+```
+
+---
+
+## Colour
+
+### Brand
+
+| Token | Default | Usage |
+|-------|---------|-------|
+| `--pk-color-primary` | `#6366f1` | Primary actions, focus rings |
+| `--pk-color-primary-100` | `#e0e7ff` | Light primary tint |
+| `--pk-color-primary-500` | `#6366f1` | Base primary |
+| `--pk-color-primary-900` | `#312e81` | Dark primary shade |
+| `--pk-color-secondary` | `#ec4899` | Secondary actions |
+
+### Semantic
+
+| Token | Default | Usage |
+|-------|---------|-------|
+| `--pk-color-success` | `#22c55e` | Success states |
+| `--pk-color-warning` | `#f59e0b` | Warning states |
+| `--pk-color-error` | `#ef4444` | Error states |
+| `--pk-color-info` | `#3b82f6` | Informational states |
+
+### Surface
+
+| Token | Default | Usage |
+|-------|---------|-------|
+| `--pk-color-background` | `#ffffff` | Page background |
+| `--pk-color-surface` | `#f9fafb` | Card / panel background |
+| `--pk-color-border` | `#e5e7eb` | Dividers, input borders |
+| `--pk-color-text` | `#111827` | Body text |
+| `--pk-color-text-muted` | `#6b7280` | Secondary text |
+
+---
+
+## Typography
+
+| Token | Default | Usage |
+|-------|---------|-------|
+| `--pk-font-family-base` | `system-ui, sans-serif` | Body text |
+| `--pk-font-family-heading` | `inherit` | Heading elements |
+| `--pk-font-family-mono` | `ui-monospace, monospace` | Code blocks |
+| `--pk-font-size-base` | `1rem` | Body font size |
+| `--pk-font-size-sm` | `0.875rem` | Small text |
+| `--pk-font-size-lg` | `1.125rem` | Large text |
+| `--pk-font-weight-normal` | `400` | Regular weight |
+| `--pk-font-weight-medium` | `500` | Medium weight |
+| `--pk-font-weight-bold` | `700` | Bold weight |
+| `--pk-line-height-base` | `1.5` | Body line height |
+| `--pk-line-height-tight` | `1.25` | Heading line height |
+
+---
+
+## Spacing
+
+Prokodo UI uses a 4 px base grid:
+
+| Token | Value |
+|-------|-------|
+| `--pk-spacing-1` | `4px` |
+| `--pk-spacing-2` | `8px` |
+| `--pk-spacing-3` | `12px` |
+| `--pk-spacing-4` | `16px` |
+| `--pk-spacing-6` | `24px` |
+| `--pk-spacing-8` | `32px` |
+| `--pk-spacing-12` | `48px` |
+| `--pk-spacing-16` | `64px` |
+
+---
+
+## Border radius
+
+| Token | Default | Usage |
+|-------|---------|-------|
+| `--pk-radius-sm` | `4px` | Chips, tags |
+| `--pk-radius-md` | `8px` | Inputs, cards |
+| `--pk-radius-lg` | `16px` | Dialogs, popovers |
+| `--pk-radius-full` | `9999px` | Pills, toggle switches |
+
+---
+
+## Shadows
+
+| Token | Default |
+|-------|---------|
+| `--pk-shadow-sm` | `0 1px 2px rgba(0,0,0,.06)` |
+| `--pk-shadow-md` | `0 4px 12px rgba(0,0,0,.10)` |
+| `--pk-shadow-lg` | `0 12px 40px rgba(0,0,0,.15)` |
+
+---
+
+## Motion
+
+| Token | Default | Usage |
+|-------|---------|-------|
+| `--pk-duration-fast` | `150ms` | Hover, focus transitions |
+| `--pk-duration-base` | `250ms` | Component state changes |
+| `--pk-duration-slow` | `400ms` | Entrance animations |
+| `--pk-easing-base` | `cubic-bezier(.4,0,.2,1)` | Standard easing |
+| `--pk-easing-enter` | `cubic-bezier(0,0,.2,1)` | Decelerate on enter |
+| `--pk-easing-exit` | `cubic-bezier(.4,0,1,1)` | Accelerate on exit |
+
+---
+
+## Overriding tokens
+
+```css title="app/globals.css"
+@import '@prokodo/ui/theme.css';
+
+:root {
+  --pk-color-primary: #0ea5e9;
+  --pk-radius-md: 4px; /* sharper corners */
+  --pk-font-family-base: 'DM Sans', sans-serif;
+}
+```
+
+See [Theming](/docs/getting-started/theming) for patterns including dark mode and scoped overrides.

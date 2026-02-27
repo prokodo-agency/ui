@@ -1,0 +1,29 @@
+{
+  "id": "design-tokens",
+  "title": "Design Tokens",
+  "description": "Full reference for all prokodo UI CSS custom properties (--pk-*) covering colour, spacing, typography, radius, shadow, and motion.",
+  "source": "@site/docs/design-tokens.mdx",
+  "sourceDirName": ".",
+  "slug": "/design-tokens",
+  "permalink": "/de/docs/design-tokens",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/design-tokens.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "design-tokens",
+    "title": "Design Tokens",
+    "sidebar_label": "Design Tokens",
+    "description": "Full reference for all prokodo UI CSS custom properties (--pk-*) covering colour, spacing, typography, radius, shadow, and motion."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Map",
+    "permalink": "/de/docs/components/map"
+  },
+  "next": {
+    "title": "AIC Muster",
+    "permalink": "/de/docs/aic-pattern"
+  }
+}

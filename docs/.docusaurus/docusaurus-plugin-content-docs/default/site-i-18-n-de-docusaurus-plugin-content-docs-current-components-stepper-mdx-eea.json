@@ -1,0 +1,29 @@
+{
+  "id": "components/stepper",
+  "title": "Stepper",
+  "description": "Multi-step wizard component with linear and non-linear navigation, step validation, and progress tracking.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/stepper.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/stepper",
+  "permalink": "/de/docs/components/stepper",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/stepper.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "stepper",
+    "title": "Stepper",
+    "sidebar_label": "Stepper",
+    "description": "Multi-step wizard component with linear and non-linear navigation, step validation, and progress tracking."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "ImageText",
+    "permalink": "/de/docs/components/image-text"
+  },
+  "next": {
+    "title": "Table",
+    "permalink": "/de/docs/components/table"
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "theme.ErrorPageContent.title": {
+    "message": "Seite nicht gefunden.",
+    "description": "The title of the error page"
+  },
+  "theme.NotFound.title": {
+    "message": "Seite nicht gefunden",
+    "description": "The title of the not found error page"
+  },
+  "theme.NotFound.p1": {
+    "message": "Diese Seite existiert nicht.",
+    "description": "The first paragraph of the not found error page"
+  },
+  "theme.NotFound.p2": {
+    "message": "Wenden Sie sich an den Eigentümer der Website, die Sie hierher verlinkt hat, und teilen Sie ihm mit, dass der Link defekt ist.",
+    "description": "The 2nd paragraph of the not found error page"
+  },
+  "theme.admonition.note": {
+    "message": "Hinweis",
+    "description": "The default label used for the Note admonition"
+  },
+  "theme.admonition.tip": {
+    "message": "Tipp",
+    "description": "The default label used for the Tip admonition"
+  },
+  "theme.admonition.info": {
+    "message": "Info",
+    "description": "The default label used for the Info admonition"
+  },
+  "theme.admonition.warning": {
+    "message": "Warnung",
+    "description": "The default label used for the Warning admonition"
+  },
+  "theme.admonition.danger": {
+    "message": "Achtung",
+    "description": "The default label used for the Danger admonition"
+  },
+  "theme.SearchModal.searchBox.resetButtonTitle": {
+    "message": "Suche zurücksetzen",
+    "description": "The label and title of the reset button in the search box"
+  },
+  "theme.SearchModal.searchBox.cancelButtonText": {
+    "message": "Abbrechen",
+    "description": "The label of the cancel button in the search box"
+  },
+  "prokodo.homepage.feature.ready.title": {
+    "message": "Sofort einsatzbereit",
+    "description": "Homepage feature title"
+  },
+  "prokodo.homepage.feature.ready.description": {
+    "message": "Installiere ein Paket und liefere produktionsreife React-UI-Komponenten für Next.js, Vite und Remix mit minimalem Setup aus.",
+    "description": "Homepage feature description"
+  },
+  "prokodo.homepage.feature.tokens.title": {
+    "message": "Dark Mode & Theming",
+    "description": "Homepage feature title"
+  },
+  "prokodo.homepage.feature.tokens.description": {
+    "message": "Ein CSS-Import aktiviert konsistentes Light/Dark-Theming über dein Design System, gesteuert durch skalierbare Design-Tokens.",
+    "description": "Homepage feature description"
+  },
+  "prokodo.homepage.feature.typescript.title": {
+    "message": "Vollständig typisiert",
+    "description": "Homepage feature title"
+  },
+  "prokodo.homepage.feature.typescript.description": {
+    "message": "Typisierte Props, Varianten und Refs sorgen für verlässliches Autocomplete und sichere Refactorings in großen TypeScript-Codebasen.",
+    "description": "Homepage feature description"
+  },
+  "prokodo.homepage.feature.storybook.title": {
+    "message": "Live-Vorschauen",
+    "description": "Homepage feature title"
+  },
+  "prokodo.homepage.feature.storybook.description": {
+    "message": "Interaktive Storybook-Previews beschleunigen Evaluation, QA und Abstimmung im Team vor der Implementierung.",
+    "description": "Homepage feature description"
+  },
+  "prokodo.homepage.feature.accessible.title": {
+    "message": "Barrierefrei",
+    "description": "Homepage feature title"
+  },
+  "prokodo.homepage.feature.accessible.description": {
+    "message": "Integrierte Accessibility-Patterns liefern ARIA-Support, Tastaturnavigation und robustes Fokus-Management standardmäßig.",
+    "description": "Homepage feature description"
+  },
+  "prokodo.homepage.feature.nextjs.title": {
+    "message": "Für Next.js optimiert",
+    "description": "Homepage feature title"
+  },
+  "prokodo.homepage.feature.nextjs.description": {
+    "message": "AIC-first-Architektur mit Server-, Client- und Lazy-Varianten hilft, Bundle-Größe und Laufzeitperformance zu optimieren.",
+    "description": "Homepage feature description"
+  },
+  "prokodo.homepage.hero.tagline": {
+    "message": "AIC-ready, High-Performance React-UI-Komponenten für Next.js und Vite — entwickelt für starke Core Web Vitals und skalierbare Produktteams.",
+    "description": "Homepage hero tagline"
+  },
+  "prokodo.homepage.hero.browseComponents": {
+    "message": "Komponenten ansehen →",
+    "description": "Homepage hero CTA"
+  },
+  "prokodo.homepage.hero.openStorybook": {
+    "message": "Storybook öffnen ↗",
+    "description": "Homepage hero CTA"
+  },
+  "prokodo.homepage.hero.alsoAvailable": {
+    "message": "Auch verfügbar via",
+    "description": "Homepage hero install hint"
+  },
+  "prokodo.homepage.hero.stats.components": {
+    "message": "52 produktionsreife Komponenten",
+    "description": "Homepage hero stat"
+  },
+  "prokodo.homepage.hero.stats.darkMode": {
+    "message": "AIC-ready Architektur",
+    "description": "Homepage hero stat"
+  },
+  "prokodo.homepage.hero.stats.typescript": {
+    "message": "High Performance",
+    "description": "Homepage hero stat"
+  },
+  "prokodo.homepage.hero.stats.accessible": {
+    "message": "Standardmäßig barrierefrei",
+    "description": "Homepage hero stat"
+  },
+  "prokodo.homepage.layout.title": {
+    "message": "prokodo UI — AIC-ready React-Komponentenbibliothek für Next.js & Vite",
+    "description": "Homepage page title"
+  },
+  "prokodo.homepage.layout.description": {
+    "message": "AIC-ready, High-Performance React-Komponentenbibliothek für Next.js und Vite mit barrierefreien UI-Komponenten, TypeScript-APIs, Design-Tokens und Live-Storybook-Doku.",
+    "description": "Homepage page description"
+  },
+  "prokodo.homepage.components.heading": {
+    "message": "52 produktionsreife React-UI-Komponenten",
+    "description": "Homepage section heading"
+  },
+  "prokodo.homepage.components.subtitle": {
+    "message": "Entdecke prokodo's UI-Komponenten-Dokumentation mit Implementierungsleitfäden, API-Referenzen und produktionsreifen Usage-Beispielen.",
+    "description": "Homepage section subtitle"
+  },
+  "prokodo.homepage.components.viewAll": {
+    "message": "Vollständige Komponentenübersicht anzeigen →",
+    "description": "Homepage link label"
+  },
+  "prokodo.homepage.features.heading": {
+    "message": "AIC-ready Architektur und hohe Performance",
+    "description": "Homepage section heading"
+  },
+  "prokodo.homepage.features.subtitle": {
+    "message": "Gebaut für moderne Produktteams, die schnelle Renderzeiten, skalierbare Architektur und konsistente UX über mehrere Apps brauchen.",
+    "description": "Homepage section subtitle"
+  },
+  "prokodo.homepage.quickstart.heading": {
+    "message": "Quick Start für Next.js und Vite in 3 Schritten",
+    "description": "Homepage section heading"
+  },
+  "prokodo.homepage.hero.srOnly": {
+    "message": "prokodo UI React-Komponentenbibliothek",
+    "description": "Homepage semantic H1 text"
+  },
+  "prokodo.homepage.quickstart.subtitle": {
+    "message": "Integriere einen AIC-ready, High-Performance Komponenten-Stack in nur wenigen Schritten in deine React-App.",
+    "description": "Homepage section subtitle"
+  },
+  "prokodo.homepage.quickstart.step.install": {
+    "message": "Installieren",
+    "description": "Homepage quickstart step label"
+  },
+  "prokodo.homepage.quickstart.step.install.desc": {
+    "message": "Füge die Library in dein React-Projekt ein und starte direkt mit produktionsreifen UI-Bausteinen.",
+    "description": "Homepage quickstart step description"
+  },
+  "prokodo.homepage.quickstart.step.theme": {
+    "message": "Theme importieren",
+    "description": "Homepage quickstart step label"
+  },
+  "prokodo.homepage.quickstart.step.theme.desc": {
+    "message": "Aktiviere token-basiertes Theming für konsistente Light- und Dark-Experiences über alle Komponenten.",
+    "description": "Homepage quickstart step description"
+  },
+  "prokodo.homepage.quickstart.step.use": {
+    "message": "Verwenden",
+    "description": "Homepage quickstart step label"
+  },
+  "prokodo.homepage.quickstart.step.use.desc": {
+    "message": "Importiere typisierte, tree-shakable Komponenten, optimiert für Performance und Accessibility.",
+    "description": "Homepage quickstart step description"
+  },
+  "prokodo.homepage.category.form.label": {
+    "message": "Formulare",
+    "description": "Homepage category label"
+  },
+  "prokodo.homepage.category.form.tagline": {
+    "message": "Inputs, Selects, Picker und mehr",
+    "description": "Homepage category tagline"
+  },
+  "prokodo.homepage.category.display.label": {
+    "message": "Darstellung",
+    "description": "Homepage category label"
+  },
+  "prokodo.homepage.category.display.tagline": {
+    "message": "Buttons, Cards, Chips, Avatare und visuelle Elemente",
+    "description": "Homepage category tagline"
+  },
+  "prokodo.homepage.category.navigation.label": {
+    "message": "Navigation",
+    "description": "Homepage category label"
+  },
+  "prokodo.homepage.category.navigation.tagline": {
+    "message": "Tabs, Accordions, Carousels und Routing",
+    "description": "Homepage category tagline"
+  },
+  "prokodo.homepage.category.feedback.label": {
+    "message": "Feedback",
+    "description": "Homepage category label"
+  },
+  "prokodo.homepage.category.feedback.tagline": {
+    "message": "Dialoge, Toasts, Loader und Statusanzeigen",
+    "description": "Homepage category tagline"
+  },
+  "prokodo.homepage.category.content.label": {
+    "message": "Inhalt",
+    "description": "Homepage category label"
+  },
+  "prokodo.homepage.category.content.tagline": {
+    "message": "Listen, Tabellen, Posts und Rich-Content",
+    "description": "Homepage category tagline"
+  },
+  "prokodo.homepage.category.service.label": {
+    "message": "Services",
+    "description": "Homepage category label"
+  },
+  "prokodo.homepage.category.service.tagline": {
+    "message": "Drittanbieter-Integrationen und Karten",
+    "description": "Homepage category tagline"
+  },
+  "prokodo.footer.link.aicPattern": {
+    "message": "AIC Muster",
+    "description": "Footer docs link label for AIC pattern page"
+  }
+}

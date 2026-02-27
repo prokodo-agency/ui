@@ -1,0 +1,29 @@
+{
+  "id": "components/overview",
+  "title": "Komponentenübersicht",
+  "description": "Vollständige Matrix aller 52 prokodo UI-Komponenten — Kategorie, Type, CSS-Ansatz und Storybook-Links.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/overview",
+  "permalink": "/de/docs/components/overview",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/overview.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "overview",
+    "title": "Komponentenübersicht",
+    "sidebar_label": "Übersicht",
+    "description": "Vollständige Matrix aller 52 prokodo UI-Komponenten — Kategorie, Type, CSS-Ansatz und Storybook-Links."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Theming",
+    "permalink": "/de/docs/getting-started/theming"
+  },
+  "next": {
+    "title": "Autocomplete",
+    "permalink": "/de/docs/components/autocomplete"
+  }
+}

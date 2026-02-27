@@ -1,0 +1,29 @@
+{
+  "id": "components/icon",
+  "title": "Icon",
+  "description": "SVG icon component with 1 000+ icons from the prokodo icon set loaded on demand via jsDelivr CDN.",
+  "source": "@site/docs/components/icon.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/icon",
+  "permalink": "/docs/components/icon",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/icon.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "icon",
+    "title": "Icon",
+    "sidebar_label": "Icon",
+    "description": "SVG icon component with 1 000+ icons from the prokodo icon set loaded on demand via jsDelivr CDN."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Headline",
+    "permalink": "/docs/components/headline"
+  },
+  "next": {
+    "title": "Image",
+    "permalink": "/docs/components/image"
+  }
+}

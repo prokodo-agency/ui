@@ -1,0 +1,29 @@
+{
+  "id": "components/dynamic-list",
+  "title": "DynamicList",
+  "description": "Form-integrated repeatable field list — lets users add, reorder, and remove rows at runtime.",
+  "source": "@site/docs/components/dynamic-list.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/dynamic-list",
+  "permalink": "/docs/components/dynamic-list",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/dynamic-list.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "dynamic-list",
+    "title": "DynamicList",
+    "sidebar_label": "DynamicList",
+    "description": "Form-integrated repeatable field list — lets users add, reorder, and remove rows at runtime."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "DatePicker",
+    "permalink": "/docs/components/date-picker"
+  },
+  "next": {
+    "title": "Form",
+    "permalink": "/docs/components/form"
+  }
+}

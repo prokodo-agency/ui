@@ -1,0 +1,29 @@
+{
+  "id": "components/chip",
+  "title": "Chip",
+  "description": "Compact label component for tags, statuses, and inline annotations — supports color variants and deletable mode.",
+  "source": "@site/docs/components/chip.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/chip",
+  "permalink": "/docs/components/chip",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/chip.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "chip",
+    "title": "Chip",
+    "sidebar_label": "Chip",
+    "description": "Compact label component for tags, statuses, and inline annotations — supports color variants and deletable mode."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Button",
+    "permalink": "/docs/components/button"
+  },
+  "next": {
+    "title": "Headline",
+    "permalink": "/docs/components/headline"
+  }
+}

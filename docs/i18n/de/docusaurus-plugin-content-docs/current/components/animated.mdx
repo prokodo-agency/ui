@@ -1,0 +1,78 @@
+---
+id: animated
+title: Animated
+sidebar_label: Animated
+description: Wrapper component that applies entrance animations to any child element using prokodo design tokens.
+---
+
+# Animated
+
+Die `Animated`-Komponente wraps any React child and applies a CSS entrance animation. Animation direction, delay, and duration are controlled via props and design tokens.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Animated } from '@prokodo/ui/animated'
+
+<Animated direction="up">
+  <p>This content fades in from below.</p>
+</Animated>
+```
+
+<StorybookEmbed id="prokodo-common-animated--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Animated } from '@prokodo/ui/animated'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/animated.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `children` | `ReactNode` | — | ✅ | Content to animate. |
+| `direction` | `"up" \| "down" \| "left" \| "right" \| "fade"` | `"up"` | — | Entrance animation direction. |
+| `delay` | `number` | `0` | — | Animation delay in milliseconds. |
+| `duration` | `number` | `400` | — | Animation duration in milliseconds. |
+| `className` | `string` | — | — | CSS class on root wrapper. |
+
+> Siehe [`src/components/animated/Animated.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animated/Animated.model.ts) für den vollständigen `AnimatedProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.1.1** | **Nicht-Text-Inhalt** (A) | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **2.2.2** | **Pausieren, Beenden, Ausblenden** (A) | 🔍 Manuell prüfen | Animationen oder automatisch rotierende Inhalte, die länger als 5 s laufen, müssen einen Pause-/Stopp-Schalter bieten. |
+| **2.3.1** | **Dreimaliges Blitzen oder unterhalb des Grenzwerts** (A) | 🔍 Manuell prüfen | Animierte Inhalte dürfen nicht mehr als 3-mal pro Sekunde flackern. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 5 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Animated in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-animated--docs)
+
+---
+
+## Quellcode
+
+[`src/components/animated/Animated.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animated/Animated.model.ts)

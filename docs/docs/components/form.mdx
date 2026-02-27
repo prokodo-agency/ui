@@ -1,0 +1,104 @@
+---
+id: form
+title: Form
+sidebar_label: Form
+description: Structured form container with built-in validation orchestration, submission state, and accessible error summary.
+---
+
+# Form
+
+`Form` wraps a `<form>` element and provides validation orchestration, a submission loading state, and an accessible error summary. Use `Form` as the root container for `Input`, `Select`, `Checkbox`, and other form fields.
+
+
+---
+
+## Overview
+
+```tsx
+import { Form } from '@prokodo/ui/form'
+
+<Form
+  onSubmit={async (event, data) => {
+    await submitToApi(data)
+  }}
+  submitLabel="Send message"
+>
+  <Input name="email" label="Email" type="email" required />
+  <Input name="message" label="Message" />
+</Form>
+```
+
+<StorybookEmbed id="prokodo-form-form--default" height={420} />
+
+
+---
+
+## Import
+
+```ts
+import { Form } from '@prokodo/ui/form'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/form.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `onSubmit` | `(event, data: FormData) => void \| Promise<void>` | — | ✅ | Submit handler; receives native event and serialised form data. |
+| `children` | `ReactNode` | — | ✅ | Form fields and layout content. |
+| `submitLabel` | `string` | `"Submit"` | — | Text for the submit button. |
+| `loading` | `boolean` | `false` | — | Show loading state on submit button. |
+| `successMessage` | `string` | — | — | Shown after a successful submission. |
+| `errorMessage` | `string` | — | — | Shown when submission fails. |
+| `className` | `string` | — | — | CSS class on root `<form>` element. |
+
+> See [`src/components/form/Form.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/form/Form.model.ts) for the full `FormProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Form } from '@prokodo/ui/form'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.5** | **Identify Input Purpose** (AA) | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute. |
+| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **3.3.1** | **Error Identification** (A) | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone. |
+| **3.3.2** | **Labels or Instructions** (A) | 🔍 Manual review | Every form input requires a programmatically associated label or a visible instruction. |
+| **3.3.7** | **Redundant Entry** (A) | 🔍 Manual review | Information already entered in the same session/process must not be required again unless it serves a distinct purpose. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 8 test file(s) · 6 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Form in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-form--docs)
+
+---
+
+## Source
+
+[`src/components/form/Form.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/form/Form.model.ts)

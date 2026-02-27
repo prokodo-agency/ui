@@ -1,0 +1,29 @@
+{
+  "id": "components/rte",
+  "title": "RTE",
+  "description": "Rich text editor (WYSIWYG) with toolbar, markdown shortcuts, and image upload support.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/rte.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/rte",
+  "permalink": "/de/docs/components/rte",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/rte.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "rte",
+    "title": "RTE",
+    "sidebar_label": "RTE",
+    "description": "Rich text editor (WYSIWYG) with toolbar, markdown shortcuts, and image upload support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Rating",
+    "permalink": "/de/docs/components/rating"
+  },
+  "next": {
+    "title": "Select",
+    "permalink": "/de/docs/components/select"
+  }
+}

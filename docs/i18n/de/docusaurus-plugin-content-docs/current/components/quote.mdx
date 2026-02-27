@@ -1,0 +1,80 @@
+---
+id: quote
+title: Quote
+sidebar_label: Quote
+description: Styled blockquote component for pull-quotes, testimonials, and highlighted citations.
+---
+
+# Quote
+
+`Quote` rendert ein semantisch korrektes `<blockquote>` mit optionaler Autorenangabe und dekorativem Akzent. Häufige Einsatzzwecke sind Testimonials, Pull-Quotes und zitierte Passagen.
+
+---
+
+## Übersicht
+
+```tsx
+import { Quote } from '@prokodo/ui/quote'
+
+<Quote
+  text="prokodo UI saved us weeks of development time."
+  author="Jane Doe"
+  role="CTO, Acme Corp"
+/>
+```
+
+<StorybookEmbed id="prokodo-common-quote--default" />
+
+
+---
+
+## Import
+
+```ts
+import { Quote } from '@prokodo/ui/quote'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/quote.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `text` | `string` | — | ✅ | The quote body text. |
+| `author` | `string` | — | — | Attribution name. |
+| `role` | `string` | — | — | Author's role/title shown beneath the name. |
+| `variant` | `"default" \| "large" \| "minimal"` | `"default"` | — | Visual style variant. |
+| `className` | `string` | — | — | CSS class on root `<blockquote>`. |
+
+> Siehe [`src/components/quote/Quote.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/quote/Quote.model.ts) für den vollständigen `QuoteProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A) | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen. |
+| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
+| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 1 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Quote in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-quote--docs)
+
+---
+
+## Quellcode
+
+[`src/components/quote/Quote.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/quote/Quote.model.ts)

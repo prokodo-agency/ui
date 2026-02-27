@@ -1,0 +1,26 @@
+{
+  "id": "intro",
+  "title": "Introduction",
+  "description": "Overview of prokodo UI — a fully typed, AIC-ready React component library built for Next.js App Router.",
+  "source": "@site/docs/intro.mdx",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/docs/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/intro.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "intro",
+    "title": "Introduction",
+    "sidebar_label": "Introduction",
+    "description": "Overview of prokodo UI — a fully typed, AIC-ready React component library built for Next.js App Router.",
+    "slug": "/"
+  },
+  "sidebar": "uiSidebar",
+  "next": {
+    "title": "Installation",
+    "permalink": "/docs/getting-started/installation"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "components/snackbar",
+  "title": "Snackbar",
+  "description": "Auto-dismissing notification toast with severity variants, action button support, and smooth enter/exit animation.",
+  "source": "@site/docs/components/snackbar.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/snackbar",
+  "permalink": "/docs/components/snackbar",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/snackbar.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "snackbar",
+    "title": "Snackbar",
+    "sidebar_label": "Snackbar",
+    "description": "Auto-dismissing notification toast with severity variants, action button support, and smooth enter/exit animation."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Skeleton",
+    "permalink": "/docs/components/skeleton"
+  },
+  "next": {
+    "title": "Tooltip",
+    "permalink": "/docs/components/tooltip"
+  }
+}

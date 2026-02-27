@@ -1,0 +1,112 @@
+---
+id: installation
+title: Installation
+sidebar_label: Installation
+description: Install prokodo UI with pnpm, npm, or yarn and add global styles to your Next.js project.
+---
+
+# Installation
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { List } from '@prokodo/ui/list';
+import '@prokodo/ui/list.css';
+
+## Requirements
+
+<div className="margin-bottom--md">
+  <p>
+    <strong>Ready in under 2 minutes</strong>
+  </p>
+  <p>
+    Before installing, make sure your project meets these requirements:
+  </p>
+  <List
+    className="installation-requirements-list"
+    items={[
+      { title: 'Node.js ≥ 18', icon: 'CheckmarkCircle01Icon' },
+      { title: 'React ≥ 18', icon: 'CheckmarkCircle01Icon' },
+      { title: 'Next.js ≥ 14 (App Router)', icon: 'CheckmarkCircle01Icon' },
+    ]}
+  />
+</div>
+
+---
+
+## 1. Install the package
+
+<Tabs>
+  <TabItem value="pnpm" label="pnpm" default>
+
+```bash
+pnpm add @prokodo/ui
+```
+
+  </TabItem>
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @prokodo/ui
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="yarn">
+
+```bash
+yarn add @prokodo/ui
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 2. Add global styles
+
+Import the prokodo UI CSS bundle in your root layout (`app/layout.tsx`):
+
+```ts title="app/layout.tsx"
+import '@prokodo/ui/theme.css'
+```
+
+This file:
+- Imports all CSS custom properties (`--pk-*` design tokens)
+- Provides baseline resets compatible with Next.js App Router
+- Must be imported **once** at the root — no need to repeat it per component
+
+:::info CSS architecture
+Individual component CSS is shipped per component (e.g. `@prokodo/ui/button.css`) and should be imported alongside each component. See [Quick Start](/docs/getting-started/quick-start) for examples.
+:::
+
+---
+
+## 3. Configure next.config
+
+No special configuration is required for most setups. If you use `transpilePackages`, you do **not** need to add `@prokodo/ui` — it ships pre-compiled ESM.
+
+---
+
+## 4. Verify
+
+Create a quick test page:
+
+```tsx title="app/test/page.tsx"
+import { Button } from '@prokodo/ui/button'
+import '@prokodo/ui/button.css'
+
+export default function TestPage() {
+  return <Button>It works!</Button>
+}
+```
+
+Open `http://localhost:3000/test` — you should see a styled button.
+
+---
+
+## Troubleshooting
+
+**`Cannot find module '@prokodo/ui/…'`** — Ensure `node_modules/@prokodo/ui` exists. Run your package manager install again.
+
+**Styles not loading** — Confirm `@prokodo/ui/theme.css` is imported in the root layout, not inside a component file.
+
+**Icon renders as empty** — In development, icons load from the local `node_modules` asset path. In production, they load from jsDelivr CDN. See the [Icon](/docs/components/icon) page.

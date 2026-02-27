@@ -1,0 +1,29 @@
+{
+  "id": "components/skeleton",
+  "title": "Skeleton",
+  "description": "Animated content placeholder component for loading states — text, circle, and rectangle variants.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/skeleton.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/skeleton",
+  "permalink": "/de/docs/components/skeleton",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/skeleton.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "skeleton",
+    "title": "Skeleton",
+    "sidebar_label": "Skeleton",
+    "description": "Animated content placeholder component for loading states — text, circle, and rectangle variants."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "ProgressBar",
+    "permalink": "/de/docs/components/progress-bar"
+  },
+  "next": {
+    "title": "Snackbar",
+    "permalink": "/de/docs/components/snackbar"
+  }
+}

@@ -1,0 +1,138 @@
+---
+id: aic-pattern
+title: AIC Pattern
+sidebar_label: AIC Pattern
+description: Deep dive into the Async/Interactive/Client (AIC) architecture that makes prokodo UI RSC-compatible.
+---
+
+# AIC Pattern
+
+The **AIC Pattern** (Async · Interactive · Client) is the architectural convention prokodo UI uses to keep one developer API across runtimes.
+
+The key benefit for consumers of this library:
+
+- **Use the standard import in all cases** (for example `@prokodo/ui/button`)
+- **No manual runtime choice is required**
+- **No separate export variants to choose in app code**
+
+---
+
+## The problem
+
+React's App Router model splits components into two worlds:
+
+- **Server Components** — rendered on the server; can `async` fetch data; cannot use state, effects, or browser APIs
+- **Client Components** — run in the browser; have access to hooks, events, and DOM APIs; marked with `"use client"` at the top of the file
+
+A naive UI library that marks all components as `"use client"` opts out of Server Components entirely — every import triggers client-side JS, even for purely presentational content.
+
+---
+
+## The solution
+
+prokodo UI provides runtime compatibility behind a single primary import path:
+
+```
+@prokodo/ui/{name}          ← Always use this in application code
+```
+
+Use this import everywhere — in Server Components, Client Components, and standard React usage.
+
+```tsx
+import { Button } from '@prokodo/ui/button'
+
+export default function Example() {
+  return <Button>Continue</Button>
+}
+```
+
+---
+
+## Build your own AIC components
+
+If you build custom components inside this codebase, you can apply the same AIC architecture with two helpers:
+
+- `createIsland` — defines the public component entry and decides between server fallback and client hydration
+- `createLazyWrapper` — wires server/client variants and controls hydration timing
+
+### 1) Public component with `createIsland`
+
+```tsx
+import { createIsland } from '@prokodo/ui/createIsland'
+import WidgetServer from './Widget.server'
+import type { WidgetProps } from './Widget.model'
+
+export const Widget = createIsland<WidgetProps>({
+  name: 'Widget',
+  Server: WidgetServer,
+  loadLazy: () => import('./Widget.lazy'),
+})
+```
+
+`createIsland` keeps one component API while rendering a server-safe fallback when no interactivity is needed.
+
+### 2) Lazy wrapper with `createLazyWrapper`
+
+```tsx
+import { createLazyWrapper } from '@prokodo/ui/createLazyWrapper'
+import WidgetClient from './Widget.client'
+import WidgetServer from './Widget.server'
+import type { WidgetProps } from './Widget.model'
+
+export default createLazyWrapper<WidgetProps>({
+  name: 'Widget',
+  Client: WidgetClient,
+  Server: WidgetServer,
+  hydrateOnVisible: true,
+})
+```
+
+Use `hydrateOnVisible` for below-the-fold or heavy UI to defer hydration until the component enters the viewport.
+
+### 3) `priority` for above-the-fold rendering
+
+The helpers also support a `priority` flag for critical, above-the-fold UI.
+
+- In `createLazyWrapper`, `priority` skips visibility waiting and hydrates immediately.
+- For `Image`, `priority` is also forwarded to server/client image rendering behavior.
+
+```tsx
+import { Image } from '@prokodo/ui/image'
+import '@prokodo/ui/image.css'
+
+<Image
+  src="/hero.jpg"
+  alt="Homepage hero"
+  width={1200}
+  height={630}
+  priority
+/>
+```
+
+For `Image`, this results in eager loading with high fetch priority (`loading="eager"` and `fetchpriority="high"`) in both server and client paths.
+
+---
+
+## Components without an AIC entry
+
+Purely presentational or non-interactive components — such as `Headline`, `Grid`, `Image`, `List`, and `Teaser` — also follow the same developer experience:
+
+- use the same standard import path
+- no runtime-specific import decisions
+
+---
+
+## Why this matters
+
+- Cleaner API surface for product teams
+- Fewer migration and onboarding issues
+- Runtime details stay inside the library, not in app code
+
+---
+
+## Maintainer note
+
+The AIC naming describes the internal runtime architecture of the library.
+It is **not** a consumer-facing import model.
+
+For application code, the rule remains simple: **always use `@prokodo/ui/{name}`**.

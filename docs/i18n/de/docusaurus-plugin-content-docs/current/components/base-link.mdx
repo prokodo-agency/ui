@@ -1,0 +1,79 @@
+---
+id: base-link
+title: BaseLink
+sidebar_label: BaseLink
+description: Low-level SSR-safe link primitive used internally by Button, Card, and other interactive components.
+---
+
+# BaseLink
+
+`BaseLink` ist das grundlegende Link-Primitive in `@prokodo/ui`. Es rendert in Server-Kontexten als `<a>` und unterstützt interne sowie externe Navigation. Wird intern von `Button`, `Card` und weiteren Komponenten mit `redirect`-Props verwendet.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { BaseLink } from '@prokodo/ui/base-link'
+
+<BaseLink href="/docs/intro" className="my-link">
+  Read the docs
+</BaseLink>
+```
+
+<StorybookEmbed id="prokodo-common-baselink--default" />
+
+
+---
+
+## Import
+
+```ts
+import { BaseLink } from '@prokodo/ui/base-link'
+```
+
+Styling is handled via design tokens — no additional CSS import required.
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `href` | `string` | — | ✅ | Destination URL (relative or absolute). |
+| `children` | `ReactNode` | — | ✅ | Link content. |
+| `className` | `string` | — | — | CSS class on `<a>` element. |
+| `disabled` | `boolean` | `false` | — | Visually disable and prevent navigation. |
+| `id` | `string` | — | — | HTML `id` attribute. |
+| `target` | `string` | — | — | Link target (e.g. `"_blank"`). |
+| `rel` | `string` | — | — | Link `rel` attribute. |
+
+> Siehe [`src/components/base-link/BaseLink.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/base-link/BaseLink.model.ts) für den vollständigen `BaseLinkProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
+| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
+| **2.4.4** | **Linkzweck (im Kontext)** (A) | 🔍 Manuell prüfen | Der Zweck jedes Links muss allein aus dem Linktext oder aus dem umgebenden Kontext bestimmbar sein. |
+| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein. |
+| **2.5.3** | **Label im Namen** (A) | ✅ Erfüllt | Bei Komponenten mit sichtbarem Label muss der zugängliche Name den sichtbaren Labeltext enthalten oder diesem entsprechen. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 4 jest-axe-Assertion(s) in 5 Testdatei(en) · 2 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [BaseLink in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-baselink--docs)
+
+---
+
+## Quellcode
+
+[`src/components/base-link/BaseLink.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/base-link/BaseLink.model.ts)

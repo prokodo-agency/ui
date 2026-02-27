@@ -1,0 +1,29 @@
+{
+  "id": "components/checkbox-group",
+  "title": "CheckboxGroup",
+  "description": "Group of checkboxes with shared label, multi-select state management, and validation support.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/checkbox-group.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/checkbox-group",
+  "permalink": "/de/docs/components/checkbox-group",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/checkbox-group.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "checkbox-group",
+    "title": "CheckboxGroup",
+    "sidebar_label": "CheckboxGroup",
+    "description": "Group of checkboxes with shared label, multi-select state management, and validation support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Checkbox",
+    "permalink": "/de/docs/components/checkbox"
+  },
+  "next": {
+    "title": "DatePicker",
+    "permalink": "/de/docs/components/date-picker"
+  }
+}

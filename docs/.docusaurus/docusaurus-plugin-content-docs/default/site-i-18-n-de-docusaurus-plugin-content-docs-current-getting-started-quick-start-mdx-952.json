@@ -1,0 +1,29 @@
+{
+  "id": "getting-started/quick-start",
+  "title": "Schnellstart",
+  "description": "Verwende deine erste prokodo UI Komponente in weniger als 5 Minuten — Button, Card, Input und Dialog als Beispiele.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/getting-started/quick-start.mdx",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/quick-start",
+  "permalink": "/de/docs/getting-started/quick-start",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/getting-started/quick-start.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "quick-start",
+    "title": "Schnellstart",
+    "sidebar_label": "Schnellstart",
+    "description": "Verwende deine erste prokodo UI Komponente in weniger als 5 Minuten — Button, Card, Input und Dialog als Beispiele."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Installation",
+    "permalink": "/de/docs/getting-started/installation"
+  },
+  "next": {
+    "title": "Theming",
+    "permalink": "/de/docs/getting-started/theming"
+  }
+}

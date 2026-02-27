@@ -1,0 +1,125 @@
+---
+id: image
+title: Image
+sidebar_label: Image
+description: Optimised image component wrapping Next.js Image with lazy loading, blur placeholder, and aspect-ratio control.
+---
+
+# Image
+
+`Image` rendert optimierte Bilder mit responsiven Größen, Lazy-Loading und optionaler Priority für Above-the-fold-Inhalte.
+
+
+---
+
+## Übersicht
+
+```tsx
+import { Image } from '@prokodo/ui/image'
+
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  width={1200}
+  height={630}
+  priority
+/>
+```
+
+<StorybookEmbed id="prokodo-common-image--default" height={340} />
+
+
+---
+
+## Import
+
+```ts
+import { Image } from '@prokodo/ui/image'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/image.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `src` | `string` | — | ✅ | Image URL or server-side imported static. |
+| `alt` | `string` | — | ✅ | Alt text. |
+| `width` | `number` | — | — | Intrinsic width for layout calculation. |
+| `height` | `number` | — | — | Intrinsic height for layout calculation. |
+| `fill` | `boolean` | `false` | — | Fill the parent element (requires `position: relative` parent). |
+| `priority` | `boolean` | `false` | — | Deaktiviere lazy loading; preload for LCP images. |
+| `quality` | `number` | `75` | — | Image compression quality (1–100). |
+| `className` | `string` | — | — | CSS class on root wrapper. |
+
+> Siehe [`src/components/image/Image.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/image/Image.model.ts) für den vollständigen `ImageProps`-Typ.
+
+---
+
+## Above-the-fold optimization (`priority`)
+
+Use `priority` for images that are visible immediately on first paint (for example, hero/LCP images):
+
+```tsx
+<Image
+  src="/hero.jpg"
+  alt="Homepage hero"
+  width={1200}
+  height={630}
+  priority
+/>
+```
+
+What `priority` does in this library:
+
+- Sets `loading="eager"`
+- Sets `fetchpriority="high"`
+- Applies the behavior in both server and client rendering paths
+
+Use it sparingly for truly critical above-the-fold images only.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Image } from '@prokodo/ui/image'
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.1.1** | **Nicht-Text-Inhalt** (A) | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
+| **1.4.5** | **Bilder von Text** (AA) | 🔍 Manuell prüfen | Text sollte als echter Text gerendert werden, nicht als Bild, außer wenn unvermeidbar (z. B. Logo, Markenzeichen). |
+| **1.4.11** | **Nicht-Text-Kontrast** (AA) | 🔍 Manuell prüfen | Ränder von UI-Komponenten und Icons müssen mindestens 3:1 Kontrast zu angrenzenden Farben aufweisen. Prüfung im Produkt-Theme erforderlich. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 4 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Image in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-image--docs)
+
+---
+
+## Quellcode
+
+[`src/components/image/Image.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/image/Image.model.ts)

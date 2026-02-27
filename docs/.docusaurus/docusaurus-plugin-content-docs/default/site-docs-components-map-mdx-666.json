@@ -1,0 +1,29 @@
+{
+  "id": "components/map",
+  "title": "Map",
+  "description": "Interactive map component powered by Google Maps or Leaflet, with marker, cluster, and polygon support.",
+  "source": "@site/docs/components/map.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/map",
+  "permalink": "/docs/components/map",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/map.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "map",
+    "title": "Map",
+    "sidebar_label": "Map",
+    "description": "Interactive map component powered by Google Maps or Leaflet, with marker, cluster, and polygon support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Lottie",
+    "permalink": "/docs/components/lottie"
+  },
+  "next": {
+    "title": "Design Tokens",
+    "permalink": "/docs/design-tokens"
+  }
+}

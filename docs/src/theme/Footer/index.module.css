@@ -1,0 +1,193 @@
+/* ─── Shell ───────────────────────────────────────────────────────────────── */
+.footer {
+  background: var(--ifm-footer-background-color);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  padding-top: 3rem;
+}
+
+.inner {
+  display: flex;
+  gap: 3rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2.5rem;
+}
+
+/* ─── Brand column ────────────────────────────────────────────────────────── */
+.brand {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.brandLogo {
+  width: 120px;
+  display: block;
+}
+
+.brandLogoLink {
+  display: inline-block;
+  line-height: 0;
+}
+
+.brandLogoLight {
+  width: 120px;
+  display: block;
+}
+
+.brandLogoDark {
+  width: 120px;
+  display: none;
+}
+
+:global([data-theme='dark']) .brandLogoLight {
+  display: none;
+}
+
+:global([data-theme='dark']) .brandLogoDark {
+  display: block;
+}
+
+.brandName {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: var(--prokodo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tagline {
+  font-family: var(--font-secondary);
+  font-size: 0.825rem;
+  color: var(--ifm-color-emphasis-600);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.socials {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ifm-color-emphasis-600);
+  transition: color 0.15s;
+}
+
+.socialLink:hover {
+  color: var(--color-primary-500);
+}
+
+/* ─── Link groups ─────────────────────────────────────────────────────────── */
+.linkGroups {
+  display: flex;
+  gap: 3rem;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.section {
+  min-width: 120px;
+}
+
+.sectionTitle {
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 0.75rem;
+}
+
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.footerLink {
+  font-family: var(--font-secondary);
+  font-size: 0.875rem;
+  color: var(--ifm-font-color-base) !important;
+  text-decoration: none !important;
+  opacity: 0.8;
+  transition:
+    opacity 0.15s,
+    color 0.15s;
+}
+
+.footerLink:hover {
+  opacity: 1;
+  color: var(--color-primary-500) !important;
+}
+
+/* ─── Bottom bar ──────────────────────────────────────────────────────────── */
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.copyright {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0;
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.bottomLink {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600) !important;
+  text-decoration: none !important;
+  transition: color 0.15s;
+}
+
+.bottomLink:hover {
+  color: var(--color-primary-500) !important;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .inner {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .brand {
+    flex: unset;
+  }
+
+  .linkGroups {
+    gap: 2rem;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}

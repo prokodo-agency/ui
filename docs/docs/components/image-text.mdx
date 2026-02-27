@@ -1,0 +1,80 @@
+---
+id: image-text
+title: ImageText
+sidebar_label: ImageText
+description: Two-column section component pairing an image with body copy, supporting left/right layout and vertical alignment.
+---
+
+# ImageText
+
+`ImageText` renders a two-column section with an image on one side and text content on the other. The layout direction (image-left vs image-right) is reversible and collapses to a single column on mobile.
+
+---
+
+## Overview
+
+```tsx
+import { ImageText } from '@prokodo/ui/image-text'
+
+<ImageText
+  image={{ src: '/feature.jpg', alt: 'Feature' }}
+  reverse
+>
+  <h2>Built for performance</h2>
+  <p>Every component ships with SSR support and zero layout shift.</p>
+</ImageText>
+```
+
+<StorybookEmbed id="prokodo-common-imagetext--default" height={380} />
+
+
+---
+
+## Import
+
+```ts
+import { ImageText } from '@prokodo/ui/image-text'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/image-text.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `image` | `ImageProps` | — | ✅ | Props forwarded to the `<Image>` component. |
+| `children` | `ReactNode` | — | ✅ | Text-side content. |
+| `reverse` | `boolean` | `false` | — | Image on the right instead of the left. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | — | Vertical alignment of the text column. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/image-text/ImageText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/image-text/ImageText.model.ts) for the full `ImageTextProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.2** | **Meaningful Sequence** (A) | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order. |
+| **1.4.4** | **Resize Text** (AA) | 🔍 Manual review | Text must remain readable and functional when scaled to 200% without assistive technology. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 1 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open ImageText in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-layout-imagetext--docs)
+
+---
+
+## Source
+
+[`src/components/image-text/ImageText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/image-text/ImageText.model.ts)

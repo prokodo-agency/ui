@@ -22,6 +22,7 @@ const config = {
   },
   viteFinal: async config => {
     return mergeConfig(config, {
+      base: "/storybook/",
       resolve: {
         alias: {
           "@": path.resolve(__dirname, "../src"),

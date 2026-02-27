@@ -1,0 +1,29 @@
+{
+  "id": "components/pagination",
+  "title": "Pagination",
+  "description": "Page navigation component with first/prev/next/last controls, configurable page window, and accessible ARIA labels.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/pagination.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/pagination",
+  "permalink": "/de/docs/components/pagination",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/pagination.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "pagination",
+    "title": "Pagination",
+    "sidebar_label": "Pagination",
+    "description": "Page navigation component with first/prev/next/last controls, configurable page window, and accessible ARIA labels."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Link",
+    "permalink": "/de/docs/components/link"
+  },
+  "next": {
+    "title": "Sidenav",
+    "permalink": "/de/docs/components/sidenav"
+  }
+}

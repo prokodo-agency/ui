@@ -1,0 +1,76 @@
+---
+id: lottie
+title: Lottie
+sidebar_label: Lottie
+description: Lottie JSON animation player component with play/pause control, loop, and autoplay support.
+---
+
+# Lottie
+
+`Lottie` rendert JSON-basierte Lottie-Animationen performant im UI und unterstützt kontrollierte Wiedergabeoptionen.
+
+---
+
+## Übersicht
+
+```tsx
+import { Lottie } from '@prokodo/ui/lottie'
+
+<Lottie src="/animations/hero.json" loop autoplay />
+```
+
+<StorybookEmbed id="prokodo-common-lottie--default" height={340} />
+
+
+---
+
+## Import
+
+```ts
+import { Lottie } from '@prokodo/ui/lottie'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/lottie.css'
+```
+
+---
+
+## Props
+
+| Prop | Typ | Standard | Pflicht | Beschreibung |
+|------|------|---------|----------|-------------|
+| `src` | `string \| object` | — | ✅ | URL to a `.json` file or an inline animation object. |
+| `loop` | `boolean` | `true` | — | Loop the animation. |
+| `autoplay` | `boolean` | `true` | — | Start playing on mount. |
+| `width` | `number \| string` | `"100%"` | — | Container width. |
+| `height` | `number \| string` | `"auto"` | — | Container height. |
+| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+
+> Siehe [`src/components/lottie/Lottie.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/lottie/Lottie.model.ts) für den vollständigen `LottieProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung | Status | Hinweis |
+|-----------|-------------|--------|---------|
+| **1.1.1** | **Nicht-Text-Inhalt** (A) | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **2.2.2** | **Pausieren, Beenden, Ausblenden** (A) | 🔍 Manuell prüfen | Animationen oder automatisch rotierende Inhalte, die länger als 5 s laufen, müssen einen Pause-/Stopp-Schalter bieten. |
+| **2.3.1** | **Dreimaliges Blitzen oder unterhalb des Grenzwerts** (A) | 🔍 Manuell prüfen | Animierte Inhalte dürfen nicht mehr als 3-mal pro Sekunde flackern. |
+| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 1 jest-axe-Assertion(s) in 1 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Lottie in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-media-lottie--docs)
+
+---
+
+## Quellcode
+
+[`src/components/lottie/Lottie.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/lottie/Lottie.model.ts)

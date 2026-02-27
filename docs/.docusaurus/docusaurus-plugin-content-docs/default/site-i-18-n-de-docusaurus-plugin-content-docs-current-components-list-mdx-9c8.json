@@ -1,0 +1,29 @@
+{
+  "id": "components/list",
+  "title": "List",
+  "description": "Ordered and unordered semantic list component with optional icon bullets and nesting support.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/list.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/list",
+  "permalink": "/de/docs/components/list",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/list.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "list",
+    "title": "List",
+    "sidebar_label": "List",
+    "description": "Ordered and unordered semantic list component with optional icon bullets and nesting support."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Image",
+    "permalink": "/de/docs/components/image"
+  },
+  "next": {
+    "title": "PostItem",
+    "permalink": "/de/docs/components/post-item"
+  }
+}

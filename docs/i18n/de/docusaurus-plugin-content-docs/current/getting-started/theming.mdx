@@ -1,0 +1,89 @@
+---
+id: theming
+title: Theming
+sidebar_label: Theming
+description: Überschreibe prokodo UI Design-Tokens, um deine eigenen Markenfarben, Typografie und Abstände anzuwenden.
+---
+
+# Theming
+
+prokodo UI basiert auf einem CSS-Kustomeigenschaften-System (Design-Tokens). Theming bedeutet das Überschreiben von `--pk-*`-Variablen — kein JavaScript erforderlich, kein Build-Schritt, kein Theme-Provider.
+
+---
+
+## Wie Tokens funktionieren
+
+Alle Designentscheidungen — Farbe, Abstände, Typografie, Rahmen-Radien, Schatten — sind als `--pk-*` CSS-Variablen definiert, die in `@prokodo/ui/theme.css` enthalten sind. Komponenten verwenden diese Variablen direkt aus ihren CSS Modules.
+
+Überschreibe beliebige Tokens in deinem globalen Stylesheet **nach** dem `theme.css`-Import:
+
+```css title="app/globals.css"
+@import '@prokodo/ui/theme.css';
+
+:root {
+  /* Markenfarben */
+  --pk-color-primary:     #7c3aed;
+  --pk-color-primary-100: #ede9fe;
+  --pk-color-primary-500: #7c3aed;
+  --pk-color-primary-900: #2e1065;
+
+  /* Typografie */
+  --pk-font-family-base:  'Inter', sans-serif;
+  --pk-font-size-base:    1rem;
+
+  /* Rahmen-Radien */
+  --pk-radius-sm:  4px;
+  --pk-radius-md:  8px;
+  --pk-radius-lg: 16px;
+}
+```
+
+---
+
+## Dark Mode
+
+prokodo UI unterstützt Dark Mode über das `data-theme="dark"`-Attribut am `<html>`-Element:
+
+```css
+:root[data-theme='dark'] {
+  --pk-color-background: #0f0f0f;
+  --pk-color-surface:    #1a1a1a;
+  --pk-color-text:       #f5f5f5;
+}
+```
+
+Aktiviere den Dark Mode mit `document.documentElement.dataset.theme = 'dark'` in deinem Client-Code.
+
+---
+
+## Token-Referenz
+
+Die vollständige Liste aller `--pk-*`-Kustomeigenschaften findest du unter [Design-Tokens](/de/docs/design-tokens).
+
+---
+
+## Schrift laden
+
+prokodo UI bündelt keine Schriftarten. Importiere deine Schrift im Root-Layout und setze `--pk-font-family-base`:
+
+```tsx title="app/layout.tsx"
+import { Inter } from 'next/font/google'
+import '@prokodo/ui/theme.css'
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="de" className={inter.variable}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+```css title="app/globals.css"
+:root {
+  --pk-font-family-base: var(--font-inter), sans-serif;
+}
+```

@@ -1,0 +1,34 @@
+{
+  "sidebar.uiSidebar.category.Getting Started": {
+    "message": "Erste Schritte",
+    "description": "The label for category Getting Started in sidebar uiSidebar"
+  },
+  "sidebar.uiSidebar.category.Components": {
+    "message": "Komponenten",
+    "description": "The label for category Components in sidebar uiSidebar"
+  },
+  "sidebar.uiSidebar.category.Form": {
+    "message": "Formular",
+    "description": "The label for category Form in sidebar uiSidebar"
+  },
+  "sidebar.uiSidebar.category.Layout": {
+    "message": "Layout",
+    "description": "The label for category Layout in sidebar uiSidebar"
+  },
+  "sidebar.uiSidebar.category.Navigation": {
+    "message": "Navigation",
+    "description": "The label for category Navigation in sidebar uiSidebar"
+  },
+  "sidebar.uiSidebar.category.Content": {
+    "message": "Inhalte",
+    "description": "The label for category Content in sidebar uiSidebar"
+  },
+  "sidebar.uiSidebar.category.Feedback": {
+    "message": "Feedback",
+    "description": "The label for category Feedback in sidebar uiSidebar"
+  },
+  "sidebar.uiSidebar.category.Media": {
+    "message": "Medien",
+    "description": "The label for category Media in sidebar uiSidebar"
+  }
+}

@@ -40,8 +40,8 @@ export function LinkView({
     return (
       <span
         {...common}
-        role="button"
-        tabIndex={0}
+        role={hasHandlers ? "button" : undefined}
+        tabIndex={hasHandlers ? 0 : undefined}
         onClick={hasHandlers ? onClick : undefined}
         onKeyDown={
           hasHandlers

@@ -1,0 +1,355 @@
+/**
+ * prokodo UI documentation theme
+ * Design tokens imported from @prokodo/ui — single source of truth.
+ */
+
+/* ─── prokodo design system tokens ──────────────────────────────────────────
+   All CSS custom properties (--color-*, --gradient-*, --elevation-*, etc.)
+   are defined by @prokodo/ui/theme.css and switch automatically between
+   light and dark via :root[data-theme='dark'] (Docusaurus sets data-theme
+   on <html> = :root, so both light and dark work without extra overrides).
+   ────────────────────────────────────────────────────────────────────────── */
+@import '@prokodo/ui/theme.css';
+@import '@prokodo/ui/button.css';
+@import '@prokodo/ui/card.css';
+@import '@prokodo/ui/icon.css';
+@import '@prokodo/ui/chip.css';
+@import '@prokodo/ui/headline.css';
+@import '@prokodo/ui/grid.css';
+
+/* ─── Font variables ─────────────────────────────────────────────────────── */
+:root {
+  --font-primary: 'Montserrat', 'Montserrat Fallback', sans-serif;
+  --font-secondary: 'Open Sans', 'Open Sans Fallback', sans-serif;
+}
+
+/* ─── Docusaurus variable overrides — Light ──────────────────────────────── */
+:root {
+  /* prokodo-ui ships primary-20/40 as #FFFFFF in light mode (invisible).
+     Override with actual subtle blue tints so our background system works. */
+  --color-primary-20: #f0f6ff;
+  --color-primary-40: #e3eeff;
+
+  /* Primary palette — wire Docusaurus tokens to prokodo design system */
+  --ifm-color-primary: var(--color-primary-500);
+  --ifm-color-primary-dark: var(--color-primary-600);
+  --ifm-color-primary-darker: var(--color-primary-700);
+  --ifm-color-primary-darkest: var(--color-primary-800);
+  --ifm-color-primary-light: var(--color-primary-400);
+  --ifm-color-primary-lighter: var(--color-primary-300);
+  --ifm-color-primary-lightest: var(--color-primary-200);
+
+  /* Brand gradient shorthand (re-export for convenience) */
+  --prokodo-gradient: var(--gradient-background-primary-secondary);
+
+  /* Typography */
+  --ifm-font-family-base: var(--font-secondary);
+  --ifm-heading-font-family: var(--font-primary);
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.6;
+
+  /* Code blocks */
+  --ifm-code-font-size: 0.875rem;
+
+  /* Border radius */
+  --ifm-global-radius: 8px;
+  --ifm-card-border-radius: 12px;
+  --ifm-button-border-radius: 8px;
+
+  /* Spacing */
+  --ifm-navbar-height: 64px;
+
+  /* Surfaces — prokodo tinted backgrounds */
+  --ifm-background-color: var(--color-primary-20);
+  --ifm-background-surface-color: var(--color-primary-20);
+  --ifm-navbar-background-color: var(--color-primary-40);
+  --ifm-footer-background-color: var(--color-primary-40);
+
+  /* Code highlight */
+  --docusaurus-highlighted-code-line-bg: rgba(30, 144, 255, 0.12);
+}
+
+/* ─── Dark mode overrides ────────────────────────────────────────────────── */
+/* @prokodo/ui/theme.css already re-maps --color-* under :root[data-theme='dark']
+   so --color-primary-500, --color-grey-* etc. automatically reflect dark values.
+   We only need to hard-wire Docusaurus-specific background / nav colours here. */
+[data-theme='dark'] {
+  --ifm-background-color: var(--color-primary-20);
+  --ifm-background-surface-color: var(--color-primary-20);
+  --ifm-navbar-background-color: var(--color-primary-40);
+  --ifm-footer-background-color: var(--color-primary-40);
+  --ifm-toc-border-color: var(--color-grey-100);
+  --ifm-hr-border-color: var(--color-grey-100);
+
+  --docusaurus-highlighted-code-line-bg: rgba(30, 144, 255, 0.2);
+}
+
+/* ─── Hero / landing section ─────────────────────────────────────────────── */
+.hero--prokodo {
+  /* Dark mode — deep navy */
+  background: linear-gradient(135deg, #0d1824 0%, #0a1628 50%, #0d1e24 100%);
+  padding: 5rem 0 6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light mode — dark charcoal radial so white text stays readable */
+:root:not([data-theme='dark']) .hero--prokodo {
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, #2d3748 0%, #1a202c 55%, #111827 100%);
+}
+
+/* Ambient colour glow overlay */
+.hero--prokodo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(30, 144, 255, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 70% 60%, rgba(0, 230, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Hero outlined button — force white in light mode (banner is always dark) */
+:root:not([data-theme='dark']) .hero--prokodo .prokodo-Button--has-variant-outlined {
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  color: #fff !important;
+}
+
+:root:not([data-theme='dark'])
+  .hero--prokodo
+  .prokodo-Button--has-variant-outlined
+  .prokodo-Button__content {
+  color: #fff !important;
+}
+
+/* ─── Navbar ─────────────────────────────────────────────────────────────── */
+.navbar {
+  font-family: var(--font-primary);
+}
+
+h1 {
+  background: var(--gradient-text-primary-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Admonitions ────────────────────────────────────────────────────────── */
+.alert--tip {
+  --ifm-alert-background-color: rgba(30, 144, 255, 0.08);
+  --ifm-alert-border-color: var(--color-primary-500);
+}
+
+/* ─── Doc page areas ─────────────────────────────────────────────────────── */
+/* Force primary-20 on all main content surfaces that Docusaurus may override. */
+html,
+body,
+.main-wrapper,
+.theme-doc-sidebar-container,
+[class*='docMainContainer'],
+[class*='docItemContainer'],
+[class*='docsWrapper'],
+[class*='docRoot'] {
+  background-color: var(--color-primary-20) !important;
+}
+
+/* ─── Code blocks ────────────────────────────────────────────────────────── */
+.prism-code {
+  border-radius: var(--ifm-card-border-radius) !important;
+  border: 1px solid rgba(30, 144, 255, 0.12);
+}
+
+/* Inline code */
+code {
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.menu__link--active {
+  color: var(--color-primary-500);
+  font-weight: 600;
+}
+
+/* ─── Tables ─────────────────────────────────────────────────────────────── */
+/* Own class names — no @prokodo/ui/table.css import, zero cascade conflicts. */
+
+/* Outer frame: gradient border via padding + inner white bg */
+.docs-table {
+  display: block;
+  width: 100%;
+  margin: 1.75rem 0;
+  border-radius: 10px;
+  background: linear-gradient(
+    112.34deg,
+    var(--color-primary-500) 0%,
+    var(--color-secondary-500) 100%
+  );
+  padding: 2px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.docs-table__scroll {
+  border-radius: 9px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--ifm-background-color);
+}
+
+.docs-table__el {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  display: table;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.docs-table__head {
+  background: linear-gradient(
+    112.34deg,
+    var(--color-primary-500) 0%,
+    var(--color-secondary-500) 100%
+  );
+}
+
+.docs-table__head-tr {
+  border: none;
+}
+
+.docs-table__th {
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border: none;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* ── Body ──────────────────────────────────────────────────────────────── */
+.docs-table__body .docs-table__tr:nth-child(even) {
+  background: var(--color-primary-20);
+}
+
+.docs-table__tr {
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  transition: background 0.15s;
+}
+
+.docs-table__body .docs-table__tr:last-child {
+  border-bottom: none;
+}
+
+.docs-table__body .docs-table__tr:hover {
+  background: var(--color-primary-40);
+}
+
+/* ── Cells ─────────────────────────────────────────────────────────────── */
+.docs-table__td {
+  padding: 0.7rem 1rem;
+  border: none;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* First column bolder */
+.docs-table__td:first-child {
+  font-weight: 600;
+  font-family: var(--font-primary);
+}
+
+/* Code inside cells */
+.docs-table__td code {
+  font-size: 0.82em;
+  background: rgba(30, 144, 255, 0.08);
+  border: 1px solid rgba(30, 144, 255, 0.2);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────────────── */
+[data-theme='dark'] .docs-table {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='dark'] .docs-table__body .docs-table__tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme='dark'] .docs-table__body .docs-table__tr:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='dark'] .docs-table__td code {
+  background: rgba(30, 144, 255, 0.12);
+  border-color: rgba(30, 144, 255, 0.25);
+}
+
+/* Installation requirements list: ensure bullet icons stay readable in dark mode */
+[data-theme='dark'] .installation-requirements-list .prokodo-List__item__icon__wrapper,
+[data-theme='dark'] .installation-requirements-list .prokodo-List__item__icon,
+[data-theme='dark'] .installation-requirements-list .prokodo-Icon {
+  color: var(--ifm-color-white) !important;
+}
+
+[data-theme='dark'] .installation-requirements-list,
+[data-theme='dark'] .installation-requirements-list .prokodo-List__item,
+[data-theme='dark'] .installation-requirements-list .prokodo-List__item__title,
+[data-theme='dark'] .installation-requirements-list .list-title {
+  color: var(--ifm-color-white) !important;
+}
+
+[data-theme='dark'] .installation-requirements-list .prokodo-Icon svg,
+[data-theme='dark'] .installation-requirements-list .prokodo-Icon path {
+  fill: currentColor;
+}
+
+/* ─── Headline — light-mode colour fix ───────────────────────────────────── */
+:root:not([data-theme='dark']) .main-wrapper .prokodo-Headline--inherit {
+  color: var(--ifm-heading-color, #1c1e21) !important;
+  -webkit-text-fill-color: var(--ifm-heading-color, #1c1e21) !important;
+}
+
+/* Hero headline is always on a dark background — keep it white */
+:root:not([data-theme='dark']) .hero--prokodo .prokodo-Headline--inherit {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+.footer__title {
+  font-family: var(--font-primary);
+  font-size: 0.85rem;
+}
+
+/* ─── Chip — inline size reset ───────────────────────────────────────────── */
+.prokodo-Chip {
+  font-size: 0.875em !important;
+  line-height: 1 !important;
+  padding: 0.15em 0.45em !important;
+  vertical-align: middle;
+}
+
+/* ─── Doc header: breadcrumb + version badge ────────────────────────────── */
+.theme-doc-breadcrumbs {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.theme-doc-version-badge {
+  float: right;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 996px) {
+  .theme-doc-breadcrumbs,
+  .theme-doc-version-badge {
+    float: none;
+    display: block;
+  }
+}

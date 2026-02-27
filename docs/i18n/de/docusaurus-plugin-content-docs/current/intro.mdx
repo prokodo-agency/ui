@@ -1,0 +1,64 @@
+---
+id: intro
+title: Einführung
+sidebar_label: Einführung
+description: Übersicht über prokodo UI — eine vollständig typisierte, AIC-fähige React-Komponentenbibliothek für Next.js App Router.
+slug: /
+---
+
+# prokodo UI
+
+**prokodo UI** ist eine vollständig typisierte, produktionsreife React‑Komponentenbibliothek, die von Grund auf für den [Next.js App Router](https://nextjs.org/docs/app) entwickelt wurde. Sie umfasst 52 Komponenten in 6 Kategorien, alle mit einem design‑token‑basierten CSS-System gestaltet — ganz ohne JavaScript‑Stilinjektion zur Laufzeit.
+
+---
+
+## Was sie besonders macht
+
+### AIC-Muster — server, client, lazy
+
+Jede interaktive Komponente wird in drei Varianten ausgeliefert:
+
+| Import | Umgebung | Empfohlene Verwendung |
+|--------|----------|-----------------------|
+| `@prokodo/ui/{name}` | Server Component (RSC) | Standard — funktioniert in App Router Layouts und Pages |
+| `@prokodo/ui/{name}/client` | Client Component | Innerhalb von `"use client"`-Grenzen |
+| `@prokodo/ui/{name}/lazy` | Lazy (dynamischer Import) | Schwere Komponenten, die außerhalb des sichtbaren Bereichs geladen werden |
+
+Weitere Informationen: [AIC-Muster](/de/docs/aic-pattern).
+
+### TypeScript-First
+
+Jede Komponente exportiert ein typisiertes `{Name}Props`-Interface aus ihrer Modelldatei:
+
+```ts
+import type { ButtonDefaultProps } from '@prokodo/ui/button'
+```
+
+### Design-Tokens
+
+Alle Abstands-, Farb-, Typografie- und Animationswerte werden als CSS-Kustomeigenschaften unter dem Namespace `--pk-*` exportiert. Überschreibe sie einmalig in deinem globalen Stylesheet, um deine Marke auf alle Komponenten anzuwenden.
+
+Weitere Informationen: [Design-Tokens](/de/docs/design-tokens).
+
+---
+
+## Paketinformationen
+
+| Detail | Wert |
+|--------|------|
+| Paket | `@prokodo/ui` |
+| Registry | [npm](https://www.npmjs.com/package/@prokodo/ui) |
+| Peer-Abhängigkeit | `react >= 18`, `next >= 14` |
+| Bundle-Format | ESM, tree-shakable pro Komponente |
+| Styling | CSS Modules + Design Tokens (kein CSS-in-JS) |
+
+---
+
+## Schnelllinks
+
+- [Installation](/de/docs/getting-started/installation)
+- [Schnellstart](/de/docs/getting-started/quick-start)
+- [Theming](/de/docs/getting-started/theming)
+- [Alle Komponenten](/de/docs/components/overview)
+- [Storybook ↗](https://ui.prokodo.com/storybook)
+- [GitHub ↗](https://github.com/prokodo-agency/ui)

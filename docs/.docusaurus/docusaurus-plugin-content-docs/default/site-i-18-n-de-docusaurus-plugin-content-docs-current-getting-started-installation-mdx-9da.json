@@ -1,0 +1,29 @@
+{
+  "id": "getting-started/installation",
+  "title": "Installation",
+  "description": "Installiere prokodo UI mit pnpm, npm oder yarn und binde globale Stile in dein Next.js-Projekt ein.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/getting-started/installation.mdx",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/installation",
+  "permalink": "/de/docs/getting-started/installation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/getting-started/installation.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "installation",
+    "title": "Installation",
+    "sidebar_label": "Installation",
+    "description": "Installiere prokodo UI mit pnpm, npm oder yarn und binde globale Stile in dein Next.js-Projekt ein."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Einführung",
+    "permalink": "/de/docs/"
+  },
+  "next": {
+    "title": "Schnellstart",
+    "permalink": "/de/docs/getting-started/quick-start"
+  }
+}

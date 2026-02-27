@@ -65,6 +65,23 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
     (e: KeyboardEvent<HTMLDivElement>, index: number) => {
       const prev = index - 1
       const next = index + 1
+      const isCompleted = index < activeStep
+      const isActivationKey =
+        e.key === "Enter" ||
+        e.key === " " ||
+        e.key === "Spacebar" ||
+        e.code === "Enter" ||
+        e.code === "Space"
+
+      if (isActivationKey) {
+        if (isCompleted) {
+          setActiveStep(index)
+          stepRefs.current[index]?.focus()
+          onChange?.(e, index)
+        }
+        e.preventDefault()
+        return
+      }
 
       if (e.key === "ArrowLeft") {
         // Only move left if prev is a completed step

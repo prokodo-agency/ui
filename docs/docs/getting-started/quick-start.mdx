@@ -1,0 +1,115 @@
+---
+id: quick-start
+title: Quick Start
+sidebar_label: Quick Start
+description: Use your first prokodo UI component in under 5 minutes — Button, Card, Input, and Dialog examples.
+---
+
+# Quick Start
+
+After [installing](/docs/getting-started/installation) `@prokodo/ui`, you're ready to use components. Each component is a separate entry point — import only what you need.
+
+---
+
+## Your first component — Button
+
+```tsx title="app/page.tsx"
+import { Button } from '@prokodo/ui/button'
+import '@prokodo/ui/button.css'
+
+export default function Page() {
+  return (
+    <main>
+      <Button variant="primary" size="md">
+        Get started
+      </Button>
+    </main>
+  )
+}
+```
+
+---
+
+## Do's and don'ts
+
+### ✅ Do
+
+- Import each component directly from its entry point for highest performance:
+
+```tsx
+import { Button } from '@prokodo/ui/button'
+import { Card } from '@prokodo/ui/card'
+```
+
+- Prefer component-level styles whenever possible:
+
+```tsx
+import '@prokodo/ui/button.css'
+import '@prokodo/ui/card.css'
+```
+
+- Use `priority` for critical above-the-fold elements (especially hero images) so they load/hydrate eagerly.
+
+### ❌ Don't
+
+- Avoid broader or unnecessary imports if you only need a few components.
+- Avoid loading extra styles that are not needed on the page.
+
+---
+
+## Form example
+
+```tsx title="app/contact/page.tsx"
+import { Form } from '@prokodo/ui/form'
+import { Input } from '@prokodo/ui/input'
+import '@prokodo/ui/form.css'
+import '@prokodo/ui/input.css'
+
+export default function ContactPage() {
+  return (
+    <Form onSubmit={(e, data) => console.log(data)} submitLabel="Send">
+      <Input name="name" label="Full name" required />
+      <Input name="email" label="Email" type="email" required />
+    </Form>
+  )
+}
+```
+
+---
+
+## Card grid example
+
+```tsx title="components/FeatureGrid.tsx"
+import { Grid } from '@prokodo/ui/grid'
+import { Card } from '@prokodo/ui/card'
+import '@prokodo/ui/grid.css'
+import '@prokodo/ui/card.css'
+
+const features = [
+  { title: 'AIC Pattern', body: 'Server, client, and lazy variants.' },
+  { title: 'TypeScript', body: 'Fully typed props for every component.' },
+  { title: 'Design tokens', body: 'CSS custom properties throughout.' },
+]
+
+export function FeatureGrid() {
+  return (
+    <Grid cols={3} gap="lg">
+      {features.map((f) => (
+        <Card key={f.title}>
+          <h3>{f.title}</h3>
+          <p>{f.body}</p>
+        </Card>
+      ))}
+    </Grid>
+  )
+}
+```
+
+---
+
+## Next steps
+
+- [Theming](/docs/getting-started/theming) — customise design tokens for your brand
+- [AIC Pattern](/docs/aic-pattern) — deep dive on server/client/lazy architecture
+- [Design Tokens](/docs/design-tokens) — full token reference
+- [All Components →](/docs/components/overview)

@@ -1,0 +1,29 @@
+{
+  "id": "components/card",
+  "title": "Card",
+  "description": "Versatile container component with panel, list-item, and elevated variants — unterstützt animated entrance and click handling.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/card.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/card",
+  "permalink": "/de/docs/components/card",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/card.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "card",
+    "title": "Card",
+    "sidebar_label": "Card",
+    "description": "Versatile container component with panel, list-item, and elevated variants — unterstützt animated entrance and click handling."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Accordion",
+    "permalink": "/de/docs/components/accordion"
+  },
+  "next": {
+    "title": "Carousel",
+    "permalink": "/de/docs/components/carousel"
+  }
+}

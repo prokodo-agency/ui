@@ -1,0 +1,73 @@
+---
+id: changelog
+title: Changelog
+sidebar_label: Changelog
+description: Release history for @prokodo/ui — a record of all new features, fixes, and breaking changes.
+---
+
+# Changelog
+
+All notable changes to `@prokodo/ui` are documented here. This project follows [Semantic Versioning](https://semver.org/) and [Keep a Changelog](https://keepachangelog.com/).
+
+---
+
+## [Unreleased]
+
+### Added
+- Docusaurus 3 documentation site (`docs.ui.prokodo.com`)
+- `check-translation-drift.mjs` script for i18n maintenance
+
+---
+
+## [3.0.0] — 2024-06-01
+
+### Breaking changes
+- Component entry points renamed from PascalCase to kebab-case. See [Migration Guide](/docs/migration).
+- CSS auto-injection removed — explicit CSS module imports required.
+- CSS variables migrated from `--prokodo-*` to `--pk-*` namespace.
+
+### Added
+- `/lazy` variant for every AIC-ready component
+- `InputOTP` component — 6-digit one-time password input
+- `DynamicList` component — repeatable form field arrays
+- `PostWidgetCarousel` — carousel variant of `PostWidget`
+- Full Storybook "Docs" stories for all 52 components
+
+### Fixed
+- `Select` dropdown z-index in stacked modal contexts
+- `DatePicker` locale formatting for German (`de`) locale
+
+---
+
+## [2.1.0] — 2024-02-15
+
+### Added
+- `Autocomplete` component with async option loading
+- `Rating` component with half-star precision
+- Dark mode token overrides in `theme.css`
+
+### Fixed
+- `Dialog` focus trap on Safari iOS
+- `Tooltip` placement flipping near viewport edge
+
+---
+
+## [2.0.0] — 2023-11-01
+
+### Breaking changes
+- Requires React 18 and Next.js 14
+- AIC Pattern introduced — `/client` variant for interactive components
+
+### Added
+- Server Component (RSC) default export for all interactive components
+- `Slider` component with dual-thumb range mode
+- `Stepper` component with vertical orientation
+
+---
+
+## [1.0.0] — 2023-05-01
+
+### Added
+- Initial release with 38 components
+- CSS Modules architecture with design token system
+- Storybook publishing to `ui.prokodo.com`

@@ -1,0 +1,29 @@
+{
+  "id": "components/animated-text",
+  "title": "AnimatedText",
+  "description": "Text component with character-by-character or word-by-word entrance animations.",
+  "source": "@site/docs/components/animated-text.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/animated-text",
+  "permalink": "/docs/components/animated-text",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/animated-text.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "animated-text",
+    "title": "AnimatedText",
+    "sidebar_label": "AnimatedText",
+    "description": "Text component with character-by-character or word-by-word entrance animations."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Animated",
+    "permalink": "/docs/components/animated"
+  },
+  "next": {
+    "title": "Avatar",
+    "permalink": "/docs/components/avatar"
+  }
+}

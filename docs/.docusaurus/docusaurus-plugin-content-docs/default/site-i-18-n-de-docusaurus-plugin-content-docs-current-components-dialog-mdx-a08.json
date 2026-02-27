@@ -1,0 +1,29 @@
+{
+  "id": "components/dialog",
+  "title": "Dialog",
+  "description": "Modal dialog overlay with accessible focus trap, ESC-to-close, and configurable size variants.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/dialog.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/dialog",
+  "permalink": "/de/docs/components/dialog",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/dialog.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "dialog",
+    "title": "Dialog",
+    "sidebar_label": "Dialog",
+    "description": "Modal dialog overlay with accessible focus trap, ESC-to-close, and configurable size variants."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Teaser",
+    "permalink": "/de/docs/components/teaser"
+  },
+  "next": {
+    "title": "Drawer",
+    "permalink": "/de/docs/components/drawer"
+  }
+}

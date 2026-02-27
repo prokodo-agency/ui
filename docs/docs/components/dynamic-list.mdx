@@ -1,0 +1,109 @@
+---
+id: dynamic-list
+title: DynamicList
+sidebar_label: DynamicList
+description: Form-integrated repeatable field list — lets users add, reorder, and remove rows at runtime.
+---
+
+# DynamicList
+
+`DynamicList` renders a repeatable set of input rows that users can add or remove at runtime. Ideal for managing arrays of values inside forms (e.g. phone numbers, addresses, tags).
+
+
+---
+
+## Overview
+
+```tsx
+import { DynamicList } from '@prokodo/ui/dynamic-list'
+
+<DynamicList
+  label="Phone numbers"
+  name="phones"
+  value={phones}
+  onChange={setPhones}
+  renderItem={(item, onChange) => (
+    <Input value={item} onChange={(e) => onChange(e.target.value)} />
+  )}
+/>
+```
+
+<StorybookEmbed id="prokodo-form-dynamiclist--single-field" height={340} />
+
+
+---
+
+## Import
+
+```ts
+import { DynamicList } from '@prokodo/ui/dynamic-list'
+```
+
+CSS:
+
+```ts
+import '@prokodo/ui/dynamic-list.css'
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `name` | `string` | — | ✅ | Field name used as key prefix. |
+| `value` | `unknown[]` | — | — | Controlled array of item values. |
+| `onChange` | `(value: unknown[]) => void` | — | — | Called with the updated array on add/remove. |
+| `renderItem` | `(item, onChange) => ReactNode` | — | ✅ | Row render function per item. |
+| `label` | `string` | — | — | Group label shown above the list. |
+| `addLabel` | `string` | `"Add item"` | — | Label for the add-row button. |
+| `maxItems` | `number` | — | — | Prevent adding more than this many items. |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/dynamic-list/DynamicList.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dynamic-list/DynamicList.model.ts) for the full `DynamicListProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { DynamicList } from '@prokodo/ui/dynamic-list'
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.5** | **Identify Input Purpose** (AA) | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute. |
+| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.1.2** | **No Keyboard Trap** (A) | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys. |
+| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
+| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
+| **3.3.1** | **Error Identification** (A) | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone. |
+| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled | Every form input requires a programmatically associated label or a visible instruction. |
+| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 5 test file(s) · 6 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open DynamicList in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-dynamiclist--docs)
+
+---
+
+## Source
+
+[`src/components/dynamic-list/DynamicList.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dynamic-list/DynamicList.model.ts)

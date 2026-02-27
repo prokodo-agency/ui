@@ -1,0 +1,338 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/de/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "latest",
+          "isLast": true,
+          "path": "/de/docs",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "aic-pattern",
+              "path": "/de/docs/aic-pattern",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "changelog",
+              "path": "/de/docs/changelog",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/accordion",
+              "path": "/de/docs/components/accordion",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/animated",
+              "path": "/de/docs/components/animated",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/animated-text",
+              "path": "/de/docs/components/animated-text",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/autocomplete",
+              "path": "/de/docs/components/autocomplete",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/avatar",
+              "path": "/de/docs/components/avatar",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/base-link",
+              "path": "/de/docs/components/base-link",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/button",
+              "path": "/de/docs/components/button",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/calendly",
+              "path": "/de/docs/components/calendly",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/card",
+              "path": "/de/docs/components/card",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/carousel",
+              "path": "/de/docs/components/carousel",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/checkbox",
+              "path": "/de/docs/components/checkbox",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/checkbox-group",
+              "path": "/de/docs/components/checkbox-group",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/chip",
+              "path": "/de/docs/components/chip",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/date-picker",
+              "path": "/de/docs/components/date-picker",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/dialog",
+              "path": "/de/docs/components/dialog",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/drawer",
+              "path": "/de/docs/components/drawer",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/dynamic-list",
+              "path": "/de/docs/components/dynamic-list",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/form",
+              "path": "/de/docs/components/form",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/grid",
+              "path": "/de/docs/components/grid",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/headline",
+              "path": "/de/docs/components/headline",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/icon",
+              "path": "/de/docs/components/icon",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/image",
+              "path": "/de/docs/components/image",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/image-text",
+              "path": "/de/docs/components/image-text",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/input",
+              "path": "/de/docs/components/input",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/input-otp",
+              "path": "/de/docs/components/input-otp",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/label",
+              "path": "/de/docs/components/label",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/link",
+              "path": "/de/docs/components/link",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/list",
+              "path": "/de/docs/components/list",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/loading",
+              "path": "/de/docs/components/loading",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/lottie",
+              "path": "/de/docs/components/lottie",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/map",
+              "path": "/de/docs/components/map",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/overview",
+              "path": "/de/docs/components/overview",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/pagination",
+              "path": "/de/docs/components/pagination",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/post-item",
+              "path": "/de/docs/components/post-item",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/post-teaser",
+              "path": "/de/docs/components/post-teaser",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/post-widget",
+              "path": "/de/docs/components/post-widget",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/post-widget-carousel",
+              "path": "/de/docs/components/post-widget-carousel",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/progress-bar",
+              "path": "/de/docs/components/progress-bar",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/quote",
+              "path": "/de/docs/components/quote",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/rating",
+              "path": "/de/docs/components/rating",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/rich-text",
+              "path": "/de/docs/components/rich-text",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/rte",
+              "path": "/de/docs/components/rte",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/select",
+              "path": "/de/docs/components/select",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/sidenav",
+              "path": "/de/docs/components/sidenav",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/skeleton",
+              "path": "/de/docs/components/skeleton",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/slider",
+              "path": "/de/docs/components/slider",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/snackbar",
+              "path": "/de/docs/components/snackbar",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/stepper",
+              "path": "/de/docs/components/stepper",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/switch",
+              "path": "/de/docs/components/switch",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/table",
+              "path": "/de/docs/components/table",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/tabs",
+              "path": "/de/docs/components/tabs",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/teaser",
+              "path": "/de/docs/components/teaser",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "components/tooltip",
+              "path": "/de/docs/components/tooltip",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "design-tokens",
+              "path": "/de/docs/design-tokens",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "getting-started/installation",
+              "path": "/de/docs/getting-started/installation",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "getting-started/quick-start",
+              "path": "/de/docs/getting-started/quick-start",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "getting-started/theming",
+              "path": "/de/docs/getting-started/theming",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/de/docs/",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "migration",
+              "path": "/de/docs/migration",
+              "sidebar": "uiSidebar"
+            },
+            {
+              "id": "versions",
+              "path": "/de/docs/versions",
+              "sidebar": "uiSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "uiSidebar": {
+              "link": {
+                "path": "/de/docs/",
+                "label": "👋 Introduction"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

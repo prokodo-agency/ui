@@ -27,8 +27,8 @@ export function ChipView({
   return (
     <div
       {...rest}
-      role="button"
-      tabIndex={isClickable ? 0 : -1}
+      role={isClickable ? "button" : undefined}
+      tabIndex={isClickable ? 0 : undefined}
       className={bem(
         undefined,
         {

@@ -1,0 +1,29 @@
+{
+  "id": "aic-pattern",
+  "title": "AIC Muster",
+  "description": "Deep Dive in die Async/Interactive/Client (AIC) Architektur von prokodo UI.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/aic-pattern.mdx",
+  "sourceDirName": ".",
+  "slug": "/aic-pattern",
+  "permalink": "/de/docs/aic-pattern",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/aic-pattern.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "aic-pattern",
+    "title": "AIC Muster",
+    "sidebar_label": "AIC Muster",
+    "description": "Deep Dive in die Async/Interactive/Client (AIC) Architektur von prokodo UI."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Design Tokens",
+    "permalink": "/de/docs/design-tokens"
+  },
+  "next": {
+    "title": "Migration",
+    "permalink": "/de/docs/migration"
+  }
+}

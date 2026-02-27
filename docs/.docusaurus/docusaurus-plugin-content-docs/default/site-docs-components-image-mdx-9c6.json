@@ -1,0 +1,29 @@
+{
+  "id": "components/image",
+  "title": "Image",
+  "description": "Optimised image component wrapping Next.js Image with lazy loading, blur placeholder, and aspect-ratio control.",
+  "source": "@site/docs/components/image.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/image",
+  "permalink": "/docs/components/image",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/image.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "image",
+    "title": "Image",
+    "sidebar_label": "Image",
+    "description": "Optimised image component wrapping Next.js Image with lazy loading, blur placeholder, and aspect-ratio control."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Icon",
+    "permalink": "/docs/components/icon"
+  },
+  "next": {
+    "title": "List",
+    "permalink": "/docs/components/list"
+  }
+}

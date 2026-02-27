@@ -1,0 +1,76 @@
+---
+id: map
+title: Map
+sidebar_label: Map
+description: Interactive map component powered by Google Maps or Leaflet, with marker, cluster, and polygon support.
+---
+
+# Map
+
+`Map` renders an interactive map. Markers, clusters, polygons, and custom info windows are configured via props. The underlying library (Google Maps / Leaflet) is abstracted behind a consistent API.
+
+---
+
+## Overview
+
+```tsx
+import { Map } from '@prokodo/ui/map'
+
+<Map
+  center={{ lat: 52.52, lng: 13.405 }}
+  zoom={12}
+  markers={[{ position: { lat: 52.52, lng: 13.405 }, title: 'Berlin HQ' }]}
+/>
+```
+
+<StorybookEmbed id="prokodo-service-map--default" height={460} />
+
+
+---
+
+## Import
+
+```ts
+import { Map } from '@prokodo/ui/map'
+```
+
+Styling is handled via design tokens — no additional CSS import required.
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `center` | `{ lat: number; lng: number }` | — | ✅ | Initial map center. |
+| `zoom` | `number` | `12` | — | Initial zoom level. |
+| `markers` | `MapMarker[]` | `[]` | — | Array of markers with `position` and optional `title`. |
+| `height` | `string \| number` | `"400px"` | — | Map container height. |
+| `gestureHandling` | `"greedy" \| "auto" \| "none"` | `"auto"` | — | Google Maps gesture handling mode. |
+| `className` | `string` | — | — | CSS class on root container. |
+
+> See [`src/components/map/Map.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/map/Map.model.ts) for the full `MapProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.1.1** | **Non-text Content** (A) | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
+| **2.4.1** | **Bypass Blocks** (A) | 🔍 Manual review | Embedded frames or repeated navigation blocks must provide a skip-to-content mechanism (e.g. iframe title, skip link). |
+| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 1 jest-axe assertion(s) across 1 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Map in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-media-map--docs)
+
+---
+
+## Source
+
+[`src/components/map/Map.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/map/Map.model.ts)

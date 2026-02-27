@@ -1,0 +1,72 @@
+---
+id: animated-text
+title: AnimatedText
+sidebar_label: AnimatedText
+description: Text component with character-by-character or word-by-word entrance animations.
+---
+
+# AnimatedText
+
+`AnimatedText` renders text with staggered entrance animations applied at the character or word level, powered by CSS transitions and prokodo design tokens.
+
+
+---
+
+## Overview
+
+```tsx
+import { AnimatedText } from '@prokodo/ui/animated-text'
+
+<AnimatedText text="Hello, World!" mode="word" />
+```
+
+<StorybookEmbed id="prokodo-common-animatedtext--default" />
+
+
+---
+
+## Import
+
+```ts
+import { AnimatedText } from '@prokodo/ui/animated-text'
+```
+
+Styling is handled via design tokens — no component CSS import required beyond `@prokodo/ui/theme.css`.
+
+---
+
+## Props
+
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+| `text` | `string` | — | ✅ | Text content to animate. |
+| `mode` | `"char" \| "word"` | `"word"` | — | Unit of animation (character or word). |
+| `stagger` | `number` | `30` | — | Delay between each animated unit (ms). |
+| `animated` | `boolean` | `true` | — | Disable animation (renders plain text). |
+| `className` | `string` | — | — | CSS class on root element. |
+
+> See [`src/components/animatedText/AnimatedText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animatedText/AnimatedText.model.ts) for the full `AnimatedTextProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name | Status | Note |
+|-----------|------|--------|---------|
+| **1.1.1** | **Non-text Content** (A) | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.2.2** | **Pause, Stop, Hide** (A) | 🔍 Manual review | Animations or auto-rotating content lasting more than 5 s must provide a pause/stop control. |
+| **2.3.1** | **Three Flashes or Below Threshold** (A) | 🔍 Manual review | Animated content must not flash more than 3 times per second. |
+| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 1 jest-axe assertion(s) across 5 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open AnimatedText in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-animatedtext--docs)
+
+---
+
+## Source
+
+[`src/components/animatedText/AnimatedText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animatedText/AnimatedText.model.ts)

@@ -1,0 +1,85 @@
+---
+id: quick-start
+title: Schnellstart
+sidebar_label: Schnellstart
+description: Verwende deine erste prokodo UI Komponente in weniger als 5 Minuten — Button, Card, Input und Dialog als Beispiele.
+---
+
+# Schnellstart
+
+Nach der [Installation](/de/docs/getting-started/installation) von `@prokodo/ui` kannst du sofort Komponenten verwenden. Jede Komponente ist ein separater Einstiegspunkt — importiere nur das, was du brauchst.
+
+---
+
+## Erste Komponente — Button
+
+```tsx title="app/page.tsx"
+import { Button } from '@prokodo/ui/button'
+import '@prokodo/ui/button.css'
+
+export default function Page() {
+  return (
+    <main>
+      <Button variant="primary" size="md">
+        Jetzt starten
+      </Button>
+    </main>
+  )
+}
+```
+
+---
+
+## Do's and don'ts
+
+### ✅ Do
+
+- Importiere jede Komponente direkt über ihren Entry Point für maximale Performance:
+
+```tsx
+import { Button } from '@prokodo/ui/button'
+import { Card } from '@prokodo/ui/card'
+```
+
+- Nutze wenn möglich komponentenspezifische Styles:
+
+```tsx
+import '@prokodo/ui/button.css'
+import '@prokodo/ui/card.css'
+```
+
+- Nutze `priority` für kritische Above-the-fold-Elemente (insbesondere Hero-Bilder), damit sie eager geladen/hydratisiert werden.
+
+### ❌ Don't
+
+- Vermeide breitere oder unnötige Imports, wenn du nur wenige Komponenten brauchst.
+- Vermeide zusätzliche Styles, die auf der Seite nicht benötigt werden.
+
+---
+
+## Formular-Beispiel
+
+```tsx title="app/contact/page.tsx"
+import { Form } from '@prokodo/ui/form'
+import { Input } from '@prokodo/ui/input'
+import '@prokodo/ui/form.css'
+import '@prokodo/ui/input.css'
+
+export default function ContactPage() {
+  return (
+    <Form onSubmit={(e, data) => console.log(data)} submitLabel="Senden">
+      <Input name="name" label="Vollständiger Name" required />
+      <Input name="email" label="E-Mail" type="email" required />
+    </Form>
+  )
+}
+```
+
+---
+
+## Nächste Schritte
+
+- [Theming](/de/docs/getting-started/theming) — Design-Tokens für deine Marke anpassen
+- [AIC-Muster](/de/docs/aic-pattern) — Deep-Dive in die server/client/lazy-Architektur
+- [Design-Tokens](/de/docs/design-tokens) — vollständige Token-Referenz
+- [Alle Komponenten →](/de/docs/components/overview)

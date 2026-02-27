@@ -1,0 +1,29 @@
+{
+  "id": "components/post-item",
+  "title": "PostItem",
+  "description": "Compact blog/news list-item component with thumbnail, category, title, and date.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/components/post-item.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/post-item",
+  "permalink": "/de/docs/components/post-item",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/post-item.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "post-item",
+    "title": "PostItem",
+    "sidebar_label": "PostItem",
+    "description": "Compact blog/news list-item component with thumbnail, category, title, and date."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "List",
+    "permalink": "/de/docs/components/list"
+  },
+  "next": {
+    "title": "PostTeaser",
+    "permalink": "/de/docs/components/post-teaser"
+  }
+}

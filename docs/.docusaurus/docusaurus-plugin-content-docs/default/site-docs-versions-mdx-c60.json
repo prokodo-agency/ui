@@ -1,0 +1,29 @@
+{
+  "id": "versions",
+  "title": "Versions",
+  "description": "Published versions of @prokodo/ui and their support status.",
+  "source": "@site/docs/versions.mdx",
+  "sourceDirName": ".",
+  "slug": "/versions",
+  "permalink": "/de/docs/versions",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/versions.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "versions",
+    "title": "Versions",
+    "sidebar_label": "Versions",
+    "description": "Published versions of @prokodo/ui and their support status."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Migration",
+    "permalink": "/de/docs/migration"
+  },
+  "next": {
+    "title": "Changelog",
+    "permalink": "/de/docs/changelog"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "components/tabs",
+  "title": "Tabs",
+  "description": "Tab panel component with keyboard navigation, animated panel switching, and accessible ARIA roles.",
+  "source": "@site/docs/components/tabs.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/tabs",
+  "permalink": "/docs/components/tabs",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/tabs.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "tabs",
+    "title": "Tabs",
+    "sidebar_label": "Tabs",
+    "description": "Tab panel component with keyboard navigation, animated panel switching, and accessible ARIA roles."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Sidenav",
+    "permalink": "/docs/components/sidenav"
+  },
+  "next": {
+    "title": "Animated",
+    "permalink": "/docs/components/animated"
+  }
+}

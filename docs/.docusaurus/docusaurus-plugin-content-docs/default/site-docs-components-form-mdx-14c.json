@@ -1,0 +1,29 @@
+{
+  "id": "components/form",
+  "title": "Form",
+  "description": "Structured form container with built-in validation orchestration, submission state, and accessible error summary.",
+  "source": "@site/docs/components/form.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/form",
+  "permalink": "/docs/components/form",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/form.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "form",
+    "title": "Form",
+    "sidebar_label": "Form",
+    "description": "Structured form container with built-in validation orchestration, submission state, and accessible error summary."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "DynamicList",
+    "permalink": "/docs/components/dynamic-list"
+  },
+  "next": {
+    "title": "Input",
+    "permalink": "/docs/components/input"
+  }
+}

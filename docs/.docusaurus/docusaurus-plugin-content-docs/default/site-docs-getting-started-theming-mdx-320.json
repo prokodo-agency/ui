@@ -1,0 +1,29 @@
+{
+  "id": "getting-started/theming",
+  "title": "Theming",
+  "description": "Override prokodo UI design tokens to apply your brand colours, typography, and spacing.",
+  "source": "@site/docs/getting-started/theming.mdx",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/theming",
+  "permalink": "/docs/getting-started/theming",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/getting-started/theming.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "theming",
+    "title": "Theming",
+    "sidebar_label": "Theming",
+    "description": "Override prokodo UI design tokens to apply your brand colours, typography, and spacing."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Quick Start",
+    "permalink": "/docs/getting-started/quick-start"
+  },
+  "next": {
+    "title": "Overview",
+    "permalink": "/docs/components/overview"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "intro",
+  "title": "Einführung",
+  "description": "Übersicht über prokodo UI — eine vollständig typisierte, AIC-fähige React-Komponentenbibliothek für Next.js App Router.",
+  "source": "@site/i18n/de/docusaurus-plugin-content-docs/current/intro.mdx",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/de/docs/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/intro.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "intro",
+    "title": "Einführung",
+    "sidebar_label": "Einführung",
+    "description": "Übersicht über prokodo UI — eine vollständig typisierte, AIC-fähige React-Komponentenbibliothek für Next.js App Router.",
+    "slug": "/"
+  },
+  "sidebar": "uiSidebar",
+  "next": {
+    "title": "Installation",
+    "permalink": "/de/docs/getting-started/installation"
+  }
+}

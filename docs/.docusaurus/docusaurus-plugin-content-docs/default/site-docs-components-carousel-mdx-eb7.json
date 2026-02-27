@@ -1,0 +1,29 @@
+{
+  "id": "components/carousel",
+  "title": "Carousel",
+  "description": "Horizontal sliding carousel with configurable autoplay, loop, and navigation controls.",
+  "source": "@site/docs/components/carousel.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/carousel",
+  "permalink": "/docs/components/carousel",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/prokodo-agency/ui/edit/main/docs/docs/docs/components/carousel.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "carousel",
+    "title": "Carousel",
+    "sidebar_label": "Carousel",
+    "description": "Horizontal sliding carousel with configurable autoplay, loop, and navigation controls."
+  },
+  "sidebar": "uiSidebar",
+  "previous": {
+    "title": "Card",
+    "permalink": "/docs/components/card"
+  },
+  "next": {
+    "title": "Grid",
+    "permalink": "/docs/components/grid"
+  }
+}

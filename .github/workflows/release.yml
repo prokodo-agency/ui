@@ -78,9 +78,47 @@ jobs:
       - name: 📘 Build Storybook (static export)
         run: pnpm run storybook:build
 
-      - name: 🌐 Deploy Storybook to GitHub Pages (ui.prokodo.com)
+      - name: 📝 Generate docs component overview
+        run: cd docs && node scripts/generate-overview.mjs
+
+      - name: 📚 Build Docusaurus docs
+        run: cd docs && pnpm build
+
+      - name: 🧱 Assemble Pages site (docs root + storybook subpath)
+        shell: bash
+        run: |
+          rm -rf site
+          mkdir -p site/storybook
+
+          # Docs become primary site at ui.prokodo.com
+          cp -R docs/build/. site/
+
+          # Storybook is served under /storybook
+          cp -R storybook-static/. site/storybook/
+
+          # Root entrypoint should open docs
+          cat > site/index.html << 'EOF'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta http-equiv="refresh" content="0; url=/docs/" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>prokodo UI</title>
+            </head>
+            <body>
+              <p>Redirecting to <a href="/docs/">/docs/</a>…</p>
+            </body>
+          </html>
+          EOF
+
+          # Ensure custom domain for GitHub Pages
+          echo 'ui.prokodo.com' > site/CNAME
+
+      - name: 🌐 Deploy UI docs + Storybook to GitHub Pages (ui.prokodo.com)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
+          publish_dir: ./site
+          publish_branch: gh-pages
           cname: ui.prokodo.com
