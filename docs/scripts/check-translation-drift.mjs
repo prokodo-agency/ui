@@ -50,7 +50,7 @@ const bold = s => `\x1b[1m${s}\x1b[0m`
 
 // ── load component list ───────────────────────────────────────────────────────
 
-const componentsPath = join(ROOT, "src", "components.json")
+const componentsPath = join(ROOT, "docs", "_data", "components.json")
 const components = JSON.parse(await readFile(componentsPath, "utf8"))
 
 const EN_DIR = join(ROOT, "docs", "components")
