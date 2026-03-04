@@ -1,4 +1,4 @@
-name: 📚 Deploy Docs
+name: 📚 Docs (build check)
 
 on:
   push:
@@ -7,20 +7,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  id-token: write
-  pages: write
+  contents: read
 
 jobs:
   deploy-docs:
-    name: Build & Deploy Docs
+    name: Build Docs (check only)
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    # Skip on release commits — release.yml deploys docs as part of the full
-    # release pipeline (with the freshly published npm version), so running
-    # a second deploy here would race and potentially overwrite it.
+    # Deployment is handled by release.yml after a successful npm publish.
+    # This job only verifies the docs build cleanly on every non-release push.
     if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
 
     steps:
@@ -55,26 +49,4 @@ jobs:
       - name: 🛠 Build Docusaurus site
         run: cd docs && pnpm build
 
-      - name: 🧱 Assemble Pages site (docs root + storybook subpath)
-        shell: bash
-        run: |
-          rm -rf site
-          mkdir -p site/storybook
 
-          # Docs become the primary site at ui.prokodo.com
-          cp -R docs/build/. site/
-
-          # Storybook is served under /storybook
-          cp -R storybook-static/. site/storybook/
-
-          # Custom domain for GitHub Pages
-          echo 'ui.prokodo.com' > site/CNAME
-
-      - name: 📤 Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./site
-
-      - name: 🌐 Deploy to GitHub Pages (ui.prokodo.com)
-        id: deployment
-        uses: actions/deploy-pages@v4
