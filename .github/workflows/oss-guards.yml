@@ -1,0 +1,113 @@
+name: OSS Guards
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  oss-guards:
+    name: OSS integrity checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ------------------------------------------------------------------ #
+      # 1. Proprietary-marker check                                         #
+      #    Scans src/, assets/, tools/, docs/ for "All Rights Reserved",   #
+      #    "PROPRIETARY", and "ui-theme-prokodo" strings.                   #
+      # ------------------------------------------------------------------ #
+      - name: Check for proprietary markers in source
+        run: node tools/check-license-headers.mjs
+
+      # ------------------------------------------------------------------ #
+      # 2. Build the library so we can inspect dist/                        #
+      # ------------------------------------------------------------------ #
+      - name: Build
+        run: pnpm build:prod
+
+      # ------------------------------------------------------------------ #
+      # 3. Restricted-path check (also run as part of build, belt+braces)  #
+      #    Verifies no branded theme paths ended up in dist/.               #
+      # ------------------------------------------------------------------ #
+      - name: Check for restricted paths in dist/
+        run: node tools/check-restricted-paths.mjs
+
+      # ------------------------------------------------------------------ #
+      # 4. Dry-run pack & tarball grep                                      #
+      #    Ensures the published tarball contains no proprietary markers.   #
+      # ------------------------------------------------------------------ #
+      - name: Verify tarball is clean
+        run: |
+          pnpm pack --pack-destination /tmp/prokodo-ui-tarball
+          TARBALL=$(ls /tmp/prokodo-ui-tarball/*.tgz | head -1)
+          echo "Inspecting $TARBALL"
+          mkdir -p /tmp/prokodo-ui-unpacked
+          tar -xzf "$TARBALL" -C /tmp/prokodo-ui-unpacked
+          # Grep for proprietary markers — exit-code 1 means "not found" which is what we want
+          if grep -r --include="*.js" --include="*.mjs" --include="*.cjs" \
+                 --include="*.css" --include="*.scss" \
+                 -l "All Rights Reserved\|PROPRIETARY\|ui-theme-prokodo" \
+                 /tmp/prokodo-ui-unpacked 2>/dev/null; then
+            echo "❌ Tarball contains forbidden proprietary markers"
+            exit 1
+          else
+            echo "✅ Tarball is clean"
+          fi
+
+      # ------------------------------------------------------------------ #
+      # 5. Docs dependency check (ensure docs/ builds without issues)      #
+      # ------------------------------------------------------------------ #
+      - name: Typecheck docs
+        run: pnpm docs:typecheck
+
+      # ------------------------------------------------------------------ #
+      # 6. SCSS hex-literal guard (components only)                         #
+      #    Component stylesheets must use var(--pk-*) tokens for CSS        #
+      #    property values — not literal hex colours.                       #
+      #    Scoped to src/components/**/*.scss only.                         #
+      #                                                                     #
+      #    Allowed:                                                          #
+      #      - Hex used as fallback inside var(--pk-...): token-first use  #
+      #      - Lines declaring a CSS custom property (--xxx: #value)        #
+      #        — component-level token defaults are legitimate              #
+      #      - #fff / #FFF / #000 in CSS layer/mask techniques              #
+      #      - Comment-only lines                                            #
+      # ------------------------------------------------------------------ #
+      - name: Check SCSS components for hardcoded hex colours
+        run: |
+          # Match #rrggbb, #rrggbbaa, #rgb, #rgba (3–8 hex digits after #)
+          # then exclude all legitimate patterns
+          VIOLATIONS=$(grep -rn --include="*.scss" \
+            -E '#[0-9a-fA-F]{3,8}\b' \
+            src/components/ 2>/dev/null \
+            | grep -vE ':[0-9]+:[[:space:]]*//' \
+            | grep -vE 'var\(--pk-[^)]*,\s*#[0-9a-fA-F]{3,8}\b' \
+            | grep -vE '#(fff|ffffff|FFF|FFFFFF|000|000000)\b' \
+            | grep -vE ':[0-9]+:[[:space:]]*--[a-zA-Z0-9_-]+\s*:' \
+            || true)
+          if [ -n "$VIOLATIONS" ]; then
+            echo "❌ Hardcoded hex colours found in src/components/ — use var(--pk-*) tokens instead:"
+            echo "$VIOLATIONS"
+            exit 1
+          else
+            echo "✅ No hardcoded hex colours in component stylesheets"
+          fi

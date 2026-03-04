@@ -295,7 +295,7 @@
   },
   "scripts": {
     "dev": "PK_ENABLE_DEBUG_LOGS=true vite",
-    "build": "vite build && pnpm build:types && node tools/duplicate-css-modules.mjs && node tools/update-exports.mjs",
+    "build": "vite build && pnpm build:types && node tools/duplicate-css-modules.mjs && node tools/update-exports.mjs && node tools/check-restricted-paths.mjs",
     "build:types": "tsc --project tsconfig.build.json",
     "build:prod": "pnpm test && pnpm build",
     "typecheck": "tsc --project tsconfig.typecheck.json",
@@ -318,6 +318,7 @@
     "export-icons": "tsx tools/export-icons.ts",
     "prepare": "husky",
     "release": "pnpm build && pnpm changeset && pnpm changeset version && pnpm install && git add . && git commit -m 'ci: version bump' && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags",
+    "prepublishOnly": "pnpm build && node tools/check-license-headers.mjs && node tools/check-restricted-paths.mjs",
     "docs:start": "cd docs && pnpm start",
     "docs:build": "cd docs && pnpm build",
     "docs:serve": "cd docs && pnpm serve",
@@ -449,14 +450,15 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "NOTICE"
   ],
   "author": {
     "name": "prokodo",
     "email": "info@prokodo.com",
     "url": "https://www.prokodo.com/en/next-js-agency/?utm_source=npm&utm_medium=author&utm_campaign=prokodo_ui"
   },
-  "license": "BUSL-1.1",
+  "license": "Apache-2.0",
   "funding": {
     "type": "other",
     "url": "https://www.prokodo.com/en/next-js-agency/?utm_source=npm&utm_medium=funding&utm_campaign=prokodo_ui"

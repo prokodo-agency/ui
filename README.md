@@ -1,10 +1,8 @@
 <p align="center">
-  <a href="https://www.prokodo.com" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.prokodo.com/prokodo_logo_1a3bb7867c/prokodo_logo_1a3bb7867c.webp" alt="prokodo – UI component library for React" height="58" />
+  <a href="https://ui.prokodo.com" target="_blank" rel="noopener noreferrer">
+    <img src="./assets/images/banner.svg" alt="prokodo UI — Empowering Digital Innovation" width="900" />
   </a>
 </p>
-<h1 align="center">prokodo UI (Beta)</h1>
-<h2 align="center">Empowering Digital Innovation</h2>
 
 **Modern, customizable UI components built with React and TypeScript — developed by [prokodo](https://www.prokodo.com) for high-performance web interfaces.**
 
@@ -27,11 +25,13 @@
  https://www.prokodo.com/en/guide/next-js/next-js-migration/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=migration_en
 </details>
 
+<br>
+
 [![npm](https://img.shields.io/npm/v/@prokodo/ui?style=flat&color=3178c6&label=npm)](https://www.npmjs.com/package/@prokodo/ui)
 [![CI](https://github.com/prokodo-agency/ui/actions/workflows/release.yml/badge.svg)](https://github.com/prokodo-agency/ui/actions/workflows/release.yml)
-[![License: BUSL-1.1](https://img.shields.io/badge/license-BUSL--1.1-blue.svg)](LICENSE)
-[![Storybook](https://img.shields.io/badge/storybook-ui.prokodo.com-ff4785?logo=storybook&logoColor=white)](https://ui.prokodo.com)
-[![bundlephobia](https://img.shields.io/bundlephobia/minzip/@prokodo/ui?label=bundle%20size&style=flat&color=blue)](https://bundlephobia.com/result?p=@prokodo/ui)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-ui.prokodo.com-6c47ff?logo=googledocs&logoColor=white)](https://ui.prokodo.com)
+[![Storybook](https://img.shields.io/badge/storybook-ui.prokodo.com%2Fstorybook-ff4785?logo=storybook&logoColor=white)](https://ui.prokodo.com/storybook)
 [![Next.js](https://img.shields.io/badge/Next.js-13–16-black)](#)
 [![Turbopack](https://img.shields.io/badge/Works%20with-Turbopack-000)](#)
 
@@ -45,7 +45,7 @@
 - 🧩 **Component-rich**: 50+ reusable UI components
 - 🧪 **Reliable**: Fully tested with Jest and Testing Library
 - 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
-- 📦 **Ready-to-install**: Distributed via npm for non-production use under the BUSL-1.1 license
+- 📦 **Ready-to-install**: Distributed via npm under the Apache-2.0 license — free for production use
 - 🚀 **Optimized for Next.js 13–16 out of the box** (App Router, React Server Components)
 - ⚡ **Turbopack compatible** (no config required)
 - 🔗 **Framework adapters** via `UIRuntimeProvider` for `next/link` & `next/image`
@@ -64,13 +64,21 @@ Each component is built for **lazy loading**, works seamlessly with **React Serv
 
 This makes `@prokodo/ui` ideal for modern SSR apps using Next.js or Remix, with excellent Time-to-Interactive (TTI) and Core Web Vitals.
 
+## 📄 License & Usage
+
+|                  |                                                                                                                                        |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **License**      | [Apache-2.0](LICENSE) — free for production use, modification, and redistribution                                                      |
+| **Trademark**    | "prokodo" and the prokodo logo are trademarks of prokodo (Christian Salat). See [TRADEMARKS.md](TRADEMARKS.md)                         |
+| **Brand theme**  | Signature visuals (logo, illustrations, special glow patterns) may appear in docs/Storybook but are not distributed in the npm package |
+| **Contributing** | Sign-off required (DCO 1.1). See [CONTRIBUTING.md](CONTRIBUTING.md)                                                                    |
+| **Security**     | Responsible disclosure via GitHub Advisories. See [SECURITY.md](SECURITY.md)                                                           |
+
 ---
 
 ## 🚀 Getting Started
 
-### 1. Install the package
-
-> ⚠️ ESM-only: This package does not support CommonJS (`require()`).
+### Install
 
 ```bash
 pnpm add @prokodo/ui
@@ -78,300 +86,22 @@ pnpm add @prokodo/ui
 npm install @prokodo/ui
 ```
 
-### 2. Use a component
+> ⚠️ ESM-only: This package does not support CommonJS (`require()`).
 
-#### React
+### Documentation & Examples
 
-```tsx
-import { Button, type ButtonProps } from "@prokodo/ui/button"
-
-export default function Layout() {
-  // Renders to HTML on the server with zero‐JS.
-  // On the client, it will hydrate when scrolled into view or the user interacts.
-  return <Button title="Click me" />
-}
-```
-
-#### Next.js (RSC + AIC, lazy‐hydrate when visible/interacted)
-
-```tsx
-import { Button, type ButtonProps } from "@prokodo/ui/button"
-
-export default function Layout() {
-  // Renders to HTML on the server with zero‐JS.
-  // On the client, it will hydrate when scrolled into view or the user interacts.
-  return <Button title="Click me" />
-}
-```
-
-#### Next.js (RSC + AIC, force immediate hydration with priority)
-
-```tsx
-import { Button, type ButtonProps } from "@prokodo/ui/button"
-
-export default function AboveTheFoldHero() {
-  // Because this lives above the fold, we want it to hydrate right away:
-  return <Button priority title="Welcome to prokodo" />
-}
-```
-
-#### Next.js ("use client" wrapper, immediate hydration - above the fold)
-
-```tsx
-"use client"
-
-import { Button, type ButtonProps } from "@prokodo/ui/button"
-import { type FC, memo } from "react"
-
-// In a pure‐client file, you can wrap the AIC export.
-// The `priority` prop here ensures hydration runs immediately when mounted.
-export const HeadlineClient: FC<ButtonProps> = memo(props => {
-  return <Button {...props} priority />
-})
-```
-
-#### Next.js (hydrate on visibility only, default behavior)
-
-```tsx
-import { Headline, type ButtonProps } from "@prokodo/ui/button"
-
-export default function GalleryPage() {
-  return (
-    <div style={{ height: "200vh" }}>
-      <p>Keep scrolling…</p>
-      <div style={{ marginTop: "100vh" }}>
-        {/* This will render as HTML on the server;
-            on the client, it only hydrates when this element scrolls into view. */}
-        <Button title="I hydrate when you see me" />
-      </div>
-    </div>
-  )
-}
-```
-
-## 📦 Available Components
-
-### Compatibility of the components
-
-- ✅ = Available as AIC (renders zero-JS RSC and self-hydrates when needed) and can also be used as a client‐only entry.
-- \- = RSC (AIC) only; no client‐side bundle needed. (Usable in both, but best practice to use in RSC only)
-
-| Component           | ✅ AIC (RSC + optional client) | ✅ SSR-Compatible (`"use client"`) |
-| ------------------- | :----------------------------: | :--------------------------------: |
-| Accordion           |               ✅               |                 ✅                 |
-| Animated            |               ✅               |                 ✅                 |
-| AnimatedText        |               ✅               |                 ✅                 |
-| Autocomplete        |               ✅               |                 ✅                 |
-| Avatar              |               ✅               |                 ✅                 |
-| BaseLink            |               ✅               |                 ✅                 |
-| Button              |               ✅               |                 ✅                 |
-| Calendly            |               ✅               |                 ✅                 |
-| Card                |               ✅               |                 ✅                 |
-| Carousel            |               ✅               |                 ✅                 |
-| Checkbox            |               ✅               |                 ✅                 |
-| CheckboxGroup       |               ✅               |                 ✅                 |
-| Chip                |               ✅               |                 ✅                 |
-| DatePicker          |               ✅               |                 ✅                 |
-| Dialog              |               ✅               |                 ✅                 |
-| Drawer              |               ✅               |                 ✅                 |
-| DynamicList         |               ✅               |                 ✅                 |
-| Form                |               ✅               |                 ✅                 |
-| FormResponse        |               ✅               |                 –                  |
-| Grid/GridRow        |               ✅               |                 –                  |
-| Headline            |               ✅               |                 -                  |
-| Icon                |               ✅               |                 –                  |
-| Image               |               ✅               |                 ✅                 |
-| ImageText           |               ✅               |                 -                  |
-| Input               |               ✅               |                 ✅                 |
-| Label               |               ✅               |                 –                  |
-| Link                |               ✅               |                 ✅                 |
-| List                |               ✅               |                 –                  |
-| Loading             |               ✅               |                 –                  |
-| Lottie              |               ❌               |                 ✅                 |
-| Map                 |               ❌               |                 ✅                 |
-| Pagination          |               ✅               |                 ✅                 |
-| PostItem            |               ✅               |                 ✅                 |
-| PostTeaser          |               ✅               |                 ✅                 |
-| PostWidget          |               ✅               |                 ✅                 |
-| PostWidgetCarousel  |               ✅               |                 ✅                 |
-| ProgressBar         |               ✅               |                 ✅                 |
-| Quote               |               ✅               |                 –                  |
-| Rating              |               ✅               |                 ✅                 |
-| RichText            |               ✅               |                 ✅                 |
-| RTE (Beta)          |               ✅               |                 ✅                 |
-| Select              |               ✅               |                 ✅                 |
-| SideNav             |               ✅               |                 ✅                 |
-| Skeleton            |               ✅               |                 –                  |
-| Slider              |               ✅               |                 ✅                 |
-| Snackbar & Provider |               ✅               |                 ✅                 |
-| Stepper             |               ✅               |                 ✅                 |
-| Switch              |               ✅               |                 ✅                 |
-| Table               |               ✅               |                 –                  |
-| Tabs                |               ✅               |                 ✅                 |
-| Teaser              |               ✅               |                 -                  |
-| Tooltip             |               ✅               |                 ✅                 |
-
-## Since Next.js 16
-
-- Link/Image runtime provider (required for <Link>/<Image> adapters)
-- For Next.js apps, provide your framework components (next/link, next/image) via a small client provider.
-- Do not pass linkComponent / imageComponent props from pages—use the provider instead.
-
-### 1. Create a client provider
-
-```tsx
-// app/providers/ProkodoUiNextProvider.tsx
-"use client"
-
-import NextLink from "next/link"
-import NextImage from "next/image"
-import { UIRuntimeProvider } from "@prokodo/ui/runtime"
-
-export function ProkodoUiNextProvider({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <UIRuntimeProvider
-      value={{ linkComponent: NextLink, imageComponent: NextImage }}
-    >
-      {children}
-    </UIRuntimeProvider>
-  )
-}
-```
-
-### 2. Wrap your root layout
-
-```tsx
-// app/layout.tsx (server component)
-import { ProkodoUiNextProvider } from "./providers/ProkodoUiNextProvider"
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body>
-        <ProkodoUiNextProvider>{children}</ProkodoUiNextProvider>
-      </body>
-    </html>
-  )
-}
-```
-
-### 3. Use components normally (no extra props needed)
-
-```tsx
-import { Link } from "@prokodo/ui/link"
-import { Image } from "@prokodo/ui/image"
-
-export default function Page() {
-  return (
-    <>
-      <Link href="/about">About</Link>
-      <Image src="/hero.jpg" alt="Hero" />
-    </>
-  )
-}
-```
-
-**Notes**:
-
-- The provider file must be a "use client" module.
-- Remove any linkComponent / imageComponent props you previously passed from server code.
-- Plain React (non-Next) apps don’t need this; just use <a> / <img> or pass your own adapters inside client components.
-
-## How to create my own Island Component?
-
-### 1. Create your island component (Navbar.tsx):
-
-Island architecture lets you render components on the server and hydrate them on the client only when needed.
-
-```tsx
-import { createIsland } from "@prokodo/ui/createIsland"
-import { NavbarServer } from "./Navbar.server"
-
-import type { NavbarProps } from "./Navbar.model"
-
-export const Navbar = createIsland<NavbarProps>({
-  name: "Navbar",
-  Server: NavbarServer,
-  loadLazy: () => import("./Navbar.lazy"),
-
-  // Optional: Force client-side hydration as soon as someone uses an action
-  // We are automatically recognizing onChange, onKeyDown, ... events. Only needed for custom attributes.
-  isInteractive: (p: NavbarProps) => p.customEvent === true,
-})
-```
-
-### 2. Create your lazy-hydrate wrapper (Navbar.lazy):
-
-```tsx
-"use client"
-import { createLazyWrapper } from "@prokodo/ui/createLazyWrapper"
-
-import { NavbarClient } from "./Navbar.client"
-import { NavbarServer } from "./Navbar.server"
-
-import type { NavbarProps } from "./Navbar.model"
-
-export default createLazyWrapper<NavbarProps>({
-  name: "Navbar",
-  Client: NavbarClient,
-  Server: NavbarServer,
-
-  // Optional: Defer hydration until the component becomes visible in the viewport (Default: true)
-  // Can be controlled by priority attribute.
-  hydrateOnVisible: false,
-
-  // Optional: Force client-side hydration as soon as someone uses an action.
-  // We are automatically recognizing onChange, onKeyDown, ... events. Only needed for custom attributes.
-  isInteractive: (p: NavbarProps) => p.customEvent === true,
-})
-```
-
-## 🎯 Next steps
-
-- [ ] Add more ✨ **fancy styling**, UI polish and properties
-- [ ] Improve **accessibility** to meet **WCAG 2.2 AAA** standards
-- [ ] Detailed Documentation about the components
-- [x] Detailed Typescript-Model-Documentation about the components
-
-## Examples (Next.js + Headless CMS)
-
-Real-world setups we ship:
-
-- Next.js + **Strapi** content models
-- Next.js + **Contentful** entries & preview
-- Migration from **Headless WordPress** to Next.js
-
-**Need help or a quick scoping?**
-
-- 🇺🇸 **Next.js Agency (EN)** → https://www.prokodo.com/en/next-js-agency/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=examples_cta_en
-- 🇩🇪 **Next.js Agentur (DE)** → https://www.prokodo.com/de/next-js-agentur/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=examples_cta_de
-
-<details>
-  <summary><b>Further reading: Next.js guides</b> (SEO · Performance · Migration)</summary>
-
-- SEO (Metadata API, hreflang):  
-  https://www.prokodo.com/en/guide/next-js/next-js-seo/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=seo_en
-
-- Performance (LCP/INP/CLS, Streaming SSR):  
-  https://www.prokodo.com/en/guide/next-js/next-js-performance/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=perf_en
-
-- Migration Playbook (RACI, Canary, Rollback):  
- https://www.prokodo.com/en/guide/next-js/next-js-migration/?utm_source=github&utm_medium=readme_examples&utm_campaign=ui&utm_content=migration_en
-</details>
+| Resource                          | Link                                                                       |
+| --------------------------------- | -------------------------------------------------------------------------- |
+| 📖 Full docs & API reference      | [ui.prokodo.com](https://ui.prokodo.com)                                   |
+| 🎨 Interactive component explorer | [ui.prokodo.com/storybook](https://ui.prokodo.com/storybook)               |
+| 📦 npm                            | [npmjs.com/package/@prokodo/ui](https://www.npmjs.com/package/@prokodo/ui) |
 
 ## 📘 Documentation
 
-Explore all components and examples in the official Storybook:
-
-👉 https://ui.prokodo.com
+|                                   |                                                              |
+| --------------------------------- | ------------------------------------------------------------ |
+| 📖 Docs & API reference           | [ui.prokodo.com](https://ui.prokodo.com)                     |
+| 🎨 Component explorer (Storybook) | [ui.prokodo.com/storybook](https://ui.prokodo.com/storybook) |
 
 ## 🛠 Local Development
 
@@ -390,7 +120,7 @@ pnpm run storybook:build
 
 ## 📄 License
 
-This library is published under the Business Source License 1.1 (BUSL-1.1).
+This library is published under the [Apache License 2.0](LICENSE).
 
-© 2025 prokodo — All rights reserved.
+© 2025 prokodo. See [NOTICE](NOTICE) and [TRADEMARKS.md](TRADEMARKS.md).  
 Visit us at [prokodo.com](https://www.prokodo.com).
