@@ -38,6 +38,9 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: 🏗 Build library
+        run: pnpm build
+
       - name: 📝 Generate component overview
         run: cd docs && node scripts/generate-overview.mjs
 
