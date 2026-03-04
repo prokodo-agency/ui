@@ -9,11 +9,15 @@ on:
 permissions:
   contents: write
   id-token: write
+  pages: write
 
 jobs:
   deploy-docs:
     name: Build & Deploy Docs
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     # Skip on release commits — release.yml deploys docs as part of the full
     # release pipeline (with the freshly published npm version), so running
     # a second deploy here would race and potentially overwrite it.
@@ -66,10 +70,11 @@ jobs:
           # Custom domain for GitHub Pages
           echo 'ui.prokodo.com' > site/CNAME
 
-      - name: 🌐 Deploy to GitHub Pages (ui.prokodo.com)
-        uses: peaceiris/actions-gh-pages@v4
+      - name: 📤 Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          publish_branch: gh-pages
-          cname: ui.prokodo.com
+          path: ./site
+
+      - name: 🌐 Deploy to GitHub Pages (ui.prokodo.com)
+        id: deployment
+        uses: actions/deploy-pages@v4
