@@ -40,9 +40,12 @@ jobs:
 
       # ------------------------------------------------------------------ #
       # 2. Build the library so we can inspect dist/                        #
+      #    Use pnpm build (not build:prod) — build:prod runs the full test  #
+      #    suite incl. Cypress E2E which is not this workflow's concern.    #
+      #    Tests are already gated by the PR Checks workflow.               #
       # ------------------------------------------------------------------ #
       - name: Build
-        run: pnpm build:prod
+        run: pnpm build
 
       # ------------------------------------------------------------------ #
       # 3. Restricted-path check (also run as part of build, belt+braces)  #
