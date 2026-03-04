@@ -173,6 +173,9 @@ jobs:
       - name: 📥 Install dependencies (frozen lockfile)
         run: pnpm install --frozen-lockfile
 
+      - name: 🏗 Build library
+        run: pnpm build
+
       - name: 📘 Build Storybook (static export)
         run: pnpm run storybook:build
 
