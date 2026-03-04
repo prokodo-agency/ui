@@ -1,4 +1,5 @@
 import type { IconProps } from "@/components/icon"
+import type { Variants } from "@/types/variants"
 import type { ChangeEvent, HTMLAttributes, ReactNode } from "react"
 
 /**
@@ -48,6 +49,9 @@ export type CheckboxProps<T extends string = string> = Omit<
 
   /** Visual variant, defaults to "plain". */
   variant?: CheckboxVariant
+
+  /** Color variant — controls tick/fill gradient and glow. Defaults to "primary". */
+  color?: Variants
 
   /** Called whenever checked state changes. */
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void

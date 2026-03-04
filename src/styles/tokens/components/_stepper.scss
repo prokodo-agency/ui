@@ -1,0 +1,19 @@
+// =============================================================================
+// STEPPER COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin stepper-tokens() {
+  // Mask isolation background (used in CSS mask-composite gradient — must be a solid colour)
+  --pk-stepper-icon-mask-bg:       var(--pk-color-surface);
+  // Step label text colours
+  // Uses color-mix so it adapts to both light (dark fg) and dark (light fg) themes
+  --pk-stepper-label-color:        color-mix(in srgb, var(--pk-color-fg) 45%, transparent);
+  --pk-stepper-label-color-active: var(--pk-color-fg);
+  // Icon container box-shadow
+  --pk-stepper-shadow:             var(--pk-shadow-sm);
+  // Inner inset shadow for the active step icon (bridges the legacy elevation token)
+  --pk-stepper-shadow-inset:       var(--elevation-1--inset);
+  // Bottom margin between icon container and label text
+  --pk-stepper-icon-mb:            var(--pk-space-md);
+}

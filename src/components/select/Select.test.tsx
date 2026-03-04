@@ -85,7 +85,7 @@ describe("Select", () => {
 
     it("renders selected item label when value is set", () => {
       render(<Select id="fruits" items={items} label="Fruits" value="b" />)
-      expect(screen.getByText("Banana")).toBeInTheDocument()
+      expect(screen.getAllByText("Banana")[0]).toBeInTheDocument()
     })
 
     it("marks required with aria-required", () => {

@@ -1,17 +1,17 @@
 import { PostWidgetCarousel } from "./PostWidgetCarousel"
 
 import type { PostWidgetCarouselItem } from "./PostWidgetCarousel.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/blog/PostWidgetCarousel",
+  title: "prokodo/content/PostWidgetCarousel",
   component: PostWidgetCarousel,
   parameters: {
     layout: "centered",
   },
   tags: ["experimental"],
   argTypes: {
-    variant: {
+    color: {
       options: [
         "inherit",
         "primary",
@@ -75,5 +75,12 @@ export const Default: Story = {
       content: "Categories",
     },
     items,
+  },
+}
+
+export const Colored: Story = {
+  args: {
+    ...Default.args,
+    color: "primary",
   },
 }

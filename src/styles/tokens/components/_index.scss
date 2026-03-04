@@ -1,0 +1,71 @@
+// =============================================================================
+// COMPONENT TOKENS INDEX
+// Defines emit-components-defaults() which is @included inside the single
+// :root block in themes/_default.scss.
+//
+// RULE: Add new components here as they are migrated — do not remove existing.
+// =============================================================================
+
+@use "button"       as *;
+@use "card"         as *;
+@use "input"        as *;
+@use "label"        as *;
+@use "select"       as *;
+@use "autocomplete" as *;
+@use "dialog"       as *;
+@use "accordion"    as *;
+@use "snackbar"     as *;
+@use "checkbox"     as *;
+@use "switch"       as *;
+@use "slider"       as *;
+@use "datepicker"   as *;
+@use "inputotp"     as *;
+@use "rte"          as *;
+@use "dynamic-list" as *;
+@use "rating"       as *;
+@use "carousel"     as *;
+@use "grid"         as *;
+@use "image-text"   as *;
+@use "stepper"      as *;
+@use "table"        as *;
+@use "link"         as *;
+@use "pagination"   as *;
+@use "sidenav"      as *;
+@use "tabs"         as *;
+@use "progressbar"  as *;
+@use "drawer"       as *;
+@use "skeleton"     as *;
+@use "tooltip"      as *;
+
+@mixin emit-components-defaults() {
+  @include button-tokens();
+  @include card-tokens();
+  @include input-tokens();
+  @include label-tokens();
+  @include select-tokens();
+  @include autocomplete-tokens();
+  @include dialog-tokens();
+  @include accordion-tokens();
+  @include snackbar-tokens();
+  @include checkbox-tokens();
+  @include switch-tokens();
+  @include slider-tokens();
+  @include datepicker-tokens();
+  @include inputotp-tokens();
+  @include rte-tokens();
+  @include dynamic-list-tokens();
+  @include rating-tokens();
+  @include carousel-tokens();
+  @include grid-tokens();
+  @include image-text-tokens();
+  @include stepper-tokens();
+  @include table-tokens();
+  @include link-tokens();
+  @include pagination-tokens();
+  @include sidenav-tokens();
+  @include tabs-tokens();
+  @include progressbar-tokens();
+  @include drawer-tokens();
+  @include skeleton-tokens();
+  @include tooltip-tokens();
+}

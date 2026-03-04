@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as ButtonStories from "./Button.stories"
 
 <Meta of={ButtonStories} />
@@ -36,6 +36,21 @@ Use `Button` for any primary or secondary user action — form submission, navig
 - `redirect` wraps the button in `BaseLink` and switches the root element to `<a>`
 - `fullWidth` stretches the button to 100% of its container
 
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                     | Default                          | Description                                                  |
+| ------------------------- | -------------------------------- | ------------------------------------------------------------ |
+| `--pk-button-bg`          | `var(--pk-color-surface-raised)` | Default button background (contained/inherit fallback).      |
+| `--pk-button-fg`          | `var(--pk-color-fg)`             | Default button text/icon color.                              |
+| `--pk-button-shadow`      | `none`                           | Base box-shadow; per-color glow shadows apply automatically. |
+| `--pk-button-radius`      | `var(--pk-radius-md)`            | Border radius.                                               |
+| `--pk-button-padding-x`   | `var(--pk-space-lg)`             | Horizontal padding.                                          |
+| `--pk-button-padding-y`   | `var(--pk-space-md)`             | Vertical padding.                                            |
+| `--pk-button-disabled-bg` | —                                | Override background for disabled state (optional).           |
+| `--pk-button-disabled-fg` | `var(--pk-color-muted)`          | Override text color for disabled state (optional).           |
+
 ## ✅ Do
 
 - Use clear, action-oriented labels: "Save changes", "Delete project"
@@ -72,6 +87,24 @@ Use `Button` for any primary or secondary user action — form submission, navig
 
 <Canvas>
   <Story of={ButtonStories.WithImage} />
+</Canvas>
+
+### With loading
+
+<Canvas>
+  <Story of={ButtonStories.WithLoading} />
+</Canvas>
+
+### With loading outlined
+
+<Canvas>
+  <Story of={ButtonStories.WithLoadingOutlined} />
+</Canvas>
+
+### With loading text
+
+<Canvas>
+  <Story of={ButtonStories.WithLoadingText} />
 </Canvas>
 
 ### Props

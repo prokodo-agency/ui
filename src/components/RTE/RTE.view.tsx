@@ -36,6 +36,7 @@ export function RTEView({
   errorTranslations,
   rteToolbar,
   rteOptions,
+  color,
   ...rest
 }: RTEViewProps): JSX.Element {
   void onChange
@@ -48,7 +49,9 @@ export function RTEView({
   return (
     <Input
       {...rest}
+      isFocused
       multiline
+      color={color}
       disabled={disabled}
       errorText={errorText}
       maxLength={maxLength}
@@ -62,6 +65,7 @@ export function RTEView({
           className={bem(undefined, {
             disabled: Boolean(disabled),
             readonly: Boolean(readOnly),
+            [color ?? "primary"]: true,
           })}
         >
           <div

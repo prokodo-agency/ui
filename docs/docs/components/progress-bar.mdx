@@ -9,49 +9,61 @@ description: Linear progress indicator with determinate, indeterminate, and step
 
 `ProgressBar` renders a horizontal progress indicator. Supports determinate (known progress), indeterminate (unknown progress), and stepped/segmented modes.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { ProgressBar } from '@prokodo/ui/progress-bar'
-
-<ProgressBar value={65} max={100} label="Upload progress" />
+import { ProgressBar } from "@prokodo/ui/progress-bar"
+;<ProgressBar value={65} max={100} label="Upload progress" />
 ```
 
-<StorybookEmbed id="prokodo-common-progressbar--default" />
-
+<StorybookEmbed id="prokodo-feedback-progressbar--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { ProgressBar } from '@prokodo/ui/progress-bar'
+import { ProgressBar } from "@prokodo/ui/progress-bar"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/progress-bar.css'
+import "@prokodo/ui/progress-bar.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `value` | `number` | — | — | Current progress value. Required for determinate mode. |
-| `max` | `number` | `100` | — | Maximum progress value. |
-| `variant` | `"determinate" \| "indeterminate"` | `"determinate"` | — | Progress mode. |
-| `color` | `"primary" \| "secondary" \| "success" \| "error"` | `"primary"` | — | Track color. |
-| `label` | `string` | — | — | Accessible ARIA label. |
-| `showLabel` | `boolean` | `false` | — | Display a percentage label above the bar. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop        | Type       | Default | Required | Description                                       |
+| ----------- | ---------- | ------- | -------- | ------------------------------------------------- |
+| `id`        | `string`   | —       | ✅       | HTML id linking label to progress element.        |
+| `value`     | `number`   | `0`     | —        | Progress value (0–100).                           |
+| `label`     | `string`   | —       | —        | Accessible label text.                            |
+| `hideLabel` | `boolean`  | `false` | —        | Visually hide the label (still accessible).       |
+| `infinity`  | `boolean`  | `false` | —        | Show indeterminate / infinite progress animation. |
+| `animated`  | `boolean`  | `true`  | —        | Animate the progress bar fill.                    |
+| `color`     | `Variants` | —       | —        | Accent color variant.                             |
+| `className` | `string`   | —       | —        | CSS class on root element.                        |
 
 > See [`src/components/progress-bar/ProgressBar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/progress-bar/ProgressBar.model.ts) for the full `ProgressBarProps` type.
+
+---
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                         | Default                          | Description         |
+| ----------------------------- | -------------------------------- | ------------------- |
+| `--pk-progressbar-track-bg`   | `var(--pk-color-surface-raised)` | Track background    |
+| `--pk-progressbar-radius`     | `0.75rem`                        | Track border-radius |
+| `--pk-progressbar-height`     | `1rem`                           | Track height        |
+| `--pk-progressbar-shadow`     | `var(--elevation-2)`             | Track box-shadow    |
+| `--pk-progressbar-label-size` | `0.875rem`                       | Label font-size     |
 
 ---
 
@@ -60,7 +72,7 @@ import '@prokodo/ui/progress-bar.css'
 Use the standard import path in application code:
 
 ```ts
-import { ProgressBar } from '@prokodo/ui/progress-bar'
+import { ProgressBar } from "@prokodo/ui/progress-bar"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -72,11 +84,11 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
-| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+| Criterion | Name                           | Status       | Note                                                                                                                                       |
+| --------- | ------------------------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.            |
+| **4.1.3** | **Status Messages** (AA)       | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
 
 > **Test coverage:** 3 jest-axe assertion(s) across 4 test file(s) · 4 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

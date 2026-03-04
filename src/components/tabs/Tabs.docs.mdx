@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as TabsStories from "./Tabs.stories"
 
 <Meta of={TabsStories} />
@@ -30,6 +30,7 @@ Use `Tabs` when users need to switch between sibling content sections without le
 
 ## API updates
 
+- `TabsProps.color` sets the indicator gradient and hover accent for all tabs (`primary | secondary | success | error | info | warning`)
 - `TabsItem.label` accepts `ReactNode` (not only plain text)
 - `TabsProps.badgeChipProps` sets global Chip props for all badges
 - `TabsItem.badgeChipProps` overrides global badge chip props per tab item
@@ -57,6 +58,28 @@ Use `Tabs` when users need to switch between sibling content sections without le
 - Don’t put too many tabs in one row without clear grouping
 - Don’t use vague labels like “Tab 1/Tab 2”
 
+## Design Tokens
+
+Customise `Tabs` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                          | Default                                                              | Description                                                                    |
+| ------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `--pk-tabs-border`             | `var(--pk-color-border)`                                             | Tab list border color (bottom / right in vertical mode)                        |
+| `--pk-tabs-tab-color`          | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)`            | Default tab label color                                                        |
+| `--pk-tabs-tab-hover-color`    | `var(--pk-color-brand)`                                              | Hover accent color (tints the hover background)                                |
+| `--pk-tabs-tab-hover-bg`       | `color-mix(in srgb, var(--pk-tabs-tab-hover-color) 8%, transparent)` | Tab background on hover and focus                                              |
+| `--pk-tabs-tab-selected-color` | `var(--pk-color-fg)`                                                 | Active/selected tab label color                                                |
+| `--pk-tabs-tab-disabled-color` | `var(--pk-color-muted)`                                              | Disabled tab label color                                                       |
+| `--pk-tabs-badge-bg`           | `var(--pk-color-border)`                                             | Badge pill background color                                                    |
+| `--pk-tabs-badge-fg`           | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)`            | Badge pill text color                                                          |
+| `--pk-tabs-indicator-gradient` | `var(--gradient-border-4)`                                           | Gradient used for the selected-tab indicator line                              |
+| `--pk-tabs-gap`                | `var(--pk-space-lg)`                                                 | Gap in vertical layout grid                                                    |
+| `--pk-tabs-pad-xs`             | `var(--pk-space-xs)`                                                 | Badge pill horizontal padding                                                  |
+| `--pk-tabs-pad-sm`             | `var(--pk-space-sm)`                                                 | Gap between icon and label inside a tab                                        |
+| `--pk-tabs-pad-md`             | `var(--pk-space-md)`                                                 | Vertical padding of each tab button                                            |
+| `--pk-tabs-pad-lg`             | `var(--pk-space-lg)`                                                 | Horizontal padding of each tab button / panel padding                          |
+| `--pk-tabs-radius`             | `var(--pk-radius-sm)`                                                | Border-radius of tab button top corners (horizontal) / left corners (vertical) |
+
 ## Examples
 
 ### Default
@@ -77,10 +100,64 @@ Use `Tabs` when users need to switch between sibling content sections without le
   <Story of={TabsStories.Vertical} />
 </Canvas>
 
+### With disabled tab
+
+<Canvas>
+  <Story of={TabsStories.WithDisabledTab} />
+</Canvas>
+
+### Disabled (all tabs)
+
+<Canvas>
+  <Story of={TabsStories.Disabled} />
+</Canvas>
+
 ### ReactNode labels + badge chip props
 
 <Canvas>
   <Story of={TabsStories.BadgeChipProps} />
+</Canvas>
+
+### Color — primary
+
+<Canvas>
+  <Story of={TabsStories.ColorPrimary} />
+</Canvas>
+
+### Color — secondary
+
+<Canvas>
+  <Story of={TabsStories.ColorSecondary} />
+</Canvas>
+
+### Color — success
+
+<Canvas>
+  <Story of={TabsStories.ColorSuccess} />
+</Canvas>
+
+### Color — error
+
+<Canvas>
+  <Story of={TabsStories.ColorError} />
+</Canvas>
+
+### Color — warning
+
+<Canvas>
+  <Story of={TabsStories.ColorWarning} />
+</Canvas>
+
+### Color — info
+
+<Canvas>
+  <Story of={TabsStories.ColorInfo} />
+</Canvas>
+
+### Color — vertical
+
+<Canvas>
+  <Story of={TabsStories.ColorVertical} />
 </Canvas>
 
 ### Props

@@ -7,58 +7,74 @@ description: SVG icon component with 1 000+ icons from the prokodo icon set load
 
 # Icon
 
-`Icon` renders SVG icons from the prokodo icon set. In production builds (and inside Docusaurus), icons are loaded from the jsDelivr CDN via `process.env.MODE = 'production'`.
+`Icon` renders SVG icons from the prokodo icon set. Icons are loaded from the jsDelivr CDN in any environment where `process.env.MODE` is not `'development'` — in development mode they fall back to local `/assets/icons`.
 
 ---
 
 ## Overview
 
 ```tsx
-import { Icon } from '@prokodo/ui/icon'
-
-<Icon name="arrow-right" size={24} color="primary" />
+import { Icon } from "@prokodo/ui/icon"
+;<Icon name="arrow-right" size={24} color="primary" />
 ```
 
-<StorybookEmbed id="prokodo-common-icon--default" />
-
+<StorybookEmbed id="prokodo-content-icon--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { Icon } from '@prokodo/ui/icon'
+import { Icon } from "@prokodo/ui/icon"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/icon.css'
+import "@prokodo/ui/icon.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `name` | `string` | — | ✅ | Icon identifier (e.g. `"arrow-right"`, `"check"`). |
-| `size` | `number \| string` | `20` | — | Width and height in pixels or CSS value. |
-| `color` | `string` | `"currentColor"` | — | Icon fill color (design token or CSS value). |
-| `title` | `string` | — | — | Accessible title for the SVG (screen-reader label). |
-| `className` | `string` | — | — | CSS class on root `<span>` wrapper. |
+| Prop        | Type         | Default | Required | Description                                    |
+| ----------- | ------------ | ------- | -------- | ---------------------------------------------- |
+| `name`      | `IconName`   | —       | —        | Icon identifier from the icon registry.        |
+| `label`     | `string`     | —       | —        | Accessible label text (sets `aria-label`).     |
+| `size`      | `IconSize`   | —       | —        | Icon size (preset string or numeric px value). |
+| `color`     | `string`     | —       | —        | CSS color value or token.                      |
+| `role`      | `string`     | —       | —        | ARIA role override.                            |
+| `onClick`   | `() => void` | —       | —        | Click handler.                                 |
+| `className` | `string`     | —       | —        | CSS class on root element.                     |
 
 > See [`src/components/icon/Icon.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/icon/Icon.model.ts) for the full `IconProps` type.
 
 ---
 
+## Design Tokens
+
+`Icon` does not define component-specific CSS custom properties. It resolves color via `currentColor` from the following global semantic tokens:
+
+| Token                | Description                        |
+| -------------------- | ---------------------------------- |
+| `--pk-color-brand`   | Icon color for `color="primary"`   |
+| `--pk-color-accent`  | Icon color for `color="secondary"` |
+| `--pk-color-muted`   | Icon color for `color="info"`      |
+| `--pk-color-success` | Icon color for `color="success"`   |
+| `--pk-color-warning` | Icon color for `color="warning"`   |
+| `--pk-color-error`   | Icon color for `color="error"`     |
+| `--pk-palette-white` | Icon color for `color="white"`     |
+
+---
+
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.1.1** | **Non-text Content** (A) | ✅ Fulfilled | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion | Name                           | Status       | Note                                                                                                                                            |
+| --------- | ------------------------------ | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Non-text Content** (A)       | ✅ Fulfilled | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                     |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.                 |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 1 test file(s) · 2 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

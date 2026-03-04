@@ -42,8 +42,8 @@ export type ListCardItemProps = (ListItemTitle | ListItemTitleNode) & {
   desc?: string | ReactNode
   /** Icon name or custom icon node. */
   icon?: IconName | ReactNode
-  /** Visual variant. */
-  variant?: ListVariant
+  /** Visual color. */
+  color?: ListVariant
   /** Icon props if using an IconName. */
   iconProps?: IconProps
   /** Optional redirect link props. */
@@ -64,8 +64,8 @@ export type ListDefaultItemProps = (ListItemTitle | ListItemTitleNode) & {
   className?: string
   /** Icon name or custom icon node. */
   icon?: IconName | ReactNode
-  /** Visual variant. */
-  variant?: ListVariant
+  /** Visual color. */
+  color?: ListVariant
   /** Optional redirect link props. */
   redirect?: LinkProps
   /** Item click handler (receives item config). */
@@ -91,8 +91,28 @@ export type ListItemProps = ListDefaultItemProps | ListCardItemProps
 export type ListDefaultProps = HTMLAttributes<HTMLUListElement> & {
   /** Render type. */
   type?: "default"
-  /** Visual variant. */
-  variant?: ListVariant
+  /** Visual color. */
+  color?: ListVariant
+  /** List root class name. */
+  className?: string
+  /** Description class name. */
+  classNameDesc?: string
+  /** Default list options. */
+  options?: ListDefaultOptions
+  /** Items to render. */
+  items: ListDefaultItemProps[]
+  /** Optional click handler on the list root. */
+  onClick?: () => void
+}
+
+/**
+ * List props for icon layout (items display with circular icon badge).
+ */
+export type ListIconProps = HTMLAttributes<HTMLUListElement> & {
+  /** Render type. */
+  type: "icon"
+  /** Visual color. */
+  color?: ListVariant
   /** List root class name. */
   className?: string
   /** Description class name. */
@@ -111,8 +131,8 @@ export type ListDefaultProps = HTMLAttributes<HTMLUListElement> & {
 export type ListCardProps = HTMLAttributes<HTMLUListElement> & {
   /** Render type. */
   type?: "card"
-  /** Visual variant. */
-  variant?: ListVariant
+  /** Visual color. */
+  color?: ListVariant
   /** List root class name. */
   className?: string
   /** Description class name. */
@@ -128,4 +148,4 @@ export type ListCardProps = HTMLAttributes<HTMLUListElement> & {
 /**
  * Union of supported list props.
  */
-export type ListProps = ListDefaultProps | ListCardProps
+export type ListProps = ListDefaultProps | ListIconProps | ListCardProps

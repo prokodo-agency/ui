@@ -1,9 +1,9 @@
 import { Skeleton } from "./Skeleton"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Skeleton",
+  title: "prokodo/feedback/Skeleton",
   component: Skeleton,
   parameters: {
     layout: "padded",

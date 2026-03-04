@@ -35,6 +35,7 @@ export function AutocompleteView({
   listClassName,
   itemClassName,
   inputProps,
+  color = "primary",
   _clientState,
   onChange,
   onSelect,
@@ -49,13 +50,14 @@ export function AutocompleteView({
   const canSearch = String(value ?? "").trim().length >= minQueryLength
 
   return (
-    <div className={bem(undefined, undefined, className)}>
+    <div className={bem(undefined, { [color]: true }, className)}>
       <div className={bem("inputWrap")}>
         <Input
           {...restInputProps}
           aria-describedby={ariaDescribedBy}
           aria-labelledby={ariaLabelledBy}
           autoComplete={autoComplete}
+          color={color}
           disabled={disabled}
           fullWidth={fullWidth}
           hideLegend={hideLabel || restInputProps?.hideLegend}

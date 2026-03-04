@@ -3,6 +3,7 @@ import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
 import { Icon } from "../icon"
+import { Loading, type LoadingColor } from "../loading"
 
 import styles from "./Button.module.scss"
 
@@ -27,17 +28,22 @@ export const ButtonView: FC<ButtonViewProps> = ({
   loading,
   ...rest
 }) => {
-  void loading
-
   const isOutlined = variant === "outlined"
   const iconName = iconProps?.name
   const iconMod = { "icon-only": isIconOnly }
   const { title } = rest as ButtonDefaultProps
 
+  // Spinner color: for contained buttons currentColor inherits from button text
+  // (white for info/error, --pk-color-fg for others). For outlined/text we
+  // explicitly pass the semantic color so the spinner matches the border/label.
+  const spinnerColor: LoadingColor | undefined =
+    variant !== "contained" ? (color as LoadingColor) : undefined
+
   const inner = (
     <>
+      {/* image — hidden while loading */}
       {/* istanbul ignore next */}
-      {image?.src !== undefined && (
+      {!loading && image?.src !== undefined && (
         /* istanbul ignore next */
         <Image
           height={20}
@@ -46,7 +52,15 @@ export const ButtonView: FC<ButtonViewProps> = ({
           className={bem("image", undefined, image?.className)}
         />
       )}
-      {iconName && <Icon className={bem("icon", iconMod)} {...iconProps} />}
+      {/* icon — hidden while loading */}
+      {!loading && iconName && (
+        <Icon className={bem("icon", iconMod)} {...iconProps} />
+      )}
+      {/* spinner — shown while loading, before the label */}
+      {loading && (
+        <Loading ariaLabel="Loading" color={spinnerColor} size="xs" />
+      )}
+      {/* title — always rendered so the button keeps its width */}
       {title}
     </>
   )
@@ -72,6 +86,7 @@ export const ButtonView: FC<ButtonViewProps> = ({
           variant === "outlined",
         [`has-text-${color}`]: variant === "text",
         "is-disabled": Boolean(disabled),
+        "is-loading": Boolean(loading),
         ...iconMod,
       },
       className,

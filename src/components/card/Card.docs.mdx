@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as CardStories from "./Card.stories"
 
 <Meta of={CardStories} />
@@ -9,7 +9,7 @@ Flexible content container with variants for highlight, background, gradient, an
 
 ## When to use
 
-Use `Card` to group related content — blog teasers, product listings, feature highlights, pricing tiers. Choose a variant to convey visual hierarchy or interactivity.
+Use `Card` to group related content — blog teasers, product listings, feature highlights, pricing tiers. Choose a `color` to convey visual hierarchy or interactivity.
 
 ## Accessibility (WCAG 2.2)
 
@@ -32,6 +32,15 @@ Use `Card` to group related content — blog teasers, product listings, feature 
 - `CardGradiant` applies a gradient overlay
 - `CardClickHandler` wraps the entire card in an accessible interactive region — provide keyboard and screen-reader support via the built-in handler props
 - Pass children as normal React nodes to compose card content freely
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                          | Default                   | Description               |
+| ------------------------------ | ------------------------- | ------------------------- |
+| `--pk-card-bg`                 | `var(--pk-color-surface)` | Card background           |
+| `--pk-card-panel-light-border` | `rgba(0, 0, 0, 0.08)`     | Light panel border colour |
 
 ## ✅ Do
 

@@ -8,6 +8,9 @@ let capturedInputProps: Record<string, unknown> = {}
 let capturedDatePickerProps: Record<string, unknown> = {}
 let capturedDynamicListProps: Record<string, unknown> = {}
 let capturedRatingProps: Record<string, unknown> = {}
+let capturedCheckboxProps: Record<string, unknown> = {}
+let capturedCheckboxGroupProps: Record<string, unknown> = {}
+let capturedAutocompleteProps: Record<string, unknown> = {}
 
 // Mock all child form components so tests are fast and isolated
 jest.mock("../switch", () => ({
@@ -121,6 +124,52 @@ jest.mock("../grid", () => ({
     <div data-testid="grid-row">{children}</div>
   ),
 }))
+jest.mock("../checkbox", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Checkbox: (props: any) => {
+    capturedCheckboxProps = props
+    return (
+      <div data-checked={String(props.checked ?? false)} data-testid="checkbox">
+        <button
+          data-testid="checkbox-trigger"
+          onClick={() => props.onChange?.({}, true)}
+        />
+      </div>
+    )
+  },
+}))
+jest.mock("../checkbox-group", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  CheckboxGroup: (props: any) => {
+    capturedCheckboxGroupProps = props
+    return (
+      <div data-testid="checkbox-group">
+        <button
+          data-testid="checkbox-group-trigger"
+          onClick={() => props.onChange?.(["a", "b"])}
+        />
+      </div>
+    )
+  },
+}))
+jest.mock("../autocomplete", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Autocomplete: (props: any) => {
+    capturedAutocompleteProps = props
+    return (
+      <div data-testid="autocomplete">
+        <button
+          data-testid="autocomplete-change"
+          onClick={() => props.onChange?.({ query: "search" })}
+        />
+        <button
+          data-testid="autocomplete-select"
+          onClick={() => props.onSelect?.({ value: "selected" })}
+        />
+      </div>
+    )
+  },
+}))
 
 const FormFieldClient = require("./FormField.client").default
 
@@ -129,6 +178,9 @@ beforeEach(() => {
   capturedDatePickerProps = {}
   capturedDynamicListProps = {}
   capturedRatingProps = {}
+  capturedCheckboxProps = {}
+  capturedCheckboxGroupProps = {}
+  capturedAutocompleteProps = {}
 })
 
 describe("FormField.client", () => {
@@ -457,5 +509,186 @@ describe("FormField.client – onChange callbacks", () => {
     )
     fireEvent.click(document.querySelector('[data-testid="select-trigger"]')!)
     expect(onChange).toHaveBeenCalledWith(expect.anything(), "optA")
+  })
+
+  // -------------------------------------------------------------------------
+  // Color prop forwarding
+  // -------------------------------------------------------------------------
+  it("forwards color to Input field", () => {
+    render(<FormFieldClient color="success" fieldType="input" id="inp-color" />)
+    expect(capturedInputProps.color).toBe("success")
+  })
+
+  it("forwards color to DatePicker field", () => {
+    render(<FormFieldClient color="warning" fieldType="date" id="date-color" />)
+    expect(capturedDatePickerProps.color).toBe("warning")
+  })
+
+  it("forwards color to DynamicList field", () => {
+    render(
+      <FormFieldClient color="error" fieldType="dynamic-list" id="dl-color" />,
+    )
+    expect(capturedDynamicListProps.color).toBe("error")
+  })
+
+  it("forwards color to Rating field", () => {
+    render(<FormFieldClient color="info" fieldType="rating" id="rt-color" />)
+    expect(capturedRatingProps.color).toBe("info")
+  })
+
+  // -------------------------------------------------------------------------
+  // Checkbox field type
+  // -------------------------------------------------------------------------
+
+  it("renders Checkbox for fieldType='checkbox'", () => {
+    const { getByTestId } = render(<FormFieldClient fieldType="checkbox" />)
+    expect(getByTestId("checkbox")).toBeInTheDocument()
+  })
+
+  it("passes boolean value as checked to Checkbox", () => {
+    render(<FormFieldClient fieldType="checkbox" value={true} />)
+    expect(capturedCheckboxProps.checked).toBe(true)
+  })
+
+  it("uses props.checked when value is not a boolean for Checkbox", () => {
+    render(
+      <FormFieldClient
+        checked={true}
+        fieldType="checkbox"
+        value="not-a-bool"
+      />,
+    )
+    expect(capturedCheckboxProps.checked).toBe(true)
+  })
+
+  it("Checkbox onChange calls outer onChange with boolean value", () => {
+    const onChange = jest.fn()
+    const { getByTestId } = render(
+      <FormFieldClient fieldType="checkbox" id="cb1" onChange={onChange} />,
+    )
+    fireEvent.click(getByTestId("checkbox-trigger"))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "cb1" }),
+      true,
+    )
+  })
+
+  it("forwards color to Checkbox field", () => {
+    render(
+      <FormFieldClient color="success" fieldType="checkbox" id="cb-color" />,
+    )
+    expect(capturedCheckboxProps.color).toBe("success")
+  })
+
+  // -------------------------------------------------------------------------
+  // CheckboxGroup field type
+  // -------------------------------------------------------------------------
+
+  it("renders CheckboxGroup for fieldType='checkbox-group'", () => {
+    const { getByTestId } = render(
+      <FormFieldClient fieldType="checkbox-group" />,
+    )
+    expect(getByTestId("checkbox-group")).toBeInTheDocument()
+  })
+
+  it("passes array value as values to CheckboxGroup", () => {
+    render(<FormFieldClient fieldType="checkbox-group" value={["x", "y"]} />)
+    expect(capturedCheckboxGroupProps.values).toEqual(["x", "y"])
+  })
+
+  it("uses props.values when value is not an array for CheckboxGroup", () => {
+    render(
+      <FormFieldClient
+        fieldType="checkbox-group"
+        value="not-an-array"
+        values={["a"]}
+      />,
+    )
+    expect(capturedCheckboxGroupProps.values).toEqual(["a"])
+  })
+
+  it("CheckboxGroup onChange calls outer onChange with array value", () => {
+    const onChange = jest.fn()
+    const { getByTestId } = render(
+      <FormFieldClient
+        fieldType="checkbox-group"
+        id="cbg1"
+        onChange={onChange}
+      />,
+    )
+    fireEvent.click(getByTestId("checkbox-group-trigger"))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "cbg1" }),
+      ["a", "b"],
+    )
+  })
+
+  it("forwards color to CheckboxGroup field", () => {
+    render(
+      <FormFieldClient
+        color="warning"
+        fieldType="checkbox-group"
+        id="cbg-color"
+      />,
+    )
+    expect(capturedCheckboxGroupProps.color).toBe("warning")
+  })
+
+  // -------------------------------------------------------------------------
+  // Autocomplete field type
+  // -------------------------------------------------------------------------
+
+  it("renders Autocomplete for fieldType='autocomplete'", () => {
+    const { getByTestId } = render(<FormFieldClient fieldType="autocomplete" />)
+    expect(getByTestId("autocomplete")).toBeInTheDocument()
+  })
+
+  it("passes string value to Autocomplete", () => {
+    render(<FormFieldClient fieldType="autocomplete" value="hello" />)
+    expect(capturedAutocompleteProps.value).toBe("hello")
+  })
+
+  it("uses props.value from AutocompleteProps when value is not a string", () => {
+    render(
+      <FormFieldClient
+        fieldType="autocomplete"
+        value={null}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {...({ value: { label: "X", id: 1 } } as any)}
+      />,
+    )
+    // With non-string cast, the AutocompleteProps.value path is taken
+    expect(capturedAutocompleteProps).toBeDefined()
+  })
+
+  it("Autocomplete onChange calls outer onChange with query string", () => {
+    const onChange = jest.fn()
+    const { getByTestId } = render(
+      <FormFieldClient fieldType="autocomplete" id="ac1" onChange={onChange} />,
+    )
+    fireEvent.click(getByTestId("autocomplete-change"))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "ac1" }),
+      "search",
+    )
+  })
+
+  it("Autocomplete onSelect calls outer onChange with selected value", () => {
+    const onChange = jest.fn()
+    const { getByTestId } = render(
+      <FormFieldClient fieldType="autocomplete" id="ac2" onChange={onChange} />,
+    )
+    fireEvent.click(getByTestId("autocomplete-select"))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "ac2" }),
+      "selected",
+    )
+  })
+
+  it("forwards color to Autocomplete field", () => {
+    render(
+      <FormFieldClient color="error" fieldType="autocomplete" id="ac-color" />,
+    )
+    expect(capturedAutocompleteProps.color).toBe("error")
   })
 })

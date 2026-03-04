@@ -18,11 +18,11 @@ slug: /
 
 Jede interaktive Komponente wird in drei Varianten ausgeliefert:
 
-| Import | Umgebung | Empfohlene Verwendung |
-|--------|----------|-----------------------|
-| `@prokodo/ui/{name}` | Server Component (RSC) | Standard — funktioniert in App Router Layouts und Pages |
-| `@prokodo/ui/{name}/client` | Client Component | Innerhalb von `"use client"`-Grenzen |
-| `@prokodo/ui/{name}/lazy` | Lazy (dynamischer Import) | Schwere Komponenten, die außerhalb des sichtbaren Bereichs geladen werden |
+| Import                      | Umgebung                  | Empfohlene Verwendung                                                     |
+| --------------------------- | ------------------------- | ------------------------------------------------------------------------- |
+| `@prokodo/ui/{name}`        | Server Component (RSC)    | Standard — funktioniert in App Router Layouts und Pages                   |
+| `@prokodo/ui/{name}/client` | Client Component          | Innerhalb von `"use client"`-Grenzen                                      |
+| `@prokodo/ui/{name}/lazy`   | Lazy (dynamischer Import) | Schwere Komponenten, die außerhalb des sichtbaren Bereichs geladen werden |
 
 Weitere Informationen: [AIC-Muster](/de/docs/aic-pattern).
 
@@ -31,7 +31,7 @@ Weitere Informationen: [AIC-Muster](/de/docs/aic-pattern).
 Jede Komponente exportiert ein typisiertes `{Name}Props`-Interface aus ihrer Modelldatei:
 
 ```ts
-import type { ButtonDefaultProps } from '@prokodo/ui/button'
+import type { ButtonDefaultProps } from "@prokodo/ui/button"
 ```
 
 ### Design-Tokens
@@ -44,13 +44,13 @@ Weitere Informationen: [Design-Tokens](/de/docs/design-tokens).
 
 ## Paketinformationen
 
-| Detail | Wert |
-|--------|------|
-| Paket | `@prokodo/ui` |
-| Registry | [npm](https://www.npmjs.com/package/@prokodo/ui) |
-| Peer-Abhängigkeit | `react >= 18`, `next >= 14` |
-| Bundle-Format | ESM, tree-shakable pro Komponente |
-| Styling | CSS Modules + Design Tokens (kein CSS-in-JS) |
+| Detail            | Wert                                             |
+| ----------------- | ------------------------------------------------ |
+| Paket             | `@prokodo/ui`                                    |
+| Registry          | [npm](https://www.npmjs.com/package/@prokodo/ui) |
+| Peer-Abhängigkeit | `react >= 18`, `next >= 14`                      |
+| Bundle-Format     | ESM, tree-shakable pro Komponente                |
+| Styling           | CSS Modules + Design Tokens (kein CSS-in-JS)     |
 
 ---
 

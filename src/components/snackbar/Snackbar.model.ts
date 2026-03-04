@@ -5,14 +5,12 @@ import type { HTMLAttributes, ReactNode } from "react"
 //  Variants & positions
 // ────────────────────────────────────────────────────────────────────────────────
 /**
- * Visual variants for Snackbar.
+ * Color tokens for Snackbar.
  */
-export type SnackbarVariant =
-  | "default"
-  | "success"
-  | "error"
-  | "warning"
-  | "info"
+export type SnackbarColor = "default" | "success" | "error" | "warning" | "info"
+
+/** @deprecated Use {@link SnackbarColor} instead. */
+export type SnackbarVariant = SnackbarColor
 
 /**
  * Snackbar screen position.
@@ -57,7 +55,7 @@ export type SnackbarCloseHandler = (
  * <Snackbar
  *   message="Deleted"
  *   action={<button>Undo</button>}
- *   variant="warning"
+ *   color="warning"
  * />
  */
 export interface SnackbarProps {
@@ -67,8 +65,8 @@ export interface SnackbarProps {
   open?: boolean
   /** Auto‑dismiss timeout in ms (0 = never). Default: 6000. */
   autoHideDuration?: number
-  /** Visual style variant. */
-  variant?: SnackbarVariant
+  /** Visual color token. */
+  color?: SnackbarColor
   /** Screen position. Default: { vertical: "bottom", horizontal: "center" }. */
   anchorOrigin?: SnackbarAnchorOrigin
   /** Optional custom action (e.g., “UNDO” button). */

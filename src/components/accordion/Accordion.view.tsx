@@ -17,7 +17,7 @@ export function AccordionView({
   type = "card",
   headerWrapperClassName,
   headerToggleClassName,
-  variant = "primary",
+  color = "primary",
   className,
   items,
   expandedIndex,
@@ -29,7 +29,7 @@ export function AccordionView({
   return (
     <div
       {...domRest}
-      className={bem(undefined, { [variant]: true, [type]: true }, className)}
+      className={bem(undefined, { [color]: true, [type]: true }, className)}
     >
       {items.map((item, index) => {
         const {
@@ -95,10 +95,10 @@ export function AccordionView({
                   <Headline
                     animated
                     className={bem("title")}
+                    color={isExpanded ? color : "inherit"}
                     highlight={isExpanded}
                     size="xs"
                     type="h3"
-                    variant={isExpanded ? "primary" : "inherit"}
                     {...(item.titleOptions ?? titleOptions)}
                   >
                     {title}

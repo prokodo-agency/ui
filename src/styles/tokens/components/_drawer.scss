@@ -1,0 +1,12 @@
+// =============================================================================
+// DRAWER TOKENS
+// =============================================================================
+
+@mixin drawer-tokens() {
+  --pk-drawer-bg:             var(--pk-color-surface);
+  --pk-drawer-border:         var(--pk-color-border);
+  --pk-drawer-shadow:         var(--elevation-1);
+  --pk-drawer-backdrop-bg:    rgba(0, 0, 0, 0.5);
+  --pk-drawer-z-index:        1302;
+  --pk-drawer-padding:        var(--pk-space-md);
+}

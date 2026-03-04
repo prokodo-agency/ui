@@ -1,6 +1,6 @@
 import type { CardProps } from "../card"
 import type { ChipProps } from "../chip"
-import type { HeadlineProps } from "../headline"
+import type { HeadlineProps, HeadlineVariant } from "../headline"
 import type { IconProps } from "../icon"
 import type { ImageProps } from "../image"
 import type { LinkProps } from "../link"
@@ -101,7 +101,8 @@ export type PostTeaserPropsBase = {
   classes?: PostTeaserClasses
   /** Component-level prop overrides. */
   componentsProps?: PostTeaserComponentsProps
-
+  /** Top-level color for the title Headline. */
+  color?: HeadlineVariant
   /** Read count (display only). */
   readCount?: number
   /** Word count for reading time calculation. */

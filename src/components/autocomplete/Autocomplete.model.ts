@@ -1,4 +1,5 @@
 import type { InputProps } from "../input"
+import type { Variants } from "@/types/variants"
 import type { KeyboardEventHandler } from "react"
 
 type AutocompleteInputProps = Omit<
@@ -97,6 +98,8 @@ export type AutocompleteProps = {
   disabled?: boolean
   /** Stretches input to full container width. */
   fullWidth?: boolean
+  /** Visual color — controls shadow glow and accent color. Default: "primary". */
+  color?: Variants
   /** Makes input read-only while preserving focusability. */
   readOnly?: boolean
   /** Native browser autocomplete attribute. */

@@ -1,0 +1,37 @@
+// =============================================================================
+// TOOLTIP TOKENS
+// =============================================================================
+
+@mixin tooltip-tokens() {
+  // Default (dark inverted bubble)
+  --pk-tooltip-bg:              color-mix(in srgb, var(--pk-color-fg) 92%, var(--pk-color-surface));
+  --pk-tooltip-fg:              var(--pk-color-surface);
+  --pk-tooltip-border:          color-mix(in srgb, var(--pk-color-surface) 12%, transparent);
+  --pk-tooltip-shadow:          var(--pk-shadow-lg);
+  --pk-tooltip-radius:          var(--pk-radius-sm);
+  --pk-tooltip-z:               2147483647;
+
+  // Success variant
+  --pk-tooltip-success-bg:      color-mix(in srgb, var(--pk-color-success) 12%, var(--pk-color-surface));
+  --pk-tooltip-success-fg:      var(--pk-color-fg);
+  --pk-tooltip-success-border:  color-mix(in srgb, var(--pk-color-success) 35%, transparent);
+  --pk-tooltip-success-shadow:  0 4px 16px color-mix(in srgb, var(--pk-color-success) 18%, transparent);
+
+  // Error variant
+  --pk-tooltip-error-bg:        color-mix(in srgb, var(--pk-color-error) 12%, var(--pk-color-surface));
+  --pk-tooltip-error-fg:        var(--pk-color-fg);
+  --pk-tooltip-error-border:    color-mix(in srgb, var(--pk-color-error) 35%, transparent);
+  --pk-tooltip-error-shadow:    0 4px 16px color-mix(in srgb, var(--pk-color-error) 18%, transparent);
+
+  // Warning variant
+  --pk-tooltip-warning-bg:      color-mix(in srgb, var(--pk-color-warning) 12%, var(--pk-color-surface));
+  --pk-tooltip-warning-fg:      var(--pk-color-fg);
+  --pk-tooltip-warning-border:  color-mix(in srgb, var(--pk-color-warning) 35%, transparent);
+  --pk-tooltip-warning-shadow:  0 4px 16px color-mix(in srgb, var(--pk-color-warning) 18%, transparent);
+
+  // Info variant
+  --pk-tooltip-info-bg:         color-mix(in srgb, var(--pk-color-fg) 8%, var(--pk-color-surface));
+  --pk-tooltip-info-fg:         var(--pk-color-fg);
+  --pk-tooltip-info-border:     color-mix(in srgb, var(--pk-color-fg) 20%, transparent);
+  --pk-tooltip-info-shadow:     var(--pk-shadow-md);
+}

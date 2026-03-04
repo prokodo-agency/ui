@@ -36,8 +36,8 @@ describe("Avatar", () => {
       expect(screen.queryByRole("link")).not.toBeInTheDocument()
     })
 
-    it("renders with 'primary' variant class", () => {
-      const { container } = render(<AvatarView variant="primary" />)
+    it("renders with 'primary' color class", () => {
+      const { container } = render(<AvatarView color="primary" />)
       expect(container.firstChild).toHaveClass("prokodo-Avatar--primary")
     })
 

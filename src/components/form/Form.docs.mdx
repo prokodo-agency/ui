@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as FormStories from "./Form.stories"
 
 <Meta of={FormStories} />
@@ -42,6 +42,10 @@ Fields can show/hide or update props based on sibling field values using the `co
   conditions: [{ fieldId: "isCompany", equalTo: true, updateProps: { visible: true } }]
 }
 ```
+
+## Design Tokens
+
+`Form` has no component-scoped custom properties. Field appearance is controlled by the individual field components (`Input`, `Select`, etc.) and their respective tokens.
 
 ## ✅ Do
 

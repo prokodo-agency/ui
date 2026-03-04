@@ -207,3 +207,38 @@ describe("DynamicListView – select and multi-field coverage", () => {
     expect(container.querySelectorAll("li").length).toBeGreaterThan(0)
   })
 })
+
+describe("DynamicListView – color prop forwarding", () => {
+  const field = [
+    { name: "item", fieldType: "input" as const, id: "item", label: "Item" },
+  ]
+
+  it("forwards color to the legend Label", () => {
+    const { container } = render(
+      <DynamicListView
+        color="info"
+        fields={field}
+        id="dl-color"
+        label="Items"
+        name="dl-items"
+        value={[]}
+      />,
+    )
+    expect(container.querySelector(".prokodo-Label--info")).toBeInTheDocument()
+  })
+
+  it("does not add a non-provided color class", () => {
+    const { container } = render(
+      <DynamicListView
+        fields={field}
+        id="dl-no-color"
+        label="Items"
+        name="dl-items"
+        value={[]}
+      />,
+    )
+    expect(
+      container.querySelector(".prokodo-Label--info"),
+    ).not.toBeInTheDocument()
+  })
+})

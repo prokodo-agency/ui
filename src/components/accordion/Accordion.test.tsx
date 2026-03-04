@@ -31,11 +31,11 @@ describe("Accordion", () => {
     render(
       <Accordion
         className="custom-accordion-class"
+        color="secondary"
         expanded={1}
         iconProps={{ size: "lg" }}
         id="comprehensive-test"
         titleOptions={{}}
-        variant="secondary"
         items={[
           {
             title: "First Item - Default Rendering",

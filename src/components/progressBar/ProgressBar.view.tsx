@@ -14,7 +14,7 @@ export function ProgressBarView({
   label,
   hideLabel,
   infinity,
-  variant = "primary",
+  color = "primary",
   animated = true,
   className,
   ...domRest
@@ -45,7 +45,7 @@ export function ProgressBarView({
         <div
           style={!isIndeterminate ? { width: `${safeValue}%` } : undefined}
           className={bem("bar", {
-            [`${variant}`]: true,
+            [`${color}`]: true,
             indeterminate: isIndeterminate,
             infinity: Boolean(infinity),
             "indeterminate--infinity": isIndeterminate && Boolean(infinity),

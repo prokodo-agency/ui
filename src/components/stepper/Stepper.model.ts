@@ -1,4 +1,5 @@
 // Stepper.model.ts
+import type { Variants } from "@/types/variants"
 import type {
   Ref,
   RefObject,
@@ -83,6 +84,9 @@ export type StepperProps = Omit<
 
   /** Custom translations (for aria labels, statuses). */
   translations?: StepperTranslations
+
+  /** Color variant that controls the gradient theme of the stepper. */
+  color?: Variants
 }
 
 /**
@@ -103,4 +107,6 @@ export interface StepperPropsCommon {
   translations?: StepperTranslations
   /** Root class name. */
   className?: string
+  /** Color variant that controls the gradient theme of the stepper. */
+  color?: Variants
 }

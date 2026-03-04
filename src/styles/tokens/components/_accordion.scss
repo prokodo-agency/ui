@@ -1,0 +1,25 @@
+// =============================================================================
+// ACCORDION COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin accordion-tokens() {
+  --pk-accordion-radius:           var(--pk-radius-md);
+  --pk-accordion-border:           var(--pk-color-border);
+  --pk-accordion-border-focus:     var(--pk-color-brand);
+  --pk-accordion-shadow:           var(--pk-shadow-sm);
+  --pk-accordion-header-bg:        var(--pk-color-surface);
+  --pk-accordion-content-bg:       var(--pk-color-surface);
+  --pk-accordion-actions-bg:       var(--pk-color-surface-raised);
+  --pk-accordion-actions-border:   var(--pk-color-border);
+  --pk-accordion-fg:               var(--pk-color-fg);
+  --pk-accordion-padding-x:        var(--pk-space-lg);
+  --pk-accordion-padding-y:        var(--pk-space-md);
+  // Gradient used for animated hover border + expanded border
+  --pk-accordion-gradient-from:    var(--pk-color-brand);
+  --pk-accordion-gradient-to:      var(--pk-color-accent);
+  // Tint color used for expanded-item background (color-mix at low %)
+  --pk-accordion-item-tint:        var(--pk-color-brand);
+  // Shadow color — default neutral, overridden per variant
+  --pk-accordion-shadow-color:     rgba(0, 0, 0, 0.1);
+}

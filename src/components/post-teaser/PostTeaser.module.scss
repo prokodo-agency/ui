@@ -1,5 +1,4 @@
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("PostTeaser") {
@@ -15,7 +14,7 @@
         }
 
         &__content {
-            padding: 0 $space-lg 0;
+            padding: 0 var(--pk-space-lg) 0;
         }
 
         &__footer {
@@ -23,15 +22,15 @@
             align-items: center;
             justify-content: space-between;
             margin-top: auto;
-            padding: $space-lg;
+            padding: var(--pk-space-lg);
         }
     }
 
     &__meta {
         position: absolute;
-        top: $space-lg;
-        left: $space-lg;
-        width: calc(100% - (2* $space-lg));
+        top: var(--pk-space-lg);
+        left: var(--pk-space-lg);
+        width: calc(100% - (2 * var(--pk-space-lg)));
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -48,7 +47,7 @@
 
             &__wrapper {
                 display: flex;
-                gap: $space-sm;
+                gap: var(--pk-space-sm);
             }
         }
     }
@@ -74,16 +73,16 @@
         }
 
         &__caption {
-            bottom: $space-sm;
+            bottom: var(--pk-space-sm);
             text-align: right;
-            padding-right: $space-sm;
-            width: calc(100% - $space-sm);
+            padding-right: var(--pk-space-sm);
+            width: calc(100% - var(--pk-space-sm));
         }
     }
 
     &__date {
         padding: 0;
-        color: var(--color-grey-300);
+        color: var(--pk-color-muted);
         @include text("headline/xs");
     }
 
@@ -93,7 +92,7 @@
     }
 
     &__headline {
-        padding: $space-lg $space-lg 0;
+        padding: var(--pk-space-lg) var(--pk-space-lg) 0;
         @include textLineClamp(1);
     }
 
@@ -110,11 +109,11 @@
         align-items: center;
 
         &__icon {
-            margin-right: $space-xs;
+            margin-right: var(--pk-space-xs);
         }
 
         &--is-hovered {
-            color: var(--color-primary-500) !important;
+            color: var(--pk-color-brand) !important;
         }
     }
 }

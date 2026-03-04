@@ -5,10 +5,10 @@ import { Button } from "../button"
 import { Dialog } from "./Dialog"
 
 import type { DialogProps, DialogRef } from "./Dialog.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Dialog",
+  title: "prokodo/feedback/Dialog",
   component: Dialog,
   parameters: {
     layout: "centered",

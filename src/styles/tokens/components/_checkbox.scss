@@ -1,0 +1,29 @@
+// =============================================================================
+// CHECKBOX COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin checkbox-tokens() {
+  // Box dimensions
+  --pk-checkbox-size:                    1.125rem;          // 18 px
+  --pk-checkbox-radius:                  var(--pk-radius-md);
+  --pk-checkbox-control-radius:          6px;               // sub-pixel structural constant
+
+  // Resting box appearance — light-mode values (dark mode corrects below)
+  --pk-checkbox-control-border:          var(--pk-palette-grey-200);
+  --pk-checkbox-control-bg:              var(--pk-palette-white);
+  --pk-checkbox-control-checked-border:  transparent;
+
+  // Default gradient (overridden per colorVariant on the root element)
+  --pk-checkbox-gradient-from:           var(--pk-color-brand);
+  --pk-checkbox-gradient-to:             var(--pk-color-accent);
+  --pk-checkbox-shadow-color:            color-mix(in srgb, var(--pk-color-brand) 30%, transparent);
+
+  // Text colors
+  --pk-checkbox-fg:                      var(--pk-color-fg);
+  --pk-checkbox-fg-muted:                var(--pk-color-muted);
+  --pk-checkbox-error-fg:                var(--pk-color-error);
+
+  // Card variant background — light: surface white, dark: see Checkbox.module.scss override
+  --pk-checkbox-card-bg:                 var(--pk-color-surface);
+}

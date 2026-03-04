@@ -1,0 +1,29 @@
+// =============================================================================
+// SELECT COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin select-tokens() {
+  --pk-select-bg:               var(--pk-color-surface);
+  --pk-select-fg:               var(--pk-color-fg);
+  --pk-select-fg-muted:         var(--pk-color-muted);
+  --pk-select-fg-placeholder:   var(--pk-palette-grey-500);
+  --pk-select-label-fg:         var(--pk-color-brand);
+  --pk-select-label-bg:         var(--pk-color-surface);
+  --pk-select-radius:           var(--pk-radius-pill);
+  --pk-select-shadow:           var(--pk-shadow-sm);
+  --pk-select-listbox-shadow:   var(--pk-shadow-lg);
+  // Neutral resting shadow; transitions to brand-tinted on hover/expanded
+  --pk-select-shadow-color:       rgba(0, 0, 0, 0.1);
+  --pk-select-shadow-color-focus: color-mix(in srgb, var(--pk-color-brand) 30%, transparent);
+  --pk-select-gradient-from:      var(--pk-color-brand);
+  --pk-select-gradient-to:        var(--pk-color-accent);
+  --pk-select-item-hover-bg:    var(--pk-palette-primary-50);
+  --pk-select-item-active-bg:   var(--pk-palette-primary-100);
+  --pk-select-helper-fg:        var(--pk-palette-grey-300);
+  --pk-select-padding-x:        var(--pk-space-lg);       // matches --pk-input-padding-x
+  --pk-select-padding-y:        0.875rem;                  // 14px — matches --pk-input-padding-y
+  // Dropdown item padding — matches autocomplete item spacing
+  --pk-select-item-padding-x:   var(--pk-space-md);
+  --pk-select-item-padding-y:   var(--pk-space-sm);
+}

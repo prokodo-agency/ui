@@ -5,7 +5,7 @@
 @include define-block("Link") {
   text-decoration: none;
   cursor: pointer;
-  color: var(--color-grey-500);
+  color: var(--pk-link-color);
   @include text("link");
 
   @include when-hovered() {
@@ -15,42 +15,42 @@
   &--has-no-background {
     @include when-hovered() {
       text-decoration: underline;
-      color: var(--color-primary-500);
+      color: var(--pk-link-color-hover);
     }
 
     @include when-focused {
-      color: var(--color-primary-500);
+      color: var(--pk-link-color-hover);
     }
 
     &--primary {
-      color: var(--color-primary-500);
+      color: var(--pk-link-color-primary);
     }
 
     &--secondary {
-      color: var(--color-secondary-500);
+      color: var(--pk-link-color-secondary);
     }
 
     &--info {
-      color: var(--color-grey-300);
+      color: var(--pk-link-color-info);
     }
 
     &--success {
-        color: var(--color-success);
+      color: var(--pk-link-color-success);
     }
-    
+
     &--warning {
-        color: var(--color-warning);
+      color: var(--pk-link-color-warning);
     }
 
     &--error {
-        color: var(--color-error);
+      color: var(--pk-link-color-error);
     }
 
     &--white {
-      color: var(--color-white);
+      color: var(--pk-link-color-white);
 
       @include when-hovered() {
-        color: var(--color-white);
+        color: var(--pk-link-color-white);
       }
     }
 
@@ -61,11 +61,11 @@
     &--info,
     &--warning {
       @include when-hovered() {
-        color: var(--color-grey-500);
+        color: var(--pk-link-color-variant-hover);
       }
 
       @include when-focused {
-        color: var(--color-grey-500);
+        color: var(--pk-link-color-variant-hover);
       }
     }
   }

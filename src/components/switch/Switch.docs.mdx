@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as SwitchStories from "./Switch.stories"
 
 <Meta of={SwitchStories} />
@@ -23,6 +23,19 @@ Use `Switch` for settings that apply immediately without a submit action (e.g. d
 - **Tab**: focus the switch
 - **Space**: toggle the switch state
 - **Enter**: does not toggle (consistent with native checkbox semantics)
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                          | Default                 | Description          |
+| ------------------------------ | ----------------------- | -------------------- |
+| `--pk-switch-track-width`      | `44px`                  | Track width          |
+| `--pk-switch-track-height`     | `24px`                  | Track height         |
+| `--pk-switch-track-checked-bg` | `var(--pk-color-brand)` | Checked track colour |
+| `--pk-switch-thumb-size`       | `18px`                  | Thumb size           |
+| `--pk-switch-active`           | `var(--pk-color-brand)` | Active accent        |
+| `--pk-switch-timing`           | `180ms`                 | Transition duration  |
 
 ## ✅ Do
 

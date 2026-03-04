@@ -68,6 +68,17 @@ describe("PostWidgetCarousel", () => {
       expect(screen.getByText("No posts")).toBeInTheDocument()
     })
 
+    it("renders with a color prop applying it to headlines and nav buttons", () => {
+      render(
+        <PostWidgetCarouselView
+          color="primary"
+          items={carouselItems}
+          title={{ content: "Colored Carousel" }}
+        />,
+      )
+      expect(screen.getByText("Colored Carousel")).toBeInTheDocument()
+    })
+
     it("renders structured data ItemList markup", () => {
       const { container } = render(
         <PostWidgetCarouselView
@@ -157,8 +168,8 @@ describe("PostWidgetCarouselView – comprehensive prop coverage", () => {
           carouselItemLink: "cil-cls",
         }}
         componentsProps={{
-          card: { variant: "white" },
-          title: { variant: "primary" },
+          card: { color: "white" },
+          title: { color: "primary" },
           image: { decoding: "sync", loading: "eager", sizes: "100vw" },
           link: { className: "link-extra" },
         }}
@@ -168,7 +179,7 @@ describe("PostWidgetCarouselView – comprehensive prop coverage", () => {
         }))}
         title={{
           content: "Classed Widget",
-          variant: "primary",
+          color: "primary",
           className: "headline-extra",
         }}
       />,
@@ -193,13 +204,13 @@ describe("PostWidgetCarouselView – comprehensive prop coverage", () => {
       <PostWidgetCarouselView
         title={{ content: "Deep Widget" }}
         componentsProps={{
-          title: { variant: "primary" },
+          title: { color: "primary" },
         }}
         items={[
           {
             title: {
               content: "Deep Item",
-              variant: "primary",
+              color: "primary",
               className: "item-headline",
             },
             redirect: { href: "/deep", className: "redirect-cls" },
@@ -218,7 +229,7 @@ describe("PostWidgetCarouselView – comprehensive prop coverage", () => {
             },
             componentsProps: {
               image: { decoding: "sync", loading: "eager", sizes: "50vw" },
-              headline: { variant: "primary" },
+              headline: { color: "primary" },
               link: { className: "item-link-extra" },
             },
           },

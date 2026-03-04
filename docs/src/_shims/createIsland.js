@@ -13,13 +13,13 @@
  * In documentation we never need client-side interactivity, so this shim
  * always renders the Server variant — no lazy loading, no Suspense.
  */
-import { jsx } from 'react/jsx-runtime';
-import { cloneElement } from 'react';
+import { jsx } from "react/jsx-runtime"
+import { cloneElement } from "react"
 
 function stripFnProps(p) {
   return Object.fromEntries(
-    Object.entries(p).filter(([, v]) => typeof v !== 'function'),
-  );
+    Object.entries(p).filter(([, v]) => typeof v !== "function"),
+  )
 }
 
 export function createIsland({ name, Server }) {
@@ -27,18 +27,18 @@ export function createIsland({ name, Server }) {
   // ⛔  Never use React.lazy / Suspense — also breaks SSG via require().
 
   function withIslandAttr(el) {
-    return cloneElement(el, { 'data-island': name.toLowerCase() });
+    return cloneElement(el, { "data-island": name.toLowerCase() })
   }
 
   const Island = ({ priority = false, ...raw }) => {
-    const props = raw;
+    const props = raw
     const serverBaseProps =
-      name === 'Image' && priority ? { ...props, priority } : props;
-    const serverSafe = stripFnProps(serverBaseProps);
+      name === "Image" && priority ? { ...props, priority } : props
+    const serverSafe = stripFnProps(serverBaseProps)
     // Always render the server (static) variant in docs.
-    return withIslandAttr(jsx(Server, { ...serverSafe }));
-  };
+    return withIslandAttr(jsx(Server, { ...serverSafe }))
+  }
 
-  Island.displayName = `${name}Island`;
-  return Island;
+  Island.displayName = `${name}Island`
+  return Island
 }

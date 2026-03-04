@@ -1,9 +1,13 @@
 import type { IconName } from "../icon"
-import type { LabelProps } from "../label"
-import type { ChangeEvent, HTMLAttributes, FocusEvent } from "react"
+import type {
+  ChangeEvent,
+  HTMLAttributes,
+  FocusEvent,
+  LabelHTMLAttributes,
+} from "react"
 
 /**
- * Supported color variants (derived from the original "variant" prop).
+ * Supported color modes for the Switch component.
  */
 export type SwitchColor =
   | "inherit"
@@ -24,8 +28,8 @@ export type SwitchProps = Omit<HTMLAttributes<HTMLInputElement>, "onChange"> & {
   /** If true, the label will be marked as required. */
   required?: boolean
 
-  /** Color variant—corresponds to the original SCSS class names. */
-  variant?: SwitchColor
+  /** Color mode — controls the active track color, focus ring, and icon tint. */
+  color?: SwitchColor
 
   /** Icon name to display when the switch is _not_ checked. */
   icon?: IconName
@@ -55,7 +59,10 @@ export type SwitchProps = Omit<HTMLAttributes<HTMLInputElement>, "onChange"> & {
   className?: string
 
   /** Additional props forwarded to the `<Label>` (e.g. id, style). */
-  labelProps?: Omit<LabelProps, "label" | "htmlFor" | "required">
+  labelProps?: Omit<
+    LabelHTMLAttributes<HTMLLabelElement>,
+    "htmlFor" | "required"
+  >
 
   /**
    * If true, visually hides the label but keeps it in the DOM for screen readers

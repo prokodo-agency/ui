@@ -1,16 +1,30 @@
 import { PostWidget } from "./PostWidget"
 
 import type { PostWidgetItem } from "./PostWidget.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/blog/PostWidget",
+  title: "prokodo/content/PostWidget",
   component: PostWidget,
   parameters: {
     layout: "centered",
   },
   tags: ["experimental"],
-  argTypes: {},
+  argTypes: {
+    color: {
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "error",
+        "info",
+        "success",
+        "warning",
+        "white",
+      ],
+      control: { type: "select" },
+    },
+  },
 } satisfies Meta<typeof PostWidget>
 
 export default meta
@@ -67,6 +81,13 @@ export const Default: Story = {
       content: "Most popular",
     },
     items,
+  },
+}
+
+export const Colored: Story = {
+  args: {
+    ...Default.args,
+    color: "primary",
   },
 }
 

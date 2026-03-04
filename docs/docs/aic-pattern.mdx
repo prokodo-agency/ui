@@ -39,7 +39,7 @@ prokodo UI provides runtime compatibility behind a single primary import path:
 Use this import everywhere — in Server Components, Client Components, and standard React usage.
 
 ```tsx
-import { Button } from '@prokodo/ui/button'
+import { Button } from "@prokodo/ui/button"
 
 export default function Example() {
   return <Button>Continue</Button>
@@ -58,14 +58,14 @@ If you build custom components inside this codebase, you can apply the same AIC 
 ### 1) Public component with `createIsland`
 
 ```tsx
-import { createIsland } from '@prokodo/ui/createIsland'
-import WidgetServer from './Widget.server'
-import type { WidgetProps } from './Widget.model'
+import { createIsland } from "@prokodo/ui/createIsland"
+import WidgetServer from "./Widget.server"
+import type { WidgetProps } from "./Widget.model"
 
 export const Widget = createIsland<WidgetProps>({
-  name: 'Widget',
+  name: "Widget",
   Server: WidgetServer,
-  loadLazy: () => import('./Widget.lazy'),
+  loadLazy: () => import("./Widget.lazy"),
 })
 ```
 
@@ -74,13 +74,13 @@ export const Widget = createIsland<WidgetProps>({
 ### 2) Lazy wrapper with `createLazyWrapper`
 
 ```tsx
-import { createLazyWrapper } from '@prokodo/ui/createLazyWrapper'
-import WidgetClient from './Widget.client'
-import WidgetServer from './Widget.server'
-import type { WidgetProps } from './Widget.model'
+import { createLazyWrapper } from "@prokodo/ui/createLazyWrapper"
+import WidgetClient from "./Widget.client"
+import WidgetServer from "./Widget.server"
+import type { WidgetProps } from "./Widget.model"
 
 export default createLazyWrapper<WidgetProps>({
-  name: 'Widget',
+  name: "Widget",
   Client: WidgetClient,
   Server: WidgetServer,
   hydrateOnVisible: true,
@@ -97,10 +97,9 @@ The helpers also support a `priority` flag for critical, above-the-fold UI.
 - For `Image`, `priority` is also forwarded to server/client image rendering behavior.
 
 ```tsx
-import { Image } from '@prokodo/ui/image'
-import '@prokodo/ui/image.css'
-
-<Image
+import { Image } from "@prokodo/ui/image"
+import "@prokodo/ui/image.css"
+;<Image
   src="/hero.jpg"
   alt="Homepage hero"
   width={1200}

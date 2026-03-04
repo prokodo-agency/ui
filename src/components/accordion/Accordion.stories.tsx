@@ -5,10 +5,10 @@ import { RichText } from "../rich-text"
 import { Accordion } from "./Accordion"
 
 import type { AccordionItem } from "./Accordion.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Accordion",
+  title: "prokodo/layout/Accordion",
   component: Accordion,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
@@ -19,7 +19,7 @@ const meta = {
       options: ["card", "panel"],
       control: { type: "select" },
     },
-    variant: {
+    color: {
       options: [
         "inherit",
         "primary",
@@ -100,7 +100,7 @@ export const CustomHeader: Story = {
       {
         title: "Ignored title",
         renderHeader: (
-          <Headline size="xs" variant="primary">
+          <Headline color="primary" size="xs">
             🌟 Custom Header Element (No Actions)
           </Headline>
         ),
@@ -129,7 +129,7 @@ export const CustomHeaderWithActions: Story = {
       {
         title: "Ignored title",
         renderHeader: (
-          <Headline size="xs" variant="primary">
+          <Headline color="primary" size="xs">
             ✨ Custom Header + Actions
           </Headline>
         ),

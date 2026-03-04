@@ -7,10 +7,10 @@ description: Install prokodo UI with pnpm, npm, or yarn and add global styles to
 
 # Installation
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import { List } from '@prokodo/ui/list';
-import '@prokodo/ui/list.css';
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import { List } from "@prokodo/ui/list"
+import "@prokodo/ui/list.css"
 
 ## Requirements
 
@@ -18,15 +18,13 @@ import '@prokodo/ui/list.css';
   <p>
     <strong>Ready in under 2 minutes</strong>
   </p>
-  <p>
-    Before installing, make sure your project meets these requirements:
-  </p>
+  <p>Before installing, make sure your project meets these requirements:</p>
   <List
     className="installation-requirements-list"
     items={[
-      { title: 'Node.js ≥ 18', icon: 'CheckmarkCircle01Icon' },
-      { title: 'React ≥ 18', icon: 'CheckmarkCircle01Icon' },
-      { title: 'Next.js ≥ 14 (App Router)', icon: 'CheckmarkCircle01Icon' },
+      { title: "Node.js ≥ 18", icon: "CheckmarkCircle01Icon" },
+      { title: "React ≥ 18", icon: "CheckmarkCircle01Icon" },
+      { title: "Next.js ≥ 14 (App Router)", icon: "CheckmarkCircle01Icon" },
     ]}
   />
 </div>
@@ -66,10 +64,11 @@ yarn add @prokodo/ui
 Import the prokodo UI CSS bundle in your root layout (`app/layout.tsx`):
 
 ```ts title="app/layout.tsx"
-import '@prokodo/ui/theme.css'
+import "@prokodo/ui/theme.css"
 ```
 
 This file:
+
 - Imports all CSS custom properties (`--pk-*` design tokens)
 - Provides baseline resets compatible with Next.js App Router
 - Must be imported **once** at the root — no need to repeat it per component
@@ -91,8 +90,8 @@ No special configuration is required for most setups. If you use `transpilePacka
 Create a quick test page:
 
 ```tsx title="app/test/page.tsx"
-import { Button } from '@prokodo/ui/button'
-import '@prokodo/ui/button.css'
+import { Button } from "@prokodo/ui/button"
+import "@prokodo/ui/button.css"
 
 export default function TestPage() {
   return <Button>It works!</Button>

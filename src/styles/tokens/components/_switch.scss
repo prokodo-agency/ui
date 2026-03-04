@@ -1,0 +1,31 @@
+// =============================================================================
+// SWITCH COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin switch-tokens() {
+  // Track
+  --pk-switch-track-width:         44px;
+  --pk-switch-track-height:        24px;
+  --pk-switch-track-bg:            color-mix(in srgb, var(--pk-color-fg) 18%, transparent);
+  --pk-switch-track-checked-bg:    var(--pk-color-brand);
+  --pk-switch-track-radius:        9999px;
+
+  // Thumb
+  --pk-switch-thumb-size:          18px;
+  --pk-switch-thumb-bg:            #ffffff;
+  --pk-switch-thumb-checked-bg:    #ffffff;
+  --pk-switch-thumb-glow-rgb:      var(--pk-palette-primary-500-rgb);
+
+  // Label
+  --pk-switch-label-fg:            var(--pk-color-fg);
+
+  // Active color (overridden by color modifiers on the root)
+  --pk-switch-active:              var(--pk-color-brand);
+
+  // Focus ring
+  --pk-switch-focus-ring:          var(--pk-color-brand);
+
+  // Animation
+  --pk-switch-timing:              180ms;
+}

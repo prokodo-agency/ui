@@ -1,11 +1,5 @@
 @use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("Rating") {
@@ -18,20 +12,26 @@
     width: 100%;
   }
 
+  // ── Color variant overrides ────────────────────────────────────────────
+  &--primary   { --pk-rating-icon-fg-filled: var(--pk-color-brand); }
+  &--secondary { --pk-rating-icon-fg-filled: var(--pk-color-accent); }
+  &--success   { --pk-rating-icon-fg-filled: var(--pk-color-success); }
+  &--warning   { --pk-rating-icon-fg-filled: var(--pk-color-warning); }
+  &--error     { --pk-rating-icon-fg-filled: var(--pk-color-error); }
+  &--info,
+  &--inherit,
+  &--white     { --pk-rating-icon-fg-filled: var(--pk-color-muted); }
+
   &__inner {
     position: relative;
   }
 
   &__label {
-    padding-bottom: $space-sm;
-    color: var(--color-grey-600);
+    padding-bottom: var(--pk-rating-label-pb);
+    color: var(--pk-color-muted);
     z-index: 1;
     pointer-events: none;
-
-    @include screenLargerThan($screen-lg) {
-      font-size: 1.125rem;
-      padding: 0;
-    }
+    font-size: 1.125rem;
   }
 
   &__field {
@@ -41,8 +41,8 @@
   &__group {
     display: flex;
     align-items: center;
-    gap: $space-lg;
-    padding: $space-md 0;
+    gap: var(--pk-rating-gap);
+    padding: var(--pk-rating-padding-y) 0;
   }
 
   &__icon {
@@ -51,12 +51,12 @@
     padding: 0;
     margin: 0;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: var(--pk-rating-icon-size);
     line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-grey-300);
+    color: var(--pk-rating-icon-fg);
     transition:
       transform 0.1s ease,
       color 0.15s ease;
@@ -70,7 +70,7 @@
     }
 
     &--filled {
-      color: var(--color-primary-500);
+      color: var(--pk-rating-icon-fg-filled);
     }
 
     &--selected {
@@ -79,7 +79,7 @@
 
     &--disabled {
       cursor: not-allowed;
-      color: var(--color-grey-200);
+      color: var(--pk-rating-icon-fg-disabled);
     }
 
     &--readonly {
@@ -91,7 +91,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--color-primary-500);
+      outline: 2px solid var(--pk-rating-focus-ring);
       outline-offset: 2px;
       border-radius: 999px;
     }
@@ -101,26 +101,28 @@
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    padding-top: $space-sm;
+    padding-top: var(--pk-rating-footer-pt);
   }
 
   &__helperText {
     width: 100%;
-    padding-top: $space-md;
+    padding-top: var(--pk-rating-helper-pt);
     display: flex;
-    color: var(--color-grey-300);
+    color: var(--pk-rating-helper-fg);
     @include text("caption");
 
-    html[data-theme='dark'] & {
-      color: var(--color-grey-700);
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      color: var(--pk-palette-grey-400);
     }
 
     &__content {
       width: 100%;
 
       &--is-error {
-        color: var(--color-error);
+        color: var(--pk-rating-error-fg);
       }
     }
   }
 }
+

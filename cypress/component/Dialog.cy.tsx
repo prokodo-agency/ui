@@ -79,7 +79,7 @@ describe("Dialog", () => {
       </Dialog>,
     )
     // Wait for Dialog lazy client to be fully rendered
-    cy.get("[role='dialog']").should("be.visible")
+    cy.contains("button", "Close").should("be.visible")
     cy.contains("button", "Close").click()
     cy.get("@onClose").should("have.been.called")
   })
@@ -92,7 +92,7 @@ describe("Dialog", () => {
       </Dialog>,
     )
     // Wait for Dialog client + useEffect (keydown listener) to be ready
-    cy.get("[role='dialog']").should("be.visible")
+    cy.contains("button", "Close").should("be.visible")
     cy.window().then(win => {
       win.dispatchEvent(
         new win.KeyboardEvent("keydown", { key: "Escape", bubbles: true }),

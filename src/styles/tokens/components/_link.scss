@@ -1,0 +1,21 @@
+// =============================================================================
+// LINK COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin link-tokens() {
+  // Default link color (base / inherit)
+  --pk-link-color:           color-mix(in srgb, var(--pk-color-fg) 55%, transparent);
+  // Hover/focus color when no variant is active
+  --pk-link-color-hover:     var(--pk-color-fg);
+  // Per-variant colors (BEM modifier --has-no-background--<variant>)
+  --pk-link-color-primary:   var(--pk-color-brand);
+  --pk-link-color-secondary: var(--pk-color-accent);
+  --pk-link-color-info:      color-mix(in srgb, var(--pk-color-fg) 35%, transparent);
+  --pk-link-color-success:   var(--pk-color-success);
+  --pk-link-color-warning:   var(--pk-color-warning);
+  --pk-link-color-error:     var(--pk-color-error);
+  --pk-link-color-white:     var(--pk-palette-white);
+  // Hover color applied when a coloured variant loses focus / is hovered-off
+  --pk-link-color-variant-hover: color-mix(in srgb, var(--pk-color-fg) 55%, transparent);
+}

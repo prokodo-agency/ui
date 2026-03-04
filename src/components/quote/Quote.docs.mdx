@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as QuoteStories from "./Quote.stories"
 
 <Meta of={QuoteStories} />
@@ -26,6 +26,22 @@ Use `Quote` to highlight a significant statement from an article, case study, or
 
 - Don't use `Quote` for long body passages — use standard prose or a callout box
 - Don't omit author attribution in customer-testimonial contexts where trust is critical
+
+## API notes
+
+- `color` is forwarded to the embedded `Avatar` and subtitle `Headline` for coordinated colouring
+- The `color` prop now applies to the sub-headline, avatar, and the Card's border colour and background tint — all visual elements respond to a single token
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token              | Purpose                                                    |
+| ------------------ | ---------------------------------------------------------- |
+| `--pk-space-xs`    | Author position top padding                                |
+| `--pk-space-lg`    | Headline padding, avatar right margin, quote bottom margin |
+| `--pk-color-fg`    | Author name text color                                     |
+| `--pk-color-muted` | Author position/role text color                            |
 
 ## Examples
 

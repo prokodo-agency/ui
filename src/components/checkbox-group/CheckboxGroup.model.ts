@@ -1,4 +1,5 @@
 import type { IconProps } from "@/components/icon"
+import type { Variants } from "@/types/variants"
 import type { HTMLAttributes } from "react"
 
 /**
@@ -76,6 +77,8 @@ export type CheckboxGroupProps<T extends string> = {
   layout?: CheckboxGroupLayout
   /** Visual style variant of each option row. */
   variant?: CheckboxGroupVariant
+  /** Color variant — controls tick/fill gradient and glow on each checkbox. Defaults to "primary". */
+  color?: Variants
 
   /** Optional i18n values. */
   translations?: CheckboxGroupTranslations

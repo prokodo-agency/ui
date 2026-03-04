@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as TooltipStories from "./Tooltip.stories"
 
 <Meta of={TooltipStories} />
@@ -24,6 +24,35 @@ Use `Tooltip` to provide brief supplemental information about an element — ico
 - **Tab**: focus the trigger → tooltip appears
 - **Escape**: dismiss the tooltip while keeping focus on the trigger
 - **Tab away**: tooltip dismisses
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                         | Default                               | Description                        |
+| ----------------------------- | ------------------------------------- | ---------------------------------- |
+| `--pk-tooltip-bg`             | `color-mix(… fg 92%, surface)`        | Default background (dark inverted) |
+| `--pk-tooltip-fg`             | `var(--pk-color-surface)`             | Default text color                 |
+| `--pk-tooltip-border`         | `color-mix(… surface 12%)`            | Default accent border              |
+| `--pk-tooltip-shadow`         | `var(--pk-shadow-lg)`                 | Default box-shadow                 |
+| `--pk-tooltip-radius`         | `var(--pk-radius-sm)`                 | Border-radius                      |
+| `--pk-tooltip-z`              | `2147483647`                          | z-index                            |
+| `--pk-tooltip-success-bg`     | `color-mix(… success 12%, surface)`   | Success tinted background          |
+| `--pk-tooltip-success-fg`     | `var(--pk-color-fg)`                  | Success text color                 |
+| `--pk-tooltip-success-border` | `color-mix(… success 35%)`            | Success accent border              |
+| `--pk-tooltip-success-shadow` | `0 4px 16px color-mix(… success 18%)` | Success ambient glow               |
+| `--pk-tooltip-error-bg`       | `color-mix(… error 12%, surface)`     | Error tinted background            |
+| `--pk-tooltip-error-fg`       | `var(--pk-color-fg)`                  | Error text color                   |
+| `--pk-tooltip-error-border`   | `color-mix(… error 35%)`              | Error accent border                |
+| `--pk-tooltip-error-shadow`   | `0 4px 16px color-mix(… error 18%)`   | Error ambient glow                 |
+| `--pk-tooltip-warning-bg`     | `color-mix(… warning 12%, surface)`   | Warning tinted background          |
+| `--pk-tooltip-warning-fg`     | `var(--pk-color-fg)`                  | Warning text color                 |
+| `--pk-tooltip-warning-border` | `color-mix(… warning 35%)`            | Warning accent border              |
+| `--pk-tooltip-warning-shadow` | `0 4px 16px color-mix(… warning 18%)` | Warning ambient glow               |
+| `--pk-tooltip-info-bg`        | `color-mix(… fg 8%, surface)`         | Info tinted background             |
+| `--pk-tooltip-info-fg`        | `var(--pk-color-fg)`                  | Info text color                    |
+| `--pk-tooltip-info-border`    | `color-mix(… fg 20%)`                 | Info accent border                 |
+| `--pk-tooltip-info-shadow`    | `var(--pk-shadow-md)`                 | Info box-shadow                    |
 
 ## ✅ Do
 
@@ -77,6 +106,12 @@ Use `Tooltip` to provide brief supplemental information about an element — ico
 
 <Canvas>
   <Story of={TooltipStories.InlineTextTrigger} />
+</Canvas>
+
+### Colors
+
+<Canvas>
+  <Story of={TooltipStories.Colors} />
 </Canvas>
 
 ### Props

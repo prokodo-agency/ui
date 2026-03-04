@@ -1,5 +1,7 @@
 @use "./designsystem/config/colors" as *;
 @use "./designsystem/config/elevation" as *;
+@use "./themes/default";
+@use "./themes/dark";
 
 // Default variables (Light Theme)
 :root {
@@ -48,6 +50,10 @@
   --color-success: #{$light--success};
   --color-warning: #{$light--warning};
   --color-error: #{$light--error};
+
+  // RGB-triple companions (consumed by Slider component)
+  --color-primary-500-rgb: 30 144 255;
+  --color-primary-700-rgb: 39 94 162;
 
   // Elevations
   --elevation-1: #{$elevation-1--light};
@@ -101,7 +107,7 @@
   
   // Dark Theme Variables
 :root[data-theme='dark'] {
-  --color-white: $black;
+  --color-white: #{$black};
   --color-black: #{$dark--grey-900};
 
   // Dark theme greys mapped to CSS variables

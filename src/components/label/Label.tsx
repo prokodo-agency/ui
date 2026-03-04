@@ -15,11 +15,10 @@ export const Label: FC<LabelProps> = ({
   contentProps,
   textProps,
   error,
+  color,
   children,
   ...props
 }) => {
-  const splittedLabel = label?.split(" ")
-
   const renderContent = () => (
     <>
       <span {...contentProps}>
@@ -33,24 +32,24 @@ export const Label: FC<LabelProps> = ({
             textProps?.className,
           )}
         >
-          {splittedLabel?.[0]}{" "}
-        </i>
-        <i
-          {...textProps}
-          className={bem("text", undefined, textProps?.className)}
-        >
-          {splittedLabel?.slice(1).join(" ")}{" "}
-          {Boolean(required) && <span aria-hidden="true">*</span>}
+          {label} {Boolean(required) && <span aria-hidden="true">*</span>}
         </i>
       </span>
       {children}
     </>
   )
 
-  if (!splittedLabel) return children
+  if (!label) return children
   if (type === "legend") {
     return (
-      <legend {...props} className={bem(undefined, undefined, className)}>
+      <legend
+        {...props}
+        className={bem(
+          undefined,
+          color ? { [color]: true } : undefined,
+          className,
+        )}
+      >
         {renderContent()}
       </legend>
     )
@@ -58,7 +57,11 @@ export const Label: FC<LabelProps> = ({
   return (
     <label
       {...(props as LabelHTMLAttributes<HTMLLabelElement>)}
-      className={bem(undefined, undefined, className)}
+      className={bem(
+        undefined,
+        color ? { [color]: true } : undefined,
+        className,
+      )}
     >
       {renderContent()}
     </label>

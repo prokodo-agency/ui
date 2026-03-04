@@ -9,57 +9,93 @@ description: Card-style blog post teaser with cover image, category, title, exce
 
 `PostTeaser` rendert einen vertikalen Teaser im Kartenstil für Blog- oder News-Inhalte. Geeignet für rasterbasierte Artikel-Listings mit prominentem Coverbild.
 
-
 ---
 
 ## Übersicht
 
 ```tsx
-import { PostTeaser } from '@prokodo/ui/post-teaser'
-
-<PostTeaser
+import { PostTeaser } from "@prokodo/ui/post-teaser"
+;<PostTeaser
   title="Design tokens in practice"
   slug="/blog/design-tokens"
   date="2024-04-10"
-  image={{ src: '/blog/tokens.jpg', alt: 'Design tokens' }}
+  image={{ src: "/blog/tokens.jpg", alt: "Design tokens" }}
   category="Design"
   excerpt="How we use design tokens across our component library."
 />
 ```
 
-<StorybookEmbed id="prokodo-blog-postteaser--default" height={380} />
-
+<StorybookEmbed id="prokodo-content-postteaser--default" height={380} />
 
 ---
 
 ## Import
 
 ```ts
-import { PostTeaser } from '@prokodo/ui/post-teaser'
+import { PostTeaser } from "@prokodo/ui/post-teaser"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/post-teaser.css'
+import "@prokodo/ui/post-teaser.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `title` | `string` | — | ✅ | Post title. |
-| `slug` | `string` | — | ✅ | URL path for the post link. |
-| `image` | `ImageProps` | — | ✅ | Cover image props. |
-| `date` | `string` | — | — | ISO publication date string. |
-| `category` | `string` | — | — | Category label. |
-| `excerpt` | `string` | — | — | Short excerpt shown below the title. |
-| `author` | `string` | — | — | Author name shown near the date. |
-| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+| Prop             | Typ                    | Standard | Pflicht | Beschreibung                                                            |
+| ---------------- | ---------------------- | -------- | ------- | ----------------------------------------------------------------------- |
+| `title`          | `PostTeaserHeadline`   | —        | ✅      | Headline-Konfiguration: `{ content: string } & HeadlineProps`.          |
+| `content`        | `string`               | —        | —       | Auszug-Text.                                                            |
+| `category`       | `string`               | —        | —       | Kategorie-Label.                                                        |
+| `hideCategory`   | `boolean`              | `false`  | —       | Kategorie-Chip ausblenden.                                              |
+| `image`          | `ImageProps`           | —        | —       | Cover-Bild-Props.                                                       |
+| `redirect`       | `PostTeaserRedirect`   | —        | —       | Link-Konfiguration: `LinkProps & { label?: string; icon?: IconProps }`. |
+| `date`           | `string`               | —        | —       | ISO-Datumsstring (erfordert `locale` wenn angegeben).                   |
+| `locale`         | `Intl.LocalesArgument` | —        | —       | Gebietsschema für die Datumsformatierung.                               |
+| `color`          | `HeadlineVariant`      | —        | —       | Akzentfarbe.                                                            |
+| `wordCount`      | `number`               | —        | —       | Wortanzahl zur Berechnung der Lesezeit.                                 |
+| `readCount`      | `number`               | —        | —       | Lesezähler in den Metadaten.                                            |
+| `onClick`        | `() => void`           | —        | —       | Klick-Handler der Teaser-Karte.                                         |
+| `structuredData` | `boolean`              | `false`  | —       | JSON-LD-Strukturdaten ausgeben.                                         |
+| `className`      | `string`               | —        | —       | CSS-Klasse am Root-Element.                                             |
 
 > Siehe [`src/components/post-teaser/PostTeaser.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-teaser/PostTeaser.model.ts) für den vollständigen `PostTeaserProps`-Typ.
+
+---
+
+## Farbe
+
+Das `color`-Prop überträgt einen einheitlichen Akzent auf die Teaser-Karte und ihre interaktiven Elemente:
+
+| Wert          | Karten-Rahmen / Schatten          | Headline-Text                      | Link-Icon          |
+| ------------- | --------------------------------- | ---------------------------------- | ------------------ |
+| `"primary"`   | Marken-Blau (30 % Tönung + Glow)  | Marken-Blau                        | Marken-Blau        |
+| `"secondary"` | Akzent-Cyan (30 % Tönung + Glow)  | Akzent-Cyan                        | Akzent-Cyan        |
+| `"success"`   | Grün-Indikator                    | Grün                               | Grün               |
+| `"warning"`   | Bernstein-Indikator               | Bernstein                          | Bernstein          |
+| `"error"`     | Rot-Indikator                     | Rot                                | Rot                |
+| `"info"`      | Neutraler Vordergrundton          | Gedämpft                           | Gedämpft           |
+| `"white"`     | Standard-Weißkarte, kein Schatten | `inherit` (automatischer Kontrast) | `primary` Fallback |
+| `"inherit"`   | Kein Override                     | `inherit`                          | `primary` Fallback |
+
+<StorybookEmbed id="prokodo-content-postteaser--colored" height={380} />
+
+---
+
+## Design-Tokens
+
+`PostTeaser` definiert keine eigenen CSS Custom Properties. Passe das Erscheinungsbild an, indem du folgende globale Design-System-Tokens auf `:root` oder einem übergeordneten Element überschreibst:
+
+| Token              | Beschreibung                         |
+| ------------------ | ------------------------------------ |
+| `--pk-space-xs`    | Rechter Abstand des Link-Icons       |
+| `--pk-space-sm`    | Padding der Bild-Bildunterschrift    |
+| `--pk-space-lg`    | Padding von Card-Header und -Footer  |
+| `--pk-color-muted` | Textfarbe des Datums                 |
+| `--pk-color-brand` | Link-Hover-Farbe (Überschreib-Token) |
 
 ---
 
@@ -68,7 +104,7 @@ import '@prokodo/ui/post-teaser.css'
 Verwende im Anwendungscode immer den Standard-Importpfad:
 
 ```ts
-import { PostTeaser } from '@prokodo/ui/post-teaser'
+import { PostTeaser } from "@prokodo/ui/post-teaser"
 ```
 
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
@@ -80,13 +116,13 @@ Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`)
 
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
-| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A) | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen. |
-| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
-| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben. |
-| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| Kriterium | Bezeichnung                              | Status            | Hinweis                                                                                                                              |
+| --------- | ---------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1** | **Info und Beziehungen** (A)             | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.            |
+| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A)      | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen.                                    |
+| **1.4.3** | **Kontrast (Minimum)** (AA)              | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich.      |
+| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben.                                        |
+| **4.1.2** | **Name, Rolle, Wert** (A)                | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
 
 > **Testabdeckung:** 2 jest-axe-Assertion(s) in 4 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.

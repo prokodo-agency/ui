@@ -18,11 +18,11 @@ slug: /
 
 Every interactive component ships in three variants:
 
-| Import | Environment | When to use |
-|--------|-------------|-------------|
-| `@prokodo/ui/{name}` | Server Component (RSC) | Default — works in App Router layouts and pages |
-| `@prokodo/ui/{name}/client` | Client Component | Inside `"use client"` boundaries |
-| `@prokodo/ui/{name}/lazy` | Lazy (dynamic) | Heavy components loaded below the fold |
+| Import                      | Environment            | When to use                                     |
+| --------------------------- | ---------------------- | ----------------------------------------------- |
+| `@prokodo/ui/{name}`        | Server Component (RSC) | Default — works in App Router layouts and pages |
+| `@prokodo/ui/{name}/client` | Client Component       | Inside `"use client"` boundaries                |
+| `@prokodo/ui/{name}/lazy`   | Lazy (dynamic)         | Heavy components loaded below the fold          |
 
 See [AIC Pattern](/docs/aic-pattern) for the full explanation.
 
@@ -31,7 +31,7 @@ See [AIC Pattern](/docs/aic-pattern) for the full explanation.
 Every component exposes a typed `{Name}Props` interface exported from its model file:
 
 ```ts
-import type { ButtonDefaultProps } from '@prokodo/ui/button'
+import type { ButtonDefaultProps } from "@prokodo/ui/button"
 ```
 
 ### Design tokens
@@ -44,13 +44,13 @@ See [Design Tokens](/docs/design-tokens) for the reference.
 
 ## Package info
 
-| Detail | Value |
-|--------|-------|
-| Package | `@prokodo/ui` |
-| Registry | [npm](https://www.npmjs.com/package/@prokodo/ui) |
-| Required peer | `react >= 18`, `next >= 14` |
-| Bundle format | ESM, tree-shakable per component |
-| Styling | CSS Modules + design tokens (no CSS-in-JS) |
+| Detail        | Value                                            |
+| ------------- | ------------------------------------------------ |
+| Package       | `@prokodo/ui`                                    |
+| Registry      | [npm](https://www.npmjs.com/package/@prokodo/ui) |
+| Required peer | `react >= 18`, `next >= 14`                      |
+| Bundle format | ESM, tree-shakable per component                 |
+| Styling       | CSS Modules + design tokens (no CSS-in-JS)       |
 
 ---
 

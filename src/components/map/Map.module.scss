@@ -1,0 +1,11 @@
+@use "@/styles/ui/mixins/bem" as *;
+
+// Component token (override on :root or a scoped ancestor):
+// --pk-map-height  → map container height (default 500px)
+
+@include define-block("Map") {
+  &__container {
+    width: 100%;
+    height: var(--pk-map-height, 500px);
+  }
+}

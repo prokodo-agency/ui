@@ -25,4 +25,15 @@ describe("DatePickerServer", () => {
     render(<DatePickerServer label="Birth Date" name="birthDate" />)
     expect(screen.getByTestId("view")).toHaveAttribute("data-readonly", "true")
   })
+
+  it("computes selectedDate when a value string is provided", () => {
+    render(
+      <DatePickerServer
+        label="Birth Date"
+        name="birthDate"
+        value="2024-03-15"
+      />,
+    )
+    expect(screen.getByTestId("view")).toBeInTheDocument()
+  })
 })

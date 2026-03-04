@@ -34,8 +34,8 @@ export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl" | number
 export type AvatarProps = {
   /** Prioritize image loading (use for above-fold avatars). */
   priority?: boolean
-  /** Color variant (maps to CSS classes). */
-  variant?: Variants
+  /** Color (maps to CSS classes). */
+  color?: Variants
   /** Avatar size preset or pixel value. */
   size?: AvatarSize
   /** Image source and properties. */

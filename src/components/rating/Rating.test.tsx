@@ -111,4 +111,23 @@ describe("Rating", () => {
       expect(radios[0]).toBeInTheDocument()
     })
   })
+
+  // -------------------------------------------------------------------------
+  // Color prop forwarding
+  // -------------------------------------------------------------------------
+  describe("color prop", () => {
+    it("forwards color to Label as a modifier class", () => {
+      render(<RatingView color="success" label="Rate" name="color-test" />)
+      expect(
+        document.querySelector(".prokodo-Label--success"),
+      ).toBeInTheDocument()
+    })
+
+    it("does not add a color class when color is not provided", () => {
+      render(<RatingView label="Rate" name="no-color" />)
+      expect(
+        document.querySelector("[class*='Label--']"),
+      ).not.toBeInTheDocument()
+    })
+  })
 })

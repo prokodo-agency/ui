@@ -1,21 +1,60 @@
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 
+// Fieldset reset + color variant token cascade for legend label
 @include define-block("CheckboxGroup") {
   margin: 0;
   padding: 0;
   border: 0;
   min-width: 0;
 
+  // ── Color variant: cascade gradient tokens for the legend highlight ────────
+  // Legend label uses color-mix darkening in light mode (same as Label component)
+  &--primary {
+    --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-brand) 80%, #000000);
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-brand); }
+  }
+  &--secondary {
+    --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-accent) 80%, #000000);
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-accent); }
+  }
+  &--success {
+    --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-success) 80%, #000000);
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-success); }
+  }
+  &--warning {
+    --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-warning) 80%, #000000);
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-warning); }
+  }
+  &--error {
+    --pk-cg-legend-color: var(--pk-color-error);
+  }
+  &--info,
+  &--inherit,
+  &--white {
+    --pk-cg-legend-color: var(--pk-color-muted);
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-palette-grey-200); }
+  }
+
+  // ── Legend ─────────────────────────────────────────────────────────────────
   &__legend {
-    margin: 0 0 $space-sm 0;
+    margin: 0 0 var(--pk-space-sm) 0;
     padding: 0;
-    opacity: 0.82;
+    opacity: 0.9;
     display: inline-flex;
     align-items: center;
-    gap: $space-xs;
+    gap: var(--pk-space-xs);
     @include text("caption");
 
     &--is-hidden {
@@ -24,20 +63,22 @@
   }
 
   &__legendLabel {
-    color: var(--color-grey-900);
+    // Falls back to fg when no colorVariant set on the fieldset
+    color: var(--pk-cg-legend-color, var(--pk-color-fg));
     @include text("caption");
   }
 
   &__legendRequiredMark {
-    color: var(--color-error);
+    color: var(--pk-color-error);
     line-height: 1;
     @include text("caption");
   }
 
+  // ── Option list ────────────────────────────────────────────────────────────
   &__list {
     display: flex;
     flex-direction: column;
-    gap: $space-sm;
+    gap: var(--pk-space-sm);
     min-width: 0;
 
     &--plain {

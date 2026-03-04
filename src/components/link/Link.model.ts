@@ -21,8 +21,8 @@ export type LinkClassNames = {
  * Shared Link props for both href and click-only links.
  */
 export type LinkDefaultProps = BaseLinkProps & {
-  /** Visual variant token. */
-  variant?: LinkVariants
+  /** Color variant token. */
+  color?: LinkVariants
   /** Optional class name overrides. */
   classNames?: LinkClassNames
   /** Whether the link renders with a background style. */

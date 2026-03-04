@@ -2,68 +2,85 @@
 id: card
 title: Card
 sidebar_label: Card
-description: Versatile container component with panel, list-item, and elevated variants — unterstützt animated entrance and click handling.
+description: Versatile container component with panel, list-item, and elevated colors — unterstützt animated entrance and click handling.
 ---
 
 # Card
 
 `Card` rendert einen flexiblen Content-Container für Teaser, Listen und Landing-Sections mit konsistentem Spacing und optionalen Interaktionszuständen.
 
-
 ---
 
 ## Übersicht
 
 ```tsx
-import { Card } from '@prokodo/ui/card'
-
-<Card variant="panel" enableShadow animated={false}>
+import { Card } from "@prokodo/ui/card"
+;<Card color="panel" enableShadow animated={false}>
   <h2>Title</h2>
   <p>Card content goes here.</p>
 </Card>
 ```
 
-<StorybookEmbed id="prokodo-common-card--card-highlight" height={320} />
-
+<StorybookEmbed id="prokodo-layout-card--card-highlight" height={320} />
 
 ---
 
 ## Import
 
 ```ts
-import { Card } from '@prokodo/ui/card'
+import { Card } from "@prokodo/ui/card"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/card.css'
+import "@prokodo/ui/card.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `children` | `ReactNode` | — | ✅ | Card body content. |
-| `variant` | `"panel" \| "list-item"` | `"panel"` | — | Visual card type. |
-| `enableShadow` | `boolean` | `false` | — | Add drop shadow. |
-| `animated` | `boolean` | `true` | — | Aktiviere entrance animation. |
-| `redirect` | `LinkProps` | — | — | Make the card a link (SSR-safe). |
-| `onClick` | `MouseEventHandler` | — | — | Click handler (makes card interactive). |
-| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+| Prop                | Typ                          | Standard | Pflicht | Beschreibung                                     |
+| ------------------- | ---------------------------- | -------- | ------- | ------------------------------------------------ |
+| `children`          | `ReactNode`                  | —        | —       | Karten-Inhalt.                                   |
+| `color`             | `Variants`                   | —        | —       | Akzentfarbe (Rahmen / Schatten-Tönung).          |
+| `highlight`         | `boolean`                    | `false`  | —       | Highlight-Darstellung anwenden.                  |
+| `gradiant`          | `boolean`                    | `false`  | —       | Verlaufsüberlagerung anwenden.                   |
+| `gradiantClassName` | `string`                     | —        | —       | CSS-Klasse auf dem Verlaufs-Overlay-Element.     |
+| `contentClassName`  | `string`                     | —        | —       | CSS-Klasse auf dem inneren Content-Wrapper.      |
+| `background`        | `boolean`                    | `false`  | —       | Hintergrunds-Element rendern.                    |
+| `backgroundProps`   | `object`                     | —        | —       | Props für das Hintergrunds-Element.              |
+| `loading`           | `boolean`                    | `false`  | —       | Skeleton-Ladezustand anzeigen.                   |
+| `skeletonProps`     | `SkeletonProps`              | —        | —       | Props für den Skeleton-Platzhalter.              |
+| `disabled`          | `boolean`                    | `false`  | —       | Deaktivierten Darstellungszustand anwenden.      |
+| `animatedProps`     | `AnimatedProps`              | —        | —       | Eingangsanimations-Konfiguration.                |
+| `customAnimation`   | `string`                     | —        | —       | Benutzerdefinierter Animations-Klassen-Override. |
+| `onClick`           | `() => void`                 | —        | —       | Klick-Handler der Karte.                         |
+| `onKeyDown`         | `React.KeyboardEventHandler` | —        | —       | Tastatur-Ereignis-Handler.                       |
+| `onMouseEnter`      | `() => void`                 | —        | —       | Mouse-Enter-Handler.                             |
+| `onMouseLeave`      | `() => void`                 | —        | —       | Mouse-Leave-Handler.                             |
+| `className`         | `string`                     | —        | —       | CSS-Klasse am Root-Element.                      |
 
 > Siehe [`src/components/card/Card.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/card/Card.model.ts) für den vollständigen `CardProps`-Typ.
 
 ---
+
+## Design-Tokens
+
+Passe `Card` über CSS Custom Properties auf `:root` oder einem übergeordneten Element an.
+
+| Token                          | Standard                  | Beschreibung            |
+| ------------------------------ | ------------------------- | ----------------------- |
+| `--pk-card-bg`                 | `var(--pk-color-surface)` | Karten-Hintergrundfarbe |
+| `--pk-card-panel-light-border` | `rgba(0, 0, 0, 0.08)`     | Heller Panel-Rahmen     |
 
 ## AIC-Hinweis
 
 Verwende im Anwendungscode immer den Standard-Importpfad:
 
 ```ts
-import { Card } from '@prokodo/ui/card'
+import { Card } from "@prokodo/ui/card"
 ```
 
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
@@ -75,22 +92,22 @@ Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`)
 
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
-| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
-| **2.4.3** | **Fokusreihenfolge** (A) | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten. |
-| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
-| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein. |
-| **2.5.8** | **Zielgröße (Minimum)** (AA) | 🔍 Manuell prüfen | Interaktive Zielbereiche müssen mindestens 24 × 24 CSS-Pixel groß sein. Prüfung in der integrierten Produkt-UI erforderlich. |
-| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| Kriterium  | Bezeichnung                          | Status            | Hinweis                                                                                                                                              |
+| ---------- | ------------------------------------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1**  | **Info und Beziehungen** (A)         | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.                            |
+| **2.1.1**  | **Tastatur** (A)                     | ✅ Erfüllt        | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                             |
+| **2.4.3**  | **Fokusreihenfolge** (A)             | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten.                         |
+| **2.4.7**  | **Fokus sichtbar** (AA)              | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein.              |
+| **2.5.8**  | **Zielgröße (Minimum)** (AA)         | 🔍 Manuell prüfen | Interaktive Zielbereiche müssen mindestens 24 × 24 CSS-Pixel groß sein. Prüfung in der integrierten Produkt-UI erforderlich.                         |
+| **4.1.2**  | **Name, Rolle, Wert** (A)            | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                 |
 
 > **Testabdeckung:** 2 jest-axe-Assertion(s) in 4 Testdatei(en) · 1 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
 
 ## Storybook
 
-👉 [Card in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-card--docs)
+👉 [Card in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-layout-card--docs)
 
 ---
 

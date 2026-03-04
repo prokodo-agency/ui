@@ -3,7 +3,7 @@ import { isString } from "@/helpers/validations"
 
 import { Card, type CardProps } from "../card"
 import { Carousel } from "../carousel"
-import { Headline } from "../headline"
+import { Headline, type HeadlineProps } from "../headline"
 import { Image, type ImageProps } from "../image"
 import { Link } from "../link"
 
@@ -28,6 +28,7 @@ export function PostWidgetCarouselView(
     classes,
     componentsProps,
     structuredData = true,
+    color,
     ...rest
   } = props
 
@@ -36,9 +37,10 @@ export function PostWidgetCarouselView(
     enableShadow: true,
     ...(componentsProps?.card as Partial<CardProps>),
     ...(rest as Partial<CardProps>),
-    variant: (componentsProps?.card?.variant ??
-      (rest as Partial<CardProps>)?.variant ??
-      "white") as CardProps["variant"],
+    color: (componentsProps?.card?.color ??
+      (rest as Partial<CardProps>)?.color ??
+      color ??
+      "white") as CardProps["color"],
   }
 
   return (
@@ -59,17 +61,22 @@ export function PostWidgetCarouselView(
         {title && (
           <Headline
             highlight
-            size="md"
-            type="h2"
             {...{ ...title, ...(componentsProps?.title ?? {}) }}
             itemProp="headline"
+            size="md"
+            type="h2"
             className={bem(
               "title",
               undefined,
               [title?.className, classes?.title].filter(Boolean).join(" "),
             )}
-            variant={
-              title?.variant ?? componentsProps?.title?.variant ?? "secondary"
+            color={
+              title?.color ??
+              componentsProps?.title?.color ??
+              (color && color !== "white"
+                ? (color as HeadlineProps["color"])
+                : /* istanbul ignore next */ undefined) ??
+              "inherit"
             }
           >
             {title?.content}
@@ -110,16 +117,26 @@ export function PostWidgetCarouselView(
             )}
             nextButton={{
               variant: "contained",
-              color: "primary",
+              color: ((color && color !== "white"
+                ? color
+                : /* istanbul ignore next */ undefined) ??
+                "primary") as "primary",
+              ...componentsProps?.nextButton,
               iconProps: {
                 size: "sm",
+                ...componentsProps?.nextButton?.iconProps,
               },
             }}
             prevButton={{
               variant: "contained",
-              color: "primary",
+              color: ((color && color !== "white"
+                ? color
+                : /* istanbul ignore next */ undefined) ??
+                "primary") as "primary",
+              ...componentsProps?.prevButton,
               iconProps: {
                 size: "sm",
+                ...componentsProps?.prevButton?.iconProps,
               },
             }}
           >
@@ -229,9 +246,12 @@ export function PostWidgetCarouselView(
                           .filter(Boolean)
                           .join(" "),
                       )}
-                      variant={
-                        item.title?.variant ??
-                        componentsProps?.title?.variant ??
+                      color={
+                        item.title?.color ??
+                        componentsProps?.title?.color ??
+                        (color && color !== "white"
+                          ? (color as HeadlineProps["color"])
+                          : /* istanbul ignore next */ undefined) ??
                         "inherit"
                       }
                     >

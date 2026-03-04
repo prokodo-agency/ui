@@ -2,52 +2,64 @@
 id: map
 title: Map
 sidebar_label: Map
-description: Interactive map component powered by Google Maps or Leaflet, with marker, cluster, and polygon support.
+description: Interaktive Google-Maps-Karte mit Marker-Unterstützung und automatischem Hell-/Dunkel-Theme-Wechsel.
 ---
 
 # Map
 
-`Map` rendert interaktive Kartenansichten mit Marker-/Standortdarstellung und eignet sich für Kontakt- und Standortseiten.
+`Map` rendert interaktive Google-Kartenansichten mit Marker-/Standortdarstellung. Die Karte wechselt automatisch zwischen hellem und dunklem Kartenstil basierend auf dem `data-theme`-Attribut der Seite.
 
 ---
 
 ## Übersicht
 
 ```tsx
-import { Map } from '@prokodo/ui/map'
-
-<Map
-  center={{ lat: 52.52, lng: 13.405 }}
+import { Map } from "@prokodo/ui/map"
+;<Map
+  apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}
+  center={{ lat: 48.1371, lng: 11.5754 }}
   zoom={12}
-  markers={[{ position: { lat: 52.52, lng: 13.405 }, title: 'Berlin HQ' }]}
+  marker={[{ position: { lat: 48.1371, lng: 11.5754 } }]}
 />
 ```
 
-<StorybookEmbed id="prokodo-service-map--default" height={460} />
-
+<StorybookEmbed id="prokodo-media-map--default" height={460} />
 
 ---
 
 ## Import
 
 ```ts
-import { Map } from '@prokodo/ui/map'
+import { Map } from "@prokodo/ui/map"
 ```
 
-Styling is handled via design tokens — no additional CSS import required.
+Styling wird über Design-Tokens gesteuert — kein separater CSS-Import erforderlich.
+
+---
+
+## Styling
+
+Die Karten-Höhe wird über den CSS-Custom-Property `--pk-map-height` gesteuert (Standard: `500px`):
+
+```css
+.my-contact-section {
+  --pk-map-height: 400px;
+}
+```
 
 ---
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `center` | `{ lat: number; lng: number }` | — | ✅ | Initial map center. |
-| `zoom` | `number` | `12` | — | Initial zoom level. |
-| `markers` | `MapMarker[]` | `[]` | — | Array von markers with `position` and optional `title`. |
-| `height` | `string \| number` | `"400px"` | — | Map container height. |
-| `gestureHandling` | `"greedy" \| "auto" \| "none"` | `"auto"` | — | Google Maps gesture handling mode. |
-| `className` | `string` | — | — | CSS class on root container. |
+| Prop      | Typ                            | Standard | Pflicht | Beschreibung                                    |
+| --------- | ------------------------------ | -------- | ------- | ----------------------------------------------- |
+| `apiKey`  | `string`                       | —        | ✅      | Google Maps JS API-Schlüssel.                   |
+| `center`  | `{ lat: number; lng: number }` | —        | ✅      | Initiale Kartenzentrierung.                     |
+| `mapId`   | `string`                       | —        | —       | Map ID für cloud-basiertes Custom-Styling.      |
+| `zoom`    | `number`                       | `8`      | —       | Initialer Zoom-Level.                           |
+| `marker`  | `MapMarker[]`                  | —        | —       | Array von Markern mit `position: { lat, lng }`. |
+| `heading` | `number`                       | —        | —       | Kamera-Ausrichtung in Grad.                     |
+| `tilt`    | `number`                       | —        | —       | Kamera-Neigung in Grad.                         |
 
 > Siehe [`src/components/map/Map.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/map/Map.model.ts) für den vollständigen `MapProps`-Typ.
 
@@ -55,12 +67,12 @@ Styling is handled via design tokens — no additional CSS import required.
 
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.1.1** | **Nicht-Text-Inhalt** (A) | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
-| **2.1.1** | **Tastatur** (A) | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
-| **2.4.1** | **Blöcke überspringen** (A) | 🔍 Manuell prüfen | Eingebettete Frames oder wiederholte Navigationsblöcke müssen einen Skip-to-Content-Mechanismus bieten (z. B. iframe-Titel, Skip-Link). |
-| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| Kriterium | Bezeichnung                 | Status            | Hinweis                                                                                                                                                  |
+| --------- | --------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Nicht-Text-Inhalt** (A)   | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **2.1.1** | **Tastatur** (A)            | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                                 |
+| **2.4.1** | **Blöcke überspringen** (A) | 🔍 Manuell prüfen | Eingebettete Frames oder wiederholte Navigationsblöcke müssen einen Skip-to-Content-Mechanismus bieten (z. B. iframe-Titel, Skip-Link).                  |
+| **4.1.2** | **Name, Rolle, Wert** (A)   | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                     |
 
 > **Testabdeckung:** 1 jest-axe-Assertion(s) in 1 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.

@@ -1,13 +1,13 @@
 import { Grid } from "./Grid"
 import { GridRow } from "./GridRow"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Grid",
+  title: "prokodo/layout/Grid",
   component: Grid,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component:

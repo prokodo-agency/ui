@@ -152,6 +152,49 @@ describe("SideNav", () => {
       )
       expect(screen.getByText("Footer Content")).toBeInTheDocument()
     })
+
+    it("does not render footer when collapsed=true even with renderFooter", () => {
+      render(
+        <SideNavView
+          collapsed={true}
+          items={navItems}
+          renderFooter={() => <div>Hidden Footer</div>}
+        />,
+      )
+      expect(screen.queryByText("Hidden Footer")).not.toBeInTheDocument()
+    })
+
+    it("renders sections with headline and description", () => {
+      const sections = [
+        {
+          headline: "Main Section",
+          description: "Section description",
+          items: navItems,
+        },
+      ]
+      render(<SideNavView collapsed={false} sections={sections} />)
+      expect(screen.getByText("Main Section")).toBeInTheDocument()
+      expect(screen.getByText("Section description")).toBeInTheDocument()
+    })
+
+    it("renders sections with a custom HeadlineComponent", () => {
+      const HeadlineComponent = ({ className }: { className?: string }) => (
+        <div className={className}>Custom Section Header</div>
+      )
+      const sections = [
+        {
+          headlineComponent: HeadlineComponent,
+          items: navItems,
+        },
+      ]
+      render(<SideNavView collapsed={false} sections={sections} />)
+      expect(screen.getByText("Custom Section Header")).toBeInTheDocument()
+    })
+
+    it("renders empty list when items is undefined and no sections", () => {
+      render(<SideNavView collapsed={false} />)
+      expect(screen.getByRole("list")).toBeInTheDocument()
+    })
   })
 })
 

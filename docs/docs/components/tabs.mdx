@@ -9,53 +9,62 @@ description: Tab panel component with keyboard navigation, animated panel switch
 
 `Tabs` renders a tabbed interface with accessible keyboard navigation (arrow keys), animated panel transitions, and correct ARIA `tablist`/`tab`/`tabpanel` roles.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Tabs } from '@prokodo/ui/tabs'
-
-<Tabs
-  tabs={[
-    { label: 'Overview', content: <OverviewPanel /> },
-    { label: 'Details', content: <DetailsPanel /> },
-    { label: 'Reviews', content: <ReviewsPanel /> },
+import { Tabs } from "@prokodo/ui/tabs"
+;<Tabs
+  id="my-tabs"
+  ariaLabel="Documentation sections"
+  defaultValue="overview"
+  items={[
+    { value: "overview", label: "Overview", content: <OverviewPanel /> },
+    { value: "details", label: "Details", content: <DetailsPanel /> },
+    { value: "reviews", label: "Reviews", content: <ReviewsPanel /> },
   ]}
-  defaultTab={0}
 />
 ```
 
 <StorybookEmbed id="prokodo-navigation-tabs--default" />
-
 
 ---
 
 ## Import
 
 ```ts
-import { Tabs } from '@prokodo/ui/tabs'
+import { Tabs } from "@prokodo/ui/tabs"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/tabs.css'
+import "@prokodo/ui/tabs.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `tabs` | `Tab[]` | — | ✅ | Array of tab definitions with `label` and `content`. |
-| `defaultTab` | `number` | `0` | — | Index of the initially active tab. |
-| `activeTab` | `number` | — | — | Controlled active tab index. |
-| `onChange` | `(index: number) => void` | — | — | Called when the active tab changes. |
-| `variant` | `"default" \| "enclosed" \| "pills"` | `"default"` | — | Visual tab strip style. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop              | Type                         | Default        | Required | Description                            |
+| ----------------- | ---------------------------- | -------------- | -------- | -------------------------------------- |
+| `id`              | `string`                     | —              | ✅       | Unique id (used for ARIA linking).     |
+| `items`           | `TabItem[]`                  | —              | ✅       | Tab definitions.                       |
+| `value`           | `string`                     | —              | —        | Controlled active tab value.           |
+| `defaultValue`    | `string`                     | —              | —        | Uncontrolled initial tab value.        |
+| `color`           | `Variants`                   | —              | —        | Accent color variant.                  |
+| `orientation`     | `"horizontal" \| "vertical"` | `"horizontal"` | —        | Tab list orientation.                  |
+| `activationMode`  | `"automatic" \| "manual"`    | `"automatic"`  | —        | Focus vs. selection activation mode.   |
+| `disabled`        | `boolean`                    | `false`        | —        | Disable all tabs.                      |
+| `fullWidth`       | `boolean`                    | `false`        | —        | Stretch tab list to container width.   |
+| `ariaLabel`       | `string`                     | —              | —        | Accessible label for the tablist.      |
+| `badgeChipProps`  | `ChipProps`                  | —              | —        | Props for badge chips on tab items.    |
+| `onChange`        | `(value: string) => void`    | —              | —        | Called when active tab changes.        |
+| `listClassName`   | `string`                     | —              | —        | CSS class on the tab list element.     |
+| `tabClassName`    | `string`                     | —              | —        | CSS class applied to each tab button.  |
+| `panelsClassName` | `string`                     | —              | —        | CSS class on the tab panels container. |
+| `className`       | `string`                     | —              | —        | CSS class on root element.             |
 
 > See [`src/components/tabs/Tabs.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tabs/Tabs.model.ts) for the full `TabsProps` type.
 
@@ -66,7 +75,7 @@ import '@prokodo/ui/tabs.css'
 Use the standard import path in application code:
 
 ```ts
-import { Tabs } from '@prokodo/ui/tabs'
+import { Tabs } from "@prokodo/ui/tabs"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -78,17 +87,43 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
-| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
-| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion  | Name                               | Status           | Note                                                                                                                            |
+| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **2.1.1**  | **Keyboard** (A)                   | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                       |
+| **2.4.3**  | **Focus Order** (A)                | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                     |
+| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.      |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                  |
+| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 3 test file(s) · 5 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+---
+
+## Design Tokens
+
+Customise `Tabs` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                          | Default                                                              | Description                                                             |
+| ------------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `--pk-tabs-border`             | `var(--pk-color-border)`                                             | Tab list border color (bottom / right in vertical mode)                 |
+| `--pk-tabs-tab-color`          | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)`            | Default tab label color                                                 |
+| `--pk-tabs-tab-hover-color`    | `var(--pk-color-brand)`                                              | Hover accent color (tints the hover background)                         |
+| `--pk-tabs-tab-hover-bg`       | `color-mix(in srgb, var(--pk-tabs-tab-hover-color) 8%, transparent)` | Tab background on hover and focus                                       |
+| `--pk-tabs-tab-selected-color` | `var(--pk-color-fg)`                                                 | Active/selected tab label color                                         |
+| `--pk-tabs-tab-disabled-color` | `var(--pk-color-muted)`                                              | Disabled tab label color                                                |
+| `--pk-tabs-badge-bg`           | `var(--pk-color-border)`                                             | Badge pill background color                                             |
+| `--pk-tabs-badge-fg`           | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)`            | Badge pill text color                                                   |
+| `--pk-tabs-indicator-gradient` | `var(--gradient-border-4)`                                           | Gradient used for the selected-tab indicator line                       |
+| `--pk-tabs-gap`                | `var(--pk-space-lg)`                                                 | Gap in vertical layout grid                                             |
+| `--pk-tabs-pad-xs`             | `var(--pk-space-xs)`                                                 | Badge pill horizontal padding                                           |
+| `--pk-tabs-pad-sm`             | `var(--pk-space-sm)`                                                 | Internal tab icon–label gap                                             |
+| `--pk-tabs-pad-md`             | `var(--pk-space-md)`                                                 | Vertical padding of each tab button                                     |
+| `--pk-tabs-pad-lg`             | `var(--pk-space-lg)`                                                 | Horizontal padding of tab buttons / panel padding                       |
+| `--pk-tabs-radius`             | `var(--pk-radius-sm)`                                                | Border-radius of tab top corners (horizontal) / left corners (vertical) |
+
+---
 
 ## Storybook
 

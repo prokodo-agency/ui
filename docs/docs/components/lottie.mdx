@@ -2,65 +2,67 @@
 id: lottie
 title: Lottie
 sidebar_label: Lottie
-description: Lottie JSON animation player component with play/pause control, loop, and autoplay support.
+description: Lazy viewport-aware dotLottie animation player with loop, autoplay, and custom class support.
 ---
 
 # Lottie
 
-`Lottie` renders Lottie JSON animations. Supports autoplay, loop, and programmatic play/pause control. Animations are loaded from a URL or inline JSON data.
+`Lottie` lazy-renders a dotLottie animation via `@lottiefiles/dotlottie-react`. The animation only loads when the container scrolls into the viewport (IntersectionObserver), keeping off-screen frames from consuming resources.
 
 ---
 
 ## Overview
 
 ```tsx
-import { Lottie } from '@prokodo/ui/lottie'
-
-<Lottie src="/animations/hero.json" loop autoplay />
+import { Lottie } from "@prokodo/ui/lottie"
+;<Lottie animation="/animations/hero.lottie" loop autoplay />
 ```
 
-<StorybookEmbed id="prokodo-common-lottie--default" height={340} />
-
+<StorybookEmbed id="prokodo-media-lottie--default" height={340} />
 
 ---
 
 ## Import
 
 ```ts
-import { Lottie } from '@prokodo/ui/lottie'
+import { Lottie } from "@prokodo/ui/lottie"
 ```
 
-CSS:
+---
+
+## Available animations
+
+All pre-defined animation URLs are exported from `LottieAnimations.ts` as the `ANIMATIONS` map:
 
 ```ts
-import '@prokodo/ui/lottie.css'
+import { ANIMATIONS } from "@prokodo/ui/lottie/LottieAnimations"
+<Lottie animation={ANIMATIONS.SolutionCloud} />
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `src` | `string \| object` | — | ✅ | URL to a `.json` file or an inline animation object. |
-| `loop` | `boolean` | `true` | — | Loop the animation. |
-| `autoplay` | `boolean` | `true` | — | Start playing on mount. |
-| `width` | `number \| string` | `"100%"` | — | Container width. |
-| `height` | `number \| string` | `"auto"` | — | Container height. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop                 | Type      | Default | Required | Description                           |
+| -------------------- | --------- | ------- | -------- | ------------------------------------- |
+| `animation`          | `object`  | —       | ✅       | Lottie animation JSON data.           |
+| `loop`               | `boolean` | `true`  | —        | Loop the animation.                   |
+| `autoplay`           | `boolean` | `true`  | —        | Auto-start the animation.             |
+| `containerClassName` | `string`  | —       | —        | CSS class on the animation container. |
+| `className`          | `string`  | —       | —        | CSS class on root element.            |
 
-> See [`src/components/lottie/Lottie.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/lottie/Lottie.model.ts) for the full `LottieProps` type.
+> Additional props from `DotLottieReactProps` (e.g. `speed`, `playOnHover`) are forwarded to the underlying player. See [`src/components/lottie/Lottie.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/lottie/Lottie.model.ts) for the full type.
 
 ---
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.1.1** | **Non-text Content** (A) | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
-| **2.2.2** | **Pause, Stop, Hide** (A) | 🔍 Manual review | Animations or auto-rotating content lasting more than 5 s must provide a pause/stop control. |
-| **2.3.1** | **Three Flashes or Below Threshold** (A) | 🔍 Manual review | Animated content must not flash more than 3 times per second. |
-| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion | Name                                     | Status           | Note                                                                                                                                            |
+| --------- | ---------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Non-text Content** (A)                 | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.2.2** | **Pause, Stop, Hide** (A)                | 🔍 Manual review | Animations or auto-rotating content lasting more than 5 s must provide a pause/stop control.                                                    |
+| **2.3.1** | **Three Flashes or Below Threshold** (A) | 🔍 Manual review | Animated content must not flash more than 3 times per second.                                                                                   |
+| **4.1.2** | **Name, Role, Value** (A)                | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.                 |
 
 > **Test coverage:** 1 jest-axe assertion(s) across 1 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

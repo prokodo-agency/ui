@@ -9,26 +9,26 @@ description: Full-screen or inline loading indicator with spinner, skeleton puls
 
 `Loading` renders a loading state indicator. It supports a full-screen overlay mode for page transitions and inline modes for lazy-loaded content regions.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Loading } from '@prokodo/ui/loading'
+import { Loading } from "@prokodo/ui/loading"
 
-{isFetching && <Loading variant="spinner" fullscreen />}
+{
+  isFetching && <Loading variant="spinner" fullscreen />
+}
 ```
 
-<StorybookEmbed id="prokodo-common-loading--default" />
-
+<StorybookEmbed id="prokodo-feedback-loading--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { Loading } from '@prokodo/ui/loading'
+import { Loading } from "@prokodo/ui/loading"
 ```
 
 Styling is handled via design tokens — no additional CSS import required.
@@ -37,16 +37,41 @@ Styling is handled via design tokens — no additional CSS import required.
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `variant` | `"spinner" \| "dots" \| "pulse"` | `"spinner"` | — | Visual style of the loading indicator. |
-| `fullscreen` | `boolean` | `false` | — | Mount as a full-screen overlay. |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | — | Size of the indicator. |
-| `color` | `string` | `"primary"` | — | Design token color. |
-| `label` | `string` | — | — | Accessible label for screen readers. |
-| `className` | `string` | — | — | CSS class on root element. |
+`LoadingProps` is a discriminated union between a plain spinner (`variant="spinner"`, default) and a full-screen overlay (`variant="overlay"`).
+
+### Common props
+
+| Prop            | Type                                                                                              | Default     | Required | Description                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------- | ----------- | -------- | ------------------------------------------------------------ |
+| `variant`       | `"spinner" \| "overlay"`                                                                          | `"spinner"` | —        | Visual style variant.                                        |
+| `size`          | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`                                                            | `"sm"`      | —        | Size of the spinner.                                         |
+| `color`         | `"inherit" \| "primary" \| "secondary" \| "success" \| "error" \| "info" \| "warning" \| "white"` | —           | —        | Explicit spinner color; defaults to `currentColor` if unset. |
+| `ariaLabel`     | `string`                                                                                          | `"Loading"` | —        | Accessible label for screen readers.                         |
+| `reducedMotion` | `boolean`                                                                                         | —           | —        | Disable animation regardless of system preference.           |
+| `className`     | `string`                                                                                          | —           | —        | CSS class on root element.                                   |
+| `style`         | `CSSProperties`                                                                                   | —           | —        | Inline styles on root element.                               |
+
+### Additional overlay props (`variant="overlay"`)
+
+| Prop       | Type                          | Default  | Description                                        |
+| ---------- | ----------------------------- | -------- | -------------------------------------------------- |
+| `show`     | `boolean`                     | `true`   | Mount and show the overlay.                        |
+| `backdrop` | `"light" \| "dark" \| "auto"` | `"auto"` | Backdrop color source (auto-detects system theme). |
+| `blur`     | `number`                      | `0`      | Backdrop blur intensity in px.                     |
+| `zIndex`   | `number`                      | `9999`   | z-index of the overlay container.                  |
 
 > See [`src/components/loading/Loading.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/loading/Loading.model.ts) for the full `LoadingProps` type.
+
+---
+
+## Design Tokens
+
+`Loading` has no CSS custom-property tokens. The spinner color is driven entirely by the CSS `color` property.
+
+| Mechanism      | Description                                                                            |
+| -------------- | -------------------------------------------------------------------------------------- |
+| `color` (prop) | Maps to a design-system token (e.g. `var(--pk-color-brand)` for `"primary"`).          |
+| `currentColor` | When no `color` prop is set, the spinner inherits the parent element's CSS text color. |
 
 ---
 
@@ -55,7 +80,7 @@ Styling is handled via design tokens — no additional CSS import required.
 Use the standard import path in application code:
 
 ```ts
-import { Loading } from '@prokodo/ui/loading'
+import { Loading } from "@prokodo/ui/loading"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -67,11 +92,11 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
-| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+| Criterion | Name                           | Status       | Note                                                                                                                                       |
+| --------- | ------------------------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.            |
+| **4.1.3** | **Status Messages** (AA)       | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

@@ -35,6 +35,7 @@ export function RatingView(props: RatingViewProps): JSX.Element {
     onMouseEnter,
     onMouseLeave,
     inputRef,
+    color,
   } = props
 
   const isError = typeof errorText === "string"
@@ -52,7 +53,7 @@ export function RatingView(props: RatingViewProps): JSX.Element {
     <div
       className={bem(
         undefined,
-        { "full-width": Boolean(fullWidth) },
+        { "full-width": Boolean(fullWidth), ...(color && { [color]: true }) },
         className,
       )}
     >
@@ -60,6 +61,7 @@ export function RatingView(props: RatingViewProps): JSX.Element {
         {typeof label === "string" && (
           <Label
             {...labelProps}
+            color={color}
             error={isError}
             htmlFor={name}
             label={label}

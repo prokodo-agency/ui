@@ -279,8 +279,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
             )}
             iconProps={{
               name: "ArrowLeft01Icon",
-              size: "md",
-              color: "white",
+              size: "sm",
               /* istanbul ignore next */
               ...prevButton?.iconProps,
             }}
@@ -323,8 +322,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
             )}
             iconProps={{
               name: "ArrowRight01Icon",
-              size: "md",
-              color: "white",
+              size: "sm",
               /* istanbul ignore next */
               ...nextButton?.iconProps,
             }}

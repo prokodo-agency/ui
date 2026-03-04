@@ -9,64 +9,85 @@ description: Accessible checkbox input with label, error state, and controlled/u
 
 `Checkbox` renders an accessible `<input type="checkbox">` with an associated label, optional helper text, and error feedback. Works in controlled and uncontrolled modes.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Checkbox } from '@prokodo/ui/checkbox'
-
-<Checkbox
+import { Checkbox } from "@prokodo/ui/checkbox"
+;<Checkbox
   name="terms"
   label="I accept the terms and conditions"
   checked={accepted}
-  onChange={(e) => setAccepted(e.target.checked)}
+  onChange={e => setAccepted(e.target.checked)}
 />
 ```
 
-<StorybookEmbed id="prokodo-form-checkbox--controlled" />
-
+<StorybookEmbed id="prokodo-form-checkbox--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { Checkbox } from '@prokodo/ui/checkbox'
+import { Checkbox } from "@prokodo/ui/checkbox"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/checkbox.css'
+import "@prokodo/ui/checkbox.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `name` | `string` | — | ✅ | Input `name` attribute. |
-| `label` | `string` | — | — | Visible label text. |
-| `checked` | `boolean` | — | — | Controlled checked state. |
-| `defaultChecked` | `boolean` | `false` | — | Uncontrolled default checked state. |
-| `onChange` | `ChangeEventHandler<HTMLInputElement>` | — | — | Change handler. |
-| `disabled` | `boolean` | `false` | — | Disable the input. |
-| `error` | `string` | — | — | Error message shown below the input. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop               | Type                                   | Default   | Required | Description                                |
+| ------------------ | -------------------------------------- | --------- | -------- | ------------------------------------------ |
+| `value`            | `T` (generic)                          | —         | ✅       | Value associated with this checkbox.       |
+| `title`            | `ReactNode`                            | —         | —        | Label/title rendered next to the checkbox. |
+| `description`      | `string`                               | —         | —        | Secondary description text.                |
+| `icon`             | `string`                               | —         | —        | Icon name shown inside the card variant.   |
+| `iconLabel`        | `string`                               | —         | —        | Accessible label for the icon.             |
+| `checked`          | `boolean`                              | —         | —        | Controlled checked state.                  |
+| `defaultChecked`   | `boolean`                              | —         | —        | Uncontrolled initial checked state.        |
+| `disabled`         | `boolean`                              | `false`   | —        | Disable the checkbox.                      |
+| `required`         | `boolean`                              | `false`   | —        | Mark field as required.                    |
+| `showRequiredMark` | `boolean`                              | `false`   | —        | Show required asterisk on the label.       |
+| `variant`          | `"plain" \| "card"`                    | `"plain"` | —        | Visual variant.                            |
+| `color`            | `Variants`                             | —         | —        | Accent color variant.                      |
+| `onChange`         | `(checked: boolean, value: T) => void` | —         | —        | Called when checked state changes.         |
+| `className`        | `string`                               | —         | —        | CSS class on root element.                 |
 
 > See [`src/components/checkbox/Checkbox.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/checkbox/Checkbox.model.ts) for the full `CheckboxProps` type.
 
 ---
+
+## Design Tokens
+
+Customise `Checkbox` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                          | Default                      | Description                   |
+| ------------------------------ | ---------------------------- | ----------------------------- |
+| `--pk-checkbox-size`           | `1.125rem`                   | Checkbox control size         |
+| `--pk-checkbox-radius`         | `var(--pk-radius-md)`        | Outer container radius        |
+| `--pk-checkbox-control-radius` | `6px`                        | Control (checkbox box) radius |
+| `--pk-checkbox-control-border` | `var(--pk-palette-grey-200)` | Unchecked border colour       |
+| `--pk-checkbox-control-bg`     | `var(--pk-palette-white)`    | Unchecked background          |
+| `--pk-checkbox-gradient-from`  | `var(--pk-color-brand)`      | Checked gradient start        |
+| `--pk-checkbox-gradient-to`    | `var(--pk-color-accent)`     | Checked gradient end          |
+| `--pk-checkbox-fg`             | `var(--pk-color-fg)`         | Label text colour             |
+| `--pk-checkbox-fg-muted`       | `var(--pk-color-muted)`      | Helper text colour            |
+| `--pk-checkbox-error-fg`       | `var(--pk-color-error)`      | Error text colour             |
+| `--pk-checkbox-card-bg`        | `var(--pk-color-surface)`    | Card-style background         |
 
 ## AIC Note
 
 Use the standard import path in application code:
 
 ```ts
-import { Checkbox } from '@prokodo/ui/checkbox'
+import { Checkbox } from "@prokodo/ui/checkbox"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -78,14 +99,14 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **1.4.1** | **Use of Color** (A) | 🔍 Manual review | Color must not be the only means of conveying information (e.g. error states, required field markers). |
-| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
-| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled | Every form input requires a programmatically associated label or a visible instruction. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.4.1** | **Use of Color** (A)           | 🔍 Manual review | Color must not be the only means of conveying information (e.g. error states, required field markers).                          |
+| **2.1.1** | **Keyboard** (A)               | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                       |
+| **2.4.7** | **Focus Visible** (AA)         | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.      |
+| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled     | Every form input requires a programmatically associated label or a visible instruction.                                         |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 5 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

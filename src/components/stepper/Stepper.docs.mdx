@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as StepperStories from "./Stepper.stories"
 
 <Meta of={StepperStories} />
@@ -24,6 +24,19 @@ Use `Stepper` for multi-page forms, onboarding flows, and checkout sequences whe
 - **Enter / Space**: activate the focused button
 - Navigation through locked future steps is prevented
 
+## Design Tokens
+
+Customise `Stepper` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                             | Default                     | Description                                    |
+| --------------------------------- | --------------------------- | ---------------------------------------------- |
+| `--pk-stepper-icon-mask-bg`       | `var(--pk-color-surface)`   | Mask isolation colour for icon border gradient |
+| `--pk-stepper-label-color`        | `var(--pk-color-muted)`     | Step label text colour (inactive)              |
+| `--pk-stepper-label-color-active` | `var(--pk-color-fg)`        | Step label text colour (active)                |
+| `--pk-stepper-shadow`             | `var(--pk-shadow-sm)`       | Active icon container box-shadow               |
+| `--pk-stepper-shadow-inset`       | `var(--elevation-1--inset)` | Active icon container inset shadow             |
+| `--pk-stepper-icon-mb`            | `var(--pk-space-md)`        | Bottom margin between icon and label           |
+
 ## ✅ Do
 
 - Display a persistent summary of completed data so users can verify before the final step
@@ -46,6 +59,24 @@ Use `Stepper` for multi-page forms, onboarding flows, and checkout sequences whe
 
 <Canvas>
   <Story of={StepperStories.WithIcon} />
+</Canvas>
+
+### Success state
+
+<Canvas>
+  <Story of={StepperStories.Success} />
+</Canvas>
+
+### Warning state
+
+<Canvas>
+  <Story of={StepperStories.Warning} />
+</Canvas>
+
+### Error state
+
+<Canvas>
+  <Story of={StepperStories.Error} />
 </Canvas>
 
 ### Props

@@ -7,10 +7,10 @@ description: Installiere prokodo UI mit pnpm, npm oder yarn und binde globale St
 
 # Installation
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import { List } from '@prokodo/ui/list';
-import '@prokodo/ui/list.css';
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import { List } from "@prokodo/ui/list"
+import "@prokodo/ui/list.css"
 
 ## Voraussetzungen
 
@@ -19,14 +19,15 @@ import '@prokodo/ui/list.css';
     <strong>Startklar in unter 2 Minuten</strong>
   </p>
   <p>
-    Stelle vor der Installation sicher, dass dein Projekt diese Anforderungen erfüllt:
+    Stelle vor der Installation sicher, dass dein Projekt diese Anforderungen
+    erfüllt:
   </p>
   <List
     className="installation-requirements-list"
     items={[
-      { title: 'Node.js ≥ 18', icon: 'CheckmarkCircle01Icon' },
-      { title: 'React ≥ 18', icon: 'CheckmarkCircle01Icon' },
-      { title: 'Next.js ≥ 14 (App Router)', icon: 'CheckmarkCircle01Icon' },
+      { title: "Node.js ≥ 18", icon: "CheckmarkCircle01Icon" },
+      { title: "React ≥ 18", icon: "CheckmarkCircle01Icon" },
+      { title: "Next.js ≥ 14 (App Router)", icon: "CheckmarkCircle01Icon" },
     ]}
   />
 </div>
@@ -66,10 +67,11 @@ yarn add @prokodo/ui
 Importiere das prokodo UI CSS-Bundle in deinem Root-Layout (`app/layout.tsx`):
 
 ```ts title="app/layout.tsx"
-import '@prokodo/ui/theme.css'
+import "@prokodo/ui/theme.css"
 ```
 
 Diese Datei:
+
 - Importiert alle CSS-Kustomeigenschaften (`--pk-*` Design-Tokens)
 - Stellt baseline-Resets bereit, die mit Next.js App Router kompatibel sind
 - Muss **einmalig** am Root eingebunden werden — kein wiederholter Import pro Komponente erforderlich
@@ -91,8 +93,8 @@ Für die meisten Setups ist keine besondere Konfiguration erforderlich. Wenn du 
 Erstelle eine schnelle Testseite:
 
 ```tsx title="app/test/page.tsx"
-import { Button } from '@prokodo/ui/button'
-import '@prokodo/ui/button.css'
+import { Button } from "@prokodo/ui/button"
+import "@prokodo/ui/button.css"
 
 export default function TestPage() {
   return <Button>Es funktioniert!</Button>

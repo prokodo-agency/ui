@@ -39,6 +39,7 @@ export function TabsView<Value extends string = string>({
   items,
   value,
   defaultValue,
+  color,
   orientation = "horizontal",
   disabled,
   fullWidth,
@@ -63,6 +64,7 @@ export function TabsView<Value extends string = string>({
         undefined,
         {
           vertical: orientation === "vertical",
+          [`color-${color}`]: Boolean(color),
         },
         className,
       )}
@@ -116,7 +118,7 @@ export function TabsView<Value extends string = string>({
                 {
                   disabled: isDisabled,
                   fullWidth: fullWidth === true,
-                  selected: isSelected,
+                  selected: isSelected && disabled !== true,
                   vertical: orientation === "vertical",
                 },
                 tabClassName,

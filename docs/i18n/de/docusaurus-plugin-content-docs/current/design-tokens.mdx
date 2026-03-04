@@ -1,0 +1,110 @@
+---
+id: design-tokens
+title: Design Tokens
+sidebar_label: Design Tokens
+description: Vollständige Referenz aller prokodo UI CSS Custom Properties (--pk-*) für Farbe, Abstände, Typografie, Radius, Schatten und komponentenbezogene Überschreibungen.
+---
+
+# Design Tokens
+
+Alle Designentscheidungen in prokodo UI werden als CSS Custom Properties unter dem `--pk-*`-Namespace ausgedrückt. Das System hat **drei Ebenen**:
+
+1. **Primitive Palette** (`--pk-palette-*`) — Rohe Hex-Werte; im Consumer-Code nicht direkt referenzieren
+2. **Semantische Tokens** (`--pk-color-*`, `--pk-space-*`, `--pk-radius-*`, …) — Rollen-basierte Aliase
+3. **Komponenten-Tokens** (`--pk-input-*`, `--pk-select-*`, …) — Überschreibpunkte pro Komponente
+
+Token-Definitionen einmalig im App-Root importieren:
+
+```ts
+import "@prokodo/ui/theme.css"
+```
+
+---
+
+## Semantische Farben
+
+Diese Tokens überschreibst du, um deine Marke anzuwenden.
+
+### Marke & Akzent
+
+| Token                    | Standard (Hell) | Beschreibung                                                     |
+| ------------------------ | --------------- | ---------------------------------------------------------------- |
+| `--pk-color-brand`       | `#1e90ff`       | Primäre Markenfarbe — Buttons, aktive Rahmen, Verläufe           |
+| `--pk-color-brand-hover` | `#64a1ff`       | Aufgehellte Marke im Hover                                       |
+| `--pk-color-accent`      | `#00e6ff`       | Sekundärer Akzent — Verlauf-Endfarbe an interaktiven Komponenten |
+| `--pk-color-on-brand`    | `#ffffff`       | Vordergrundfarbe auf Marken-Hintergründen                        |
+
+### Oberfläche & Vordergrund
+
+| Token                       | Hell      | Dunkel    | Beschreibung                         |
+| --------------------------- | --------- | --------- | ------------------------------------ |
+| `--pk-color-bg`             | `#f5f5f5` | `#121212` | Seitenhintergrund                    |
+| `--pk-color-fg`             | `#121212` | `#f5f5f5` | Primärer Text / Icons                |
+| `--pk-color-surface`        | `#ffffff` | `#242424` | Karte, Input, Panel-Hintergrund      |
+| `--pk-color-surface-raised` | `#f5f5f5` | `#2f2f2f` | Erhöhte Oberfläche (Button-Standard) |
+| `--pk-color-border`         | `#9c9c9c` | `#393939` | Trennlinien, Input-Rahmen            |
+| `--pk-color-muted`          | `#7d7d7d` | `#606060` | Placeholder / sekundärer Label-Text  |
+
+### Status
+
+| Token                | Wert      | Beschreibung  |
+| -------------------- | --------- | ------------- |
+| `--pk-color-success` | `#20e381` | Erfolgsstatus |
+| `--pk-color-warning` | `#f7b529` | Warnstatus    |
+| `--pk-color-error`   | `#f0453a` | Fehlerstatus  |
+
+---
+
+## Abstände
+
+| Token            | Wert      | Pixel |
+| ---------------- | --------- | ----- |
+| `--pk-space-xs`  | `0.25rem` | 4 px  |
+| `--pk-space-sm`  | `0.5rem`  | 8 px  |
+| `--pk-space-md`  | `0.75rem` | 12 px |
+| `--pk-space-lg`  | `1rem`    | 16 px |
+| `--pk-space-xl`  | `1.5rem`  | 24 px |
+| `--pk-space-2xl` | `2rem`    | 32 px |
+
+---
+
+## Eckenradien
+
+| Token                | Wert      | Verwendung                        |
+| -------------------- | --------- | --------------------------------- |
+| `--pk-radius-sm`     | `5px`     | Chips, Tags                       |
+| `--pk-radius-md`     | `0.75rem` | Karten, Dialoge, Checkboxen       |
+| `--pk-radius-lg`     | `2rem`    | Popovers, Bottom-Sheets           |
+| `--pk-radius-pill`   | `1.5rem`  | Inputs, Buttons, Select           |
+| `--pk-radius-circle` | `9999px`  | Icon-Buttons, Avatar, Tageszellen |
+
+---
+
+## Komponenten-Tokens
+
+Jede Komponente exponiert eigene CSS Custom Properties. Im **Design Tokens**-Abschnitt jeder Komponenten-Seite sind die spezifischen Tokens dokumentiert.
+
+### Beispiel: Überschreiben
+
+```css
+@import "@prokodo/ui/theme.css";
+
+:root {
+  /* Marke anpassen */
+  --pk-color-brand: #0ea5e9;
+  --pk-color-accent: #f0abfc;
+
+  /* Eckradien */
+  --pk-radius-pill: 0.5rem;
+
+  /* DatePicker-Kalender schärfer */
+  --pk-dp-dialog-radius: 8px;
+}
+
+/* Select auf einer bestimmten Seite */
+.mein-formular {
+  --pk-select-shadow: none;
+}
+```
+
+Weitere Muster für Dark Mode und Scoped Overrides: [Theming](/docs/getting-started/theming).

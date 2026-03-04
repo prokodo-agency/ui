@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as CheckboxGroupStories from "./CheckboxGroup.stories"
 
 <Meta of={CheckboxGroupStories} />
@@ -37,6 +37,10 @@ Use `CheckboxGroup` when users can select none, one, or multiple options from th
 - `required` enforces group-level requirement (legend shows `*`)
 - `options[].required` enforces item-level requirement (checkbox label shows `*`)
 
+## Design Tokens
+
+`CheckboxGroup` shares all tokens with `Checkbox`. See the [Checkbox docs](/docs/components/checkbox#design-tokens) for the full token list.
+
 ## ✅ Do
 
 - Provide a meaningful `legend` for grouped context
@@ -59,12 +63,6 @@ Use `CheckboxGroup` when users can select none, one, or multiple options from th
   <Story of={CheckboxGroupStories.Default} />
 </Canvas>
 
-### Controlled
-
-<Canvas>
-  <Story of={CheckboxGroupStories.Controlled} />
-</Canvas>
-
 ### Grid plain layout
 
 <Canvas>
@@ -81,6 +79,18 @@ Use `CheckboxGroup` when users can select none, one, or multiple options from th
 
 <Canvas>
   <Story of={CheckboxGroupStories.OptionRequired} />
+</Canvas>
+
+### Card group
+
+<Canvas>
+  <Story of={CheckboxGroupStories.CardGroup} />
+</Canvas>
+
+### Success card
+
+<Canvas>
+  <Story of={CheckboxGroupStories.SuccessCard} />
 </Canvas>
 
 ### Props

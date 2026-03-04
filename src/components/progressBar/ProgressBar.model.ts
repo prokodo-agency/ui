@@ -2,9 +2,12 @@ import type { Variants } from "@/types/variants"
 import type { HTMLAttributes } from "react"
 
 /**
- * Visual variants for the progress bar (excluding white).
+ * Color tokens for the progress bar (excluding white).
  */
-export type ProgressBarVariant = Omit<Variants, "white">
+export type ProgressBarColor = Omit<Variants, "white">
+
+/** @deprecated Use {@link ProgressBarColor} instead. */
+export type ProgressBarVariant = ProgressBarColor
 
 /**
  * ProgressBar props.
@@ -25,8 +28,8 @@ export type ProgressBarProps = {
   label?: string
   /** Hide the label even when provided. */
   hideLabel?: boolean
-  /** Visual style variant (maps to CSS vars). Default: "primary". */
-  variant?: ProgressBarVariant
+  /** Visual color token. Default: "primary". */
+  color?: ProgressBarColor
   /** Runs the animation infinitely in a loop. */
   infinity?: boolean
   /** Adds a pulsing animation on value change. */

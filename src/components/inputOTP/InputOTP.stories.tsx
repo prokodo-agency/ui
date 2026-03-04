@@ -3,7 +3,7 @@ import { useState } from "react"
 import { InputOTP } from "./InputOTP"
 
 import type { InputOTPProps } from "./InputOTP.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
   title: "prokodo/form/InputOTP",
@@ -20,6 +20,38 @@ const meta = {
   argTypes: {
     length: {
       control: { type: "number", min: 4, max: 8, step: 1 },
+    },
+    color: {
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "error",
+        "white",
+      ],
+      control: { type: "select" },
+      description:
+        "Color variant — changes the gradient border and focus glow.",
+    },
+    label: {
+      control: "text",
+      description:
+        "Visible label above the cells. Shows asterisk when `required` is set.",
+    },
+    helperText: {
+      control: "text",
+      description: "Helper text shown below the cells.",
+    },
+    errorText: {
+      control: "text",
+      description: "Error message shown below the cells in error colour.",
+    },
+    name: {
+      control: "text",
+      description: 'Base name/id for the digit inputs. Defaults to "otp".',
     },
     groupLabel: { control: "text" },
     groupInstruction: { control: "text" },
@@ -102,8 +134,8 @@ export const Disabled: Story = {
   args: {
     length: 6,
     disabled: true,
-    groupLabel: "One-time password",
-    groupInstruction: "Input is disabled.",
+    label: "One-time password",
+    helperText: "Input is disabled.",
   },
   render: args => <Controlled {...args} />,
 }
@@ -112,8 +144,54 @@ export const Required: Story = {
   args: {
     length: 6,
     required: true,
-    groupLabel: "Required OTP",
-    groupInstruction: "This field is required.",
+    label: "Verification code",
+    helperText: "Enter the 6-digit code sent to your device.",
   },
   render: args => <Controlled {...args} />,
+}
+
+export const WithLabel: Story = {
+  args: {
+    length: 6,
+    label: "One-time password",
+    helperText: "Enter the 6-digit code sent to your device.",
+  },
+  render: args => <Controlled {...args} />,
+}
+
+export const WithError: Story = {
+  args: {
+    length: 6,
+    label: "One-time password",
+    errorText: "The code you entered is incorrect. Please try again.",
+    color: "error",
+  },
+  render: args => <Controlled {...args} />,
+}
+
+export const Variants: Story = {
+  args: { length: 6 },
+  render: args => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      {(
+        ["primary", "secondary", "success", "warning", "error", "info"] as const
+      ).map(variant => (
+        <div
+          key={variant}
+          style={{ display: "flex", flexDirection: "column", gap: 6 }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-secondary)",
+              fontSize: 12,
+              opacity: 0.6,
+            }}
+          >
+            {variant}
+          </span>
+          <Controlled {...args} color={variant} />
+        </div>
+      ))}
+    </div>
+  ),
 }

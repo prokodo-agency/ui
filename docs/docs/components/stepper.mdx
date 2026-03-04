@@ -9,63 +9,77 @@ description: Multi-step wizard component with linear and non-linear navigation, 
 
 `Stepper` renders a multi-step progress indicator suitable for wizards and multi-page forms. Steps can be navigated linearly (requiring completion validation) or freely.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Stepper } from '@prokodo/ui/stepper'
-
-<Stepper
+import { Stepper } from "@prokodo/ui/stepper"
+;<Stepper
   activeStep={step}
   steps={[
-    { label: 'Personal info' },
-    { label: 'Address' },
-    { label: 'Confirm' },
+    { label: "Personal info" },
+    { label: "Address" },
+    { label: "Confirm" },
   ]}
 />
 ```
 
-<StorybookEmbed id="prokodo-common-stepper--default" height={260} />
-
+<StorybookEmbed id="prokodo-layout-stepper--default" height={260} />
 
 ---
 
 ## Import
 
 ```ts
-import { Stepper } from '@prokodo/ui/stepper'
+import { Stepper } from "@prokodo/ui/stepper"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/stepper.css'
+import "@prokodo/ui/stepper.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `steps` | `StepperStep[]` | — | ✅ | Array of steps with `label` and optional `description`. |
-| `activeStep` | `number` | — | ✅ | Index of the currently active step (0-based). |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | — | Layout direction. |
-| `nonLinear` | `boolean` | `false` | — | Allow clicking any step regardless of completion. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop           | Type                     | Default | Required | Description                                        |
+| -------------- | ------------------------ | ------- | -------- | -------------------------------------------------- |
+| `steps`        | `Step[]`                 | —       | ✅       | Step definitions.                                  |
+| `initialStep`  | `number`                 | `0`     | —        | Index of the initially active step (0-based).      |
+| `translations` | `StepperTranslations`    | —       | —        | Override default label strings.                    |
+| `color`        | `Variants`               | —       | —        | Accent color variant.                              |
+| `onChange`     | `(step: number) => void` | —       | —        | Called when the active step changes.               |
+| `onFocus`      | `() => void`             | —       | —        | Called when the stepper receives focus.            |
+| `onBlur`       | `() => void`             | —       | —        | Called when the stepper loses focus.               |
+| `ref`          | `StepperRef`             | —       | —        | Ref to imperative handle for programmatic control. |
+| `className`    | `string`                 | —       | —        | CSS class on root element.                         |
 
 > See [`src/components/stepper/Stepper.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/stepper/Stepper.model.ts) for the full `StepperProps` type.
 
 ---
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                             | Default                     | Description                                    |
+| --------------------------------- | --------------------------- | ---------------------------------------------- |
+| `--pk-stepper-icon-mask-bg`       | `var(--pk-color-surface)`   | Mask isolation colour for icon border gradient |
+| `--pk-stepper-label-color`        | `var(--pk-color-muted)`     | Step label text colour (inactive)              |
+| `--pk-stepper-label-color-active` | `var(--pk-color-fg)`        | Step label text colour (active)                |
+| `--pk-stepper-shadow`             | `var(--pk-shadow-sm)`       | Active icon container box-shadow               |
+| `--pk-stepper-shadow-inset`       | `var(--elevation-1--inset)` | Active icon container inset shadow             |
+| `--pk-stepper-icon-mb`            | `var(--pk-space-md)`        | Bottom margin between icon and label           |
 
 ## AIC Note
 
 Use the standard import path in application code:
 
 ```ts
-import { Stepper } from '@prokodo/ui/stepper'
+import { Stepper } from "@prokodo/ui/stepper"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -77,14 +91,14 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
-| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
-| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+| Criterion | Name                           | Status           | Note                                                                                                                                       |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **2.1.1** | **Keyboard** (A)               | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                                  |
+| **2.4.3** | **Focus Order** (A)            | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                                |
+| **2.4.7** | **Focus Visible** (AA)         | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.                 |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.            |
+| **4.1.3** | **Status Messages** (AA)       | ✅ Fulfilled     | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
 
 > **Test coverage:** 3 jest-axe assertion(s) across 4 test file(s) · 6 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

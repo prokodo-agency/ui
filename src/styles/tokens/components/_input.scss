@@ -1,0 +1,24 @@
+// =========================================================================
+// INPUT COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =========================================================================
+
+@mixin input-tokens() {
+  --pk-input-bg:               var(--pk-color-surface);
+  --pk-input-fg:               var(--pk-color-fg);
+  --pk-input-fg-muted:         var(--pk-color-muted);
+  --pk-input-border:           var(--pk-color-border);
+  --pk-input-border-focus:     var(--pk-color-brand);
+  --pk-input-radius:           var(--pk-radius-pill);
+  --pk-input-padding-x:        var(--pk-space-lg);
+  --pk-input-padding-y:        0.875rem;
+  --pk-input-label-fg:         var(--pk-color-muted);
+  --pk-input-label-focused-fg: var(--pk-color-brand);
+  --pk-input-helper-fg:        var(--pk-palette-grey-300);
+  --pk-input-focus-ring:       var(--pk-focus-ring-color);
+  --pk-input-shadow:           var(--pk-shadow-sm);
+  --pk-input-shadow-color:       rgba(0, 0, 0, 0.1);
+  --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-input-border-focus) 30%, transparent);
+  --pk-input-gradient-from:      var(--pk-color-brand);
+  --pk-input-gradient-to:        var(--pk-color-accent);
+}

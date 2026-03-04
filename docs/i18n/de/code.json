@@ -108,7 +108,7 @@
     "description": "Homepage hero install hint"
   },
   "prokodo.homepage.hero.stats.components": {
-    "message": "52 produktionsreife Komponenten",
+    "message": "50+ produktionsreife Komponenten",
     "description": "Homepage hero stat"
   },
   "prokodo.homepage.hero.stats.darkMode": {
@@ -132,7 +132,7 @@
     "description": "Homepage page description"
   },
   "prokodo.homepage.components.heading": {
-    "message": "52 produktionsreife React-UI-Komponenten",
+    "message": "50+ produktionsreife React-UI-Komponenten",
     "description": "Homepage section heading"
   },
   "prokodo.homepage.components.subtitle": {

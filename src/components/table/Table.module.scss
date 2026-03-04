@@ -3,11 +3,14 @@
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/config/spaces" as *;
+
+// Component tokens: --pk-table-border-color, --pk-table-header-accent-color,
+//   --pk-table-row-hover-bg, --pk-table-caption-color, --pk-table-cell-fg,
+//   --pk-table-padding-y, --pk-table-padding-x, --pk-table-container-pb
 
 @include define-block("Table") {
-  padding-bottom: $space-xl;
-  padding-left: calc($space-lg + $space-xs);
+  padding-bottom: var(--pk-table-container-pb);
+  padding-left: calc(var(--pk-space-lg) + var(--pk-space-xs));
 
   @include screenLargerThan($screen-md) {
     padding-left: 0;
@@ -18,11 +21,18 @@
   }
 
   &__headline {
-    margin-left: -40px;
+    // Cancel out the mobile padding-left on the root so the headline
+    // stays flush with the left edge; reset to 0 on wider screens.
+    margin-left: calc(-1 * (var(--pk-space-lg) + var(--pk-space-xs)));
+
+    @include screenLargerThan($screen-md) {
+      margin-left: 0;
+    }
   }
 
   &__content {
-    padding-left: $space-xl;
+    // No extra left-indent — headline and content share the same left edge.
+    padding-left: 0;
   }
 
   &__table {
@@ -38,11 +48,11 @@
 
   &__head {
     &__row {
-      border-bottom: 1px solid var(--color-grey-200);
+      border-bottom: var(--pk-border-width) solid var(--pk-table-border-color);
     }
 
     &__cell {
-      padding: $space-xl $space-sm;
+      padding: var(--pk-table-padding-y) var(--pk-table-padding-x);
       font-weight: 500;
       @include text("headline/sm");
 
@@ -51,7 +61,7 @@
       }
 
       &:first-child {
-        color: var(--color-primary-500);
+        color: var(--pk-table-header-accent-color);
         text-align: left;
       }
     }
@@ -59,22 +69,22 @@
 
   &__body {
     &__row {
-      border-bottom: 1px solid var(--color-grey-200);
+      border-bottom: var(--pk-border-width) solid var(--pk-table-border-color);
 
       &--has-link {
         @include when-hovered() {
-          background: var(--color-primary-20);
+          background: var(--pk-table-row-hover-bg);
         }
 
         @include when-focused() {
-          background: var(--color-primary-20);
+          background: var(--pk-table-row-hover-bg);
         }
       }
     }
   }
 
   &__caption {
-    color: var(--color-grey-300);
+    color: var(--pk-table-caption-color);
     text-align: right;
     opacity: 0;
     @include text('caption');
@@ -91,8 +101,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: $space-xl $space-sm;
-    color: var(--color-grey-900);
+    padding: var(--pk-table-padding-y) var(--pk-table-padding-x);
+    color: var(--pk-table-cell-fg);
     @include text("base");
   }
 
@@ -103,6 +113,6 @@
   }
 
   &__icon {
-    padding-bottom: $space-lg;
+    padding-bottom: var(--pk-space-lg);
   }
 }

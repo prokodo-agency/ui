@@ -14,8 +14,8 @@ Nach der [Installation](/de/docs/getting-started/installation) von `@prokodo/ui`
 ## Erste Komponente — Button
 
 ```tsx title="app/page.tsx"
-import { Button } from '@prokodo/ui/button'
-import '@prokodo/ui/button.css'
+import { Button } from "@prokodo/ui/button"
+import "@prokodo/ui/button.css"
 
 export default function Page() {
   return (
@@ -37,15 +37,15 @@ export default function Page() {
 - Importiere jede Komponente direkt über ihren Entry Point für maximale Performance:
 
 ```tsx
-import { Button } from '@prokodo/ui/button'
-import { Card } from '@prokodo/ui/card'
+import { Button } from "@prokodo/ui/button"
+import { Card } from "@prokodo/ui/card"
 ```
 
 - Nutze wenn möglich komponentenspezifische Styles:
 
 ```tsx
-import '@prokodo/ui/button.css'
-import '@prokodo/ui/card.css'
+import "@prokodo/ui/button.css"
+import "@prokodo/ui/card.css"
 ```
 
 - Nutze `priority` für kritische Above-the-fold-Elemente (insbesondere Hero-Bilder), damit sie eager geladen/hydratisiert werden.
@@ -60,10 +60,10 @@ import '@prokodo/ui/card.css'
 ## Formular-Beispiel
 
 ```tsx title="app/contact/page.tsx"
-import { Form } from '@prokodo/ui/form'
-import { Input } from '@prokodo/ui/input'
-import '@prokodo/ui/form.css'
-import '@prokodo/ui/input.css'
+import { Form } from "@prokodo/ui/form"
+import { Input } from "@prokodo/ui/input"
+import "@prokodo/ui/form.css"
+import "@prokodo/ui/input.css"
 
 export default function ContactPage() {
   return (

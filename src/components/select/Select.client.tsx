@@ -11,9 +11,15 @@ import {
 } from "react"
 import { createPortal } from "react-dom"
 
+import { Icon } from "@/components/icon"
+import { create } from "@/helpers/bem"
+
+import styles from "./Select.module.scss"
 import { SelectView } from "./Select.view"
 
 import type { SelectProps, SelectEvent, SelectValue } from "./Select.model"
+
+const bem = create(styles, "Select")
 
 /* ---------- helper to normalise outside value ------------ */
 function isMulti<V extends string>(v: unknown): v is V[] {
@@ -61,6 +67,8 @@ function SelectClient<Value extends string = string>({
   )
   const [popupStyle, setPopupStyle] = useState<React.CSSProperties>({})
   const [popupReady, setPopupReady] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const sheetSwipeStart = useRef<number | null>(null)
 
   const hasPlaceholder = !Boolean(required) && !Boolean(multiple)
   const optionCount = (hasPlaceholder ? 1 : 0) + items.length
@@ -207,6 +215,14 @@ function SelectClient<Value extends string = string>({
     return () => window.removeEventListener("click", handleOutside)
   }, [open, close])
 
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 480px)")
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
+  }, [])
+
   const handleKey = /* istanbul ignore next */ (e: KeyboardEvent) => {
     /* istanbul ignore next */
     if (Boolean(disabled)) return
@@ -347,6 +363,158 @@ function SelectClient<Value extends string = string>({
             }
           }
 
+          // ── Mobile bottom-sheet ────────────────────────────────────────
+          if (isMobile) {
+            const sheetVariant = rest.color ?? "primary"
+
+            const handleSheetTouchStart = (
+              e: React.TouchEvent<HTMLDivElement>,
+            ) => {
+              sheetSwipeStart.current = e.touches[0]?.clientY ?? null
+            }
+            const handleSheetTouchEnd = (
+              e: React.TouchEvent<HTMLDivElement>,
+            ) => {
+              const startY = sheetSwipeStart.current
+              sheetSwipeStart.current = null
+              if (startY === null) return
+              const dy = (e.changedTouches[0]?.clientY ?? startY) - startY
+              if (dy > 60) close()
+            }
+
+            const sheet = (
+              <>
+                <div
+                  aria-hidden="true"
+                  className={bem("sheet__backdrop")}
+                  onClick={close}
+                />
+                <div
+                  aria-label={rest.label}
+                  aria-modal="true"
+                  className={bem("sheet", { [sheetVariant]: true })}
+                  role="dialog"
+                  onTouchEnd={handleSheetTouchEnd}
+                  onTouchStart={handleSheetTouchStart}
+                >
+                  <div className={bem("sheet__header")}>
+                    <span className={bem("sheet__title")}>{rest.label}</span>
+                    <button
+                      aria-label="Close"
+                      className={bem("sheet__close")}
+                      type="button"
+                      onClick={close}
+                    >
+                      <Icon name="Cancel01Icon" size="sm" />
+                    </button>
+                  </div>
+
+                  <ul
+                    ref={listRef}
+                    aria-multiselectable={Boolean(args.multiple) || undefined}
+                    className={bem("sheet__list")}
+                    id={args.id}
+                    role="listbox"
+                    tabIndex={0}
+                    aria-activedescendant={
+                      activeIndex >= 0
+                        ? `${args.id}-opt-${activeIndex}`
+                        : undefined
+                    }
+                    onKeyDown={onListKeyDown}
+                  >
+                    {!Boolean(args.required) && !Boolean(args.multiple) && (
+                      <li
+                        key="placeholder"
+                        id={`${args.id}-opt-0`}
+                        role="option"
+                        tabIndex={-1}
+                        aria-selected={
+                          /* istanbul ignore next */
+                          Array.isArray(args.value)
+                            ? args.value.length === 0
+                            : String(args.value ?? "") === ""
+                        }
+                        className={bem("sheet__item", {
+                          selected:
+                            /* istanbul ignore next */
+                            Array.isArray(args.value)
+                              ? args.value.length === 0
+                              : String(args.value ?? "") === "",
+                          active: activeIndex === 0,
+                        })}
+                        onClick={
+                          /* istanbul ignore next */ () =>
+                            args.onOptionClick(null)
+                        }
+                        onKeyDown={
+                          /* istanbul ignore next */ e =>
+                            onOptionKeyDown(e, null)
+                        }
+                        onMouseMove={
+                          /* istanbul ignore next */ () => setActiveIndex(0)
+                        }
+                      >
+                        {args.placeholder}
+                      </li>
+                    )}
+
+                    {args.items.map(opt => {
+                      const hasPh =
+                        !Boolean(args.required) && !Boolean(args.multiple)
+                      const idx = args.items.findIndex(
+                        x => x.value === opt.value,
+                      )
+                      const index = idx + (hasPh ? 1 : 0)
+                      const selected = Array.isArray(args.value)
+                        ? args.value.includes(opt.value as Value)
+                        : (opt.value as Value) === (args.value as Value)
+
+                      return (
+                        <li
+                          key={`${args.id}-${opt.value}`}
+                          aria-selected={selected}
+                          id={`${args.id}-opt-${index}`}
+                          role="option"
+                          tabIndex={-1}
+                          className={bem("sheet__item", {
+                            selected,
+                            active: activeIndex === index,
+                          })}
+                          onClick={() => args.onOptionClick(opt.value as Value)}
+                          onMouseMove={() => setActiveIndex(index)}
+                          onKeyDown={e =>
+                            onOptionKeyDown(e, opt.value as Value)
+                          }
+                        >
+                          {/* istanbul ignore next */}
+                          {Boolean(args.iconVisible) &&
+                            /* istanbul ignore next */ opt.icon?.()}
+                          {opt.label}
+                        </li>
+                      )
+                    })}
+                  </ul>
+
+                  {/* Footer: Done button shown for multi-select */}
+                  {Boolean(args.multiple) && (
+                    <div className={bem("sheet__footer")}>
+                      <button
+                        className={bem("sheet__done")}
+                        type="button"
+                        onClick={close}
+                      >
+                        Done
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            )
+            return createPortal(sheet, document.body)
+          }
+
+          // ── Desktop: portal-positioned listbox ────────────────────────
           const listbox = (
             <ul
               ref={listRef}

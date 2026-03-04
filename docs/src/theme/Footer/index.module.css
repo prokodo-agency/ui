@@ -41,11 +41,11 @@
   display: none;
 }
 
-:global([data-theme='dark']) .brandLogoLight {
+:global([data-theme="dark"]) .brandLogoLight {
   display: none;
 }
 
-:global([data-theme='dark']) .brandLogoDark {
+:global([data-theme="dark"]) .brandLogoDark {
   display: block;
 }
 

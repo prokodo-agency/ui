@@ -1,9 +1,9 @@
 import { Avatar } from "./Avatar"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Avatar",
+  title: "prokodo/content/Avatar",
   component: Avatar,
   parameters: {
     layout: "centered",
@@ -14,7 +14,7 @@ const meta = {
       options: ["xs", "sm", "md", "lg", "xl"],
       control: { type: "select" },
     },
-    variant: {
+    color: {
       options: [
         "inherit",
         "primary",
@@ -35,8 +35,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    size: 'lg',
-    variant: 'primary',
+    size: "lg",
+    color: "primary",
   },
 }
 

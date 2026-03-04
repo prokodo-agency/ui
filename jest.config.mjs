@@ -51,6 +51,9 @@ export default {
     "!src/helpers/createIsland.tsx",
     "!src/helpers/createLazyWrapper.tsx",
     "!src/hooks/useHydrationReady.ts",
+    // Lazy island wrappers are thin createLazyWrapper() call-sites; the helper
+    // itself is globally mocked so these files cannot be instrumented in jsdom.
+    "!src/**/*.lazy.tsx",
     // Pure generated data files — no logic, just constant exports.
     "!src/components/icon/IconList.ts",
     "!src/components/lottie/LottieAnimations.ts",

@@ -40,9 +40,9 @@ export const FormResponse: FC<FormResponseProps> = ({
           aria-relevant="all"
           className={bem("errors")}
           classNameDesc={bem("errors__desc")}
+          color="error"
           items={listItems}
           role="alert"
-          variant="error"
         />
       )}
     </div>

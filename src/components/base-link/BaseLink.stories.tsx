@@ -1,10 +1,13 @@
 import { BaseLink } from "./BaseLink"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 export default {
-  title: "prokodo/common/BaseLink",
+  title: "prokodo/navigation/BaseLink",
   component: args => <BaseLink {...args}>Link</BaseLink>,
+  parameters: {
+    layout: "centered",
+  },
 } as Meta
 
 export const Default: StoryObj = {

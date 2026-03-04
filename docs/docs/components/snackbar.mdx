@@ -9,64 +9,93 @@ description: Auto-dismissing notification toast with severity variants, action b
 
 `Snackbar` renders a temporary notification message at the bottom of the screen. It auto-dismisses after a configurable duration and supports success, error, warning, and info severity variants.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Snackbar } from '@prokodo/ui/snackbar'
-
-<Snackbar
+import { Snackbar } from "@prokodo/ui/snackbar"
+;<Snackbar
   open={showSnack}
   message="Changes saved successfully"
-  severity="success"
+  color="success"
   onClose={() => setShowSnack(false)}
 />
 ```
 
 <StorybookEmbed id="prokodo-feedback-snackbar--default" />
 
-
 ---
 
 ## Import
 
 ```ts
-import { Snackbar } from '@prokodo/ui/snackbar'
+import { Snackbar } from "@prokodo/ui/snackbar"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/snackbar.css'
+import "@prokodo/ui/snackbar.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `open` | `boolean` | — | ✅ | Whether the snackbar is visible. |
-| `message` | `string` | — | ✅ | Notification message text. |
-| `onClose` | `() => void` | — | ✅ | Called when the snackbar auto-closes or is dismissed. |
-| `severity` | `"success" \| "error" \| "warning" \| "info"` | `"info"` | — | Semantic severity level. |
-| `duration` | `number` | `4000` | — | Auto-dismiss delay in milliseconds. `0` to disable. |
-| `action` | `ReactNode` | — | — | Optional action element (e.g. an `<Undo>` button). |
-| `position` | `"bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-left"` | — | Screen position. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop               | Type                                                                         | Default                                        | Required | Description                         |
+| ------------------ | ---------------------------------------------------------------------------- | ---------------------------------------------- | -------- | ----------------------------------- |
+| `open`             | `boolean`                                                                    | —                                              | ✅       | Controls snackbar visibility.       |
+| `message`          | `string`                                                                     | —                                              | ✅       | Snackbar message text.              |
+| `severity`         | `"success" \| "error" \| "warning" \| "info"`                                | —                                              | —        | Visual severity variant.            |
+| `autoHideDuration` | `number`                                                                     | `3000`                                         | —        | Auto-close delay in milliseconds.   |
+| `anchorOrigin`     | `{ vertical: "top" \| "bottom"; horizontal: "left" \| "center" \| "right" }` | `{ vertical: "bottom", horizontal: "center" }` | —        | Position of the snackbar on screen. |
+| `closeable`        | `boolean`                                                                    | `true`                                         | —        | Show a close button.                |
+| `elevation`        | `number`                                                                     | —                                              | —        | Box-shadow elevation level.         |
+| `onClose`          | `() => void`                                                                 | —                                              | —        | Called when the snackbar closes.    |
+| `className`        | `string`                                                                     | —                                              | —        | CSS class on root element.          |
 
 > See [`src/components/snackbar/Snackbar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/snackbar/Snackbar.model.ts) for the full `SnackbarProps` type.
 
 ---
+
+## Design Tokens
+
+Customise `Snackbar` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                          | Default                               | Description                   |
+| ------------------------------ | ------------------------------------- | ----------------------------- |
+| `--pk-snackbar-bg`             | `var(--pk-color-fg)`                  | Default background (inverted) |
+| `--pk-snackbar-fg`             | `var(--pk-color-surface)`             | Default text color            |
+| `--pk-snackbar-border-color`   | `color-mix(… surface 15%)`            | Default accent border         |
+| `--pk-snackbar-radius`         | `var(--pk-radius-md)`                 | Border-radius                 |
+| `--pk-snackbar-shadow`         | `var(--pk-shadow-lg)`                 | Default box-shadow            |
+| `--pk-snackbar-padding-x`      | `var(--pk-space-xl)`                  | Horizontal padding            |
+| `--pk-snackbar-padding-y`      | `var(--pk-space-lg)`                  | Vertical padding              |
+| `--pk-snackbar-timing`         | `var(--pk-timing-normal)`             | Slide-in / slide-out duration |
+| `--pk-snackbar-success-bg`     | `color-mix(… success 10%, surface)`   | Success tinted background     |
+| `--pk-snackbar-success-fg`     | `var(--pk-color-fg)`                  | Success text color            |
+| `--pk-snackbar-success-border` | `color-mix(… success 40%)`            | Success accent border         |
+| `--pk-snackbar-success-shadow` | `0 4px 24px color-mix(… success 20%)` | Success ambient glow          |
+| `--pk-snackbar-error-bg`       | `color-mix(… error 10%, surface)`     | Error tinted background       |
+| `--pk-snackbar-error-fg`       | `var(--pk-color-fg)`                  | Error text color              |
+| `--pk-snackbar-error-border`   | `color-mix(… error 40%)`              | Error accent border           |
+| `--pk-snackbar-error-shadow`   | `0 4px 24px color-mix(… error 20%)`   | Error ambient glow            |
+| `--pk-snackbar-warning-bg`     | `color-mix(… warning 10%, surface)`   | Warning tinted background     |
+| `--pk-snackbar-warning-fg`     | `var(--pk-color-fg)`                  | Warning text color            |
+| `--pk-snackbar-warning-border` | `color-mix(… warning 40%)`            | Warning accent border         |
+| `--pk-snackbar-warning-shadow` | `0 4px 24px color-mix(… warning 20%)` | Warning ambient glow          |
+| `--pk-snackbar-info-bg`        | `color-mix(… fg 8%, surface)`         | Info tinted background        |
+| `--pk-snackbar-info-fg`        | `var(--pk-color-fg)`                  | Info text color               |
+| `--pk-snackbar-info-border`    | `color-mix(… fg 20%)`                 | Info accent border            |
+| `--pk-snackbar-info-shadow`    | `var(--pk-shadow-md)`                 | Info box-shadow               |
 
 ## AIC Note
 
 Use the standard import path in application code:
 
 ```ts
-import { Snackbar } from '@prokodo/ui/snackbar'
+import { Snackbar } from "@prokodo/ui/snackbar"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -78,13 +107,13 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **1.4.1** | **Use of Color** (A) | 🔍 Manual review | Color must not be the only means of conveying information (e.g. error states, required field markers). |
-| **1.4.3** | **Contrast (Minimum)** (AA) | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme. |
-| **2.2.1** | **Timing Adjustable** (A) | 🔍 Manual review | Auto-dismissing notifications must offer a way to extend or disable the timeout, or persist for at least 20 s. |
-| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+| Criterion | Name                           | Status           | Note                                                                                                                                       |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **1.4.1** | **Use of Color** (A)           | 🔍 Manual review | Color must not be the only means of conveying information (e.g. error states, required field markers).                                     |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                            |
+| **2.2.1** | **Timing Adjustable** (A)      | 🔍 Manual review | Auto-dismissing notifications must offer a way to extend or disable the timeout, or persist for at least 20 s.                             |
+| **4.1.3** | **Status Messages** (AA)       | ✅ Fulfilled     | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
 
 > **Test coverage:** 3 jest-axe assertion(s) across 6 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

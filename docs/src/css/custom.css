@@ -9,18 +9,18 @@
    light and dark via :root[data-theme='dark'] (Docusaurus sets data-theme
    on <html> = :root, so both light and dark work without extra overrides).
    ────────────────────────────────────────────────────────────────────────── */
-@import '@prokodo/ui/theme.css';
-@import '@prokodo/ui/button.css';
-@import '@prokodo/ui/card.css';
-@import '@prokodo/ui/icon.css';
-@import '@prokodo/ui/chip.css';
-@import '@prokodo/ui/headline.css';
-@import '@prokodo/ui/grid.css';
+@import "@prokodo/ui/theme.css";
+@import "@prokodo/ui/button.css";
+@import "@prokodo/ui/card.css";
+@import "@prokodo/ui/icon.css";
+@import "@prokodo/ui/chip.css";
+@import "@prokodo/ui/headline.css";
+@import "@prokodo/ui/grid.css";
 
 /* ─── Font variables ─────────────────────────────────────────────────────── */
 :root {
-  --font-primary: 'Montserrat', 'Montserrat Fallback', sans-serif;
-  --font-secondary: 'Open Sans', 'Open Sans Fallback', sans-serif;
+  --font-primary: "Montserrat", "Montserrat Fallback", sans-serif;
+  --font-secondary: "Open Sans", "Open Sans Fallback", sans-serif;
 }
 
 /* ─── Docusaurus variable overrides — Light ──────────────────────────────── */
@@ -73,7 +73,7 @@
 /* @prokodo/ui/theme.css already re-maps --color-* under :root[data-theme='dark']
    so --color-primary-500, --color-grey-* etc. automatically reflect dark values.
    We only need to hard-wire Docusaurus-specific background / nav colours here. */
-[data-theme='dark'] {
+[data-theme="dark"] {
   --ifm-background-color: var(--color-primary-20);
   --ifm-background-surface-color: var(--color-primary-20);
   --ifm-navbar-background-color: var(--color-primary-40);
@@ -94,28 +94,42 @@
 }
 
 /* Light mode — dark charcoal radial so white text stays readable */
-:root:not([data-theme='dark']) .hero--prokodo {
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, #2d3748 0%, #1a202c 55%, #111827 100%);
+:root:not([data-theme="dark"]) .hero--prokodo {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #2d3748 0%,
+    #1a202c 55%,
+    #111827 100%
+  );
 }
 
 /* Ambient colour glow overlay */
 .hero--prokodo::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(30, 144, 255, 0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 70% 60%, rgba(0, 230, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(
+      ellipse 60% 50% at 30% 40%,
+      rgba(30, 144, 255, 0.12) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 70% 60%,
+      rgba(0, 230, 255, 0.08) 0%,
+      transparent 70%
+    );
   pointer-events: none;
 }
 
 /* Hero outlined button — force white in light mode (banner is always dark) */
-:root:not([data-theme='dark']) .hero--prokodo .prokodo-Button--has-variant-outlined {
+:root:not([data-theme="dark"])
+  .hero--prokodo
+  .prokodo-Button--has-variant-outlined {
   border-color: rgba(255, 255, 255, 0.7) !important;
   color: #fff !important;
 }
 
-:root:not([data-theme='dark'])
+:root:not([data-theme="dark"])
   .hero--prokodo
   .prokodo-Button--has-variant-outlined
   .prokodo-Button__content {
@@ -146,10 +160,10 @@ html,
 body,
 .main-wrapper,
 .theme-doc-sidebar-container,
-[class*='docMainContainer'],
-[class*='docItemContainer'],
-[class*='docsWrapper'],
-[class*='docRoot'] {
+[class*="docMainContainer"],
+[class*="docItemContainer"],
+[class*="docsWrapper"],
+[class*="docRoot"] {
   background-color: var(--color-primary-20) !important;
 }
 
@@ -273,50 +287,52 @@ code {
 }
 
 /* ── Dark mode ─────────────────────────────────────────────────────────── */
-[data-theme='dark'] .docs-table {
+[data-theme="dark"] .docs-table {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
-[data-theme='dark'] .docs-table__body .docs-table__tr:nth-child(even) {
+[data-theme="dark"] .docs-table__body .docs-table__tr:nth-child(even) {
   background: rgba(255, 255, 255, 0.03);
 }
 
-[data-theme='dark'] .docs-table__body .docs-table__tr:hover {
+[data-theme="dark"] .docs-table__body .docs-table__tr:hover {
   background: rgba(255, 255, 255, 0.07);
 }
 
-[data-theme='dark'] .docs-table__td code {
+[data-theme="dark"] .docs-table__td code {
   background: rgba(30, 144, 255, 0.12);
   border-color: rgba(30, 144, 255, 0.25);
 }
 
 /* Installation requirements list: ensure bullet icons stay readable in dark mode */
-[data-theme='dark'] .installation-requirements-list .prokodo-List__item__icon__wrapper,
-[data-theme='dark'] .installation-requirements-list .prokodo-List__item__icon,
-[data-theme='dark'] .installation-requirements-list .prokodo-Icon {
+[data-theme="dark"]
+  .installation-requirements-list
+  .prokodo-List__item__icon__wrapper,
+[data-theme="dark"] .installation-requirements-list .prokodo-List__item__icon,
+[data-theme="dark"] .installation-requirements-list .prokodo-Icon {
   color: var(--ifm-color-white) !important;
 }
 
-[data-theme='dark'] .installation-requirements-list,
-[data-theme='dark'] .installation-requirements-list .prokodo-List__item,
-[data-theme='dark'] .installation-requirements-list .prokodo-List__item__title,
-[data-theme='dark'] .installation-requirements-list .list-title {
+[data-theme="dark"] .installation-requirements-list,
+[data-theme="dark"] .installation-requirements-list .prokodo-List__item,
+[data-theme="dark"] .installation-requirements-list .prokodo-List__item__title,
+[data-theme="dark"] .installation-requirements-list .list-title {
   color: var(--ifm-color-white) !important;
 }
 
-[data-theme='dark'] .installation-requirements-list .prokodo-Icon svg,
-[data-theme='dark'] .installation-requirements-list .prokodo-Icon path {
+[data-theme="dark"] .installation-requirements-list .prokodo-Icon svg,
+[data-theme="dark"] .installation-requirements-list .prokodo-Icon path {
   fill: currentColor;
 }
 
 /* ─── Headline — light-mode colour fix ───────────────────────────────────── */
-:root:not([data-theme='dark']) .main-wrapper .prokodo-Headline--inherit {
+:root:not([data-theme="dark"]) .main-wrapper .prokodo-Headline--inherit {
   color: var(--ifm-heading-color, #1c1e21) !important;
   -webkit-text-fill-color: var(--ifm-heading-color, #1c1e21) !important;
 }
 
 /* Hero headline is always on a dark background — keep it white */
-:root:not([data-theme='dark']) .hero--prokodo .prokodo-Headline--inherit {
+:root:not([data-theme="dark"]) .hero--prokodo .prokodo-Headline--inherit {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
 }

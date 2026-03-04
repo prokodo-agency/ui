@@ -1,6 +1,4 @@
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("PostWidgetCarousel") {
@@ -10,11 +8,10 @@
 
     &__carousel {
         position: relative;
-        margin-top: $space-xl;
-        
+        margin-top: var(--pk-space-xl);
 
         &__wrapper {
-            padding-bottom: $space-lg;
+            padding-bottom: var(--pk-space-lg);
         }
 
         &__item {
@@ -24,7 +21,7 @@
                 height: clamp(180px, 30vw, 420px);
                 display: block;
                 line-height: 0;
-                border-radius: $ui-image-border-radius;
+                border-radius: var(--pk-radius-md);
                 overflow: hidden;
             }
 
@@ -53,19 +50,18 @@
 
         &__buttons {
             position: absolute;
-            bottom: $space-md;
-            right: $space-sm;
+            bottom: var(--pk-space-md);
+            right: var(--pk-space-sm);
             display: flex;
             flex-direction: row;
             max-width: 100px;
-            gap: $space-sm;
+            gap: var(--pk-space-sm);
             z-index: 2;
         }
     }
 
     &__headline {
-        
-        margin-top: $space-md !important;
+        margin-top: var(--pk-space-md) !important;
         @include textLineClamp(2);
     }
 }

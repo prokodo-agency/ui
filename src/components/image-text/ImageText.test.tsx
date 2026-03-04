@@ -54,6 +54,17 @@ describe("ImageText", () => {
       expect(container.firstChild).toBeTruthy()
     })
 
+    it("renders with animatedBorder direction=bottom-to-top", () => {
+      const { container } = render(
+        <ImageText
+          animatedBorder={{ direction: "bottom-to-top" }}
+          content="Animated"
+          title="Border section"
+        />,
+      )
+      expect(container.firstChild).toBeTruthy()
+    })
+
     it("renders with image", () => {
       render(
         <ImageText

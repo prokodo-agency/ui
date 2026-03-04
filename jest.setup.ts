@@ -21,6 +21,33 @@ Object.defineProperty(window, "scrollTo", {
   writable: true,
 })
 
+// jsdom does not implement window.matchMedia; provide a default desktop stub.
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: jest.fn().mockImplementation((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+})
+
+// jsdom does not expose PointerEvent; shim it so tests can dispatch pointerdown.
+if (
+  typeof (globalThis as Record<string, unknown>).PointerEvent === "undefined"
+) {
+  class PointerEvent extends MouseEvent {
+    constructor(type: string, params?: MouseEventInit) {
+      super(type, params)
+    }
+  }
+  Object.assign(globalThis, { PointerEvent })
+}
+
 // Mock createIsland to render its Server component synchronously in tests.
 // Island components use React.lazy internally, which causes Suspense-based
 // AggregateErrors in subsequent tests within the same file. By returning the

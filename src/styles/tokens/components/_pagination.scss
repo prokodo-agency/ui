@@ -1,0 +1,15 @@
+// =============================================================================
+// PAGINATION COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin pagination-tokens() {
+  --pk-pagination-gap:           var(--pk-space-sm);
+  --pk-pagination-fg:            color-mix(in srgb, var(--pk-color-fg) 70%, transparent);
+  --pk-pagination-page-radius:   10px;
+  --pk-pagination-pad-x:         var(--pk-space-xs);
+  // Active page indicator tokens (overridden per color variant)
+  --pk-pagination-active-border:   var(--pk-color-brand);
+  --pk-pagination-active-shadow:   0 4px 18px color-mix(in srgb, var(--pk-color-brand) 45%, transparent);
+  --pk-pagination-active-gradient: var(--gradient-border-4);
+}

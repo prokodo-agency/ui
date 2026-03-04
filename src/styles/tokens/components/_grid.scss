@@ -1,0 +1,9 @@
+// =============================================================================
+// GRID COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin grid-tokens() {
+  // Inner padding of the grid container
+  --pk-grid-padding: var(--pk-space-lg);
+}

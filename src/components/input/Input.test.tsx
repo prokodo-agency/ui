@@ -87,6 +87,20 @@ describe("Input", () => {
       render(<Input fullWidth label="Full" name="full" />)
       expect(screen.getByRole("textbox", { name: /full/i })).toBeInTheDocument()
     })
+
+    it("renders a static trailing icon (no click handler) as a non-interactive span", () => {
+      render(
+        <InputView
+          label="Search"
+          name="search"
+          trailingIcon="Search01Icon"
+          trailingIconLabel="Search"
+        />,
+      )
+      expect(
+        screen.getByRole("textbox", { name: /search/i }),
+      ).toBeInTheDocument()
+    })
   })
 
   // -------------------------------------------------------------------------

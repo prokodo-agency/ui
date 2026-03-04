@@ -56,6 +56,7 @@ export function TooltipView(props: TooltipViewProps): JSX.Element {
     content,
     children,
     placement = "top",
+    color = "default",
     disabled,
     open,
 
@@ -158,7 +159,11 @@ export function TooltipView(props: TooltipViewProps): JSX.Element {
 
   const inlineBubbleClass = bem(
     "bubble",
-    { open: Boolean(effectiveOpen), [effectivePlacement]: true },
+    {
+      open: Boolean(effectiveOpen),
+      [effectivePlacement]: true,
+      ...(color !== "default" ? { [color]: true } : {}),
+    },
     tooltipClassName,
   )
 

@@ -9,20 +9,18 @@ description: Dropdown select input with search/filter, grouped options, multi-se
 
 `Select` renders an accessible dropdown with optional search filtering, option grouping, multi-select, and async remote option loading.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Select } from '@prokodo/ui/select'
-
-<Select
+import { Select } from "@prokodo/ui/select"
+;<Select
   name="country"
   label="Country"
   options={[
-    { label: 'Germany', value: 'de' },
-    { label: 'Austria', value: 'at' },
+    { label: "Germany", value: "de" },
+    { label: "Austria", value: "at" },
   ]}
   value={country}
   onChange={setCountry}
@@ -31,48 +29,79 @@ import { Select } from '@prokodo/ui/select'
 
 <StorybookEmbed id="prokodo-form-select--default" />
 
-
 ---
 
 ## Import
 
 ```ts
-import { Select } from '@prokodo/ui/select'
+import { Select } from "@prokodo/ui/select"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/select.css'
+import "@prokodo/ui/select.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `name` | `string` | — | ✅ | Input `name` attribute. |
-| `options` | `SelectOption[]` | — | ✅ | Array of `{ label, value, disabled? }` options. |
-| `label` | `string` | — | — | Visible label text. |
-| `value` | `string \| string[]` | — | — | Controlled selected value(s). |
-| `onChange` | `(value: string \| string[]) => void` | — | — | Called when the selection changes. |
-| `multiple` | `boolean` | `false` | — | Allow multiple selections. |
-| `searchable` | `boolean` | `false` | — | Show a search input to filter options. |
-| `disabled` | `boolean` | `false` | — | Disable the select. |
-| `error` | `string` | — | — | Error message shown below the select. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop              | Type                                           | Default | Required | Description                                          |
+| ----------------- | ---------------------------------------------- | ------- | -------- | ---------------------------------------------------- |
+| `id`              | `string`                                       | —       | ✅       | HTML id for the select (required for accessibility). |
+| `items`           | `SelectItem[]`                                 | —       | ✅       | Selectable options.                                  |
+| `label`           | `string`                                       | —       | —        | Select label text.                                   |
+| `name`            | `string`                                       | —       | —        | Name for form submission.                            |
+| `value`           | `string \| string[]`                           | —       | —        | Controlled selected value(s).                        |
+| `defaultValue`    | `string \| string[]`                           | —       | —        | Uncontrolled initial value(s).                       |
+| `placeholder`     | `string`                                       | —       | —        | Placeholder text when nothing is selected.           |
+| `multiple`        | `boolean`                                      | `false` | —        | Allow multiple selections.                           |
+| `disabled`        | `boolean`                                      | `false` | —        | Disable the select.                                  |
+| `required`        | `boolean`                                      | `false` | —        | Mark field as required.                              |
+| `fullWidth`       | `boolean`                                      | `false` | —        | Stretch to container width.                          |
+| `iconVisible`     | `boolean`                                      | `true`  | —        | Show/hide the dropdown chevron icon.                 |
+| `color`           | `Variants`                                     | —       | —        | Accent color variant.                                |
+| `helperText`      | `string`                                       | —       | —        | Helper text shown below the select.                  |
+| `errorText`       | `string`                                       | —       | —        | Error message (also sets error state).               |
+| `fieldClassName`  | `string`                                       | —       | —        | CSS class on the field wrapper.                      |
+| `selectClassName` | `string`                                       | —       | —        | CSS class on the `<select>` element.                 |
+| `labelProps`      | `LabelProps`                                   | —       | —        | Props forwarded to the label.                        |
+| `onChange`        | `(e: SelectEvent, value: SelectValue) => void` | —       | —        | Called when selection changes.                       |
+| `className`       | `string`                                       | —       | —        | CSS class on root element.                           |
 
 > See [`src/components/select/Select.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/select/Select.model.ts) for the full `SelectProps` type.
 
 ---
+
+## Design Tokens
+
+Customise `Select` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                        | Default                         | Description                |
+| ---------------------------- | ------------------------------- | -------------------------- |
+| `--pk-select-bg`             | `var(--pk-color-surface)`       | Trigger background         |
+| `--pk-select-fg`             | `var(--pk-color-fg)`            | Trigger text colour        |
+| `--pk-select-fg-muted`       | `var(--pk-color-muted)`         | Secondary / muted text     |
+| `--pk-select-fg-placeholder` | `var(--pk-palette-grey-500)`    | Placeholder text colour    |
+| `--pk-select-label-fg`       | `var(--pk-color-brand)`         | Floating label colour      |
+| `--pk-select-label-bg`       | `var(--pk-color-surface)`       | Label notch background     |
+| `--pk-select-radius`         | `var(--pk-radius-pill)`         | Trigger corner radius      |
+| `--pk-select-shadow`         | `var(--pk-shadow-sm)`           | Trigger box-shadow         |
+| `--pk-select-listbox-shadow` | `var(--pk-shadow-lg)`           | Dropdown panel shadow      |
+| `--pk-select-gradient-from`  | `var(--pk-color-brand)`         | Focus gradient start       |
+| `--pk-select-gradient-to`    | `var(--pk-color-accent)`        | Focus gradient end         |
+| `--pk-select-item-hover-bg`  | `var(--pk-palette-primary-50)`  | List item hover background |
+| `--pk-select-item-active-bg` | `var(--pk-palette-primary-100)` | Selected item background   |
+| `--pk-select-padding-x`      | `var(--pk-space-lg)`            | Trigger horizontal padding |
+| `--pk-select-padding-y`      | `0.875rem`                      | Trigger vertical padding   |
 
 ## AIC Note
 
 Use the standard import path in application code:
 
 ```ts
-import { Select } from '@prokodo/ui/select'
+import { Select } from "@prokodo/ui/select"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -84,19 +113,19 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **1.3.5** | **Identify Input Purpose** (AA) | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute. |
-| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.1.2** | **No Keyboard Trap** (A) | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys. |
-| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
-| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
-| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
-| **3.3.1** | **Error Identification** (A) | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone. |
-| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled | Every form input requires a programmatically associated label or a visible instruction. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
-| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+| Criterion  | Name                               | Status           | Note                                                                                                                                       |
+| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **1.3.5**  | **Identify Input Purpose** (AA)    | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute.                                        |
+| **2.1.1**  | **Keyboard** (A)                   | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                                  |
+| **2.1.2**  | **No Keyboard Trap** (A)           | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys.               |
+| **2.4.3**  | **Focus Order** (A)                | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                                |
+| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.                 |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                             |
+| **3.3.1**  | **Error Identification** (A)       | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone.                                                    |
+| **3.3.2**  | **Labels or Instructions** (A)     | ✅ Fulfilled     | Every form input requires a programmatically associated label or a visible instruction.                                                    |
+| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.            |
+| **4.1.3**  | **Status Messages** (AA)           | ✅ Fulfilled     | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
 
 > **Test coverage:** 3 jest-axe assertion(s) across 5 test file(s) · 10 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

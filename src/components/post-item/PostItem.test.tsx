@@ -77,6 +77,18 @@ describe("PostItem", () => {
       // eslint-disable-next-line testing-library/no-container
       expect(container.querySelector("aside")).toBeTruthy()
     })
+
+    it("renders with a color prop applying it to headline and button", () => {
+      render(
+        <PostItemView
+          button={{ title: "Read" }}
+          color="primary"
+          readMinutes={0}
+          title={{ content: "Colored Post" }}
+        />,
+      )
+      expect(screen.getByText("Colored Post")).toBeInTheDocument()
+    })
   })
 
   // -------------------------------------------------------------------------
@@ -215,7 +227,7 @@ describe("PostItemView – comprehensive prop coverage", () => {
           headline: {
             size: "xl" as const,
             className: "cp-hl",
-            variant: "primary" as const,
+            color: "primary" as const,
           },
           author: { className: "auth-c" },
           button: {
@@ -223,7 +235,7 @@ describe("PostItemView – comprehensive prop coverage", () => {
             className: "cp-btn",
             contentClassName: "cp-btncnt",
           },
-          card: { variant: "white" as const },
+          card: { color: "white" as const },
         }}
         title={{
           content: "Full Post",

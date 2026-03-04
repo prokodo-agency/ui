@@ -9,6 +9,9 @@ import type {
 import type { ButtonProps } from "../button"
 import type { HeadlineProps } from "../headline"
 
+import { Autocomplete, type AutocompleteProps } from "../autocomplete"
+import { Checkbox, type CheckboxProps } from "../checkbox"
+import { CheckboxGroup, type CheckboxGroupProps } from "../checkbox-group"
 import {
   DatePicker,
   type DatePickerProps,
@@ -49,6 +52,9 @@ export type FormFieldTypes =
   | "date"
   | "dynamic-list"
   | "rating"
+  | "checkbox"
+  | "checkbox-group"
+  | "autocomplete"
 
 /**
  * Union type for field values across all field types.
@@ -90,6 +96,12 @@ export type FormFieldCondition = {
 export type FormFieldOptionals = {
   /** Explicit field type (inferred from union if not provided). */
   fieldType?: FormFieldTypes
+  /** Unique field identifier used for key, error tracking and conditions. */
+  id?: string
+  /** Field label text (common across all field types for error key generation). */
+  label?: string
+  /** Current field-level error text (managed by Form.client validation). */
+  errorText?: string
   /** Show/hide field (conditional visibility). */
   visible?: boolean
   /** Conditional rendering rules based on other fields. */
@@ -155,6 +167,32 @@ export type FormFieldRating = FormFieldOptionals & {
 } & RatingProps
 
 /**
+ * Single checkbox field variant.
+ * Inherits all Checkbox props. `value` from FormFieldOptionals (boolean) drives
+ * checked state; the HTML submit value is set via `CheckboxProps.value` but is
+ * omitted here to avoid a type conflict.
+ */
+export type FormFieldCheckbox = FormFieldOptionals & {
+  fieldType: "checkbox"
+} & Omit<CheckboxProps, "value">
+
+/**
+ * Checkbox group field variant (multi-select).
+ * Inherits all CheckboxGroup props.
+ */
+export type FormFieldCheckboxGroup = FormFieldOptionals & {
+  fieldType: "checkbox-group"
+} & CheckboxGroupProps<string>
+
+/**
+ * Autocomplete field variant.
+ * Inherits all Autocomplete props.
+ */
+export type FormFieldAutocomplete = FormFieldOptionals & {
+  fieldType: "autocomplete"
+} & AutocompleteProps
+
+/**
  * Union type for any form field.
  * Type narrowed based on fieldType.
  */
@@ -166,6 +204,9 @@ export type FormField =
   | FormFieldDate
   | FormFieldDynamicList
   | FormFieldRating
+  | FormFieldCheckbox
+  | FormFieldCheckboxGroup
+  | FormFieldAutocomplete
 
 /**
  * Server-side validation errors keyed by field ID.
@@ -213,6 +254,9 @@ export type FormFieldMessages = {
  * Allowed child components in Form (direct children).
  */
 export type FormAllowedChildren =
+  | ReactElement<typeof Autocomplete>
+  | ReactElement<typeof Checkbox>
+  | ReactElement<typeof CheckboxGroup>
   | ReactElement<typeof DatePicker>
   | ReactElement<typeof Input>
   | ReactElement<typeof InputOTP>
@@ -295,7 +339,7 @@ export type FormProps = {
   /** Disable all form fields. */
   disabled?: boolean
   /** Color variant for theme. */
-  variant?: FormVariants
+  color?: FormVariants
   /** Hide success/error message after submission. */
   hideResponse?: boolean
   /** Array of fields to render. */

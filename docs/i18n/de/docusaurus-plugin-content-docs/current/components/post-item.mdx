@@ -9,55 +9,99 @@ description: Compact blog/news list-item component with thumbnail, category, tit
 
 `PostItem` rendert einen kompakten Blog-/News-Eintrag mit Bild, Metadaten und Link-Ziel für Listen- oder Feed-Ansichten.
 
-
 ---
 
 ## Übersicht
 
 ```tsx
-import { PostItem } from '@prokodo/ui/post-item'
-
-<PostItem
+import { PostItem } from "@prokodo/ui/post-item"
+;<PostItem
   title="Getting started with prokodo UI"
   slug="/blog/getting-started"
   date="2024-03-01"
   category="Tutorial"
-  image={{ src: '/blog/thumb.jpg', alt: 'Thumbnail' }}
+  image={{ src: "/blog/thumb.jpg", alt: "Thumbnail" }}
 />
 ```
 
-<StorybookEmbed id="prokodo-blog-postitem--default" />
-
+<StorybookEmbed id="prokodo-content-postitem--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { PostItem } from '@prokodo/ui/post-item'
+import { PostItem } from "@prokodo/ui/post-item"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/post-item.css'
+import "@prokodo/ui/post-item.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `title` | `string` | — | ✅ | Post title. |
-| `slug` | `string` | — | ✅ | URL path for the post link. |
-| `date` | `string` | — | — | ISO date string for publication date display. |
-| `category` | `string` | — | — | Category label shown as a `Chip`. |
-| `excerpt` | `string` | — | — | Short excerpt text shown below the title. |
-| `image` | `ImageProps` | — | — | Thumbnail image props. |
-| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+| Prop             | Typ                    | Standard | Pflicht | Beschreibung                                                    |
+| ---------------- | ---------------------- | -------- | ------- | --------------------------------------------------------------- |
+| `title`          | `PostItemHeadline`     | —        | ✅      | Headline-Konfiguration: `{ content: string } & HeadlineProps`.  |
+| `content`        | `string`               | —        | —       | Auszug / Textkörper.                                            |
+| `category`       | `string`               | —        | —       | Kategorie-Label als `Chip`.                                     |
+| `image`          | `string`               | —        | —       | Bild-URL für das Vorschaubild.                                  |
+| `author`         | `PostItemAuthorProps`  | —        | —       | Autoren-Informationen.                                          |
+| `date`           | `string`               | —        | —       | ISO-Datumsstring (erfordert `locale` wenn angegeben).           |
+| `locale`         | `Intl.LocalesArgument` | —        | —       | Gebietsschema für die Datumsformatierung.                       |
+| `metaDate`       | `string`               | —        | —       | Vorformatierter Datumsstring (überschreibt Datumsformatierung). |
+| `wordCount`      | `number`               | —        | —       | Wortanzahl zur Berechnung der Lesezeit.                         |
+| `readCount`      | `number`               | —        | —       | Lesezähler in den Metadaten.                                    |
+| `button`         | `ButtonProps`          | —        | —       | CTA-Button-Props.                                               |
+| `animate`        | `boolean`              | `false`  | —       | Eingangsanimation aktivieren.                                   |
+| `color`          | `HeadlineVariant`      | —        | —       | Akzentfarbe für Kartenrahmen/Schatten und Überschrift.          |
+| `structuredData` | `boolean`              | `false`  | —       | JSON-LD-Strukturdaten ausgeben.                                 |
+| `className`      | `string`               | —        | —       | CSS-Klasse am Root-Element.                                     |
 
 > Siehe [`src/components/post-item/PostItem.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-item/PostItem.model.ts) für den vollständigen `PostItemProps`-Typ.
+
+---
+
+## Farbe
+
+Das `color`-Prop überträgt eine einheitliche Akzentfarbe auf alle visuellen Bereiche des Artikel-Cards:
+
+| Wert          | Karten-Rahmen / Schatten          | Headline-Text                      | Button-Farbe |
+| ------------- | --------------------------------- | ---------------------------------- | ------------ |
+| `"primary"`   | Marken-Blau (30 % Tönung + Glow)  | Marken-Blau                        | Primary      |
+| `"secondary"` | Akzent-Cyan (30 % Tönung + Glow)  | Akzent-Cyan                        | Secondary    |
+| `"success"`   | Grün-Indikator                    | Grün                               | Success      |
+| `"warning"`   | Bernstein-Indikator               | Bernstein                          | Warning      |
+| `"error"`     | Rot-Indikator                     | Rot                                | Error        |
+| `"info"`      | Neutraler Vordergrundton          | Gedämpft                           | Info         |
+| `"white"`     | Standard-Weißkarte, kein Schatten | `inherit` (automatischer Kontrast) | `inherit`    |
+| `"inherit"`   | Kein Override                     | `inherit`                          | `inherit`    |
+
+Der Wert `"white"` behält die Standard-Kartenoberfläche und verhindert gleichzeitig unsichtbaren Text oder Buttons im Light-Mode.
+
+<StorybookEmbed id="prokodo-content-postitem--colored" />
+
+---
+
+## Design-Tokens
+
+`PostItem` definiert keine eigenen CSS Custom Properties. Passe das Erscheinungsbild an, indem du folgende globale Design-System-Tokens auf `:root` oder einem übergeordneten Element überschreibst:
+
+| Token              | Beschreibung                                    |
+| ------------------ | ----------------------------------------------- |
+| `--pk-space-xs`    | Minimales horizontales Padding                  |
+| `--pk-space-sm`    | Kleiner interner Abstand                        |
+| `--pk-space-md`    | Mittlerer interner Abstand                      |
+| `--pk-space-lg`    | Standard-Layout-Abstand (Grid-Column-Gap)       |
+| `--pk-space-xl`    | Weiter Layout-Abstand auf Desktop (zweispaltig) |
+| `--pk-color-muted` | Textfarbe für Datum, Lesezeit und Vorschautext  |
+| `--pk-radius-lg`   | Eckenradius des Bild-Containers                 |
+
+> **Bild-Responsivität:** Das `image`-Hintergrundbild wird immer mit `object-fit: cover` gerendert und füllt seinen Container auf allen Bildschirmgrößen. Auf Mobilgeräten nimmt die Bildspalte die volle Breite ein; auf dem Desktop belegt sie die linke 33-%-Spalte.
 
 ---
 
@@ -66,7 +110,7 @@ import '@prokodo/ui/post-item.css'
 Verwende im Anwendungscode immer den Standard-Importpfad:
 
 ```ts
-import { PostItem } from '@prokodo/ui/post-item'
+import { PostItem } from "@prokodo/ui/post-item"
 ```
 
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
@@ -78,13 +122,13 @@ Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`)
 
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
-| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A) | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen. |
-| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
-| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben. |
-| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| Kriterium | Bezeichnung                              | Status            | Hinweis                                                                                                                              |
+| --------- | ---------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1** | **Info und Beziehungen** (A)             | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.            |
+| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A)      | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen.                                    |
+| **1.4.3** | **Kontrast (Minimum)** (AA)              | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich.      |
+| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben.                                        |
+| **4.1.2** | **Name, Rolle, Wert** (A)                | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
 
 > **Testabdeckung:** 2 jest-axe-Assertion(s) in 5 Testdatei(en) · 4 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.

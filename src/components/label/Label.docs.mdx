@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as LabelStories from "./Label.stories"
 
 <Meta of={LabelStories} />
@@ -24,6 +24,17 @@ Use `Label` directly when building custom form controls. Inside `Input`, `Select
 - `<legend>` must be a direct child of `<fieldset>` — enforced by HTML spec
 - `required` adds a visible asterisk and communicates requirement to assistive tech
 - `error` applies error styling; pair with an error message linked via `aria-describedby`
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                      | Default                  | Description               |
+| -------------------------- | ------------------------ | ------------------------- |
+| `--pk-label-gradient-from` | `var(--pk-color-brand)`  | First-word gradient start |
+| `--pk-label-gradient-to`   | `var(--pk-color-accent)` | First-word gradient end   |
+| `--pk-label-fg`            | `var(--pk-color-muted)`  | Remaining words colour    |
+| `--pk-label-error-from`    | `var(--pk-color-error)`  | Error gradient start      |
 
 ## ✅ Do
 
@@ -55,6 +66,12 @@ Use `Label` directly when building custom form controls. Inside `Input`, `Select
 
 <Canvas>
   <Story of={LabelStories.ErrorState} />
+</Canvas>
+
+### Variant contexts
+
+<Canvas>
+  <Story of={LabelStories.VariantContexts} />
 </Canvas>
 
 ### Props

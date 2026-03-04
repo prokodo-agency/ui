@@ -1,0 +1,20 @@
+// =============================================================================
+// DARK THEME
+// Selector: html[data-theme="dark"] (explicit root, specificity 0,1,1 beats :root at 0,1,0)
+//           [data-theme="dark"]     (scoped wrapper, specificity 0,1,0, same as :root so
+//                                    source-order win suffices)
+//
+// :where() is intentionally NOT used here — it would strip specificity to 0,0,0
+// and :root (0,1,0) in _default.scss would silently override dark-mode tokens.
+// =============================================================================
+
+@use "../tokens/semantic" as *;
+
+html[data-theme="dark"],
+[data-theme="dark"],
+.pk-theme-dark {
+  @include emit-semantic(dark);
+
+  // Snackbar info variant: dark mode uses a different bg
+  --pk-snackbar-info-bg: var(--pk-palette-grey-300);
+}

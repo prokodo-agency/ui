@@ -1,15 +1,14 @@
 @use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/ui/mixins/bem" as *;
+
+// Component tokens: --pk-grid-padding
 
 @include define-block("Grid") {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    padding: $space-lg;
+    padding: var(--pk-grid-padding);
 }
-
-$spacing-unit: $space-md;
 
 @include define-block("GridRow") {
     /* Grid alignment classes */

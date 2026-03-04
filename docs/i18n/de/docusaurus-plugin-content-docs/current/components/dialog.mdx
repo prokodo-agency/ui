@@ -9,65 +9,85 @@ description: Modal dialog overlay with accessible focus trap, ESC-to-close, and 
 
 `Dialog` rendert einen modalen Overlay-Dialog mit Focus-Trap, ESC-Close und flexiblen Größen-/Layout-Optionen.
 
-
 ---
 
 ## Übersicht
 
 ```tsx
-import { Dialog } from '@prokodo/ui/dialog'
-
-<Dialog
-  open={isOpen}
-  title="Confirm action"
-  onClose={() => setIsOpen(false)}
->
+import { Dialog } from "@prokodo/ui/dialog"
+;<Dialog open={isOpen} title="Confirm action" onClose={() => setIsOpen(false)}>
   <p>Are you sure you want to delete this item?</p>
 </Dialog>
 ```
 
-<StorybookEmbed id="prokodo-common-dialog--default" height={380} />
-
+<StorybookEmbed id="prokodo-feedback-dialog--default" height={380} />
 
 ---
 
 ## Import
 
 ```ts
-import { Dialog } from '@prokodo/ui/dialog'
+import { Dialog } from "@prokodo/ui/dialog"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/dialog.css'
+import "@prokodo/ui/dialog.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `open` | `boolean` | — | ✅ | Whether the dialog is visible. |
-| `onClose` | `() => void` | — | ✅ | Called when the dialog should close (ESC / backdrop click). |
-| `children` | `ReactNode` | — | ✅ | Dialog body content. |
-| `title` | `string` | — | — | Dialog title shown in the header. |
-| `size` | `"sm" \| "md" \| "lg" \| "fullscreen"` | `"md"` | — | Dialog width variant. |
-| `closeOnBackdrop` | `boolean` | `true` | — | Close when clicking the backdrop. |
-| `showClose` | `boolean` | `true` | — | Render an explicit close (×) button. |
-| `className` | `string` | — | — | CSS class on the dialog panel. |
+| Prop                   | Typ                                                                                    | Standard  | Pflicht | Beschreibung                                                              |
+| ---------------------- | -------------------------------------------------------------------------------------- | --------- | ------- | ------------------------------------------------------------------------- |
+| `open`                 | `boolean`                                                                              | —         | —       | Steuert die Sichtbarkeit des Dialogs.                                     |
+| `title`                | `string`                                                                               | —         | —       | Dialog-Titeltext.                                                         |
+| `titleProps`           | `HeadlineProps`                                                                        | —         | —       | Props für die Überschrifts-Komponente.                                    |
+| `hideTitle`            | `boolean`                                                                              | `false`   | —       | Titel visuell ausblenden (bleibt barrierefrei).                           |
+| `hideCloseButton`      | `boolean`                                                                              | `false`   | —       | Standard-Schließen-Button ausblenden.                                     |
+| `height`               | `number \| string`                                                                     | —         | —       | Feste Höhe des Dialog-Inhaltsbereichs.                                    |
+| `fullScreen`           | `boolean`                                                                              | `false`   | —       | Dialog als Vollbild-Overlay rendern.                                      |
+| `scroll`               | `"paper" \| "body"`                                                                    | `"paper"` | —       | `"paper"` scrollt Inhalt im Dialog; `"body"` scrollt die Seite.           |
+| `closeOnBackdropClick` | `boolean`                                                                              | `true`    | —       | Dialog beim Klick auf den Hintergrund schließen.                          |
+| `actions`              | `DialogAction[]`                                                                       | —         | —       | Aktions-Buttons im Dialog-Footer.                                         |
+| `renderHeader`         | `() => ReactNode`                                                                      | —         | —       | Benutzerdefinierte Header-Render-Funktion.                                |
+| `contentProps`         | `object`                                                                               | —         | —       | Props für den Inhalts-Wrapper.                                            |
+| `wrapperProps`         | `object`                                                                               | —         | —       | Props für den äußeren Dialog-Wrapper.                                     |
+| `translations`         | `DialogTranslations`                                                                   | —         | —       | Standardbeschriftungen überschreiben (Schließen-Button usw.).             |
+| `onClose`              | `() => void`                                                                           | —         | —       | Klick-Handler des Schließen-Buttons.                                      |
+| `onChange`             | `(event: unknown, reason: "backdropClick" \| "escapeKeyDown", state: boolean) => void` | —         | —       | Wird bei jeder Zustandsänderung (Öffnen/Schließen) ausgelöst.             |
+| `ref`                  | `Ref<DialogRef>`                                                                       | —         | —       | Imperatives Ref für programmatische `openDialog`/`closeDialog`-Steuerung. |
+| `className`            | `string`                                                                               | —         | —       | CSS-Klasse am Root-Element.                                               |
 
 > Siehe [`src/components/dialog/Dialog.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dialog/Dialog.model.ts) für den vollständigen `DialogProps`-Typ.
 
 ---
+
+## Design-Tokens
+
+Passe `Dialog` über CSS Custom Properties auf `:root` oder einem übergeordneten Element an.
+
+| Token                   | Standard                     | Beschreibung               |
+| ----------------------- | ---------------------------- | -------------------------- |
+| `--pk-dialog-bg`        | `var(--pk-color-surface)`    | Dialog-Hintergrundfarbe    |
+| `--pk-dialog-fg`        | `var(--pk-color-fg)`         | Dialog-Textfarbe           |
+| `--pk-dialog-radius`    | `var(--pk-radius-md)`        | Eckenradius                |
+| `--pk-dialog-shadow`    | `var(--pk-shadow-lg)`        | Box-Shadow                 |
+| `--pk-dialog-padding-x` | `var(--pk-space-lg)`         | Horizontaler Innenabstand  |
+| `--pk-dialog-padding-y` | `var(--pk-space-xl)`         | Vertikaler Innenabstand    |
+| `--pk-dialog-header-fg` | `var(--pk-color-fg)`         | Überschriften-Textfarbe    |
+| `--pk-dialog-close-fg`  | `var(--pk-palette-grey-500)` | Schließen-Button-Iconfarbe |
+
+> `--pk-z-modal` (`1301`) und `--pk-z-modal-backdrop` (`1300`) sind globale Semantic-Tokens, die das Z-Index-Layering des Dialogs steuern und auf `:root` überschrieben werden können.
 
 ## AIC-Hinweis
 
 Verwende im Anwendungscode immer den Standard-Importpfad:
 
 ```ts
-import { Dialog } from '@prokodo/ui/dialog'
+import { Dialog } from "@prokodo/ui/dialog"
 ```
 
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
@@ -79,16 +99,16 @@ Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`)
 
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
-| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
-| **2.1.2** | **Keine Tastaturfalle** (A) | 🔍 Manuell prüfen | Der Tastaturfokus darf niemals innerhalb einer Komponente eingeschlossen sein; Nutzer müssen immer mit Standardtasten navigieren können. |
-| **2.4.3** | **Fokusreihenfolge** (A) | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten. |
-| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
-| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein. |
-| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
-| **4.1.3** | **Statusmeldungen** (AA) | 🔍 Manuell prüfen | Statusmeldungen (Laden, Erfolg, Fehler, Fortschritt) müssen assistiven Technologien ohne Fokusverschiebung mitgeteilt werden (aria-live oder role='status'). |
+| Kriterium  | Bezeichnung                          | Status            | Hinweis                                                                                                                                                      |
+| ---------- | ------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1**  | **Info und Beziehungen** (A)         | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.                                    |
+| **2.1.1**  | **Tastatur** (A)                     | ✅ Erfüllt        | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                                     |
+| **2.1.2**  | **Keine Tastaturfalle** (A)          | 🔍 Manuell prüfen | Der Tastaturfokus darf niemals innerhalb einer Komponente eingeschlossen sein; Nutzer müssen immer mit Standardtasten navigieren können.                     |
+| **2.4.3**  | **Fokusreihenfolge** (A)             | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten.                                 |
+| **2.4.7**  | **Fokus sichtbar** (AA)              | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich.         |
+| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein.                      |
+| **4.1.2**  | **Name, Rolle, Wert** (A)            | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                         |
+| **4.1.3**  | **Statusmeldungen** (AA)             | 🔍 Manuell prüfen | Statusmeldungen (Laden, Erfolg, Fehler, Fortschritt) müssen assistiven Technologien ohne Fokusverschiebung mitgeteilt werden (aria-live oder role='status'). |
 
 > **Testabdeckung:** 1 jest-axe-Assertion(s) in 4 Testdatei(en) · 7 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.

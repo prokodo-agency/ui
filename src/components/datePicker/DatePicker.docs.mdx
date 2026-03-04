@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as DatePickerStories from "./DatePicker.stories"
 
 <Meta of={DatePickerStories} />
@@ -35,6 +35,22 @@ Use `DatePicker` wherever a user must select a specific date or date range — b
 - `WithTime` adds an hour/minute picker below the calendar
 - Pass `minDate` / `maxDate` to restrict selectable range
 - `value` / `onChange` follow controlled component conventions
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                            | Default                   | Description                |
+| -------------------------------- | ------------------------- | -------------------------- |
+| `--pk-dp-trigger-bg`             | `var(--pk-color-surface)` | Trigger background         |
+| `--pk-dp-trigger-radius`         | `var(--pk-radius-pill)`   | Trigger corner radius      |
+| `--pk-dp-trigger-label-float-fg` | `var(--pk-color-brand)`   | Floating label colour      |
+| `--pk-dp-dialog-bg`              | `var(--pk-color-surface)` | Calendar dialog background |
+| `--pk-dp-dialog-radius`          | `var(--pk-radius-lg)`     | Calendar radius            |
+| `--pk-dp-dialog-shadow`          | `var(--pk-shadow-lg)`     | Calendar shadow            |
+| `--pk-dp-day-today-ring`         | `var(--pk-color-brand)`   | Today ring colour          |
+| `--pk-dp-gradient-from`          | `var(--pk-color-brand)`   | Selection gradient start   |
+| `--pk-dp-gradient-to`            | `var(--pk-color-accent)`  | Selection gradient end     |
 
 ## ✅ Do
 

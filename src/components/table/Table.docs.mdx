@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as TableStories from "./Table.stories"
 
 <Meta of={TableStories} />
@@ -26,6 +26,21 @@ Use `Table` to display structured, relational data where rows and columns have l
 
 - Don't use a `Table` for layout — use CSS Grid or Flexbox
 - Don't omit column headers (`<th scope="col">`) even if they are visually hidden
+
+## Design Tokens
+
+Customise `Table` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                            | Default                                                     | Description                     |
+| -------------------------------- | ----------------------------------------------------------- | ------------------------------- |
+| `--pk-table-border-color`        | `var(--pk-color-border)`                                    | Row separator border colour     |
+| `--pk-table-header-accent-color` | `var(--pk-color-brand)`                                     | First header cell accent colour |
+| `--pk-table-row-hover-bg`        | `color-mix(in srgb, var(--pk-color-brand) 8%, transparent)` | Row hover/focus background tint |
+| `--pk-table-caption-color`       | `var(--pk-color-muted)`                                     | Caption text colour             |
+| `--pk-table-cell-fg`             | `var(--pk-color-fg)`                                        | Default cell foreground colour  |
+| `--pk-table-padding-y`           | `var(--pk-space-xl)`                                        | Cell vertical padding           |
+| `--pk-table-padding-x`           | `var(--pk-space-sm)`                                        | Cell horizontal padding         |
+| `--pk-table-container-pb`        | `var(--pk-space-xl)`                                        | Root container bottom padding   |
 
 ## Examples
 

@@ -1,0 +1,24 @@
+// =============================================================================
+// SIDENAV COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin sidenav-tokens() {
+  --pk-sidenav-bg:             var(--pk-color-surface);
+  --pk-sidenav-shadow:         var(--pk-shadow-md);
+  --pk-sidenav-toggle-hover:   var(--pk-color-surface-raised);
+  --pk-sidenav-link-hover-bg:  color-mix(in srgb, var(--pk-color-brand) 10%, transparent);
+  --pk-sidenav-link-active-bg: color-mix(in srgb, var(--pk-color-brand) 5%, transparent);
+  --pk-sidenav-icon-color:     var(--pk-color-fg);
+  --pk-sidenav-icon-bg:        var(--pk-color-surface-raised);
+  --pk-sidenav-label-color:    color-mix(in srgb, var(--pk-color-fg) 70%, transparent);
+  --pk-sidenav-fg:             var(--pk-color-fg);
+  --pk-sidenav-radius:         var(--pk-radius-sm);
+  --pk-sidenav-gap:            var(--pk-space-xs);
+  --pk-sidenav-pad-xs:         var(--pk-space-xs);
+  --pk-sidenav-pad-sm:         var(--pk-space-sm);
+  --pk-sidenav-pad-md:         var(--pk-space-md);
+  --pk-sidenav-pad-lg:         var(--pk-space-lg);
+  --pk-sidenav-link-gap:                var(--pk-space-md);
+  --pk-sidenav-section-headline-color:  color-mix(in srgb, var(--pk-color-fg) 45%, transparent);
+}

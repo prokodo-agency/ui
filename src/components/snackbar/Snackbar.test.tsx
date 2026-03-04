@@ -43,20 +43,20 @@ describe("Snackbar", () => {
       expect(screen.getByRole("button", { name: /undo/i })).toBeInTheDocument()
     })
 
-    it("renders in 'error' variant", () => {
-      render(<SnackbarView message="An error occurred" variant="error" />)
+    it("renders in 'error' color", () => {
+      render(<SnackbarView color="error" message="An error occurred" />)
       expect(screen.getByRole("status")).toHaveClass("prokodo-Snackbar--error")
     })
 
-    it("renders in 'success' variant", () => {
-      render(<SnackbarView message="Saved successfully" variant="success" />)
+    it("renders in 'success' color", () => {
+      render(<SnackbarView color="success" message="Saved successfully" />)
       expect(screen.getByRole("status")).toHaveClass(
         "prokodo-Snackbar--success",
       )
     })
 
-    it("renders in 'warning' variant", () => {
-      render(<SnackbarView message="Low disk space" variant="warning" />)
+    it("renders in 'warning' color", () => {
+      render(<SnackbarView color="warning" message="Low disk space" />)
       expect(screen.getByRole("status")).toHaveClass(
         "prokodo-Snackbar--warning",
       )
@@ -88,7 +88,7 @@ describe("Snackbar", () => {
 
     it("error snackbar has no axe violations", async () => {
       const { container } = render(
-        <SnackbarView message="An error occurred" variant="error" />,
+        <SnackbarView color="error" message="An error occurred" />,
       )
       expect(await axe(container)).toHaveNoViolations()
     })

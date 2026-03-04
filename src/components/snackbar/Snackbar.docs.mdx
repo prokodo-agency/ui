@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as SnackbarStories from "./Snackbar.stories"
 
 <Meta of={SnackbarStories} />
@@ -29,7 +29,7 @@ Then dispatch notifications from any component:
 import { useSnackbar } from "@prokodo/ui/snackbar"
 
 const { enqueue } = useSnackbar()
-enqueue({ message: "Saved!", severity: "success" })
+enqueue({ message: "Saved!", color: "success" })
 ```
 
 ## Accessibility (WCAG 2.2)
@@ -38,10 +38,41 @@ enqueue({ message: "Saved!", severity: "success" })
 - Close buttons have `aria-label="Close notification"`
 - Snackbars auto-dismiss after a configurable timeout; they stay open while focused or hovered (WCAG 2.2 SC 2.2.4)
 
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                          | Default                               | Description                   |
+| ------------------------------ | ------------------------------------- | ----------------------------- |
+| `--pk-snackbar-bg`             | `var(--pk-color-fg)`                  | Default background (inverted) |
+| `--pk-snackbar-fg`             | `var(--pk-color-surface)`             | Default text color            |
+| `--pk-snackbar-border-color`   | `color-mix(… surface 15%)`            | Default accent border         |
+| `--pk-snackbar-radius`         | `var(--pk-radius-md)`                 | Border-radius                 |
+| `--pk-snackbar-shadow`         | `var(--pk-shadow-lg)`                 | Default box-shadow            |
+| `--pk-snackbar-padding-x`      | `var(--pk-space-xl)`                  | Horizontal padding            |
+| `--pk-snackbar-padding-y`      | `var(--pk-space-lg)`                  | Vertical padding              |
+| `--pk-snackbar-timing`         | `var(--pk-timing-normal)`             | Slide-in / slide-out duration |
+| `--pk-snackbar-success-bg`     | `color-mix(… success 10%, surface)`   | Success tinted background     |
+| `--pk-snackbar-success-fg`     | `var(--pk-color-fg)`                  | Success text color            |
+| `--pk-snackbar-success-border` | `color-mix(… success 40%)`            | Success accent border         |
+| `--pk-snackbar-success-shadow` | `0 4px 24px color-mix(… success 20%)` | Success ambient glow          |
+| `--pk-snackbar-error-bg`       | `color-mix(… error 10%, surface)`     | Error tinted background       |
+| `--pk-snackbar-error-fg`       | `var(--pk-color-fg)`                  | Error text color              |
+| `--pk-snackbar-error-border`   | `color-mix(… error 40%)`              | Error accent border           |
+| `--pk-snackbar-error-shadow`   | `0 4px 24px color-mix(… error 20%)`   | Error ambient glow            |
+| `--pk-snackbar-warning-bg`     | `color-mix(… warning 10%, surface)`   | Warning tinted background     |
+| `--pk-snackbar-warning-fg`     | `var(--pk-color-fg)`                  | Warning text color            |
+| `--pk-snackbar-warning-border` | `color-mix(… warning 40%)`            | Warning accent border         |
+| `--pk-snackbar-warning-shadow` | `0 4px 24px color-mix(… warning 20%)` | Warning ambient glow          |
+| `--pk-snackbar-info-bg`        | `color-mix(… fg 8%, surface)`         | Info tinted background        |
+| `--pk-snackbar-info-fg`        | `var(--pk-color-fg)`                  | Info text color               |
+| `--pk-snackbar-info-border`    | `color-mix(… fg 20%)`                 | Info accent border            |
+| `--pk-snackbar-info-shadow`    | `var(--pk-shadow-md)`                 | Info box-shadow               |
+
 ## ✅ Do
 
 - Keep messages under two lines and one sentence wherever possible
-- Always provide a `severity` so colour-blind users receive a semantic cue
+- Always provide a `color` so colour-blind users receive a semantic cue
 
 ## ❌ Don't
 

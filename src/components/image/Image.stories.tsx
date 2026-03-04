@@ -1,9 +1,9 @@
 import { Image } from "./Image"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Image",
+  title: "prokodo/content/Image",
   component: Image,
   parameters: {
     layout: "centered",

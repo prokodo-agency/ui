@@ -6,7 +6,7 @@ import type { Variants } from "@/types/variants"
 import type { StaticImageData } from "next/image"
 import type { Ref, ReactNode, KeyboardEvent } from "react"
 
-/** Visual variant: semantic styles or "panel" for flat appearance. */
+/** Visual color: semantic styles or "panel" for flat appearance. */
 export type CardVariant = Variants | "panel"
 
 /**
@@ -27,8 +27,8 @@ export type CardBackgroundProps = {
 export type CardProps = {
   /** DOM ref to card container element. */
   ref?: Ref<HTMLDivElement>
-  /** Visual variant (semantic color, neutral, panel). Defaults to "primary". */
-  variant?: CardVariant
+  /** Color token (semantic color, neutral, panel). Defaults to "primary". */
+  color?: CardVariant
   /** Show skeleton overlay while loading. Requires `skeletonProps` for customization. */
   loading?: boolean
   /** Skeleton animation config. Only used when `loading=true`. */

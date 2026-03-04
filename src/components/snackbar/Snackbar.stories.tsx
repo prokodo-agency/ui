@@ -4,7 +4,7 @@
 import { Snackbar, SnackbarProvider } from "@/components/snackbar"
 import { useSnackbar } from "@/components/snackbar/SnackbarProvider.client"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
@@ -34,7 +34,7 @@ Wrapped in a **`SnackbarProvider`** so each story can also enqueue multiple mess
     message: { control: "text" },
     open: { control: "boolean" },
     autoHideDuration: { control: { type: "number", min: 0, step: 500 } },
-    variant: {
+    color: {
       control: "select",
       options: ["default", "success", "error", "warning", "info"],
     },
@@ -66,7 +66,7 @@ export const Success: Story = {
   args: {
     open: true,
     message: "Changes applied",
-    variant: "success",
+    color: "success",
     autoHideDuration: 3000,
   },
 }
@@ -75,7 +75,7 @@ export const ErrorWithCloseIcon: Story = {
   args: {
     open: true,
     message: "Something went wrong",
-    variant: "error",
+    color: "error",
     closeable: true,
   },
 }
@@ -84,7 +84,7 @@ export const WithAction: Story = {
   args: {
     open: true,
     message: "Item deleted",
-    variant: "info",
+    color: "info",
     action: <button onClick={() => alert("Undo!")}>UNDO</button>,
     closeable: true,
   },
@@ -106,7 +106,7 @@ function ProviderDemoComponent() {
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       <button
         onClick={() =>
-          enqueue({ message: "Default message", variant: "default" })
+          enqueue({ message: "Default message", color: "default" })
         }
       >
         Show default
@@ -116,7 +116,7 @@ function ProviderDemoComponent() {
         onClick={() =>
           enqueue({
             message: "Success!",
-            variant: "success",
+            color: "success",
             autoHideDuration: 2500,
           })
         }
@@ -128,7 +128,7 @@ function ProviderDemoComponent() {
         onClick={() =>
           enqueue({
             message: "Oops, an error occurred",
-            variant: "error",
+            color: "error",
             closeable: true,
           })
         }

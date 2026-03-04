@@ -1,9 +1,9 @@
 import { AnimatedText } from "./AnimatedText"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/AnimatedText",
+  title: "prokodo/content/AnimatedText",
   component: AnimatedText,
   parameters: {
     layout: "centered",
@@ -36,6 +36,7 @@ export const Default: Story = {
     style: {
       fontFamily: "Montserrat",
       fontSize: 24,
+      color: "var(--pk-color-fg)",
     },
     children: "Do you want to write some text?",
   },

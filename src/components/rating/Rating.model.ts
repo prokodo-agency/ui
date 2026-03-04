@@ -1,4 +1,5 @@
 import type { LabelProps } from "../label"
+import type { Variants } from "@/types/variants"
 import type { Ref, FocusEvent, MouseEvent } from "react"
 
 /* ---------- Events / helpers ---------------------------- */
@@ -83,6 +84,8 @@ export type RatingProps = {
   required?: boolean
   /** Stretch to full width of container. */
   fullWidth?: boolean
+  /** Visual color — sets the filled icon color. */
+  color?: Variants
 
   /** Helper text displayed below the field. */
   helperText?: string

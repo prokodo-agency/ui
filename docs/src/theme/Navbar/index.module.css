@@ -90,7 +90,7 @@
 }
 
 .navLink::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0.75rem;
   right: 0.75rem;
@@ -107,12 +107,12 @@
 }
 
 .navLink:hover,
-.navLink[aria-current='page'] {
+.navLink[aria-current="page"] {
   color: var(--color-primary-500) !important;
 }
 
 .navLink:hover::after,
-.navLink[aria-current='page']::after {
+.navLink[aria-current="page"]::after {
   transform: scaleX(1);
 }
 
@@ -154,7 +154,7 @@
 
 /* Chevron arrow via pseudo-element */
 .versionDropdown::after {
-  content: '▾';
+  content: "▾";
   position: absolute;
   right: 0.45rem;
   pointer-events: none;

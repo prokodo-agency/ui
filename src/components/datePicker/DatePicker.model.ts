@@ -1,5 +1,99 @@
 import type { InputProps } from "../input"
+import type { IconName } from "@/components/icon"
+import type { Variants } from "@/types/variants"
 import type { Dayjs } from "dayjs"
+import type { TouchEventHandler } from "react"
+
+// -----------------------------------------------------------------
+// View mode
+// -----------------------------------------------------------------
+
+/** Which picker panel is currently visible inside the dialog. */
+export type DatePickerViewMode = "days" | "months" | "years"
+
+/** A single cell in the calendar day grid. */
+export interface CalendarDay {
+  date: Dayjs
+  isCurrentMonth: boolean
+  isToday: boolean
+  isDisabled: boolean
+}
+
+/** Props that manage open / navigation / selection state — owned by client. */
+export interface DatePickerDialogBehavior {
+  isOpen: boolean
+  /** Current picker panel: "days", "months" or "years". */
+  viewMode: DatePickerViewMode
+  viewingMonth: Dayjs
+  selectedDate: Dayjs | null
+  onToggle: () => void
+  onPrevMonth: () => void
+  onNextMonth: () => void
+  /** Switch the visible panel. */
+  onViewModeChange: (mode: DatePickerViewMode) => void
+  /** User picked a month (0-based) in the month-picker panel. */
+  onMonthSelect: (month: number) => void
+  /** User picked a year in the year-picker panel. */
+  onYearSelect: (year: number) => void
+  onDayClick: (day: Dayjs) => void
+  onToday: () => void
+  onClear: () => void
+  onApply: () => void
+  onTimeChange: (value: number, unit: "hour" | "minute") => void
+}
+
+/**
+ * Optional UI customization for the calendar dialog.
+ * All props are passed through `DatePickerProps` and forwarded to the dialog.
+ */
+export interface DatePickerDialogCustomization {
+  /** Icon name for the "previous month" nav button. Default: "ArrowLeft01Icon". */
+  prevIcon?: IconName
+  /** Icon name for the "next month" nav button. Default: "ArrowRight01Icon". */
+  nextIcon?: IconName
+  /** Aria-label for the "previous month" nav button. Default: "Previous month". */
+  prevAriaLabel?: string
+  /** Aria-label for the "next month" nav button. Default: "Next month". */
+  nextAriaLabel?: string
+  /** Weekday header labels (7 entries, Mon–Sun). Default: ["Mo","Tu","We","Th","Fr","Sa","Su"]. */
+  weekdays?: readonly string[]
+  /** Dayjs format string for the month/year header. Default: "MMMM YYYY". */
+  monthFormat?: string
+  /** Dayjs format string for each day's aria-label. Default: "D MMMM YYYY". */
+  dayAriaFormat?: string
+  /** Label for the "Today" footer button. Default: "Today". */
+  todayLabel?: string
+  /** Label for the "Clear" footer button. Default: "Clear". */
+  clearLabel?: string
+  /** Label for the "Apply" footer button. Default: "Apply". */
+  applyLabel?: string
+  /** Label for the time row. Default: "Time". */
+  timeLabel?: string
+  /** Icon name for the mobile close button. Default: "Cancel01Icon". */
+  closeIcon?: IconName
+  /** Aria-label for the mobile close button. Default: "Close". */
+  closeLabel?: string
+  /** Visual color variant override for the calendar dialog only. Falls back to the root `color` prop if not set. */
+  dialogColor?: Variants
+}
+
+/** Full props for the `DatePickerDialog` component. */
+export interface DatePickerDialogProps
+  extends Omit<DatePickerDialogBehavior, "isOpen" | "onToggle">,
+    DatePickerDialogCustomization {
+  name: string
+  label: string
+  withTime?: boolean
+  minuteStep?: number
+  minDate?: DatePickerValue
+  maxDate?: DatePickerValue
+  /** Called when the user taps the backdrop or close button (mobile). Typically the same as onToggle. */
+  onClose?: () => void
+  /** Touch-start handler injected by the client for swipe gestures. */
+  onDialogTouchStart?: TouchEventHandler<HTMLDivElement>
+  /** Touch-end handler injected by the client for swipe gestures. */
+  onDialogTouchEnd?: TouchEventHandler<HTMLDivElement>
+}
 
 /** Date/time value: Dayjs object, ISO string, or null (empty). */
 export type DatePickerValue = Dayjs | string | null
@@ -47,8 +141,10 @@ export type DatePickerErrorTranslations = {
 export interface DatePickerProps
   extends Omit<
     InputProps,
-    "onChange" | "value" | "errorTranslations" | "type"
+    "onChange" | "value" | "errorTranslations" | "type" | "color"
   > {
+  /** Visual color variant — controls gradient and glow. Default: "primary". */
+  color?: Variants
   /** Single-line input enforced (date input). Excluded from discriminated union. */
   multiline?: false
   /** Textarea rows not applicable (date input). Excluded from discriminated union. */
@@ -100,4 +196,32 @@ export interface DatePickerProps
    * Default: 1 minute (60 seconds). Ignored when `withTime=false`.
    */
   minuteStep?: number
+  /** Icon name for the "previous month" nav button. Default: "ArrowLeft01Icon". */
+  prevIcon?: IconName
+  /** Icon name for the "next month" nav button. Default: "ArrowRight01Icon". */
+  nextIcon?: IconName
+  /** Aria-label for the "previous month" nav button. Default: "Previous month". */
+  prevAriaLabel?: string
+  /** Aria-label for the "next month" nav button. Default: "Next month". */
+  nextAriaLabel?: string
+  /** Weekday header labels (7 entries, Mon–Sun). Default: ["Mo","Tu","We","Th","Fr","Sa","Su"]. */
+  weekdays?: readonly string[]
+  /** Dayjs format string for the month/year header. Default: "MMMM YYYY". */
+  monthFormat?: string
+  /** Dayjs format string for each day's aria-label. Default: "D MMMM YYYY". */
+  dayAriaFormat?: string
+  /** Label for the "Today" footer button. Default: "Today". */
+  todayLabel?: string
+  /** Label for the "Clear" footer button. Default: "Clear". */
+  clearLabel?: string
+  /** Label for the "Apply" footer button. Default: "Apply". */
+  applyLabel?: string
+  /** Label for the time row. Default: "Time". */
+  timeLabel?: string
+  /** Icon name for the mobile close button. Default: "Cancel01Icon". */
+  closeIcon?: IconName
+  /** Aria-label for the mobile close button. Default: "Close". */
+  closeLabel?: string
+  /** Visual color variant override for the calendar dialog only. Falls back to the root `color` prop if not set. */
+  dialogColor?: Variants
 }

@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta } from "@storybook/blocks"
+import { Canvas, Controls, Meta } from "@storybook/addon-docs/blocks"
 import * as RichTextStories from "./RichText.stories"
 
 <Meta of={RichTextStories} />
@@ -39,17 +39,39 @@ All HTML is sanitised before injection via `dangerouslySetInnerHTML` to prevent 
 - Don't bypass sanitisation to allow arbitrary HTML from user input
 - Don't nest `RichText` inside another `RichText` — it will double-render heading levels
 
+## API notes
+
+- `color` controls icon and link accent colouring within the rendered markup (`"primary"` | `"secondary"` | `"success"` | `"info"` | `"warning"` | `"error"`)
+- When `animated` is `true`, inline text nodes are wrapped in `<AnimatedText>`
+- `linkPolicy` controls how external links are sanitised: `"trusted"` (no `rel` added) or `"ugc"` (`rel="ugc nofollow"`)
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                       | Purpose                                       |
+| --------------------------- | --------------------------------------------- |
+| `--pk-color-brand`          | Anchor color, ordered-list decimal background |
+| `--pk-color-muted`          | Paragraph and preformatted text color         |
+| `--pk-color-border`         | `<pre>` border, blockquote left border        |
+| `--pk-color-surface-raised` | `<pre>` and blockquote background             |
+| `--pk-radius-sm`            | `<pre>` block border-radius                   |
+| `--pk-radius-md`            | Inline image border-radius                    |
+| `--pk-space-xs`             | List item bottom padding                      |
+| `--pk-space-sm`             | List icon right margin                        |
+| `--pk-space-lg`             | Blockquote horizontal padding                 |
+
 ## Examples
 
 ### Default
 
 <Canvas of={RichTextStories.Default} />
 
-### Primary variant
+### Primary color
 
 <Canvas of={RichTextStories.PrimaryVariant} />
 
-### Secondary variant
+### Secondary color
 
 <Canvas of={RichTextStories.SecondaryVariant} />
 

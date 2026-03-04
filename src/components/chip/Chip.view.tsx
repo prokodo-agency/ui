@@ -39,8 +39,7 @@ export function ChipView({
         },
         className,
       )}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
+      {...(isClickable ? { onClick, onKeyDown } : {})}
     >
       {icon}
       <span className={bem("label")}>{label}</span>

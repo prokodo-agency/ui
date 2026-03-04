@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as SelectStories from "./Select.stories"
 
 <Meta of={SelectStories} />
@@ -26,6 +26,22 @@ Use `Select` when the user must choose from a predefined list of options. For fr
 - **↑ / ↓**: navigate options
 - **Enter / Space**: select the focused option
 - **Escape**: close without selecting
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                        | Default                        | Description           |
+| ---------------------------- | ------------------------------ | --------------------- |
+| `--pk-select-bg`             | `var(--pk-color-surface)`      | Trigger background    |
+| `--pk-select-fg`             | `var(--pk-color-fg)`           | Trigger text colour   |
+| `--pk-select-label-fg`       | `var(--pk-color-brand)`        | Floating label colour |
+| `--pk-select-radius`         | `var(--pk-radius-pill)`        | Corner radius         |
+| `--pk-select-shadow`         | `var(--pk-shadow-sm)`          | Trigger shadow        |
+| `--pk-select-listbox-shadow` | `var(--pk-shadow-lg)`          | Dropdown shadow       |
+| `--pk-select-gradient-from`  | `var(--pk-color-brand)`        | Focus gradient start  |
+| `--pk-select-gradient-to`    | `var(--pk-color-accent)`       | Focus gradient end    |
+| `--pk-select-item-hover-bg`  | `var(--pk-palette-primary-50)` | Item hover background |
 
 ## ✅ Do
 

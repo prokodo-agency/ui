@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as CarouselStories from "./Carousel.stories"
 
 <Meta of={CarouselStories} />
@@ -33,6 +33,18 @@ Use `Carousel` to display a sequence of related content items — image gallerie
 - `ThreeAtOnce` sets `slidesPerView` to 3; combine with responsive breakpoints for narrower viewports
 - Navigation arrows are rendered by default; set `arrows={false}` to hide them
 - Pass an array of `ReactNode` children — each child becomes one slide
+
+## Design Tokens
+
+Customise `Carousel` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                          | Default                                                           | Description                                                     |
+| ------------------------------ | ----------------------------------------------------------------- | --------------------------------------------------------------- |
+| `--pk-carousel-overlay-bg`     | `color-mix(in srgb, var(--pk-palette-grey-900) 70%, transparent)` | Mobile tutorial overlay background                              |
+| `--pk-carousel-dot-active-bg`  | `var(--pk-color-surface)`                                         | Active pagination dot fill                                      |
+| `--pk-carousel-button-padding` | `var(--pk-space-xs)`                                              | Prev/next navigation button padding                             |
+| `--pk-carousel-dots-mt`        | `var(--pk-space-2xl)`                                             | Top margin above the dot indicator row                          |
+| `--pk-carousel-controls-mt`    | `var(--pk-space-lg)`                                              | Top margin between slides and the controls row (prev/dots/next) |
 
 ## ✅ Do
 

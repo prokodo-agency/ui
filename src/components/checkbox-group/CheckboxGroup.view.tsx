@@ -21,6 +21,7 @@ export function CheckboxGroupView<T extends string>({
   hiddenInputName,
   layout = "stack",
   variant = "plain",
+  color = "primary",
   translations: t,
   isChecked,
   onToggle,
@@ -35,7 +36,7 @@ export function CheckboxGroupView<T extends string>({
     <fieldset
       aria-label={label}
       aria-required={required || undefined}
-      className={bem()}
+      className={bem(undefined, { [color]: true })}
     >
       {legend ? (
         <legend
@@ -79,6 +80,7 @@ export function CheckboxGroupView<T extends string>({
             >
               <Checkbox
                 checked={checked}
+                color={color}
                 description={opt.description}
                 disabled={itemDisabled}
                 icon={opt.icon}

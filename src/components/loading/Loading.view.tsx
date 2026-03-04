@@ -1,9 +1,25 @@
 import type {
   LoadingBaseProps,
+  LoadingColor,
   LoadingOverlayProps,
   LoadingSize,
 } from "./Loading.model"
 import type { FC } from "react"
+
+/** Maps a LoadingColor value to a CSS color expression. */
+const colorToCSS: Record<LoadingColor, string> = {
+  // "inherit" explicitly targets the adaptive foreground token so the spinner
+  // stays visible regardless of light/dark mode instead of blindly inheriting
+  // a parent color that may match the background.
+  inherit: "var(--pk-color-fg)",
+  primary: "var(--pk-color-brand)",
+  secondary: "var(--pk-color-accent)",
+  success: "var(--pk-color-success)",
+  error: "var(--pk-color-error)",
+  info: "var(--pk-color-fg)",
+  warning: "var(--pk-color-warning)",
+  white: "var(--pk-palette-white)",
+}
 
 /** px per size */
 const PX: Record<LoadingSize, number> = {
@@ -22,6 +38,7 @@ export const SpinnerView: FC<LoadingBaseProps> = ({
   /* istanbul ignore next */
   ariaLabel = /* istanbul ignore next */ "Loading",
   reducedMotion,
+  color,
 }) => {
   const s = PX[size]
   const r = s / 2
@@ -40,6 +57,12 @@ export const SpinnerView: FC<LoadingBaseProps> = ({
       width={s}
       style={{
         display: "inline-block",
+        ...(color
+          ? ({
+              "--pk-loading-color": colorToCSS[color],
+              color: colorToCSS[color],
+            } as React.CSSProperties)
+          : undefined),
         ...style,
       }}
     >
@@ -104,6 +127,7 @@ export const OverlayView: FC<
   zIndex = 9999,
   reducedMotion,
   resolvedBackdrop,
+  color,
 }) => {
   if (!show) return null
   const bg =
@@ -129,6 +153,7 @@ export const OverlayView: FC<
     >
       <SpinnerView
         ariaLabel={ariaLabel}
+        color={color}
         reducedMotion={reducedMotion}
         size={size}
       />

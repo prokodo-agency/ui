@@ -27,6 +27,7 @@ export const SliderView: FC<SliderViewProps> = ({
   marks = false,
   valueLabelProps = {},
   className,
+  color,
 
   internalValue,
   isFocused,
@@ -68,11 +69,18 @@ export const SliderView: FC<SliderViewProps> = ({
   }
 
   return (
-    <div className={bem(undefined, undefined, className)}>
+    <div
+      className={bem(
+        undefined,
+        color ? { [color]: true } : undefined,
+        className,
+      )}
+    >
       {/* Optionales Label */}
       {isString(label) && (
         <Label
           {...labelProps}
+          color={color}
           htmlFor={id}
           label={label}
           required={required}

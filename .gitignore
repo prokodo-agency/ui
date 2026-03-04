@@ -21,6 +21,10 @@ stats.html
 .DS_Store
 *.pem
 
+# Docusaurus build cache & output
+docs/.docusaurus/
+docs/build/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

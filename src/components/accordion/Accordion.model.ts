@@ -79,8 +79,8 @@ export type AccordionProps = {
   expanded?: number | null
   /** Root element class name. */
   className?: string
-  /** Visual variant (primary, secondary, neutral, etc.). Affects header/border colors. */
-  variant?: Variants
+  /** Color token (primary, secondary, neutral, etc.). Affects header/border colors. */
+  color?: Variants
   /** Default headline props for all item titles. Individual items can override via `titleOptions`. */
   titleOptions?: HeadlineProps
   /** Chevron/expand icon props (size, color, className). Rotates on expand/collapse. */

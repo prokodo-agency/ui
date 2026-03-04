@@ -1,4 +1,15 @@
 /**
+ * Accent color applied to the active page button and navigation arrows.
+ */
+export type PaginationColor =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "error"
+  | "info"
+  | "warning"
+
+/**
  * i18n translation strings for Pagination component.
  */
 export type PaginationTranslations = {
@@ -62,6 +73,8 @@ export type PaginationProps = {
   disabled?: boolean
   /** Show loading state during navigation. */
   isPending?: boolean
+  /** Accent color applied to active page indicator and navigation arrows. */
+  color?: PaginationColor
 
   /**
    * Custom handler for previous page button.

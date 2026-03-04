@@ -39,19 +39,15 @@ export const ImageText: FC<ImageTextProps> = ({
 
   return (
     <div className={bem()}>
-      <Grid
-        className={bem("grid", {
-          "is-reverse": Boolean(reverse),
-        })}
-      >
+      <Grid className={bem("grid")}>
         <GridRow className={bem("content")} md={leftColumnMd} xs={10}>
           <Animated>
             {isString(subTitle) && (
               <Headline
                 highlight
+                color="primary"
                 size="sm"
                 type="h3"
-                variant="primary"
                 {...subTitleProps}
                 className={bem(
                   "sub__headline",
@@ -90,7 +86,11 @@ export const ImageText: FC<ImageTextProps> = ({
           </Animated>
         </GridRow>
         {image && (
-          <GridRow className={bem("image")} md={6} xs={10}>
+          <GridRow
+            className={bem("image", { "is-reverse": Boolean(reverse) })}
+            md={6}
+            xs={10}
+          >
             <Animated className={bem("animated__container")}>
               {
                 /* istanbul ignore next */ isString(animation) ? (
@@ -103,6 +103,15 @@ export const ImageText: FC<ImageTextProps> = ({
                 )
               }
             </Animated>
+          </GridRow>
+        )}
+        {animatedBorder && (
+          <GridRow className={bem("animated-border")} md={2} xs={12}>
+            <div
+              className={bem("animated-border__line", {
+                "bottom-to-top": animatedBorder.direction === "bottom-to-top",
+              })}
+            />
           </GridRow>
         )}
       </Grid>

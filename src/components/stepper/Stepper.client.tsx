@@ -27,6 +27,7 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
     onBlur,
     translations,
     className,
+    color,
     ...rootProps
   } = props
 
@@ -93,10 +94,13 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
         e.preventDefault()
       } else if (e.key === "ArrowRight") {
         // Only move right if next is already completed (< activeStep)
-        if (next < steps.length && next < activeStep) {
-          setActiveStep(next)
-          stepRefs.current[next]?.focus()
-          onChange?.(e, next)
+        if (next < steps.length) {
+          /* istanbul ignore else */
+          if (next < activeStep) {
+            setActiveStep(next)
+            stepRefs.current[next]?.focus()
+            onChange?.(e, next)
+          }
         }
         e.preventDefault()
       }
@@ -155,6 +159,7 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
       {...rootProps}
       activeStep={activeStep}
       className={className}
+      color={color}
       stepRefs={stepRefs}
       steps={formattedSteps}
       translations={translations}

@@ -13,15 +13,13 @@ description: Rich text editor (WYSIWYG) with toolbar, markdown shortcuts, and im
 `RTE` is currently in **beta**. API details and behavior may still change in upcoming releases.
 :::
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { RTE } from '@prokodo/ui/rte'
-
-<RTE
+import { RTE } from "@prokodo/ui/rte"
+;<RTE
   name="content"
   value={editorValue}
   onChange={setEditorValue}
@@ -31,46 +29,65 @@ import { RTE } from '@prokodo/ui/rte'
 
 <StorybookEmbed id="prokodo-form-rte--default" height={380} />
 
-
 ---
 
 ## Import
 
 ```ts
-import { RTE } from '@prokodo/ui/rte'
+import { RTE } from "@prokodo/ui/rte"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/rte.css'
+import "@prokodo/ui/rte.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `name` | `string` | — | ✅ | Field name for form submission. |
-| `value` | `string` | — | — | Controlled HTML content value. |
-| `onChange` | `(html: string) => void` | — | — | Called with serialised HTML on each change. |
-| `label` | `string` | — | — | Editor label shown above the toolbar. |
-| `placeholder` | `string` | — | — | Placeholder text shown in an empty editor. |
-| `disabled` | `boolean` | `false` | — | Disable the editor. |
-| `error` | `string` | — | — | Error message shown below the editor. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop           | Type                                             | Default | Required | Description                                        |
+| -------------- | ------------------------------------------------ | ------- | -------- | -------------------------------------------------- |
+| `id`           | `string`                                         | —       | —        | HTML id for the editor.                            |
+| `label`        | `string`                                         | —       | —        | Label text shown above the editor.                 |
+| `value`        | `string`                                         | —       | —        | Controlled HTML content value.                     |
+| `defaultValue` | `string`                                         | —       | —        | Uncontrolled initial HTML value.                   |
+| `placeholder`  | `string`                                         | —       | —        | Placeholder text.                                  |
+| `disabled`     | `boolean`                                        | `false` | —        | Disable the editor.                                |
+| `required`     | `boolean`                                        | `false` | —        | Mark field as required.                            |
+| `errorText`    | `string`                                         | —       | —        | Error message shown below the editor.              |
+| `helperText`   | `string`                                         | —       | —        | Helper text shown below the editor.                |
+| `rteOptions`   | `RTEOptions`                                     | —       | —        | Quill editor options config.                       |
+| `rteToolbar`   | `RTEFeature[]`                                   | —       | —        | Toolbar feature array override.                    |
+| `onChange`     | `(html: string, meta: { text: string }) => void` | —       | —        | Called on content change with HTML and plain text. |
+| `className`    | `string`                                         | —       | —        | CSS class on root element.                         |
 
 > See [`src/components/rte/RTE.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/rte/RTE.model.ts) for the full `RTEProps` type.
 
 ---
+
+## Design Tokens
+
+Customise `RTE` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                    | Default                                                                 | Description                |
+| ------------------------ | ----------------------------------------------------------------------- | -------------------------- |
+| `--pk-rte-bg`            | `var(--pk-color-surface)`                                               | Editor background          |
+| `--pk-rte-toolbar-bg`    | `color-mix(in srgb, var(--pk-color-brand) 8%, var(--pk-color-surface))` | Toolbar background tint    |
+| `--pk-rte-accent`        | `var(--pk-color-brand)`                                                 | Active toolbar item colour |
+| `--pk-rte-icon-color`    | `var(--pk-color-fg)`                                                    | Toolbar icon colour        |
+| `--pk-rte-picker-bg`     | `var(--pk-color-surface)`                                               | Colour-picker background   |
+| `--pk-rte-picker-shadow` | `0 10px 30px rgba(0,0,0,0.12)`                                          | Picker shadow              |
+| `--pk-rte-code-bg`       | `color-mix(in srgb, var(--pk-color-fg) 6%, transparent)`                | Inline code background     |
+| `--pk-rte-radius`        | `var(--pk-radius-md)`                                                   | Editor border radius       |
 
 ## AIC Note
 
 Use the standard import path in application code:
 
 ```ts
-import { RTE } from '@prokodo/ui/rte'
+import { RTE } from "@prokodo/ui/rte"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -82,19 +99,19 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **1.3.5** | **Identify Input Purpose** (AA) | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute. |
-| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.1.2** | **No Keyboard Trap** (A) | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys. |
-| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
-| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
-| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
-| **3.3.1** | **Error Identification** (A) | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone. |
-| **3.3.2** | **Labels or Instructions** (A) | ✅ Fulfilled | Every form input requires a programmatically associated label or a visible instruction. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
-| **4.1.3** | **Status Messages** (AA) | ✅ Fulfilled | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+| Criterion  | Name                               | Status           | Note                                                                                                                                       |
+| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **1.3.5**  | **Identify Input Purpose** (AA)    | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute.                                        |
+| **2.1.1**  | **Keyboard** (A)                   | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing.                                                  |
+| **2.1.2**  | **No Keyboard Trap** (A)           | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys.               |
+| **2.4.3**  | **Focus Order** (A)                | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                                |
+| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.                 |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                             |
+| **3.3.1**  | **Error Identification** (A)       | 🔍 Manual review | Input errors must be identified and described to the user in text, not by colour alone.                                                    |
+| **3.3.2**  | **Labels or Instructions** (A)     | ✅ Fulfilled     | Every form input requires a programmatically associated label or a visible instruction.                                                    |
+| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.            |
+| **4.1.3**  | **Status Messages** (AA)           | ✅ Fulfilled     | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 6 test file(s) · 5 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

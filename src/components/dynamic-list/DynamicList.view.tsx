@@ -39,6 +39,7 @@ export function DynamicListView({
   name = /* istanbul ignore next */ "items",
   errorText,
   helperText,
+  color,
 }: DynamicListViewProps): ReactNode {
   const isError = Boolean(errorText)
   const hasHelper = Boolean(helperText)
@@ -50,7 +51,11 @@ export function DynamicListView({
     <fieldset
       aria-describedby={isError ? errorId : helperId}
       aria-labelledby={`${name}-legend`}
-      className={bem(undefined, undefined, className)}
+      className={bem(
+        undefined,
+        color ? { [color]: true } : undefined,
+        className,
+      )}
     >
       {/* ————————————— wrapper-level label ————————————— */}
       {isString(label) && (
@@ -59,6 +64,7 @@ export function DynamicListView({
           aria-disabled={disabled}
           /* istanbul ignore next */
           className={bem("label", undefined, labelProps?.className)}
+          color={color}
           error={isError}
           /* istanbul ignore next */
           id={labelProps?.id ?? `${name}-legend`}
@@ -75,7 +81,7 @@ export function DynamicListView({
           aria-describedby={errorId ?? helperId}
           className={bem("list", mod, classNameList)}
         >
-          <li className={bem("list__item")}>
+          <li className={bem("list__item", mod)}>
             {fields.map(({ fieldType, ...field }: DynamicListField) => {
               switch (fieldType) {
                 case "select":
@@ -83,6 +89,7 @@ export function DynamicListView({
                     <Select
                       key={field.name}
                       fullWidth
+                      color={color}
                       {...(field as SelectProps)}
                       className={bem("field", mod, field?.className)}
                       data-field={field?.name}
@@ -112,6 +119,7 @@ export function DynamicListView({
                     <Input
                       key={field.name}
                       fullWidth
+                      color={color}
                       {...(field as InputProps)}
                       className={bem("field", mod, field?.className)}
                       data-field={field?.name}
@@ -136,21 +144,45 @@ export function DynamicListView({
                   )
               }
             })}
+            {single && (
+              <Button
+                aria-label={`Remove ${label} entry ${idx + 1}`}
+                color="error"
+                data-index={idx}
+                iconProps={{
+                  name: "Delete02Icon",
+                }}
+                {...buttonDeleteProps}
+                /* istanbul ignore next */
+                className={bem(
+                  "delete__button",
+                  mod,
+                  buttonDeleteProps?.className,
+                )}
+              />
+            )}
           </li>
-          <Button
-            aria-label={`Remove ${label} entry ${idx + 1}`}
-            color="error"
-            data-index={idx}
-            iconProps={{
-              name: "Delete02Icon",
-            }}
-            {...buttonDeleteProps}
-            /* istanbul ignore next */
-            className={bem("delete__button", mod, buttonDeleteProps?.className)}
-          />
+          {!single && (
+            <Button
+              aria-label={`Remove ${label} entry ${idx + 1}`}
+              color="error"
+              data-index={idx}
+              iconProps={{
+                name: "Delete02Icon",
+              }}
+              {...buttonDeleteProps}
+              /* istanbul ignore next */
+              className={bem(
+                "delete__button",
+                mod,
+                buttonDeleteProps?.className,
+              )}
+            />
+          )}
         </ul>
       ))}
       <Button
+        color={color !== "white" ? color : undefined}
         title="Add item"
         variant="outlined"
         {...buttonAddProps}

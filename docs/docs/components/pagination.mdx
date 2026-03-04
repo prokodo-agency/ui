@@ -9,51 +9,50 @@ description: Page navigation component with first/prev/next/last controls, confi
 
 `Pagination` renders a page navigation strip. It handles large page counts by showing a configurable window of pages with ellipsis on either side.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Pagination } from '@prokodo/ui/pagination'
-
-<Pagination
+import { Pagination } from "@prokodo/ui/pagination"
+;<Pagination
   page={currentPage}
   count={totalPages}
-  onChange={(page) => setCurrentPage(page)}
+  onChange={page => setCurrentPage(page)}
 />
 ```
 
 <StorybookEmbed id="prokodo-navigation-pagination--default" />
-
 
 ---
 
 ## Import
 
 ```ts
-import { Pagination } from '@prokodo/ui/pagination'
+import { Pagination } from "@prokodo/ui/pagination"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/pagination.css'
+import "@prokodo/ui/pagination.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `page` | `number` | — | ✅ | Current active page (1-based). |
-| `count` | `number` | — | ✅ | Total number of pages. |
-| `onChange` | `(page: number) => void` | — | ✅ | Called when the user selects a page. |
-| `siblingCount` | `number` | `1` | — | Pages shown on each side of the active page. |
-| `showFirstLast` | `boolean` | `true` | — | Show first/last page jump buttons. |
-| `disabled` | `boolean` | `false` | — | Disable all controls. |
-| `className` | `string` | — | — | CSS class on root `<nav>` element. |
+| Prop            | Type                     | Default | Required | Description                                      |
+| --------------- | ------------------------ | ------- | -------- | ------------------------------------------------ |
+| `totalPages`    | `number`                 | —       | ✅       | Total number of pages.                           |
+| `currentPage`   | `number`                 | `1`     | —        | Controlled current page.                         |
+| `boundaryCount` | `number`                 | `1`     | —        | Number of always-visible pages at each boundary. |
+| `readOnly`      | `boolean`                | `false` | —        | Disable interactive page change.                 |
+| `translations`  | `PaginationTranslations` | —       | —        | Override default label strings.                  |
+| `onPageChange`  | `(page: number) => void` | —       | —        | Called when the current page changes.            |
+| `onPrev`        | `() => void`             | —       | —        | Called when the previous button is clicked.      |
+| `onNext`        | `() => void`             | —       | —        | Called when the next button is clicked.          |
+| `className`     | `string`                 | —       | —        | CSS class on root element.                       |
 
 > See [`src/components/pagination/Pagination.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/pagination/Pagination.model.ts) for the full `PaginationProps` type.
 
@@ -64,7 +63,7 @@ import '@prokodo/ui/pagination.css'
 Use the standard import path in application code:
 
 ```ts
-import { Pagination } from '@prokodo/ui/pagination'
+import { Pagination } from "@prokodo/ui/pagination"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -76,18 +75,36 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.4.4** | **Link Purpose (In Context)** (A) | 🔍 Manual review | The purpose of every link must be determinable from the link text alone, or from its surrounding context. |
-| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
-| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
-| **2.5.8** | **Target Size (Minimum)** (AA) | 🔍 Manual review | Interactive target areas must be at least 24 × 24 CSS pixels. Verify in the integrated product UI. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion  | Name                               | Status           | Note                                                                                                                            |
+| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **2.1.1**  | **Keyboard** (A)                   | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                       |
+| **2.4.4**  | **Link Purpose (In Context)** (A)  | 🔍 Manual review | The purpose of every link must be determinable from the link text alone, or from its surrounding context.                       |
+| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.      |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                  |
+| **2.5.8**  | **Target Size (Minimum)** (AA)     | 🔍 Manual review | Interactive target areas must be at least 24 × 24 CSS pixels. Verify in the integrated product UI.                              |
+| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
 
 > **Test coverage:** 3 jest-axe assertion(s) across 5 test file(s) · 6 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+---
+
+## Design Tokens
+
+Customise `Pagination` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                             | Default                                                   | Description                                                              |
+| --------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `--pk-pagination-gap`             | `var(--pk-space-sm)`                                      | Gap between pagination items                                             |
+| `--pk-pagination-fg`              | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)` | Text color for ellipsis and inactive page numbers                        |
+| `--pk-pagination-page-radius`     | `10px`                                                    | Border-radius of page number buttons                                     |
+| `--pk-pagination-pad-x`           | `var(--pk-space-xs)`                                      | Horizontal padding of page number buttons                                |
+| `--pk-pagination-active-border`   | `var(--pk-color-brand)`                                   | Color used for the active page glow shadow (overridden per `color`)      |
+| `--pk-pagination-active-shadow`   | `0 4px 18px color-mix(in srgb, brand 45%, transparent)`   | Drop-shadow on the active page button                                    |
+| `--pk-pagination-active-gradient` | `var(--gradient-border-4)`                                | Gradient applied to the active page border ring (overridden per `color`) |
+
+---
 
 ## Storybook
 

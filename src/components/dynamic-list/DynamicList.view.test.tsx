@@ -36,4 +36,16 @@ describe("DynamicListView", () => {
     // One item row should be rendered
     expect(screen.getByRole("list")).toBeInTheDocument()
   })
+
+  it("passes undefined color to the Add button when color is 'white'", () => {
+    render(
+      <DynamicListView
+        color="white"
+        fields={singleTextField}
+        id="test-dynamic-list"
+        label="White List"
+      />,
+    )
+    expect(screen.getByTitle("Add item")).toBeInTheDocument()
+  })
 })

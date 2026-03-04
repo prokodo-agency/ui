@@ -15,7 +15,7 @@ const bem = create(styles, "Card")
 
 export function CardView({
   isClickable,
-  variant = "white",
+  color = "white",
   loading,
   skeletonProps,
   highlight,
@@ -45,7 +45,7 @@ export function CardView({
   redirect?: LinkProps
 }): JSX.Element {
   const modifiers = {
-    [variant]: true,
+    [color]: true,
     "is-clickable": Boolean(isClickable),
     "has-highlight": Boolean(highlight),
     "has-gradiant": Boolean(gradiant),
@@ -104,7 +104,7 @@ export function CardView({
         <div
           className={bem(
             "gradiant",
-            { [variant]: variant !== "inherit" && variant !== "white" },
+            { [color]: color !== "inherit" && color !== "white" },
             gradiantClassName,
           )}
         />

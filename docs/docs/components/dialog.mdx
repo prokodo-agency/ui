@@ -9,65 +9,89 @@ description: Modal dialog overlay with accessible focus trap, ESC-to-close, and 
 
 `Dialog` renders an accessible modal overlay. Focus is trapped inside while open; pressing `Escape` closes it. Supports multiple size variants and an optional close button.
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { Dialog } from '@prokodo/ui/dialog'
-
-<Dialog
+import { Dialog } from "@prokodo/ui/dialog"
+;<Dialog
   open={isOpen}
   title="Confirm action"
-  onClose={() => setIsOpen(false)}
+  onChange={(e, reason, state) => setIsOpen(state)}
 >
   <p>Are you sure you want to delete this item?</p>
 </Dialog>
 ```
 
-<StorybookEmbed id="prokodo-common-dialog--default" height={380} />
-
+<StorybookEmbed id="prokodo-feedback-dialog--default" height={380} />
 
 ---
 
 ## Import
 
 ```ts
-import { Dialog } from '@prokodo/ui/dialog'
+import { Dialog } from "@prokodo/ui/dialog"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/dialog.css'
+import "@prokodo/ui/dialog.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `open` | `boolean` | — | ✅ | Whether the dialog is visible. |
-| `onClose` | `() => void` | — | ✅ | Called when the dialog should close (ESC / backdrop click). |
-| `children` | `ReactNode` | — | ✅ | Dialog body content. |
-| `title` | `string` | — | — | Dialog title shown in the header. |
-| `size` | `"sm" \| "md" \| "lg" \| "fullscreen"` | `"md"` | — | Dialog width variant. |
-| `closeOnBackdrop` | `boolean` | `true` | — | Close when clicking the backdrop. |
-| `showClose` | `boolean` | `true` | — | Render an explicit close (×) button. |
-| `className` | `string` | — | — | CSS class on the dialog panel. |
+| Prop                   | Type                                                                                   | Default   | Required | Description                                                                           |
+| ---------------------- | -------------------------------------------------------------------------------------- | --------- | -------- | ------------------------------------------------------------------------------------- |
+| `open`                 | `boolean`                                                                              | —         | —        | Controls dialog visibility.                                                           |
+| `title`                | `string`                                                                               | —         | —        | Dialog title text.                                                                    |
+| `titleProps`           | `HeadlineProps`                                                                        | —         | —        | Props forwarded to the title Headline component.                                      |
+| `hideTitle`            | `boolean`                                                                              | `false`   | —        | Visually hide the title (still accessible).                                           |
+| `hideCloseButton`      | `boolean`                                                                              | `false`   | —        | Hide the default close button.                                                        |
+| `height`               | `number \| string`                                                                     | —         | —        | Fixed height for the dialog content area.                                             |
+| `fullScreen`           | `boolean`                                                                              | `false`   | —        | Render dialog as full-screen overlay.                                                 |
+| `scroll`               | `"paper" \| "body"`                                                                    | `"paper"` | —        | Scroll behaviour: `"paper"` scrolls content inside dialog; `"body"` scrolls the page. |
+| `closeOnBackdropClick` | `boolean`                                                                              | `true`    | —        | Close when clicking the backdrop.                                                     |
+| `actions`              | `DialogAction[]`                                                                       | —         | —        | Action buttons rendered in the dialog footer.                                         |
+| `renderHeader`         | `() => ReactNode`                                                                      | —         | —        | Custom header render function.                                                        |
+| `contentProps`         | `object`                                                                               | —         | —        | Props forwarded to the content wrapper element.                                       |
+| `wrapperProps`         | `object`                                                                               | —         | —        | Props forwarded to the outer dialog wrapper.                                          |
+| `translations`         | `DialogTranslations`                                                                   | —         | —        | Override default label strings (close button, etc.).                                  |
+| `onClose`              | `() => void`                                                                           | —         | —        | Close button click handler.                                                           |
+| `onChange`             | `(event: unknown, reason: "backdropClick" \| "escapeKeyDown", state: boolean) => void` | —         | —        | Called on any open-state change with reason and new state.                            |
+| `ref`                  | `Ref<DialogRef>`                                                                       | —         | —        | Imperative ref for programmatic `openDialog` / `closeDialog` control.                 |
+| `className`            | `string`                                                                               | —         | —        | CSS class on root element.                                                            |
 
 > See [`src/components/dialog/Dialog.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/dialog/Dialog.model.ts) for the full `DialogProps` type.
 
 ---
+
+## Design Tokens
+
+Customise `Dialog` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                   | Default                      | Description             |
+| ----------------------- | ---------------------------- | ----------------------- |
+| `--pk-dialog-bg`        | `var(--pk-color-surface)`    | Dialog background       |
+| `--pk-dialog-fg`        | `var(--pk-color-fg)`         | Dialog text color       |
+| `--pk-dialog-radius`    | `var(--pk-radius-md)`        | Dialog border-radius    |
+| `--pk-dialog-shadow`    | `var(--pk-shadow-lg)`        | Dialog box-shadow       |
+| `--pk-dialog-padding-x` | `var(--pk-space-lg)`         | Horizontal padding      |
+| `--pk-dialog-padding-y` | `var(--pk-space-xl)`         | Vertical padding        |
+| `--pk-dialog-header-fg` | `var(--pk-color-fg)`         | Header text color       |
+| `--pk-dialog-close-fg`  | `var(--pk-palette-grey-500)` | Close button icon color |
+
+> `--pk-z-modal` (`1301`) and `--pk-z-modal-backdrop` (`1300`) are global semantic tokens that control Dialog stacking and can be overridden on `:root`.
 
 ## AIC Note
 
 Use the standard import path in application code:
 
 ```ts
-import { Dialog } from '@prokodo/ui/dialog'
+import { Dialog } from "@prokodo/ui/dialog"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -79,16 +103,16 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **2.1.1** | **Keyboard** (A) | ✅ Fulfilled | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.1.2** | **No Keyboard Trap** (A) | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys. |
-| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
-| **2.4.7** | **Focus Visible** (AA) | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme. |
-| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
-| **4.1.3** | **Status Messages** (AA) | 🔍 Manual review | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+| Criterion  | Name                               | Status           | Note                                                                                                                                       |
+| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **2.1.1**  | **Keyboard** (A)                   | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                                  |
+| **2.1.2**  | **No Keyboard Trap** (A)           | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys.               |
+| **2.4.3**  | **Focus Order** (A)                | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                                |
+| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.                 |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                             |
+| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.            |
+| **4.1.3**  | **Status Messages** (AA)           | 🔍 Manual review | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
 
 > **Test coverage:** 1 jest-axe assertion(s) across 4 test file(s) · 7 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

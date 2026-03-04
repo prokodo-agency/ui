@@ -1,15 +1,33 @@
 import { Quote } from "./Quote"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Quote",
+  title: "prokodo/content/Quote",
   component: Quote,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {},
+  argTypes: {
+    color: {
+      control: "select",
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "error",
+        "white",
+      ],
+      description:
+        "Color token applied to sub-headline, avatar, and card border.",
+      table: { defaultValue: { summary: "primary" } },
+    },
+    className: { table: { disable: true } },
+  },
 } satisfies Meta<typeof Quote>
 
 export default meta

@@ -35,35 +35,35 @@ describe("Snackbar", () => {
     cy.checkAccessibility()
   })
 
-  it("error snackbar has no accessibility violations", () => {
-    cy.mount(<SnackbarView message="An error occurred" variant="error" />)
+  it("error color has no accessibility violations", () => {
+    cy.mount(<SnackbarView color="error" message="An error occurred" />)
     cy.checkAccessibility()
   })
 
-  it("renders with variant=success", () => {
-    cy.mount(<SnackbarView message="Saved successfully" variant="success" />)
+  it("renders with color=success", () => {
+    cy.mount(<SnackbarView color="success" message="Saved successfully" />)
     cy.contains("Saved successfully").should("be.visible")
   })
 
-  it("renders with variant=warning", () => {
+  it("renders with color=warning", () => {
     cy.mount(
-      <SnackbarView message="Please review your input" variant="warning" />,
+      <SnackbarView color="warning" message="Please review your input" />,
     )
     cy.contains("Please review your input").should("be.visible")
   })
 
-  it("renders with variant=info", () => {
-    cy.mount(<SnackbarView message="New update available" variant="info" />)
+  it("renders with color=info", () => {
+    cy.mount(<SnackbarView color="info" message="New update available" />)
     cy.contains("New update available").should("be.visible")
   })
 
-  it("success variant has no accessibility violations", () => {
-    cy.mount(<SnackbarView message="Record saved" variant="success" />)
+  it("success color has no accessibility violations", () => {
+    cy.mount(<SnackbarView color="success" message="Record saved" />)
     cy.checkAccessibility()
   })
 
-  it("warning variant has no accessibility violations", () => {
-    cy.mount(<SnackbarView message="Low storage" variant="warning" />)
+  it("warning color has no accessibility violations", () => {
+    cy.mount(<SnackbarView color="warning" message="Low storage" />)
     cy.checkAccessibility()
   })
 })

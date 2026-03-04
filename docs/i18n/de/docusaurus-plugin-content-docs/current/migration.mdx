@@ -1,0 +1,270 @@
+---
+id: migration
+title: Migrationsleitfaden
+sidebar_label: Migration
+description: Wichtige Änderungen und schrittweise Anweisung zur Migration auf prokodo UI v1.
+---
+
+# Migrationsleitfaden
+
+## v0 → v1
+
+v1 enthält **keine Änderungen an den Peer-Dependencies** (`react`, `react-dom`, `next` bleiben unberührt), führt jedoch ein neues Token-System, eine angepasste Komponentenarchitektur und geänderte API-Oberflächen für mehrere Formularkomponenten ein.
+
+Laufzeit-Breaking Changes sind minimal – der Großteil der Migrationsarbeit besteht aus typgeprüfbaren Prop-Umbenennungen und der Aktualisierung von CSS-Tokens.
+
+---
+
+### 1. Token-System-Überarbeitung
+
+Alle Design-Tokens wurden auf den `--pk-*`-Namespace verschoben. Wenn du v0-Tokens oder undokumentierte interne Klassen überschrieben hast, aktualisiere sie bitte.
+
+**Einbinden des neuen Token-Stylesheets:**
+
+```ts
+// alt  – nicht mehr vorhanden
+import "@prokodo/ui/variables.css"
+
+// neu
+import "@prokodo/ui/theme.css"
+```
+
+Das Stylesheet exportiert semantische Tokens (`--pk-color-brand`, `--pk-space-lg`, `--pk-radius-pill` etc.) und komponentenbezogene Tokens (`--pk-input-bg`, `--pk-select-radius` usw.). Für die vollständige Referenz siehe [Design Tokens](/docs/design-tokens).
+
+---
+
+### 2. DatePicker — nativer → benutzerdefinierter Picker
+
+Der DatePicker rendert kein natives `<input type="date">` mehr. Er rendert jetzt ein `<input type="text">` als Trigger, das einen barrierefreien Kalender-Dialog öffnet.
+
+**Was sich geändert hat:**
+
+| Aspekt       | v0                                      | v1                                                |
+| ------------ | --------------------------------------- | ------------------------------------------------- |
+| Input-Typ    | `type="date"` / `type="datetime-local"` | `type="text"`                                     |
+| Zeit-Eingabe | Nativer Browser-Picker                  | Eigen implementiertes Stunden-/Minuten-`<select>` |
+| Bibliothek   | –                                       | `dayjs` (neue Peer-Dependency)                    |
+
+**Migration von `dayjs`:** v1 benötigt `dayjs` als Peer-Dependency:
+
+```bash
+pnpm add dayjs
+```
+
+**Prop-Änderungen:**
+
+```tsx
+// v0
+;<DatePicker value="2024-03-15" onChange={fn} minDate="2024-01-01" />
+
+// v1
+import dayjs from "dayjs"
+;<DatePicker
+  value={dayjs("2024-03-15")}
+  onChange={fn}
+  minDate={dayjs("2024-01-01")}
+  format="DD/MM/YYYY"
+/>
+```
+
+**Aufnahme in automatisierte Tests:** Testet, die vorher `input[type='date']` abgefragt haben, müssen auf `input[type='text']` umgestellt werden.
+
+---
+
+### 3. Select — `options` → `items` umbenannt
+
+Die Prop zum Übergeben von Optionen wurde von `options` in `items` umbenannt:
+
+```tsx
+// v0
+<Select options={[{ label: "Apple", value: "apple" }]} />
+
+// v1
+<Select items={[{ label: "Apple", value: "apple" }]} />
+```
+
+Außerdem wurde ein `label`-Prop für gültige Floating-Label-Unterstützung eingeführt:
+
+```tsx
+<Select name="fruit" label="Feld auswählen" items={items} />
+```
+
+---
+
+### 4. Floating Label-Muster
+
+Input, Select, Autocomplete und DatePicker nutzen jetzt alle das Floating-Label-Muster. Das Label ist als `placeholder`-ähnliches Label implementiert, das nach oben schwebt, wenn das Feld fokussiert ist oder einen Wert hat.
+
+Wenn du vorher ein manuell verknüpftes `<label>` neben dem Input bereitgestellt hast, entferne es und nutze stattdessen die `label`-Prop:
+
+```tsx
+// v0
+<label htmlFor="email">E-Mail</label>
+<Input id="email" name="email" />
+
+// v1
+<Input name="email" label="E-Mail" />
+```
+
+---
+
+### 5. InputOTP — Island-Architektur
+
+`InputOTP` wird jetzt über die Island-Architektur geliefert. Das Export-Shape aus dem Root ist unverändert – aber intern wechselt die Komponente auf Basis der übergebenen Props automatisch zwischen Server-Render und Client-Render.
+
+Für die meisten Consumer ist keine Änderung erforderlich. Wenn du jedoch direkt `InputOTPClient` oder `InputOTPServer` importiert hast, sind die neuen Exporte:
+
+```ts
+import { InputOTP } from "@prokodo/ui/input-otp" // Empfohlen: Island
+import { InputOTPClient } from "@prokodo/ui/input-otp" // Nur Client erzwingen
+```
+
+---
+
+### 6. Island-Architektur
+
+v1 führt das Island-Muster für ausgewählte Komponenten ein. Die Standard-Export-Pfade (`@prokodo/ui/input-otp`, etc.) liefern die Island-Komponente, die je nach Props server- oder client-seitig rendert. Die meisten Consumer müssen nichts ändern.
+
+---
+
+### 7. Komponenten-CSS Custom Properties
+
+Alle Komponenten akzeptieren jetzt CSS Custom Properties auf Scope-Basis. Beispiel:
+
+```css
+/* DatePicker Kalender-Eckradius überschreiben */
+.mein-formular {
+  --pk-dp-dialog-radius: 8px;
+}
+
+/* Input-Hintergrund auf einer bestimmten Seite anpassen */
+.anmelde-seite {
+  --pk-input-bg: var(--pk-color-surface-raised);
+}
+```
+
+Für alle verfügbaren Tokens: [Design Tokens](/docs/design-tokens).
+
+---
+
+### 8. `variant` → `color` Prop-Umbenennung
+
+Das `variant`-Prop wurde in einer Vielzahl von Komponenten in `color` umbenannt. Dies ist eine TypeScript-Breaking-Change: der Compiler erkennt betroffene Stellen beim nächsten Typencheck. Das Laufzeitverhalten ist nach der Umbenennung identisch.
+
+**Betroffene Komponenten:**
+
+| Komponente                         | Alte Prop                     | Neue Prop                 |
+| ---------------------------------- | ----------------------------- | ------------------------- |
+| `Accordion`                        | `variant`                     | `color`                   |
+| `Card`                             | `variant`                     | `color`                   |
+| `Form`                             | `variant`                     | `color`                   |
+| `Headline`                         | `variant`                     | `color`                   |
+| `Link`                             | `variant`                     | `color`                   |
+| `List` (alle Item- und Root-Typen) | `variant`                     | `color`                   |
+| `Quote`                            | `variant`                     | `color`                   |
+| `RichText`                         | `variant`                     | `color`                   |
+| `Snackbar`                         | `variant` (`SnackbarVariant`) | `color` (`SnackbarColor`) |
+| `Switch`                           | `variant`                     | `color`                   |
+| `Teaser`                           | `variant`                     | `color`                   |
+
+**Beispiel:**
+
+```tsx
+// v0
+<Accordion variant="primary" />
+<Card variant="secondary" />
+<Snackbar variant="warning" message="Gespeichert" />
+<Switch variant="primary" />
+
+// v1
+<Accordion color="primary" />
+<Card color="secondary" />
+<Snackbar color="warning" message="Gespeichert" />
+<Switch color="primary" />
+```
+
+`SnackbarVariant` bleibt als veralteter Alias von `SnackbarColor` exportiert, um die Migration zu erleichtern, und wird in einer zukünftigen Version entfernt.
+
+---
+
+### 9. SideNav — `sections`-API
+
+`SideNav` unterstützt jetzt strukturierte Navigationsbereiche zusätzlich zum flachen `items`-Array.
+
+**Was sich geändert hat:**
+
+- `items` ist jetzt **optional** (vorher erforderlich).
+- Neue `sections`-Prop akzeptiert ein Array von `SideNavSection`-Objekten, jede mit optionalem `headline`, `description` und eigenem `items`.
+
+Wer bisher eine flache Liste übergeben hat, muss nichts ändern. Die neue `sections`-Prop ist additiv.
+
+```tsx
+// v0 — funktioniert weiterhin
+<SideNav items={navItems} />
+
+// v1 — strukturierte Bereiche (neu)
+<SideNav
+  sections={[
+    { headline: "Allgemein", items: generalItems },
+    { headline: "Admin", items: adminItems },
+  ]}
+/>
+```
+
+---
+
+### 10. Dark Mode
+
+v1 liefert ein Dunkel-Theme-Stylesheet. Aktiviere es, indem du `data-theme="dark"` auf `<html>` (oder einem beliebigen Wrapper-Element) setzt. Die Klasse `.pk-theme-dark` wird ebenfalls unterstützt.
+
+```html
+<!-- Gesamte Seite im Dark Mode -->
+<html data-theme="dark">
+  <!-- Eingeschränkter Dark-Mode-Bereich -->
+  <div data-theme="dark">…</div>
+</html>
+```
+
+Es sind keine Import-Änderungen erforderlich — die Dark-Tokens sind in `@prokodo/ui/theme.css` zusammen mit dem Standard-Theme gebündelt.
+
+---
+
+### 11. Input — Trailing Icon
+
+`Input` akzeptiert jetzt optional ein Icon auf der rechten Seite des Feldes:
+
+```tsx
+<Input
+  name="suche"
+  label="Suche"
+  trailingIcon="search-01"
+  trailingIconLabel="Suche leeren"
+  onTrailingIconClick={() => setValue("")}
+/>
+```
+
+Diese Änderung ist additiv — bestehende Usages müssen nicht angepasst werden.
+
+---
+
+### 12. Neue komponentenbezogene CSS-Exporte
+
+Drei Komponenten liefern jetzt zusätzlich zur JS-Bundle eine eigenständige CSS-Datei. Importiere diese, wenn du Komponentenstyles separat lädst (z. B. in einem App-Shell oder SSR-Head):
+
+```ts
+import "@prokodo/ui/calendly.css"
+import "@prokodo/ui/datePicker.css"
+import "@prokodo/ui/map.css"
+```
+
+Diese Imports sind optional und nur erforderlich, wenn du die oben genannten Komponenten verwendest, ohne `@prokodo/ui/theme.css` in deinem Entry Point zu importieren.
+
+---
+
+### Peer-Dependencies
+
+Die Peer-Dependencies aus v0 bleiben unverändert (`react ≥ 18`, `react-dom ≥ 18`, `next ≥ 14`). Neu hinzugekommen ist:
+
+| Paket   | Erforderliche Version |
+| ------- | --------------------- |
+| `dayjs` | `^1.11`               |

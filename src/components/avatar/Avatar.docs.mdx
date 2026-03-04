@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as AvatarStories from "./Avatar.stories"
 
 <Meta of={AvatarStories} />
@@ -30,7 +30,7 @@ Use `Avatar` to represent a user, organisation, or entity visually — profile h
 - `image` maps to `ImageProps` — pass `priority` for above-fold avatars
 - `redirect` maps to `LinkProps` and wraps the avatar in a link
 - `iconOverride` replaces the default fallback icon with a custom `ReactNode`
-- `variant` applies the design-system colour token
+- `color` applies the design-system colour token
 
 ## ✅ Do
 
@@ -43,6 +43,21 @@ Use `Avatar` to represent a user, organisation, or entity visually — profile h
 - Don't use `Avatar` for logos or brand marks — use `Image` directly
 - Don't omit `alt` when the image conveys the user's identity
 - Don't pass very large pixel sizes without also providing an appropriately sized image source
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                | Purpose                                                    |
+| -------------------- | ---------------------------------------------------------- |
+| `--pk-color-brand`   | Primary background fill                                    |
+| `--pk-color-accent`  | Secondary background fill                                  |
+| `--pk-color-success` | Success background fill                                    |
+| `--pk-color-warning` | Warning background fill                                    |
+| `--pk-color-error`   | Error background fill                                      |
+| `--pk-color-fg`      | Fallback icon color for `color="inherit"` (dark mode safe) |
+| `--pk-palette-white` | White avatar background                                    |
+| `--pk-shadow-sm`     | Drop shadow (size `lg` and above)                          |
 
 ## Examples
 

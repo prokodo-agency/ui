@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as ProgressBarStories from "./ProgressBar.stories"
 
 <Meta of={ProgressBarStories} />
@@ -35,11 +35,53 @@ Use `ProgressBar` to communicate deterministic progress — file uploads, multi-
   <Story of={ProgressBarStories.Default} />
 </Canvas>
 
-### Animated progress
+### Primary
 
 <Canvas>
-  <Story of={ProgressBarStories.AnimatedProgress} />
+  <Story of={ProgressBarStories.Primary} />
 </Canvas>
+
+### Success
+
+<Canvas>
+  <Story of={ProgressBarStories.Success} />
+</Canvas>
+
+### Error
+
+<Canvas>
+  <Story of={ProgressBarStories.Error} />
+</Canvas>
+
+### Warning
+
+<Canvas>
+  <Story of={ProgressBarStories.Warning} />
+</Canvas>
+
+### Info
+
+<Canvas>
+  <Story of={ProgressBarStories.Info} />
+</Canvas>
+
+### Indeterminate
+
+<Canvas>
+  <Story of={ProgressBarStories.Indeterminate} />
+</Canvas>
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                         | Default                          | Description         |
+| ----------------------------- | -------------------------------- | ------------------- |
+| `--pk-progressbar-track-bg`   | `var(--pk-color-surface-raised)` | Track background    |
+| `--pk-progressbar-radius`     | `0.75rem`                        | Track border-radius |
+| `--pk-progressbar-height`     | `1rem`                           | Track height        |
+| `--pk-progressbar-shadow`     | `var(--elevation-2)`             | Track box-shadow    |
+| `--pk-progressbar-label-size` | `0.875rem`                       | Label font-size     |
 
 ### Props
 

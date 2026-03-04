@@ -208,4 +208,42 @@ describe("SliderView – additional coverage", () => {
     // eslint-disable-next-line testing-library/no-container
     expect(container.querySelector("input[type='range']")).toBeInTheDocument()
   })
+
+  // -------------------------------------------------------------------------
+  // Color prop forwarding
+  // -------------------------------------------------------------------------
+  describe("color prop", () => {
+    it("forwards color to Label as a modifier class", () => {
+      render(
+        <SliderView
+          {...sliderInternalProps}
+          color="warning"
+          id="sl-color"
+          internalValue={50}
+          label="Volume"
+          max={100}
+          min={0}
+        />,
+      )
+      expect(
+        document.querySelector(".prokodo-Label--warning"),
+      ).toBeInTheDocument()
+    })
+
+    it("does not add a color class when color is not provided", () => {
+      render(
+        <SliderView
+          {...sliderInternalProps}
+          id="sl-no-color"
+          internalValue={50}
+          label="Volume"
+          max={100}
+          min={0}
+        />,
+      )
+      expect(
+        document.querySelector("[class*='Label--']"),
+      ).not.toBeInTheDocument()
+    })
+  })
 })

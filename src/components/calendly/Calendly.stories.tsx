@@ -1,10 +1,10 @@
 import { Calendly } from "@/components/calendly"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Story meta ------------------------------------ */
 const meta = {
-  title: "prokodo/service/Calendly",
+  title: "prokodo/media/Calendly",
   component: Calendly,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
@@ -20,13 +20,14 @@ const meta = {
       description: "Props forwarded to `<Animated>` wrapper.",
       table: { type: { summary: "AnimatedProps" } },
     },
-    /* ------- color ---------------------------------------- */
-    color: {
+    /* ------- colors --------------------------------------- */
+    colors: {
       control: "object",
-      description: "Hex colors for text, button & background.",
+      description:
+        "Hex color overrides forwarded to the Calendly widget (text, button, background).",
       table: {
         type: {
-          summary: "{ text?: string button?: string background?: string }",
+          summary: "{ text?: string; button?: string; background?: string }",
         },
       },
     },

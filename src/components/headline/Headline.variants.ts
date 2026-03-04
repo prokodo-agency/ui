@@ -4,5 +4,8 @@ export const POSSIBLE_HIGHLIGHTS = [
   "inherit",
   "primary",
   "secondary",
-  "white",
+  "success",
+  "warning",
+  "error",
+  "info",
 ] as HeadlineVariant[]

@@ -51,8 +51,8 @@ export type TeaserAlign = "left" | "center" | "right"
 export type TeaserProps = {
   /** Root class name. */
   className?: string
-  /** Visual variant token. */
-  variant?: TeaserVariant
+  /** Visual color token. */
+  color?: TeaserVariant
   /** Text alignment. */
   align?: TeaserAlign
   /** Clamp content lines (optional). */

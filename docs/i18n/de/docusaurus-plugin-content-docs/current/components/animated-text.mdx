@@ -9,26 +9,23 @@ description: Text component with character-by-character or word-by-word entrance
 
 `AnimatedText` rendert Text mit gestaffelten Einblend-Animationen auf Zeichen- oder Wortebene, umgesetzt mit CSS-Transitions und prokodo Design-Tokens.
 
-
 ---
 
 ## Übersicht
 
 ```tsx
-import { AnimatedText } from '@prokodo/ui/animated-text'
-
-<AnimatedText text="Hello, World!" mode="word" />
+import { AnimatedText } from "@prokodo/ui/animated-text"
+;<AnimatedText delay={100}>Hello, World!</AnimatedText>
 ```
 
-<StorybookEmbed id="prokodo-common-animatedtext--default" />
-
+<StorybookEmbed id="prokodo-content-animatedtext--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { AnimatedText } from '@prokodo/ui/animated-text'
+import { AnimatedText } from "@prokodo/ui/animated-text"
 ```
 
 Styling is handled via design tokens — no component CSS import required beyond `@prokodo/ui/theme.css`.
@@ -37,33 +34,39 @@ Styling is handled via design tokens — no component CSS import required beyond
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `text` | `string` | — | ✅ | Text content to animate. |
-| `mode` | `"char" \| "word"` | `"word"` | — | Unit of animation (character or word). |
-| `stagger` | `number` | `30` | — | Delay between each animated unit (ms). |
-| `animated` | `boolean` | `true` | — | Deaktiviere animation (rendert plain text). |
-| `className` | `string` | — | — | CSS-Klasse am Root-Element. |
+| Prop        | Typ       | Standard | Pflicht | Beschreibung                                        |
+| ----------- | --------- | -------- | ------- | --------------------------------------------------- |
+| `children`  | `string`  | —        | ✅      | Textinhalt, der zeichenweise animiert wird.         |
+| `speed`     | `number`  | —        | —       | Pause zwischen jedem Zeichen in Millisekunden (ms). |
+| `delay`     | `number`  | —        | —       | Startverzögerung der Animation in ms.               |
+| `disabled`  | `boolean` | `false`  | —       | Animation deaktivieren (Text sofort anzeigen).      |
+| `className` | `string`  | —        | —       | CSS-Klasse am Root-Element.                         |
 
 > Siehe [`src/components/animatedText/AnimatedText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animatedText/AnimatedText.model.ts) für den vollständigen `AnimatedTextProps`-Typ.
 
 ---
 
+## Design-Tokens
+
+`AnimatedText` definiert und konsumiert keine CSS Custom Properties. Das Animationsverhalten wird von `Animated` vererbt, es werden keine eigenen Token-Referenzen ergänzt.
+
+---
+
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.1.1** | **Nicht-Text-Inhalt** (A) | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
-| **2.2.2** | **Pausieren, Beenden, Ausblenden** (A) | 🔍 Manuell prüfen | Animationen oder automatisch rotierende Inhalte, die länger als 5 s laufen, müssen einen Pause-/Stopp-Schalter bieten. |
-| **2.3.1** | **Dreimaliges Blitzen oder unterhalb des Grenzwerts** (A) | 🔍 Manuell prüfen | Animierte Inhalte dürfen nicht mehr als 3-mal pro Sekunde flackern. |
-| **4.1.2** | **Name, Rolle, Wert** (A) | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| Kriterium | Bezeichnung                                               | Status            | Hinweis                                                                                                                                                  |
+| --------- | --------------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Nicht-Text-Inhalt** (A)                                 | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **2.2.2** | **Pausieren, Beenden, Ausblenden** (A)                    | 🔍 Manuell prüfen | Animationen oder automatisch rotierende Inhalte, die länger als 5 s laufen, müssen einen Pause-/Stopp-Schalter bieten.                                   |
+| **2.3.1** | **Dreimaliges Blitzen oder unterhalb des Grenzwerts** (A) | 🔍 Manuell prüfen | Animierte Inhalte dürfen nicht mehr als 3-mal pro Sekunde flackern.                                                                                      |
+| **4.1.2** | **Name, Rolle, Wert** (A)                                 | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                     |
 
 > **Testabdeckung:** 1 jest-axe-Assertion(s) in 5 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
 
 ## Storybook
 
-👉 [AnimatedText in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-common-animatedtext--docs)
+👉 [AnimatedText in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-animatedtext--docs)
 
 ---
 

@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as DynamicListStories from "./DynamicList.stories"
 
 <Meta of={DynamicListStories} />
@@ -20,6 +20,16 @@ Use `DynamicList` when the number of values in a form field is unknown at design
 - Delete buttons include an accessible label via `iconProps.label` or `title`
 - Error and helper text are linked via `aria-describedby`
 - Keyboard-navigable: all Add/Delete buttons are standard `<button>` elements
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                         | Default                      | Description            |
+| ----------------------------- | ---------------------------- | ---------------------- |
+| `--pk-dynamic-list-gap`       | `var(--pk-space-lg)`         | Gap between list items |
+| `--pk-dynamic-list-helper-fg` | `var(--pk-palette-grey-300)` | Helper text colour     |
+| `--pk-dynamic-list-error-fg`  | `var(--pk-color-error)`      | Error text colour      |
 
 ## ✅ Do
 

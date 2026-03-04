@@ -3,9 +3,9 @@ import { localizeDate, type LocalizedDate } from "@/helpers/date"
 import { isNumber, isString } from "@/helpers/validations"
 
 import { Animated } from "../animated"
-import { Button } from "../button"
+import { Button, type ButtonProps } from "../button"
 import { Card, type CardProps } from "../card"
-import { Headline } from "../headline"
+import { Headline, type HeadlineProps } from "../headline"
 import { RichText } from "../rich-text"
 
 import styles from "./PostItem.module.scss"
@@ -41,17 +41,19 @@ export function PostItemView(
     // public opts
     structuredData = true,
     animate = true,
+    color,
     ...rest
   } = props
 
-  // Merge Card props without widening variant to string
+  // Merge Card props without widening color to string
   const cardMerged = {
     ...(componentsProps?.card as Partial<CardProps>),
     ...(rest as Partial<CardProps>),
-    // keep variant narrow; if none is provided, let Card default handle it
-    variant: (componentsProps?.card?.variant ??
-      (rest as Partial<CardProps>)?.variant ??
-      undefined) as CardProps["variant"],
+    // keep color narrow; if none is provided, let Card default handle it
+    color: (componentsProps?.card?.color ??
+      (rest as Partial<CardProps>)?.color ??
+      (color as CardProps["color"] | undefined) ??
+      undefined) as CardProps["color"],
   }
   const ArticleWrapper = animate
     ? Animated
@@ -99,6 +101,14 @@ export function PostItemView(
                     .filter(Boolean)
                     .join(" "),
                 )}
+                color={
+                  title?.color ??
+                  componentsProps?.headline?.color ??
+                  (color && color !== "white"
+                    ? (color as HeadlineProps["color"])
+                    : /* istanbul ignore next */ undefined) ??
+                  "inherit"
+                }
               >
                 {title.content}
               </Headline>
@@ -190,6 +200,13 @@ export function PostItemView(
                     .filter(Boolean)
                     .join(" "),
                 )}
+                color={
+                  button?.color ??
+                  componentsProps?.button?.color ??
+                  (color && color !== "white"
+                    ? (color as ButtonProps["color"])
+                    : /* istanbul ignore next */ undefined)
+                }
                 contentClassName={bem(
                   "button__content",
                   undefined,

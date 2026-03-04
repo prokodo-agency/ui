@@ -13,14 +13,14 @@
  *   node scripts/check-translation-drift.mjs
  */
 
-import { execSync } from 'node:child_process'
-import { existsSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
-import { join, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { execSync } from "node:child_process"
+import { existsSync } from "node:fs"
+import { readFile } from "node:fs/promises"
+import { join, dirname } from "node:path"
+import { fileURLToPath } from "node:url"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const ROOT = join(__dirname, '..')
+const ROOT = join(__dirname, "..")
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -32,7 +32,7 @@ function gitMtime(filePath) {
   try {
     const out = execSync(`git log -1 --format=%ct -- "${filePath}"`, {
       cwd: ROOT,
-      stdio: ['pipe', 'pipe', 'pipe'],
+      stdio: ["pipe", "pipe", "pipe"],
     })
       .toString()
       .trim()
@@ -43,24 +43,24 @@ function gitMtime(filePath) {
 }
 
 /** ANSI helpers */
-const yellow = (s) => `\x1b[33m${s}\x1b[0m`
-const red = (s) => `\x1b[31m${s}\x1b[0m`
-const green = (s) => `\x1b[32m${s}\x1b[0m`
-const bold = (s) => `\x1b[1m${s}\x1b[0m`
+const yellow = s => `\x1b[33m${s}\x1b[0m`
+const red = s => `\x1b[31m${s}\x1b[0m`
+const green = s => `\x1b[32m${s}\x1b[0m`
+const bold = s => `\x1b[1m${s}\x1b[0m`
 
 // ── load component list ───────────────────────────────────────────────────────
 
-const componentsPath = join(ROOT, 'src', 'components.json')
-const components = JSON.parse(await readFile(componentsPath, 'utf8'))
+const componentsPath = join(ROOT, "src", "components.json")
+const components = JSON.parse(await readFile(componentsPath, "utf8"))
 
-const EN_DIR = join(ROOT, 'docs', 'components')
+const EN_DIR = join(ROOT, "docs", "components")
 const DE_DIR = join(
   ROOT,
-  'i18n',
-  'de',
-  'docusaurus-plugin-content-docs',
-  'current',
-  'components'
+  "i18n",
+  "de",
+  "docusaurus-plugin-content-docs",
+  "current",
+  "components",
 )
 
 // ── check each component ──────────────────────────────────────────────────────
@@ -68,7 +68,7 @@ const DE_DIR = join(
 let warnings = 0
 let missing = 0
 
-console.log(bold('\n🔍  Translation drift check\n'))
+console.log(bold("\n🔍  Translation drift check\n"))
 
 for (const { slug } of components) {
   const enFile = join(EN_DIR, `${slug}.mdx`)
@@ -95,7 +95,7 @@ for (const { slug } of components) {
     const deDate = new Date(deMtime * 1000).toISOString().slice(0, 10)
     console.log(
       yellow(`  ⚠ STALE   de/${slug}.mdx`) +
-        `  (EN: ${enDate}  DE: ${deDate})`
+        `  (EN: ${enDate}  DE: ${deDate})`,
     )
     warnings++
   }
@@ -105,10 +105,9 @@ for (const { slug } of components) {
 
 console.log()
 if (missing === 0 && warnings === 0) {
-  console.log(green('  ✓ All DE translations are up to date.\n'))
+  console.log(green("  ✓ All DE translations are up to date.\n"))
 } else {
-  if (missing > 0)
-    console.log(red(`  ${missing} translation(s) are missing.`))
+  if (missing > 0) console.log(red(`  ${missing} translation(s) are missing.`))
   if (warnings > 0)
     console.log(yellow(`  ${warnings} translation(s) are stale.`))
   console.log()

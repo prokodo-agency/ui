@@ -1,17 +1,17 @@
-import type { ReactNode } from 'react';
-import { useState, useEffect } from 'react';
+import type { ReactNode } from "react"
+import { useState, useEffect } from "react"
 
-import styles from './StorybookEmbed.module.css';
-import { STORYBOOK_URL } from '../constants';
-import { withStorybookTheme } from '../utils/storybookThemeUrl';
+import styles from "./StorybookEmbed.module.css"
+import { STORYBOOK_URL } from "../constants"
+import { withStorybookTheme } from "../utils/storybookThemeUrl"
 
 interface StorybookEmbedProps {
   /** Full Storybook story ID, e.g. "prokodo-common-button--default" */
-  id: string;
+  id: string
   /** iframe height in pixels (default 300) */
-  height?: number;
+  height?: number
   /** Accessible title for the iframe */
-  title?: string;
+  title?: string
 }
 
 /**
@@ -22,23 +22,29 @@ interface StorybookEmbedProps {
 export function StorybookEmbed({
   id,
   height = 300,
-  title = 'Live component preview',
+  title = "Live component preview",
 }: StorybookEmbedProps): ReactNode {
   // Start with 'light'; useEffect corrects from DOM and tracks changes.
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<"light" | "dark">("light")
 
   useEffect(() => {
-    const root = document.documentElement;
+    const root = document.documentElement
     const read = () =>
-      setTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
-    read();
-    const observer = new MutationObserver(read);
-    observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
-  }, []);
+      setTheme(root.getAttribute("data-theme") === "dark" ? "dark" : "light")
+    read()
+    const observer = new MutationObserver(read)
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    })
+    return () => observer.disconnect()
+  }, [])
 
-  const src = `${STORYBOOK_URL}/iframe.html?id=${id}&viewMode=story&globals=theme:${theme}`;
-  const storyUrl = withStorybookTheme(`${STORYBOOK_URL}/?path=/story/${id}`, theme);
+  const src = `${STORYBOOK_URL}/iframe.html?id=${id}&viewMode=story&globals=theme:${theme}`
+  const storyUrl = withStorybookTheme(
+    `${STORYBOOK_URL}/?path=/story/${id}`,
+    theme,
+  )
 
   return (
     <div className={styles.wrapper}>
@@ -67,5 +73,5 @@ export function StorybookEmbed({
         allow="clipboard-write"
       />
     </div>
-  );
+  )
 }

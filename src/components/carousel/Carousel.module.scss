@@ -1,10 +1,11 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
+
+// Component tokens: --pk-carousel-overlay-bg, --pk-carousel-dot-active-bg,
+//   --pk-carousel-button-padding, --pk-carousel-dots-mt, --pk-carousel-controls-mt
 
 @include define-block("Carousel") {
     position: relative;
@@ -35,7 +36,7 @@
         left: 0;
         opacity: 1;
         visibility: visible;
-        background-color: rgba($light--grey-800, 0.7);
+        background-color: var(--pk-carousel-overlay-bg);
         transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         z-index: 10;
 
@@ -59,6 +60,7 @@
         width: 100%;
         align-items: center;
         justify-content: space-between;
+        margin-top: var(--pk-carousel-controls-mt);
         opacity: 0;
 
         @include screenLargerThan($screen-md) {
@@ -67,12 +69,15 @@
     }
 
     &__button {
-        padding: $space-xs;
+        padding: var(--pk-carousel-button-padding) !important;
+        line-height: 1 !important;
+        --pk-button-padding-x: var(--pk-carousel-button-padding);
+        --pk-button-padding-y: var(--pk-carousel-button-padding);
     }
 
     &__dots {
         display: flex;
-        margin: $space-2xl auto 0 auto;
+        margin: var(--pk-carousel-dots-mt) auto 0 auto;
         text-align: center;
 
         &__dot {
@@ -104,7 +109,7 @@
             }
 
             &--is-active {
-                background-color: $white;
+                background-color: var(--pk-carousel-dot-active-bg);
             }
 
             @include screenSmallerThan($screen-xl) {

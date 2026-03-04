@@ -1,34 +1,185 @@
-@use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+
+// Component tokens: --pk-otp-gap, --pk-otp-cell-size, --pk-otp-cell-radius,
+//   --pk-otp-gradient-from, --pk-otp-gradient-to
 
 @include define-block("InputOTP") {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  // ── Variant overrides ──────────────────────────────────────────────
+  // Cascade Input token overrides so every digit cell inherits the
+  // correct palette without needing explicit per-cell variant props.
+  &--primary {
+    --pk-otp-gradient-from:      var(--pk-color-brand);
+    --pk-otp-gradient-to:        var(--pk-color-accent);
+    --pk-input-gradient-from:    var(--pk-color-brand);
+    --pk-input-gradient-to:      var(--pk-color-accent);
+    --pk-input-border-focus:     var(--pk-color-brand);
+    --pk-input-label-focused-fg: var(--pk-color-brand);
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-brand) 30%, transparent);
+  }
+  &--secondary {
+    --pk-otp-gradient-from:      var(--pk-color-accent);
+    --pk-otp-gradient-to:        var(--pk-color-brand);
+    --pk-input-gradient-from:    var(--pk-color-accent);
+    --pk-input-gradient-to:      var(--pk-color-brand);
+    --pk-input-border-focus:     var(--pk-color-accent);
+    --pk-input-label-focused-fg: var(--pk-color-accent);
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-accent) 30%, transparent);
+  }
+  &--success {
+    --pk-otp-gradient-from:      var(--pk-color-success);
+    --pk-otp-gradient-to:        #10CCB8;
+    --pk-input-gradient-from:    var(--pk-color-success);
+    --pk-input-gradient-to:      #10CCB8;
+    --pk-input-border-focus:     var(--pk-color-success);
+    --pk-input-label-focused-fg: var(--pk-color-success);
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-success) 30%, transparent);
+  }
+  &--warning {
+    --pk-otp-gradient-from:      var(--pk-color-warning);
+    --pk-otp-gradient-to:        #f7cc6a;
+    --pk-input-gradient-from:    var(--pk-color-warning);
+    --pk-input-gradient-to:      #f7cc6a;
+    --pk-input-border-focus:     var(--pk-color-warning);
+    --pk-input-label-focused-fg: var(--pk-color-warning);
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-warning) 30%, transparent);
+  }
+  &--error {
+    --pk-otp-gradient-from:      var(--pk-color-error);
+    --pk-otp-gradient-to:        #ff6b6b;
+    --pk-input-gradient-from:    var(--pk-color-error);
+    --pk-input-gradient-to:      #ff6b6b;
+    --pk-input-border-focus:     var(--pk-color-error);
+    --pk-input-label-focused-fg: var(--pk-color-error);
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-error) 30%, transparent);
+  }
+  &--info,
+  &--inherit,
+  &--white {
+    --pk-otp-gradient-from:      var(--pk-color-muted);
+    --pk-otp-gradient-to:        var(--pk-color-border);
+    --pk-input-gradient-from:    var(--pk-color-muted);
+    --pk-input-gradient-to:      var(--pk-color-border);
+    --pk-input-border-focus:     var(--pk-color-muted);
+    --pk-input-label-focused-fg: var(--pk-color-muted);
+  }
+
+  // ── Disabled state ──────────────────────────────────────────────────
+  // Mute the gradient ring and dim the whole group.
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    --pk-otp-gradient-from: var(--pk-color-border);
+    --pk-otp-gradient-to:   var(--pk-color-muted);
+  }
+
+  // ── ARIA-hidden text slots ─────────────────────────────────────────
+  &__label,
+  &__instruction {
+    @include hidden();
+  }
+
+  // ── Visible label (Label component) ────────────────────────────────────────
+  &__visible-label {
+    margin-bottom: var(--pk-space-sm);
+  }
+
+  // ── Cells flex row ──────────────────────────────────────────────────
+  &__row {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: var(--pk-otp-gap);
+  }
 
-    &__label,
-    &__instruction {
-        @include hidden();
+  // ── Footer (error / helper text) ───────────────────────────────────────
+  &__footer {
+    display: flex;
+    margin-top: var(--pk-space-xs);
+  }
+
+  &__helperText {
+    color: var(--pk-input-helper-fg);
+    @include text("caption");
+
+    &__content {
+      &--is-error {
+        color: var(--pk-color-error);
+      }
+    }
+  }
+
+  // ── Input island cell wrapper ──────────────────────────────────────
+  // We draw the gradient ring ourselves via ::before so it's always
+  // visible — independent of Input's hover/focus animation state.
+  &__field {
+    position: relative;
+    width: var(--pk-otp-cell-size);
+    height: var(--pk-otp-cell-size);
+    border-radius: var(--pk-otp-cell-radius) !important;
+    flex-shrink: 0;
+
+    // Gradient ring (CSS mask technique: padding area = border width)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--pk-otp-cell-radius);
+      padding: 2px; // border thickness
+      // Conic gradient sweeps the colors evenly around the full circle ring
+      background: conic-gradient(
+        from 180deg,
+        var(--pk-otp-gradient-from),
+        var(--pk-otp-gradient-to),
+        var(--pk-otp-gradient-from)
+      );
+      // Show only the padding ring, hide the content area
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      // WebKit requires destination-out; standard spec uses exclude
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  &__input {
+    width: var(--pk-otp-cell-size);
+    height: var(--pk-otp-cell-size);
+
+    &__container {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--pk-otp-cell-radius);
+      overflow: hidden;
+      // Suppress Input's own animated gradient border — we draw ours above via ::before
+      background: transparent !important;
+      animation: none !important;
     }
 
-    &__field {
-        width: 42px;
-        height: 42px;
+    &__node {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      background: var(--pk-input-bg);
+      border-radius: var(--pk-otp-cell-radius);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      @include text("base");
+
+      & {
+        text-align: center;
+      }
     }
-
-    &__input {
-        width: 42px;
-        height: 42px;
-
-        &__container {
-            width: 100%;
-            height: 100%;
-            border-radius: 80px;
-        }
-
-        &__node {
-            width: 100%;
-            padding: $space-sm $space-lg;
-        }
-    }
+  }
 }

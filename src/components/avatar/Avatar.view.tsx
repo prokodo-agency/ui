@@ -13,7 +13,7 @@ const bem = create(styles, "Avatar")
 
 export function AvatarView({
   className,
-  variant = "inherit",
+  color = "inherit",
   size = "sm",
   image,
   redirect,
@@ -22,7 +22,7 @@ export function AvatarView({
 }: AvatarProps): JSX.Element {
   const rootClass = bem(
     undefined,
-    { [variant]: true, [`has-size-${size}`]: true },
+    { [color]: true, [`has-size-${size}`]: true },
     className,
   )
   const iconSize = getIconSize(size)
@@ -51,8 +51,8 @@ export function AvatarView({
         iconOverride
       ) : (
         <Icon
-          className={bem("icon", { [variant]: true })}
-          color={!["inherit", "white"].includes(variant) ? "white" : undefined}
+          className={bem("icon", { [color]: true })}
+          color={!["inherit", "white"].includes(color) ? "white" : undefined}
           name="UserIcon"
           size={iconSize}
         />
@@ -64,7 +64,7 @@ export function AvatarView({
       {...redirect}
       className={bem(
         "link",
-        { [variant]: true, [`has-size-${size}`]: true },
+        { [color]: true, [`has-size-${size}`]: true },
         redirect.className,
       )}
     >

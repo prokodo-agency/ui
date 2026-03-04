@@ -14,8 +14,8 @@ After [installing](/docs/getting-started/installation) `@prokodo/ui`, you're rea
 ## Your first component — Button
 
 ```tsx title="app/page.tsx"
-import { Button } from '@prokodo/ui/button'
-import '@prokodo/ui/button.css'
+import { Button } from "@prokodo/ui/button"
+import "@prokodo/ui/button.css"
 
 export default function Page() {
   return (
@@ -37,15 +37,15 @@ export default function Page() {
 - Import each component directly from its entry point for highest performance:
 
 ```tsx
-import { Button } from '@prokodo/ui/button'
-import { Card } from '@prokodo/ui/card'
+import { Button } from "@prokodo/ui/button"
+import { Card } from "@prokodo/ui/card"
 ```
 
 - Prefer component-level styles whenever possible:
 
 ```tsx
-import '@prokodo/ui/button.css'
-import '@prokodo/ui/card.css'
+import "@prokodo/ui/button.css"
+import "@prokodo/ui/card.css"
 ```
 
 - Use `priority` for critical above-the-fold elements (especially hero images) so they load/hydrate eagerly.
@@ -60,10 +60,10 @@ import '@prokodo/ui/card.css'
 ## Form example
 
 ```tsx title="app/contact/page.tsx"
-import { Form } from '@prokodo/ui/form'
-import { Input } from '@prokodo/ui/input'
-import '@prokodo/ui/form.css'
-import '@prokodo/ui/input.css'
+import { Form } from "@prokodo/ui/form"
+import { Input } from "@prokodo/ui/input"
+import "@prokodo/ui/form.css"
+import "@prokodo/ui/input.css"
 
 export default function ContactPage() {
   return (
@@ -80,21 +80,21 @@ export default function ContactPage() {
 ## Card grid example
 
 ```tsx title="components/FeatureGrid.tsx"
-import { Grid } from '@prokodo/ui/grid'
-import { Card } from '@prokodo/ui/card'
-import '@prokodo/ui/grid.css'
-import '@prokodo/ui/card.css'
+import { Grid } from "@prokodo/ui/grid"
+import { Card } from "@prokodo/ui/card"
+import "@prokodo/ui/grid.css"
+import "@prokodo/ui/card.css"
 
 const features = [
-  { title: 'AIC Pattern', body: 'Server, client, and lazy variants.' },
-  { title: 'TypeScript', body: 'Fully typed props for every component.' },
-  { title: 'Design tokens', body: 'CSS custom properties throughout.' },
+  { title: "AIC Pattern", body: "Server, client, and lazy variants." },
+  { title: "TypeScript", body: "Fully typed props for every component." },
+  { title: "Design tokens", body: "CSS custom properties throughout." },
 ]
 
 export function FeatureGrid() {
   return (
     <Grid cols={3} gap="lg">
-      {features.map((f) => (
+      {features.map(f => (
         <Card key={f.title}>
           <h3>{f.title}</h3>
           <p>{f.body}</p>

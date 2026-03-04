@@ -1,5 +1,8 @@
 name: Release
 
+# Triggered only by push to main that originated from bump.yml
+# (commit message starts with "chore(release):").
+# All other main pushes are silently ignored by every job below.
 on:
   push:
     branches:
@@ -10,42 +13,50 @@ permissions:
   id-token: write
 
 jobs:
-  release:
-    name: Version & Publish
+  # ─── 1 ─────────────────────────────────────────────────────────────────────
+  # Test, build and publish the library to npmjs.com.
+  # ────────────────────────────────────────────────────────────────────────────
+  publish-npm:
+    name: Publish — npmjs.com
     runs-on: ubuntu-latest
+    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    permissions:
+      contents: read
+      id-token: write
+
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      tag: ${{ steps.ver.outputs.tag }}
 
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # full history for changesets/tags
+          fetch-depth: 0
 
       - name: 💿 Setup pnpm (v9)
         uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      - name: 🧰 Setup Node.js (v20) & npm registry cache
+      - name: 🧰 Setup Node.js (v22) & npm registry cache
         uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           registry-url: "https://registry.npmjs.org/"
           cache: pnpm
 
       - name: ⬆️ Upgrade npm to latest
-        run: |
-          npm -v
-          npm i -g npm@latest
-          npm -v
+        run: npm i -g npm@latest
 
-      - name: � Cache Cypress binary
+      - name: 📦 Cache Cypress binary
         id: cypress-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
 
-      - name: 📦 Install dependencies (frozen lockfile)
+      - name: 📥 Install dependencies (frozen lockfile)
         run: pnpm install --frozen-lockfile
 
       - name: 🔧 Install Cypress binary
@@ -58,22 +69,109 @@ jobs:
       - name: 🛠 Build library (production)
         run: pnpm run build
 
-      - name: 🧾 Version packages (apply changesets if present)
-        run: pnpm changeset version || echo "No version changes"
-
-      - name: 🔁 Reinstall after version bump (ensure lockfile integrity)
-        run: pnpm install --frozen-lockfile
-
-      - name: ⬆️ Commit and push version bump (tags stay in repo)
+      - name: 🔖 Read version from package.json
+        id: ver
+        shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git diff-index --quiet HEAD || git commit -m "ci: version bump"
-          git push
+          VER=$(node -p "require('./package.json').version")
+          echo "version=${VER}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${VER}"    >> "$GITHUB_OUTPUT"
 
-      - name: 🚀 Publish to npm (latest tag, public access)
+      - name: ✅ Assert semver format
+        shell: bash
+        run: |
+          VER=${{ steps.ver.outputs.version }}
+          if [[ ! "$VER" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ version is not semver (X.Y.Z): ${VER}" >&2; exit 1
+          fi
+          echo "✅ Version: ${VER}"
+
+      - name: 🔍 Check whether version already exists on npm
+        id: npm-check
+        shell: bash
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VER=${{ steps.ver.outputs.version }}
+          if npm view "${NAME}@${VER}" version \
+               --registry https://registry.npmjs.org >/dev/null 2>&1; then
+            echo "exists=true"  >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 🚀 Publish to npmjs.com (OIDC provenance, public access)
+        if: steps.npm-check.outputs.exists != 'true'
         run: npm publish --access public
+
+  # ─── 2 ─────────────────────────────────────────────────────────────────────
+  # Create git tag and GitHub Release after npm publish succeeds.
+  # ────────────────────────────────────────────────────────────────────────────
+  github-release:
+    name: GitHub Release
+    runs-on: ubuntu-latest
+    needs: publish-npm
+    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 🏷 Create and push git tag
+        shell: bash
+        run: |
+          TAG="${{ needs.publish-npm.outputs.tag }}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q .; then
+            echo "ℹ️  Tag ${TAG} already exists — skipping"
+          else
+            git tag -a "${TAG}" -m "Release ${TAG}"
+            git push origin "${TAG}"
+          fi
+
+      - name: 📢 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.publish-npm.outputs.tag }}
+          name: ${{ needs.publish-npm.outputs.tag }}
+          generate_release_notes: true
+          make_latest: true
+
+  # ─── 3 ─────────────────────────────────────────────────────────────────────
+  # Build Storybook + Docusaurus and deploy to GitHub Pages.
+  # Waits for publish-npm so docs only deploy on a successful release.
+  # ────────────────────────────────────────────────────────────────────────────
+  deploy-site:
+    name: Deploy docs + Storybook → ui.prokodo.com
+    runs-on: ubuntu-latest
+    needs: publish-npm
+    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    permissions:
+      contents: write
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 💿 Setup pnpm (v9)
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🧰 Setup Node.js (v22)
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: 📥 Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
 
       - name: 📘 Build Storybook (static export)
         run: pnpm run storybook:build
@@ -90,13 +188,13 @@ jobs:
           rm -rf site
           mkdir -p site/storybook
 
-          # Docs become primary site at ui.prokodo.com
+          # Docs become the primary site at ui.prokodo.com
           cp -R docs/build/. site/
 
           # Storybook is served under /storybook
           cp -R storybook-static/. site/storybook/
 
-          # Root entrypoint should open docs
+          # Root redirect → docs
           cat > site/index.html << 'EOF'
           <!doctype html>
           <html lang="en">
@@ -112,10 +210,10 @@ jobs:
           </html>
           EOF
 
-          # Ensure custom domain for GitHub Pages
+          # Custom domain for GitHub Pages
           echo 'ui.prokodo.com' > site/CNAME
 
-      - name: 🌐 Deploy UI docs + Storybook to GitHub Pages (ui.prokodo.com)
+      - name: 🌐 Deploy to GitHub Pages (ui.prokodo.com)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

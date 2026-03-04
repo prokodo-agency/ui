@@ -9,51 +9,95 @@ description: Accessible tooltip component anchored to any trigger — unterstüt
 
 `Tooltip` rendert kontextbezogene Hinweise bei Hover/Fokus und verbessert die Verständlichkeit kompakter UI-Elemente.
 
-
 ---
 
 ## Übersicht
 
 ```tsx
-import { Tooltip } from '@prokodo/ui/tooltip'
-
-<Tooltip content="This action cannot be undone" placement="top">
+import { Tooltip } from "@prokodo/ui/tooltip"
+;<Tooltip content="This action cannot be undone" placement="top">
   <button>Delete</button>
 </Tooltip>
 ```
 
 <StorybookEmbed id="prokodo-feedback-tooltip--default" />
 
-
 ---
 
 ## Import
 
 ```ts
-import { Tooltip } from '@prokodo/ui/tooltip'
+import { Tooltip } from "@prokodo/ui/tooltip"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/tooltip.css'
+import "@prokodo/ui/tooltip.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `children` | `ReactElement` | — | ✅ | Trigger element — must be a single element that forwards a `ref`. |
-| `content` | `ReactNode` | — | ✅ | Tooltip content. |
-| `placement` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | — | Preferred placement relative to the trigger. |
-| `trigger` | `"hover" \| "focus" \| "click" \| "both"` | `"both"` | — | What user interaction opens the tooltip. |
-| `delay` | `number` | `200` | — | Open delay in milliseconds. |
-| `disabled` | `boolean` | `false` | — | Deaktiviere tooltip display. |
-| `className` | `string` | — | — | CSS class on the tooltip popover element. |
+| Prop               | Typ                                                        | Standard    | Pflicht | Beschreibung                                                                           |
+| ------------------ | ---------------------------------------------------------- | ----------- | ------- | -------------------------------------------------------------------------------------- |
+| Prop               | Typ                                                        | Standard    | Pflicht | Beschreibung                                                                           |
+| ------------------ | ---------------------------------------------------------- | ----------- | ------- | -------------------------------------------------------------------------------------- |
+| `children`         | `ReactElement`                                             | —           | ✅      | Trigger-Element — muss ein einzelnes Element sein, das `ref` weiterleitet.             |
+| `content`          | `ReactNode`                                                | —           | ✅      | Tooltip-Inhalt.                                                                        |
+| `placement`        | `"top" \| "bottom" \| "left" \| "right"`                   | `"top"`     | —       | Bevorzugte Position relativ zum Trigger.                                               |
+| `anchor`           | `"element" \| "pointer"`                                   | `"element"` | —       | Anker-Modus: `"element"` zentriert; `"pointer"` folgt dem Cursor.                      |
+| `color`            | `"default" \| "success" \| "error" \| "warning" \| "info"` | `"default"` | —       | Visuelle Farbvariante der Blase.                                                       |
+| `id`               | `string`                                                   | —           | —       | Stabile ID für `aria-describedby`.                                                     |
+| `disabled`         | `boolean`                                                  | `false`     | —       | Tooltip vollständig deaktivieren.                                                      |
+| `open`             | `boolean`                                                  | —           | —       | Gesteuerter Öffnungszustand.                                                           |
+| `defaultOpen`      | `boolean`                                                  | `false`     | —       | Unkontrollierter Anfangs-Öffnungszustand.                                              |
+| `delay`            | `number`                                                   | `200`       | —       | Hover-/Fokus-Öffnungsverzögerung in ms.                                                |
+| `closeDelay`       | `number`                                                   | —           | —       | Schließverzögerung in ms.                                                              |
+| `openOnHover`      | `boolean`                                                  | `true`      | —       | Beim Hover öffnen.                                                                     |
+| `openOnFocus`      | `boolean`                                                  | `true`      | —       | Beim Fokus öffnen.                                                                     |
+| `preventOverflow`  | `boolean`                                                  | `true`      | —       | Tooltip in den Viewport einschränken.                                                  |
+| `portal`           | `boolean`                                                  | `true`      | —       | Blase in einem Portal rendern (empfohlen).                                             |
+| `zIndex`           | `number`                                                   | —           | —       | z-index des Portal-Bubbles.                                                            |
+| `offset`           | `number`                                                   | —           | —       | Pixel-Abstand zwischen Trigger und Blase.                                              |
+| `onOpenChange`     | `(open: boolean) => void`                                  | —           | —       | Wird bei Öffnungszustandsänderung aufgerufen.                                          |
+| `tooltipClassName` | `string`                                                   | —           | —       | CSS-Klasse auf dem Tooltip-Bubble-Element.                                             |
+| `triggerClassName` | `string`                                                   | —           | —       | CSS-Klasse auf dem Trigger-Element.                                                    |
+| `className`        | `string`                                                   | —           | —       | CSS-Klasse auf dem Root-Wrapper-Element.                                               |
 
 > Siehe [`src/components/tooltip/Tooltip.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tooltip/Tooltip.model.ts) für den vollständigen `TooltipProps`-Typ.
+
+---
+
+## Design-Tokens
+
+Passe via CSS Custom Properties auf `:root` oder einem übergeordneten Element an.
+
+| Token                         | Standard                              | Beschreibung                       |
+| ----------------------------- | ------------------------------------- | ---------------------------------- |
+| `--pk-tooltip-bg`             | `color-mix(… fg 92%, surface)`        | Standard-Hintergrund (dunkel inv.) |
+| `--pk-tooltip-fg`             | `var(--pk-color-surface)`             | Standard-Textfarbe                 |
+| `--pk-tooltip-border`         | `color-mix(… surface 12%)`            | Standard-Rahmenfarbe               |
+| `--pk-tooltip-shadow`         | `var(--pk-shadow-lg)`                 | Standard-Box-Shadow                |
+| `--pk-tooltip-radius`         | `var(--pk-radius-sm)`                 | Eckenradius                        |
+| `--pk-tooltip-z`              | `2147483647`                          | z-index                            |
+| `--pk-tooltip-success-bg`     | `color-mix(… success 12%, surface)`   | Getönter Hintergrund für "success" |
+| `--pk-tooltip-success-fg`     | `var(--pk-color-fg)`                  | Textfarbe für "success"            |
+| `--pk-tooltip-success-border` | `color-mix(… success 35%)`            | Rahmenfarbe für "success"          |
+| `--pk-tooltip-success-shadow` | `0 4px 16px color-mix(… success 18%)` | Umgebungsleuchten für "success"    |
+| `--pk-tooltip-error-bg`       | `color-mix(… error 12%, surface)`     | Getönter Hintergrund für "error"   |
+| `--pk-tooltip-error-fg`       | `var(--pk-color-fg)`                  | Textfarbe für "error"              |
+| `--pk-tooltip-error-border`   | `color-mix(… error 35%)`              | Rahmenfarbe für "error"            |
+| `--pk-tooltip-error-shadow`   | `0 4px 16px color-mix(… error 18%)`   | Umgebungsleuchten für "error"      |
+| `--pk-tooltip-warning-bg`     | `color-mix(… warning 12%, surface)`   | Getönter Hintergrund für "warning" |
+| `--pk-tooltip-warning-fg`     | `var(--pk-color-fg)`                  | Textfarbe für "warning"            |
+| `--pk-tooltip-warning-border` | `color-mix(… warning 35%)`            | Rahmenfarbe für "warning"          |
+| `--pk-tooltip-warning-shadow` | `0 4px 16px color-mix(… warning 18%)` | Umgebungsleuchten für "warning"    |
+| `--pk-tooltip-info-bg`        | `color-mix(… fg 8%, surface)`         | Getönter Hintergrund für "info"    |
+| `--pk-tooltip-info-fg`        | `var(--pk-color-fg)`                  | Textfarbe für "info"               |
+| `--pk-tooltip-info-border`    | `color-mix(… fg 20%)`                 | Rahmenfarbe für "info"             |
+| `--pk-tooltip-info-shadow`    | `var(--pk-shadow-md)`                 | Box-Shadow für "info"              |
 
 ---
 
@@ -62,7 +106,7 @@ import '@prokodo/ui/tooltip.css'
 Verwende im Anwendungscode immer den Standard-Importpfad:
 
 ```ts
-import { Tooltip } from '@prokodo/ui/tooltip'
+import { Tooltip } from "@prokodo/ui/tooltip"
 ```
 
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
@@ -74,12 +118,12 @@ Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`)
 
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
-| **1.4.3** | **Kontrast (Minimum)** (AA) | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich. |
-| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
-| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| Kriterium | Bezeichnung                  | Status            | Hinweis                                                                                                                                              |
+| --------- | ---------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.                            |
+| **1.4.3** | **Kontrast (Minimum)** (AA)  | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich.                      |
+| **2.4.7** | **Fokus sichtbar** (AA)      | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **4.1.2** | **Name, Rolle, Wert** (A)    | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                 |
 
 > **Testabdeckung:** 2 jest-axe-Assertion(s) in 5 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.

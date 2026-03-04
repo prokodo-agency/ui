@@ -1,8 +1,6 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/colors" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("List") {
@@ -13,8 +11,8 @@
         flex-wrap: wrap;
         align-items: center;
         width: 100%;
-        margin: $space-xs 0;
-        color: var(--color-grey-500);
+        margin: var(--pk-space-xs) 0;
+        color: var(--pk-color-muted);
         @include text("base/md");
 
         & {
@@ -26,12 +24,12 @@
         }
 
         &__card {
-            margin: $space-md 0;
+            margin: var(--pk-space-md) 0;
 
             &__content {
                 display: flex;
                 align-items: center;
-                padding: $space-md;
+                padding: var(--pk-space-md);
             }
         }
 
@@ -56,26 +54,26 @@
             align-self: flex-start;
             min-width: 2.5rem;
             height: 2.5rem;
-            margin-top: $space-xs;
-            margin-right: $space-xs;
+            margin-top: var(--pk-space-xs);
+            margin-right: var(--pk-space-xs);
             border-radius: 1000rem;
-            background-color: var(--color-grey-50);
+            background-color: var(--pk-color-surface-raised);
 
             html[data-theme='dark'] & {
-                background-color: var(--color-grey-400);
+                background-color: var(--pk-palette-grey-400);
             }
 
             &__wrapper {
                 display: flex;
                 align-items: center;
-                padding-right: $space-sm;
+                padding-right: var(--pk-space-sm);
             }
         }
 
         &__title {
             &--card {
                 display: block;
-                padding: $space-md 0 $space-xs $space-sm;
+                padding: var(--pk-space-md) 0 var(--pk-space-xs) var(--pk-space-sm);
                 @include text("base/md");
                 & {
                     font-weight: 500;
@@ -84,32 +82,32 @@
         }
 
         &__content {
-            width: calc(100% - $space-2xl);
+            width: calc(100% - var(--pk-space-2xl));
         }
 
         &__desc {
-            color: var(--color-grey-600);
+            color: var(--pk-color-muted);
             margin: 0;
-            padding: $space-xs 0;
+            padding: var(--pk-space-xs) 0;
             display: block;
             width: 100%;
             -webkit-box-orient: vertical;
             line-clamp: 3;
-            -webkit-line-clamp: 3; /* Limits the content to 3 lines */
+            -webkit-line-clamp: 3;
             overflow: hidden;
-            text-overflow: ellipsis; /* Adds the ellipsis at the end */
+            text-overflow: ellipsis;
             word-wrap: break-word;
             @include text("base");
 
             &--card {
                 padding-top: 0;
-                padding-left: $space-sm;
+                padding-left: var(--pk-space-sm);
             }
         }
 
         &--is-clickable {
             cursor: pointer;
-            color: var(--color-grey-500);
+            color: var(--pk-color-muted);
 
             a {
                 @include text("base/md");
@@ -118,54 +116,100 @@
                 }
             }
 
-            @include when-hovered() {
-                span[role="presentation"] {
-                    color: var(--color-primary-500);
-                }
-
-                .list-title {
-                    @include gradientTextVar(primary);
-                }
-            }
-
             &--inherit {
                 @include when-hovered() {
-                    color: var(--color-primary-500);
+                    color: var(--pk-color-brand);
+
+                    .list-title {
+                        @include gradientTextVar(primary);
+                    }
                 }
             }
 
             &--primary {
-                color: var(--color-primary-500);
+                color: var(--pk-color-brand);
+
+                @include when-hovered() {
+                    .list-title {
+                        @include gradientTextVar(primary);
+                    }
+
+                    span[role="presentation"] {
+                        color: var(--pk-color-brand);
+                    }
+                }
             }
-        
+
             &--secondary {
-                color: var(--color-secondary-500);
+                color: var(--pk-color-accent);
+
+                @include when-hovered() {
+                    span[role="presentation"] {
+                        color: var(--pk-color-accent);
+                    }
+                }
             }
 
             &--info {
-                color: var(--color-grey-300);
+                color: var(--pk-color-muted);
+
+                @include when-hovered() {
+                    span[role="presentation"] {
+                        color: var(--pk-color-muted);
+                    }
+                }
             }
 
             &--success {
-                color: var(--color-success);
+                color: var(--pk-color-success);
+
+                @include when-hovered() {
+                    .list-title {
+                        @include gradientTextVar(success);
+                    }
+
+                    span[role="presentation"] {
+                        color: var(--pk-color-success);
+                    }
+                }
             }
-            
+
             &--warning {
-                color: var(--color-warning);
+                color: var(--pk-color-warning);
+
+                @include when-hovered() {
+                    .list-title {
+                        @include gradientTextVar(warning);
+                    }
+
+                    span[role="presentation"] {
+                        color: var(--pk-color-warning);
+                    }
+                }
             }
 
             &--error {
-                color: var(--color-error);
-            }
-        
-            &--white {
-                color: var(--color-white);
-        
+                color: var(--pk-color-error);
+
                 @include when-hovered() {
-                    color: var(--color-white);
+                    .list-title {
+                        @include gradientTextVar(error);
+                    }
+
+                    span[role="presentation"] {
+                        color: var(--pk-color-error);
+                    }
                 }
             }
-        
+
+            &--white {
+                color: var(--pk-palette-white);
+
+                @include when-hovered() {
+                    color: var(--pk-palette-white);
+                }
+            }
+
             &--primary,
             &--secondary,
             &--success,
@@ -173,7 +217,7 @@
             &--info,
             &--warning {
                 @include when-hovered() {
-                    color: var(--color-grey-500);
+                    color: var(--pk-color-muted);
                 }
             }
         }

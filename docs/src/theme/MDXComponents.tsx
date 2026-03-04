@@ -11,61 +11,76 @@
  * Table elements are overridden with custom docs-table* classes (no @prokodo/ui
  * table.css import) to avoid library cascade conflicts.
  */
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import OriginalMDXComponents from '@theme-original/MDXComponents';
-import { Icon } from '@prokodo/ui/icon';
-import { Chip } from '@prokodo/ui/chip';
-import { StorybookEmbed } from '../components/StorybookEmbed';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react"
+import OriginalMDXComponents from "@theme-original/MDXComponents"
+import { Icon } from "@prokodo/ui/icon"
+import { Chip } from "@prokodo/ui/chip"
+import { StorybookEmbed } from "../components/StorybookEmbed"
 import {
   readDocsThemeFromDom,
   withStorybookTheme,
   type DocsTheme,
-} from '../utils/storybookThemeUrl';
+} from "../utils/storybookThemeUrl"
 
 function resolveStorybookHref(href: string, theme: DocsTheme): string {
-  if (!href) return href;
+  if (!href) return href
 
-  const isDev = process.env.NODE_ENV === 'development';
-  let resolved = href;
+  const isDev = process.env.NODE_ENV === "development"
+  let resolved = href
 
   if (isDev) {
-    if (resolved.startsWith('/storybook')) {
-      const suffix = resolved.replace(/^\/storybook/, '');
-      resolved = `http://localhost:6006${suffix || '/'}`;
+    if (resolved.startsWith("/storybook")) {
+      const suffix = resolved.replace(/^\/storybook/, "")
+      resolved = `http://localhost:6006${suffix || "/"}`
     }
 
-    if (resolved.startsWith('https://ui.prokodo.com/storybook')) {
-      resolved = resolved.replace('https://ui.prokodo.com/storybook', 'http://localhost:6006');
+    if (resolved.startsWith("https://ui.prokodo.com/storybook")) {
+      resolved = resolved.replace(
+        "https://ui.prokodo.com/storybook",
+        "http://localhost:6006",
+      )
     }
 
-    if (resolved.startsWith('https://ui.prokodo.com/?path=')) {
-      resolved = resolved.replace('https://ui.prokodo.com', 'http://localhost:6006');
+    if (resolved.startsWith("https://ui.prokodo.com/?path=")) {
+      resolved = resolved.replace(
+        "https://ui.prokodo.com",
+        "http://localhost:6006",
+      )
     }
   }
 
-  return withStorybookTheme(resolved, theme);
+  return withStorybookTheme(resolved, theme)
 }
 
 function DocA(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const { href, ...rest } = props;
-  const [theme, setTheme] = useState<DocsTheme>('light');
+  const { href, ...rest } = props
+  const [theme, setTheme] = useState<DocsTheme>("light")
 
   useEffect(() => {
-    const root = document.documentElement;
-    const read = () => setTheme(readDocsThemeFromDom());
-    read();
-    const observer = new MutationObserver(read);
-    observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
-  }, []);
+    const root = document.documentElement
+    const read = () => setTheme(readDocsThemeFromDom())
+    read()
+    const observer = new MutationObserver(read)
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    })
+    return () => observer.disconnect()
+  }, [])
 
-  return <a href={href ? resolveStorybookHref(href, theme) : href} {...rest} />;
+  return <a href={href ? resolveStorybookHref(href, theme) : href} {...rest} />
 }
 
 // ─── Table element overrides ──────────────────────────────────────────────────
 
 /** Context so <tr> can apply the correct head/body row class. */
-const TableSectionCtx = createContext<'head' | 'body'>('body');
+const TableSectionCtx = createContext<"head" | "body">("body")
 
 function DocTable({ children }: { children: ReactNode }) {
   return (
@@ -74,7 +89,7 @@ function DocTable({ children }: { children: ReactNode }) {
         <table className="docs-table__el">{children}</table>
       </div>
     </div>
-  );
+  )
 }
 
 function DocThead({ children }: { children: ReactNode }) {
@@ -82,7 +97,7 @@ function DocThead({ children }: { children: ReactNode }) {
     <TableSectionCtx.Provider value="head">
       <thead className="docs-table__head">{children}</thead>
     </TableSectionCtx.Provider>
-  );
+  )
 }
 
 function DocTbody({ children }: { children: ReactNode }) {
@@ -90,22 +105,26 @@ function DocTbody({ children }: { children: ReactNode }) {
     <TableSectionCtx.Provider value="body">
       <tbody className="docs-table__body">{children}</tbody>
     </TableSectionCtx.Provider>
-  );
+  )
 }
 
 function DocTr({ children }: { children: ReactNode }) {
-  const section = useContext(TableSectionCtx);
+  const section = useContext(TableSectionCtx)
   return (
-    <tr className={section === 'head' ? 'docs-table__head-tr' : 'docs-table__tr'}>{children}</tr>
-  );
+    <tr
+      className={section === "head" ? "docs-table__head-tr" : "docs-table__tr"}
+    >
+      {children}
+    </tr>
+  )
 }
 
 function DocTh({ children }: { children: ReactNode }) {
-  return <th className="docs-table__th">{children}</th>;
+  return <th className="docs-table__th">{children}</th>
 }
 
 function DocTd({ children }: { children: ReactNode }) {
-  return <td className="docs-table__td">{children}</td>;
+  return <td className="docs-table__td">{children}</td>
 }
 
 // ─── Convenience wrappers ─────────────────────────────────────────────────────
@@ -119,12 +138,12 @@ function DocTd({ children }: { children: ReactNode }) {
  */
 function DocBadge({
   label,
-  color = 'primary',
+  color = "primary",
 }: {
-  label: string;
-  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  label: string
+  color?: "primary" | "secondary" | "success" | "warning" | "error"
 }) {
-  return <Chip label={label} color={color} variant="outlined" />;
+  return <Chip label={label} color={color} variant="outlined" />
 }
 
 // ─── Export ───────────────────────────────────────────────────────────────────
@@ -149,6 +168,6 @@ const MDXComponents: Record<string, any> = {
   tr: DocTr,
   th: DocTh,
   td: DocTd,
-};
+}
 
-export default MDXComponents;
+export default MDXComponents

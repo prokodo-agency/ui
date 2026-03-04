@@ -1,42 +1,45 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as CalendlyStories from "./Calendly.stories"
 
 <Meta of={CalendlyStories} />
 
 # Calendly
 
-Embeds a Calendly scheduling widget inline within the page, using island architecture and design-system styling.
+Embeds a Calendly scheduling widget inline within the page using island architecture. The embed script is lazy-loaded — only injected when the component first renders on the client.
 
 ## When to use
 
 Use `Calendly` on landing pages, contact sections, or anywhere a visitor should be able to book a meeting directly without leaving the page.
 
+## Styling
+
+The widget container is sized via the `--pk-calendly-height` CSS custom property (default `700px`). Override it on a parent element when you need a different height:
+
+```css
+.my-section {
+  --pk-calendly-height: 550px;
+}
+```
+
 ## Accessibility (WCAG 2.2)
 
-- The widget is rendered inside an `<iframe>` — Calendly's own accessibility support applies inside the frame
-- Provide a descriptive `title` attribute on the iframe (set via the component's title prop if exposed) for screen-reader users
+- The widget is rendered inside an `<iframe>` — Calendly’s own accessibility support applies inside the frame
 - Ensure surrounding page context explains the purpose of the booking widget
 
 ### Keyboard behavior
 
 - Focus enters the iframe via **Tab**
-- All interactions within the booking flow are managed by Calendly's own keyboard handling
-
-## API notes
-
-- The component lazy-loads the Calendly embed script to avoid blocking page render
-- Configure your Calendly URL via the component's URL prop
-- Inline mode fills the parent container — set a min-height on the wrapper to avoid layout collapse
+- All interactions within the booking flow are managed by Calendly’s own keyboard handling
 
 ## ✅ Do
 
-- Wrap `Calendly` in a container with an explicit height to prevent layout shift
-- Use inline mode for seamless in-page scheduling experience
+- Wrap `Calendly` in a container with a defined height to prevent layout shift
+- Pre-fill visitor data (name, email) via the `data` prop to reduce friction
 
 ## ❌ Don't
 
-- Don't render `Calendly` inside a hidden container — it may fail to initialise
-- Don't load multiple Calendly widgets on the same page simultaneously
+- Don’t render `Calendly` inside a hidden container — it may fail to initialise
+- Don’t load multiple Calendly widgets on the same page simultaneously
 
 ## Examples
 

@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta } from "@storybook/blocks"
+import { Canvas, Controls, Meta } from "@storybook/addon-docs/blocks"
 import * as ImageStories from "./Image.stories"
 
 <Meta of={ImageStories} />
@@ -43,6 +43,15 @@ Use `Image` for all content images — hero sections, cards, blog posts, and pro
 - Don't omit `alt` — even decorative images should have `alt=""`
 - Don't use `fill` without a positioned parent container
 - Don't set `priority` on every image — reserve it for above-the-fold content only
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token           | Purpose                                                |
+| --------------- | ------------------------------------------------------ |
+| `--pk-space-lg` | Bottom padding that creates room for the caption label |
+| `--pk-color-fg` | Caption text color — adaptive, readable in dark mode   |
 
 ## Examples
 

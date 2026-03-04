@@ -6,6 +6,7 @@ export type {
   ListDefaultItemProps,
   ListDefaultOptions,
   ListDefaultProps,
+  ListIconProps,
   ListItemProps,
   ListType,
   ListVariant,

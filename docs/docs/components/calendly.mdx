@@ -2,48 +2,66 @@
 id: calendly
 title: Calendly
 sidebar_label: Calendly
-description: Embeds a Calendly scheduling widget as a lazy-loaded inline or popup frame.
+description: Embeds a Calendly scheduling widget as a lazy-loaded inline frame with island architecture.
 ---
 
 # Calendly
 
-`Calendly` embeds a Calendly scheduling widget directly in the page. Supports inline and popup modes. The iframe is lazy-loaded for performance.
-
+`Calendly` embeds a Calendly scheduling widget directly in the page using island architecture. The embed script is lazy-loaded — only injected when the component first renders on the client.
 
 ---
 
 ## Overview
 
 ```tsx
-import { Calendly } from '@prokodo/ui/calendly'
-
-<Calendly url="https://calendly.com/your-org/30min" mode="inline" />
+import { Calendly } from "@prokodo/ui/calendly"
+;<Calendly
+  calendlyId="your-org/30min"
+  colors={{ button: "#1E90FF", background: "#FFFFFF" }}
+  hideCookieSettings
+/>
 ```
 
-<StorybookEmbed id="prokodo-service-calendly--inline-demo" height={520} />
-
+<StorybookEmbed id="prokodo-media-calendly--inline-demo" height={520} />
 
 ---
 
 ## Import
 
 ```ts
-import { Calendly } from '@prokodo/ui/calendly'
+import { Calendly } from "@prokodo/ui/calendly"
 ```
 
 Styling is handled via design tokens — no additional CSS import required.
 
 ---
 
+## Styling
+
+The widget height is controlled by the `--pk-calendly-height` CSS custom property (default `700px`). Override it on a parent element:
+
+```css
+.my-section {
+  --pk-calendly-height: 550px;
+}
+```
+
+---
+
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `url` | `string` | — | ✅ | Calendly scheduling link. |
-| `mode` | `"inline" \| "popup"` | `"inline"` | — | Display mode. |
-| `height` | `number` | `630` | — | Iframe height in pixels (inline mode). |
-| `hideDetails` | `boolean` | `false` | — | Hide event details in the widget. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop                   | Type                   | Default       | Required | Description                                           |
+| ---------------------- | ---------------------- | ------------- | -------- | ----------------------------------------------------- |
+| `calendlyId`           | `string`               | —             | ✅       | Calendly URL identifier (`"username/schedule-name"`). |
+| `data`                 | `CalendlyData`         | —             | —        | Prefill form data (name, email, UTM params).          |
+| `colors`               | `CalendlyColorOptions` | —             | —        | Color overrides forwarded to the Calendly widget.     |
+| `animationProps`       | `AnimatedProps`        | —             | —        | Entrance animation config.                            |
+| `hideLoading`          | `boolean`              | `false`       | —        | Hide the default loading spinner.                     |
+| `hideCookieSettings`   | `boolean`              | `false`       | —        | Suppress Calendly's GDPR banner.                      |
+| `hideEventTypeDetails` | `boolean`              | `false`       | —        | Hide the event-type sidebar inside the widget.        |
+| `hideDetails`          | `boolean`              | `false`       | —        | Hide event details on the landing page view.          |
+| `LoadingComponent`     | `React.ComponentType`  | `<Loading />` | —        | Custom loading component shown while Calendly loads.  |
+| `className`            | `string`               | —             | —        | CSS class on root element.                            |
 
 > See [`src/components/calendly/Calendly.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/calendly/Calendly.model.ts) for the full `CalendlyProps` type.
 
@@ -54,24 +72,21 @@ Styling is handled via design tokens — no additional CSS import required.
 Use the standard import path in application code:
 
 ```ts
-import { Calendly } from '@prokodo/ui/calendly'
+import { Calendly } from "@prokodo/ui/calendly"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
-
-AIC components also support a `priority` flag for critical above-the-fold elements.
-This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ---
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.1.1** | **Non-text Content** (A) | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
-| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.4.1** | **Bypass Blocks** (A) | 🔍 Manual review | Embedded frames or repeated navigation blocks must provide a skip-to-content mechanism (e.g. iframe title, skip link). |
-| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion | Name                      | Status           | Note                                                                                                                                            |
+| --------- | ------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Non-text Content** (A)  | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.1.1** | **Keyboard** (A)          | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing.                                                       |
+| **2.4.1** | **Bypass Blocks** (A)     | 🔍 Manual review | Embedded frames or repeated navigation blocks must provide a skip-to-content mechanism (e.g. iframe title, skip link).                          |
+| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.                 |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

@@ -10,110 +10,123 @@
  *   pnpm generate
  */
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import fs from "node:fs/promises"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const ROOT = path.resolve(__dirname, "..")
 
 // ─── Load data ────────────────────────────────────────────────────────────────
 
 const data = JSON.parse(
   await fs.readFile(
-    new URL('../docs/_data/components.json', import.meta.url),
-    'utf8',
+    new URL("../docs/_data/components.json", import.meta.url),
+    "utf8",
   ),
-);
+)
 
 // ─── Validate storybookPath for every entry ───────────────────────────────────
 
 for (const entry of data) {
-  const { slug, storybookPath: p } = entry;
+  const { slug, storybookPath: p } = entry
 
   if (!/^\/(docs|story)\//.test(p))
-    throw new Error(`${slug}: storybookPath must start with /docs/ or /story/ — got: ${p}`);
+    throw new Error(
+      `${slug}: storybookPath must start with /docs/ or /story/ — got: ${p}`,
+    )
 
   if (/\s/.test(p))
-    throw new Error(`${slug}: storybookPath must not contain whitespace — got: ${p}`);
+    throw new Error(
+      `${slug}: storybookPath must not contain whitespace — got: ${p}`,
+    )
 
   if (/#/.test(p))
-    throw new Error(`${slug}: storybookPath must not contain # — got: ${p}`);
+    throw new Error(`${slug}: storybookPath must not contain # — got: ${p}`)
 
   if (/^https?:|\/\//.test(p))
     throw new Error(
       `${slug}: storybookPath must be a relative path, not an absolute URL — got: ${p}`,
-    );
+    )
 
   // Structural check — throws if p makes the URL invalid
-  new URL('https://ui.prokodo.com/?path=' + p);
+  new URL("https://ui.prokodo.com/?path=" + p)
 }
 
 // ─── Category order ───────────────────────────────────────────────────────────
 
-const CATEGORY_ORDER = ['form', 'layout', 'navigation', 'content', 'feedback', 'media', 'utility'];
+const CATEGORY_ORDER = [
+  "form",
+  "layout",
+  "navigation",
+  "content",
+  "feedback",
+  "media",
+  "utility",
+]
 
 const sorted = [...data].sort((a, b) => {
-  const catDiff = CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category);
-  return catDiff !== 0 ? catDiff : a.name.localeCompare(b.name);
-});
+  const catDiff =
+    CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category)
+  return catDiff !== 0 ? catDiff : a.name.localeCompare(b.name)
+})
 
 // ─── Badge helpers ────────────────────────────────────────────────────────────
 
 function typeBadge(component) {
-  if (component.slug === 'lottie' || component.slug === 'map') {
-    return '`Client`';
+  if (component.slug === "lottie" || component.slug === "map") {
+    return "`Client`"
   }
 
   switch (component.aic) {
-    case 'server':
-    case 'client':
-    case 'lazy':
-      return '`AIC`';
-    case 'none':
-      return '`RSC`';
+    case "server":
+    case "client":
+    case "lazy":
+      return "`AIC`"
+    case "none":
+      return "`RSC`"
     default:
-      return '`RSC`';
+      return "`RSC`"
   }
 }
 
 function cssBadge(css) {
   switch (css) {
-    case 'module':
-      return '`module`';
-    case 'tokens':
-      return '`tokens`';
+    case "module":
+      return "`module`"
+    case "tokens":
+      return "`tokens`"
     default:
-      return '—';
+      return "—"
   }
 }
 
 // ─── Table rows ───────────────────────────────────────────────────────────────
 
 function categoryLabel(category, locale) {
-  if (locale !== 'de') {
-    return category.charAt(0).toUpperCase() + category.slice(1);
+  if (locale !== "de") {
+    return category.charAt(0).toUpperCase() + category.slice(1)
   }
 
   const deMap = {
-    form: 'Form',
-    layout: 'Layout',
-    navigation: 'Navigation',
-    content: 'Inhalt',
-    feedback: 'Feedback',
-    media: 'Media',
-    utility: 'Utility',
-  };
+    form: "Form",
+    layout: "Layout",
+    navigation: "Navigation",
+    content: "Inhalt",
+    feedback: "Feedback",
+    media: "Media",
+    utility: "Utility",
+  }
 
-  return deMap[category] ?? category.charAt(0).toUpperCase() + category.slice(1);
+  return deMap[category] ?? category.charAt(0).toUpperCase() + category.slice(1)
 }
 
-function buildRows(entries, locale = 'en') {
+function buildRows(entries, locale = "en") {
   return entries
-    .map((c) => {
-      const sbUrl = `https://ui.prokodo.com/?path=${c.storybookPath}`;
-      const catLabel = categoryLabel(c.category, locale);
-      const propsLabel = c.hasPropsType ? '✅' : '—';
+    .map(c => {
+      const sbUrl = `https://ui.prokodo.com/storybook/?path=${c.storybookPath}`
+      const catLabel = categoryLabel(c.category, locale)
+      const propsLabel = c.hasPropsType ? "✅" : "—"
       return (
         `<tr class="docs-table__tr">` +
         `<td class="docs-table__td"><a href="/docs/components/${c.slug}">\`${c.name}\`</a></td>` +
@@ -123,16 +136,16 @@ function buildRows(entries, locale = 'en') {
         `<td class="docs-table__td">${propsLabel}</td>` +
         `<td class="docs-table__td"><a href="${sbUrl}" target="_blank" rel="noopener noreferrer">↗ Storybook</a></td>` +
         `</tr>`
-      );
+      )
     })
-    .join('\n');
+    .join("\n")
 }
 
 // ─── MDX output ───────────────────────────────────────────────────────────────
 
-const rowsEn = buildRows(sorted, 'en');
-const rowsDe = buildRows(sorted, 'de');
-const total = sorted.length;
+const rowsEn = buildRows(sorted, "en")
+const rowsDe = buildRows(sorted, "de")
+const total = sorted.length
 
 const mdxEn = `---
 id: overview
@@ -172,7 +185,7 @@ ${rowsEn}
     </table>
   </div>
 </div>
-`;
+`
 
 const mdxDe = `---
 id: overview
@@ -212,25 +225,25 @@ ${rowsDe}
     </table>
   </div>
 </div>
-`;
+`
 
 // ─── Write output ─────────────────────────────────────────────────────────────
 
-const outPathEn = path.resolve(ROOT, 'docs', 'components', 'overview.mdx');
+const outPathEn = path.resolve(ROOT, "docs", "components", "overview.mdx")
 const outPathDe = path.resolve(
   ROOT,
-  'i18n',
-  'de',
-  'docusaurus-plugin-content-docs',
-  'current',
-  'components',
-  'overview.mdx',
-);
+  "i18n",
+  "de",
+  "docusaurus-plugin-content-docs",
+  "current",
+  "components",
+  "overview.mdx",
+)
 
-await fs.mkdir(path.dirname(outPathEn), { recursive: true });
-await fs.mkdir(path.dirname(outPathDe), { recursive: true });
-await fs.writeFile(outPathEn, mdxEn, 'utf8');
-await fs.writeFile(outPathDe, mdxDe, 'utf8');
+await fs.mkdir(path.dirname(outPathEn), { recursive: true })
+await fs.mkdir(path.dirname(outPathDe), { recursive: true })
+await fs.writeFile(outPathEn, mdxEn, "utf8")
+await fs.writeFile(outPathDe, mdxDe, "utf8")
 
-console.log(`✅  Generated ${outPathEn} (${total} components)`);
-console.log(`✅  Generated ${outPathDe} (${total} components)`);
+console.log(`✅  Generated ${outPathEn} (${total} components)`)
+console.log(`✅  Generated ${outPathDe} (${total} components)`)

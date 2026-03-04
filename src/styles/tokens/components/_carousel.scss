@@ -1,0 +1,17 @@
+// =============================================================================
+// CAROUSEL COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin carousel-tokens() {
+  // Tutorial overlay background (translucent dark veil shown on mobile)
+  --pk-carousel-overlay-bg:     color-mix(in srgb, var(--pk-palette-grey-900) 70%, transparent);
+  // Active dot indicator fill
+  --pk-carousel-dot-active-bg:  var(--pk-color-surface);
+  // Padding on prev/next navigation buttons
+  --pk-carousel-button-padding: var(--pk-space-md);
+  // Top margin separating the dot indicator row from slides
+  --pk-carousel-dots-mt:        var(--pk-space-2xl);
+  // Top margin between slide wrapper and controls row (prev/dots/next)
+  --pk-carousel-controls-mt:    var(--pk-space-lg);
+}

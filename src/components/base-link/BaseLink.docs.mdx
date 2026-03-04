@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as BaseLinkStories from "./BaseLink.stories"
 
 <Meta of={BaseLinkStories} />
@@ -40,6 +40,10 @@ Use `BaseLink` as the foundational building block when creating higher-level lin
 - Don't use `BaseLink` directly in page content — prefer `Link` for styled prose links
 - Don't pass `javascript:void(0)` as `href` — use a `<button>` for actions
 - Don't suppress all keyboard focus styling
+
+## Design Tokens
+
+`BaseLink` is a structural primitive — it does not apply colors or spacing directly, so it exposes no configurable `--pk-*` CSS custom properties. Visual styling is applied by higher-level components such as `Link`.
 
 ## Examples
 

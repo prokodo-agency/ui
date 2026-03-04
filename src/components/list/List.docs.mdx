@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as ListStories from "./List.stories"
 
 <Meta of={ListStories} />
@@ -30,6 +30,28 @@ Use `List` for displaying a set of related items — feature lists, navigation m
 - Don't place block-level elements (headings, sections) inside list items
 - Don't mix interactive and non-interactive items in the same list without visual distinction
 
+## API notes
+
+- `color` controls the clickable-item colour modifier applied as a BEM modifier (`--is-clickable--{color}`)
+- `type` can be `"default"` (plain list with optional icons) or `"card"` (each item wrapped in a `Card`)
+- Per-item `color` overrides the list-level `color` for that item
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                       | Purpose                                      |
+| --------------------------- | -------------------------------------------- |
+| `--pk-space-xs`             | Item vertical margin, icon offset            |
+| `--pk-space-sm`             | Icon wrapper padding, card title sub-padding |
+| `--pk-space-md`             | Card item padding                            |
+| `--pk-space-2xl`            | Item content width calculation               |
+| `--pk-color-muted`          | Default item and description text color      |
+| `--pk-color-brand`          | Primary hover / active color                 |
+| `--pk-color-accent`         | Secondary color                              |
+| `--pk-color-surface-raised` | Icon circle background                       |
+| `--pk-palette-white`        | White item text                              |
+
 ## Examples
 
 ### Default
@@ -38,16 +60,46 @@ Use `List` for displaying a set of related items — feature lists, navigation m
   <Story of={ListStories.Default} />
 </Canvas>
 
-### Custom items
+### With links
 
 <Canvas>
-  <Story of={ListStories.Custom} />
+  <Story of={ListStories.WithLinks} />
+</Canvas>
+
+### With icons
+
+<Canvas>
+  <Story of={ListStories.WithIcons} />
+</Canvas>
+
+### With descriptions
+
+<Canvas>
+  <Story of={ListStories.WithDescriptions} />
+</Canvas>
+
+### Icons
+
+<Canvas>
+  <Story of={ListStories.Icons} />
 </Canvas>
 
 ### Card layout
 
 <Canvas>
   <Story of={ListStories.Cards} />
+</Canvas>
+
+### Success variant
+
+<Canvas>
+  <Story of={ListStories.SuccessVariant} />
+</Canvas>
+
+### Error variant
+
+<Canvas>
+  <Story of={ListStories.ErrorVariant} />
 </Canvas>
 
 ### Props

@@ -118,7 +118,7 @@ describe("Label", () => {
           textProps={{ className: "custom-text" }}
         />,
       )
-      expect(screen.getByText("Hello")).toBeInTheDocument()
+      expect(screen.getByText("Hello world")).toBeInTheDocument()
     })
   })
 })

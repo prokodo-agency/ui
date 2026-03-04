@@ -14,57 +14,71 @@ description: Two-column section component pairing an image with body copy, suppo
 ## Overview
 
 ```tsx
-import { ImageText } from '@prokodo/ui/image-text'
-
-<ImageText
-  image={{ src: '/feature.jpg', alt: 'Feature' }}
-  reverse
->
+import { ImageText } from "@prokodo/ui/image-text"
+;<ImageText image={{ src: "/feature.jpg", alt: "Feature" }} reverse>
   <h2>Built for performance</h2>
   <p>Every component ships with SSR support and zero layout shift.</p>
 </ImageText>
 ```
 
-<StorybookEmbed id="prokodo-common-imagetext--default" height={380} />
-
+<StorybookEmbed id="prokodo-layout-imagetext--default" height={380} />
 
 ---
 
 ## Import
 
 ```ts
-import { ImageText } from '@prokodo/ui/image-text'
+import { ImageText } from "@prokodo/ui/image-text"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/image-text.css'
+import "@prokodo/ui/image-text.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `image` | `ImageProps` | — | ✅ | Props forwarded to the `<Image>` component. |
-| `children` | `ReactNode` | — | ✅ | Text-side content. |
-| `reverse` | `boolean` | `false` | — | Image on the right instead of the left. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | — | Vertical alignment of the text column. |
-| `className` | `string` | — | — | CSS class on root element. |
+| Prop             | Type                                                 | Default | Required | Description                                          |
+| ---------------- | ---------------------------------------------------- | ------- | -------- | ---------------------------------------------------- |
+| `title`          | `string`                                             | —       | ✅       | Main heading text.                                   |
+| `titleProps`     | `Omit<HeadlineProps, "children">`                    | —       | —        | Props forwarded to the title Headline component.     |
+| `subTitle`       | `string`                                             | —       | —        | Sub-heading text.                                    |
+| `subTitleProps`  | `Omit<HeadlineProps, "children">`                    | —       | —        | Props forwarded to the sub-title Headline component. |
+| `content`        | `string`                                             | —       | —        | Body text content.                                   |
+| `image`          | `ImageProps`                                         | —       | —        | Image props.                                         |
+| `button`         | `ButtonProps`                                        | —       | —        | CTA button config.                                   |
+| `reverse`        | `boolean`                                            | `false` | —        | Reverse layout — image on the right.                 |
+| `animatedBorder` | `{ direction?: "top-to-bottom" \| "bottom-to-top" }` | —       | —        | Animated border config; `direction` controls flow.   |
+| `animation`      | `string`                                             | —       | —        | Animation name/class override.                       |
+| `className`      | `string`                                             | —       | —        | CSS class on root element.                           |
 
 > See [`src/components/image-text/ImageText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/image-text/ImageText.model.ts) for the full `ImageTextProps` type.
 
 ---
 
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                           | Default                 | Description                     |
+| ------------------------------- | ----------------------- | ------------------------------- |
+| `--pk-image-text-content-color` | `var(--pk-color-muted)` | Body copy paragraph text colour |
+
+> **`reverse` prop:** Image/content column order is now controlled via CSS Grid `order`, so this prop works correctly across all screen sizes.  
+> **`animatedBorder` prop:** When supplied, a 2-column animated gradient line renders beside the content column (to the right on desktop). Set `direction: "bottom-to-top"` to reverse the animation direction.
+
+---
+
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **1.3.2** | **Meaningful Sequence** (A) | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order. |
-| **1.4.4** | **Resize Text** (AA) | 🔍 Manual review | Text must remain readable and functional when scaled to 200% without assistive technology. |
+| Criterion | Name                           | Status           | Note                                                                                                        |
+| --------- | ------------------------------ | ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
+| **1.3.2** | **Meaningful Sequence** (A)    | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order.                         |
+| **1.4.4** | **Resize Text** (AA)           | 🔍 Manual review | Text must remain readable and functional when scaled to 200% without assistive technology.                  |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 1 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

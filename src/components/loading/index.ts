@@ -3,4 +3,5 @@ export type {
   LoadingProps,
   LoadingOverlayProps,
   LoadingSize,
+  LoadingColor,
 } from "./Loading.model"

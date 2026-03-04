@@ -10,6 +10,7 @@ const STORAGE_KEY = "prokodo-adminSidebarCollapsed"
 
 export default function SidebarClient({
   items,
+  sections,
   onChange,
   ...props
 }: SideNavProps): JSX.Element {
@@ -30,7 +31,7 @@ export default function SidebarClient({
 
   const formatedItems = useMemo(
     () =>
-      items.map(el => ({
+      items?.map(el => ({
         ...el,
         redirect: el?.redirect && {
           ...el?.redirect,
@@ -44,11 +45,31 @@ export default function SidebarClient({
     [items, onChange],
   )
 
+  const formatedSections = useMemo(
+    () =>
+      sections?.map(section => ({
+        ...section,
+        items: section.items.map(el => ({
+          ...el,
+          redirect: el?.redirect && {
+            ...el?.redirect,
+            href: el?.redirect?.href ?? "",
+            onClick: e => {
+              el?.redirect?.onClick?.(e)
+              onChange?.(el)
+            },
+          },
+        })),
+      })),
+    [sections, onChange],
+  )
+
   return (
     <SideNavView
       {...props}
       collapsed={collapsed}
       items={formatedItems}
+      sections={formatedSections}
       onToggle={handleToggle}
     />
   )

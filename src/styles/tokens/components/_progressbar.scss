@@ -1,0 +1,14 @@
+// =============================================================================
+// PROGRESS BAR TOKENS
+// =============================================================================
+
+@mixin progressbar-tokens() {
+  // Track (background rail)
+  --pk-progressbar-track-bg:  var(--pk-color-surface-raised, var(--pk-palette-grey-100));
+  --pk-progressbar-radius:    0.75rem;
+  --pk-progressbar-height:    1rem;
+  --pk-progressbar-shadow:    var(--elevation-2);
+
+  // Bar label
+  --pk-progressbar-label-size: 0.875rem;
+}

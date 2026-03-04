@@ -1,9 +1,9 @@
 import { Animated } from "./Animated"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Animated",
+  title: "prokodo/content/Animated",
   component: Animated,
   parameters: {
     layout: "centered",

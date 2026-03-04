@@ -14,63 +14,81 @@ description: Accessible HTML table with sortable columns, striped rows, sticky h
 ## Overview
 
 ```tsx
-import { Table } from '@prokodo/ui/table'
-
-<Table
+import { Table } from "@prokodo/ui/table"
+;<Table
   columns={[
-    { key: 'name', label: 'Name', sortable: true },
-    { key: 'email', label: 'Email' },
-    { key: 'role', label: 'Role' },
+    { key: "name", label: "Name", sortable: true },
+    { key: "email", label: "Email" },
+    { key: "role", label: "Role" },
   ]}
   rows={users}
 />
 ```
 
-<StorybookEmbed id="prokodo-common-table--default" height={320} />
-
+<StorybookEmbed id="prokodo-layout-table--default" height={320} />
 
 ---
 
 ## Import
 
 ```ts
-import { Table } from '@prokodo/ui/table'
+import { Table } from "@prokodo/ui/table"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/table.css'
+import "@prokodo/ui/table.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `columns` | `TableColumn[]` | — | ✅ | Column definitions with `key`, `label`, and optional `sortable`. |
-| `rows` | `Record<string, ReactNode>[]` | — | ✅ | Row data; each object key maps to a column `key`. |
-| `stickyHeader` | `boolean` | `false` | — | Make the `<thead>` stick on scroll. |
-| `striped` | `boolean` | `true` | — | Alternate row background colors. |
-| `onSort` | `(key: string, dir: "asc" \| "desc") => void` | — | — | Called when a sortable column header is clicked. |
-| `emptyMessage` | `string` | `"No data"` | — | Message shown when `rows` is empty. |
-| `className` | `string` | — | — | CSS class on root `<table>`. |
+| Prop                 | Type                     | Default    | Required | Description                                              |
+| -------------------- | ------------------------ | ---------- | -------- | -------------------------------------------------------- |
+| `caption`            | `string`                 | —          | ✅       | Accessible table caption.                                |
+| `ariaLabel`          | `string`                 | —          | ✅       | ARIA label for the table element.                        |
+| `header`             | `TableHeaderCellProps[]` | —          | —        | Column header definitions.                               |
+| `body`               | `TableRowProps[]`        | —          | —        | Table row data.                                          |
+| `title`              | `string`                 | —          | —        | Visible title displayed above the table.                 |
+| `titleProps`         | `HeadlineProps`          | —          | —        | Props forwarded to the title Headline.                   |
+| `content`            | `string`                 | —          | —        | Optional description below the title.                    |
+| `type`               | `"double" \| "single"`   | `"single"` | —        | `"double"` — all borders; `"single"` — row borders only. |
+| `containerClassName` | `string`                 | —          | —        | CSS class on the table container wrapper.                |
+| `className`          | `string`                 | —          | —        | CSS class on root element.                               |
 
 > See [`src/components/table/Table.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/table/Table.model.ts) for the full `TableProps` type.
 
 ---
 
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                            | Default                                                     | Description                     |
+| -------------------------------- | ----------------------------------------------------------- | ------------------------------- |
+| `--pk-table-border-color`        | `var(--pk-color-border)`                                    | Row separator border colour     |
+| `--pk-table-header-accent-color` | `var(--pk-color-brand)`                                     | First header cell accent colour |
+| `--pk-table-row-hover-bg`        | `color-mix(in srgb, var(--pk-color-brand) 8%, transparent)` | Row hover/focus background tint |
+| `--pk-table-caption-color`       | `var(--pk-color-muted)`                                     | Caption text colour             |
+| `--pk-table-cell-fg`             | `var(--pk-color-fg)`                                        | Default cell foreground colour  |
+| `--pk-table-padding-y`           | `var(--pk-space-xl)`                                        | Cell vertical padding           |
+| `--pk-table-padding-x`           | `var(--pk-space-sm)`                                        | Cell horizontal padding         |
+| `--pk-table-container-pb`        | `var(--pk-space-xl)`                                        | Root container bottom padding   |
+
+---
+
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **1.3.2** | **Meaningful Sequence** (A) | ✅ Fulfilled | Content reading order in the DOM must match the intended visual presentation order. |
-| **1.4.3** | **Contrast (Minimum)** (AA) | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme. |
-| **2.1.1** | **Keyboard** (A) | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing. |
-| **2.4.3** | **Focus Order** (A) | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.3.2** | **Meaningful Sequence** (A)    | ✅ Fulfilled     | Content reading order in the DOM must match the intended visual presentation order.                                             |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                 |
+| **2.1.1** | **Keyboard** (A)               | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing.                                       |
+| **2.4.3** | **Focus Order** (A)            | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                     |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 1 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.

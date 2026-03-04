@@ -1,5 +1,4 @@
 @use "@/styles/ui/mixins/bem" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 
 @include define-block("Tooltip") {
@@ -51,11 +50,12 @@
     white-space: normal;
     overflow-wrap: anywhere;
 
-    padding: $space-xs $space-sm;
-    border-radius: 10px;
-    box-shadow: var(--elevation-2);
-    background: var(--color-grey-900);
-    color: var(--color-white);
+    padding: var(--pk-space-xs) var(--pk-space-sm);
+    border-radius: var(--pk-tooltip-radius);
+    border: var(--pk-border-width) solid var(--pk-tooltip-border);
+    box-shadow: var(--pk-tooltip-shadow);
+    background: var(--pk-tooltip-bg);
+    color: var(--pk-tooltip-fg);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -84,7 +84,7 @@
       top: 100%;
       transform: translateX(-50%);
       border-width: $arrow-size $arrow-size 0 $arrow-size;
-      border-color: var(--color-grey-900) transparent transparent transparent;
+      border-color: var(--pk-tooltip-bg) transparent transparent transparent;
     }
 
     &--bottom::after {
@@ -92,7 +92,7 @@
       bottom: 100%;
       transform: translateX(-50%);
       border-width: 0 $arrow-size $arrow-size $arrow-size;
-      border-color: transparent transparent var(--color-grey-900) transparent;
+      border-color: transparent transparent var(--pk-tooltip-bg) transparent;
     }
 
     &--left::after {
@@ -100,7 +100,7 @@
       left: 100%;
       transform: translateY(-50%);
       border-width: $arrow-size 0 $arrow-size $arrow-size;
-      border-color: transparent transparent transparent var(--color-grey-900);
+      border-color: transparent transparent transparent var(--pk-tooltip-bg);
     }
 
     &--right::after {
@@ -108,7 +108,48 @@
       right: 100%;
       transform: translateY(-50%);
       border-width: $arrow-size $arrow-size $arrow-size 0;
-      border-color: transparent var(--color-grey-900) transparent transparent;
+      border-color: transparent var(--pk-tooltip-bg) transparent transparent;
+    }
+
+    // Color variants — re-declare base tokens so arrows auto-adapt
+    &--success {
+      --pk-tooltip-bg:     var(--pk-tooltip-success-bg);
+      --pk-tooltip-fg:     var(--pk-tooltip-success-fg);
+      --pk-tooltip-border: var(--pk-tooltip-success-border);
+      box-shadow: var(--pk-tooltip-success-shadow);
+      background: var(--pk-tooltip-bg);
+      color: var(--pk-tooltip-fg);
+      border-color: var(--pk-tooltip-border);
+    }
+
+    &--error {
+      --pk-tooltip-bg:     var(--pk-tooltip-error-bg);
+      --pk-tooltip-fg:     var(--pk-tooltip-error-fg);
+      --pk-tooltip-border: var(--pk-tooltip-error-border);
+      box-shadow: var(--pk-tooltip-error-shadow);
+      background: var(--pk-tooltip-bg);
+      color: var(--pk-tooltip-fg);
+      border-color: var(--pk-tooltip-border);
+    }
+
+    &--warning {
+      --pk-tooltip-bg:     var(--pk-tooltip-warning-bg);
+      --pk-tooltip-fg:     var(--pk-tooltip-warning-fg);
+      --pk-tooltip-border: var(--pk-tooltip-warning-border);
+      box-shadow: var(--pk-tooltip-warning-shadow);
+      background: var(--pk-tooltip-bg);
+      color: var(--pk-tooltip-fg);
+      border-color: var(--pk-tooltip-border);
+    }
+
+    &--info {
+      --pk-tooltip-bg:     var(--pk-tooltip-info-bg);
+      --pk-tooltip-fg:     var(--pk-tooltip-info-fg);
+      --pk-tooltip-border: var(--pk-tooltip-info-border);
+      box-shadow: var(--pk-tooltip-info-shadow);
+      background: var(--pk-tooltip-bg);
+      color: var(--pk-tooltip-fg);
+      border-color: var(--pk-tooltip-border);
     }
   }
 

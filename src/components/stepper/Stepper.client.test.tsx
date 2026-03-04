@@ -1,4 +1,4 @@
-import { act, render, screen } from "@/tests"
+import { act, fireEvent, render, screen } from "@/tests"
 
 import type { Step } from "./Stepper.model"
 
@@ -390,5 +390,27 @@ describe("Stepper.client", () => {
       "0",
     )
     expect(preventDefault).toHaveBeenCalled()
+  })
+
+  it("ArrowRight does nothing when next is within bounds but not yet completed", async () => {
+    // index=0, next=1, activeStep=0: outer (1 < 3)=true, inner (1 < 0)=false
+    render(<StepperClient initialStep={0} steps={steps} />)
+    fireEvent.keyDown(screen.getByTestId("step-0"), {
+      key: "ArrowRight",
+    })
+    expect(screen.getByTestId("stepper-view")).toHaveAttribute(
+      "data-active",
+      "0",
+    )
+  })
+
+  it("ignores unrecognised keys (e.g. Tab) without changing step", async () => {
+    // Covers else-if (key === "ArrowRight") false branch (branch 9[1])
+    render(<StepperClient initialStep={1} steps={steps} />)
+    fireEvent.keyDown(screen.getByTestId("step-0"), { key: "Tab" })
+    expect(screen.getByTestId("stepper-view")).toHaveAttribute(
+      "data-active",
+      "1",
+    )
   })
 })

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Tabs } from "./Tabs"
 
 import type { TabsProps } from "./Tabs.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const defaultItems: TabsProps["items"] = [
   {
@@ -49,9 +49,14 @@ const meta = {
       control: "inline-radio",
       options: ["automatic", "manual"],
     },
+    color: {
+      control: "inline-radio",
+      options: ["primary", "secondary", "success", "error", "info", "warning"],
+    },
     disabled: { control: "boolean" },
     fullWidth: { control: "boolean" },
     ariaLabel: { control: "text" },
+    badgeChipProps: { table: { disable: true } },
     className: { table: { disable: true } },
     listClassName: { table: { disable: true } },
     tabClassName: { table: { disable: true } },
@@ -192,6 +197,70 @@ export const BadgeChipProps: Story = {
         content: "No badge for this tab.",
       },
     ],
+  },
+  render: args => <Playground {...args} />,
+}
+
+export const ColorPrimary: Story = {
+  args: {
+    ...Default.args,
+    id: "tabs-color-primary",
+    color: "primary",
+  },
+  render: args => <Playground {...args} />,
+}
+
+export const ColorSecondary: Story = {
+  args: {
+    ...Default.args,
+    id: "tabs-color-secondary",
+    color: "secondary",
+  },
+  render: args => <Playground {...args} />,
+}
+
+export const ColorSuccess: Story = {
+  args: {
+    ...Default.args,
+    id: "tabs-color-success",
+    color: "success",
+  },
+  render: args => <Playground {...args} />,
+}
+
+export const ColorError: Story = {
+  args: {
+    ...Default.args,
+    id: "tabs-color-error",
+    color: "error",
+  },
+  render: args => <Playground {...args} />,
+}
+
+export const ColorWarning: Story = {
+  args: {
+    ...Default.args,
+    id: "tabs-color-warning",
+    color: "warning",
+  },
+  render: args => <Playground {...args} />,
+}
+
+export const ColorInfo: Story = {
+  args: {
+    ...Default.args,
+    id: "tabs-color-info",
+    color: "info",
+  },
+  render: args => <Playground {...args} />,
+}
+
+export const ColorVertical: Story = {
+  args: {
+    ...Default.args,
+    id: "tabs-color-vertical",
+    color: "secondary",
+    orientation: "vertical",
   },
   render: args => <Playground {...args} />,
 }

@@ -9,68 +9,76 @@ description: Group of checkboxes with shared label, multi-select state managemen
 
 `CheckboxGroup` manages a set of related `Checkbox` inputs as a multi-select group. Handles selection state, accessible grouping, and error display for the group as a whole.
 
-
 ---
 
 ## Übersicht
 
 ```tsx
-import { CheckboxGroup } from '@prokodo/ui/checkbox-group'
-
-<CheckboxGroup
-  label="Interests"
-  name="interests"
+import { CheckboxGroup } from "@prokodo/ui/checkbox-group"
+;<CheckboxGroup
+  legend="Interessen"
   options={[
-    { label: 'Design', value: 'design' },
-    { label: 'Development', value: 'dev' },
-    { label: 'Marketing', value: 'marketing' },
+    { value: "design", title: "Design" },
+    { value: "dev", title: "Entwicklung" },
+    { value: "marketing", title: "Marketing" },
   ]}
-  value={selected}
+  values={selected}
   onChange={setSelected}
 />
 ```
 
-<StorybookEmbed id="prokodo-form-checkboxgroup--controlled" />
-
+<StorybookEmbed id="prokodo-form-checkboxgroup--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { CheckboxGroup } from '@prokodo/ui/checkbox-group'
+import { CheckboxGroup } from "@prokodo/ui/checkbox-group"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/checkbox-group.css'
+import "@prokodo/ui/checkbox-group.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Typ | Standard | Pflicht | Beschreibung |
-|------|------|---------|----------|-------------|
-| `name` | `string` | — | ✅ | Shared input `name` for all checkboxes in the group. |
-| `options` | `CheckboxOption[]` | — | ✅ | Array von `{ label, value, disabled? }` options. |
-| `label` | `string` | — | — | Group legend label. |
-| `value` | `string[]` | — | — | Controlled selected values. |
-| `onChange` | `(value: string[]) => void` | — | — | Called with the updated selected array on change. |
-| `error` | `string` | — | — | Error message displayed below the group. |
-| `className` | `string` | — | — | CSS-Klasse am Root-`<fieldset>`-Element. |
+| Prop              | Typ                     | Standard  | Pflicht | Beschreibung                                          |
+| ----------------- | ----------------------- | --------- | ------- | ----------------------------------------------------- |
+| `legend`          | `ReactNode`             | —         | —       | Fieldset-Legendentext.                                |
+| `hideLegend`      | `boolean`               | `false`   | —       | Legende visuell ausblenden (bleibt barrierefrei).     |
+| `legendProps`     | `object`                | —         | —       | Props an das Legendenelement weitergeben.             |
+| `ariaLabel`       | `string`                | —         | —       | Barrierefreie Bezeichnung des Fieldsets.              |
+| `options`         | `CheckboxGroupOption[]` | —         | ✅      | Array von Checkbox-Einträgen.                         |
+| `values`          | `T[]`                   | —         | —       | Gesteuerte ausgewählte Werte.                         |
+| `defaultValues`   | `T[]`                   | —         | —       | Unkontrollierte Ausgangswerte.                        |
+| `hiddenInputName` | `string`                | —         | —       | Versteckter Input-Name für die Formular-Übermittlung. |
+| `disabled`        | `boolean`               | `false`   | —       | Alle Checkboxen deaktivieren.                         |
+| `required`        | `boolean`               | `false`   | —       | Feld als Pflichtfeld markieren.                       |
+| `layout`          | `"stack" \| "grid"`     | `"stack"` | —       | Layout der Checkbox-Einträge.                         |
+| `variant`         | `"plain" \| "card"`     | `"plain"` | —       | Visuelle Variante für alle Checkboxen.                |
+| `color`           | `Variants`              | —         | —       | Farbakzent-Variante.                                  |
+| `onChange`        | `(values: T[]) => void` | —         | —       | Wird bei Auswahlwechsel aufgerufen.                   |
+| `className`       | `string`                | —         | —       | CSS-Klasse am Root-Element.                           |
 
 > Siehe [`src/components/checkbox-group/CheckboxGroup.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/checkbox-group/CheckboxGroup.model.ts) für den vollständigen `CheckboxGroupProps`-Typ.
 
 ---
+
+## Design-Tokens
+
+`CheckboxGroup` erbt dieselben Tokens wie `Checkbox`. Vollständige Liste: [Checkbox — Design-Tokens](/docs/components/checkbox#design-tokens-1).
 
 ## AIC-Hinweis
 
 Verwende im Anwendungscode immer den Standard-Importpfad:
 
 ```ts
-import { CheckboxGroup } from '@prokodo/ui/checkbox-group'
+import { CheckboxGroup } from "@prokodo/ui/checkbox-group"
 ```
 
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
@@ -82,14 +90,14 @@ Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`)
 
 ## WCAG-2.2-Status
 
-| Kriterium | Bezeichnung | Status | Hinweis |
-|-----------|-------------|--------|---------|
-| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden. |
-| **1.4.1** | **Verwendung von Farbe** (A) | 🔍 Manuell prüfen | Farbe darf nicht das einzige Mittel zur Informationsvermittlung sein (z. B. Fehlerhinweise, Pflichtfeldmarkierungen). |
-| **2.1.1** | **Tastatur** (A) | ✅ Erfüllt | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen. |
-| **2.4.7** | **Fokus sichtbar** (AA) | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
-| **3.3.2** | **Bezeichnungen oder Anweisungen** (A) | ✅ Erfüllt | Jedes Formularfeld benötigt ein programmatisch verknüpftes Label oder eine sichtbare Anweisung. |
-| **4.1.2** | **Name, Rolle, Wert** (A) | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+| Kriterium | Bezeichnung                            | Status            | Hinweis                                                                                                                                              |
+| --------- | -------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info und Beziehungen** (A)           | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.                            |
+| **1.4.1** | **Verwendung von Farbe** (A)           | 🔍 Manuell prüfen | Farbe darf nicht das einzige Mittel zur Informationsvermittlung sein (z. B. Fehlerhinweise, Pflichtfeldmarkierungen).                                |
+| **2.1.1** | **Tastatur** (A)                       | ✅ Erfüllt        | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                             |
+| **2.4.7** | **Fokus sichtbar** (AA)                | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **3.3.2** | **Bezeichnungen oder Anweisungen** (A) | ✅ Erfüllt        | Jedes Formularfeld benötigt ein programmatisch verknüpftes Label oder eine sichtbare Anweisung.                                                      |
+| **4.1.2** | **Name, Rolle, Wert** (A)              | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                 |
 
 > **Testabdeckung:** 1 jest-axe-Assertion(s) in 5 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.

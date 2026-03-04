@@ -6,10 +6,10 @@ import type {
   TableRowProps,
 } from "./Table.model"
 import type { IconProps } from "../icon"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta: Meta<typeof Table> = {
-  title: "prokodo/common/Table",
+  title: "prokodo/layout/Table",
   component: Table,
   parameters: {
     layout: "centered",

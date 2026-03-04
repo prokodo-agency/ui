@@ -8,7 +8,7 @@ import { LinkView } from "./Link.view"
 describe("The common link component", () => {
   it("should render primary", async () => {
     render(
-      <Link href="/" variant="primary">
+      <Link color="primary" href="/">
         Primary link
       </Link>,
     )
@@ -17,7 +17,7 @@ describe("The common link component", () => {
 
   it("should render secondary", async () => {
     render(
-      <Link href="/" variant="secondary">
+      <Link color="secondary" href="/">
         Secondary link
       </Link>,
     )
@@ -26,7 +26,7 @@ describe("The common link component", () => {
 
   it("should not open inbound links in a new tab", async () => {
     render(
-      <Link href="/" variant="primary">
+      <Link color="primary" href="/">
         Inbound link
       </Link>,
     )
@@ -37,7 +37,7 @@ describe("The common link component", () => {
 
   it("primary link has no axe violations", async () => {
     const { container } = render(
-      <Link href="/about" variant="primary">
+      <Link color="primary" href="/about">
         About us
       </Link>,
     )
@@ -46,7 +46,7 @@ describe("The common link component", () => {
 
   it("secondary link has no axe violations", async () => {
     const { container } = render(
-      <Link href="/contact" variant="secondary">
+      <Link color="secondary" href="/contact">
         Contact
       </Link>,
     )

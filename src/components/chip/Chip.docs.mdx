@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as ChipStories from "./Chip.stories"
 
 <Meta of={ChipStories} />
@@ -41,6 +41,23 @@ Use `Chip` to represent discrete values such as tags, filters, selected items, o
 
 - Don't use chips as primary navigation — use `Tabs` or `Link` instead
 - Don't put too many deletable chips in one line — wrap and paginate large sets
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                | Purpose                                                            |
+| -------------------- | ------------------------------------------------------------------ |
+| `--pk-space-sm`      | Horizontal padding, icon gap                                       |
+| `--pk-radius-pill`   | Pill border-radius                                                 |
+| `--pk-color-brand`   | Primary fill / border / shadow                                     |
+| `--pk-color-accent`  | Secondary fill / border / shadow                                   |
+| `--pk-color-success` | Success fill / border / shadow                                     |
+| `--pk-color-warning` | Warning fill / border / shadow                                     |
+| `--pk-color-error`   | Error fill / border / shadow                                       |
+| `--pk-color-fg`      | Adaptive base text color (white in dark mode) and `inherit` shadow |
+| `--pk-color-border`  | Outlined variant border                                            |
+| `--pk-timing-normal` | Hover transition duration (color + shadow)                         |
 
 ## Examples
 

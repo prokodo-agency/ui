@@ -1,6 +1,6 @@
 import type { ButtonProps } from "../button"
 import type { CardProps } from "../card"
-import type { HeadlineProps } from "../headline"
+import type { HeadlineProps, HeadlineVariant } from "../headline"
 import type { ImageProps } from "../image"
 import type { PostItemAuthorProps } from "./PostItemAuthor.model"
 
@@ -85,6 +85,12 @@ export type PostItemPropsBase = {
   classes?: PostItemClasses
   /** Component-level prop overrides. */
   componentsProps?: PostItemComponentsProps
+  /**
+   * Color variant. Controls both the Card's colored border/shadow and the title
+   * Headline color (as a fallback when `title.color` is not set).
+   * Uses the same palette as all other blog components for visual consistency.
+   */
+  color?: HeadlineVariant
   /** Word count for reading time calculation. */
   wordCount?: number
   /** Number of reads (display only). */

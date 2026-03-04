@@ -1,4 +1,5 @@
 import type { LabelProps } from "../label"
+import type { Variants } from "@/types/variants"
 import type {
   ChangeEvent,
   RefObject,
@@ -108,6 +109,8 @@ export interface SelectProps<Value extends string = string> {
   label: string
   /** Hide label (but keep in DOM for a11y). */
   hideLabel?: boolean
+  /** Visual color — controls shadow glow and accent color. Default: "primary". */
+  color?: Variants
   /** Show icon inside selected option button. */
   iconVisible?: boolean
 

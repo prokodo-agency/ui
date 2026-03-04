@@ -1,16 +1,86 @@
 @use "@/styles/ui/mixins/bem" as *;
-@use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/designsystem/mixins/texts"     as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+
+// Pending state shimmer / wave animation
+@keyframes pk-pagination-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.96); }
+}
 
 @include define-block("Pagination") {
   display: inline-flex;
   align-items: center;
-  gap: $space-sm;
+  gap: var(--pk-pagination-gap);
 
+  // ─── pending state ─────────────────────────────────────────────────────────
+  // Override Button disabled tokens so buttons stay coloured during load (not gray)
+  &--is-pending {
+    --pk-button-disabled-bg: transparent;
+    --pk-button-disabled-fg: var(--pk-pagination-fg);
+    pointer-events: none;
+  }
+
+  // Animate all page + nav buttons while pending
+  &--is-pending &__btn,
+  &--is-pending &__page {
+    animation: pk-pagination-pulse 1.4s ease-in-out infinite;
+  }
+
+  // Slower / distinct pulse on active page so it stands out
+  &--is-pending &__page--active {
+    animation-duration: 2.4s;
+  }
+
+  // Staggered wave: each successive page item lags slightly
+  @for $i from 1 through 11 {
+    &--is-pending &__item:nth-child(#{$i}) &__page {
+      animation-delay: #{($i - 1) * 0.065}s;
+    }
+  }
+
+  // ─── color variants ────────────────────────────────────────────────────────
+  &--color-primary {
+    --pk-pagination-active-border:   var(--pk-color-brand);
+    --pk-pagination-active-shadow:   0 4px 18px color-mix(in srgb, var(--pk-color-brand) 45%, transparent);
+    --pk-pagination-active-gradient: var(--gradient-border-4);
+  }
+
+  &--color-secondary {
+    --pk-pagination-active-border:   var(--pk-color-accent);
+    --pk-pagination-active-shadow:   0 4px 18px color-mix(in srgb, var(--pk-color-accent) 45%, transparent);
+    --pk-pagination-active-gradient: var(--gradient-border-2);
+  }
+
+  &--color-success {
+    --pk-pagination-active-border:   var(--pk-color-success);
+    --pk-pagination-active-shadow:   0 4px 18px color-mix(in srgb, var(--pk-color-success) 45%, transparent);
+    --pk-pagination-active-gradient: var(--gradient-border-success);
+  }
+
+  &--color-error {
+    --pk-pagination-active-border:   var(--pk-color-error);
+    --pk-pagination-active-shadow:   0 4px 18px color-mix(in srgb, var(--pk-color-error) 45%, transparent);
+    --pk-pagination-active-gradient: var(--gradient-border-error);
+  }
+
+  &--color-warning {
+    --pk-pagination-active-border:   var(--pk-color-warning);
+    --pk-pagination-active-shadow:   0 4px 18px color-mix(in srgb, var(--pk-color-warning) 45%, transparent);
+    --pk-pagination-active-gradient: var(--gradient-border-warning);
+  }
+
+  &--color-info {
+    --pk-pagination-active-border:   var(--pk-color-info);
+    --pk-pagination-active-shadow:   0 4px 18px color-mix(in srgb, var(--pk-color-info) 45%, transparent);
+    --pk-pagination-active-gradient: var(--gradient-border-info);
+  }
+
+  // ─── items ─────────────────────────────────────────────────────────────────
   &__list {
     display: inline-flex;
     align-items: center;
-    gap: $space-sm;
+    gap: var(--pk-pagination-gap);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -22,34 +92,71 @@
   }
 
   &__ellipsis {
-    color: var(--color-grey-700);
-    padding: 0 $space-xs;
+    color: var(--pk-pagination-fg);
+    padding: 0 var(--pk-pagination-pad-x);
     user-select: none;
     @include text("caption");
   }
 
+  // ─── navigation arrows ─────────────────────────────────────────────────────
   &__btn {
     width: 40px;
     height: 40px;
-  }
+    transition: box-shadow 140ms ease;
 
-  // page number button sizing
-  &__page {
-    min-width: 36px;
-    height: 36px;
-    padding: 0 $space-xs;
-    border-radius: 10px;
-    color: var(--color-grey-700);
-    border: 1px solid var(--color-grey-100);
-    text-align: center !important;
-
-    html[data-theme='dark'] & {
-      border: 1px solid var(--color-grey-500);
+    &:not(:disabled):hover {
+      box-shadow: 0 4px 14px color-mix(in srgb, var(--pk-pagination-active-border) 30%, transparent);
     }
   }
 
+  // ─── page number buttons ───────────────────────────────────────────────────
+  &__page {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 var(--pk-pagination-pad-x);
+    border-radius: var(--pk-pagination-page-radius);
+    color: var(--pk-pagination-fg);
+    border: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    text-align: center !important;
+    transition: box-shadow 140ms ease, background 140ms ease, color 140ms ease, transform 140ms ease;
+
+    &:not(:disabled):hover {
+      background: color-mix(in srgb, var(--pk-pagination-active-bg) 10%, transparent) !important;
+      background-color: color-mix(in srgb, var(--pk-pagination-active-bg) 10%, transparent) !important;
+      color: var(--pk-pagination-active-border) !important;
+      transform: scale(1.05);
+    }
+  }
+
+  // Active page — gradient border + adaptive text, no solid fill
   &__page--active {
-    border: none;
     pointer-events: none;
+    border-radius: calc(var(--pk-pagination-page-radius) + 2px);
+    box-shadow: var(--pk-pagination-active-shadow);
+    transform: scale(1.1);
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+    // Transparent bg so the gradient border pseudo shines through
+    color:            var(--pk-color-fg) !important;
+    background:       transparent !important;
+    background-color: transparent !important;
+    --pk-button-disabled-bg: transparent;
+    --pk-button-disabled-fg: var(--pk-color-fg);
+    // Gradient border mask (same technique as Button outlined)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      background: var(--pk-pagination-active-gradient) !important;
+    }
   }
 }

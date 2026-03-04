@@ -1,0 +1,135 @@
+name: Bump version
+
+# Manual trigger from the GitHub Actions UI.
+# Pick the bump type → workflow bumps package.json, writes CHANGELOG.md,
+# syncs the entry to docs/docs/changelog.mdx, then commits with a
+# "chore(release): vX.Y.Z" message that triggers release.yml automatically.
+#
+# ⚠  Branch protection: GITHUB_TOKEN can only push to main when
+#    "Allow specified actors to bypass required pull requests" is enabled for
+#    the github-actions[bot]. If not, create a fine-grained PAT (Contents: write)
+#    stored as secret RELEASE_TOKEN and it will be preferred automatically.
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Semver increment"
+        required: true
+        type: choice
+        options: [patch, minor, major]
+
+jobs:
+  bump:
+    name: Bump ${{ inputs.bump }} → changelog → commit → push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      # Bump package.json — no git tag here, release.yml creates it after publishing.
+      - name: Bump package.json version
+        id: ver
+        shell: bash
+        run: |
+          PREV=$(node -p "require('./package.json').version")
+          echo "prev_version=${PREV}" >> "$GITHUB_OUTPUT"
+          NEW_TAG=$(npm version ${{ inputs.bump }} --no-git-tag-version)
+          echo "tag=${NEW_TAG}"       >> "$GITHUB_OUTPUT"
+          echo "version=${NEW_TAG#v}" >> "$GITHUB_OUTPUT"
+
+      # Prepend a new section to CHANGELOG.md using git log since the last tag.
+      - name: Update CHANGELOG.md
+        shell: bash
+        run: |
+          VER="${{ steps.ver.outputs.version }}"
+          TAG="${{ steps.ver.outputs.tag }}"
+          DATE=$(date -u +%Y-%m-%d)
+          REPO="https://github.com/${{ github.repository }}"
+          PREV=$(git describe --tags --abbrev=0 HEAD 2>/dev/null || true)
+
+          if [ -n "$PREV" ]; then
+            COMPARE_URL="${REPO}/compare/${PREV}...${TAG}"
+            LOG=$(git log "${PREV}..HEAD" \
+              --pretty=format:"- %s" \
+              --no-merges 2>/dev/null \
+              | grep -v '^- chore(release):' || true)
+          else
+            COMPARE_URL="${REPO}/releases/tag/${TAG}"
+            LOG=$(git log \
+              --pretty=format:"- %s" \
+              --no-merges 2>/dev/null \
+              | grep -v '^- chore(release):' || true)
+          fi
+
+          [ -z "$LOG" ] && LOG="- (no user-facing changes)"
+
+          {
+            head -1 CHANGELOG.md
+            printf "\n## [%s](%s) — %s\n\n%s\n" "${VER}" "${COMPARE_URL}" "${DATE}" "${LOG}"
+            tail -n +2 CHANGELOG.md
+          } > CHANGELOG.tmp
+          mv CHANGELOG.tmp CHANGELOG.md
+
+      # Mirror the new entry into the deployed docs changelog page so the site
+      # is always in sync after the bump commit triggers the deploy.
+      - name: Sync changelog entry to docs/docs/changelog.mdx
+        shell: bash
+        run: |
+          VER="${{ steps.ver.outputs.version }}"
+          TAG="${{ steps.ver.outputs.tag }}"
+          DATE=$(date -u +%Y-%m-%d)
+          REPO="https://github.com/${{ github.repository }}"
+          PREV=$(git describe --tags --abbrev=0 HEAD 2>/dev/null || true)
+
+          if [ -n "$PREV" ]; then
+            COMPARE_URL="${REPO}/compare/${PREV}...${TAG}"
+            LOG=$(git log "${PREV}..HEAD" \
+              --pretty=format:"- %s" \
+              --no-merges 2>/dev/null \
+              | grep -v '^- chore(release):' || true)
+          else
+            COMPARE_URL="${REPO}/releases/tag/${TAG}"
+            LOG=$(git log \
+              --pretty=format:"- %s" \
+              --no-merges 2>/dev/null \
+              | grep -v '^- chore(release):' || true)
+          fi
+
+          [ -z "$LOG" ] && LOG="- (no user-facing changes)"
+
+          ENTRY=$(printf "## [%s](%s) — %s\n\n%s\n" "${VER}" "${COMPARE_URL}" "${DATE}" "${LOG}")
+
+          # Insert before the first existing '## [' release heading so the MDX
+          # frontmatter and intro paragraph stay untouched.
+          awk -v entry="$ENTRY" '
+            /^## \[/ && !done { print entry; done=1 }
+            { print }
+          ' docs/docs/changelog.mdx > docs/docs/changelog.mdx.tmp
+          mv docs/docs/changelog.mdx.tmp docs/docs/changelog.mdx
+
+      - name: Commit version bump
+        shell: bash
+        run: |
+          git add -A
+          # "chore(release):" prefix is the gate used by release.yml and ci/pr
+          # skip conditions — do not change this prefix.
+          git commit -m "chore(release): v${{ steps.ver.outputs.version }}"
+          git push origin HEAD:${{ github.ref_name }}

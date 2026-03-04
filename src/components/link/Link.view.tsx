@@ -8,7 +8,7 @@ import type { JSX } from "react"
 const bem = create(styles, "Link")
 
 export function LinkView({
-  variant = "inherit",
+  color = "inherit",
   href,
   children,
   className,
@@ -26,7 +26,7 @@ export function LinkView({
 }: LinkViewProps): JSX.Element {
   const linkMod = {
     "has-no-background": hasBackground === false,
-    [`has-no-background--${variant}`]: hasBackground === false,
+    [`has-no-background--${color}`]: hasBackground === false,
   }
 
   const common = {
@@ -42,18 +42,18 @@ export function LinkView({
         {...common}
         role={hasHandlers ? "button" : undefined}
         tabIndex={hasHandlers ? 0 : undefined}
-        onClick={hasHandlers ? onClick : undefined}
-        onKeyDown={
-          hasHandlers
-            ? e => {
+        {...(hasHandlers
+          ? {
+              onClick,
+              onKeyDown: (e: React.KeyboardEvent) => {
                 if (e.key === "Enter" || e.key === " ") {
                   ;(onClick as unknown as (ev: React.SyntheticEvent) => void)?.(
                     e,
                   )
                 }
-              }
-            : undefined
-        }
+              },
+            }
+          : {})}
         {...rest}
       >
         {children}

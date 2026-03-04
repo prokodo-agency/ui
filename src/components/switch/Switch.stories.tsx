@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import { Switch } from "./Switch"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
   title: "prokodo/form/Switch",
@@ -12,7 +12,7 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    variant: {
+    color: {
       options: [
         "inherit",
         "primary",
@@ -35,23 +35,43 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     name: "switch-1",
+  },
+  render: args => {
+    const [checked, setChecked] = useState(false)
+    return (
+      <Switch
+        {...args}
+        checked={checked}
+        onChange={() => setChecked(v => !v)}
+      />
+    )
   },
 }
 
 export const WithLabel: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     label: "Change me",
     name: "switch-2",
+  },
+  render: args => {
+    const [checked, setChecked] = useState(false)
+    return (
+      <Switch
+        {...args}
+        checked={checked}
+        onChange={() => setChecked(v => !v)}
+      />
+    )
   },
 }
 
 /* eslint react-hooks/rules-of-hooks: 0 */
 export const WithIcon: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     icon: "CancelCircleIcon",
     name: "switch-3",
     checkedIcon: "Tick03Icon",

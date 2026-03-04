@@ -8,6 +8,87 @@
         "combined": "^\\.combined-{componentName}-[a-z]+$"
       },
       "utilitySelectors": "^\\.util-[a-z]+$"
+    },
+
+    "declaration-no-important": [
+      true,
+      {
+        "message": "Avoid !important. Use token specificity instead."
+      }
+    ],
+
+    "max-nesting-depth": [
+      2,
+      {
+        "ignore": ["blockless-at-rules", "pseudo-classes"],
+        "message": "Max nesting depth is 2. Refactor to flat BEM modifiers."
+      }
+    ],
+
+    "selector-max-compound-selectors": [
+      3,
+      {
+        "message": "Max 3 compound selectors. Keep BEM blocks shallow."
+      }
+    ],
+
+    "selector-max-specificity": [
+      "0,3,0",
+      {
+        "message": "Max specificity 0,3,0. Avoid deep class chains."
+      }
+    ],
+
+    "color-no-hex": [
+      true,
+      {
+        "message": "Use CSS custom properties (var(--pk-*)) instead of bare hex values in component modules.",
+        "disableFix": true
+      }
+    ],
+
+    "declaration-property-value-disallowed-list": [
+      {
+        "/.*/": ["var(--pk-palette-*)"],
+        "color": ["/.*/"],
+        "background-color": ["/.*/"],
+        "border-color": ["/.*/"],
+        "fill": ["/.*/"],
+        "stroke": ["/.*/"]
+      },
+      {
+        "message": "Reference semantic or component tokens (--pk-color-*, --pk-button-*, etc.) not primitives (--pk-palette-*)."
+      }
+    ],
+
+    "comment-no-empty": true,
+    "shorthand-property-no-redundant-values": true,
+    "unit-no-unknown": true,
+    "property-no-unknown": true
+  },
+
+  "overrides": [
+    {
+      "files": ["src/styles/tokens/_primitives.scss"],
+      "rules": {
+        "color-no-hex": null,
+        "declaration-property-value-disallowed-list": null
+      }
+    },
+    {
+      "files": ["src/styles/themes/**/*.scss", "src/styles/tokens/**/*.scss"],
+      "rules": {
+        "color-no-hex": null,
+        "declaration-property-value-disallowed-list": null
+      }
+    },
+    {
+      "files": ["src/styles/theme.scss", "src/styles/designsystem/**/*.scss"],
+      "rules": {
+        "color-no-hex": null,
+        "declaration-no-important": null,
+        "declaration-property-value-disallowed-list": null
+      }
     }
-  }
+  ]
 }

@@ -1,0 +1,12 @@
+// =========================================================================
+// INPUT OTP COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =========================================================================
+
+@mixin inputotp-tokens() {
+  --pk-otp-gap:          var(--pk-space-sm, 0.5rem);
+  --pk-otp-cell-size:    2.75rem;
+  --pk-otp-cell-radius:  var(--pk-radius-pill);
+  --pk-otp-gradient-from: var(--pk-color-brand);
+  --pk-otp-gradient-to:   var(--pk-color-accent);
+}

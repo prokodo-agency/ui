@@ -9,46 +9,69 @@ description: Renders sanitised HTML or structured rich-text content with prokodo
 
 `RichText` renders sanitised HTML or Portable Text / structured content from a CMS. Applies prokodo typography styles to all child elements (`<h2>`–`<h6>`, `<p>`, `<a>`, `<ul>`, `<ol>`, `<blockquote>`).
 
-
 ---
 
 ## Overview
 
 ```tsx
-import { RichText } from '@prokodo/ui/rich-text'
-
-<RichText html={article.content} />
+import { RichText } from "@prokodo/ui/rich-text"
+;<RichText html={article.content} />
 ```
 
-<StorybookEmbed id="prokodo-common-richtext--default" />
-
+<StorybookEmbed id="prokodo-content-richtext--default" />
 
 ---
 
 ## Import
 
 ```ts
-import { RichText } from '@prokodo/ui/rich-text'
+import { RichText } from "@prokodo/ui/rich-text"
 ```
 
 CSS:
 
 ```ts
-import '@prokodo/ui/rich-text.css'
+import "@prokodo/ui/rich-text.css"
 ```
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Required | Description |
-|------|------|---------|----------|-------------|
-| `html` | `string` | — | — | Sanitised HTML string to render. |
-| `children` | `ReactNode` | — | — | Structured React content alternative to `html`. |
-| `prose` | `boolean` | `true` | — | Apply `prose` typography class. |
-| `className` | `string` | — | — | CSS class on root `<div>`. |
+| Prop                | Type            | Default | Required | Description                                   |
+| ------------------- | --------------- | ------- | -------- | --------------------------------------------- |
+| `children`          | `ReactNode`     | —       | ✅       | Rich text content (React nodes).              |
+| `animated`          | `boolean`       | `false` | —        | Enable entrance animation.                    |
+| `animationProps`    | `AnimatedProps` | —       | —        | Entrance animation config.                    |
+| `color`             | `Variants`      | —       | —        | Accent color for links and headings.          |
+| `schema`            | `boolean`       | `false` | —        | Emit JSON-LD schema markup.                   |
+| `itemProp`          | `string`        | —       | —        | Schema.org `itemprop` attribute.              |
+| `linkComponent`     | `ComponentType` | —       | —        | Custom link component for internal links.     |
+| `linkPolicy`        | `string`        | —       | —        | Policy applied to link rendering.             |
+| `overrideParagraph` | `boolean`       | `false` | —        | Replace `<p>` elements with custom rendering. |
+| `className`         | `string`        | —       | —        | CSS class on root element.                    |
 
 > See [`src/components/rich-text/RichText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/rich-text/RichText.model.ts) for the full `RichTextProps` type.
+
+---
+
+## Design Tokens
+
+`RichText` does not define component-specific CSS custom properties. Override appearance by customising the following global design-system tokens on `:root` or a scoped ancestor:
+
+| Token                       | Description                             |
+| --------------------------- | --------------------------------------- |
+| `--pk-color-brand`          | Link color and ordered list marker fill |
+| `--pk-color-muted`          | Paragraph and code text color           |
+| `--pk-color-fg`             | List item text color                    |
+| `--pk-color-border`         | Code block and blockquote border color  |
+| `--pk-color-surface-raised` | Code block and blockquote background    |
+| `--pk-space-lg`             | Blockquote horizontal padding           |
+| `--pk-space-sm`             | List icon right margin                  |
+| `--pk-space-xs`             | List item bottom gap                    |
+| `--pk-radius-sm`            | Code block corner radius                |
+| `--pk-radius-md`            | Inline image corner radius              |
+| `--pk-palette-white`        | Ordered list marker text color          |
 
 ---
 
@@ -57,7 +80,7 @@ import '@prokodo/ui/rich-text.css'
 Use the standard import path in application code:
 
 ```ts
-import { RichText } from '@prokodo/ui/rich-text'
+import { RichText } from "@prokodo/ui/rich-text"
 ```
 
 No separate `/client` or `/lazy` import selection is required in consumer code.
@@ -69,13 +92,13 @@ This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
 
 ## WCAG 2.2 Status
 
-| Criterion | Name | Status | Note |
-|-----------|------|--------|---------|
-| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA. |
-| **1.3.2** | **Meaningful Sequence** (A) | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order. |
-| **1.4.3** | **Contrast (Minimum)** (AA) | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme. |
-| **2.4.6** | **Headings and Labels** (AA) | 🔍 Manual review | Headings and labels must describe the topic or purpose of their associated content. |
-| **4.1.2** | **Name, Role, Value** (A) | ✅ Fulfilled | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.3.2** | **Meaningful Sequence** (A)    | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order.                                             |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                 |
+| **2.4.6** | **Headings and Labels** (AA)   | 🔍 Manual review | Headings and labels must describe the topic or purpose of their associated content.                                             |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
 
 > **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
 > Criteria marked 🔍 require manual verification in the final product integration and theme context.
