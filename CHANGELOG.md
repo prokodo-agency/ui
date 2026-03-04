@@ -1,5 +1,20 @@
 # @prokodo/ui
 
+## [1.0.0](https://github.com/prokodo-agency/ui/compare/v0.1.8...v1.0.0) — 2026-03-04
+
+- hotfix(ci): build library before docs site in docs.yml
+- feat: prokodo UI v1.0 — Apache-2.0 OSS release, full test coverage, E2E suite & docs (#161)
+- hotfix: CI release fix
+- hotfix: lottie version mismatch and CI pipeline
+- feat: Full unit, E2E, and visual regression test coverage with CI pipeline (#160)
+- feat: Checkbox & Checkbox group component (#159)
+- feat: New Autocomplete and Tabs component (#158)
+- feat: Detailed model documentations, new pagination and tooltip component (#157)
+- Feat: (Beta) RTE component & RichText Image support (#156)
+- fix: Multiple small style and js bug resolvements (#155)
+- Hotfix: Icon updates (#154)
+- feat: Image icon support for button component (#153)
+
 ## 0.1.16
 
 ### Patch Changes
