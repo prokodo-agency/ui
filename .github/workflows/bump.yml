@@ -125,6 +125,11 @@ jobs:
           ' docs/docs/changelog.mdx > docs/docs/changelog.mdx.tmp
           mv docs/docs/changelog.mdx.tmp docs/docs/changelog.mdx
 
+      - name: Format changelog files with Prettier
+        run: |
+          pnpm install --frozen-lockfile --ignore-scripts
+          npx prettier --write docs/docs/changelog.mdx CHANGELOG.md
+
       - name: Commit version bump
         shell: bash
         run: |
