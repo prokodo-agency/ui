@@ -197,22 +197,6 @@ jobs:
           # Storybook is served under /storybook
           cp -R storybook-static/. site/storybook/
 
-          # Root redirect → docs
-          cat > site/index.html << 'EOF'
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <meta charset="utf-8" />
-              <meta http-equiv="refresh" content="0; url=/docs/" />
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <title>prokodo UI</title>
-            </head>
-            <body>
-              <p>Redirecting to <a href="/docs/">/docs/</a>…</p>
-            </body>
-          </html>
-          EOF
-
           # Custom domain for GitHub Pages
           echo 'ui.prokodo.com' > site/CNAME
 
