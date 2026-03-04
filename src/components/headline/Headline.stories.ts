@@ -1,9 +1,9 @@
 import { Headline } from "./Headline"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Headline",
+  title: "prokodo/content/Headline",
   component: Headline,
   parameters: {
     layout: "centered",
@@ -19,7 +19,7 @@ const meta = {
       options: ["xs", "sm", "md", "lg", "xl", "xxl"],
       control: { type: "select" },
     },
-    variant: {
+    color: {
       options: [
         "inherit",
         "primary",
@@ -41,7 +41,7 @@ export const Default: Story = {
   args: {
     type: "h1",
     size: "xxl",
-    variant: "inherit",
+    color: "inherit",
     children: "Lorem ipsum dolar sit amet",
   },
 }

@@ -4,6 +4,21 @@
 export type LoadingSize = "xs" | "sm" | "md" | "lg" | "xl"
 
 /**
+ * Color options for the loading indicator.
+ * Uses the corresponding design-system semantic token.
+ * When unset the spinner inherits `currentColor` from its parent.
+ */
+export type LoadingColor =
+  | "inherit"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "error"
+  | "info"
+  | "warning"
+  | "white"
+
+/**
  * Base props shared by all loading variants.
  */
 export type LoadingBaseProps = {
@@ -17,6 +32,12 @@ export type LoadingBaseProps = {
   ariaLabel?: string
   /** Respect reduced motion preferences (overrides system preference). */
   reducedMotion?: boolean
+  /**
+   * Explicit spinner color.
+   * Maps to the matching design-system CSS custom property.
+   * Defaults to `currentColor` (inherits from parent) when not set.
+   */
+  color?: LoadingColor
 }
 
 /**

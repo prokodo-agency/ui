@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as LoadingStories from "./Loading.stories"
 
 <Meta of={LoadingStories} />
@@ -36,12 +36,57 @@ For inline text-skeleton placeholders composable with specific layouts, use `Ske
 - Don't block the entire viewport with a full-page spinner for sub-section updates
 - Don't show two nested `Loading` indicators simultaneously
 
+## Design Tokens
+
+`Loading` uses inline `color` styles resolved from the design token palette. The following color values are accepted via the `color` prop:
+
+| Value       | Rendered color               |
+| ----------- | ---------------------------- |
+| `primary`   | `var(--pk-color-brand)`      |
+| `secondary` | `var(--pk-color-accent)`     |
+| `success`   | `var(--pk-color-success)`    |
+| `error`     | `var(--pk-color-error)`      |
+| `warning`   | `var(--pk-color-warning)`    |
+| `info`      | `var(--pk-palette-grey-500)` |
+| `white`     | `var(--pk-palette-white)`    |
+| `inherit`   | inherits from parent element |
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story of={LoadingStories.Default} />
+</Canvas>
+
+### Primary
+
+<Canvas>
+  <Story of={LoadingStories.Primary} />
+</Canvas>
+
+### Secondary
+
+<Canvas>
+  <Story of={LoadingStories.Secondary} />
+</Canvas>
+
+### Success
+
+<Canvas>
+  <Story of={LoadingStories.Success} />
+</Canvas>
+
+### Warning
+
+<Canvas>
+  <Story of={LoadingStories.Warning} />
+</Canvas>
+
+### All colors
+
+<Canvas>
+  <Story of={LoadingStories.AllColors} />
 </Canvas>
 
 ### Props

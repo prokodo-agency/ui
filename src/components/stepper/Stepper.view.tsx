@@ -14,6 +14,7 @@ export const StepperView: FC<StepperViewProps> = ({
   activeStep,
   translations,
   className,
+  color,
   ...props
 }) => {
   const rootProps = props
@@ -31,7 +32,11 @@ export const StepperView: FC<StepperViewProps> = ({
     <ol
       {...rootProps}
       aria-label={t.stepper}
-      className={bem(undefined, undefined, className)}
+      className={bem(
+        undefined,
+        { ...(color ? { [color]: true } : {}) },
+        className,
+      )}
     >
       {steps.map((step, i) => {
         const {

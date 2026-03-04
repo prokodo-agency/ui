@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as ImageTextStories from "./ImageText.stories"
 
 <Meta of={ImageTextStories} />
@@ -13,9 +13,10 @@ Use `ImageText` for marketing or editorial sections that pair a visual with expl
 
 ## Layout
 
-- Default: image on the left, text on the right
+- Default: image on the left (CSS Grid `order: -1`), text on the right
 - `reverse={true}`: image on the right, text on the left
 - Stacks vertically on mobile
+- `animatedBorder`: renders a 2-column animated gradient line at the right edge on desktop; set `direction: "bottom-to-top"` to reverse the animation
 
 ## Accessibility (WCAG 2.2)
 
@@ -35,12 +36,50 @@ Use `ImageText` for marketing or editorial sections that pair a visual with expl
 - Don't use an decorative image without setting `alt=""`
 - Don't use both `subTitle` and a section heading at the same level above this component
 
+## Design Tokens
+
+Customise `ImageText` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                           | Default                 | Description                     |
+| ------------------------------- | ----------------------- | ------------------------------- |
+| `--pk-image-text-content-color` | `var(--pk-color-muted)` | Body copy paragraph text colour |
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story of={ImageTextStories.Default} />
+</Canvas>
+
+### Reversed
+
+<Canvas>
+  <Story of={ImageTextStories.Reversed} />
+</Canvas>
+
+### With button
+
+<Canvas>
+  <Story of={ImageTextStories.WithButton} />
+</Canvas>
+
+### Reversed with button
+
+<Canvas>
+  <Story of={ImageTextStories.ReversedWithButton} />
+</Canvas>
+
+### Content only
+
+<Canvas>
+  <Story of={ImageTextStories.ContentOnly} />
+</Canvas>
+
+### With animated border
+
+<Canvas>
+  <Story of={ImageTextStories.WithAnimatedBorder} />
 </Canvas>
 
 ### Props

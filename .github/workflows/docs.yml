@@ -1,0 +1,48 @@
+name: 📚 Docs Build Check
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  deploy-docs:
+    name: Build Docs
+    runs-on: ubuntu-latest
+    # Skip on release commits — release.yml builds & deploys docs as part of
+    # the full release pipeline, so a separate check here would be redundant.
+    if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 💿 Setup pnpm (v9)
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🧰 Setup Node.js (v22)
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 📝 Generate component overview
+        run: cd docs && node scripts/generate-overview.mjs
+
+      - name: 🛠 Build Docusaurus site
+        run: cd docs && pnpm build
+
+      - name: ✅ Docs build completed
+        run: echo "Docs build successful"

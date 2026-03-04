@@ -1,0 +1,90 @@
+---
+id: icon
+title: Icon
+sidebar_label: Icon
+description: SVG icon component with 1 000+ icons from the prokodo icon set loaded on demand via jsDelivr CDN.
+---
+
+# Icon
+
+`Icon` rendert skalierbare Symbolgrafiken aus dem prokodo-Iconset mit konsistenter Größe, Farbe und Zugänglichkeit.
+
+---
+
+## Übersicht
+
+```tsx
+import { Icon } from "@prokodo/ui/icon"
+;<Icon name="arrow-right" size={24} color="primary" />
+```
+
+<StorybookEmbed id="prokodo-content-icon--default" />
+
+---
+
+## Import
+
+```ts
+import { Icon } from "@prokodo/ui/icon"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/icon.css"
+```
+
+---
+
+## Props
+
+| Prop        | Typ          | Standard | Pflicht | Beschreibung                                    |
+| ----------- | ------------ | -------- | ------- | ----------------------------------------------- |
+| `name`      | `IconName`   | —        | —       | Icon-Bezeichner aus dem Icon-Register.          |
+| `label`     | `string`     | —        | —       | Barrierefreie Bezeichnung (setzt `aria-label`). |
+| `size`      | `IconSize`   | —        | —       | Icon-Größe als Preset-String oder Pixel-Zahl.   |
+| `color`     | `string`     | —        | —       | CSS-Farbwert oder Design-Token.                 |
+| `role`      | `string`     | —        | —       | Überschreibt die ARIA-Rolle.                    |
+| `onClick`   | `() => void` | —        | —       | Klick-Handler (für interaktive Icons).          |
+| `className` | `string`     | —        | —       | CSS-Klasse am Root-Element.                     |
+
+> Siehe [`src/components/icon/Icon.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/icon/Icon.model.ts) für den vollständigen `IconProps`-Typ.
+
+---
+
+## Design-Tokens
+
+`Icon` definiert keine komponentenspezifischen CSS Custom Properties. Die Farbe wird über `currentColor` aus folgenden globalen Semantic-Tokens bezogen:
+
+| Token                | Beschreibung                       |
+| -------------------- | ---------------------------------- |
+| `--pk-color-brand`   | Icon-Farbe für `color="primary"`   |
+| `--pk-color-accent`  | Icon-Farbe für `color="secondary"` |
+| `--pk-color-muted`   | Icon-Farbe für `color="info"`      |
+| `--pk-color-success` | Icon-Farbe für `color="success"`   |
+| `--pk-color-warning` | Icon-Farbe für `color="warning"`   |
+| `--pk-color-error`   | Icon-Farbe für `color="error"`     |
+| `--pk-palette-white` | Icon-Farbe für `color="white"`     |
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung                  | Status     | Hinweis                                                                                                                                                  |
+| --------- | ---------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Nicht-Text-Inhalt** (A)    | ✅ Erfüllt | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **1.3.1** | **Info und Beziehungen** (A) | ✅ Erfüllt | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.                                |
+| **4.1.2** | **Name, Rolle, Wert** (A)    | ✅ Erfüllt | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                     |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 1 Testdatei(en) · 2 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Icon in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-icon--docs)
+
+---
+
+## Quellcode
+
+[`src/components/icon/Icon.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/icon/Icon.model.ts)

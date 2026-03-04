@@ -1,5 +1,4 @@
 import { Icon, type IconName } from "@/components/icon"
-import { Label } from "@/components/label"
 import { create } from "@/helpers/bem"
 
 import styles from "./Switch.module.scss"
@@ -14,7 +13,7 @@ export const SwitchView: FC<SwitchViewProps> = ({
   label,
   labelProps = {},
   required = false,
-  variant = "primary",
+  color = "primary",
   icon,
   checkedIcon,
   isChecked,
@@ -30,19 +29,20 @@ export const SwitchView: FC<SwitchViewProps> = ({
   const hasLabel = typeof label === "string" && label.length > 0
 
   return (
-    <div className={bem(undefined, { [variant]: true }, className)}>
+    <div className={bem(undefined, { [color]: true }, className)}>
       {hasLabel && (
-        <Label
+        <label
           {...labelProps}
           htmlFor={name}
-          label={label}
-          required={required}
           className={bem(
             "label",
             undefined,
             hideLabel ? "visually-hidden" : undefined,
           )}
-        />
+        >
+          {label}
+          {required && <span aria-hidden="true"> *</span>}
+        </label>
       )}
 
       <div

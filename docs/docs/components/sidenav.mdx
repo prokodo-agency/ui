@@ -1,0 +1,143 @@
+---
+id: sidenav
+title: Sidenav
+sidebar_label: Sidenav
+description: Collapsible side navigation component with nested menu items, icons, and active state tracking.
+---
+
+# Sidenav
+
+`Sidenav` renders a vertical navigation panel. Supports nested sections, icon labels, collapsible groups, and automatic active-item highlighting based on the current URL.
+
+---
+
+## Overview
+
+```tsx
+import { Sidenav } from "@prokodo/ui/sidenav"
+;<Sidenav
+  items={[
+    { label: "Home", href: "/", icon: "home" },
+    {
+      label: "Products",
+      icon: "box",
+      children: [
+        { label: "All products", href: "/products" },
+        { label: "Categories", href: "/products/categories" },
+      ],
+    },
+  ]}
+/>
+```
+
+<StorybookEmbed id="prokodo-navigation-sidenav--expanded" height={380} />
+
+---
+
+## Import
+
+```ts
+import { Sidenav } from "@prokodo/ui/sidenav"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/sidenav.css"
+```
+
+---
+
+## Props
+
+| Prop               | Type                          | Default | Required | Description                                      |
+| ------------------ | ----------------------------- | ------- | -------- | ------------------------------------------------ |
+| `items`            | `SidenavItem[]`               | —       | ✅       | Navigation item tree.                            |
+| `initialCollapsed` | `boolean`                     | `false` | —        | Start in collapsed state.                        |
+| `collapsedIcon`    | `string`                      | —       | —        | Icon name shown when collapsed.                  |
+| `unCollapsedIcon`  | `string`                      | —       | —        | Icon name shown when expanded.                   |
+| `collapsedLabel`   | `string`                      | —       | —        | Accessible label for the collapsed state toggle. |
+| `unCollapsedLabel` | `string`                      | —       | —        | Accessible label for the expanded state toggle.  |
+| `iconProps`        | `IconProps`                   | —       | —        | Props applied to nav item icons.                 |
+| `ariaLabel`        | `string`                      | —       | —        | Accessible label for the nav landmark.           |
+| `renderFooter`     | `() => ReactNode`             | —       | —        | Custom footer render function.                   |
+| `onChange`         | `(item: SidenavItem) => void` | —       | —        | Called when a nav item is clicked.               |
+| `className`        | `string`                      | —       | —        | CSS class on root element.                       |
+
+### `SideNavSection`
+
+| Prop                | Type                                    | Default | Required | Description                                                                                           |
+| ------------------- | --------------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `items`             | `SideNavItem[]`                         | —       | ✅       | Navigation items belonging to this section.                                                           |
+| `headline`          | `string`                                | —       | —        | Plain-text section heading rendered via the internal `Headline` component (hidden in collapsed mode). |
+| `description`       | `string`                                | —       | —        | Short description below the headline.                                                                 |
+| `headlineComponent` | `ComponentType<{ className?: string }>` | —       | —        | Custom React component used instead of `headline` string.                                             |
+| `headlineProps`     | `Omit<HeadlineProps, "children">`       | —       | —        | Props forwarded to the section's `Headline` (overrides global `headlineProps`).                       |
+| `descriptionProps`  | `Omit<HTMLAttributes<p>, "children">`   | —       | —        | Props forwarded to the section's description `<p>` (overrides global `descriptionProps`).             |
+
+> See [`src/components/sidenav/Sidenav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/Sidenav.model.ts) for the full `SidenavProps` type.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Sidenav } from "@prokodo/ui/sidenav"
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion  | Name                               | Status           | Note                                                                                                                            |
+| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **2.1.1**  | **Keyboard** (A)                   | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing.                                       |
+| **2.4.3**  | **Focus Order** (A)                | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                     |
+| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.      |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                  |
+| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+---
+
+## Design Tokens
+
+Customise `Sidenav` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                                 | Default                                                      | Description                                    |
+| ------------------------------------- | ------------------------------------------------------------ | ---------------------------------------------- |
+| `--pk-sidenav-bg`                     | `var(--pk-color-surface)`                                    | Background color of the sidebar panel          |
+| `--pk-sidenav-shadow`                 | `var(--pk-shadow-md)`                                        | Box-shadow of the sidebar panel                |
+| `--pk-sidenav-toggle-hover`           | `var(--pk-color-surface-raised)`                             | Background color of the toggle button on hover |
+| `--pk-sidenav-link-hover-bg`          | `color-mix(in srgb, var(--pk-color-brand) 10%, transparent)` | Background color of nav items on hover/active  |
+| `--pk-sidenav-link-active-bg`         | `color-mix(in srgb, var(--pk-color-brand) 5%, transparent)`  | Background color of the current page nav item  |
+| `--pk-sidenav-icon-color`             | `var(--pk-color-fg)`                                         | Icon foreground color                          |
+| `--pk-sidenav-icon-bg`                | `var(--pk-color-surface-raised)`                             | Icon wrapper background color                  |
+| `--pk-sidenav-label-color`            | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)`    | Collapse icon and label color                  |
+| `--pk-sidenav-fg`                     | `var(--pk-color-fg)`                                         | Main nav item label color                      |
+| `--pk-sidenav-radius`                 | `var(--pk-radius-sm)`                                        | Border-radius for nav items and icon wrappers  |
+| `--pk-sidenav-gap`                    | `var(--pk-space-xs)`                                         | Gap between nav list items                     |
+| `--pk-sidenav-link-gap`               | `var(--pk-space-md)`                                         | Internal gap inside each nav item              |
+| `--pk-sidenav-section-headline-color` | `color-mix(in srgb, var(--pk-color-fg) 45%, transparent)`    | Color of section headline labels               |
+
+---
+
+## Storybook
+
+👉 [Open Sidenav in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-navigation-sidenav--docs)
+
+---
+
+## Source
+
+[`src/components/sidenav/Sidenav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/Sidenav.model.ts)

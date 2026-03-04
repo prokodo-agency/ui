@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as PaginationStories from "./Pagination.stories"
 
 <Meta of={PaginationStories} />
@@ -36,6 +36,20 @@ Use `Pagination` below any list or grid that loads data in pages. For infinite-s
 - Don't remove visited page indicators when the user navigates back
 - Don't reset focus to the top of the page on every page change
 
+## Design Tokens
+
+Customise `Pagination` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                             | Default                                                   | Description                                                              |
+| --------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `--pk-pagination-gap`             | `var(--pk-space-sm)`                                      | Gap between pagination items                                             |
+| `--pk-pagination-fg`              | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)` | Text color for ellipsis and inactive page numbers                        |
+| `--pk-pagination-page-radius`     | `10px`                                                    | Border-radius of page number buttons                                     |
+| `--pk-pagination-pad-x`           | `var(--pk-space-xs)`                                      | Horizontal padding of page number buttons                                |
+| `--pk-pagination-active-border`   | `var(--pk-color-brand)`                                   | Color used for the active page glow shadow (overridden per `color`)      |
+| `--pk-pagination-active-shadow`   | `0 4px 18px color-mix(in srgb, brand 45%, transparent)`   | Drop-shadow on the active page button                                    |
+| `--pk-pagination-active-gradient` | `var(--gradient-border-4)`                                | Gradient applied to the active page border ring (overridden per `color`) |
+
 ## Examples
 
 ### Default
@@ -44,16 +58,46 @@ Use `Pagination` below any list or grid that loads data in pages. For infinite-s
   <Story of={PaginationStories.Default} />
 </Canvas>
 
-### Pending state
+### Primary color
+
+<Canvas>
+  <Story of={PaginationStories.Primary} />
+</Canvas>
+
+### Secondary color
+
+<Canvas>
+  <Story of={PaginationStories.Secondary} />
+</Canvas>
+
+### Pending state (with color)
 
 <Canvas>
   <Story of={PaginationStories.Pending} />
+</Canvas>
+
+### Pending state (neutral)
+
+<Canvas>
+  <Story of={PaginationStories.PendingNeutral} />
 </Canvas>
 
 ### Small variant
 
 <Canvas>
   <Story of={PaginationStories.Small} />
+</Canvas>
+
+### Color — success
+
+<Canvas>
+  <Story of={PaginationStories.ColorSuccess} />
+</Canvas>
+
+### Color — error
+
+<Canvas>
+  <Story of={PaginationStories.ColorError} />
 </Canvas>
 
 ### Props

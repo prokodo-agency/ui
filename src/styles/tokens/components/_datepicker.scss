@@ -1,0 +1,60 @@
+// =============================================================================
+// DATEPICKER COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin datepicker-tokens() {
+  // ── Trigger (input-like display field) ────────────────────────────
+  --pk-dp-trigger-bg:              var(--pk-color-surface);
+  --pk-dp-trigger-fg:              var(--pk-color-fg);
+  --pk-dp-trigger-fg-muted:        var(--pk-color-muted);
+  --pk-dp-trigger-border:          var(--pk-color-border);
+  --pk-dp-trigger-radius:          var(--pk-radius-pill);
+  --pk-dp-trigger-padding-x:       var(--pk-space-lg);
+  --pk-dp-trigger-padding-y:       0.875rem;
+  --pk-dp-trigger-label-fg:        var(--pk-color-muted);
+  --pk-dp-trigger-label-float-fg:  var(--pk-color-brand);
+
+  // ── Dialog panel ──────────────────────────────────────────────────
+  --pk-dp-dialog-bg:               var(--pk-color-surface);
+  --pk-dp-dialog-border:           var(--pk-color-border);
+  --pk-dp-dialog-radius:           var(--pk-radius-lg);
+  --pk-dp-dialog-shadow:           var(--pk-shadow-lg);
+  --pk-dp-dialog-padding:          var(--pk-space-md);
+  --pk-dp-dialog-min-width:        17rem;
+
+  // ── Header ────────────────────────────────────────────────────────
+  --pk-dp-header-fg:               var(--pk-color-fg);
+  --pk-dp-nav-fg:                  var(--pk-color-muted);
+  --pk-dp-nav-hover-bg:            var(--pk-color-border);
+  --pk-dp-nav-radius:              var(--pk-radius-circle);
+
+  // ── Weekday strip ─────────────────────────────────────────────────
+  --pk-dp-weekday-fg:              var(--pk-color-muted);
+
+  // ── Day cells ─────────────────────────────────────────────────────
+  --pk-dp-day-fg:                  var(--pk-color-fg);
+  --pk-dp-day-radius:              var(--pk-radius-circle);
+  --pk-dp-day-hover-bg:            color-mix(in srgb, var(--pk-color-border) 60%, transparent);
+  --pk-dp-day-outside-fg:          color-mix(in srgb, var(--pk-color-muted) 50%, transparent);
+  --pk-dp-day-disabled-fg:         color-mix(in srgb, var(--pk-color-muted) 40%, transparent);
+  --pk-dp-day-today-ring:          var(--pk-color-brand);
+
+  // ── Selected day (gradient pill) ──────────────────────────────────
+  --pk-dp-gradient-from:           var(--pk-color-brand);
+  --pk-dp-gradient-to:             var(--pk-color-accent);
+  --pk-dp-shadow-color:            color-mix(in srgb, var(--pk-color-brand) 30%, transparent);
+
+  // ── Time row ──────────────────────────────────────────────────────
+  --pk-dp-time-label-fg:           var(--pk-color-fg);
+  --pk-dp-time-select-bg:          var(--pk-color-surface);
+  --pk-dp-time-select-fg:          var(--pk-color-fg);
+  --pk-dp-time-select-border:      var(--pk-color-border);
+  --pk-dp-time-select-radius:      var(--pk-radius-md);
+  --pk-dp-time-sep-fg:             var(--pk-color-muted);
+
+  // ── Footer ────────────────────────────────────────────────────────
+  --pk-dp-footer-border:           var(--pk-color-border);
+  --pk-dp-footer-ghost-fg:         var(--pk-color-muted);
+  --pk-dp-footer-ghost-hover-fg:   var(--pk-color-fg);
+}

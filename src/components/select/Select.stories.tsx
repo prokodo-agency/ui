@@ -4,7 +4,7 @@
 import { Select } from "@/components/select"
 
 import type { SelectItem } from "./Select.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- sample data ------------------------------------------------ */
 const demoItems: SelectItem[] = [
@@ -28,6 +28,20 @@ const meta = {
   argTypes: {
     multiple: { control: "boolean" },
     required: { control: "boolean" },
+    color: {
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "error",
+        "white",
+      ],
+      control: { type: "select" },
+      description: "Color variant — changes the focus shadow and accent color.",
+    },
     value: { table: { disable: true } }, // managed by knob playground
     items: { table: { disable: true } },
     /* hide internal styling/helpers */

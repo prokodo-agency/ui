@@ -1,0 +1,47 @@
+// =============================================================================
+// PRIMITIVE TOKENS
+// Declaration block only — no selector, no mixin, no SCSS logic.
+// These are raw design-neutral values emitted inside emit-semantic().
+// RULE: Never reference --pk-palette-* directly in component modules.
+// =============================================================================
+
+// Hex values only (no rgb() literals)
+--pk-palette-white:           #FFFFFF;
+--pk-palette-black:           #000000;
+
+// Grey scale
+--pk-palette-grey-50:         #F5F5F5;
+--pk-palette-grey-100:        #BCBCBC;
+--pk-palette-grey-200:        #9C9C9C;
+--pk-palette-grey-300:        #7D7D7D;
+--pk-palette-grey-400:        #606060;
+--pk-palette-grey-500:        #4D4D4D;
+--pk-palette-grey-600:        #393939;
+--pk-palette-grey-700:        #2F2F2F;
+--pk-palette-grey-800:        #242424;
+--pk-palette-grey-900:        #121212;
+
+// Primary palette
+--pk-palette-primary-50:      #E5EBFF;
+--pk-palette-primary-100:     #C9D8FF;
+--pk-palette-primary-400:     #64A1FF;
+--pk-palette-primary-500:     #1E90FF;
+--pk-palette-primary-600:     #2676d0;
+--pk-palette-primary-700:     #275ea2;
+
+// Secondary palette
+--pk-palette-secondary-500:   #00E6FF;
+
+// Dark surface (replaces the rgb(16, 19, 27) magic number in Input/Select/Autocomplete)
+--pk-palette-slate-950:       #10131b;
+
+// Semantic status
+--pk-palette-success:         #20E381;
+--pk-palette-warning:         #f7b529;
+--pk-palette-error:           #f0453a;
+
+// RGB-triple companions — only for alpha-composition patterns used in the codebase.
+// Format: R G B (space-separated, no commas) for use with rgb(var(--x) / alpha).
+--pk-palette-primary-500-rgb: 30 144 255; // Slider thumb hover glow
+--pk-palette-primary-700-rgb: 39 94 162;  // Slider thumb focused glow
+--pk-color-overlay-rgb:       0 0 0;      // Dialog backdrop

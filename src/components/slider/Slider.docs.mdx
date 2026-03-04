@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as SliderStories from "./Slider.stories"
 
 <Meta of={SliderStories} />
@@ -23,6 +23,19 @@ Use `Slider` for continuous or stepped numeric input where direct keyboard entry
 - **← / → Arrow keys**: decrease / increase the value by one step
 - **Home**: jump to minimum
 - **End**: jump to maximum
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                      | Default                  | Description         |
+| -------------------------- | ------------------------ | ------------------- |
+| `--pk-slider-track-height` | `4px`                    | Track height        |
+| `--pk-slider-track-bg`     | `var(--pk-color-border)` | Unfilled track      |
+| `--pk-slider-fill-from`    | `var(--pk-color-brand)`  | Fill gradient start |
+| `--pk-slider-fill-to`      | `var(--pk-color-accent)` | Fill gradient end   |
+| `--pk-slider-thumb-size`   | `24px`                   | Thumb size          |
+| `--pk-slider-tooltip-bg`   | `var(--pk-color-fg)`     | Tooltip background  |
 
 ## ✅ Do
 

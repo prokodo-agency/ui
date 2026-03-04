@@ -25,7 +25,7 @@ const bem = create(styles, "List")
  */
 export function List({
   type,
-  variant = "inherit",
+  color = "inherit",
   className,
   /* istanbul ignore next */
   options = /* istanbul ignore next */ {},
@@ -56,7 +56,7 @@ export function List({
           icon,
           redirect,
           onClick,
-          variant: itemVariant,
+          color: itemColor,
           className: itemClassName,
         } = item
         const isClickable = Boolean(onClick || redirect)
@@ -91,7 +91,7 @@ export function List({
           "item",
           {
             "is-clickable": isClickable,
-            [`is-clickable--${itemVariant ?? variant}`]: isClickable,
+            [`is-clickable--${itemColor ?? color}`]: isClickable,
             "has-icon": Boolean(item?.icon),
             ...modifier,
           },
@@ -130,6 +130,26 @@ export function List({
         // 5) Helper to render an icon (purely decorative):
         const IconWrapper = () => {
           if (icon === undefined || icon === null) return null
+          if (type === "icon") {
+            // Render with circular-badge style (same as card-type icon)
+            return (
+              <div aria-hidden="true" className={bem("item__icon")}>
+                {isValidElement(icon) ? (
+                  /* istanbul ignore next */ icon
+                ) : (
+                  <Icon
+                    {...options.icon}
+                    className={bem("item__icon__svg")}
+                    size="sm"
+                    name={
+                      (icon as IconName) ??
+                      /* istanbul ignore next */ "ArrowRight01Icon"
+                    }
+                  />
+                )}
+              </div>
+            )
+          }
           // aria-hidden for decorative icons
           return (
             <div aria-hidden="true" className={bem("item__icon__wrapper")}>
@@ -137,7 +157,7 @@ export function List({
                 /* istanbul ignore next */ icon
               ) : (
                 <Icon
-                  color={variant as Variants}
+                  color={color as Variants}
                   name={icon as IconName}
                   {...options.icon}
                 />
@@ -157,7 +177,7 @@ export function List({
             >
               <Card
                 priority
-                variant="white"
+                color="white"
                 {...cardItem}
                 className={bem("item__card", undefined, cardItem.className)}
                 contentClassName={bem(
@@ -217,7 +237,7 @@ export function List({
             >
               <Link
                 className={bem("item__link", undefined, linkProps.className)}
-                variant={variant}
+                color={color}
                 {...linkProps}
               >
                 <div className={bem("item__link__header")}>
@@ -238,8 +258,10 @@ export function List({
             {...liHandlers}
           >
             <IconWrapper />
-            <TitleSpan />
-            <DescParagraph />
+            <div>
+              <TitleSpan />
+              <DescParagraph />
+            </div>
           </li>
         )
       })}

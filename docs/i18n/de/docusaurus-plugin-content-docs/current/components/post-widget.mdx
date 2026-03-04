@@ -1,0 +1,123 @@
+---
+id: post-widget
+title: PostWidget
+sidebar_label: PostWidget
+description: Sidebar widget listing the latest or related posts with thumbnail and date.
+---
+
+# PostWidget
+
+`PostWidget` rendert ein kompaktes Sidebar-Widget mit aktuellen oder verwandten Beiträgen inklusive Thumbnail und Datum.
+
+---
+
+## Übersicht
+
+```tsx
+import { PostWidget } from "@prokodo/ui/post-widget"
+;<PostWidget title="Recent posts" posts={latestPosts} />
+```
+
+<StorybookEmbed id="prokodo-content-postwidget--default" height={340} />
+
+---
+
+## Import
+
+```ts
+import { PostWidget } from "@prokodo/ui/post-widget"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/post-widget.css"
+```
+
+---
+
+## Props
+
+| Prop             | Typ                  | Standard | Pflicht | Beschreibung                                               |
+| ---------------- | -------------------- | -------- | ------- | ---------------------------------------------------------- |
+| `items`          | `PostWidgetItem[]`   | —        | —       | Array von Post-Items.                                      |
+| `title`          | `PostWidgetHeadline` | —        | —       | Widget-Überschrift: `{ content: string } & HeadlineProps`. |
+| `fullWidth`      | `boolean`            | `false`  | —       | Karte auf volle Containerbreite ausdehnen.                 |
+| `color`          | `Variants`           | —        | —       | Akzentfarbe (erweitert `CardProps`).                       |
+| `structuredData` | `boolean`            | `false`  | —       | JSON-LD-Strukturdaten ausgeben.                            |
+| `className`      | `string`             | —        | —       | CSS-Klasse am Root-Element.                                |
+
+> Siehe [`src/components/post-widget/PostWidget.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-widget/PostWidget.model.ts) für den vollständigen `PostWidgetProps`-Typ.
+
+---
+
+## Farbe
+
+Das `color`-Prop überträgt eine einheitliche Akzentfarbe auf alle visuellen Ebenen des Widgets:
+
+| Wert          | Karten-Rahmen / Schatten          | Widget-Titel                       | Eintrags-Headlines |
+| ------------- | --------------------------------- | ---------------------------------- | ------------------ |
+| `"primary"`   | Marken-Blau (30 % Tönung + Glow)  | Marken-Blau                        | Marken-Blau        |
+| `"secondary"` | Akzent-Cyan (30 % Tönung + Glow)  | Akzent-Cyan                        | Akzent-Cyan        |
+| `"success"`   | Grün-Indikator                    | Grün                               | Grün               |
+| `"warning"`   | Bernstein-Indikator               | Bernstein                          | Bernstein          |
+| `"error"`     | Rot-Indikator                     | Rot                                | Rot                |
+| `"info"`      | Neutraler Vordergrundton          | Gedämpft                           | Gedämpft           |
+| `"white"`     | Standard-Weißkarte, kein Schatten | `inherit` (automatischer Kontrast) | `inherit`          |
+
+Wenn kein `color` übergeben wird, verwenden Widget-Titel und Eintrags-Headlines `"inherit"` (Standard-Textfarbe).
+
+<StorybookEmbed id="prokodo-content-postwidget--colored" height={340} />
+
+---
+
+## Design-Tokens
+
+`PostWidget` definiert keine eigenen CSS Custom Properties. Passe das Erscheinungsbild an, indem du folgende globale Design-System-Tokens auf `:root` oder einem übergeordneten Element überschreibst:
+
+| Token              | Beschreibung                        |
+| ------------------ | ----------------------------------- |
+| `--pk-space-lg`    | Oberer Abstand der Listenelemente   |
+| `--pk-space-md`    | Rechter Abstand des Thumbnail-Bilds |
+| `--pk-color-muted` | Textfarbe des Datums                |
+| `--pk-radius-md`   | Eckenradius des Thumbnail-Bilds     |
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { PostWidget } from "@prokodo/ui/post-widget"
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung                              | Status            | Hinweis                                                                                                                              |
+| --------- | ---------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1** | **Info und Beziehungen** (A)             | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.            |
+| **1.3.2** | **Bedeutungsvolle Reihenfolge** (A)      | 🔍 Manuell prüfen | Die Lesereihenfolge im DOM muss der beabsichtigten visuellen Darstellungsreihenfolge entsprechen.                                    |
+| **1.4.3** | **Kontrast (Minimum)** (AA)              | 🔍 Manuell prüfen | Text benötigt ein Kontrastverhältnis von mindestens 4,5:1 (3:1 für großen Text). Prüfung im finalen Produkt-Theme erforderlich.      |
+| **2.4.6** | **Überschriften und Bezeichnungen** (AA) | 🔍 Manuell prüfen | Überschriften und Labels müssen das Thema oder den Zweck des zugehörigen Inhalts beschreiben.                                        |
+| **4.1.2** | **Name, Rolle, Wert** (A)                | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein. |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 4 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [PostWidget in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-postwidget--docs)
+
+---
+
+## Quellcode
+
+[`src/components/post-widget/PostWidget.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-widget/PostWidget.model.ts)

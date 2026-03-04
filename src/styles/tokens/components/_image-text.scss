@@ -1,0 +1,9 @@
+// =============================================================================
+// IMAGE-TEXT COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin image-text-tokens() {
+  // Body copy paragraph text colour
+  --pk-image-text-content-color: var(--pk-color-muted);
+}

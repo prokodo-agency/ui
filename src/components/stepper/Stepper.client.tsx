@@ -27,6 +27,7 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
     onBlur,
     translations,
     className,
+    color,
     ...rootProps
   } = props
 
@@ -65,6 +66,23 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
     (e: KeyboardEvent<HTMLDivElement>, index: number) => {
       const prev = index - 1
       const next = index + 1
+      const isCompleted = index < activeStep
+      const isActivationKey =
+        e.key === "Enter" ||
+        e.key === " " ||
+        e.key === "Spacebar" ||
+        e.code === "Enter" ||
+        e.code === "Space"
+
+      if (isActivationKey) {
+        if (isCompleted) {
+          setActiveStep(index)
+          stepRefs.current[index]?.focus()
+          onChange?.(e, index)
+        }
+        e.preventDefault()
+        return
+      }
 
       if (e.key === "ArrowLeft") {
         // Only move left if prev is a completed step
@@ -76,10 +94,13 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
         e.preventDefault()
       } else if (e.key === "ArrowRight") {
         // Only move right if next is already completed (< activeStep)
-        if (next < steps.length && next < activeStep) {
-          setActiveStep(next)
-          stepRefs.current[next]?.focus()
-          onChange?.(e, next)
+        if (next < steps.length) {
+          /* istanbul ignore else */
+          if (next < activeStep) {
+            setActiveStep(next)
+            stepRefs.current[next]?.focus()
+            onChange?.(e, next)
+          }
         }
         e.preventDefault()
       }
@@ -138,6 +159,7 @@ const StepperClient = forwardRef<StepperRef, StepperProps>((props, ref) => {
       {...rootProps}
       activeStep={activeStep}
       className={className}
+      color={color}
       stepRefs={stepRefs}
       steps={formattedSteps}
       translations={translations}

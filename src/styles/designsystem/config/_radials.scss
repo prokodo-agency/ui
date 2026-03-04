@@ -1,7 +1,12 @@
 // Border sizes and radii
 // -----------------------------------------------------------------------------
 
-$ui-default-border-radius: 5px;
-$ui-image-border-radius: 13px;
-$ui-form-element: 1.5rem;
+$ui-default-border-radius:    5px;
+$ui-image-border-radius:      13px;
+$ui-form-element:             1.5rem;
 $ui-background-border-radius: 25px;
+
+// Additional tokens added for design system migration
+$ui-component-border-radius:  0.75rem; // used by Accordion, Dialog
+$ui-card-border-radius:       2rem;    // maps to --pk-radius-lg
+$ui-toggle-border-radius:     13px;    // Switch track / thumb

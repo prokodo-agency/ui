@@ -41,10 +41,10 @@ describe("Accordion.lazy", () => {
 
     render(
       <AccordionLazy
+        color="secondary"
         expanded={0}
         id="test-props"
         items={items}
-        variant="secondary"
         onChange={mockOnChange}
       />,
     )

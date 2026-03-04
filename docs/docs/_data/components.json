@@ -1,0 +1,522 @@
+[
+  {
+    "name": "Animated",
+    "slug": "animated",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-animated--docs",
+    "sourcePath": "src/components/animated/Animated.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "AnimatedText",
+    "slug": "animated-text",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-animatedtext--docs",
+    "sourcePath": "src/components/animatedText/AnimatedText.model.ts",
+    "aic": "server",
+    "css": "tokens",
+    "hasPropsType": true
+  },
+  {
+    "name": "Avatar",
+    "slug": "avatar",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-avatar--docs",
+    "sourcePath": "src/components/avatar/Avatar.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Button",
+    "slug": "button",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-button--docs",
+    "sourcePath": "src/components/button/Button.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Chip",
+    "slug": "chip",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-chip--docs",
+    "sourcePath": "src/components/chip/Chip.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Headline",
+    "slug": "headline",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-headline--docs",
+    "sourcePath": "src/components/headline/Headline.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Icon",
+    "slug": "icon",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-icon--docs",
+    "sourcePath": "src/components/icon/Icon.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Image",
+    "slug": "image",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-image--docs",
+    "sourcePath": "src/components/image/Image.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "List",
+    "slug": "list",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-list--docs",
+    "sourcePath": "src/components/list/List.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "PostItem",
+    "slug": "post-item",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-postitem--docs",
+    "sourcePath": "src/components/post-item/PostItem.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "PostTeaser",
+    "slug": "post-teaser",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-postteaser--docs",
+    "sourcePath": "src/components/post-teaser/PostTeaser.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "PostWidget",
+    "slug": "post-widget",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-postwidget--docs",
+    "sourcePath": "src/components/post-widget/PostWidget.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "PostWidgetCarousel",
+    "slug": "post-widget-carousel",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-postwidgetcarousel--docs",
+    "sourcePath": "src/components/post-widget-carousel/PostWidgetCarousel.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Quote",
+    "slug": "quote",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-quote--docs",
+    "sourcePath": "src/components/quote/Quote.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "RichText",
+    "slug": "rich-text",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-richtext--docs",
+    "sourcePath": "src/components/rich-text/RichText.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Teaser",
+    "slug": "teaser",
+    "category": "content",
+    "storybookPath": "/docs/prokodo-content-teaser--docs",
+    "sourcePath": "src/components/teaser/Teaser.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Dialog",
+    "slug": "dialog",
+    "category": "feedback",
+    "storybookPath": "/docs/prokodo-feedback-dialog--docs",
+    "sourcePath": "src/components/dialog/Dialog.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Drawer",
+    "slug": "drawer",
+    "category": "feedback",
+    "storybookPath": "/docs/prokodo-feedback-drawer--docs",
+    "sourcePath": "src/components/drawer/Drawer.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Loading",
+    "slug": "loading",
+    "category": "feedback",
+    "storybookPath": "/docs/prokodo-feedback-loading--docs",
+    "sourcePath": "src/components/loading/Loading.model.ts",
+    "aic": "server",
+    "css": "tokens",
+    "hasPropsType": true
+  },
+  {
+    "name": "ProgressBar",
+    "slug": "progress-bar",
+    "category": "feedback",
+    "storybookPath": "/docs/prokodo-feedback-progressbar--docs",
+    "sourcePath": "src/components/progressBar/ProgressBar.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Skeleton",
+    "slug": "skeleton",
+    "category": "feedback",
+    "storybookPath": "/docs/prokodo-feedback-skeleton--docs",
+    "sourcePath": "src/components/skeleton/Skeleton.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Snackbar",
+    "slug": "snackbar",
+    "category": "feedback",
+    "storybookPath": "/docs/prokodo-feedback-snackbar--docs",
+    "sourcePath": "src/components/snackbar/Snackbar.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Tooltip",
+    "slug": "tooltip",
+    "category": "feedback",
+    "storybookPath": "/docs/prokodo-feedback-tooltip--docs",
+    "sourcePath": "src/components/tooltip/Tooltip.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Autocomplete",
+    "slug": "autocomplete",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-autocomplete--docs",
+    "sourcePath": "src/components/autocomplete/Autocomplete.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Checkbox",
+    "slug": "checkbox",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-checkbox--docs",
+    "sourcePath": "src/components/checkbox/Checkbox.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "CheckboxGroup",
+    "slug": "checkbox-group",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-checkboxgroup--docs",
+    "sourcePath": "src/components/checkbox-group/CheckboxGroup.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "DatePicker",
+    "slug": "date-picker",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-datepicker--docs",
+    "sourcePath": "src/components/datePicker/DatePicker.model.ts",
+    "aic": "server",
+    "css": "tokens",
+    "hasPropsType": true
+  },
+  {
+    "name": "DynamicList",
+    "slug": "dynamic-list",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-dynamiclist--docs",
+    "sourcePath": "src/components/dynamic-list/DynamicList.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Form",
+    "slug": "form",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-form--docs",
+    "sourcePath": "src/components/form/Form.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Input",
+    "slug": "input",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-input--docs",
+    "sourcePath": "src/components/input/Input.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "InputOTP",
+    "slug": "input-otp",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-inputotp--docs",
+    "sourcePath": "src/components/inputOTP/InputOTP.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Label",
+    "slug": "label",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-label--docs",
+    "sourcePath": "src/components/label/Label.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Rating",
+    "slug": "rating",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-rating--docs",
+    "sourcePath": "src/components/rating/Rating.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "RTE",
+    "slug": "rte",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-rte--docs",
+    "sourcePath": "src/components/RTE/RTE.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Select",
+    "slug": "select",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-select--docs",
+    "sourcePath": "src/components/select/Select.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Slider",
+    "slug": "slider",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-slider--docs",
+    "sourcePath": "src/components/slider/Slider.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Switch",
+    "slug": "switch",
+    "category": "form",
+    "storybookPath": "/docs/prokodo-form-switch--docs",
+    "sourcePath": "src/components/switch/Switch.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Accordion",
+    "slug": "accordion",
+    "category": "layout",
+    "storybookPath": "/docs/prokodo-layout-accordion--docs",
+    "sourcePath": "src/components/accordion/Accordion.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Card",
+    "slug": "card",
+    "category": "layout",
+    "storybookPath": "/docs/prokodo-layout-card--docs",
+    "sourcePath": "src/components/card/Card.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Carousel",
+    "slug": "carousel",
+    "category": "layout",
+    "storybookPath": "/docs/prokodo-layout-carousel--docs",
+    "sourcePath": "src/components/carousel/Carousel.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Grid",
+    "slug": "grid",
+    "category": "layout",
+    "storybookPath": "/docs/prokodo-layout-grid--docs",
+    "sourcePath": "src/components/grid/Grid.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "ImageText",
+    "slug": "image-text",
+    "category": "layout",
+    "storybookPath": "/docs/prokodo-layout-imagetext--docs",
+    "sourcePath": "src/components/image-text/ImageText.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Stepper",
+    "slug": "stepper",
+    "category": "layout",
+    "storybookPath": "/docs/prokodo-layout-stepper--docs",
+    "sourcePath": "src/components/stepper/Stepper.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Table",
+    "slug": "table",
+    "category": "layout",
+    "storybookPath": "/docs/prokodo-layout-table--docs",
+    "sourcePath": "src/components/table/Table.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Calendly",
+    "slug": "calendly",
+    "category": "media",
+    "storybookPath": "/docs/prokodo-media-calendly--docs",
+    "sourcePath": "src/components/calendly/Calendly.model.ts",
+    "aic": "server",
+    "css": "tokens",
+    "hasPropsType": true
+  },
+  {
+    "name": "Lottie",
+    "slug": "lottie",
+    "category": "media",
+    "storybookPath": "/docs/prokodo-media-lottie--docs",
+    "sourcePath": "src/components/lottie/Lottie.model.ts",
+    "aic": "none",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Map",
+    "slug": "map",
+    "category": "media",
+    "storybookPath": "/docs/prokodo-media-map--docs",
+    "sourcePath": "src/components/map/Map.model.ts",
+    "aic": "none",
+    "css": "tokens",
+    "hasPropsType": true
+  },
+  {
+    "name": "BaseLink",
+    "slug": "base-link",
+    "category": "navigation",
+    "storybookPath": "/docs/prokodo-navigation-baselink--docs",
+    "sourcePath": "src/components/base-link/BaseLink.model.ts",
+    "aic": "server",
+    "css": "tokens",
+    "hasPropsType": true
+  },
+  {
+    "name": "Link",
+    "slug": "link",
+    "category": "navigation",
+    "storybookPath": "/docs/prokodo-navigation-link--docs",
+    "sourcePath": "src/components/link/Link.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Pagination",
+    "slug": "pagination",
+    "category": "navigation",
+    "storybookPath": "/docs/prokodo-navigation-pagination--docs",
+    "sourcePath": "src/components/pagination/Pagination.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "SideNav",
+    "slug": "sidenav",
+    "category": "navigation",
+    "storybookPath": "/docs/prokodo-navigation-sidenav--docs",
+    "sourcePath": "src/components/sidenav/SideNav.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  },
+  {
+    "name": "Tabs",
+    "slug": "tabs",
+    "category": "navigation",
+    "storybookPath": "/docs/prokodo-navigation-tabs--docs",
+    "sourcePath": "src/components/tabs/Tabs.model.ts",
+    "aic": "server",
+    "css": "module",
+    "hasPropsType": true
+  }
+]

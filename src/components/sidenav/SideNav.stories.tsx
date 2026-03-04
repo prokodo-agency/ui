@@ -1,10 +1,10 @@
-import { within, userEvent } from "@storybook/test"
+import { within, userEvent } from "storybook/test"
 
 import { ICON_NAMES } from "../icon/IconList"
 
 import { SideNav } from "./SideNav"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- meta ---------- */
 const meta: Meta<typeof SideNav> = {
@@ -51,5 +51,75 @@ export const Collapsed: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement)
     await userEvent.hover(c.getByRole("navigation"))
+  },
+}
+
+export const WithSections: Story = {
+  args: {
+    items: undefined,
+    sections: [
+      {
+        headline: "General",
+        description: "Core navigation",
+        items: [
+          {
+            label: "Dashboard",
+            icon: { name: "AccessIcon" },
+            redirect: { href: "#1" },
+            active: true,
+          },
+          {
+            label: "Leads",
+            icon: { name: "UserAccountIcon" },
+            redirect: { href: "#2" },
+          },
+        ],
+      },
+      {
+        headline: "Admin",
+        items: [
+          {
+            label: "Settings",
+            icon: { name: "Settings01Icon" },
+            redirect: { href: "#3" },
+          },
+        ],
+      },
+    ],
+  },
+}
+
+export const WithSectionsCollapsed: Story = {
+  args: {
+    initialCollapsed: true,
+    items: undefined,
+    sections: [
+      {
+        headline: "General",
+        items: [
+          {
+            label: "Dashboard",
+            icon: { name: "AccessIcon" },
+            redirect: { href: "#1" },
+            active: true,
+          },
+          {
+            label: "Leads",
+            icon: { name: "UserAccountIcon" },
+            redirect: { href: "#2" },
+          },
+        ],
+      },
+      {
+        headline: "Admin",
+        items: [
+          {
+            label: "Settings",
+            icon: { name: "Settings01Icon" },
+            redirect: { href: "#3" },
+          },
+        ],
+      },
+    ],
   },
 }

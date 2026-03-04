@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { DatePicker } from "./DatePicker"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
   title: "prokodo/form/DatePicker",
@@ -61,6 +61,25 @@ const meta = {
         "Minute granularity for time selection (applies when withTime=true).",
       table: { type: { summary: "number" } },
     },
+    color: {
+      control: "select",
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "success",
+        "error",
+        "info",
+        "warning",
+        "white",
+      ],
+      description:
+        "Visual color variant — controls gradient glow and accent color.",
+      table: {
+        type: { summary: "Variants" },
+        defaultValue: { summary: "primary" },
+      },
+    },
     minDate: {
       table: { disable: true },
     },
@@ -106,6 +125,7 @@ export const Default: Story = {
     helperText: "Select your birth date",
     required: false,
     format: "YYYY-MM-DD",
+    color: "primary",
   },
 }
 

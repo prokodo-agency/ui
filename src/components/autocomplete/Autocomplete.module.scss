@@ -1,162 +1,222 @@
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/screens" as *;
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+// Component tokens: --pk-autocomplete-bg, --pk-autocomplete-fg,
+//   --pk-autocomplete-fg-muted, --pk-autocomplete-radius,
+//   --pk-autocomplete-shadow, --pk-autocomplete-dropdown-bg,
+//   --pk-autocomplete-item-hover-bg, --pk-autocomplete-item-active-bg,
+//   --pk-autocomplete-state-bg, --pk-autocomplete-state-fg,
+//   --pk-autocomplete-padding-x, --pk-autocomplete-padding-y
 
 @include define-block("Autocomplete") {
   position: relative;
+  display: flex;
+  flex-direction: column;
 
+  // ── Variant overrides ──────────────────────────────────────────────
+  &--primary {
+    --pk-autocomplete-shadow-color-focus: color-mix(in srgb, var(--pk-color-brand)   30%, transparent);
+    --pk-autocomplete-gradient-from:      var(--pk-color-brand);
+    --pk-autocomplete-gradient-to:        var(--pk-color-accent);
+    --pk-autocomplete-item-hover-bg:      color-mix(in srgb, var(--pk-color-brand)   10%, var(--pk-autocomplete-bg));
+    --pk-autocomplete-item-active-bg:     color-mix(in srgb, var(--pk-color-brand)   18%, var(--pk-autocomplete-bg));
+  }
+  &--secondary {
+    --pk-autocomplete-shadow-color-focus: color-mix(in srgb, var(--pk-color-accent)  30%, transparent);
+    --pk-autocomplete-gradient-from:      var(--pk-color-accent);
+    --pk-autocomplete-gradient-to:        var(--pk-color-brand);
+    --pk-autocomplete-item-hover-bg:      color-mix(in srgb, var(--pk-color-accent)  10%, var(--pk-autocomplete-bg));
+    --pk-autocomplete-item-active-bg:     color-mix(in srgb, var(--pk-color-accent)  18%, var(--pk-autocomplete-bg));
+  }
+  &--success {
+    --pk-autocomplete-shadow-color-focus: color-mix(in srgb, var(--pk-color-success) 30%, transparent);
+    --pk-autocomplete-gradient-from:      var(--pk-color-success);
+    --pk-autocomplete-gradient-to:        #10CCB8;
+    --pk-autocomplete-item-hover-bg:      color-mix(in srgb, var(--pk-color-success) 10%, var(--pk-autocomplete-bg));
+    --pk-autocomplete-item-active-bg:     color-mix(in srgb, var(--pk-color-success) 18%, var(--pk-autocomplete-bg));
+  }
+  &--warning {
+    --pk-autocomplete-shadow-color-focus: color-mix(in srgb, var(--pk-color-warning) 30%, transparent);
+    --pk-autocomplete-gradient-from:      var(--pk-color-warning);
+    --pk-autocomplete-gradient-to:        #f7cc6a;
+    --pk-autocomplete-item-hover-bg:      color-mix(in srgb, var(--pk-color-warning) 10%, var(--pk-autocomplete-bg));
+    --pk-autocomplete-item-active-bg:     color-mix(in srgb, var(--pk-color-warning) 18%, var(--pk-autocomplete-bg));
+  }
+  &--error {
+    --pk-autocomplete-shadow-color-focus: color-mix(in srgb, var(--pk-color-error)   30%, transparent);
+    --pk-autocomplete-gradient-from:      var(--pk-color-error);
+    --pk-autocomplete-gradient-to:        #ff6b6b;
+    --pk-autocomplete-item-hover-bg:      color-mix(in srgb, var(--pk-color-error)   10%, var(--pk-autocomplete-bg));
+    --pk-autocomplete-item-active-bg:     color-mix(in srgb, var(--pk-color-error)   18%, var(--pk-autocomplete-bg));
+  }
+  &--info,
+  &--inherit,
+  &--white {
+    --pk-autocomplete-shadow-color-focus: rgba(0, 0, 0, 0.1);
+    --pk-autocomplete-gradient-from:      var(--pk-color-muted);
+    --pk-autocomplete-gradient-to:        var(--pk-color-border);
+    --pk-autocomplete-item-hover-bg:      color-mix(in srgb, var(--pk-color-muted)   10%, var(--pk-autocomplete-bg));
+    --pk-autocomplete-item-active-bg:     color-mix(in srgb, var(--pk-color-muted)   18%, var(--pk-autocomplete-bg));
+  }
+
+  // Dark mode token overrides — palette values are mode-independent so
+  // we must reseat component tokens under the dark selector.
+  :global(html[data-theme="dark"]) &,
+  :global([data-theme="dark"]) &,
+  :global(.pk-theme-dark) & {
+    --pk-autocomplete-state-fg:        var(--pk-color-fg);
+    --pk-autocomplete-fg-muted:        var(--pk-palette-grey-200);
+    // Use the active variant's gradient-from so hover/active tints respect the color prop in dark mode
+    --pk-autocomplete-item-hover-bg:   color-mix(in srgb, var(--pk-autocomplete-gradient-from) 15%, var(--pk-autocomplete-bg));
+    --pk-autocomplete-item-active-bg:  color-mix(in srgb, var(--pk-autocomplete-gradient-from) 25%, var(--pk-autocomplete-bg));
+  }
+
+  // Wrapper div around the <Input> component
   &__inputWrap {
     position: relative;
-    z-index: 41;
-    border-radius: $ui-form-element;
   }
 
+  // Passed as className to <Input> — applied to Input's root div.
+  // Used to reach Input__field for box-shadow radius squaring when open.
   &__input {
-    width: 100%;
-
-    &__inner--is-open,
-    &__node--is-open {
-        border-bottom-left-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-    }
-
-    &__inner--is-open {
-      @include gradientBorderVar(4);
+    &--is-open {
+      // Square Input__field's box-shadow to match the open shape + go colored
+      :global(.prokodo-Input__field) {
+        border-radius: var(--pk-autocomplete-radius) var(--pk-autocomplete-radius) 0 0;
+      }
+      // Square the __notch fieldset border (the visible outline) to connect with dropdown
+      :global(.prokodo-Input__notch) {
+        border-radius: var(--pk-autocomplete-radius) var(--pk-autocomplete-radius) 0 0;
+        border-bottom-color: transparent;
+      }
+      // Override Input's shadow-color-focus token so __field picks up the brand glow
+      --pk-input-shadow-color-focus: var(--pk-autocomplete-shadow-color-focus);
     }
   }
 
+  // Passed as inputContainerClassName to <Input> — lands on Input__input,
+  // which owns the animated gradient border.
+  &__input__inner {
+    &--is-open {
+      // Lock Input's animated gradient at 100% when dropdown is open
+      background-size: 100% 100%, 100% 100%;
+      background-position: 100% 0, 0 0;
+      animation: none;
+      border-radius: var(--pk-autocomplete-radius) var(--pk-autocomplete-radius) 0 0;
+    }
+  }
+
+  // Passed as inputClassName to <Input> — styles the actual <input> element.
+  &__input__node {
+    background-color: var(--pk-autocomplete-bg);
+    color: var(--pk-autocomplete-fg);
+
+    &--is-open {
+      border-radius: var(--pk-autocomplete-radius) var(--pk-autocomplete-radius) 0 0;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px var(--pk-autocomplete-bg) inset;
+      box-shadow: 0 0 0 1000px var(--pk-autocomplete-bg) inset;
+      -webkit-text-fill-color: var(--pk-autocomplete-fg);
+    }
+
+    &:disabled {
+      color: var(--pk-autocomplete-fg-muted);
+    }
+  }
+
+  // The dropdown suggestion list <ul> — sits flush below the input.
+  // Uses the same gradient-border technique as <Input>:
+  //   padding-box layer = solid surface fill
+  //   border-box layer  = gradient ring
+  // border-top: none so the list connects seamlessly with the input bottom.
   &__list {
     position: absolute;
-    top: 100%;
-    left: 0;
-    width: calc(100% - 4px);
-    margin: 0;
-    padding: 0 2px 2px;
-    list-style: none;
-    transform: none;
-    border-bottom-left-radius: $ui-form-element;
-    border-bottom-right-radius: $ui-form-element;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    @include gradientBorderVar(4);
-    margin-top: -2px;
-    box-shadow: var(--elevation-3);
+    width: 100%;
+    box-sizing: border-box;
+    background:
+      linear-gradient(var(--pk-autocomplete-bg), var(--pk-autocomplete-bg)) padding-box,
+      linear-gradient(90deg, var(--pk-autocomplete-gradient-from), var(--pk-autocomplete-gradient-to), var(--pk-autocomplete-gradient-from)) border-box;
+    border: 2px solid transparent;
+    border-top: none;
+    // Square top corners (connect with input), round bottom corners
+    border-radius: 0 0 var(--pk-autocomplete-radius) var(--pk-autocomplete-radius);
+    box-shadow: 0 8px 16px var(--pk-autocomplete-shadow-color-focus),
+                0 2px 6px color-mix(in srgb, var(--pk-autocomplete-shadow-color-focus) 80%, transparent);
+    z-index: 200;
+    overflow-y: auto;
     max-height: 260px;
-    overflow: auto;
-    z-index: 50;
-    animation: fade-in 180ms ease-out;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    padding: var(--pk-space-xs) 0;
+    list-style: none;
+    margin: 0;
   }
 
+  // Empty / loading / min-query state message <p> inside a <li>
+  // flex so the <Loading> icon and text sit side-by-side and vertically centred
   &__state {
     display: flex;
     align-items: center;
-    gap: $space-sm;
+    gap: var(--pk-space-sm);
+    padding: var(--pk-autocomplete-padding-y) var(--pk-autocomplete-padding-x);
+    color: var(--pk-autocomplete-state-fg);
     margin: 0;
-    padding: $space-sm $space-lg $space-lg $space-lg;
-    background: var(--color-white);
-    color: var(--color-grey-700);
-    border-bottom-left-radius: $ui-form-element;
-    border-bottom-right-radius: $ui-form-element;
     @include text("caption");
-
-    html[data-theme="dark"] & {
-      background: rgb(16, 19, 27);
-      color: var(--color-grey-500);
-    }
   }
 
+  // <li> wrapper for each suggestion — resets list-item marker
   &__itemRow {
     list-style: none;
-    margin: 0;
-    padding: 0;
-
-    &--is-last {
-        border-bottom-left-radius: $ui-form-element;
-        border-bottom-right-radius: $ui-form-element;
-    }
   }
 
+  // <button> for each suggestion — flex column to stack label + description
   &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    border: none;
-    background: var(--color-white);
-    color: inherit;
-    text-align: left;
-    display: grid;
-    gap: $space-xs;
-    padding: $space-sm $space-lg;
+    padding: var(--pk-autocomplete-padding-y) var(--pk-autocomplete-padding-x);
     cursor: pointer;
-    transition: background-color 120ms ease;
-
-    html[data-theme="dark"] & {
-      background: rgb(16, 19, 27);
-    }
+    background: none;
+    border: none;
+    text-align: left;
+    color: var(--pk-autocomplete-fg);
+    transition: background-color var(--pk-timing-fast) ease;
 
     @include when-hovered() {
-      background: var(--color-primary-50);
-
-      html[data-theme="dark"] & {
-        background: var(--color-primary-50);
-      }
-    }
-
-    @include when-focuse-visible() {
-      outline: 0;
-      background: var(--color-primary-50);
-
-      html[data-theme="dark"] & {
-        background: var(--color-primary-50);
-      }
-    }
-
-    &--is-first {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-
-    &--is-last {
-        border-bottom-left-radius: $ui-form-element;
-        border-bottom-right-radius: $ui-form-element;
+      background-color: var(--pk-autocomplete-item-hover-bg);
     }
 
     &--is-active {
-      background: var(--color-primary-100);
+      background-color: var(--pk-autocomplete-item-active-bg);
+    }
 
-      html[data-theme="dark"] & {
-        background: var(--color-primary-100);
-      }
+    &--is-first {
+      border-radius: 0;
+    }
+
+    &--is-last {
+      border-radius: 0 0 var(--pk-autocomplete-radius) var(--pk-autocomplete-radius);
     }
   }
 
+  // Primary label line inside each item
   &__itemLabel {
     margin: 0;
-    color: var(--color-grey-900);
-    @include text("caption");
+    color: var(--pk-autocomplete-fg);
+    @include text("base");
   }
 
+  // Secondary description line inside each item (optional)
   &__itemDescription {
-    margin: 0;
-    color: var(--color-grey-700);
+    margin: var(--pk-space-xs) 0 0;
+    color: var(--pk-autocomplete-fg-muted);
     @include text("caption");
   }
 }

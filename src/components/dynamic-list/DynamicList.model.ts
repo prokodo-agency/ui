@@ -2,6 +2,7 @@ import type { ButtonProps } from "../button"
 import type { InputProps } from "../input"
 import type { LabelProps } from "../label"
 import type { SelectProps } from "../select"
+import type { Variants } from "@/types/variants"
 import type { MouseEvent } from "react"
 
 /**
@@ -63,6 +64,9 @@ export type DynamicListDefault = {
   errorText?: string
 
   helperText?: string
+
+  /** Visual color — applied to child Input/Select fields. */
+  color?: Variants
 }
 
 /**

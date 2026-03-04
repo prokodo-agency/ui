@@ -4,6 +4,7 @@ export { SnackbarCtx } from "./SnackbarProvider.context"
 export { useSnackbar } from "./SnackbarProvider.client"
 export type {
   SnackbarProps,
+  SnackbarColor,
   SnackbarVariant,
   SnackbarAnchorOrigin,
 } from "./Snackbar.model"

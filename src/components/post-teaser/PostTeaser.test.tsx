@@ -68,6 +68,18 @@ describe("PostTeaser", () => {
       expect(screen.getByAltText("Post cover")).toBeInTheDocument()
     })
 
+    it("renders with a color prop applying it to headline and link icon", () => {
+      render(
+        <PostTeaserView
+          color="primary"
+          readMinutes={0}
+          redirect={{ href: "/post/1", label: "Read more" }}
+          title={{ content: "Colored Teaser" }}
+        />,
+      )
+      expect(screen.getByText("Colored Teaser")).toBeInTheDocument()
+    })
+
     it("renders structured data script for BlogPosting", () => {
       render(
         <PostTeaserView
@@ -263,9 +275,9 @@ describe("PostTeaserView – comprehensive prop coverage", () => {
         redirect={{ href: "/post/full", label: "Read more" }}
         wordCount={800}
         componentsProps={{
-          headline: { variant: "primary" as const },
+          headline: { color: "primary" as const },
           linkIcon: { size: "md" as const },
-          card: { variant: "white" as const },
+          card: { color: "white" as const },
         }}
         image={{
           src: "/img/full.jpg",
@@ -277,7 +289,7 @@ describe("PostTeaserView – comprehensive prop coverage", () => {
         title={{
           content: "Full PostTeaser",
           className: "t-cls",
-          variant: "primary" as const,
+          color: "primary" as const,
         }}
       />,
     )

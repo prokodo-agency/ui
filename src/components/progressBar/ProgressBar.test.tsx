@@ -48,8 +48,8 @@ describe("ProgressBar", () => {
       )
     })
 
-    it("renders with variant=success", () => {
-      render(<ProgressBar id="success" value={80} variant="success" />)
+    it("renders with color=success", () => {
+      render(<ProgressBar color="success" id="success" value={80} />)
       expect(screen.getByRole("progressbar")).toBeInTheDocument()
     })
 

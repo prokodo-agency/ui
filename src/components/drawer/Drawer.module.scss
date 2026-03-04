@@ -8,11 +8,11 @@
   &__backdrop {
     position: fixed;
     inset: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: var(--pk-drawer-backdrop-bg);
     opacity: 0;
     pointer-events: none;
     transition: opacity .3s ease;
-    z-index: 1301;
+    z-index: calc(var(--pk-drawer-z-index) - 1);
 
     &--open {
       opacity: 1;
@@ -27,9 +27,9 @@
   /* Container (slide + fade via transitions) */
   &__container {
     position: fixed;
-    background-color: var(--color-white);
-    box-shadow: var(--elevation-1);
-    z-index: 1302;
+    background-color: var(--pk-drawer-bg);
+    box-shadow: var(--pk-drawer-shadow);
+    z-index: var(--pk-drawer-z-index);
     pointer-events: none; // until open
     width: 300px;
     height: 100%;
@@ -99,13 +99,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
-    border-bottom: 1px solid var(--color-grey-200);
+    padding: var(--pk-drawer-padding);
+    border-bottom: 1px solid var(--pk-drawer-border);
   }
 
   /* Content */
   &__content {
-    padding: 1rem;
+    padding: var(--pk-drawer-padding);
     max-height: calc(100% - 7rem);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;

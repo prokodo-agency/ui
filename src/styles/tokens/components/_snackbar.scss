@@ -1,0 +1,41 @@
+// =============================================================================
+// SNACKBAR COMPONENT TOKENS
+// Declaration block only — no selectors.
+// Dark-mode info variant: add --pk-snackbar-info-bg override in themes/_dark.scss
+// =============================================================================
+
+@mixin snackbar-tokens() {
+  // Base (default — elevated inverted surface)
+  --pk-snackbar-bg:              var(--pk-color-fg);
+  --pk-snackbar-fg:              var(--pk-color-surface);
+  --pk-snackbar-border-color:    color-mix(in srgb, var(--pk-color-surface) 15%, transparent);
+  --pk-snackbar-radius:          var(--pk-radius-md);
+  --pk-snackbar-shadow:          var(--pk-shadow-lg);
+  --pk-snackbar-padding-x:       var(--pk-space-xl);
+  --pk-snackbar-padding-y:       var(--pk-space-lg);
+  --pk-snackbar-timing:          var(--pk-timing-normal);
+
+  // Success variant
+  --pk-snackbar-success-bg:      color-mix(in srgb, var(--pk-color-success) 10%, var(--pk-color-surface));
+  --pk-snackbar-success-fg:      var(--pk-color-fg);
+  --pk-snackbar-success-border:  color-mix(in srgb, var(--pk-color-success) 40%, transparent);
+  --pk-snackbar-success-shadow:  0 4px 24px color-mix(in srgb, var(--pk-color-success) 20%, transparent);
+
+  // Error variant
+  --pk-snackbar-error-bg:        color-mix(in srgb, var(--pk-color-error) 10%, var(--pk-color-surface));
+  --pk-snackbar-error-fg:        var(--pk-color-fg);
+  --pk-snackbar-error-border:    color-mix(in srgb, var(--pk-color-error) 40%, transparent);
+  --pk-snackbar-error-shadow:    0 4px 24px color-mix(in srgb, var(--pk-color-error) 20%, transparent);
+
+  // Warning variant
+  --pk-snackbar-warning-bg:      color-mix(in srgb, var(--pk-color-warning) 10%, var(--pk-color-surface));
+  --pk-snackbar-warning-fg:      var(--pk-color-fg);
+  --pk-snackbar-warning-border:  color-mix(in srgb, var(--pk-color-warning) 40%, transparent);
+  --pk-snackbar-warning-shadow:  0 4px 24px color-mix(in srgb, var(--pk-color-warning) 20%, transparent);
+
+  // Info variant
+  --pk-snackbar-info-bg:         color-mix(in srgb, var(--pk-color-fg) 8%, var(--pk-color-surface));
+  --pk-snackbar-info-fg:         var(--pk-color-fg);
+  --pk-snackbar-info-border:     color-mix(in srgb, var(--pk-color-fg) 20%, transparent);
+  --pk-snackbar-info-shadow:     var(--pk-shadow-md);
+}

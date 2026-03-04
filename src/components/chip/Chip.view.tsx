@@ -27,8 +27,8 @@ export function ChipView({
   return (
     <div
       {...rest}
-      role="button"
-      tabIndex={isClickable ? 0 : -1}
+      role={isClickable ? "button" : undefined}
+      tabIndex={isClickable ? 0 : undefined}
       className={bem(
         undefined,
         {
@@ -39,8 +39,7 @@ export function ChipView({
         },
         className,
       )}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
+      {...(isClickable ? { onClick, onKeyDown } : {})}
     >
       {icon}
       <span className={bem("label")}>{label}</span>

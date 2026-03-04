@@ -262,10 +262,10 @@ describe("AccordionView", () => {
     const { container } = render(
       <AccordionView
         className="custom-class"
+        color="secondary"
         expandedIndex={0}
         id="test-classes"
         type="panel"
-        variant="secondary"
         items={[
           {
             title: "Item 1",

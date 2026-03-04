@@ -1,0 +1,15 @@
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/screens" as *;
+@use "@/styles/ui/mixins/bem" as *;
+
+// Component token (override on :root or a scoped ancestor):
+// --pk-calendly-height  → widget height (default 700px)
+
+@include define-block("Calendly") {
+  &__widget {
+    display: block;
+    min-width: 320px;
+    height: var(--pk-calendly-height, 700px);
+    width: 100%;
+  }
+}

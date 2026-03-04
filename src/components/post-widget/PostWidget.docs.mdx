@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as PostWidgetStories from "./PostWidget.stories"
 
 <Meta of={PostWidgetStories} />
@@ -27,12 +27,42 @@ Use `PostWidget` in sidebar areas, article bottoms ("Related posts"), and landin
 - Don't reuse the same link text for different posts within one widget
 - Don't nest `PostWidget` inside another card without adequate visual separation
 
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                         | Purpose                                                    |
+| ----------------------------- | ---------------------------------------------------------- |
+| `--pk-space-lg`               | List item top margin, full-width grid gap, image right gap |
+| `--pk-radius-md`              | Thumbnail image link border-radius                         |
+| `--pk-color-muted`            | Post date text color                                       |
+| `--pk-color-brand/accent/...` | Colored border, background tint, and shadow (via `color`)  |
+
+## Color
+
+The `color` prop controls the visual accent of the entire widget, consistent
+with all other blog components and form elements:
+
+- **Card**: applies a colored `border`, translucent background tint, and an
+  ambient `box-shadow` — matching the Input/Select shadow pattern.
+- **Title Headline**: inherits the `color` value automatically (unless
+  overridden via `title.color` or `componentsProps.title.color`).
+- **Item Headlines**: also inherit `color` as their default.
+
+Available values: `inherit` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `white`
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story of={PostWidgetStories.Default} />
+</Canvas>
+
+### Colored
+
+<Canvas>
+  <Story of={PostWidgetStories.Colored} />
 </Canvas>
 
 ### Full width

@@ -1,28 +1,20 @@
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("Headline") {
   margin: 0;
 
-  /* Basale Farb-Varianten (ohne Gradients) */
-  &--inherit { color: var(--color-grey-900); }
-  &--primary { color: var(--color-primary-500); }
-  &--secondary { color: var(--color-secondary-500); }
-  &--success { color: var(--color-success); }
-  &--info    { color: var(--color-grey-300); }
-  &--warning { color: var(--color-warning); }
-  &--error   { color: var(--color-error); }
-  &--white   { color: #fff; }
-  &--black   { color: var(--color-black); }
-
-  /* Highlight-Grundlage */
-  &--is-highlighted {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  /* Color variants (mapped to semantic design tokens) */
+  &--inherit { color: var(--pk-color-fg); }
+  &--primary { color: var(--pk-color-brand); }
+  &--secondary { color: var(--pk-color-accent); }
+  &--success { color: var(--pk-color-success); }
+  &--info    { color: var(--pk-color-muted); }
+  &--warning { color: var(--pk-color-warning); }
+  &--error   { color: var(--pk-color-error); }
+  &--white   { color: var(--pk-palette-white); }
+  &--black   { color: var(--pk-palette-black); }
 
   /* Varianten mit Highlight (mit Gradients/Shadow) */
   &--inherit--highlighted   { @include gradientTextVar("grey"); }
@@ -31,6 +23,7 @@
   &--success--highlighted   { @include gradientTextVar("success");           filter: drop-shadow(var(--elevation-1--text)); }
   &--warning--highlighted   { @include gradientTextVar("warning");           filter: drop-shadow(var(--elevation-1--text)); }
   &--error--highlighted     { @include gradientTextVar("error");             filter: drop-shadow(var(--elevation-1--text)); }
+  &--info--highlighted      { @include gradientTextVar("grey"); }
 
   /* Größen */
   &--xs  { @include text('headline/xs'); }

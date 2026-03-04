@@ -1,6 +1,6 @@
 import { Tooltip } from "@/components/tooltip"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
@@ -27,6 +27,10 @@ const meta = {
     placement: {
       control: "select",
       options: ["top", "bottom", "left", "right"],
+    },
+    color: {
+      control: "select",
+      options: ["default", "success", "error", "warning", "info"],
     },
     disabled: { control: "boolean" },
 
@@ -238,4 +242,44 @@ export const InlineTextTrigger: Story = {
       it should be focusable.
     </p>
   ),
+}
+
+/**
+ * Color variants
+ * - All five `color` values side by side.
+ * - Arrows automatically pick up the variant background.
+ */
+export const Colors: Story = {
+  args: {
+    content: "Tooltip text",
+    placement: "top",
+    open: true,
+  },
+  render: args => (
+    <div
+      style={{
+        display: "flex",
+        gap: 48,
+        paddingTop: 48,
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}
+    >
+      {(["default", "success", "error", "warning", "info"] as const).map(
+        color => (
+          <Tooltip key={color} {...args} color={color}>
+            <DemoButton>{color}</DemoButton>
+          </Tooltip>
+        ),
+      )}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "All five `color` variants. Arrows adapt automatically to the bubble background.",
+      },
+    },
+  },
 }

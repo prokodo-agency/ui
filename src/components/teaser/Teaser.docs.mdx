@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as TeaserStories from "./Teaser.stories"
 
 <Meta of={TeaserStories} />
@@ -26,6 +26,22 @@ Use `Teaser` on landing pages, service overview sections, and promotional areas 
 
 - Don't stack more than four Teasers in a single row — readability degrades
 - Don't auto-play the entrance animation on repeat (e.g. on tab re-focus)
+
+## API notes
+
+- `color` is forwarded to the inner `Card` and `Headline`; it sets the card background tint and heading accent colour
+- `align` controls text alignment of headline and body copy (`"left"` | `"center"` | `"right"`)
+- `lineClamp` truncates the headline to 1 line and body copy to 3 lines
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token           | Purpose                           |
+| --------------- | --------------------------------- |
+| `--pk-space-xs` | Link icon right margin            |
+| `--pk-space-sm` | Image caption bottom/right offset |
+| `--pk-space-lg` | Card content area padding         |
 
 ## Examples
 

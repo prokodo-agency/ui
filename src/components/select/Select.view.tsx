@@ -27,6 +27,7 @@ export function SelectView<Value extends string = string>({
   multiple,
   value,
   items,
+  color = "primary",
   _clientState,
 }: SelectViewProps<Value>): JSX.Element | null {
   /* guard – nothing to show */
@@ -50,12 +51,18 @@ export function SelectView<Value extends string = string>({
           (value as Value[]).includes(i.value as Value),
       )
     : items.filter(i => i.value === (value as Value | undefined))
+
+  // Label floats to top border when the dropdown is open OR a value is selected
+  const isFloated = open || selectedItems.length > 0
   const display =
     selectedItems.length === 0 ? (
       <span
         className={bem("button__inner", {
           "is-placeholder": true,
           "is-placeholder--disabled": Boolean(disabled),
+          // hide placeholder text when label sits at rest inside the button
+          // (label visually acts as placeholder; span still reserves height)
+          "is-hidden": !isFloated,
           expanded: open,
         })}
       >
@@ -82,25 +89,49 @@ export function SelectView<Value extends string = string>({
         undefined,
         {
           fullWidth: Boolean(fullWidth),
+          [color]: true,
         },
         className,
       )}
     >
-      {/* ------------------------------------------------ label */}
-      {!Boolean(hideLabel) && (
-        <Label
-          {...labelProps}
-          className={bem("label", undefined, labelProps?.className)}
-          error={isError}
-          htmlFor={id}
-          label={label}
-          required={required}
-          type="label"
-        />
-      )}
-
-      {/* ------------------------------------------------ field */}
+      {/* ------------------------------------------------ field (label floats inside) */}
       <div className={bem("field", undefined, fieldClassName)}>
+        {/* sizer: hidden, in-flow, stacks all option labels so grid track width = widest option */}
+        <div aria-hidden="true" className={bem("sizer")}>
+          {items.map(i => (
+            <span key={i.value}>{i.label}</span>
+          ))}
+        </div>
+        {/* floating label — centers in button at rest; lifts to top border when open or value selected */}
+        {!Boolean(hideLabel) && (
+          <Label
+            {...labelProps}
+            error={isError}
+            htmlFor={id}
+            label={label}
+            required={required}
+            type="label"
+            className={bem(
+              "label",
+              { "is-focused": isFloated },
+              labelProps?.className,
+            )}
+          />
+        )}
+        {/* notch fieldset — aria-hidden; legend creates the border gap behind the floating label */}
+        {!Boolean(hideLabel) && (
+          <fieldset
+            aria-hidden="true"
+            className={bem("notch", {
+              "is-focused": isFloated,
+              expanded: open,
+            })}
+          >
+            <legend className={bem("notchLegend")}>
+              <span>{label}</span>
+            </legend>
+          </fieldset>
+        )}
         {/* --- toggle button (static, closed) */}
         <button
           ref={btnRef}
@@ -134,7 +165,11 @@ export function SelectView<Value extends string = string>({
         {/* --- listbox is rendered by the client (portal) to avoid stacking-context issues */}
         {_clientState?.renderListbox?.({
           id: listId,
-          className: bem("listbox", { "is-open": open, "is-closed": !open }),
+          className: bem("listbox", {
+            "is-open": open,
+            "is-closed": !open,
+            [color]: true,
+          }),
           open,
           required,
           multiple,

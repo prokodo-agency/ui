@@ -1,0 +1,22 @@
+// =============================================================================
+// TABLE COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin table-tokens() {
+  // Border colour for head-row separator and body-row dividers
+  --pk-table-border-color:        var(--pk-color-border);
+  // Accent colour used on the first header cell
+  --pk-table-header-accent-color: var(--pk-color-brand);
+  // Row hover / focus-within background tint
+  --pk-table-row-hover-bg:        color-mix(in srgb, var(--pk-color-brand) 8%, transparent);
+  // Caption and muted-text colour
+  --pk-table-caption-color:       var(--pk-color-muted);
+  // Default cell foreground colour
+  --pk-table-cell-fg:             var(--pk-color-fg);
+  // Cell padding (vertical / horizontal)
+  --pk-table-padding-y:           var(--pk-space-xl);
+  --pk-table-padding-x:           var(--pk-space-sm);
+  // Root container bottom padding
+  --pk-table-container-pb:        var(--pk-space-xl);
+}

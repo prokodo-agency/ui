@@ -5,7 +5,7 @@ import { isNumber, isString } from "@/helpers/validations"
 import { Card, type CardProps } from "../card"
 import { Chip } from "../chip"
 import { Headline } from "../headline"
-import { Icon } from "../icon"
+import { Icon, type IconProps } from "../icon"
 import { Image, type ImageProps } from "../image"
 import { RichText } from "../rich-text"
 
@@ -34,6 +34,7 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
     onClick,
     redirect,
     structuredData = true,
+    color,
 
     // private
     isHovered,
@@ -48,9 +49,10 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
   const cardMerged = {
     ...(componentsProps?.card as Partial<CardProps>),
     ...(cardRest as Partial<CardProps>),
-    variant: (componentsProps?.card?.variant ??
-      (cardRest as Partial<CardProps>)?.variant ??
-      "white") as CardProps["variant"],
+    color: (componentsProps?.card?.color ??
+      (cardRest as Partial<CardProps>)?.color ??
+      (color as CardProps["color"] | undefined) ??
+      "white") as CardProps["color"],
   }
 
   // Prepare Image props
@@ -161,9 +163,12 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
               undefined,
               [title?.className, classes?.headline].filter(Boolean).join(" "),
             )}
-            variant={
-              title?.variant ??
-              componentsProps?.headline?.variant ??
+            color={
+              title?.color ??
+              componentsProps?.headline?.color ??
+              (color && color !== "white"
+                ? color
+                : /* istanbul ignore next */ undefined) ??
               "secondary"
             }
           >
@@ -204,7 +209,6 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
               )}
             >
               <Icon
-                color="primary"
                 name="ArrowRight01Icon"
                 size="xs"
                 className={bem(
@@ -212,6 +216,12 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
                   { "is-hovered": Boolean(isHovered) },
                   classes?.linkIcon,
                 )}
+                color={
+                  ((color && color !== "white"
+                    ? color
+                    : /* istanbul ignore next */ undefined) ??
+                    "primary") as IconProps["color"]
+                }
                 {...componentsProps?.linkIcon}
                 {...redirect?.icon}
               />

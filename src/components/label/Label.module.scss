@@ -1,4 +1,3 @@
-@use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
@@ -16,25 +15,77 @@
         @include textShadow(1);
     }
 
+    // ── Color variant overrides ────────────────────────────────────────────
+    &--primary {
+        --pk-label-gradient-from: var(--pk-color-brand);
+        --pk-label-gradient-to:   var(--pk-color-accent);
+    }
+    &--secondary {
+        --pk-label-gradient-from: var(--pk-color-accent);
+        --pk-label-gradient-to:   var(--pk-color-brand);
+    }
+    &--success {
+        --pk-label-gradient-from: var(--pk-color-success);
+        --pk-label-gradient-to:   #10CCB8;
+    }
+    &--warning {
+        --pk-label-gradient-from: var(--pk-color-warning);
+        --pk-label-gradient-to:   #f7cc6a;
+    }
+    &--error {
+        --pk-label-gradient-from: var(--pk-color-error);
+        --pk-label-gradient-to:   #ff6b6b;
+    }
+    &--info,
+    &--inherit,
+    &--white {
+        --pk-label-gradient-from: var(--pk-color-muted);
+        --pk-label-gradient-to:   var(--pk-color-border);
+    }
+
     &__highlighted {
         font-style: normal;
-        @include gradientTextVar("primary", transparent);
+        // Light mode default: darken both gradient stops for WCAG-AA contrast
+        // on pale/white surfaces. Colours like #00E6FF (accent) and #f7cc6a
+        // (warning-to) are near-invisible at full brightness on white.
+        background: linear-gradient(
+            to right,
+            color-mix(in srgb, var(--pk-label-gradient-from) 80%, #000000),
+            color-mix(in srgb, var(--pk-label-gradient-to)   65%, #000000)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        // Solid fallback for browsers without background-clip: text
+        color: var(--pk-label-gradient-from);
 
-        html[data-theme='dark'] & {
-            @include gradientTextVar("primary", var(--color-grey-800));
+        // Dark mode: restore full-brightness gradient — dark surface has
+        // plenty of contrast so the vivid colours look great.
+        // NOTE: must repeat background-clip because the `background` shorthand
+        // resets it to `border-box`, undoing the text-clip above.
+        :global(html[data-theme='dark']) &,
+        :global([data-theme='dark']) &,
+        :global(.pk-theme-dark) & {
+            background: linear-gradient(
+                to right,
+                var(--pk-label-gradient-from),
+                var(--pk-label-gradient-to)
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
         }
 
+        // Error colours (#f0453a, #ff6b6b) are already dark/saturated enough
+        // on both themes — no darkening needed.
         &--error {
-            @include gradientTextVar("error", null);
+            background: linear-gradient(
+                to right,
+                var(--pk-label-error-from),
+                var(--pk-label-error-to)
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
         }
     }
 
-    &__text {
-        color: var(--color-grey-500);
-        font-style: normal;
-
-        html[data-theme='dark'] & {
-            color: var(--color-grey-800);
-        }
-    }
 }

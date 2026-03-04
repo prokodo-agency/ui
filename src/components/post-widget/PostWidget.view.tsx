@@ -24,6 +24,7 @@ export function PostWidgetView({
   classes,
   componentsProps,
   structuredData = true,
+  color,
   ...rest
 }: PostWidgetProps): JSX.Element {
   const cardMerged = {
@@ -31,9 +32,10 @@ export function PostWidgetView({
     enableShadow: true,
     ...(componentsProps?.card as Partial<CardProps>),
     ...(rest as Partial<CardProps>),
-    variant: (componentsProps?.card?.variant ??
-      (rest as Partial<CardProps>)?.variant ??
-      undefined) as CardProps["variant"],
+    color: (componentsProps?.card?.color ??
+      (rest as Partial<CardProps>)?.color ??
+      color ??
+      undefined) as CardProps["color"],
   }
   return (
     <section
@@ -58,17 +60,22 @@ export function PostWidgetView({
         {title && (
           <Headline
             highlight
-            size="md"
-            type="h2"
             {...{ ...title, ...(componentsProps?.title ?? {}) }}
             itemProp="headline"
+            size="md"
+            type="h2"
             className={bem(
               "title",
               undefined,
               [title?.className, classes?.title].filter(Boolean).join(" "),
             )}
-            variant={
-              title?.variant ?? componentsProps?.title?.variant ?? "secondary"
+            color={
+              title?.color ??
+              componentsProps?.title?.color ??
+              (color && color !== "white"
+                ? (color as HeadlineProps["color"])
+                : /* istanbul ignore next */ undefined) ??
+              "inherit"
             }
           >
             {title?.content}
@@ -140,7 +147,10 @@ export function PostWidgetView({
             const headlineMerged: HeadlineProps = {
               size: "sm",
               type: "h3",
-              variant: "inherit" as const,
+              color:
+                (color && color !== "white"
+                  ? (color as HeadlineProps["color"])
+                  : /* istanbul ignore next */ undefined) ?? "inherit",
               ...(item.title ?? /* istanbul ignore next */ {}),
               ...(componentsProps?.title ?? {}),
               ...(item.componentsProps?.headline ?? {}),

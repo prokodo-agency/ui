@@ -31,16 +31,17 @@ describe("Calendly", () => {
       expect(screen.queryByRole("status")).not.toBeInTheDocument()
     })
 
-    it("renders with minimum width style", () => {
+    it("renders the widget with design-system class", () => {
       render(<CalendlyView calendlyId="john/30min" />)
       const embed = document.querySelector("[data-calendly]") as HTMLElement
-      expect(embed?.style.minWidth).toBe("320px")
+      expect(embed?.className).toContain("prokodo-Calendly")
     })
 
-    it("renders with custom height style", () => {
+    it("does not apply inline height or minWidth styles", () => {
       render(<CalendlyView calendlyId="john/30min" />)
       const embed = document.querySelector("[data-calendly]") as HTMLElement
-      expect(embed?.style.height).toBe("700px")
+      expect(embed?.style.height).toBe("")
+      expect(embed?.style.minWidth).toBe("")
     })
   })
 

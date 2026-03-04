@@ -1,0 +1,75 @@
+---
+id: animated-text
+title: AnimatedText
+sidebar_label: AnimatedText
+description: Text component with character-by-character or word-by-word entrance animations.
+---
+
+# AnimatedText
+
+`AnimatedText` renders text with staggered entrance animations applied at the character or word level, powered by CSS transitions and prokodo design tokens.
+
+---
+
+## Overview
+
+```tsx
+import { AnimatedText } from "@prokodo/ui/animated-text"
+;<AnimatedText text="Hello, World!" mode="word" />
+```
+
+<StorybookEmbed id="prokodo-content-animatedtext--default" />
+
+---
+
+## Import
+
+```ts
+import { AnimatedText } from "@prokodo/ui/animated-text"
+```
+
+Styling is handled via design tokens — no component CSS import required beyond `@prokodo/ui/theme.css`.
+
+---
+
+## Props
+
+| Prop        | Type      | Default | Required | Description                                     |
+| ----------- | --------- | ------- | -------- | ----------------------------------------------- |
+| `children`  | `string`  | —       | ✅       | Text content to animate character by character. |
+| `speed`     | `number`  | —       | —        | Delay between character reveals (ms).           |
+| `delay`     | `number`  | —       | —        | Initial delay before animation starts (ms).     |
+| `disabled`  | `boolean` | `false` | —        | Disable the animation entirely.                 |
+| `className` | `string`  | —       | —        | CSS class on root element.                      |
+
+> See [`src/components/animatedText/AnimatedText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animatedText/AnimatedText.model.ts) for the full `AnimatedTextProps` type.
+
+---
+
+## Design Tokens
+
+`AnimatedText` does not define or consume CSS custom properties. It inherits animation behaviour from `Animated` and applies no additional token references.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                                     | Status           | Note                                                                                                                                            |
+| --------- | ---------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Non-text Content** (A)                 | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.2.2** | **Pause, Stop, Hide** (A)                | 🔍 Manual review | Animations or auto-rotating content lasting more than 5 s must provide a pause/stop control.                                                    |
+| **2.3.1** | **Three Flashes or Below Threshold** (A) | 🔍 Manual review | Animated content must not flash more than 3 times per second.                                                                                   |
+| **4.1.2** | **Name, Role, Value** (A)                | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.                 |
+
+> **Test coverage:** 1 jest-axe assertion(s) across 5 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open AnimatedText in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-animatedtext--docs)
+
+---
+
+## Source
+
+[`src/components/animatedText/AnimatedText.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/animatedText/AnimatedText.model.ts)

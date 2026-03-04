@@ -1,22 +1,22 @@
 import { RichText } from "./RichText"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/RichText",
+  title: "prokodo/content/RichText",
   component: RichText,
   parameters: {
     layout: "padded",
     docs: {
       description: {
         component:
-          "Renders Markdown (or mixed JSX) content. Supports syntax-highlighted code blocks, inline animations, links, and BEM-based variant colouring.",
+          "Renders Markdown (or mixed JSX) content. Supports syntax-highlighted code blocks, inline animations, links, and BEM-based color colouring.",
       },
     },
   },
   argTypes: {
     animated: { control: "boolean" },
-    variant: {
+    color: {
       options: [
         undefined,
         "primary",
@@ -67,14 +67,14 @@ export const Default: Story = {
 
 export const PrimaryVariant: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     children: sampleMarkdown,
   },
 }
 
 export const SecondaryVariant: Story = {
   args: {
-    variant: "secondary",
+    color: "secondary",
     children: sampleMarkdown,
   },
 }

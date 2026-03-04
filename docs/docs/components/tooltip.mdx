@@ -1,0 +1,137 @@
+---
+id: tooltip
+title: Tooltip
+sidebar_label: Tooltip
+description: Accessible tooltip component anchored to any trigger — supports hover, focus, and click activation with configurable placement.
+---
+
+# Tooltip
+
+`Tooltip` displays a small informational popup anchored to a trigger element. It activates on hover and focus (keyboard accessible) and supports all four placement directions.
+
+---
+
+## Overview
+
+```tsx
+import { Tooltip } from "@prokodo/ui/tooltip"
+;<Tooltip content="This action cannot be undone" placement="top">
+  <button>Delete</button>
+</Tooltip>
+```
+
+<StorybookEmbed id="prokodo-feedback-tooltip--default" />
+
+---
+
+## Import
+
+```ts
+import { Tooltip } from "@prokodo/ui/tooltip"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/tooltip.css"
+```
+
+---
+
+## Props
+
+| Prop               | Type                                                       | Default     | Required | Description                                                              |
+| ------------------ | ---------------------------------------------------------- | ----------- | -------- | ------------------------------------------------------------------------ |
+| `children`         | `ReactElement`                                             | —           | ✅       | Trigger element — must be a single element that forwards a `ref`.        |
+| `content`          | `ReactNode`                                                | —           | ✅       | Tooltip content.                                                         |
+| `placement`        | `"top" \| "bottom" \| "left" \| "right"`                   | `"top"`     | —        | Preferred placement relative to the trigger.                             |
+| `anchor`           | `"element" \| "pointer"`                                   | `"element"` | —        | Anchor mode: `"element"` centers on trigger; `"pointer"` follows cursor. |
+| `color`            | `"default" \| "success" \| "error" \| "warning" \| "info"` | `"default"` | —        | Visual color variant of the bubble.                                      |
+| `id`               | `string`                                                   | —           | —        | Stable id for `aria-describedby`.                                        |
+| `disabled`         | `boolean`                                                  | `false`     | —        | Disable tooltip entirely.                                                |
+| `open`             | `boolean`                                                  | —           | —        | Controlled open state.                                                   |
+| `defaultOpen`      | `boolean`                                                  | `false`     | —        | Uncontrolled initial open state.                                         |
+| `delay`            | `number`                                                   | `200`       | —        | Hover/focus open delay in ms.                                            |
+| `closeDelay`       | `number`                                                   | —           | —        | Close delay in ms.                                                       |
+| `openOnHover`      | `boolean`                                                  | `true`      | —        | Open on hover.                                                           |
+| `openOnFocus`      | `boolean`                                                  | `true`      | —        | Open on focus.                                                           |
+| `preventOverflow`  | `boolean`                                                  | `true`      | —        | Clamp tooltip into the viewport.                                         |
+| `portal`           | `boolean`                                                  | `true`      | —        | Render bubble in a portal (recommended).                                 |
+| `zIndex`           | `number`                                                   | —           | —        | Z-index for the portal bubble.                                           |
+| `offset`           | `number`                                                   | —           | —        | Pixel gap between trigger and bubble.                                    |
+| `onOpenChange`     | `(open: boolean) => void`                                  | —           | —        | Called when open state changes.                                          |
+| `tooltipClassName` | `string`                                                   | —           | —        | CSS class on the tooltip bubble element.                                 |
+| `triggerClassName` | `string`                                                   | —           | —        | CSS class on the trigger element.                                        |
+| `className`        | `string`                                                   | —           | —        | CSS class on the root wrapper element.                                   |
+
+> See [`src/components/tooltip/Tooltip.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tooltip/Tooltip.model.ts) for the full `TooltipProps` type.
+
+---
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                         | Default                               | Description                        |
+| ----------------------------- | ------------------------------------- | ---------------------------------- |
+| `--pk-tooltip-bg`             | `color-mix(… fg 92%, surface)`        | Default background (dark inverted) |
+| `--pk-tooltip-fg`             | `var(--pk-color-surface)`             | Default text color                 |
+| `--pk-tooltip-border`         | `color-mix(… surface 12%)`            | Default accent border              |
+| `--pk-tooltip-shadow`         | `var(--pk-shadow-lg)`                 | Default box-shadow                 |
+| `--pk-tooltip-radius`         | `var(--pk-radius-sm)`                 | Border-radius                      |
+| `--pk-tooltip-z`              | `2147483647`                          | z-index                            |
+| `--pk-tooltip-success-bg`     | `color-mix(… success 12%, surface)`   | Success tinted background          |
+| `--pk-tooltip-success-fg`     | `var(--pk-color-fg)`                  | Success text color                 |
+| `--pk-tooltip-success-border` | `color-mix(… success 35%)`            | Success accent border              |
+| `--pk-tooltip-success-shadow` | `0 4px 16px color-mix(… success 18%)` | Success ambient glow               |
+| `--pk-tooltip-error-bg`       | `color-mix(… error 12%, surface)`     | Error tinted background            |
+| `--pk-tooltip-error-fg`       | `var(--pk-color-fg)`                  | Error text color                   |
+| `--pk-tooltip-error-border`   | `color-mix(… error 35%)`              | Error accent border                |
+| `--pk-tooltip-error-shadow`   | `0 4px 16px color-mix(… error 18%)`   | Error ambient glow                 |
+| `--pk-tooltip-warning-bg`     | `color-mix(… warning 12%, surface)`   | Warning tinted background          |
+| `--pk-tooltip-warning-fg`     | `var(--pk-color-fg)`                  | Warning text color                 |
+| `--pk-tooltip-warning-border` | `color-mix(… warning 35%)`            | Warning accent border              |
+| `--pk-tooltip-warning-shadow` | `0 4px 16px color-mix(… warning 18%)` | Warning ambient glow               |
+| `--pk-tooltip-info-bg`        | `color-mix(… fg 8%, surface)`         | Info tinted background             |
+| `--pk-tooltip-info-fg`        | `var(--pk-color-fg)`                  | Info text color                    |
+| `--pk-tooltip-info-border`    | `color-mix(… fg 20%)`                 | Info accent border                 |
+| `--pk-tooltip-info-shadow`    | `var(--pk-shadow-md)`                 | Info box-shadow                    |
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Tooltip } from "@prokodo/ui/tooltip"
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                 |
+| **2.4.7** | **Focus Visible** (AA)         | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.      |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 5 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Tooltip in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-tooltip--docs)
+
+---
+
+## Source
+
+[`src/components/tooltip/Tooltip.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/tooltip/Tooltip.model.ts)

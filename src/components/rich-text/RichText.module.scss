@@ -1,32 +1,26 @@
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("RichText") {
     &__a {
-        color: var(--color-primary-500);
+        color: var(--pk-color-brand);
     }
 
     &__p {
-        color: var(--color-grey-500);
+        color: var(--pk-color-muted);
         @include text("base");
 
         & {
             text-align: inherit;
         }
-
-        html[data-theme='dark'] & {
-            color: var(--color-grey-700);
-        }
     }
 
     &__pre {
-        color: var(--color-grey-500);
+        color: var(--pk-color-muted);
         padding: 0;
-        border: 1px solid var(--color-grey-200);
-        border-radius: $ui-default-border-radius;
-        background-color: var(--color-grey-50);
+        border: 1px solid var(--pk-color-border);
+        border-radius: var(--pk-radius-sm);
+        background-color: var(--pk-color-surface-raised);
         overflow-x: auto;
         overflow-wrap: break-word;
         @include text("code");
@@ -34,22 +28,18 @@
         & {
             text-align: inherit;
         }
-
-        html[data-theme='dark'] & {
-            background-color: var(--color-grey-50);
-        }
     }
 
     &__blockquote {
-        background-color: var(--color-grey-50);
-        border-left: 3px solid var(--color-grey-100);
-        padding: 1px $space-lg;
+        background-color: var(--pk-color-surface-raised);
+        border-left: 3px solid var(--pk-color-border);
+        padding: 1px var(--pk-space-lg);
         margin: 0;
     }
 
     &__image {
         object-fit: cover;
-        border-radius: $ui-image-border-radius;
+        border-radius: var(--pk-radius-md);
 
         &__wrapper {
             position: relative;
@@ -57,7 +47,7 @@
             width: 100%;
             height: 300px;
             overflow: hidden;
-            border-radius: $ui-image-border-radius;
+            border-radius: var(--pk-radius-md);
         }
     }
 
@@ -70,14 +60,14 @@
     &__li {
         display: flex;
         align-items: flex-start;
-        padding-bottom: $space-xs;
+        padding-bottom: var(--pk-space-xs);
         margin-top: 2px;
 
         &__icon {
             flex: 0 0 20px;
             width: 20px;
             height: 20px;
-            margin-right: $space-sm;
+            margin-right: var(--pk-space-sm);
             padding-top: 2px;
             line-height: 1;
         }
@@ -87,6 +77,8 @@
             min-width: 0;
             overflow-wrap: anywhere;
             display: inline;
+            @include text("base");
+            & { color: var(--pk-color-fg); }
         }
     }
 
@@ -97,11 +89,11 @@
             align-items: center;
             width: 19px;
             height: 19px;
-            background-color: var(--color-primary-500);
-            color: var(--color-white);
-            border: 1px solid var(--color-primary-500);
+            background-color: var(--pk-color-brand);
+            color: var(--pk-palette-white);
+            border: 1px solid var(--pk-color-brand);
             border-radius: 200px;
-            margin-right: $space-sm;
+            margin-right: var(--pk-space-sm);
             @include text("caption");
 
             & {
@@ -114,28 +106,28 @@
 
             icon {
                 &--inherit {
-                    color: var(--color-grey-900);
+                    color: var(--pk-color-fg);
                 }
                 &--primary {
-                    color: var(--color-primary-500);
+                    color: var(--pk-color-brand);
                 }
                 &--secondary {
-                    color: var(--color-secondary-500);
+                    color: var(--pk-color-accent);
                 }
                 &--info {
-                    color: var(--color-grey-500);
+                    color: var(--pk-color-muted);
                 }
                 &--success {
-                    color: var(--color-success);
+                    color: var(--pk-color-success);
                 }
                 &--error {
-                    color: var(--color-error);
+                    color: var(--pk-color-error);
                 }
                 &--warning {
-                    color: var(--color-warning);
+                    color: var(--pk-color-warning);
                 }
                 &--white {
-                    color: var(--color-white);
+                    color: var(--pk-palette-white);
                 }
             }
         }

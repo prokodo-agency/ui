@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as PostTeaserStories from "./PostTeaser.stories"
 
 <Meta of={PostTeaserStories} />
@@ -27,12 +27,41 @@ Use `PostTeaser` as the primary card for editorial content previews in a grid or
 - Don't omit the hero image alt text — it is a primary visual anchor
 - Don't render more than one `PostTeaser` per row on mobile without a responsive grid
 
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                         | Purpose                                                   |
+| ----------------------------- | --------------------------------------------------------- |
+| `--pk-space-sm`               | Caption offset, read-count wrapper gap                    |
+| `--pk-space-lg`               | Card content/footer padding, meta overlay offset          |
+| `--pk-color-muted`            | Date text color                                           |
+| `--pk-color-brand`            | Hovered link color                                        |
+| `--pk-color-brand/accent/...` | Colored border, background tint, and shadow (via `color`) |
+
+## Color
+
+The `color` prop provides a shared visual accent across the entire teaser card:
+
+- **Card**: receives the same `color` value, enabling the colored `border`,
+  background tint, and ambient `box-shadow` that keep blog components
+  consistent with inputs, buttons, and other design-system elements.
+- **Headline**: uses `color` as its fallback when `title.color` is not set.
+
+Available values: `inherit` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `white`
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story of={PostTeaserStories.Default} />
+</Canvas>
+
+### Colored
+
+<Canvas>
+  <Story of={PostTeaserStories.Colored} />
 </Canvas>
 
 ### Props

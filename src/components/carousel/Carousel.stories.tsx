@@ -3,11 +3,11 @@
 
 import { Carousel } from "@/components/carousel"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
-  title: "prokodo/common/Carousel",
+  title: "prokodo/layout/Carousel",
   component: Carousel,
   parameters: {
     layout: "centered",

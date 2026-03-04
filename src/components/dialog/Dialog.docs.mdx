@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as DialogStories from "./Dialog.stories"
 
 <Meta of={DialogStories} />
@@ -29,6 +29,23 @@ For non-blocking, dismissible side content prefer `Drawer` instead.
 
 - **Tab / Shift+Tab**: cycle focus through focusable elements inside the dialog
 - **Escape**: close the dialog
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                   | Default                      | Description             |
+| ----------------------- | ---------------------------- | ----------------------- |
+| `--pk-dialog-bg`        | `var(--pk-color-surface)`    | Dialog background       |
+| `--pk-dialog-fg`        | `var(--pk-color-fg)`         | Dialog text color       |
+| `--pk-dialog-radius`    | `var(--pk-radius-md)`        | Dialog border-radius    |
+| `--pk-dialog-shadow`    | `var(--pk-shadow-lg)`        | Dialog box-shadow       |
+| `--pk-dialog-padding-x` | `var(--pk-space-lg)`         | Horizontal padding      |
+| `--pk-dialog-padding-y` | `var(--pk-space-xl)`         | Vertical padding        |
+| `--pk-dialog-header-fg` | `var(--pk-color-fg)`         | Header text color       |
+| `--pk-dialog-close-fg`  | `var(--pk-palette-grey-500)` | Close button icon color |
+
+> `--pk-z-modal` (`1301`) and `--pk-z-modal-backdrop` (`1300`) are global semantic tokens that control Dialog stacking and can be overridden on `:root`.
 
 ## ✅ Do
 

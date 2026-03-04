@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as IconStories from "./Icon.stories"
 
 <Meta of={IconStories} />
@@ -33,6 +33,20 @@ All available icon names are listed in `IconList.ts`. Icons are referenced by na
 - Don't rely on icon color alone to communicate status (use text labels or patterns)
 - Don't use a non-existent icon name — TypeScript will surface the error but double-check at runtime
 - Don't override icon stroke/fill via global CSS — use `color` and `size` props instead
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                | Purpose                          |
+| -------------------- | -------------------------------- |
+| `--pk-color-brand`   | Primary color                    |
+| `--pk-color-accent`  | Secondary color                  |
+| `--pk-color-success` | Success color                    |
+| `--pk-color-warning` | Warning color                    |
+| `--pk-color-error`   | Error color                      |
+| `--pk-color-fg`      | Inherit / foreground color       |
+| `--pk-palette-white` | White icon on colored background |
 
 ## Examples
 

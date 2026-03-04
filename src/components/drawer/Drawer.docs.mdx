@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as DrawerStories from "./Drawer.stories"
 
 <Meta of={DrawerStories} />
@@ -29,6 +29,19 @@ For blocking, confirmation-type interactions use `Dialog` instead.
 
 - **Tab / Shift+Tab**: cycle focus within the open drawer
 - **Escape**: close the drawer
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                     | Default                   | Description                |
+| ------------------------- | ------------------------- | -------------------------- |
+| `--pk-drawer-bg`          | `var(--pk-color-surface)` | Drawer panel background    |
+| `--pk-drawer-border`      | `var(--pk-color-border)`  | Header bottom border color |
+| `--pk-drawer-shadow`      | `var(--elevation-1)`      | Panel box-shadow           |
+| `--pk-drawer-backdrop-bg` | `rgba(0, 0, 0, 0.5)`      | Backdrop overlay color     |
+| `--pk-drawer-z-index`     | `1302`                    | Panel z-index              |
+| `--pk-drawer-padding`     | `var(--pk-space-md)`      | Header / content padding   |
 
 ## ✅ Do
 

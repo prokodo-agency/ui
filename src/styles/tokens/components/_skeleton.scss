@@ -1,0 +1,11 @@
+// =============================================================================
+// SKELETON TOKENS
+// =============================================================================
+
+@mixin skeleton-tokens() {
+  --pk-skeleton-bg:             rgba(0, 0, 0, 0.08);
+  --pk-skeleton-bg-dark:        rgba(30, 48, 79, 0.11);
+  --pk-skeleton-shimmer-fg:     var(--pk-palette-white);
+  --pk-skeleton-shimmer-fg-dark: var(--pk-palette-primary-50, var(--pk-color-brand));
+  --pk-skeleton-radius:         4px;
+}

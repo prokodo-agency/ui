@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta } from "@storybook/blocks"
+import { Canvas, Controls, Meta } from "@storybook/addon-docs/blocks"
 import * as SkeletonStories from "./Skeleton.stories"
 
 <Meta of={SkeletonStories} />
@@ -22,6 +22,18 @@ Use `Skeleton` in place of text, images, cards, or list items while asynchronous
 - The skeleton container has `aria-busy="true"` and `aria-label="Loading…"` (or equivalent locale string)
 - Animation respects `prefers-reduced-motion` — the shimmer is replaced by a static muted fill when the preference is set
 - Skeletons are not focusable; they are hidden from the accessibility tree until content replaces them
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                           | Default                   | Description                 |
+| ------------------------------- | ------------------------- | --------------------------- |
+| `--pk-skeleton-bg`              | `rgba(0, 0, 0, 0.08)`     | Skeleton background (light) |
+| `--pk-skeleton-bg-dark`         | `rgba(30, 48, 79, 0.11)`  | Skeleton background (dark)  |
+| `--pk-skeleton-shimmer-fg`      | `var(--pk-palette-white)` | Shimmer highlight (light)   |
+| `--pk-skeleton-shimmer-fg-dark` | `var(--pk-color-brand)`   | Shimmer highlight (dark)    |
+| `--pk-skeleton-radius`          | `4px`                     | Border-radius               |
 
 ## ✅ Do
 

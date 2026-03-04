@@ -1,0 +1,99 @@
+---
+id: input-otp
+title: InputOTP
+sidebar_label: InputOTP
+description: One-time password input with configurable digit count and automatic focus advancement.
+---
+
+# InputOTP
+
+`InputOTP` renders a segmented one-time password input. Each digit occupies its own input box, and focus advances automatically as the user types.
+
+---
+
+## Overview
+
+```tsx
+import { InputOTP } from "@prokodo/ui/input-otp"
+;<InputOTP
+  length={6}
+  label="Verification code"
+  onComplete={code => verifyCode(code)}
+/>
+```
+
+<StorybookEmbed id="prokodo-form-inputotp--default" />
+
+---
+
+## Import
+
+```ts
+import { InputOTP } from "@prokodo/ui/input-otp"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/input-otp.css"
+```
+
+---
+
+## Props
+
+| Prop               | Type                      | Default | Required | Description                                              |
+| ------------------ | ------------------------- | ------- | -------- | -------------------------------------------------------- |
+| `name`             | `string`                  | —       | ✅       | Hidden input name for form submission.                   |
+| `length`           | `number`                  | `6`     | —        | Number of OTP digit inputs.                              |
+| `label`            | `string`                  | —       | —        | Group label text.                                        |
+| `groupLabel`       | `string`                  | —       | —        | Accessible group label for the OTP fieldset.             |
+| `groupInstruction` | `string`                  | —       | —        | Screen-reader instruction text for the group.            |
+| `disabled`         | `boolean`                 | `false` | —        | Disable all digit inputs.                                |
+| `errorText`        | `string`                  | —       | —        | Error message shown below the inputs.                    |
+| `onChange`         | `(value: string) => void` | —       | —        | Called with the combined value as each digit is entered. |
+| `className`        | `string`                  | —       | —        | CSS class on root element.                               |
+
+> See [`src/components/inputOTP/InputOTP.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/inputOTP/InputOTP.model.ts) for the full `InputOTPProps` type.
+
+---
+
+## Design Tokens
+
+Customise `InputOTP` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                    | Default                  | Description                   |
+| ------------------------ | ------------------------ | ----------------------------- |
+| `--pk-otp-gap`           | `var(--pk-space-sm)`     | Gap between OTP cells         |
+| `--pk-otp-cell-size`     | `2.75rem`                | Width and height of each cell |
+| `--pk-otp-cell-radius`   | `var(--pk-radius-pill)`  | Cell corner radius            |
+| `--pk-otp-gradient-from` | `var(--pk-color-brand)`  | Active-cell gradient start    |
+| `--pk-otp-gradient-to`   | `var(--pk-color-accent)` | Active-cell gradient end      |
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                                      | Status           | Note                                                                                                                            |
+| --------- | ----------------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A)            | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.3.5** | **Identify Input Purpose** (AA)           | 🔍 Manual review | Form fields collecting personal data must expose their purpose via the HTML autocomplete attribute.                             |
+| **2.1.1** | **Keyboard** (A)                          | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                       |
+| **2.4.7** | **Focus Visible** (AA)                    | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.      |
+| **3.3.2** | **Labels or Instructions** (A)            | ✅ Fulfilled     | Every form input requires a programmatically associated label or a visible instruction.                                         |
+| **3.3.7** | **Redundant Entry** (A)                   | 🔍 Manual review | Information already entered in the same session/process must not be required again unless it serves a distinct purpose.         |
+| **3.3.8** | **Accessible Authentication (Min.)** (AA) | 🔍 Manual review | A cognitive function test (e.g. CAPTCHA, memory recall) must not be the sole authentication mechanism.                          |
+| **4.1.2** | **Name, Role, Value** (A)                 | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 1 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open InputOTP in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-inputotp--docs)
+
+---
+
+## Source
+
+[`src/components/inputOTP/InputOTP.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/inputOTP/InputOTP.model.ts)

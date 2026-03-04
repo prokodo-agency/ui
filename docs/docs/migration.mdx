@@ -1,0 +1,270 @@
+---
+id: migration
+title: Migration Guide
+sidebar_label: Migration
+description: Breaking changes and step-by-step instructions for migrating to prokodo UI v1.
+---
+
+# Migration Guide
+
+## v0 → v1
+
+v1 contains **no changes to peer dependencies** (`react`, `react-dom`, `next` remain unchanged), but introduces a new token system, a revised component architecture, and changed API surfaces on several form components.
+
+Runtime breaking changes are minimal — the majority of migration work consists of type-checkable prop renames and updating CSS tokens.
+
+---
+
+### 1. Token system overhaul
+
+All design tokens have moved to the `--pk-*` namespace. If you were overriding v0 tokens or undocumented internal classes, update them accordingly.
+
+**Include the new token stylesheet:**
+
+```ts
+// old — no longer available
+import "@prokodo/ui/variables.css"
+
+// new
+import "@prokodo/ui/theme.css"
+```
+
+The stylesheet exports semantic tokens (`--pk-color-brand`, `--pk-space-lg`, `--pk-radius-pill`, etc.) and component tokens (`--pk-input-bg`, `--pk-select-radius`, etc.). See [Design Tokens](/docs/design-tokens) for the full reference.
+
+---
+
+### 2. DatePicker — native → custom picker
+
+`DatePicker` no longer renders a native `<input type="date">`. It now renders an `<input type="text">` as a trigger that opens an accessible calendar dialog.
+
+**What changed:**
+
+| Aspect     | v0                                      | v1                            |
+| ---------- | --------------------------------------- | ----------------------------- |
+| Input type | `type="date"` / `type="datetime-local"` | `type="text"`                 |
+| Time input | Native browser picker                   | Custom hour/minute `<select>` |
+| Library    | —                                       | `dayjs` (new peer dependency) |
+
+**Add `dayjs` peer dependency:**
+
+```bash
+pnpm add dayjs
+```
+
+**Prop changes:**
+
+```tsx
+// v0
+;<DatePicker value="2024-03-15" onChange={fn} minDate="2024-01-01" />
+
+// v1
+import dayjs from "dayjs"
+;<DatePicker
+  value={dayjs("2024-03-15")}
+  onChange={fn}
+  minDate={dayjs("2024-01-01")}
+  format="DD/MM/YYYY"
+/>
+```
+
+**Automated tests:** Tests that previously queried `input[type='date']` must be updated to `input[type='text']`.
+
+---
+
+### 3. Select — `options` → `items` renamed
+
+The prop for passing options has been renamed from `options` to `items`:
+
+```tsx
+// v0
+<Select options={[{ label: "Apple", value: "apple" }]} />
+
+// v1
+<Select items={[{ label: "Apple", value: "apple" }]} />
+```
+
+A `label` prop was also added for floating-label support:
+
+```tsx
+<Select name="fruit" label="Choose a fruit" items={items} />
+```
+
+---
+
+### 4. Floating label pattern
+
+`Input`, `Select`, `Autocomplete`, and `DatePicker` all use the floating label pattern. The label is implemented as a placeholder-like label that floats upward when the field is focused or has a value.
+
+If you were previously providing a manually associated `<label>` element next to the input, remove it and use the `label` prop instead:
+
+```tsx
+// v0
+<label htmlFor="email">Email</label>
+<Input id="email" name="email" />
+
+// v1
+<Input name="email" label="Email" />
+```
+
+---
+
+### 5. InputOTP — island architecture
+
+`InputOTP` is now delivered via the island architecture. The export shape from the root path is unchanged — but internally the component automatically switches between server and client rendering based on the props passed.
+
+No change is required for most consumers. If you were importing `InputOTPClient` or `InputOTPServer` directly, the new exports are:
+
+```ts
+import { InputOTP } from "@prokodo/ui/input-otp" // Recommended: island
+import { InputOTPClient } from "@prokodo/ui/input-otp" // Force client only
+```
+
+---
+
+### 6. Island architecture
+
+v1 introduces the island pattern for select components. The default export paths (`@prokodo/ui/input-otp`, etc.) deliver the island component, which renders server- or client-side depending on props. Most consumers do not need to change anything.
+
+---
+
+### 7. Component CSS custom properties
+
+All components now accept CSS custom properties at scope level. Example:
+
+```css
+/* Override the DatePicker calendar corner radius */
+.my-form {
+  --pk-dp-dialog-radius: 8px;
+}
+
+/* Adjust input background on a specific page */
+.login-page {
+  --pk-input-bg: var(--pk-color-surface-raised);
+}
+```
+
+For all available tokens see [Design Tokens](/docs/design-tokens).
+
+---
+
+### 8. `variant` → `color` prop rename
+
+The `variant` prop has been renamed to `color` across a wide set of components. This is a type-level breaking change: TypeScript will flag any usage at compile time, and the runtime behaviour is identical once renamed.
+
+**Affected components:**
+
+| Component                      | Old prop                      | New prop                  |
+| ------------------------------ | ----------------------------- | ------------------------- |
+| `Accordion`                    | `variant`                     | `color`                   |
+| `Card`                         | `variant`                     | `color`                   |
+| `Form`                         | `variant`                     | `color`                   |
+| `Headline`                     | `variant`                     | `color`                   |
+| `Link`                         | `variant`                     | `color`                   |
+| `List` (all item + root types) | `variant`                     | `color`                   |
+| `Quote`                        | `variant`                     | `color`                   |
+| `RichText`                     | `variant`                     | `color`                   |
+| `Snackbar`                     | `variant` (`SnackbarVariant`) | `color` (`SnackbarColor`) |
+| `Switch`                       | `variant`                     | `color`                   |
+| `Teaser`                       | `variant`                     | `color`                   |
+
+**Example:**
+
+```tsx
+// v0
+<Accordion variant="primary" />
+<Card variant="secondary" />
+<Snackbar variant="warning" message="Saved" />
+<Switch variant="primary" />
+
+// v1
+<Accordion color="primary" />
+<Card color="secondary" />
+<Snackbar color="warning" message="Saved" />
+<Switch color="primary" />
+```
+
+`SnackbarVariant` remains exported as a deprecated alias of `SnackbarColor` to ease migration, but will be removed in a future release.
+
+---
+
+### 9. SideNav — `sections` API
+
+`SideNav` now supports structured navigation sections alongside the flat `items` array.
+
+**What changed:**
+
+- `items` is now **optional** (previously required).
+- New `sections` prop accepts an array of `SideNavSection` objects, each with an optional `headline`, `description`, and scoped `items`.
+
+If you previously passed a flat list, your code continues to work unchanged. The new `sections` prop is additive.
+
+```tsx
+// v0 — still works
+<SideNav items={navItems} />
+
+// v1 — structured sections (new)
+<SideNav
+  sections={[
+    { headline: "General", items: generalItems },
+    { headline: "Admin", items: adminItems },
+  ]}
+/>
+```
+
+---
+
+### 10. Dark mode
+
+v1 ships a dark theme stylesheet. Apply it by setting `data-theme="dark"` on `<html>` (or any wrapper element). The class `.pk-theme-dark` is also supported as an alternative.
+
+```html
+<!-- Entire page in dark mode -->
+<html data-theme="dark">
+  <!-- Scoped dark section -->
+  <div data-theme="dark">…</div>
+</html>
+```
+
+No import changes are required — the dark tokens are bundled inside `@prokodo/ui/theme.css` alongside the default theme.
+
+---
+
+### 11. Input — trailing icon
+
+`Input` now accepts an optional trailing icon on the right side of the field:
+
+```tsx
+<Input
+  name="search"
+  label="Search"
+  trailingIcon="search-01"
+  trailingIconLabel="Clear search"
+  onTrailingIconClick={() => setValue("")}
+/>
+```
+
+This is additive — no changes required for existing usages.
+
+---
+
+### 12. New component-scoped CSS exports
+
+Three components now ship a standalone CSS file in addition to the JS bundle. Import these if you load component styles separately (e.g. in an app shell or SSR head):
+
+```ts
+import "@prokodo/ui/calendly.css"
+import "@prokodo/ui/datePicker.css"
+import "@prokodo/ui/map.css"
+```
+
+These imports are optional and only needed if you use the above components without importing `@prokodo/ui/theme.css` in your entry point.
+
+---
+
+### Peer dependencies
+
+Peer dependencies from v0 are unchanged (`react ≥ 18`, `react-dom ≥ 18`, `next ≥ 14`). One new addition:
+
+| Package | Required version |
+| ------- | ---------------- |
+| `dayjs` | `^1.11`          |

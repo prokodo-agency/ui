@@ -1,16 +1,16 @@
 import { Link } from "./Link"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Link",
+  title: "prokodo/navigation/Link",
   component: Link,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    variant: {
+    color: {
       options: [
         "base",
         "primary",
@@ -31,7 +31,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     href: "/",
     children: "Follow me",
   },

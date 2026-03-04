@@ -75,9 +75,9 @@ export type HeadlineProps = HTMLAttributes<HTMLHeadElement> & {
   schema?: Schema
 
   /**
-   * BEM modifier variant combined with size/variant styles.
+   * BEM color modifier combined with size/color styles.
    */
-  variant?: HeadlineVariant
+  color?: HeadlineVariant
 
   /**
    * Additional CSS classes on the heading element.

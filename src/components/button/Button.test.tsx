@@ -37,6 +37,32 @@ describe("Button", () => {
       ).toBeInTheDocument()
     })
 
+    it("renders loading spinner inside button when loading=true", () => {
+      render(<Button loading title="Save" />)
+      // Spinner SVG is rendered inside the button
+      expect(screen.getByRole("status")).toBeInTheDocument()
+      // Title text is STILL visible alongside the spinner (button keeps its width)
+      expect(screen.getByText("Save")).toBeInTheDocument()
+    })
+
+    it("renders title when loading=false", () => {
+      render(<Button loading={false} title="Save" />)
+      expect(screen.getByText("Save")).toBeInTheDocument()
+      expect(screen.queryByRole("status")).not.toBeInTheDocument()
+    })
+
+    it("applies is-loading CSS modifier when loading=true", () => {
+      render(<Button loading title="Save" />)
+      const btn = screen.getByRole("button")
+      expect(btn.className).toMatch(/is-loading/)
+    })
+
+    it("applies opacity style via is-disabled class when disabled=true", () => {
+      render(<Button disabled title="Disabled" />)
+      const btn = screen.getByRole("button")
+      expect(btn.className).toMatch(/is-disabled/)
+    })
+
     it("renders outlined variant", () => {
       render(<Button title="Outlined" variant="outlined" />)
       expect(

@@ -1,12 +1,20 @@
-@use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
-@use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/screens" as *;
+
+@keyframes inputNotchAnimate {
+  0%, 100% { border-color: var(--pk-input-gradient-from); }
+  50%       { border-color: var(--pk-input-gradient-to); }
+}
+
+// Component tokens: --pk-input-bg, --pk-input-fg, --pk-input-fg-muted,
+//   --pk-input-border, --pk-input-border-focus, --pk-input-radius,
+//   --pk-input-padding-x, --pk-input-padding-y, --pk-input-label-fg,
+//   --pk-input-label-focused-fg, --pk-input-helper-fg,
+//   --pk-input-focus-ring, --pk-input-shadow
 
 @include define-block("Input") {
   position: relative;
@@ -15,42 +23,87 @@
   height: 100%;
   width: 100%;
 
+  // ── Variant overrides ──────────────────────────────────────────────
+  &--primary {
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-brand)   30%, transparent);
+    --pk-input-gradient-from:      var(--pk-color-brand);
+    --pk-input-gradient-to:        var(--pk-color-accent);
+    --pk-input-label-focused-fg:   var(--pk-color-brand);
+    --pk-input-border-focus:       var(--pk-color-brand);
+  }
+  &--secondary {
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-accent)  30%, transparent);
+    --pk-input-gradient-from:      var(--pk-color-accent);
+    --pk-input-gradient-to:        var(--pk-color-brand);
+    --pk-input-label-focused-fg:   var(--pk-color-accent);
+    --pk-input-border-focus:       var(--pk-color-accent);
+  }
+  &--success {
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-success) 30%, transparent);
+    --pk-input-gradient-from:      var(--pk-color-success);
+    --pk-input-gradient-to:        #10CCB8;
+    --pk-input-label-focused-fg:   var(--pk-color-success);
+    --pk-input-border-focus:       var(--pk-color-success);
+  }
+  &--warning {
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-warning) 30%, transparent);
+    --pk-input-gradient-from:      var(--pk-color-warning);
+    --pk-input-gradient-to:        #f7cc6a;
+    --pk-input-label-focused-fg:   var(--pk-color-warning);
+    --pk-input-border-focus:       var(--pk-color-warning);
+  }
+  &--error {
+    --pk-input-shadow-color-focus: color-mix(in srgb, var(--pk-color-error)   30%, transparent);
+    --pk-input-gradient-from:      var(--pk-color-error);
+    --pk-input-gradient-to:        #ff6b6b;
+    --pk-input-label-focused-fg:   var(--pk-color-error);
+    --pk-input-border-focus:       var(--pk-color-error);
+  }
+  &--info,
+  &--inherit,
+  &--white {
+    --pk-input-shadow-color-focus: rgba(0, 0, 0, 0.1);
+    --pk-input-gradient-from:      var(--pk-color-muted);
+    --pk-input-gradient-to:        var(--pk-color-border);
+    --pk-input-label-focused-fg:   var(--pk-color-muted);
+    --pk-input-border-focus:       var(--pk-color-border);
+
+    // In dark mode muted/border resolve to near-black — swap to light greys
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      --pk-input-gradient-from: var(--pk-palette-grey-100);
+      --pk-input-gradient-to:   var(--pk-palette-grey-200);
+    }
+  }
+
   &__label {
+    // Forward the Input variant's gradient into Label's token space.
+    --pk-label-gradient-from: var(--pk-input-gradient-from);
+    --pk-label-gradient-to:   var(--pk-input-gradient-to);
+
+    // Floating label: sits inside the field at rest; on focus/value-present it
+    // centers vertically on the top border line (MUI outlined style).
+    // The __notch fieldset's legend creates the gap in the border behind the text.
+    position: absolute;
+    left: var(--pk-space-xl);
+    font-size: 1.125rem;
+    top: calc(var(--pk-space-xl) + var(--pk-space-xs));
+    transform: translateY(-50%) scale(1);
+    padding: 0;
     transform-origin: top left;
     transition:
-      transform 0.2s ease,
-      color     0.2s ease,
-      background-color 0.2s ease;
-
-    padding-bottom: $space-sm;
-    color: var(--color-grey-600);
-    z-index: 1;
+      transform var(--pk-timing-normal) ease,
+      color var(--pk-timing-normal) ease;
+    color: var(--pk-input-label-fg);
+    z-index: 2; // above the notch border so text is always readable
     pointer-events: none;
 
-    @include screenLargerThan($screen-lg) {
-      position: absolute;
-      left: $space-xl;
-      font-size: 1.125rem;
-      top: calc($space-xl + $space-xs);
-      /* start centered vertically, at full size */
-      transform: translateY(-50%) scale(1);
-      padding: 0;
-    }
-
     &--is-focused {
-      @include screenLargerThan($screen-lg) {
-        /* lift up and shrink */
-        transform: translateY(-150%) scale(0.75);
-        color: var(--color-primary-500);
-
-        /* white background behind text so it “floats” */
-        background-color: var(--color-white);
-        padding: 0 $space-xs;
-
-        html[data-theme='dark'] & {
-          background-color: rgb(16, 19, 27);
-        }
-      }
+      // Center the scaled label on the top border line.
+      top: 0;
+      transform: translateY(-50%) scale(0.75);
+      color: var(--pk-input-label-focused-fg);
     }
   }
 
@@ -60,85 +113,110 @@
 
   &__field {
     position: relative;
-    box-shadow: var(--elevation-1);
-    border-radius: $ui-form-element;
-  }
+    // Neutral shadow at rest; colored shadow appears on hover/focus only
+    box-shadow: var(--pk-input-shadow);
+    border-radius: var(--pk-input-radius);
+    transition: box-shadow var(--pk-timing-normal) ease;
 
-  &__input {
-    width: calc(100% - $space-xs + 4px);
-    padding: 0;
-    text-align: left;
-    mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-    mask-composite: add;
-    border: none;
-    color: var(--color-grey-900);
-    border-radius: $ui-form-element;
-    @include gradientBorderVar(7);
-
-    /* Standard :autofill selector (supported in modern browsers) */
-    input:autofill,
-    textarea:autofill {
-      background-color: var(--color-white);
-      color: var(--color-grey-900);
-
-      html[data-theme='dark'] & {
-        background-color: rgb(16, 19, 27);
+    @include when-hovered() {
+      box-shadow: 0 4px 12px var(--pk-input-shadow-color-focus),
+                  0 0 5px var(--pk-input-shadow-color-focus);
+      fieldset {
+        animation: inputNotchAnimate 2s linear infinite;
+        border-color: var(--pk-input-gradient-from);
       }
     }
 
-    /* Chrome / Edge / Opera / Safari (WebKit/Blink) */
+    @include when-focused-within() {
+      box-shadow: 0 4px 12px var(--pk-input-shadow-color-focus),
+                  0 0 5px var(--pk-input-shadow-color-focus);
+      fieldset {
+        animation: none;
+        border-color: var(--pk-input-border-focus);
+      }
+    }
+
+    // JS-driven isFocused prop sets --is-focused / --focused on __input;
+    // respond here via :has() since shadow can't come from the masked element.
+    &:has(.prokodo-Input__input--is-focused),
+    &:has(.prokodo-Input__input--focused) {
+      box-shadow: 0 4px 12px var(--pk-input-shadow-color-focus),
+                  0 0 5px var(--pk-input-shadow-color-focus);
+      fieldset {
+        animation: none;
+        border-color: var(--pk-input-border-focus);
+      }
+    }
+
+    // Disabled: neutral shadow only, suppress hover glow
+    &:has(.prokodo-Input__input--disabled) {
+      box-shadow: var(--pk-input-shadow);
+      @include when-hovered() {
+        box-shadow: var(--pk-input-shadow);
+        fieldset {
+          animation: none;
+          border-color: var(--pk-input-border);
+        }
+      }
+    }
+  }
+
+  &__input {
+    width: calc(100% - var(--pk-space-xs) + 4px);
+    padding: 0;
+    text-align: left;
+    border: none;
+    color: var(--pk-input-fg);
+    border-radius: var(--pk-input-radius);
+    // Border is handled by the __notch fieldset; background is transparent.
+    background: transparent;
+
+    // Autofill: paint over browser injection using the component surface token
+    input:autofill,
+    textarea:autofill {
+      background-color: var(--pk-input-bg);
+      color: var(--pk-input-fg);
+    }
+
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
     textarea:-webkit-autofill,
     textarea:-webkit-autofill:hover,
     textarea:-webkit-autofill:focus {
-      /* Paint over the browser’s autofill background */
-      -webkit-box-shadow: 0 0 0 1000px var(--color-white) inset;
-      box-shadow: 0 0 0 1000px var(--color-white) inset;
-
-      /* Text color inside autofilled field */
-      -webkit-text-fill-color: var(--color-grey-900);
-
-      /* Long transition hack so the yellow flash is not visible */
+      -webkit-box-shadow: 0 0 0 1000px var(--pk-input-bg) inset;
+      box-shadow: 0 0 0 1000px var(--pk-input-bg) inset;
+      -webkit-text-fill-color: var(--pk-input-fg);
       transition: background-color 9999s ease-out, color 9999s ease-out;
     }
 
-    /* Firefox (legacy) */
     input:-moz-autofill,
     textarea:-moz-autofill {
-      box-shadow: 0 0 0 1000px var(--color-white) inset;
-      background-color: var(--color-white);
-      color: var(--color-grey-900);
-
-      html[data-theme='dark'] & {
-        background-color: rgb(16, 19, 27);
-      }
+      box-shadow: 0 0 0 1000px var(--pk-input-bg) inset;
+      background-color: var(--pk-input-bg);
+      color: var(--pk-input-fg);
     }
 
-    /* Optional: border style when autofilled */
     input:is(:autofill, :-webkit-autofill),
     textarea:is(:autofill, :-webkit-autofill) {
-      border-color: none; /* adjust as needed */
+      border-color: none;
     }
 
-    /* Optional: gleiche Styles für Textareas, falls autocomplete genutzt wird */
     textarea:-webkit-autofill,
     textarea:-moz-autofill {
-      -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
-      box-shadow: 0 0 0 1000px #ffffff inset;
-      -webkit-text-fill-color: #000000;
-      color: #000000 !important;
+      -webkit-box-shadow: 0 0 0 1000px var(--pk-input-bg) inset;
+      box-shadow: 0 0 0 1000px var(--pk-input-bg) inset;
+      -webkit-text-fill-color: var(--pk-input-fg);
+      color: var(--pk-input-fg);
     }
 
-     &--is-focused {
-      @include gradientBorderVar(4);
+    &--is-focused {
+      // border handled by __notch fieldset via __field :has()
     }
 
-    @include when-hovered() {
-      @include gradientBorderVar(4);
+    // When the native input/textarea inside is focused
+    &:focus-within {
+      // border handled by __notch fieldset via __field :focus-within
     }
 
     &--multiline {
@@ -146,82 +224,148 @@
       flex-direction: column;
       height: 100%;
     }
-    
+
     &--focused {
-      @include gradientBorderVar(4);
+      // border handled by __notch fieldset via __field :has()
     }
 
     &--disabled {
-      @include gradientBorderVar(8);
-
-      @include when-hovered() {
-        @include gradientBorderVar(8);
-      }
+      // border handled by __notch fieldset
     }
 
     &__node {
-      width: calc(100% - $space-lg - $space-lg - $space-xs);
-      padding: px-to-rem(14px) $space-lg;
+      width: calc(100% - var(--pk-input-padding-x) - var(--pk-input-trailing-pr, var(--pk-input-padding-x)) - var(--pk-space-xs));
+      padding: var(--pk-input-padding-y) var(--pk-input-trailing-pr, var(--pk-input-padding-x)) var(--pk-input-padding-y) var(--pk-input-padding-x);
       margin: 2px;
       border: none;
       outline: none;
-      border-radius: $ui-form-element;
-      color: var(--color-grey-900);
-      background-color: var(--color-white);
+      border-radius: var(--pk-input-radius);
+      color: var(--pk-input-fg);
+      background-color: var(--pk-input-bg); // dark mode resolved via --pk-color-surface
       @include text("base");
-
-      html[data-theme='dark'] & {
-        background-color: rgb(16, 19, 27);
-      }
 
       & {
         font-size: 1rem;
       }
 
       &--multiline {
-         /* allow it to grow to fill the wrapper */
         flex: 1;
-        /* remove inline-table & min-height */
         display: block;
         height: 100%;
-        resize: vertical; // Allow only vertical resizing
-        overflow: auto; // Ensure scrollbars appear if content overflows
+        resize: vertical;
+        overflow: auto;
         position: relative;
 
         &::-webkit-resizer {
-          display: none; // Hide the default WebKit resizer
+          display: none;
         }
 
         &::after {
           content: "";
           position: absolute;
-          right: 5px; // Adjust to place it inside the textarea
-          bottom: 5px; // Adjust to place it inside the textarea
+          right: 5px;
+          bottom: 5px;
           width: 16px;
           height: 16px;
           background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23000" d="M2 14h12v1H2zM0 12h16v1H0zM4 10h8v1H4z"/></svg>') no-repeat center center;
-          opacity: 0.5; // Optional: Make it semi-transparent
-          pointer-events: none; // Prevent the fake icon from interfering with text editing
+          opacity: 0.5;
+          pointer-events: none;
         }
       }
 
       &:disabled {
-        color: var(--color-grey-700);
-        background: var(--color-white);
-
-        html[data-theme='dark'] & {
-          background-color: rgb(16, 19, 27);
-        }
+        color: var(--pk-input-fg-muted);
+        background: var(--pk-input-bg);
       }
     }
 
-     @include when-focused() {
-      border-color: var(--color-primary-500);
-      box-shadow: 0 0 5px var(--color-primary-500);
+  }
+
+  // Set extra trailing-pr when a trailing icon is present so text doesn't
+  // overlap the icon button. Inherits down to __input__node via CSS cascade.
+  &__input--has-trailing {
+    --pk-input-trailing-pr: calc(var(--pk-input-padding-x) + 1.5rem);
+  }
+
+  // ── Notch fieldset — solid border that browser cuts behind floating label legend ──
+  // Absolutely covers __field. aria-hidden in HTML.
+  // Border-color animates on hover (same keyframe approach as Select).
+  &__notch {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0 calc(var(--pk-space-xl) - 0.25em);
+    border: 2px solid var(--pk-input-border);
+    border-radius: var(--pk-input-radius);
+    pointer-events: none;
+    z-index: 1;
+    background: transparent;
+    transition: border-color var(--pk-timing-normal) ease;
+
+    legend {
+      display: block;
+      height: 0;
+      // 1.125rem (label base) × 0.75 (scale) = 0.84375rem
+      font-size: 0.84375rem;
+      visibility: hidden;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0;
+      max-width: 0.01px; // no notch at rest
+      transition: max-width var(--pk-timing-normal) ease;
+
+      span {
+        padding: 0 0.5em;
+        display: inline-block;
+      }
     }
 
-    &[aria-invalid="true"] {
-      border-color: var(--color-error);
+    &--is-focused {
+      legend {
+        max-width: 100%; // open notch gap behind floated label
+      }
+    }
+  }
+
+  // ── Trailing icon / action ──────────────────────────────────────────
+  &__trailing {
+    position: absolute;
+    right: var(--pk-input-padding-x);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: var(--pk-input-fg-muted);
+    pointer-events: none;
+    z-index: 2;
+
+    // Ensure the icon stays readable in dark mode
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      color: var(--pk-palette-grey-300);
+    }
+
+    &--clickable {
+      pointer-events: auto;
+      background: none;
+      border: none;
+      padding: var(--pk-space-xs);
+      margin-right: calc(-1 * var(--pk-space-xs));
+      cursor: pointer;
+      border-radius: var(--pk-input-radius);
+      transition:
+        color      var(--pk-timing-normal) ease,
+        background var(--pk-timing-normal) ease;
+
+      @include when-hovered() {
+        color: var(--pk-input-fg);
+        background: color-mix(in srgb, var(--pk-input-fg) 8%, transparent);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--pk-input-border-focus);
+        outline-offset: 2px;
+      }
     }
   }
 
@@ -235,27 +379,23 @@
   }
 
   &__helperText__wrapper {
-    padding-top: $space-xs;
-    margin-bottom: 0 !important;
+    padding-top: var(--pk-space-xs);
+    margin-bottom: 0 !important; // resets external margin utility
   }
 
   &__helperText {
-    padding-left: $space-xl;
-    padding-top: $space-md;
+    padding-left: var(--pk-space-xl);
+    padding-top: var(--pk-space-md);
     display: flex;
-    color: var(--color-grey-300);
+    color: var(--pk-input-helper-fg);
     width: 80%;
     @include text("caption");
-
-    html[data-theme='dark'] & {
-      color: var(--color-grey-700);
-    }
 
     &__content {
       width: 100%;
 
       &--is-error {
-        color: var(--color-error);
+        color: var(--pk-color-error);
       }
     }
 
@@ -266,8 +406,8 @@
   }
 
   &__counter {
-    padding-top: $space-md;
-    color: var(--color-grey-600);
+    padding-top: var(--pk-space-md);
+    color: var(--pk-palette-grey-600);
     @include text("caption");
   }
 }

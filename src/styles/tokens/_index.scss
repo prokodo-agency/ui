@@ -1,0 +1,10 @@
+// =============================================================================
+// TOKENS INDEX — barrel for the tokens/ directory.
+// Used by themes/ files. Not injected into additionalData.
+// =============================================================================
+
+@use "semantic" as *;
+@use "components/index" as comp;
+
+@forward "semantic";
+@forward "components/index";

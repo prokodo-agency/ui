@@ -1,19 +1,16 @@
-@use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *; // keep for non-animated gradients (if any)
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
 
-/**
-* Fade in
-*/
+// Component tokens: --pk-card-bg, --pk-card-fg, --pk-card-radius,
+//   --pk-card-shadow, --pk-card-padding, --pk-card-inherit-bg,
+//   --pk-card-panel-bg, --pk-card-panel-border,
+//   --pk-card-panel-light-bg, --pk-card-panel-light-border
 
 @keyframes Card_fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 @keyframes Card_fadeInMask {
@@ -22,26 +19,65 @@
 
 @include define-block("Card") {
   position: relative;
-  color: var(--color-grey-900);
-  background-color: var(--color-white);
-  border-radius: 2rem;
+  overflow: hidden;             // clips __background image to rounded corners
+  color: var(--pk-card-fg, #111);
+  background-color: var(--pk-card-bg, #fff);
+  border-radius: var(--pk-card-radius);
 
-  &--inherit { background-color: var(--color-grey-100); }
-
-  &--white {
-    background-color: var(--color-white);
-
-    html[data-theme='dark'] & { background-color: transparent; }
+  &--inherit {
+    background-color: var(--pk-card-inherit-bg);
   }
 
-  &--panel {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+  &--white {
+    background-color: var(--pk-card-bg);
+  }
 
-    /* in light mode trotzdem lesbar */
-    html:not([data-theme='dark']) & {
-      background: var(--color-white);
-      border: 1px solid rgba(0, 0, 0, 0.08);
+  // Color variants — subtle accent border + translucent tint + ambient glow
+  &--primary {
+    border: var(--pk-border-width) solid color-mix(in srgb, var(--pk-color-brand)   30%, transparent);
+    background-color: color-mix(in srgb, var(--pk-color-brand)    4%, var(--pk-card-bg));
+  }
+
+  &--secondary {
+    border: var(--pk-border-width) solid color-mix(in srgb, var(--pk-color-accent)  30%, transparent);
+    background-color: color-mix(in srgb, var(--pk-color-accent)   4%, var(--pk-card-bg));
+  }
+
+  &--success {
+    border: var(--pk-border-width) solid color-mix(in srgb, var(--pk-color-success) 30%, transparent);
+    background-color: color-mix(in srgb, var(--pk-color-success)  4%, var(--pk-card-bg));
+  }
+
+  &--warning {
+    border: var(--pk-border-width) solid color-mix(in srgb, var(--pk-color-warning) 30%, transparent);
+    background-color: color-mix(in srgb, var(--pk-color-warning)  4%, var(--pk-card-bg));
+  }
+
+  &--error {
+    border: var(--pk-border-width) solid color-mix(in srgb, var(--pk-color-error)   30%, transparent);
+    background-color: color-mix(in srgb, var(--pk-color-error)    4%, var(--pk-card-bg));
+  }
+
+  &--info {
+    border: var(--pk-border-width) solid color-mix(in srgb, var(--pk-color-fg)      20%, transparent);
+    background-color: color-mix(in srgb, var(--pk-color-fg)       4%, var(--pk-card-bg));
+  }
+
+  // Ambient glow only on interactive cards (redirect / onClick present)
+  &--primary#{&}--is-clickable   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-brand)   18%, transparent); }
+  &--secondary#{&}--is-clickable { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-accent)  18%, transparent); }
+  &--success#{&}--is-clickable   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-success) 18%, transparent); }
+  &--warning#{&}--is-clickable   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-warning) 18%, transparent); }
+  &--error#{&}--is-clickable     { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-error)   18%, transparent); }
+  &--info#{&}--is-clickable      { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-fg)      10%, transparent); }
+
+  &--panel {
+    background: var(--pk-card-panel-bg);
+    border: var(--pk-border-width) solid var(--pk-card-panel-border);
+
+    &:not([data-theme="dark"] *) {
+      background: var(--pk-card-panel-light-bg);
+      border-color: var(--pk-card-panel-light-border);
     }
   }
 
@@ -49,95 +85,106 @@
     position: absolute;
     z-index: 3;
     width: 100%;
-    height: 100% !important;
-    border-radius: 2rem;
+    height: 100% !important; // skeleton library override — unavoidable
+    border-radius: var(--pk-card-radius);
   }
 
   &__background {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; height: 100%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    border-radius: 2rem;
+    border-radius: var(--pk-card-radius);
     z-index: 1;
-
-    html[data-theme='dark'] & { opacity: 0.7; }
+    opacity: 0.7;
   }
 
   &__link {
     align-items: center;
+
     @include when-hovered() {
-      text-decoration: none !important;
+      text-decoration: none !important; // overrides external link reset
     }
   }
 
   &__content {
-    position: relative; z-index: 2;
-    padding: $space-xl;
-    color: var(--color-grey-900);
+    position: relative;
+    z-index: 2;
+    padding: var(--pk-card-padding);
+    color: var(--pk-card-fg);
 
     &--has-link {
       cursor: pointer;
-      @include when-focused-within() { @include use-custom-focus-outline(); }
+      @include when-focused-within() {
+        @include use-custom-focus-outline();
+      }
     }
   }
 
-  /* keep the gradient *class hooks*, but DO NOT include animated keyframes here */
   &__gradiant {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
-    border-radius: 2rem;
+    border-radius: var(--pk-card-radius);
 
-    &--primary   { @include gradientBackgroundVar("primary"); }
+    &--primary   { @include gradientBackgroundVar("primary");   }
     &--secondary { @include gradientBackgroundVar("secondary"); }
-    &--info      { @include gradientBackgroundVar("info"); }
-    &--success   { @include gradientBackgroundVar("success"); }
-    &--warning   { @include gradientBackgroundVar("warning"); }
+    &--info      { @include gradientBackgroundVar("info");      }
+    &--success   { @include gradientBackgroundVar("success");   }
+    &--warning   { @include gradientBackgroundVar("warning");   }
   }
 
   &--has-highlight {
     position: relative;
 
-    /* Highlight border fade-in that previously defined @keyframes inline */
     &::before {
       content: "";
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      padding: 2px;
+      padding: var(--pk-border-width);
       mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
       mask-composite: exclude;
       opacity: 0;
-      /* If gradientBorderVar injects animated gradient, it's fine here */
       @include gradientBorderVar(4);
-
       animation: Card_fadeInMask 0.5s ease forwards;
     }
   }
-  &--has-gradiant  { position: relative; }
+
+  &--has-gradiant { position: relative; }
+
   &--has-gradiant,
-  &--has-background { color: var(--color-grey-900); }
+  &--has-background {
+    color: var(--pk-card-fg);
+  }
 
-  &--has-shadow { box-shadow: var(--elevation-1); }
+  &--has-shadow {
+    box-shadow: var(--pk-card-shadow);
+  }
 
-  /* Reveal animation (what used to be &--has-animation + fadeInAnimation) */
   &--has-animation {
     animation: Card_fadeInAnimation 0.5s;
   }
 
   &--is-clickable {
     cursor: pointer;
+    transition: transform var(--pk-timing-fast, 0.15s) ease;
 
     @include when-hovered() {
+      transform: translateY(-2px);
       box-shadow: none;
     }
-    @include when-focused() { @include use-custom-focus-outline(); }
+
+    @include when-focused() {
+      @include use-custom-focus-outline();
+    }
   }
 }

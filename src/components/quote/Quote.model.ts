@@ -36,8 +36,8 @@ export type QuoteAuthor = {
 export type QuoteProps = {
   /** Root class name. */
   className?: string
-  /** Visual variant token. */
-  variant?: Variants
+  /** Visual color token. */
+  color?: Variants
   /** Optional title headline. */
   title?: QuoteHeadline
   /** Optional subtitle headline. */

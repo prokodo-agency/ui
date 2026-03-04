@@ -146,7 +146,7 @@ export function RichTextClient({
   children,
   animated,
   animationProps = {},
-  variant = "primary",
+  color = "primary",
   schema = {},
   itemProp,
   linkComponent,
@@ -398,12 +398,12 @@ export function RichTextClient({
             {...baseProps}
             aria-label={childReactNodes.map(extractText).join("")}
             className={cls}
+            color="primary"
             href={href}
             linkComponent={linkComponent}
             rel={rel}
             target={target}
             title={title}
-            variant="primary"
           >
             {linkText}
           </Link>
@@ -509,7 +509,7 @@ export function RichTextClient({
             <Icon
               key={`${path}.icon`}
               className={bem("li__icon")}
-              color={variant}
+              color={color}
               name="ArrowRight01Icon"
               size={18}
             />

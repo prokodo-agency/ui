@@ -1,0 +1,89 @@
+---
+id: map
+title: Map
+sidebar_label: Map
+description: Interactive Google Maps component with marker support and automatic light/dark theme switching.
+---
+
+# Map
+
+`Map` renders an interactive Google Map. The map automatically switches between light and dark tile styles based on the site’s `data-theme` attribute. Markers use Google Maps Advanced Marker API.
+
+---
+
+## Overview
+
+```tsx
+import { Map } from "@prokodo/ui/map"
+;<Map
+  apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}
+  center={{ lat: 48.1371, lng: 11.5754 }}
+  zoom={12}
+  marker={[{ position: { lat: 48.1371, lng: 11.5754 } }]}
+/>
+```
+
+<StorybookEmbed id="prokodo-media-map--default" height={460} />
+
+---
+
+## Import
+
+```ts
+import { Map } from "@prokodo/ui/map"
+```
+
+Styling is handled via design tokens — no additional CSS import required.
+
+---
+
+## Styling
+
+The map height is controlled by the `--pk-map-height` CSS custom property (default `500px`):
+
+```css
+.my-contact-section {
+  --pk-map-height: 400px;
+}
+```
+
+---
+
+## Props
+
+| Prop        | Type                           | Default | Required | Description                |
+| ----------- | ------------------------------ | ------- | -------- | -------------------------- |
+| `apiKey`    | `string`                       | —       | ✅       | Google Maps API key.       |
+| `center`    | `{ lat: number; lng: number }` | —       | ✅       | Map center coordinates.    |
+| `mapId`     | `string`                       | —       | —        | Google Maps map style ID.  |
+| `zoom`      | `number`                       | `14`    | —        | Initial zoom level.        |
+| `marker`    | `{ lat: number; lng: number }` | —       | —        | Marker position.           |
+| `heading`   | `number`                       | `0`     | —        | Map heading in degrees.    |
+| `tilt`      | `number`                       | `0`     | —        | Map tilt angle.            |
+| `className` | `string`                       | —       | —        | CSS class on root element. |
+
+> See [`src/components/map/Map.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/map/Map.model.ts) for the full `MapProps` type.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                      | Status           | Note                                                                                                                                            |
+| --------- | ------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Non-text Content** (A)  | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **2.1.1** | **Keyboard** (A)          | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing.                                                       |
+| **2.4.1** | **Bypass Blocks** (A)     | 🔍 Manual review | Embedded frames or repeated navigation blocks must provide a skip-to-content mechanism (e.g. iframe title, skip link).                          |
+| **4.1.2** | **Name, Role, Value** (A) | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.                 |
+
+> **Test coverage:** 1 jest-axe assertion(s) across 1 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Map in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-media-map--docs)
+
+---
+
+## Source
+
+[`src/components/map/Map.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/map/Map.model.ts)

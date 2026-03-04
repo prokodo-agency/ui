@@ -1,0 +1,114 @@
+---
+id: drawer
+title: Drawer
+sidebar_label: Drawer
+description: Slide-in side panel (off-canvas) with configurable placement, width, and accessible focus management.
+---
+
+# Drawer
+
+`Drawer` renders an off-canvas side panel that slides in from the left, right, top, or bottom. Focus is trapped while open and released on close.
+
+---
+
+## Overview
+
+```tsx
+import { Drawer } from "@prokodo/ui/drawer"
+;<Drawer open={menuOpen} placement="right" onClose={() => setMenuOpen(false)}>
+  <nav>...</nav>
+</Drawer>
+```
+
+<StorybookEmbed id="prokodo-feedback-drawer--default" height={420} />
+
+---
+
+## Import
+
+```ts
+import { Drawer } from "@prokodo/ui/drawer"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/drawer.css"
+```
+
+---
+
+## Props
+
+| Prop         | Type                                     | Default   | Required | Description                                        |
+| ------------ | ---------------------------------------- | --------- | -------- | -------------------------------------------------- |
+| `open`       | `boolean`                                | —         | ✅       | Controls drawer visibility.                        |
+| `anchor`     | `"left" \| "right" \| "top" \| "bottom"` | `"right"` | —        | Side from which the drawer slides in.              |
+| `title`      | `string`                                 | —         | —        | Drawer title text.                                 |
+| `titleProps` | `HeadlineProps`                          | —         | —        | Props forwarded to the title Headline component.   |
+| `fullscreen` | `boolean`                                | `false`   | —        | Render the drawer as full-screen.                  |
+| `actions`    | `ReactNode`                              | —         | —        | Action buttons rendered in the drawer footer.      |
+| `children`   | `ReactNode`                              | —         | —        | Drawer body content.                               |
+| `onChange`   | `(open: boolean) => void`                | —         | —        | Called when the drawer open state changes.         |
+| `ref`        | `DrawerRef`                              | —         | —        | Ref to imperative handle for programmatic control. |
+| `className`  | `string`                                 | —         | —        | CSS class on root element.                         |
+
+> See [`src/components/drawer/Drawer.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/drawer/Drawer.model.ts) for the full `DrawerProps` type.
+
+---
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                     | Default                   | Description                |
+| ------------------------- | ------------------------- | -------------------------- |
+| `--pk-drawer-bg`          | `var(--pk-color-surface)` | Drawer panel background    |
+| `--pk-drawer-border`      | `var(--pk-color-border)`  | Header bottom border color |
+| `--pk-drawer-shadow`      | `var(--elevation-1)`      | Panel box-shadow           |
+| `--pk-drawer-backdrop-bg` | `rgba(0, 0, 0, 0.5)`      | Backdrop overlay color     |
+| `--pk-drawer-z-index`     | `1302`                    | Panel z-index              |
+| `--pk-drawer-padding`     | `var(--pk-space-md)`      | Header / content padding   |
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { Drawer } from "@prokodo/ui/drawer"
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion  | Name                               | Status           | Note                                                                                                                                       |
+| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                                |
+| **2.1.1**  | **Keyboard** (A)                   | ✅ Fulfilled     | All functionality must be operable via keyboard alone, without requiring specific timing.                                                  |
+| **2.1.2**  | **No Keyboard Trap** (A)           | 🔍 Manual review | Keyboard focus must never become trapped inside a component; users must always be able to navigate away using standard keys.               |
+| **2.4.3**  | **Focus Order** (A)                | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                                |
+| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.                 |
+| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                             |
+| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.            |
+| **4.1.3**  | **Status Messages** (AA)           | 🔍 Manual review | Status messages (loading, success, error, progress) must reach assistive technologies without a focus change (aria-live or role='status'). |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 6 test file(s) · 4 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Drawer in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-feedback-drawer--docs)
+
+---
+
+## Source
+
+[`src/components/drawer/Drawer.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/drawer/Drawer.model.ts)

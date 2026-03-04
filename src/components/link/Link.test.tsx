@@ -8,7 +8,7 @@ import { LinkView } from "./Link.view"
 describe("The common link component", () => {
   it("should render primary", async () => {
     render(
-      <Link href="/" variant="primary">
+      <Link color="primary" href="/">
         Primary link
       </Link>,
     )
@@ -17,7 +17,7 @@ describe("The common link component", () => {
 
   it("should render secondary", async () => {
     render(
-      <Link href="/" variant="secondary">
+      <Link color="secondary" href="/">
         Secondary link
       </Link>,
     )
@@ -26,7 +26,7 @@ describe("The common link component", () => {
 
   it("should not open inbound links in a new tab", async () => {
     render(
-      <Link href="/" variant="primary">
+      <Link color="primary" href="/">
         Inbound link
       </Link>,
     )
@@ -37,7 +37,7 @@ describe("The common link component", () => {
 
   it("primary link has no axe violations", async () => {
     const { container } = render(
-      <Link href="/about" variant="primary">
+      <Link color="primary" href="/about">
         About us
       </Link>,
     )
@@ -46,7 +46,7 @@ describe("The common link component", () => {
 
   it("secondary link has no axe violations", async () => {
     const { container } = render(
-      <Link href="/contact" variant="secondary">
+      <Link color="secondary" href="/contact">
         Contact
       </Link>,
     )
@@ -72,7 +72,7 @@ describe("LinkView span branch", () => {
     </a>
   )
 
-  it("renders span with role=button", () => {
+  it("renders non-interactive span without button role when hasHandlers=false", () => {
     render(
       <LinkView
         BaseLinkComponent={FakeBase as never}
@@ -83,7 +83,8 @@ describe("LinkView span branch", () => {
         Click me
       </LinkView>,
     )
-    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.queryByRole("button")).not.toBeInTheDocument()
+    expect(screen.getByText("Click me")).toBeInTheDocument()
   })
 
   it("fires onClick when span is clicked and hasHandlers=true", () => {
@@ -167,7 +168,7 @@ describe("LinkView span branch", () => {
         Span link
       </LinkView>,
     )
-    screen.getByRole("button").click()
+    screen.getByText("Span link").click()
     // onClick is undefined when hasHandlers=false, so it should not be called
     expect(onClick).not.toHaveBeenCalled()
   })

@@ -1,0 +1,39 @@
+// =============================================================================
+// RTE COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin rte-tokens() {
+  // Surface layers
+  --pk-rte-bg:               var(--pk-color-surface);
+  // Subtle brand tint on the toolbar — auto-adapts: light blue in light mode,
+  // dark near-black with a hint of brand in dark mode.
+  --pk-rte-toolbar-bg:       color-mix(in srgb, var(--pk-color-brand) 8%, var(--pk-color-surface));
+
+  // Accent colour — set per-variant via BEM modifiers on the RTE root.
+  // This fallback ensures a sensible value when no variant class is present.
+  --pk-rte-accent:           var(--pk-color-brand);
+
+  // Icon / text colour inside the toolbar
+  --pk-rte-icon-color:       var(--pk-color-fg);
+  --pk-rte-icon-opacity:     0.7;
+
+  // Picker dropdown
+  --pk-rte-picker-bg:        var(--pk-color-surface);
+  --pk-rte-picker-border:    var(--pk-color-border);
+  // Hover/active use color-mix with --pk-rte-accent so they follow the variant
+  --pk-rte-picker-hover-bg:  color-mix(in srgb, var(--pk-rte-accent) 8%,  var(--pk-color-surface));
+  --pk-rte-picker-active-bg: color-mix(in srgb, var(--pk-rte-accent) 16%, var(--pk-color-surface));
+  --pk-rte-picker-shadow:    0 10px 30px rgba(0, 0, 0, 0.12);
+
+  // Code / pre blocks — 6 % of the foreground → light grey in light, soft white in dark
+  --pk-rte-code-bg:          color-mix(in srgb, var(--pk-color-fg) 6%, transparent);
+
+  // Shared radius
+  --pk-rte-radius:           var(--pk-radius-md);      // 0.75rem  ≈ 12 px
+  --pk-rte-radius-lg:        14px;                      // larger cards / picker shell
+
+  // Resize handle
+  --pk-rte-resize-color:     var(--pk-color-fg);
+  --pk-rte-resize-opacity:   0.55;
+}

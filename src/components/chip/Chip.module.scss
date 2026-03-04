@@ -1,137 +1,238 @@
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/colors" as *;
-@use "@/styles/designsystem/config/spaces" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
+// Component tokens (overridable on :root or a scoped ancestor):
+// --pk-chip-radius  → shape
+// --pk-chip-bg      → resting background
+// --pk-chip-fg      → resting text color
+
 @include define-block("Chip") {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  border-radius: $ui-background-border-radius;
-  padding: $space-xs $space-md;
+  border-radius: var(--pk-radius-pill);
+  padding: var(--pk-space-xs) var(--pk-space-md);
   user-select: none;
-  gap: $space-sm;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border-color: var(--color-grey-500);
-  color: var(--color-black);
+  gap: var(--pk-space-sm);
+  transition:
+    background-color var(--pk-timing-normal) ease,
+    color            var(--pk-timing-normal) ease,
+    box-shadow       var(--pk-timing-normal) ease,
+    filter           var(--pk-timing-fast)   ease;
+  color: var(--pk-color-fg);
   @include text("base/md");
+
+  @include when-focused-within() {
+    @include use-custom-focus-outline();
+    border-radius: var(--pk-radius-pill);
+  }
 
   &--is-clickable {
     cursor: pointer;
+
+    @include when-hovered() {
+      filter: brightness(1.08);
+      box-shadow: none;
+    }
   }
+
+  // ── colored shadows (clickable chips only) ────────────────────────────────
+  &--is-clickable#{&}--filled--primary,
+  &--is-clickable#{&}--outlined--primary   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-brand)   18%, transparent); }
+
+  &--is-clickable#{&}--filled--secondary,
+  &--is-clickable#{&}--outlined--secondary { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-accent)  18%, transparent); }
+
+  &--is-clickable#{&}--filled--success,
+  &--is-clickable#{&}--outlined--success   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-success) 18%, transparent); }
+
+  &--is-clickable#{&}--filled--warning,
+  &--is-clickable#{&}--outlined--warning   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-warning) 18%, transparent); }
+
+  &--is-clickable#{&}--filled--error,
+  &--is-clickable#{&}--outlined--error     { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-error)   18%, transparent); }
+
+  &--is-clickable#{&}--filled--info,
+  &--is-clickable#{&}--outlined--info,
+  &--is-clickable#{&}--filled--inherit,
+  &--is-clickable#{&}--outlined--inherit   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-fg)      10%, transparent); }
 
   &--has-icon {
-    padding-right: $space-sm;
+    padding-right: var(--pk-space-sm);
   }
 
+  // ── filled variant — tinted badge style (soft bg + colored text) ───────────
   &--filled {
     background-color: inherit;
     color: inherit;
 
     &--primary {
-      background-color: var(--color-primary-500);
-      color: var(--color-white);
+      background-color: color-mix(in srgb, var(--pk-color-brand)   14%, var(--pk-color-surface));
     }
 
     &--secondary {
-      background-color: var(--color-secondary-500);
-      color: var(--color-white);
+      background-color: color-mix(in srgb, var(--pk-color-accent)  14%, var(--pk-color-surface));
     }
 
     &--info {
-      background-color: var(--color-grey-300);
-      color: var(--color-grey-700);
+      background-color: color-mix(in srgb, var(--pk-color-muted)   20%, var(--pk-color-surface));
     }
 
     &--success {
-      background-color: var(--color-success);
-      color: var(--color-white);
+      background-color: color-mix(in srgb, var(--pk-color-success) 14%, var(--pk-color-surface));
     }
 
     &--error {
-      background-color: var(--color-error);
-      color: var(--color-white);
+      background-color: color-mix(in srgb, var(--pk-color-error)   14%, var(--pk-color-surface));
     }
 
     &--warning {
-      background-color: var(--color-warning);
-      color: var(--color-black);
+      background-color: color-mix(in srgb, var(--pk-color-warning) 18%, var(--pk-color-surface));
     }
+
     &--white {
-      background-color: var(--color-white);
-      color: var(--color-black);
+      // always white — never adapts to dark mode
+      background-color: var(--pk-palette-white);
+      color: var(--pk-palette-black);
+    }
+
+    &--inherit {
+      // light mode: soft grey gradient (like a white chip with depth)
+      @include gradientBackgroundVar("inherit");
+
+      // dark mode: adapt to surface so it reads on dark backgrounds
+      :global(html[data-theme="dark"]) &,
+      :global([data-theme="dark"]) & {
+        background: var(--pk-color-surface-raised);
+      }
     }
   }
 
+  // ── outlined variant (gradient-border mask, same as Button) ─────────────
   &--outlined {
-    border: 1px solid;
     background-color: transparent;
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
-    &--primary {
-      border-color: var(--color-primary-300);
-      color: var(--color-primary-500);
+    // gradient border is painted in ::before so we can mask it to a ring
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: var(--pk-border-width);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      z-index: 0;
+      @include gradientBorderVar(4);
     }
-    &--secondary {
-      border-color: var(--color-secondary-300);
-      color: var(--color-secondary-500);
-    }
-    &--info {
-      border-color: var(--color-grey-300);
-      color: var(--color-grey-500);
-    }
-    &--success {
-      border-color: var(--color-success);
-      color: var(--color-success);
-    }
-    &--error {
-      border-color: var(--color-error);
-      color: var(--color-error);
-    }
-    &--warning {
-      border-color: var(--color-warning);
-      color: var(--color-warning);
-    }
-    &--white {
-      border-color: var(--color-white);
-      color: var(--color-white);
+
+    &--primary   { &::before { @include gradientBorderVar(4); } }
+    &--secondary { &::before { @include gradientBorderVar(2); } }
+    &--info      { &::before { @include gradientBorderVar("info"); } }
+    &--success   { &::before { @include gradientBorderVar("success"); } }
+    &--error     { &::before { @include gradientBorderVar("error"); } }
+    &--warning   { &::before { @include gradientBorderVar("warning"); } }
+
+    // white & inherit: light grey border in light mode, soft white in dark mode
+    &--white,
+    &--inherit {
+      &::before {
+        background: linear-gradient(
+          90deg,
+          var(--pk-palette-grey-100) 0%,
+          var(--pk-palette-grey-200) 100%
+        );
+      }
+
+      :global(html[data-theme="dark"]) &::before,
+      :global([data-theme="dark"]) &::before {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.30) 0%,
+          rgba(255, 255, 255, 0.50) 100%
+        );
+      }
     }
   }
 
+  // ── delete button ────────────────────────────────────────────────────────
   &__delete {
+    position: relative; // keeps it above the ::before gradient ring
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 1.25rem;
+    height: 1.25rem;
     border: none;
-    border-radius: 100px;
+    border-radius: 100%;
     color: inherit;
     cursor: pointer;
     padding: 0;
     line-height: 1;
-    transition: color 0.3s ease;
-    background-color: var(--color-grey-50);
+    flex-shrink: 0;
+    transition:
+      background-color var(--pk-timing-fast) ease,
+      color            var(--pk-timing-fast) ease;
+    background-color: rgba(0, 0, 0, 0.12);
 
-    &--primary {
-      color: var(--color-primary-500);
+    @include when-hovered() {
+      background-color: rgba(0, 0, 0, 0.22);
     }
-    &--secondary {
-      color: var(--color-secondary-500);
+  }
+
+  // ── gradient text on __label per color ────────────────────────────────────
+  // Filled: tinted bg → colored gradient text per variant
+  &--filled--primary   &__label { @include gradientTextVar("primary",           transparent); }
+  &--filled--secondary &__label { @include gradientTextVar("primary-secondary", transparent); }
+  &--filled--success   &__label { @include gradientTextVar("success",           transparent); }
+  &--filled--error     &__label { @include gradientTextVar("error",             transparent); }
+  &--filled--warning   &__label { @include gradientTextVar("warning",           transparent); }
+  &--filled--info      &__label { @include gradientTextVar("grey",              transparent); }
+
+  // Outlined: all colors → gradient text (bg is transparent so it shows through)
+  // Only use keys that actually exist in --gradient-text-*
+  &--outlined--primary   &__label { @include gradientTextVar("primary",            transparent); }
+  &--outlined--secondary &__label { @include gradientTextVar("primary-secondary",  transparent); } // no --gradient-text-secondary
+  &--outlined--success   &__label { @include gradientTextVar("success",            transparent); }
+  &--outlined--error     &__label { @include gradientTextVar("error",              transparent); }
+  &--outlined--warning   &__label { @include gradientTextVar("warning",            transparent); }
+  &--outlined--info      &__label { @include gradientTextVar("grey",               transparent); } // no --gradient-text-info
+
+  // white: bg is always white → always dark grey gradient text (same in light + dark)
+  &--filled--white   &__label,
+  &--outlined--white &__label {
+    @include gradientTextVar("grey", transparent);
+
+    // override dark mode remapping — keep the same light-mode values
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) & {
+      background-image: linear-gradient(
+        90deg,
+        var(--pk-palette-grey-400) 0%,
+        var(--pk-palette-grey-600) 100%
+      );
     }
-    &--info {
-      color: var(--color-grey-500);
-    }
-    &--success {
-      color: var(--color-success);
-    }
-    &--error {
-      color: var(--color-error);
-    }
-    &--white,
-    &--warning {
-      color: var(--color-black);
-    }
+  }
+
+  // inherit: grey text in light mode, white→grey gradient in dark mode
+  &--filled--inherit   &__label { @include gradientTextVar("grey", transparent); }
+  &--outlined--inherit &__label { @include gradientTextVar("grey", transparent); }
+
+  :global(html[data-theme="dark"]) &--filled--inherit   &__label,
+  :global([data-theme="dark"])     &--filled--inherit   &__label,
+  :global(html[data-theme="dark"]) &--outlined--inherit &__label,
+  :global([data-theme="dark"])     &--outlined--inherit &__label {
+    background-image: linear-gradient(90deg, var(--pk-palette-white) 0%, var(--pk-palette-grey-100) 100%);
+  }
+
+  // keep label & icon above the ::before gradient ring overlay
+  &__label {
+    position: relative;
+    z-index: 1;
   }
 }

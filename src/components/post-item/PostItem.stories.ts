@@ -1,15 +1,29 @@
 import { PostItem } from "./PostItem"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/blog/PostItem",
+  title: "prokodo/content/PostItem",
   component: PostItem,
   parameters: {
     layout: "centered",
   },
   tags: ["experimental"],
-  argTypes: {},
+  argTypes: {
+    color: {
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "error",
+        "info",
+        "success",
+        "warning",
+        "white",
+      ],
+      control: { type: "select" },
+    },
+  },
 } satisfies Meta<typeof PostItem>
 
 export default meta
@@ -35,5 +49,12 @@ export const Default: Story = {
     button: {
       title: "Read more",
     },
+  },
+}
+
+export const Colored: Story = {
+  args: {
+    ...Default.args,
+    color: "primary",
   },
 }

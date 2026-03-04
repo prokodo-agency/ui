@@ -1,18 +1,25 @@
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("Quote") {
     margin: 0;
 
+    // Colour-driven gradient border overrides — only change --gradient-border-4
+    // which is consumed by the Card highlight ::before pseudo-element.
+    &--secondary { --gradient-border-4: var(--gradient-border-6);       }
+    &--success   { --gradient-border-4: var(--gradient-border-success); }
+    &--warning   { --gradient-border-4: var(--gradient-border-warning); }
+    &--error     { --gradient-border-4: var(--gradient-border-error);   }
+    &--info      { --gradient-border-4: var(--gradient-border-info);    }
+
     &__headline {
-        padding-bottom: $space-lg;
+        padding-bottom: var(--pk-space-lg);
     }
 
     &__quote {
         margin: 0;
         &__content {
-            margin: 0 0 $space-lg 0;
+            margin: 0 0 var(--pk-space-lg) 0;
             @include text("quote");
         }
     }
@@ -21,7 +28,7 @@
         display: flex;
 
         &__avatar {
-            margin-right: $space-lg;
+            margin-right: var(--pk-space-lg);
         }
 
         &__author {
@@ -29,13 +36,13 @@
             flex-direction: column;
 
             &__name {
-                color: var(--color-grey-900);
+                color: var(--pk-color-fg);
                 @include text("headline/xs");
             }
 
             &__position {
-                padding-top: $space-xs;
-                color: var(--color-grey-500);
+                padding-top: var(--pk-space-xs);
+                color: var(--pk-color-muted);
                 @include text("base");
             }
         }

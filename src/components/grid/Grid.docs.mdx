@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta } from "@storybook/blocks"
+import { Canvas, Controls, Meta } from "@storybook/addon-docs/blocks"
 import * as GridStories from "./Grid.stories"
 
 <Meta of={GridStories} />
@@ -35,6 +35,14 @@ Use `Grid` and `GridRow` to arrange sibling components into a column-based layou
 - Don't use Grid for micro-layout within a component (use Flexbox or component-level CSS)
 - Don't nest Grid containers more than two levels deep
 - Don't rely on visual order for focus order — keep DOM order meaningful
+
+## Design Tokens
+
+Customise `Grid` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token               | Default              | Description                         |
+| ------------------- | -------------------- | ----------------------------------- |
+| `--pk-grid-padding` | `var(--pk-space-lg)` | Inner padding of the grid container |
 
 ## Examples
 

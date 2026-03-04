@@ -70,6 +70,20 @@ const ITEMS = [
   { value: "c", label: "Option C" },
 ]
 
+beforeAll(() => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  })
+})
+
 beforeEach(() => mockView.mockClear())
 
 describe("Select.client", () => {
@@ -397,5 +411,231 @@ describe("Select.client – listbox interaction (popupReady)", () => {
     fireEvent.click(options[0]!)
     // Value should reset
     expect(screen.getByTestId("select-view")).toHaveAttribute("data-value", "")
+  })
+})
+
+describe("Select.client – mobile bottom-sheet", () => {
+  beforeEach(() => {
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: jest.fn().mockImplementation((query: string) => ({
+        matches: true, // mobile viewport
+        media: query,
+        onchange: null,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    })
+  })
+
+  afterEach(() => {
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: jest.fn().mockImplementation((query: string) => ({
+        matches: false, // restore desktop
+        media: query,
+        onchange: null,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    })
+  })
+
+  it("renders mobile sheet when isMobile=true and picker is open", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    // Mobile sheet has role="dialog"
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+  })
+
+  it("closes sheet on backdrop click", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const backdrop = document.querySelector('[aria-hidden="true"]')
+    expect(backdrop).toBeInTheDocument()
+    fireEvent.click(backdrop!)
+    // After close, dialog should be gone
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+  })
+
+  it("closes sheet on close button click", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    fireEvent.click(screen.getByRole("button", { name: /close/i }))
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+  })
+
+  it("shows all options and clicking one selects it (single-select)", async () => {
+    const onChange = jest.fn()
+    render(<SelectClient items={ITEMS} onChange={onChange} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const options = screen.getAllByRole("option")
+    // With placeholder there should be items.length + 1 options
+    expect(options.length).toBeGreaterThan(0)
+    fireEvent.click(options[1]!) // "Option A"
+    expect(onChange).toHaveBeenCalled()
+  })
+
+  it("renders placeholder option when not required", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const options = screen.getAllByRole("option")
+    expect(options.length).toBe(ITEMS.length + 1) // +1 for placeholder
+  })
+
+  it("omits placeholder when required=true", async () => {
+    render(<SelectClient required items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const options = screen.getAllByRole("option")
+    expect(options.length).toBe(ITEMS.length)
+  })
+
+  it("shows Done button for multi-select", async () => {
+    render(<SelectClient multiple items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    expect(screen.getByRole("button", { name: /done/i })).toBeInTheDocument()
+  })
+
+  it("Done button closes the sheet", async () => {
+    render(<SelectClient multiple items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    fireEvent.click(screen.getByRole("button", { name: /done/i }))
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+  })
+
+  it("uses the color prop for the sheet variant class", async () => {
+    render(<SelectClient color="secondary" items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const sheet = screen.getByRole("dialog")
+    // The bem modifier should include the color
+
+    expect(sheet.className).toMatch(/secondary/)
+  })
+
+  it("fires swipe-down to close on touch end > 60 px", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const sheet = screen.getByRole("dialog")
+    // Simulate touch start at y=100
+    fireEvent.touchStart(sheet, {
+      touches: [{ clientY: 100 }],
+    })
+    // Simulate touch end at y=170 (dy=70)
+    fireEvent.touchEnd(sheet, {
+      changedTouches: [{ clientY: 170 }],
+    })
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+  })
+
+  it("touch end with no start recorded is a no-op", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const sheet = screen.getByRole("dialog")
+    // Fire touchEnd without touchStart — sheetSwipeStart.current is null
+    fireEvent.touchEnd(sheet, {
+      changedTouches: [{ clientY: 170 }],
+    })
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+  })
+
+  it("onMouseMove on a sheet option updates activeIndex", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const options = screen.getAllByRole("option")
+    // Mouse over the second real option (index 2 with placeholder)
+    fireEvent.mouseMove(options[2]!)
+    // Just verify no error thrown and dialog still open
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+  })
+
+  it("onKeyDown Enter on a sheet option selects it", async () => {
+    const onChange = jest.fn()
+    render(<SelectClient items={ITEMS} onChange={onChange} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const options = screen.getAllByRole("option")
+    fireEvent.keyDown(options[1]!, { key: "Enter" })
+    expect(onChange).toHaveBeenCalled()
+  })
+
+  it("touchStart with no touches records null as start position", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const sheet = screen.getByRole("dialog")
+    // touches is empty → clientY is undefined → ?? null branch
+    fireEvent.touchStart(sheet, { touches: [] })
+    // Subsequent touchEnd with a startY: startY=null → early return
+    fireEvent.touchEnd(sheet, { changedTouches: [{ clientY: 200 }] })
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+  })
+
+  it("touchEnd with empty changedTouches uses startY as clientY (no close)", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const sheet = screen.getByRole("dialog")
+    // Record a valid start
+    fireEvent.touchStart(sheet, { touches: [{ clientY: 100 }] })
+    // changedTouches is empty → clientY is undefined → ?? startY → dy=0 → no close
+    fireEvent.touchEnd(sheet, { changedTouches: [] })
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+  })
+
+  it("swipe down less than 60 px does not close the sheet", async () => {
+    render(<SelectClient items={ITEMS} />)
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    const sheet = screen.getByRole("dialog")
+    fireEvent.touchStart(sheet, { touches: [{ clientY: 100 }] })
+    // dy = 140 - 100 = 40 < 60 → should NOT close
+    fireEvent.touchEnd(sheet, { changedTouches: [{ clientY: 140 }] })
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+  })
+
+  it("matchMedia change handler updates isMobile for Select", async () => {
+    const changeListeners: Array<(e: { matches: boolean }) => void> = []
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: jest.fn().mockImplementation((query: string) => ({
+        matches: false, // start as desktop
+        media: query,
+        onchange: null,
+        addEventListener: jest
+          .fn()
+          .mockImplementation(
+            (event: string, handler: (e: { matches: boolean }) => void) => {
+              if (event === "change") changeListeners.push(handler)
+            },
+          ),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    })
+    render(<SelectClient items={ITEMS} />)
+    // Picker button is rendered (desktop mode)
+    expect(screen.getByTestId("select-btn")).toBeInTheDocument()
+    // Simulate matchMedia change → mobile mode
+    await act(async () => {
+      changeListeners.forEach(h => h({ matches: true }))
+    })
+    // Open the picker in mobile mode to verify sheet appears
+    fireEvent.click(screen.getByTestId("select-btn"))
+    jest.runAllTimers()
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
   })
 })

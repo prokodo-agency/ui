@@ -1,0 +1,98 @@
+---
+id: avatar
+title: Avatar
+sidebar_label: Avatar
+description: User avatar component with image, initials fallback, and size/shape variants.
+---
+
+# Avatar
+
+`Avatar` renders a user profile picture with automatic fallback to initials when no image is provided. Supports multiple shapes and sizes.
+
+---
+
+## Overview
+
+```tsx
+import { Avatar } from '@prokodo/ui/avatar'
+
+<Avatar src="/profile.jpg" alt="Jane Doe" size="md" />
+<Avatar initials="JD" color="primary" size="lg" />
+```
+
+<StorybookEmbed id="prokodo-content-avatar--default" />
+
+---
+
+## Import
+
+```ts
+import { Avatar } from "@prokodo/ui/avatar"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/avatar.css"
+```
+
+---
+
+## Props
+
+| Prop           | Type                                             | Default | Required | Description                                        |
+| -------------- | ------------------------------------------------ | ------- | -------- | -------------------------------------------------- |
+| `image`        | `ImageProps`                                     | —       | —        | Image source props (src, alt, …).                  |
+| `iconOverride` | `ReactNode`                                      | —       | —        | Custom icon/element rendered instead of the image. |
+| `size`         | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| number` | `"md"`  | —        | Avatar size preset or pixel value.                 |
+| `color`        | `Variants`                                       | —       | —        | Background color variant.                          |
+| `priority`     | `boolean`                                        | `false` | —        | Eagerly load the avatar image.                     |
+| `redirect`     | `LinkProps`                                      | —       | —        | Wrap avatar in a link.                             |
+| `className`    | `string`                                         | —       | —        | CSS class on root element.                         |
+
+> See [`src/components/avatar/Avatar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/avatar/Avatar.model.ts) for the full `AvatarProps` type.
+
+---
+
+## Design Tokens
+
+`Avatar` does not define component-specific CSS custom properties. Override appearance by customising the following global design-system tokens on `:root` or a scoped ancestor:
+
+| Token                | Description                                                       |
+| -------------------- | ----------------------------------------------------------------- |
+| `--pk-shadow-sm`     | Shadow on the avatar link wrapper                                 |
+| `--pk-color-fg`      | Fallback icon color for `color="inherit"` — adaptive in dark mode |
+| `--pk-color-brand`   | Background color for `color="primary"`                            |
+| `--pk-color-accent`  | Background color for `color="secondary"`                          |
+| `--pk-color-muted`   | Background color for `color="info"`                               |
+| `--pk-color-success` | Background color for `color="success"`                            |
+| `--pk-color-warning` | Background color for `color="warning"`                            |
+| `--pk-color-error`   | Background color for `color="error"`                              |
+| `--pk-palette-white` | Background color for `color="white"`                              |
+
+> **Dark mode:** When `color="inherit"`, the fallback `UserIcon` uses `var(--pk-color-fg)` so it remains visible against both light and dark surfaces.
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion  | Name                        | Status           | Note                                                                                                                                            |
+| ---------- | --------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1**  | **Non-text Content** (A)    | 🔍 Manual review | All images, icons, and media require a text alternative (alt, aria-label, or aria-labelledby). Decorative-only elements must carry aria-hidden. |
+| **1.4.3**  | **Contrast (Minimum)** (AA) | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                                 |
+| **1.4.5**  | **Images of Text** (AA)     | 🔍 Manual review | Text should be rendered as real text rather than as an image, unless unavoidable (e.g. logo, brand mark).                                       |
+| **1.4.11** | **Non-text Contrast** (AA)  | 🔍 Manual review | UI component boundaries and icons must achieve at least 3:1 contrast against adjacent colours. Verify in the product theme.                     |
+| **4.1.2**  | **Name, Role, Value** (A)   | 🔍 Manual review | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA.                 |
+
+> **Test coverage:** 3 jest-axe assertion(s) across 4 test file(s) · 0 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Avatar in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-avatar--docs)
+
+---
+
+## Source
+
+[`src/components/avatar/Avatar.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/avatar/Avatar.model.ts)

@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as HeadlineStories from "./Headline.stories"
 
 <Meta of={HeadlineStories} />
@@ -11,12 +11,13 @@ Semantic heading component mapping heading levels to design-system typography va
 
 Use `Headline` for every heading in the product — page titles, section headings, card headers, and widget titles. Never use raw `<h1>`–`<h6>` elements or utility classes for headings outside of this component.
 
-## Variants vs. levels
+## Color vs. levels
 
-`variant` controls the **visual** size/style (`h1`–`h6`, `subtitle1`, `subtitle2`, etc.).  
-`tag` controls the **semantic** HTML element rendered in the DOM.
+`color` controls the **visual colour** (`primary`, `secondary`, `inherit`, etc.).  
+`size` controls the **visual size** (`xs`–`xxl`).  
+`type` controls the **semantic** HTML element rendered in the DOM.
 
-Always choose a `tag` that reflects the correct document outline, independent of how large the heading looks visually.
+Always choose a `type` that reflects the correct document outline, independent of how large the heading looks visually.
 
 ## Accessibility (WCAG 2.2)
 
@@ -29,13 +30,27 @@ Always choose a `tag` that reflects the correct document outline, independent of
 
 - Keep heading text concise and descriptive
 - Maintain a logical heading hierarchy on every page
-- Use `variant` to match the design specification while keeping `tag` semantically correct
+- Use `color` to match the design specification while keeping `type` semantically correct
 
 ## ❌ Don't
 
 - Don't use `Headline` purely for font size — use `Typography` or CSS instead
 - Don't use `h1` for decorative/marketing slogans that are not meaningful headings
 - Don't duplicate `h1` within a page
+
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                | Purpose                          |
+| -------------------- | -------------------------------- |
+| `--pk-color-brand`   | Primary heading color            |
+| `--pk-color-accent`  | Secondary heading color          |
+| `--pk-color-success` | Success heading color            |
+| `--pk-color-warning` | Warning heading color            |
+| `--pk-color-error`   | Error heading color              |
+| `--pk-color-fg`      | Inherit / default text color     |
+| `--pk-palette-white` | White heading (on dark surfaces) |
 
 ## Examples
 

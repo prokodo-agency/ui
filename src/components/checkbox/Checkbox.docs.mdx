@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as CheckboxStories from "./Checkbox.stories"
 
 <Meta of={CheckboxStories} />
@@ -35,6 +35,18 @@ Use `Checkbox` for independent yes/no selections, optional user preferences, and
 - `description` and `icon` are optional helpers
 - `iconLabel` provides an accessible label for the optional icon
 
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                          | Default                  | Description            |
+| ------------------------------ | ------------------------ | ---------------------- |
+| `--pk-checkbox-size`           | `1.125rem`               | Checkbox size          |
+| `--pk-checkbox-control-radius` | `6px`                    | Control corner radius  |
+| `--pk-checkbox-gradient-from`  | `var(--pk-color-brand)`  | Checked gradient start |
+| `--pk-checkbox-gradient-to`    | `var(--pk-color-accent)` | Checked gradient end   |
+| `--pk-checkbox-error-fg`       | `var(--pk-color-error)`  | Error text colour      |
+
 ## ✅ Do
 
 - Keep labels short and action-oriented
@@ -63,16 +75,22 @@ Use `Checkbox` for independent yes/no selections, optional user preferences, and
   <Story of={CheckboxStories.WithDescription} />
 </Canvas>
 
-### Controlled
-
-<Canvas>
-  <Story of={CheckboxStories.Controlled} />
-</Canvas>
-
 ### Required
 
 <Canvas>
   <Story of={CheckboxStories.Required} />
+</Canvas>
+
+### Card variant
+
+<Canvas>
+  <Story of={CheckboxStories.CardVariant} />
+</Canvas>
+
+### All color variants
+
+<Canvas>
+  <Story of={CheckboxStories.AllColorVariants} />
 </Canvas>
 
 ### Props

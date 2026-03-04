@@ -1,0 +1,96 @@
+---
+id: list
+title: List
+sidebar_label: List
+description: Ordered and unordered semantic list component with optional icon bullets and nesting support.
+---
+
+# List
+
+`List` renders semantic `<ul>` or `<ol>` lists with optional icon bullets and support for nested sub-lists.
+
+---
+
+## Overview
+
+```tsx
+import { List } from "@prokodo/ui/list"
+;<List
+  items={[
+    { text: "First item" },
+    { text: "Second item", children: [{ text: "Nested item" }] },
+  ]}
+/>
+```
+
+<StorybookEmbed id="prokodo-content-list--default" />
+
+---
+
+## Import
+
+```ts
+import { List } from "@prokodo/ui/list"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/list.css"
+```
+
+---
+
+## Props
+
+| Prop            | Type                                            | Default     | Required | Description                                  |
+| --------------- | ----------------------------------------------- | ----------- | -------- | -------------------------------------------- |
+| `items`         | `ListDefaultItemProps[] \| ListCardItemProps[]` | —           | ✅       | List items array.                            |
+| `type`          | `"default" \| "icon" \| "card"`                 | `"default"` | —        | Visual list type.                            |
+| `color`         | `Variants`                                      | —           | —        | Accent color variant.                        |
+| `options`       | `ListDefaultOptions`                            | —           | —        | Configuration options for default/icon type. |
+| `onClick`       | `(item: ListDefaultItemProps) => void`          | —           | —        | Click handler for list items.                |
+| `classNameDesc` | `string`                                        | —           | —        | CSS class on item description element.       |
+| `className`     | `string`                                        | —           | —        | CSS class on root element.                   |
+
+> See [`src/components/list/List.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/list/List.model.ts) for the full `ListProps` type.
+
+---
+
+## Design Tokens
+
+`List` does not define component-specific CSS custom properties. Override appearance by customising the following global design-system tokens on `:root` or a scoped ancestor:
+
+| Token                       | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| `--pk-space-xs`             | Vertical item spacing and icon top margin           |
+| `--pk-space-sm`             | Icon wrapper right padding                          |
+| `--pk-space-md`             | Card-style item margin and content padding          |
+| `--pk-color-muted`          | Default item text color                             |
+| `--pk-color-surface-raised` | Icon bubble background (light mode)                 |
+| `--pk-color-brand`          | Hover accent color and `color="primary"` item color |
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.3.2** | **Meaningful Sequence** (A)    | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order.                                             |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                 |
+| **2.4.6** | **Headings and Labels** (AA)   | 🔍 Manual review | Headings and labels must describe the topic or purpose of their associated content.                                             |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 1 test file(s) · 4 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open List in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-list--docs)
+
+---
+
+## Source
+
+[`src/components/list/List.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/list/List.model.ts)

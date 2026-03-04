@@ -1,7 +1,23 @@
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("Lottie") {
-    &__container {
-        position: relative;
+  &__container {
+    position: relative;
+    width: 100%;
+  }
+
+  &__placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--pk-radius-md);
+    background-color: var(--pk-color-surface-subtle);
+    animation: pulse var(--pk-timing-slow) ease-in-out infinite alternate;
+
+    @keyframes pulse {
+      from { opacity: 1; }
+      to   { opacity: 0.4; }
     }
+  }
 }

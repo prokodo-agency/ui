@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useState, type ComponentProps } from "react"
 
 import { CheckboxGroup } from "./CheckboxGroup"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const options = [
   {
@@ -36,6 +36,20 @@ const meta = {
       options: ["plain", "card"],
       control: { type: "select" },
     },
+    color: {
+      options: [
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info",
+        "white",
+        "inherit",
+      ],
+      control: { type: "select" },
+      defaultValue: "primary",
+    },
     layout: {
       options: ["stack", "grid"],
       control: { type: "select" },
@@ -47,7 +61,25 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const renderWithState = (initial: string[] = []) => {
+  const CheckboxGroupWithState = (
+    args: ComponentProps<typeof CheckboxGroup>,
+  ) => {
+    const [values, setValues] = useState<string[]>(initial)
+    return (
+      <CheckboxGroup
+        {...args}
+        values={values}
+        onChange={next => setValues(next as string[])}
+      />
+    )
+  }
+  CheckboxGroupWithState.displayName = "CheckboxGroupWithState"
+  return CheckboxGroupWithState
+}
+
 export const Default: Story = {
+  render: renderWithState(),
   args: {
     name: "preferences",
     legend: "Notification preferences",
@@ -57,31 +89,8 @@ export const Default: Story = {
   },
 }
 
-/* eslint react-hooks/rules-of-hooks: 0 */
-export const Controlled: Story = {
-  args: {
-    name: "preferences-controlled",
-    legend: "Notification preferences",
-    options: [...options],
-    variant: "plain",
-  },
-  render: () => {
-    const [values, setValues] = useState<string[]>(["newsletter"])
-
-    return (
-      <CheckboxGroup
-        legend="Notification preferences"
-        name="preferences-controlled"
-        options={[...options]}
-        values={values}
-        variant="plain"
-        onChange={setValues}
-      />
-    )
-  },
-}
-
 export const GridPlain: Story = {
+  render: renderWithState(),
   args: {
     name: "preferences-grid",
     legend: "Notification preferences",
@@ -92,6 +101,7 @@ export const GridPlain: Story = {
 }
 
 export const Required: Story = {
+  render: renderWithState(),
   args: {
     name: "preferences-required",
     legend: "Notification preferences",
@@ -103,11 +113,36 @@ export const Required: Story = {
 }
 
 export const OptionRequired: Story = {
+  render: renderWithState(),
   args: {
     name: "preferences-option-required",
     legend: "Notification preferences",
     options: [{ ...options[0], required: true }, ...options.slice(1)],
     variant: "plain",
     layout: "stack",
+  },
+}
+
+export const CardGroup: Story = {
+  render: renderWithState(["newsletter"]),
+  args: {
+    name: "preferences-card",
+    legend: "Notification preferences",
+    options: [...options],
+    variant: "card",
+    color: "primary",
+    layout: "stack",
+  },
+}
+
+export const SuccessCard: Story = {
+  render: renderWithState(),
+  args: {
+    name: "preferences-success",
+    legend: "Feature flags",
+    options: [...options],
+    variant: "card",
+    color: "success",
+    layout: "grid",
   },
 }

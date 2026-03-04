@@ -1,81 +1,78 @@
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("PostWidget") {
-    &__list {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
+  &__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 
-        &--has-fullWidth {
-            display: flex;
-            flex-wrap: wrap;
-            gap: $space-lg;
-        }
-
-        &__item {
-            display: block;
-            margin-top: $space-lg;
-
-            &--has-fullWidth {
-                width: 100%;
-
-                @include screenLargerThan($screen-md) {
-                    width: calc(50% - $space-lg / 2);
-                }
-            }
-        }
-
-        &__item__content {
-            display: flex;
-            justify-content: flex-start;
-        }
+    &--has-fullWidth {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--pk-space-lg);
     }
 
-    &__image {
+    &__item {
+      display: block;
+      margin-top: var(--pk-space-lg);
+
+      &--has-fullWidth {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
 
-        &__link {
-            position: relative;
-            display: block;
-            width: 80px;
-            height: 80px;
-            margin-right: $space-lg;
-            line-height: 0;
-            border-radius: $ui-image-border-radius;
-            overflow: hidden;
+        @include screenLargerThan($screen-md) {
+          width: calc(50% - var(--pk-space-lg) / 2);
         }
-
-        /* This is the Image component’s container to force fill */
-        &__container {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-        }
+      }
     }
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-width: 0;
+    &__item__content {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    &__link {
+      position: relative;
+      display: block;
+      width: 80px;
+      height: 80px;
+      margin-right: var(--pk-space-lg);
+      line-height: 0;
+      border-radius: var(--pk-radius-md);
+      overflow: hidden;
     }
 
-    &__headline {
-        @include textLineClamp(3);
+    &__container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
+  }
 
-    &__date {
-        display: block;
-        margin: 0;
-        color: var(--color-grey-300);
-        @include text("caption");
-    }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  &__headline {
+    @include textLineClamp(3);
+  }
+
+  &__date {
+    display: block;
+    margin: 0;
+    color: var(--pk-color-muted);
+    @include text("caption");
+  }
 }

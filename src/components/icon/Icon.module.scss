@@ -1,5 +1,4 @@
 @use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/config/colors" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("Icon") {
@@ -13,58 +12,58 @@
     --webkit-mask-position: center;
 
     &--primary {
-        color: var(--color-primary-500);
+        color: var(--pk-color-brand);
 
         @include when-hovered() {
-            color: var(--color-primary-500);
+            color: var(--pk-color-brand);
         }
     }
 
     &--secondary {
-        color: var(--color-secondary-500);
+        color: var(--pk-color-accent);
 
         @include when-hovered() {
-            color: var(--color-secondary-500);
+            color: var(--pk-color-accent);
         }
     }
 
     &--info {
-        color: var(--color-grey-300);
+        color: var(--pk-color-muted);
 
         @include when-hovered() {
-            color: var(--color-grey-300);
+            color: var(--pk-color-muted);
         }
     }
 
     &--success {
-        color: var(--color-success);
+        color: var(--pk-color-success);
 
         @include when-hovered() {
-            color: var(--color-success);
+            color: var(--pk-color-success);
         }
     }
-    
+
     &--warning {
-        color: var(--color-warning);
+        color: var(--pk-color-warning);
 
         @include when-hovered() {
-            color: var(--color-warning);
+            color: var(--pk-color-warning);
         }
     }
 
     &--error {
-        color: var(--color-error);
+        color: var(--pk-color-error);
 
         @include when-hovered() {
-            color: var(--color-error);
+            color: var(--pk-color-error);
         }
     }
 
     &--white {
-        color: $white;
+        color: var(--pk-palette-white);
 
         @include when-hovered() {
-            color: $white;
+            color: var(--pk-palette-white);
         }
     }
 }

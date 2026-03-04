@@ -1,0 +1,367 @@
+---
+id: changelog
+title: Changelog
+sidebar_label: Changelog
+description: Release history for @prokodo/ui — a record of all new features, fixes, and breaking changes.
+---
+
+# Changelog
+
+All notable changes to `@prokodo/ui` are documented here. This project follows [Semantic Versioning](https://semver.org/) and [Keep a Changelog](https://keepachangelog.com/).
+
+---
+
+## [Unreleased]
+
+---
+
+## [0.1.16]
+
+### Added
+
+- **`color` prop — blog components**: `PostItem`, `PostTeaser`, `PostWidget`, and `PostWidgetCarousel` now accept a `color` prop (`Variants` / `CardProps["color"]`) that propagates a consistent design-system accent to the card, headlines, and component-specific interactive elements (Button in `PostItem`, link Icon in `PostTeaser`, prev/next buttons in `PostWidgetCarousel`).
+- **`Card` colored box-shadow**: Added ambient `box-shadow` via `color-mix()` to the `primary`, `secondary`, `success`, `warning`, `error`, and `info` Card color variants, matching the shadow style already used by `Input` and `Select`.
+
+### Fixed
+
+- **`white` color visibility**: Passing `color="white"` to blog components no longer produces invisible text or icons on light-mode backgrounds. Headline, Button, and Icon color now fall back to `"inherit"` while the Card retains its default white surface.
+- **`PostTeaser` link icon color**: The `ArrowRight01Icon` in the teaser footer now follows the `color` prop (falls back to `"primary"` when `color` is unset or `"white"`).
+- **`PostItem` read-more Button color**: The read-more `Button` now receives the component `color` prop (skips `"white"` as button color).
+- **`PostWidget` / `PostWidgetCarousel` title default**: Widget titles and item headlines now default to `"inherit"` instead of the hardcoded `"secondary"`, making the neutral appearance consistent across all blog components.
+
+---
+
+## [0.1.15]
+
+### Added
+
+- Comprehensive unit test coverage across all components (204 test suites, 1 690 tests, 100 % coverage threshold).
+- Cypress component tests for all 354 component specs, running headlessly in CI via `pnpm test:e2e:ci`.
+- Storybook stories and MDX documentation pages for every component.
+- Chromatic visual regression integration with `@chromatic-com/cypress`.
+- GitHub Actions CI workflow for pull requests (typecheck, lint, unit tests with coverage enforcement, E2E tests).
+
+---
+
+## [0.1.14]
+
+### Added
+
+- `Checkbox` component with controlled/uncontrolled mode, `required`/`showRequiredMark` support, `plain`/`card` variants, and full test coverage.
+- `CheckboxGroup` component with multi-select `fieldset`/`legend` semantics, `stack`/`grid` layouts, `plain`/`card` variants, and hidden input mirror for non-JS form posts.
+- `Button` explicit dark-mode color overrides and outlined border gradients per variant (`primary`, `secondary`, `info`, `success`, `warning`, `error`).
+- `Dialog` new `actionsClassName` prop.
+- New gradient border design tokens (`info`, `success`, `warning`, `error`) for light and dark themes.
+
+### Fixed
+
+- `Snackbar` info variant now uses neutral grey background with dark-mode override.
+- Updated success color token (`$light--success`, `$dark--success`) to `#20E381`.
+
+---
+
+## [0.1.13]
+
+### Added
+
+- `Autocomplete` component with keyboard navigation, async/loading states, and listbox accessibility.
+- `Tabs` component with ARIA tab pattern, keyboard navigation (`Arrow`, `Home`, `End`, `Enter`, `Space`), vertical mode, and badge chip support.
+- `Accordion` new `type` variants (`card`/`panel`) and new style hooks (`headerWrapperClassName`, `headerToggleClassName`).
+
+### Fixed
+
+- Tooltip hover behavior — moving the pointer from the trigger to the tooltip bubble no longer closes it prematurely.
+
+---
+
+## [0.1.12]
+
+### Added
+
+- Comprehensive TypeScript documentation across all components.
+- `Tooltip` component.
+- `Pagination` component.
+
+---
+
+## [0.1.11]
+
+### Added
+
+- `RTE` component (beta).
+- Image support for `RichText` component.
+
+### Fixed
+
+- Resolved styling bugs.
+
+---
+
+## [0.1.10]
+
+### Fixed
+
+- Multiple style and JavaScript bug fixes.
+
+---
+
+## [0.1.9]
+
+### Changed
+
+- Updated icons.
+
+---
+
+## [0.1.8]
+
+### Added
+
+- Image icon support for `Button` component.
+
+---
+
+## [0.1.7]
+
+### Fixed
+
+- Multiple design and logic bug fixes.
+
+---
+
+## [0.1.6]
+
+### Security
+
+- Upgraded React to latest version to remediate critical RCE vulnerability CVE-2025-55182.
+
+### Fixed
+
+- Resolved styling bugs.
+
+---
+
+## [0.1.5]
+
+### Added
+
+- Single-import possibility for CSS files.
+
+---
+
+## [0.1.4]
+
+### Fixed
+
+- Hotfix `Image` component.
+
+---
+
+## [0.1.3]
+
+### Added
+
+- `Rating` component.
+- Changed image provider.
+
+### Fixed
+
+- Bug fixes.
+
+---
+
+## [0.1.2]
+
+### Fixed
+
+- Hotfix: Runtime provider.
+
+---
+
+## [0.1.1]
+
+### Fixed
+
+- Closed security leaks and type fixes.
+
+---
+
+## [0.1.0]
+
+### Changed
+
+- Next.js 16 and Turbopack compatibility changes.
+
+---
+
+## [0.0.56]
+
+- Added trusted publisher logic to actions.
+
+---
+
+## [0.0.55]
+
+### Fixed
+
+- Style fix in form elements.
+
+---
+
+## [0.0.54]
+
+### Added
+
+- `highlight.js` integration to `RichText` for syntax-highlighted code blocks.
+
+### Fixed
+
+- Bug fixes in blog components.
+
+---
+
+## [0.0.53]
+
+### Added
+
+- Beta release of blog components.
+
+---
+
+## [0.0.52]
+
+### Fixed
+
+- Hotfix `Drawer` component.
+
+---
+
+## [0.0.51]
+
+### Fixed
+
+- Hotfix `RichText` component styles.
+
+---
+
+## [0.0.50]
+
+### Fixed
+
+- Multiple bug fixes and performance updates.
+
+---
+
+## [0.0.49]
+
+### Fixed
+
+- Bugfix README.
+
+---
+
+## [0.0.48]
+
+### Changed
+
+- Updated README and `package.json`.
+
+---
+
+## [0.0.47]
+
+### Added
+
+- Time support for `DatePicker` component.
+
+---
+
+## [0.0.46]
+
+### Fixed
+
+- Multiple small bugs in `Form` and `Input`.
+- Changed ESLint config.
+- Styling updates for `Accordion` and `List` components.
+
+---
+
+## [0.0.45]
+
+### Fixed
+
+- Bugfix `Link` and `BaseLink` components.
+
+---
+
+## [0.0.44]
+
+### Added
+
+- `Select` field support in `DynamicList` component.
+
+---
+
+## [0.0.42]
+
+### Added
+
+- `ProgressBar` component.
+- `DynamicList` component.
+- `Snackbar` component with `SnackbarProvider`.
+
+---
+
+## [0.0.39]
+
+### Changed
+
+- Refactored `Button`, `Link`, `Animated`, and `Accordion` to adopt the **Automated Island Component (AIC)** architecture — server-first rendering, on-demand hydration via `IntersectionObserver`, and zero-config tree-shaking.
+
+---
+
+## [0.0.27]
+
+### Added
+
+- Adaptive Island Component (AIC) infrastructure (experimental).
+
+---
+
+## [0.0.22]
+
+### Changed
+
+- Refactored `Icon` component for SSR compatibility and performance.
+
+---
+
+## [0.0.16]
+
+### Changed
+
+- Migrated all icons to CDN-based loading for improved performance, SSR compatibility, and AAA-level accessibility.
+
+---
+
+## [0.0.12]
+
+### Changed
+
+- Improved `Icon` via `getIconLoader` — dynamic loading with better tree-shaking, reduced bundle size, and SSR/CI compatibility.
+
+---
+
+## [0.0.11]
+
+### Changed
+
+- Removed CJS support.
+
+---
+
+## [0.0.5]
+
+### Added
+
+- Initial release — changelogs and open bug fixes.

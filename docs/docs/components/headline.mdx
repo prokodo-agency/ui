@@ -1,0 +1,99 @@
+---
+id: headline
+title: Headline
+sidebar_label: Headline
+description: Typographic heading component mapping semantic levels (h1–h6) to the prokodo type scale.
+---
+
+# Headline
+
+`Headline` renders a typographic heading (`h1`–`h6`) with design-token typography applied. Supports visual size overrides that decouple visual appearance from semantic level.
+
+---
+
+## Overview
+
+```tsx
+import { Headline } from "@prokodo/ui/headline"
+;<Headline level={1} size="h2" animated>
+  Welcome to prokodo UI
+</Headline>
+```
+
+<StorybookEmbed id="prokodo-content-headline--default" />
+
+---
+
+## Import
+
+```ts
+import { Headline } from "@prokodo/ui/headline"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/headline.css"
+```
+
+---
+
+## Props
+
+| Prop             | Type                                                      | Default | Required | Description                          |
+| ---------------- | --------------------------------------------------------- | ------- | -------- | ------------------------------------ |
+| `children`       | `ReactNode`                                               | —       | ✅       | Headline content.                    |
+| `type`           | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"`            | `"h2"`  | —        | HTML heading tag rendered.           |
+| `size`           | `"xxl" \| "xl" \| "lg" \| "md" \| "sm" \| "xs" \| number` | —       | —        | Visual size preset or numeric scale. |
+| `color`          | `HeadlineVariant`                                         | —       | —        | Text color variant.                  |
+| `weight`         | `"normal" \| "bold" \| "light"`                           | —       | —        | Font weight override.                |
+| `align`          | `"left" \| "center" \| "right"`                           | —       | —        | Text alignment.                      |
+| `highlight`      | `string`                                                  | —       | —        | Substring to visually highlight.     |
+| `schema`         | `boolean`                                                 | `false` | —        | Emit JSON-LD schema markup.          |
+| `animationProps` | `AnimatedProps`                                           | —       | —        | Entrance animation config.           |
+| `className`      | `string`                                                  | —       | —        | CSS class on root element.           |
+
+> See [`src/components/headline/Headline.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/headline/Headline.model.ts) for the full `HeadlineProps` type.
+
+---
+
+## Design Tokens
+
+`Headline` does not define component-specific CSS custom properties. Override appearance by customising the following global design-system tokens on `:root` or a scoped ancestor:
+
+| Token                | Description                        |
+| -------------------- | ---------------------------------- |
+| `--pk-color-fg`      | Text color for `color="inherit"`   |
+| `--pk-color-brand`   | Text color for `color="primary"`   |
+| `--pk-color-accent`  | Text color for `color="secondary"` |
+| `--pk-color-muted`   | Text color for `color="info"`      |
+| `--pk-color-success` | Text color for `color="success"`   |
+| `--pk-color-warning` | Text color for `color="warning"`   |
+| `--pk-color-error`   | Text color for `color="error"`     |
+| `--pk-palette-white` | Text color for `color="white"`     |
+| `--pk-palette-black` | Text color for `color="black"`     |
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.3.2** | **Meaningful Sequence** (A)    | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order.                                             |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                 |
+| **2.4.6** | **Headings and Labels** (AA)   | 🔍 Manual review | Headings and labels must describe the topic or purpose of their associated content.                                             |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 3 jest-axe assertion(s) across 1 test file(s) · 1 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open Headline in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-headline--docs)
+
+---
+
+## Source
+
+[`src/components/headline/Headline.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/headline/Headline.model.ts)

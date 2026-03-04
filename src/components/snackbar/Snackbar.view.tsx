@@ -13,7 +13,10 @@ import type { JSX } from "react"
 
 const bem = create(styles, "Snackbar")
 
-export interface SnackbarViewProps extends Omit<SnackbarProps, "open"> {
+export interface SnackbarViewProps
+  extends Omit<SnackbarProps, "open" | "color"> {
+  /** Resolved color token (default: "default"). */
+  color?: SnackbarProps["color"]
   /** Hydration wrapper passes this when toast still interactive */
   onClose?: SnackbarCloseHandler
   /** When server‑rendered we add readOnly */
@@ -22,7 +25,7 @@ export interface SnackbarViewProps extends Omit<SnackbarProps, "open"> {
 
 export function SnackbarView({
   message,
-  variant = "default",
+  color = "default",
   anchorOrigin = { vertical: "bottom", horizontal: "center" },
   action,
   closeable = true,
@@ -42,7 +45,7 @@ export function SnackbarView({
       className={bem(
         undefined,
         {
-          [variant]: true,
+          [color]: true,
           readonly: Boolean(readOnly),
           [pos.vertical]: true,
           [pos.horizontal]: true,

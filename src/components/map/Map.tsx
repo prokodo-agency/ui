@@ -1,12 +1,17 @@
 "use client"
 import { type FC, memo, useEffect, useState, useCallback, useRef } from "react"
 
+import { create } from "@/helpers/bem"
 import { isString, isArray } from "@/helpers/validations"
 import { useGoogleMaps } from "@/hooks/useGoogleMaps"
 
 import { Skeleton } from "../skeleton"
 
+import styles from "./Map.module.scss"
+
 import type { MapProps, MapMarker } from "./Map.model"
+
+const bem = create(styles, "Map")
 
 export const Map: FC<MapProps> = memo(
   ({ apiKey, mapId, center, marker, zoom = 8 }) => {
@@ -89,10 +94,10 @@ export const Map: FC<MapProps> = memo(
 
     /* istanbul ignore next */
     if (!loaded) {
-      return <Skeleton height="500px" width="100%" />
+      return <Skeleton className={bem("container")} />
     }
     /* istanbul ignore next */
-    return <div ref={mapRef} style={{ width: "100%", height: "500px" }} />
+    return <div ref={mapRef} className={bem("container")} />
   },
 )
 

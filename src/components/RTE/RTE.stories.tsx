@@ -1,6 +1,6 @@
 import { RTE } from "@/components/RTE"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
@@ -32,6 +32,23 @@ const meta = {
     fullWidth: { control: "boolean" },
     maxLength: { control: { type: "number", min: 20, step: 20 } },
     hideCounter: { control: "boolean" },
+
+    /* --- visual color --------------------------------------- */
+    color: {
+      control: "select",
+      options: [
+        "primary",
+        "secondary",
+        "success",
+        "error",
+        "info",
+        "warning",
+        "inherit",
+        "white",
+      ],
+      description:
+        "Visual accent colour — controls shadow glow and label gradient.",
+    },
 
     /* --- RTE specific ------------------------------------------ */
     rteToolbar: {

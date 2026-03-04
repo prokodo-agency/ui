@@ -1,0 +1,20 @@
+// =============================================================================
+// CARD COMPONENT TOKENS
+// Declaration block only — no selectors.
+// Note: panel variant uses intentional rgba() literals for glassmorphism.
+// =============================================================================
+
+@mixin card-tokens() {
+  --pk-card-bg:                  var(--pk-color-surface);
+--pk-card-fg:                  var(--pk-color-fg);
+--pk-card-radius:              var(--pk-radius-lg);
+--pk-card-shadow:              var(--pk-shadow-sm);
+--pk-card-padding:             var(--pk-space-xl);
+--pk-card-inherit-bg:          var(--pk-color-surface-raised);
+
+// Panel variant — glassmorphism: intentional rgba() literals in token layer
+--pk-card-panel-bg:            rgba(255, 255, 255, 0.03);
+--pk-card-panel-border:        rgba(255, 255, 255, 0.10);
+--pk-card-panel-light-bg:      var(--pk-color-surface);
+  --pk-card-panel-light-border:  rgba(0, 0, 0, 0.08);
+}

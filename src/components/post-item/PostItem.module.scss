@@ -2,8 +2,6 @@
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("PostItem") {
@@ -11,13 +9,13 @@
     /* Mobile: stacked, image on top via order */
     display: flex;
     flex-direction: column-reverse;
-    gap: $space-lg;
+    gap: var(--pk-space-lg);
     align-items: stretch;
 
     @include screenLargerThan($screen-lg) {
       flex-direction: row;
       align-items: flex-start;
-      gap: $space-xl;
+      gap: var(--pk-space-xl);
     }
   }
 
@@ -25,12 +23,14 @@
     order: 1;
     width: 100%;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 
     @include screenLargerThan($screen-lg) {
       order: 0;
       flex: 0 1 33.3333%;
       max-width: 33.333%;
-      min-width: 0; /* prevent overflow pushing layout */
+      min-width: 0;
     }
   }
 
@@ -46,7 +46,7 @@
       min-width: 0;
     }
   }
-  
+
   &__animation {
     transform: none;
   }
@@ -61,35 +61,34 @@
   }
 
   &__date {
-    color: var(--color-grey-300);
+    color: var(--pk-color-muted);
     @include text("base");
   }
 
   &__read__count {
-    padding-left: $space-md;
-    color: var(--color-grey-300);
+    padding-left: var(--pk-space-md);
+    color: var(--pk-color-muted);
     @include text("base");
   }
 
   &__content {
     display: flex;
     align-items: center;
-    min-width: 0;            /* ← prevent long lines from forcing column wider */
-    overflow-wrap: anywhere; /* ← allow breaking long words/URLs */
+    min-width: 0;
+    overflow-wrap: anywhere;
     @include text("base");
 
     &__paragraph {
-      color: var(--color-grey-500);
+      color: var(--pk-color-muted);
       @include textLineClamp(3);
 
       & > p {
-        margin: $space-sm $space-xs;
+        margin: var(--pk-space-sm) var(--pk-space-xs);
       }
     }
   }
 
   &__image {
-    min-height: 300px;
     min-height: 300px;
     object-fit: cover;
 
@@ -98,18 +97,18 @@
     }
 
     &__wrapper {
+      flex: 1;
       width: 100%;
-      min-width: 300px;
       min-height: 300px;
-      border-radius: $ui-background-border-radius;
+      border-radius: var(--pk-radius-lg);
       overflow: hidden;
-      transform: none; /* prevent overlay */
+      transform: none;
     }
   }
 
   &__button {
     width: 100%;
-    margin-top: $space-lg;
+    margin-top: var(--pk-space-lg);
 
     &__content {
       justify-content: flex-start;

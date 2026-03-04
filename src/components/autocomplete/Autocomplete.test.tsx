@@ -37,7 +37,7 @@ describe("Autocomplete", () => {
           name="tech"
         />,
       )
-      expect(screen.getByText("Technology")).toBeInTheDocument()
+      expect(screen.getAllByText("Technology")[0]).toBeInTheDocument()
     })
 
     it("renders placeholder text", () => {

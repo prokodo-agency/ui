@@ -6,6 +6,28 @@ const STORAGE_KEY = "prokodo-adminSidebarCollapsed"
 jest.mock("./SideNav.view", () => {
   const React = require("react")
   function MockSideNavView(props: Record<string, unknown>) {
+    const sectionItemButtons = Array.isArray(props.sections)
+      ? (
+          props.sections as Array<{
+            items: Array<Record<string, unknown>>
+          }>
+        ).flatMap((section, si) =>
+          section.items.map((item, ii) =>
+            React.createElement(
+              "button",
+              {
+                key: `s${si}-i${ii}`,
+                "data-testid": `section-${si}-item-${ii}`,
+                onClick: () =>
+                  (
+                    item.redirect as { onClick?: (e: unknown) => void }
+                  )?.onClick?.({}),
+              },
+              String(item.label ?? ""),
+            ),
+          ),
+        )
+      : []
     return React.createElement(
       "div",
       {
@@ -33,6 +55,7 @@ jest.mock("./SideNav.view", () => {
             ),
           )
         : []),
+      ...sectionItemButtons,
     )
   }
   return { __esModule: true, default: MockSideNavView }
@@ -135,6 +158,63 @@ describe("SideNav.client", () => {
       render(<SidebarClient items={[{ label: "NoHref", redirect: {} }]} />)
       // should render without crashing
       expect(screen.getByTestId("item-0")).toBeInTheDocument()
+    })
+  })
+
+  describe("formatedSections", () => {
+    it("processes sections with redirect items and calls onClick and onChange", () => {
+      const redirectOnClick = jest.fn()
+      const onChangeMock = jest.fn()
+      const item = {
+        label: "Section Link",
+        redirect: { href: "/section", onClick: redirectOnClick },
+      }
+      render(
+        <SidebarClient
+          items={[]}
+          sections={[{ headline: "Section", items: [item] }]}
+          onChange={onChangeMock}
+        />,
+      )
+      act(() => screen.getByTestId("section-0-item-0").click())
+      expect(redirectOnClick).toHaveBeenCalledTimes(1)
+      expect(onChangeMock).toHaveBeenCalledWith(item)
+    })
+
+    it("processes sections with redirect but no onClick gracefully", () => {
+      const onChangeMock = jest.fn()
+      const item = { label: "NoClick", redirect: { href: "/page" } }
+      render(
+        <SidebarClient
+          items={[]}
+          sections={[{ headline: "Nav", items: [item] }]}
+          onChange={onChangeMock}
+        />,
+      )
+      act(() => screen.getByTestId("section-0-item-0").click())
+      expect(onChangeMock).toHaveBeenCalledWith(item)
+    })
+
+    it("processes section items without redirect (covers falsy redirect branch)", () => {
+      render(
+        <SidebarClient
+          items={[]}
+          sections={[{ headline: "Nav", items: [{ label: "NoRedirect" }] }]}
+        />,
+      )
+      expect(screen.getByTestId("section-0-item-0")).toBeInTheDocument()
+    })
+
+    it("defaults section redirect.href to empty string when not provided", () => {
+      render(
+        <SidebarClient
+          items={[]}
+          sections={[
+            { headline: "Nav", items: [{ label: "NoHref", redirect: {} }] },
+          ]}
+        />,
+      )
+      expect(screen.getByTestId("section-0-item-0")).toBeInTheDocument()
     })
   })
 })

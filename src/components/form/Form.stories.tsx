@@ -9,7 +9,7 @@ import type {
   FormFieldMessages,
   OnChangeFormHandler,
 } from "./Form.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
   title: "prokodo/form/Form",
@@ -18,6 +18,33 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    color: {
+      control: "select",
+      options: [
+        "primary",
+        "secondary",
+        "success",
+        "error",
+        "info",
+        "warning",
+        "inherit",
+      ],
+      description: "Color variant applied to all child fields",
+    },
+    label: { control: "text", description: "Form heading label" },
+    hideResponse: {
+      control: "boolean",
+      description: "Hide the server response message after submit",
+    },
+    fields: { table: { disable: true } },
+    defaultFields: { table: { disable: true } },
+    messagesFields: { table: { disable: true } },
+    messages: { table: { disable: true } },
+    button: { table: { disable: true } },
+    onSubmit: { action: "submitted", table: { disable: true } },
+    onChangeForm: { action: "changed", table: { disable: true } },
+  },
 } satisfies Meta<typeof Form>
 
 export default meta
@@ -30,8 +57,11 @@ type Story = StoryObj<typeof meta>
  * – one select with options,
  * – one switch,
  * – one slider,
- * – one date picker.
- * – one dynamic-list.
+ * – one date picker,
+ * – one dynamic-list,
+ * – one checkbox,
+ * – one checkbox-group,
+ * – one autocomplete.
  */
 const exampleFields: FormField[] = [
   {
@@ -92,6 +122,38 @@ const exampleFields: FormField[] = [
     fields: [{ name: "value", label: "Tag" }],
     value: ["react", "typescript", "nextjs"],
   },
+  {
+    id: "agreeTerms",
+    fieldType: "checkbox",
+    name: "agreeTerms",
+    title: "I agree to the terms and conditions",
+    value: false,
+  },
+  {
+    id: "interests",
+    fieldType: "checkbox-group",
+    name: "interests",
+    legend: "Interests",
+    options: [
+      { value: "design", title: "Design" },
+      { value: "engineering", title: "Engineering" },
+      { value: "marketing", title: "Marketing" },
+    ],
+  },
+  {
+    id: "framework",
+    fieldType: "autocomplete",
+    name: "framework",
+    label: "Preferred Framework",
+    placeholder: "Search frameworks…",
+    items: [
+      { value: "react", label: "React" },
+      { value: "vue", label: "Vue" },
+      { value: "angular", label: "Angular" },
+      { value: "svelte", label: "Svelte" },
+    ],
+    value: "",
+  },
 ]
 
 /**
@@ -141,6 +203,7 @@ const handleChangeForm: OnChangeFormHandler = field => {
 export const Default: Story = {
   args: {
     label: "User Information",
+    color: "primary",
     fields: exampleFields,
     defaultFields,
     button: { children: "Submit" },

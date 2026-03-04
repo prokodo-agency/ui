@@ -1,327 +1,655 @@
-@use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
-@use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/config/screens" as *;
 
-/* fade-in / out for the popup ------------------------------------------------ */
-@keyframes fade-in  { from { opacity: 0 } to { opacity: 1 } }
-@keyframes fade-out { from { opacity: 1 } to { opacity: 0 } }
+@keyframes selectBorderShift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to   { background-position: 0 0, 200% 0, 0 0; }
+}
+
+@keyframes selectNotchAnimate {
+  0%, 100% { border-color: var(--pk-select-gradient-from); }
+  50%       { border-color: var(--pk-select-gradient-to); }
+}
+
+@keyframes selectFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes selectSlideUp {
+  from { transform: translateY(100%); opacity: 0.8; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+// Component tokens: --pk-select-bg, --pk-select-fg, --pk-select-fg-muted,
+//   --pk-select-fg-placeholder, --pk-select-label-fg, --pk-select-radius,
+//   --pk-select-shadow, --pk-select-listbox-shadow,
+//   --pk-select-item-hover-bg, --pk-select-item-active-bg,
+//   --pk-select-helper-fg, --pk-select-padding-x, --pk-select-padding-y
 
 @include define-block("Select") {
   position: relative;
+  display: flex;
+  flex-direction: column;
+
+  // ── Variant overrides ──────────────────────────────────────────────
+  &--primary {
+    --pk-select-shadow-color-focus: color-mix(in srgb, var(--pk-color-brand)   30%, transparent);
+    --pk-select-gradient-from:      var(--pk-color-brand);
+    --pk-select-gradient-to:        var(--pk-color-accent);
+    --pk-select-label-fg:           var(--pk-color-brand);
+    --pk-select-item-hover-bg:      color-mix(in srgb, var(--pk-color-brand)   10%, var(--pk-select-bg));
+    --pk-select-item-active-bg:     color-mix(in srgb, var(--pk-color-brand)   18%, var(--pk-select-bg));
+  }
+  &--secondary {
+    --pk-select-shadow-color-focus: color-mix(in srgb, var(--pk-color-accent)  30%, transparent);
+    --pk-select-gradient-from:      var(--pk-color-accent);
+    --pk-select-gradient-to:        var(--pk-color-brand);
+    --pk-select-label-fg:           var(--pk-color-accent);
+    --pk-select-item-hover-bg:      color-mix(in srgb, var(--pk-color-accent)  10%, var(--pk-select-bg));
+    --pk-select-item-active-bg:     color-mix(in srgb, var(--pk-color-accent)  18%, var(--pk-select-bg));
+  }
+  &--success {
+    --pk-select-shadow-color-focus: color-mix(in srgb, var(--pk-color-success) 30%, transparent);
+    --pk-select-gradient-from:      var(--pk-color-success);
+    --pk-select-gradient-to:        #10CCB8;
+    --pk-select-label-fg:           var(--pk-color-success);
+    --pk-select-item-hover-bg:      color-mix(in srgb, var(--pk-color-success) 10%, var(--pk-select-bg));
+    --pk-select-item-active-bg:     color-mix(in srgb, var(--pk-color-success) 18%, var(--pk-select-bg));
+  }
+  &--warning {
+    --pk-select-shadow-color-focus: color-mix(in srgb, var(--pk-color-warning) 30%, transparent);
+    --pk-select-gradient-from:      var(--pk-color-warning);
+    --pk-select-gradient-to:        #f7cc6a;
+    --pk-select-label-fg:           var(--pk-color-warning);
+    --pk-select-item-hover-bg:      color-mix(in srgb, var(--pk-color-warning) 10%, var(--pk-select-bg));
+    --pk-select-item-active-bg:     color-mix(in srgb, var(--pk-color-warning) 18%, var(--pk-select-bg));
+  }
+  &--error {
+    --pk-select-shadow-color-focus: color-mix(in srgb, var(--pk-color-error)   30%, transparent);
+    --pk-select-gradient-from:      var(--pk-color-error);
+    --pk-select-gradient-to:        #ff6b6b;
+    --pk-select-label-fg:           var(--pk-color-error);
+    --pk-select-item-hover-bg:      color-mix(in srgb, var(--pk-color-error)   10%, var(--pk-select-bg));
+    --pk-select-item-active-bg:     color-mix(in srgb, var(--pk-color-error)   18%, var(--pk-select-bg));
+  }
+  &--info,
+  &--inherit,
+  &--white {
+    --pk-select-shadow-color-focus: rgba(0, 0, 0, 0.1);
+    --pk-select-gradient-from:      var(--pk-color-muted);
+    --pk-select-gradient-to:        var(--pk-color-border);
+    --pk-select-label-fg:           var(--pk-color-muted);
+    --pk-select-item-hover-bg:      color-mix(in srgb, var(--pk-color-muted)   10%, var(--pk-select-bg));
+    --pk-select-item-active-bg:     color-mix(in srgb, var(--pk-color-muted)   18%, var(--pk-select-bg));
+
+    // In dark mode muted/border resolve to near-black — swap to light greys
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      --pk-select-gradient-from: var(--pk-palette-grey-100);
+      --pk-select-gradient-to:   var(--pk-palette-grey-200);
+      --pk-select-label-fg:      var(--pk-palette-grey-200);
+    }
+  }
+
+  // Dark mode token overrides
+  :global(html[data-theme="dark"]) &,
+  :global([data-theme="dark"]) &,
+  :global(.pk-theme-dark) & {
+    --pk-select-item-hover-bg:   color-mix(in srgb, var(--pk-select-gradient-from) 15%, var(--pk-select-bg));
+    --pk-select-item-active-bg:  color-mix(in srgb, var(--pk-select-gradient-from) 25%, var(--pk-select-bg));
+    --pk-select-fg-placeholder:  var(--pk-palette-grey-400);
+  }
 
   &--fullWidth {
     width: 100%;
   }
 
+  // Floating label — rendered inside __field (position:relative).
+  // At rest: centered vertically inside the button box, acts as a placeholder descriptor.
+  // On focus / has value: centers on the top border line; __notch legend creates the gap.
   &__label {
-    position: relative;
+    --pk-label-gradient-from: var(--pk-select-gradient-from);
+    --pk-label-gradient-to:   var(--pk-select-gradient-to);
+
+    position: absolute;
+    left: var(--pk-select-padding-x);
+    top: 50%;
+    transform: translateY(-50%) scale(1);
     transform-origin: top left;
-    padding-bottom: $space-sm;
+    transition:
+      transform var(--pk-timing-normal) ease,
+      color var(--pk-timing-normal) ease;
     font-size: 1rem;
-    color: var(--color-primary-500);
-    z-index: 1;
+    color: var(--pk-color-muted);
+    z-index: 2; // above the notch border
     pointer-events: none;
 
-     @include screenLargerThan($screen-lg) {
-        position: absolute;
-        left: $space-xl;
-        top: calc($space-xl + $space-xs);
-        padding: 0 $space-xs;
-        /* start centered vertically, at full size */
-        transform: translateY(-150%) scale(0.75);
-        background-color: var(--color-white);
-        @include textLineClamp(1);
-
-        html[data-theme='dark'] & {
-          background-color: rgb(16, 19, 27);
-        }
-     }
+    &--is-focused {
+      // Center the scaled label on the top border line.
+      top: 0;
+      transform: translateY(-50%) scale(0.75);
+      color: var(--pk-select-label-fg);
+    }
   }
 
-  /* ───────────────── field (container for button + listbox) */
+  // Just a positioning context — no gradient here.
+  // Gradient lives on __button so btnRef measures the correct full width for JS.
   &__field {
     position: relative;
-    box-shadow: var(--elevation-1);
-    border-radius: $ui-form-element;
+    display: grid;
 
-    /*   ‘expanded’ state is now driven by a class your JS toggles */
-    &--expanded {
-        box-shadow:none;
-        z-index: 100;
+    @include when-hovered() {
+      .prokodo-Select__notch {
+        animation: selectNotchAnimate 2s linear infinite;
+        border-color: var(--pk-select-gradient-from);
+      }
+    }
+
+    &:has(.prokodo-Select__button--expanded) .prokodo-Select__notch {
+      animation: none;
+      border-color: var(--pk-select-label-fg);
     }
   }
 
-  /* ───────────────── toggle button */
-  &__button {
-    box-sizing:border-box;
-    width:calc(100% - $space-xs + 4px);
-    padding:0;
-    text-align:left;
-    cursor:pointer;
-    border:none;
-    color:var(--color-grey-900);
-    border-radius:$ui-form-element;
-    position:relative;
-    @include gradientBorderVar(7);
-    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite:add;
+  // Hidden sizer — stacks all option labels to force grid track to widest option width.
+  // Matches button's box-model exactly for accurate measurement.
+  &__sizer {
+    grid-row: 1;
+    grid-column: 1;
+    visibility: hidden;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    padding: 0 var(--pk-select-padding-x);
+    line-height: 1.5rem;
+    @include text("base");
 
-    /* hover / focus */
-    @include when-hovered() {
-        @include gradientBorderVar(4);
+    span {
+      display: block;
+      white-space: nowrap;
     }
-    @include when-focused() {
-        outline:0; @include gradientBorderVar(4);
+  }
+
+  // Gradient ring lives here via padding-box / border-box double-background.
+  // border: 2px inside box-sizing: border-box → element fills 100% of __field
+  // → JS measures the full field width → portal listbox aligns exactly.
+  // Spacing from ring edge to text = 2px border + padding = same as Input
+  // (Input uses margin: 2px on __input__node + padding, equivalent total offset).
+  &__button {
+    grid-row: 1;
+    grid-column: 1;
+    box-sizing: border-box;
+    min-width: 0;    // prevent grid track from expanding when selected text is wider than sizer
+    overflow: hidden; // cap max-content contribution so grid track is sized by __sizer only
+    line-height: 1.5rem; // 24px — matches Input __input__node content height
+    padding: var(--pk-select-padding-y) var(--pk-select-padding-x);
+    border: none;
+    border-radius: var(--pk-select-radius);
+    // Fill only — border is handled by the __notch fieldset.
+    background: var(--pk-select-bg);
+    // Shadow always visible with variant color (soft at rest)
+    box-shadow: 0 2px 8px var(--pk-select-shadow-color-focus),
+                0 1px 3px color-mix(in srgb, var(--pk-select-shadow-color-focus) 50%, transparent);
+    transition: box-shadow var(--pk-timing-normal) ease;
+    color: var(--pk-select-fg);
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+    @include text("base");
+
+    @include when-hovered() {
+      box-shadow: 0 4px 12px var(--pk-select-shadow-color-focus),
+                  0 0 5px var(--pk-select-shadow-color-focus);
+    }
+
+    // Square bottom corners, merge seamlessly with listbox below.
+    &--expanded {
+      border-radius: var(--pk-select-radius) var(--pk-select-radius) 0 0;
+      box-shadow: 0 8px 16px var(--pk-select-shadow-color-focus),
+                  0 2px 6px color-mix(in srgb, var(--pk-select-shadow-color-focus) 80%, transparent);
     }
 
     &:disabled {
-      color: var(--color-grey-700);
-      cursor: default;
-      @include gradientBorderVar(8);
+      cursor: not-allowed;
+      color: var(--pk-select-fg-muted);
+      background: var(--pk-select-bg);
+    }
+  }
 
-      @include when-hovered() {
-        @include gradientBorderVar(8);
+  // ── Notch fieldset — border ring with legend gap for the floating label ──────
+  // Absolutely covers __field. aria-hidden in HTML.
+  // Border color transitions on focus; __button box-shadow provides the glow.
+  &__notch {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0 calc(var(--pk-select-padding-x) - 0.25em);
+    border: 2px solid var(--pk-color-border);
+    border-radius: var(--pk-select-radius);
+    pointer-events: none;
+    z-index: 1;
+    background: transparent;
+    transition: border-color var(--pk-timing-normal) ease;
+
+    legend {
+      display: block;
+      height: 0;
+      // 1rem (label base) × 0.75 (scale)
+      font-size: 0.75rem;
+      visibility: hidden;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0;
+      max-width: 0.01px; // no notch at rest
+      transition: max-width var(--pk-timing-normal) ease;
+
+      span {
+        padding: 0 0.5em;
+        display: inline-block;
       }
     }
 
-    /* open state — JS toggles .Select__button--expanded **and**
-       .Select__field--expanded plus aria-expanded="true"          */
+    &--is-focused {
+      border-color: var(--pk-select-label-fg);
+
+      legend {
+        max-width: 100%; // opens notch gap to full legend content width
+      }
+    }
+
+    // Square bottom corners when dropdown is open
     &--expanded {
-      border-top-left-radius:px-to-rem(27px);
-      border-top-right-radius:px-to-rem(27px);
-      border-bottom-left-radius:0;
-      border-bottom-right-radius:0;
-      @include gradientBorderVar(4);
-
-      > .Select__button__inner {
-        border-top-left-radius:px-to-rem(25px);
-        border-top-right-radius:px-to-rem(25px);
-        border-bottom-left-radius:0;
-        border-bottom-right-radius:0;
-      }
-    }
-
-    /* caret / icon (if you still have one) */
-    > svg {
-      position:absolute;
-      top: 0;
-      right: 10px;
-      font-size: 1rem;
-      height: 100%;
-    }
-
-    /* inner text */
-    &__inner {
-      display:flex;
-      align-items:center;
-      padding:px-to-rem(14px) $space-lg;
-      margin:2px;
-      background-color:var(--color-white);
-      border-radius:$ui-form-element;
-      @include text("base");
-
-      html[data-theme='dark'] & {
-        background-color: rgb(16, 19, 27);
-      }
-
-      & {
-        font-size: 1rem;
-      }
-
-      &--expanded {
-        border-top-left-radius:px-to-rem(25px);
-        border-top-right-radius:px-to-rem(25px);
-        border-bottom-left-radius:0;
-        border-bottom-right-radius:0;
-      }
-
-      &--is-placeholder {
-        color:var(--color-grey-500);
-      }
-
-      &--is-placeholder--disabled {
-        color: var(--color-grey-500);
-      }
+      border-radius: var(--pk-select-radius) var(--pk-select-radius) 0 0;
     }
   }
 
-  /* ───────────────── listbox (popup) */
+  // Text / selected value span inside the button
+  &__button__inner {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    // placeholder hidden at rest — floating label acts as the visual placeholder
+    &--is-hidden {
+      visibility: hidden;
+    }
+
+    &--is-placeholder {
+      color: var(--pk-select-fg-placeholder);
+    }
+
+    &--is-placeholder--disabled {
+      color: var(--pk-select-fg-placeholder);
+      opacity: 0.5;
+    }
+  }
+
+  // Portal-rendered dropdown listbox <ul>
+  // Matches Autocomplete__list: gradient border ring + flush top connection.
+  // Dark mode overrides are set HERE (not on the root) because the listbox
+  // is portal-rendered in document.body and doesn't inherit from the root.
   &__listbox {
-    // position: absolute;
-    box-sizing:border-box;
-    padding: 2px;
+    box-sizing: border-box;
+    background:
+      linear-gradient(var(--pk-select-bg), var(--pk-select-bg)) padding-box,
+      linear-gradient(90deg, var(--pk-select-gradient-from), var(--pk-select-gradient-to), var(--pk-select-gradient-from)) border-box;
+    border: 2px solid transparent;
+    border-top: none;
+    border-radius: 0 0 var(--pk-select-radius) var(--pk-select-radius);
+    box-shadow: var(--pk-select-listbox-shadow);
+    overflow-y: auto;
+    max-height: 260px;
+    list-style: none;
     margin: -2px 0 0 0;
-    overflow:auto;
-    outline:0;
-    max-height: 225px;
-    width: 100%;
-    color:var(--color-grey-900);
-    border-bottom-left-radius:px-to-rem(25px);
-    border-bottom-right-radius:px-to-rem(25px);
-    @include gradientBorderVar(4);
-    box-shadow:var(--elevation-3);
-    scrollbar-width: none;
-    z-index: 2147483647;
-
-    /* animation – your JS toggles .is-open / .is-closed */
-    &--is-open   {
-      animation:fade-in 200ms ease-out forwards;
-    }
-    &--is-closed {
-      animation:fade-out 200ms ease-in  forwards;
-    }
-  }
-
-  /* ───────────────── option item */
-  &__item {
-    list-style:none;
-    display:flex;
-    align-items:center;
-    padding:$space-md $space-lg;
-    cursor:pointer;
-    background:var(--color-white);
-    position:relative;
-    backface-visibility:hidden;
-    margin-top: -2px;
-    perspective:1000px;
+    padding: 0;
     @include text("base");
-
-    html[data-theme='dark'] & {
-      background: rgb(16, 19, 27);
+    // ── Variant gradient overrides (portal: can't inherit from component root) ──
+    &--primary {
+      --pk-select-gradient-from:  var(--pk-color-brand);   --pk-select-gradient-to: var(--pk-color-accent);
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-brand)   10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-brand)   18%, var(--pk-select-bg));
+    }
+    &--secondary {
+      --pk-select-gradient-from:  var(--pk-color-accent);  --pk-select-gradient-to: var(--pk-color-brand);
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-accent)  10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-accent)  18%, var(--pk-select-bg));
+    }
+    &--success {
+      --pk-select-gradient-from:  var(--pk-color-success); --pk-select-gradient-to: #10CCB8;
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-success) 10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-success) 18%, var(--pk-select-bg));
+    }
+    &--warning {
+      --pk-select-gradient-from:  var(--pk-color-warning); --pk-select-gradient-to: #f7cc6a;
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-warning) 10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-warning) 18%, var(--pk-select-bg));
+    }
+    &--error {
+      --pk-select-gradient-from:  var(--pk-color-error);   --pk-select-gradient-to: #ff6b6b;
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-error)   10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-error)   18%, var(--pk-select-bg));
+    }
+    &--info,
+    &--inherit,
+    &--white {
+      --pk-select-gradient-from:  var(--pk-color-muted);   --pk-select-gradient-to: var(--pk-color-border);
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-muted)   10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-muted)   18%, var(--pk-select-bg));
     }
 
-    & {
-      font-size: 1rem;
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      --pk-select-item-hover-bg:   color-mix(in srgb, var(--pk-select-gradient-from) 15%, var(--pk-select-bg));
+      --pk-select-item-active-bg:  color-mix(in srgb, var(--pk-select-gradient-from) 25%, var(--pk-select-bg));
+      --pk-select-fg:              var(--pk-color-fg);
+      --pk-select-bg:              var(--pk-color-surface);
     }
 
-    &:last-child {
-      border-bottom-left-radius:px-to-rem(25px);
-      border-bottom-right-radius:px-to-rem(25px);
+    &--is-closed {
+      display: none;
     }
-
-    /* hover / focus */
-    @include when-hovered() {
-      background:var(--color-primary-50);
-
-      html[data-theme='dark'] & {
-        background:var(--color-primary-50);
-      }
-    }
-
-    @include when-focuse-visible() {
-      outline:0;
-      background:var(--color-primary-50);
-
-      html[data-theme='dark'] & {
-        background:var(--color-primary-50);
-      }
-    }
-
-    /* selected */
-    &--selected {
-      background:var(--color-primary-100);
-
-      html[data-theme='dark'] & {
-        background:var(--color-primary-100);
-      }
-    }
-
-    /* keyboard "active" option (aria-activedescendant) */
-    &--active {
-      background: var(--color-primary-100);
-
-      html[data-theme='dark'] & {
-        background: var(--color-primary-100);
-      }
-    }
-
-    /* if both selected + active, keep it clearly active */
-    &--selected--active {
-      background: var(--color-primary-100);
-
-      html[data-theme='dark'] & {
-        background: var(--color-primary-100);
-      }
-    }
-
-    /* disabled (if you add aria-disabled) */
-    &[aria-disabled="true"] { color:var(--color-grey-400); cursor:not-allowed; }
   }
 
-  /* ───────────────── checkbox for multi-select */
-  &__checkbox {
-    position:relative;
-    min-width: 18px;
-    min-height: 18px;
-    margin-right: $space-md;
-    transform: scale(1.2);
+  // Each option <li>
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--pk-space-sm);
+    padding: var(--pk-select-item-padding-y) var(--pk-select-item-padding-x);
     cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    -webkit-appearance: none;
-    appearance: none;
-    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: add;
-    @include gradientBorderVar(7);
+    color: var(--pk-select-fg);
+    list-style: none;
+    transition: background-color var(--pk-timing-fast) ease;
 
-    &:before { /* white inner square */
-      content: "";
-      position: absolute;
-      inset: 2px;
-      background: var(--color-white);
-
-      html[data-theme='dark'] & {
-        background-color: rgb(16, 19, 27);
-      }
+    @include when-hovered() {
+      background-color: var(--pk-select-item-hover-bg);
     }
 
-    &--checked { /* gradient + tick mark */
-      @include gradientBorderVar(4);
+    &--active {
+      background-color: var(--pk-select-item-hover-bg);
+    }
+
+    &--selected {
+      background-color: var(--pk-select-item-active-bg);
+    }
+  }
+
+  // Multi-select checkbox input — styled to match the design system Checkbox component
+  &__checkbox {
+    flex-shrink: 0;
+    pointer-events: none;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 4px;
+    background: var(--pk-color-surface, #fff);
+    box-shadow:
+      inset 0 0 0 2px color-mix(in srgb, var(--pk-select-gradient-from) 30%, transparent),
+      inset 0 2px 6px color-mix(in srgb, var(--pk-select-gradient-from) 20%, transparent);
+    transition:
+      background var(--pk-timing-fast) ease,
+      box-shadow  var(--pk-timing-fast) ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 9px;
+      border: 2px solid transparent;
+      border-top-width: 0;
+      border-left-width: 0;
+      transform: translate(-50%, -60%) rotate(45deg);
+      opacity: 0;
+      transition:
+        opacity      var(--pk-timing-fast) ease,
+        border-color var(--pk-timing-fast) ease;
+    }
+
+    &--checked {
+      background: linear-gradient(
+        135deg,
+        var(--pk-select-gradient-from),
+        var(--pk-select-gradient-to)
+      );
+      box-shadow: 0 2px 10px color-mix(in srgb, var(--pk-select-gradient-from) 40%, transparent);
 
       &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        @include gradientBackgroundVar(primary-grey-secondary);
-        -webkit-mask: url('data:image/svg+xml;utf8,\
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" \
-               stroke-width="1.5" fill="none" stroke-linecap="round" \
-               stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" \
-               stroke="black"/></svg>') no-repeat center / contain;
-        mask: url('data:image/svg+xml;utf8,\
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" \
-               stroke-width="1.5" fill="none" stroke-linecap="round" \
-               stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" \
-               stroke="black"/></svg>') no-repeat center / contain;
+        border-color: #ffffff;
+        opacity: 1;
       }
     }
   }
 
-  /* ───────────────── helper / error text */
+  // Helper / error text below the field
   &__helperText {
-    padding-left: $space-xl;
-    padding-top: $space-md;
-    display: flex;
-    color: var(--color-grey-300);
-    width: 80%;
+    padding-top: var(--pk-space-xs);
+    color: var(--pk-select-helper-fg);
     @include text("caption");
 
-    html[data-theme='dark'] & {
-      color: var(--color-grey-700);
+    &__content {
+      &--is-error {
+        color: var(--pk-color-error);
+      }
+    }
+  }
+
+  // ── Mobile bottom-sheet ────────────────────────────────────────────────────
+
+  // Dim overlay behind the sheet (portal-rendered)
+  &__sheet__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: selectFadeIn 200ms ease both;
+  }
+
+  // The sheet panel itself
+  &__sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-height: 80dvh;
+    background: var(--pk-select-bg);
+    border-radius: 1.25rem 1.25rem 0 0;
+    border: 1px solid color-mix(in srgb, var(--pk-select-gradient-from) 30%, transparent);
+    border-bottom: none;
+    box-shadow:
+      0 -4px 40px rgba(0, 0, 0, 0.18),
+      0 -2px 0 color-mix(in srgb, var(--pk-select-gradient-from) 50%, transparent);
+    padding: 0 1.25rem 2rem;
+    overflow: hidden;
+    animation: selectSlideUp 260ms cubic-bezier(0.32, 0.72, 0, 1) both;
+
+    // Variant gradient tokens (mirrors __listbox — needed because sheet is portal-rendered)
+    &--primary {
+      --pk-select-gradient-from:  var(--pk-color-brand);   --pk-select-gradient-to: var(--pk-color-accent);
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-brand)   10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-brand)   18%, var(--pk-select-bg));
+    }
+    &--secondary {
+      --pk-select-gradient-from:  var(--pk-color-accent);  --pk-select-gradient-to: var(--pk-color-brand);
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-accent)  10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-accent)  18%, var(--pk-select-bg));
+    }
+    &--success {
+      --pk-select-gradient-from:  var(--pk-color-success); --pk-select-gradient-to: #10CCB8;
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-success) 10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-success) 18%, var(--pk-select-bg));
+    }
+    &--warning {
+      --pk-select-gradient-from:  var(--pk-color-warning); --pk-select-gradient-to: #f7cc6a;
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-warning) 10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-warning) 18%, var(--pk-select-bg));
+    }
+    &--error {
+      --pk-select-gradient-from:  var(--pk-color-error);   --pk-select-gradient-to: #ff6b6b;
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-error)   10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-error)   18%, var(--pk-select-bg));
+    }
+    &--info,
+    &--inherit,
+    &--white {
+      --pk-select-gradient-from:  var(--pk-color-muted);   --pk-select-gradient-to: var(--pk-color-border);
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-color-muted)   10%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-muted)   18%, var(--pk-select-bg));
     }
 
-    &__content {
-      width: 100%;
+    // Dark mode
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-select-gradient-from) 15%, var(--pk-select-bg));
+      --pk-select-item-active-bg: color-mix(in srgb, var(--pk-select-gradient-from) 25%, var(--pk-select-bg));
+      --pk-select-fg:             var(--pk-color-fg);
+      --pk-select-bg:             var(--pk-color-surface);
+    }
 
-      &--is-error {
-        color: var(--color-error);
+  }
+
+  // Drag handle: explicit per-variant (avoids CSS-variable inheritance issues in portals)
+  &__sheet::before {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 0.25rem;
+    background: var(--pk-color-brand); // primary default
+    border-radius: 999px;
+    margin: 0.75rem auto 1rem;
+    flex-shrink: 0;
+  }
+  &__sheet--secondary::before { background: var(--pk-color-accent); }
+  &__sheet--success::before   { background: var(--pk-color-success); }
+  &__sheet--warning::before   { background: var(--pk-color-warning); }
+  &__sheet--error::before     { background: var(--pk-color-error); }
+  &__sheet--info::before,
+  &__sheet--inherit::before,
+  &__sheet--white::before     { background: var(--pk-color-muted); }
+
+  &__sheet__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.25rem 0.75rem;
+    flex-shrink: 0;
+  }
+
+  &__sheet__title {
+    font-weight: 700;
+    color: var(--pk-select-fg);
+    @include text("base/md");
+  }
+
+  &__sheet__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--pk-select-fg);
+    flex-shrink: 0;
+    transition: background var(--pk-timing-fast) ease, color var(--pk-timing-fast) ease;
+
+    @include when-hovered() {
+      background: color-mix(in srgb, var(--pk-select-gradient-from) 12%, transparent);
+      color: var(--pk-select-gradient-from);
+    }
+  }
+
+  &__sheet__list {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    list-style: none;
+    margin: 0;
+    padding: var(--pk-space-xs, 0.25rem) 0;
+  }
+
+  &__sheet__item {
+    display: flex;
+    align-items: center;
+    gap: var(--pk-space-sm);
+    padding: 0.875rem 0.75rem;
+    border-radius: var(--pk-select-radius, 8px);
+    cursor: pointer;
+    color: var(--pk-select-fg);
+    min-height: 2.75rem;
+    transition: background-color var(--pk-timing-fast) ease;
+    @include text("base");
+
+    @include when-hovered() {
+      background-color: var(--pk-select-item-hover-bg);
+    }
+
+    &--active {
+      background-color: var(--pk-select-item-hover-bg);
+    }
+
+    &--selected {
+      background-color: color-mix(in srgb, var(--pk-select-gradient-from) 10%, transparent);
+      font-weight: 600;
+      color: var(--pk-select-gradient-from);
+
+      // Checkmark on right for single select
+      &::after {
+        content: "\2713"; // ✓
+        margin-left: auto;
+        font-weight: 700;
       }
+    }
+  }
+
+  &__sheet__footer {
+    padding-top: var(--pk-space-sm, 0.5rem);
+    flex-shrink: 0;
+  }
+
+  // "Done" button for multi-select sheet footer
+  &__sheet__done {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--pk-select-radius, 8px);
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    background: linear-gradient(
+      90deg,
+      var(--pk-select-gradient-from),
+      var(--pk-select-gradient-to)
+    );
+    color: #fff;
+    transition: opacity var(--pk-timing-fast) ease;
+    @include text("base/lg");
+
+    @include when-hovered() {
+      opacity: 0.9;
     }
   }
 }

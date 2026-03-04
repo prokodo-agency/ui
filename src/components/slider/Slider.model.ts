@@ -1,4 +1,5 @@
 import type { LabelProps } from "../label"
+import type { Variants } from "@/types/variants"
 import type { HTMLAttributes, FocusEvent, ChangeEvent } from "react"
 
 /**
@@ -81,6 +82,8 @@ export interface SliderProps {
 
   /** Optional additional CSS class on the root container. */
   className?: string
+  /** Visual color — sets the track and thumb gradient colors. */
+  color?: Variants
 
   /**
    * How the thumb snaps when the user drags it.

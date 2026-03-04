@@ -69,6 +69,17 @@ describe("PostWidget", () => {
         expect.stringContaining("ItemList"),
       )
     })
+
+    it("renders with a color prop applying it to headlines", () => {
+      render(
+        <PostWidgetView
+          color="primary"
+          items={widgetItems}
+          title={{ content: "Colored Widget" }}
+        />,
+      )
+      expect(screen.getByText("Colored Widget")).toBeInTheDocument()
+    })
   })
 
   // -------------------------------------------------------------------------

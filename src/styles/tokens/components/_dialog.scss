@@ -1,0 +1,16 @@
+// =============================================================================
+// DIALOG COMPONENT TOKENS
+// Declaration block only — no selectors.
+// Backdrop uses RGB-triple pattern: rgb(var(--pk-color-overlay-rgb) / var(--pk-color-overlay-alpha))
+// =============================================================================
+
+@mixin dialog-tokens() {
+  --pk-dialog-bg:         var(--pk-color-surface);
+  --pk-dialog-fg:         var(--pk-color-fg);
+  --pk-dialog-radius:     var(--pk-radius-md);
+  --pk-dialog-shadow:     var(--pk-shadow-lg);
+  --pk-dialog-padding-x:  var(--pk-space-lg);
+  --pk-dialog-padding-y:  var(--pk-space-xl);
+  --pk-dialog-header-fg:  var(--pk-color-fg);
+  --pk-dialog-close-fg:   var(--pk-palette-grey-500);
+}

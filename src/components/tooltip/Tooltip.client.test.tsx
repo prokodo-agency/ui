@@ -398,4 +398,13 @@ describe("Tooltip.client – portal geometry (compute / resize / scroll)", () =>
     fireEvent.mouseLeave(bubble)
     expect(bubble).toBeInTheDocument()
   })
+
+  it("applies non-default color without errors (covers color BEM branch)", () => {
+    render(
+      <TooltipClient color="success" content="Tooltip">
+        child
+      </TooltipClient>,
+    )
+    expect(screen.getByTestId("tooltip-view")).toBeInTheDocument()
+  })
 })

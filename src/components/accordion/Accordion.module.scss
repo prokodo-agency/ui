@@ -1,8 +1,12 @@
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 
-/* Keep this out of the critical/render-blocking bundle. */
+// Component tokens: --pk-accordion-fg, --pk-accordion-radius,
+//   --pk-accordion-border, --pk-accordion-border-focus, --pk-accordion-shadow,
+//   --pk-accordion-header-bg, --pk-accordion-content-bg,
+//   --pk-accordion-actions-bg, --pk-accordion-actions-border,
+//   --pk-accordion-padding-x, --pk-accordion-padding-y
+
 @keyframes accordionBorderShift {
   from { background-position: 0 0,   0% 0; }
   to   { background-position: 0 0, 200% 0; }
@@ -12,20 +16,101 @@
   display: flex;
   flex-direction: column;
 
+  // ── Variant token overrides ────────────────────────────────────────────────
+  // Each variant re-maps the gradient + tint + border-focus tokens so that
+  // the hover animation, expanded border and item tint all pick up the right
+  // color automatically.
+  &--primary {
+    --pk-accordion-gradient-from:  var(--pk-color-brand);
+    --pk-accordion-gradient-to:    var(--pk-color-accent);
+    --pk-accordion-border-focus:   var(--pk-color-brand);
+    --pk-accordion-item-tint:      var(--pk-color-brand);
+    --pk-accordion-shadow-color:   color-mix(in srgb, var(--pk-color-brand) 30%, transparent);
+  }
+
+  &--secondary {
+    --pk-accordion-gradient-from:  var(--pk-color-accent);
+    --pk-accordion-gradient-to:    var(--pk-color-brand);
+    --pk-accordion-border-focus:   var(--pk-color-accent);
+    --pk-accordion-item-tint:      var(--pk-color-accent);
+    --pk-accordion-shadow-color:   color-mix(in srgb, var(--pk-color-accent) 30%, transparent);
+  }
+
+  &--success {
+    --pk-accordion-gradient-from:  var(--pk-color-success);
+    --pk-accordion-gradient-to:    #10CCB8;
+    --pk-accordion-border-focus:   var(--pk-color-success);
+    --pk-accordion-item-tint:      var(--pk-color-success);
+    --pk-accordion-shadow-color:   color-mix(in srgb, var(--pk-color-success) 30%, transparent);
+  }
+
+  &--warning {
+    --pk-accordion-gradient-from:  var(--pk-color-warning);
+    --pk-accordion-gradient-to:    #f7cc6a;
+    --pk-accordion-border-focus:   var(--pk-color-warning);
+    --pk-accordion-item-tint:      var(--pk-color-warning);
+    --pk-accordion-shadow-color:   color-mix(in srgb, var(--pk-color-warning) 30%, transparent);
+  }
+
+  &--error {
+    --pk-accordion-gradient-from:  var(--pk-color-error);
+    --pk-accordion-gradient-to:    #ff6b6b;
+    --pk-accordion-border-focus:   var(--pk-color-error);
+    --pk-accordion-item-tint:      var(--pk-color-error);
+    --pk-accordion-shadow-color:   color-mix(in srgb, var(--pk-color-error) 30%, transparent);
+  }
+
+  &--info {
+    --pk-accordion-gradient-from:  var(--pk-color-fg);
+    --pk-accordion-gradient-to:    var(--pk-color-muted);
+    --pk-accordion-border-focus:   var(--pk-color-border);
+    --pk-accordion-item-tint:      var(--pk-color-fg);
+    --pk-accordion-shadow-color:   rgba(0, 0, 0, 0.1);
+  }
+
+  &--inherit {
+    --pk-accordion-gradient-from:  var(--pk-color-muted);
+    --pk-accordion-gradient-to:    var(--pk-color-border);
+    --pk-accordion-border-focus:   var(--pk-color-border);
+    --pk-accordion-item-tint:      var(--pk-color-fg);
+    --pk-accordion-shadow-color:   rgba(0, 0, 0, 0.1);
+  }
+
+  // Default (card) type has gap between items
+  &--card {
+    gap: 0; // items have margin-bottom via __item
+  }
+
   &--panel {
     gap: 0;
   }
 
+  // ── Item ───────────────────────────────────────────────────────────────────
   &__item {
-    border: 1px solid var(--color-grey-200);
-    border-radius: 0.75rem;
-    margin-bottom: 8px;
+    border: 1px solid var(--pk-accordion-border);
+    border-radius: var(--pk-accordion-radius);
+    margin-bottom: var(--pk-space-sm);
     overflow: hidden;
-    transition: border 0.3s ease;
-    box-shadow: var(--elevation-1);
+    transition: border-color var(--pk-timing-normal) ease,
+                box-shadow var(--pk-timing-normal) ease;
+    box-shadow: 0 4px 6px var(--pk-accordion-shadow-color),
+                0 1px 3px color-mix(in srgb, var(--pk-accordion-shadow-color) 80%, transparent);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &--is-expanded {
-      border-color: var(--color-primary-500);
+      border-color: var(--pk-accordion-border-focus);
+      // Subtle tint derived from the variant color — same technique as text button
+      background-color: color-mix(
+        in srgb,
+        var(--pk-accordion-item-tint) 5%,
+        transparent
+      );
+      // Deepen the shadow when expanded
+      box-shadow: 0 8px 16px var(--pk-accordion-shadow-color),
+                  0 2px 6px color-mix(in srgb, var(--pk-accordion-shadow-color) 80%, transparent);
     }
 
     &--panel {
@@ -33,157 +118,184 @@
       margin-bottom: 0;
       box-shadow: none;
       border: none;
+      border-bottom: 1px solid var(--pk-accordion-border);
+
+      &:last-child {
+        border-bottom: none;
+      }
     }
   }
 
-  &__header {
+  // ── Header Wrapper (gradient border shell) ─────────────────────────────────
+  &__header__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $space-lg;
-    cursor: pointer;
 
-    &__toggle {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: $space-lg;
-      cursor: pointer;
-      gap: $space-md;
+    // gradient border trick — 2px transparent border, two backgrounds:
+    // layer 1 (padding-box): solid surface fill
+    // layer 2 (border-box):  sliding gradient, initially 0% wide
+    border: 2px solid transparent;
+    border-radius: var(--pk-accordion-radius);
+    background:
+      linear-gradient(
+        var(--pk-accordion-header-bg),
+        var(--pk-accordion-header-bg)
+      ) padding-box,
+      linear-gradient(
+        90deg,
+        var(--pk-accordion-gradient-from),
+        var(--pk-accordion-gradient-to),
+        var(--pk-accordion-gradient-from)
+      ) border-box;
+    background-size: 100% 100%, 0% 100%;
+    background-position: 0 0, 0 0;
+    background-repeat: no-repeat;
+    transition: color var(--pk-timing-normal) ease,
+                background-size 0.35s ease;
+
+    &:hover,
+    &:focus-visible {
+      background-size: 100% 100%, 200% 100%;
+      animation: accordionBorderShift 2s linear;
+      outline: none;
     }
 
-    &__actions {
-      display: flex;
-      gap: $space-sm;
+    &--is-expanded {
+      position: relative;
+      z-index: 2;
+      background-size: 100% 100%, 100% 100%;
+      background-position: 0 0, 100% 0;
+      border-radius: var(--pk-accordion-radius) var(--pk-accordion-radius) 0 0;
+      animation: none !important;
+    }
 
-      &__wrapper {
-        display: flex;
+    // Panel variant: no box border, just animated bottom line via ::after
+    &--panel {
+      position: relative;
+      border: none;
+      border-bottom: 2px solid transparent;
+      background: linear-gradient(
+        var(--pk-accordion-header-bg),
+        var(--pk-accordion-header-bg)
+      );
+      border-radius: 0;
+      background-size: 100% 100%;
+      transition: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -2px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--pk-accordion-gradient-from),
+          var(--pk-accordion-gradient-to),
+          var(--pk-accordion-gradient-from)
+        );
+        background-size: 0% 100%;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        transition: background-size 0.35s ease;
       }
-    }
 
-    &__icons {
-      display: flex;
-      align-items: center;
-      padding-left: $space-lg;
-    }
-
-    &__wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      /* reserve space for a “border” without layout jump */
-      border: 2px solid transparent;
-      border-radius: 12px;
-
-      /* two-background trick: inner fill + border gradient */
-      background:
-        /* inner fill (static) */
-        linear-gradient(var(--header-bg, var(--color-white)), var(--header-bg, var(--color-white))) padding-box,
-        /* border gradient (animated layer) */
-        linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500), var(--color-primary-500)) border-box;
-
-      /* hide the border layer initially */
-      background-size: 100% 100%, 0% 100%;
-      background-position: 0 0, 0 0;
-      background-repeat: no-repeat;
-      transition: color .3s ease, background-size .35s ease;
-
-      &:hover,
-      &:focus-visible {
-        /* reveal the border layer */
-        background-size: 100% 100%, 200% 100%;
-        /* animation name is defined in the EFFECTS sheet */
+      &:hover::after,
+      &:focus-visible::after {
+        background-size: 200% 100%;
         animation: accordionBorderShift 2s linear;
-        outline: none;
       }
+    }
 
-      &--is-expanded {
-        position: relative;
-        z-index: 2;
-        /* keep border visible and settled */
-        background-size: 100% 100%, 100% 100%;
-        background-position: 0 0, 100% 0;
-        border-radius: 12px 12px 0 0;
+    &--panel--is-expanded {
+      border-radius: 0;
+      box-shadow: none;
+      animation: none !important;
+
+      &::after {
+        background-size: 100% 100%;
+        background-position: 100% 0;
         animation: none !important;
-        box-shadow: var(--elevation-1);
-      }
-
-      &--panel {
-        position: relative;
-        border: none;
-        border-bottom: 2px solid transparent;
-        background: linear-gradient(var(--header-bg, var(--color-white)), var(--header-bg, var(--color-white)));
-        border-radius: 0;
-
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 2px;
-          background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500), var(--color-primary-500));
-          background-size: 0% 100%;
-          background-position: 0 0;
-          background-repeat: no-repeat;
-          transition: background-size .35s ease;
-        }
-
-        &:hover,
-        &:focus-visible {
-          animation: none;
-
-          &::after {
-            background-size: 200% 100%;
-            animation: accordionBorderShift 2s linear;
-          }
-        }
-        
-        &--is-expanded {
-          border-radius: 0;
-          box-shadow: none;
-          animation: none !important;
-
-          &::after {
-            background-size: 100% 100%;
-            background-position: 100% 0;
-            animation: none !important;
-          }
-        }
       }
     }
   }
 
+  // ── Header Toggle (flex row inside the wrapper) ────────────────────────────
+  &__header__toggle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--pk-accordion-padding-y) var(--pk-accordion-padding-x);
+    cursor: pointer;
+    gap: var(--pk-space-md);
+    user-select: none;
+    // Match the wrapper's border-radius so the focus ring follows the card shape
+    border-radius: var(--pk-accordion-radius);
+
+    // Never show outline on mouse/touch click
+    &:focus {
+      outline: none;
+    }
+
+    // Only show focus ring on keyboard navigation
+    &:focus-visible {
+      outline: var(--pk-focus-ring-width) solid var(--pk-focus-ring-color);
+      outline-offset: 2px;
+      border-radius: var(--pk-accordion-radius);
+    }
+  }
+
+  // ── Title ──────────────────────────────────────────────────────────────────
   &__title {
-    width: calc(100% - 20px);
+    width: calc(100% - 1.25rem);
     margin: 0;
     @include text("base/md", true);
-    & { font-weight: 500; }
 
-    html[data-theme='dark'] & {
-      color: var(--color-grey-900)
+    & {
+      font-weight: 500;
+      color: var(--pk-accordion-fg);
     }
   }
 
+  // ── Header Actions Wrapper ─────────────────────────────────────────────────
+  &__header__actions__wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  // ── Header Actions (stop-propagation zone) ─────────────────────────────────
+  &__header__actions {
+    display: flex;
+    gap: var(--pk-space-sm);
+  }
+
+  // ── Header Icons ──────────────────────────────────────────────────────────
+  &__header__icons {
+    display: flex;
+    align-items: center;
+    padding-left: var(--pk-space-lg);
+  }
+
+  // ── Toggle Icons (plus / minus — one is always hidden) ────────────────────
   &__icon {
-    padding-left: $space-lg;
-    transition: transform 0.3s ease;
+    color: var(--pk-accordion-fg);
+    flex-shrink: 0;
 
     &--is-hidden {
       display: none !important;
     }
-
-    html[data-theme='dark'] & {
-      color: var(--color-grey-900);
-    }
   }
 
+  // ── Content ────────────────────────────────────────────────────────────────
   &__content {
-    padding: 16px;
-    background-color: var(--color-white);
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    padding: var(--pk-accordion-padding-y) var(--pk-accordion-padding-x);
+    background-color: var(--pk-accordion-content-bg);
+    color: var(--pk-accordion-fg);
+    transition: max-height var(--pk-timing-normal) ease,
+                opacity var(--pk-timing-normal) ease;
     @include text("base");
 
     &[hidden] {
@@ -198,11 +310,12 @@
     }
   }
 
+  // ── Actions row ────────────────────────────────────────────────────────────
   &__actions {
     display: flex;
-    gap: 8px;
-    padding: 8px 16px;
-    background-color: var(--color-grey-100);
-    border-top: 1px solid var(--color-grey-200);
+    gap: var(--pk-space-sm);
+    padding: var(--pk-space-sm) var(--pk-accordion-padding-x);
+    background-color: var(--pk-accordion-actions-bg);
+    border-top: 1px solid var(--pk-accordion-actions-border);
   }
 }

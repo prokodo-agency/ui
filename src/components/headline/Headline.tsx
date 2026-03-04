@@ -23,20 +23,19 @@ export const Headline: FC<HeadlineProps> = ({
   className,
   align,
   isRichtext = false,
-  variant = "inherit",
+  color = "inherit",
   children,
   ...remainingProps
 }) => {
   const isHighlighted =
-    Boolean(highlight) && POSSIBLE_HIGHLIGHTS.includes(variant)
+    Boolean(highlight) && POSSIBLE_HIGHLIGHTS.includes(color)
   // 1) Determine highlight state
 
   // 2) Build BEM modifier object
   const modifier = {
-    [variant]: !!variant,
+    [color]: !!color,
     "is-highlighted": isHighlighted,
-    highlighted: isHighlighted,
-    [`${variant}--highlighted`]: isHighlighted,
+    [`${color}--highlighted`]: isHighlighted,
     [size]: typeof size === "string" && !!size,
     [`${align}`]: !!align,
   }
@@ -98,11 +97,11 @@ export const Headline: FC<HeadlineProps> = ({
           animated={animated}
           animationProps={animationProps}
           className={bem("headline", undefined, className)}
+          color={color}
           id={id}
           itemProp={undefined}
           linkComponent={undefined}
           schema={schema}
-          variant={variant}
           {...remainingProps}
           overrideParagraph={
             /* istanbul ignore next */ (textContent: string) =>

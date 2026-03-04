@@ -1,0 +1,25 @@
+// =============================================================================
+// DYNAMIC LIST COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin dynamic-list-tokens() {
+  // Label spacing
+  --pk-dynamic-list-label-mb:   var(--pk-space-md);
+
+  // List layout
+  --pk-dynamic-list-gap:        var(--pk-space-lg);
+
+  // Multi-field row spacing
+  --pk-dynamic-list-field-mb:   var(--pk-space-lg);
+
+  // Delete button top offset (multi mode)
+  --pk-dynamic-list-delete-mt:  var(--pk-space-sm);
+
+  // Helper / error text
+  --pk-dynamic-list-helper-fg:  var(--pk-palette-grey-300);
+  --pk-dynamic-list-helper-pl:  var(--pk-space-xl);
+  --pk-dynamic-list-helper-pt:  var(--pk-space-md);
+  --pk-dynamic-list-helper-w:   80%;
+  --pk-dynamic-list-error-fg:   var(--pk-color-error);
+}

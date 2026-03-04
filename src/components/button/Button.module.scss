@@ -1,28 +1,28 @@
-@use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
-@use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/config/colors" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+
+// Component tokens: --pk-button-bg, --pk-button-fg, --pk-button-radius,
+//   --pk-button-padding-x, --pk-button-padding-y, --pk-button-shadow,
+//   --pk-button-disabled-bg, --pk-button-disabled-fg
+// Override any token on :root or a scoped element — no !important needed.
 
 @include define-block("Button") {
-  display: inline-block;
-  border-radius: $ui-form-element;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pk-space-sm);
+  border-radius: var(--pk-button-radius);
   border-width: 0;
-  padding: px-to-rem(14px) $space-xl;
-  background-color: var(--color-grey-50);
-  box-shadow: var(--elevation-1);
+  padding: var(--pk-button-padding-y) var(--pk-button-padding-x);
+  background-color: var(--pk-button-bg, var(--pk-color-brand, #1E90FF));
+  color: var(--pk-button-fg, var(--pk-color-fg, #111));
+  box-shadow: var(--pk-button-shadow);
   cursor: pointer;
 
   @include gradientBackgroundVar("inherit");
   @include text("headline/xs", true);
-
-  html[data-theme='dark'] & {
-    background-color: var(--color-grey-100);
-  }
 
   @include when-hovered() {
     box-shadow: none;
@@ -30,84 +30,90 @@
 
   @include when-focused-within() {
     @include use-custom-focus-outline();
-    border-radius: $ui-form-element;
+    border-radius: var(--pk-button-radius);
   }
 
-  &--has-bg-primary,
-  &--has-bg-secondary,
-  &--has-bg-success,
-  &--has-bg-warning {
-    color: $black;
-  }
-
+  // ── bg variants ────────────────────────────────────────────────────────────
+  // These inherit color: var(--pk-button-fg) from the base rule, which resolves
+  // to --pk-color-fg — dark in light mode, near-white in dark mode.
+  // info and error use explicit white because their gradients have dark backgrounds.
   &--has-bg-info,
   &--has-bg-error {
-    color: $white;
+    color: var(--pk-palette-white);
   }
 
   &--has-bg-primary {
     @include gradientBackgroundVar("primary");
-    color: $black;
-
-    html[data-theme='dark'] & {
-      color: $white;
-    }
   }
 
   &--has-bg-inherit {
-    html[data-theme='dark'] & {
-      color: var(--color-grey-900);
-      background: linear-gradient(112deg, var(--color-grey-200) 0%, var(--color-grey-300) 100%);
-      background-color: var(--color-grey-300);
-    }
+    background: linear-gradient(
+      112deg,
+      var(--pk-color-surface-raised) 0%,
+      var(--pk-color-border) 100%
+    );
+    background-color: var(--pk-color-surface-raised);
   }
 
   &--has-bg-secondary {
     @include gradientBackgroundVar("secondary");
-    color: $black;
-
-    html[data-theme='dark'] & {
-      color: $white;
-    }
   }
 
-  &--is-disabled,
   &--has-bg-info {
     @include gradientBackgroundVar("info");
-    color: $white;
-
-    html[data-theme='dark'] & {
-      color: var(--color-grey-700);
-    }
+    color: var(--pk-palette-white);
   }
 
   &--has-bg-success {
     @include gradientBackgroundVar("success");
-    color: $black;
-
-    html[data-theme='dark'] & {
-      color: $black;
-    }
   }
 
   &--has-bg-warning {
     @include gradientBackgroundVar("warning");
-    color: $black;
-
-    html[data-theme='dark'] & {
-      color: $black;
-    }
   }
 
   &--has-bg-error {
     @include gradientBackgroundVar("error");
-    color: $white;
-
-    html[data-theme='dark'] & {
-      color: $white;
-    }
+    color: var(--pk-palette-white);
   }
 
+  // ── colored shadows (all variants) ───────────────────────────────────────
+  // One subtle glow per semantic color — removed on hover (base rule above).
+  // Applied to contained (--has-bg-*), text (--has-text-*) and outlined
+  // (--has-variant-outlined--has-outline-*) so the glow always matches the
+  // active color prop regardless of variant.
+  &--has-bg-primary,
+  &--has-text-primary,
+  &--has-variant-outlined--has-outline-primary   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-brand)   18%, transparent); }
+
+  &--has-bg-secondary,
+  &--has-text-secondary,
+  &--has-variant-outlined--has-outline-secondary { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-accent)  18%, transparent); }
+
+  &--has-bg-success,
+  &--has-text-success,
+  &--has-variant-outlined--has-outline-success   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-success) 18%, transparent); }
+
+  &--has-bg-warning,
+  &--has-text-warning,
+  &--has-variant-outlined--has-outline-warning   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-warning) 18%, transparent); }
+
+  &--has-bg-error,
+  &--has-text-error,
+  &--has-variant-outlined--has-outline-error     { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-error)   18%, transparent); }
+
+  &--has-bg-info,
+  &--has-text-info,
+  &--has-variant-outlined--has-outline-info,
+  &--has-bg-inherit,
+  &--has-text-inherit,
+  &--has-variant-outlined--has-outline-inherit   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-fg)      10%, transparent); }
+
+
+  // ── text variants ──────────────────────────────────────────────────────────
+  // Resting bg: a subtle tint derived from the button's own text color via
+  // color-mix — fully adaptive (no opaque surface token that inverts in dark).
+  // Hover: fills to the variant color, text flips to white.
   &--has-text-inherit,
   &--has-text-primary,
   &--has-text-secondary,
@@ -116,101 +122,98 @@
   &--has-text-warning,
   &--has-text-error {
     background: none;
-    background-color: var(--color-grey-50);
-    padding: $space-md $space-lg;
-    transition: background-color 0.3s ease-in-out;
+    background-color: color-mix(in srgb, currentColor 8%, transparent);
+    padding: var(--pk-space-md) var(--pk-space-lg);
+    transition:
+      background-color var(--pk-timing-normal) ease-in-out,
+      color var(--pk-timing-fast) ease-in-out;
 
     @include when-hovered() {
-      color: $white;
+      color: var(--pk-palette-white);
     }
   }
 
   &--has-text-inherit {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     @include when-hovered() {
-      background-color: var(--color-grey-500);
+      background-color: var(--pk-color-muted);
     }
   }
 
   &--has-text-primary {
-    color: var(--color-primary-500);
+    color: var(--pk-color-brand);
 
     @include when-hovered() {
-      background-color: var(--color-primary-500);
+      background-color: var(--pk-color-brand);
     }
   }
 
   &--has-text-secondary {
-    color: var(--color-secondary-500);
+    color: var(--pk-color-accent);
 
     @include when-hovered() {
-      background-color: var(--color-secondary-500);
+      background-color: var(--pk-color-accent);
+      color: var(--pk-palette-black);
     }
   }
 
-  &--is-disabled,
   &--has-text-info {
-    color: var(--color-grey-700);
+    color: var(--pk-color-fg);
 
     @include when-hovered() {
-      background-color: var(--color-grey-100);
+      background-color: var(--pk-color-muted);
     }
   }
 
   &--has-text-success {
-    color: var(--color-success);
+    color: var(--pk-color-success);
 
     @include when-hovered() {
-      background-color: var(--color-success);
+      background-color: var(--pk-color-success);
     }
   }
 
   &--has-text-warning {
-    color: var(--color-warning);
+    color: var(--pk-color-warning);
 
     @include when-hovered() {
-      background-color: var(--color-warning);
+      background-color: var(--pk-color-warning);
+      color: var(--pk-palette-black);
     }
   }
 
   &--has-text-error {
-    color: var(--color-error);
+    color: var(--pk-color-error);
 
     @include when-hovered() {
-      background-color: var(--color-error);
+      background-color: var(--pk-color-error);
     }
   }
 
+  // ── outlined variants (gradient-border mask technique preserved) ───────────
   &--has-variant-outlined {
     position: relative;
     background: none;
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       border-radius: inherit;
-      padding: 2px;
-      mask: 
-          linear-gradient(#fff 0 0) content-box, 
-          linear-gradient(#fff 0 0);
-      mask-composite: exclude; 
+      padding: var(--pk-border-width);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
       z-index: 0;
       @include gradientBorderVar(4);
-    }
-
-    html[data-theme='dark'] & {
-      background: none;
     }
   }
 
   &--has-variant-outlined--has-outline-inherit {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       @include gradientBorderVar(8);
@@ -218,152 +221,110 @@
   }
 
   &--has-variant-outlined--has-outline-primary {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       @include gradientBorderVar(4);
     }
-
-    html[data-theme='dark'] & {
-      color: var(--color-primary-500);
-    }
   }
 
   &--has-variant-outlined--has-outline-secondary {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       @include gradientBorderVar(2);
     }
-
-    html[data-theme='dark'] & {
-      color: var(--color-secondary-500);
-    }
   }
 
   &--has-variant-outlined--has-outline-info {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       @include gradientBorderVar("info");
     }
-
-    html[data-theme='dark'] & {
-      color: $white;
-    }
   }
 
   &--has-variant-outlined--has-outline-success {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       @include gradientBorderVar("success");
     }
-
-    html[data-theme='dark'] & {
-      color: var(--color-success);
-    }
   }
 
   &--has-variant-outlined--has-outline-warning {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       @include gradientBorderVar("warning");
     }
-
-    html[data-theme='dark'] & {
-      color: var(--color-warning);
-    }
   }
 
   &--has-variant-outlined--has-outline-error {
-    color: var(--color-black);
+    color: var(--pk-color-fg);
 
     &::before {
       @include gradientBorderVar("error");
     }
-
-    html[data-theme='dark'] & {
-      color: var(--color-error);
-    }
   }
 
-  &--has-image,
-  &--has-icon {
-    display: flex;
-    align-items: center;
-  }
-
+  // ── layout modifiers ───────────────────────────────────────────────────────
+  // Base is already inline-flex with align+justify center — no per-modifier
+  // display override needed. Modifiers only adjust shape/size.
   &--icon-only {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 10000px;
-    padding: $space-md;
+    padding: var(--pk-space-md);
   }
 
   &--has-fullWidth {
-    display: flex;
-    justify-content: center;
     width: 100%;
   }
 
+  // ── loading ────────────────────────────────────────────────────────────────
+  &--is-loading {
+    cursor: progress;
+    pointer-events: none;
+  }
+
+  // ── disabled ───────────────────────────────────────────────────────────────
   &--is-disabled {
     cursor: default;
     box-shadow: none;
-    color: var(--color-grey-500);
-    background: var(--color-grey-100);
-    background-color: var(--color-grey-100);
-
-    &::before {
-      @include gradientBorderVar(8);
-    }
-
-    @include when-hovered() {
-      color: var(--color-grey-500);
-      background: var(--color-grey-100);
-      background-color: var(--color-grey-100);
-    }
-
-    html[data-theme='dark'] & {
-      color: var(--color-grey-600);
-      background: linear-gradient(112deg, var(--color-grey-200) 0%, var(--color-grey-300) 100%);
-      background-color: var(--color-grey-300);
-
-      &::before {
-        background: linear-gradient(112deg, var(--color-grey-300) 0%, var(--color-grey-500) 100%);
-      }
-    }
+    opacity: 0.45;
+    pointer-events: none;
   }
 
+  // ── sub-elements ───────────────────────────────────────────────────────────
   &__title {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: var(--pk-space-xs);
   }
 
   &__image {
-    margin-right: $space-sm;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    // spacing handled by __content gap
   }
 
   &__icon {
-    margin-right: $space-sm;
-
-    &--icon-only {
-      margin-right: 0;
-    }
+    // spacing handled by __content gap
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
   }
 
   &__link {
-    display: table;
+    // flex so it inherits the button's centered layout naturally
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: inherit;
     width: 100%;
     color: inherit;
     @include text("headline/xs");
-
-    &--icon-only {
-      display: contents;
-    }
 
     @include when-hovered() {
       text-decoration: none;
@@ -374,11 +335,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 2rem;
+    gap: var(--pk-space-sm);
     width: 100%;
-
-    &--icon-only {
-      border-radius: 2000rem;
-    }
   }
 }

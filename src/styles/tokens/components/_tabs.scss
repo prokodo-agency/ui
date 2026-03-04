@@ -1,0 +1,22 @@
+// =============================================================================
+// TABS COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin tabs-tokens() {
+  --pk-tabs-border:             var(--pk-color-border);
+  --pk-tabs-tab-color:          color-mix(in srgb, var(--pk-color-fg) 70%, transparent);
+  --pk-tabs-tab-hover-color:    var(--pk-color-brand);
+  --pk-tabs-tab-hover-bg:       color-mix(in srgb, var(--pk-tabs-tab-hover-color) 8%, transparent);
+  --pk-tabs-tab-selected-color: var(--pk-color-fg);
+  --pk-tabs-tab-disabled-color: var(--pk-color-muted);
+  --pk-tabs-badge-bg:           var(--pk-color-border);
+  --pk-tabs-badge-fg:           color-mix(in srgb, var(--pk-color-fg) 70%, transparent);
+  --pk-tabs-indicator-gradient: var(--gradient-border-4);
+  --pk-tabs-gap:                var(--pk-space-lg);
+  --pk-tabs-pad-xs:             var(--pk-space-xs);
+  --pk-tabs-pad-sm:             var(--pk-space-sm);
+  --pk-tabs-pad-md:             var(--pk-space-md);
+  --pk-tabs-pad-lg:             var(--pk-space-lg);
+  --pk-tabs-radius:             var(--pk-radius-sm);
+}

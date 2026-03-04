@@ -1,6 +1,9 @@
 import type { LabelProps } from "../label"
+import type { IconName } from "@/components/icon"
+import type { Variants } from "@/types/variants"
 import type {
   Ref,
+  ButtonHTMLAttributes,
   ChangeEvent,
   ChangeEventHandler,
   FocusEvent,
@@ -131,6 +134,8 @@ export type InputProps = {
   customRegexPattern?: string
   /** Field wrapper class name (outer container). */
   fieldClassName?: string
+  /** Visual color — controls shadow glow and accent color. Default: "primary". */
+  color?: Variants
   /** Hide character count indicator (default: false). Only applies to multiline fields. */
   hideCounter?: boolean
   /** Input container class name. Direct parent of input/textarea element. */
@@ -180,6 +185,17 @@ export type InputProps = {
    * Must manage its own value and change events via `id` and `describedBy`.
    */
   renderNode?: (args: InputRenderNodeArgs) => ReactNode
+  /** Icon displayed on the trailing (right) side of the field. */
+  trailingIcon?: IconName
+  /** Accessible label for the trailing icon button. Required when `onTrailingIconClick` is provided. */
+  trailingIconLabel?: string
+  /** Click handler for the trailing icon. Renders as a `<button>` if set, otherwise a decorative `<span>`. */
+  onTrailingIconClick?: () => void
+  /** Additional HTML/ARIA attributes for the trailing icon `<button>` (e.g. `aria-haspopup`, `aria-expanded`). */
+  trailingIconButtonProps?: Omit<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    "type" | "onClick"
+  >
 } & (
   | {
       /* ---------- Single-line input --------------------------- */

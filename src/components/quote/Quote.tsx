@@ -15,7 +15,7 @@ const bem = create(styles, "Quote")
 
 export const Quote: FC<QuoteProps> = ({
   className,
-  variant = "primary",
+  color = "primary",
   title,
   subTitle,
   content,
@@ -23,7 +23,7 @@ export const Quote: FC<QuoteProps> = ({
 }) => (
   <figure
     itemScope
-    className={bem(undefined, undefined, className)}
+    className={bem(undefined, { [color]: true }, className)}
     itemType="https://schema.org/Quotation"
   >
     {subTitle && (
@@ -33,7 +33,7 @@ export const Quote: FC<QuoteProps> = ({
         size="sm"
         type="h3"
         {...subTitle}
-        variant={subTitle.variant ?? variant}
+        color={subTitle.color ?? color}
       >
         {subTitle?.content}
       </Headline>
@@ -52,9 +52,9 @@ export const Quote: FC<QuoteProps> = ({
       animated
       highlight
       className={bem("card__container")}
+      color="white"
       contentClassName={bem("card")}
       customAnimation="left-right"
-      variant="white"
     >
       <blockquote className={bem("quote")}>
         <RichText className={bem("quote__content")} itemProp="text">
@@ -72,7 +72,7 @@ export const Quote: FC<QuoteProps> = ({
               <Avatar
                 className={bem("caption__avatar")}
                 {...author.avatar}
-                variant={variant}
+                color={color}
               />
             )}
             <div className={bem("caption__author")}>

@@ -1,0 +1,19 @@
+// =============================================================================
+// LABEL COMPONENT TOKENS
+// Defaults — parent components (Input, Select) override these by forwarding
+// their own --pk-*-gradient-from/to into the __label rule, so the highlighted
+// word automatically follows the parent's variant color.
+// =============================================================================
+
+@mixin label-tokens() {
+  // Highlighted-word gradient (first word of the label text)
+  --pk-label-gradient-from: var(--pk-color-brand);
+  --pk-label-gradient-to:   var(--pk-color-accent);
+
+  // Rest of label text color
+  --pk-label-fg:            var(--pk-color-muted);
+
+  // Error state gradient (overrides --error modifier on __highlighted)
+  --pk-label-error-from:    var(--pk-color-error);
+  --pk-label-error-to:      #ff6b6b;
+}

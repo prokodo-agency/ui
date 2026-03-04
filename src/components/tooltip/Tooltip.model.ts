@@ -1,6 +1,11 @@
 import type { HTMLAttributes, ReactElement, ReactNode } from "react"
 
 export type TooltipAnchor = "element" | "pointer"
+
+/**
+ * Visual color variant for the tooltip bubble.
+ */
+export type TooltipColor = "default" | "success" | "error" | "warning" | "info"
 export type TooltipPlacement = "top" | "bottom" | "left" | "right"
 export type TooltipOpenChangeEvent = (open: boolean) => void
 
@@ -75,6 +80,12 @@ export type TooltipProps = {
    * Default matches $screen-lg (960).
    */
   mobileBreakpoint?: number
+
+  /**
+   * Visual color variant of the tooltip bubble.
+   * Default: "default" (dark inverted).
+   */
+  color?: TooltipColor
 
   /**
    * Disable tooltip entirely.

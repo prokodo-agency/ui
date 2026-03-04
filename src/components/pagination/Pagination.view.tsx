@@ -15,6 +15,7 @@ export function PaginationView({
   totalPages,
   disabled,
   isPending,
+  color,
   siblingCount = 1,
   boundaryCount = 1,
   onPrev,
@@ -40,12 +41,21 @@ export function PaginationView({
 
   return (
     <nav
+      aria-busy={isPending || undefined}
       aria-label={t?.pagination ?? "Pagination"}
-      className={bem(undefined, undefined, className)}
+      className={bem(
+        undefined,
+        {
+          "is-pending": Boolean(isPending),
+          [`color-${color}`]: Boolean(color),
+        },
+        className,
+      )}
     >
       <Button
         aria-label={t?.prev ?? "Previous page"}
         className={bem("btn")}
+        color={color}
         disabled={isDisabled || safePage <= 1}
         iconProps={{ name: "ArrowLeft01Icon" }}
         variant="outlined"
@@ -81,6 +91,7 @@ export function PaginationView({
               <Button
                 aria-current={isActive ? "page" : undefined}
                 className={bem("page", { active: isActive })}
+                color={color}
                 disabled={isDisabled || isActive}
                 title={it.value?.toString()}
                 variant={isActive ? "outlined" : "text"}
@@ -105,6 +116,7 @@ export function PaginationView({
       <Button
         aria-label={t?.next ?? "Next page"}
         className={bem("btn")}
+        color={color}
         disabled={isDisabled || safePage >= safeTotal}
         iconProps={{ name: "ArrowRight01Icon" }}
         variant="outlined"

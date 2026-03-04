@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as SideNavStories from "./SideNav.stories"
 
 <Meta of={SideNavStories} />
@@ -34,6 +34,58 @@ Use `SideNav` as the primary navigation surface in multi-section app layouts. Fo
 - Don't hide the nav completely on desktop — at minimum show the icon-only collapsed rail
 - Don't use `SideNav` for pagination or step sequences — use `Stepper`
 
+## API
+
+### `SideNavProps`
+
+| Prop               | Type                                                     | Default              | Description                                                                                                     |
+| ------------------ | -------------------------------------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `items`            | `SideNavItem[]`                                          | —                    | Flat list of navigation items. Mutually exclusive with `sections`.                                              |
+| `sections`         | `SideNavSection[]`                                       | —                    | Navigation organised into named sections. When set, `items` is ignored.                                         |
+| `headlineProps`    | `Omit<HeadlineProps, "children">`                        | —                    | Default props forwarded to every section's `Headline`. Section-level `headlineProps` take precedence.           |
+| `descriptionProps` | `Omit<HTMLAttributes<HTMLParagraphElement>, "children">` | —                    | Default props forwarded to every section's description `<p>`. Section-level `descriptionProps` take precedence. |
+| `initialCollapsed` | `boolean`                                                | `false`              | Initial collapsed state.                                                                                        |
+| `collapsedIcon`    | `IconName`                                               | `"ArrowRight01Icon"` | Icon shown when nav is collapsed.                                                                               |
+| `unCollapsedIcon`  | `IconName`                                               | `"ArrowLeft01Icon"`  | Icon shown when nav is expanded.                                                                                |
+| `collapsedLabel`   | `string`                                                 | `"Expand menu"`      | Screen-reader label for the toggle when collapsed.                                                              |
+| `unCollapsedLabel` | `string`                                                 | `"Collapse menu"`    | Screen-reader label for the toggle when expanded.                                                               |
+| `iconProps`        | `Omit<IconProps, "name">`                                | —                    | Extra props forwarded to the toggle icon.                                                                       |
+| `ariaLabel`        | `string`                                                 | `"Main navigation"`  | `aria-label` on the `<nav>` element.                                                                            |
+| `className`        | `string`                                                 | —                    | CSS class on the root `<aside>` element.                                                                        |
+| `renderFooter`     | `() => ReactNode`                                        | —                    | Optional footer rendered below the nav items.                                                                   |
+| `onChange`         | `(item: SideNavItem) => void`                            | —                    | Called whenever a nav item is clicked.                                                                          |
+
+### `SideNavSection`
+
+| Prop                | Type                                                     | Default | Required | Description                                                                                           |
+| ------------------- | -------------------------------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `items`             | `SideNavItem[]`                                          | —       | ✅       | Navigation items belonging to this section.                                                           |
+| `headline`          | `string`                                                 | —       | —        | Plain-text section heading rendered via the internal `Headline` component (hidden in collapsed mode). |
+| `description`       | `string`                                                 | —       | —        | Short description rendered below the headline.                                                        |
+| `headlineComponent` | `ComponentType<{ className?: string }>`                  | —       | —        | Custom React component used instead of `headline` string.                                             |
+| `headlineProps`     | `Omit<HeadlineProps, "children">`                        | —       | —        | Props forwarded to the section's `Headline` (overrides global `headlineProps`).                       |
+| `descriptionProps`  | `Omit<HTMLAttributes<HTMLParagraphElement>, "children">` | —       | —        | Props forwarded to the section's description `<p>` (overrides global `descriptionProps`).             |
+
+## Design Tokens
+
+Customise `SideNav` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                                 | Default                                                      | Description                                       |
+| ------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------- |
+| `--pk-sidenav-bg`                     | `var(--pk-color-surface)`                                    | Background color of the sidebar panel             |
+| `--pk-sidenav-shadow`                 | `var(--pk-shadow-md)`                                        | Box-shadow of the sidebar panel                   |
+| `--pk-sidenav-toggle-hover`           | `var(--pk-color-surface-raised)`                             | Background color of the toggle button on hover    |
+| `--pk-sidenav-link-hover-bg`          | `color-mix(in srgb, var(--pk-color-brand) 10%, transparent)` | Background color of nav items on hover/active     |
+| `--pk-sidenav-link-active-bg`         | `color-mix(in srgb, var(--pk-color-brand) 5%, transparent)`  | Background color of the current page nav item     |
+| `--pk-sidenav-icon-color`             | `var(--pk-color-fg)`                                         | Icon foreground color                             |
+| `--pk-sidenav-icon-bg`                | `var(--pk-color-surface-raised)`                             | Icon wrapper background color                     |
+| `--pk-sidenav-label-color`            | `color-mix(in srgb, var(--pk-color-fg) 70%, transparent)`    | Collapse icon and label color                     |
+| `--pk-sidenav-fg`                     | `var(--pk-color-fg)`                                         | Main nav item label color                         |
+| `--pk-sidenav-radius`                 | `var(--pk-radius-sm)`                                        | Border-radius for nav items and icon wrappers     |
+| `--pk-sidenav-gap`                    | `var(--pk-space-xs)`                                         | Gap between nav list items                        |
+| `--pk-sidenav-link-gap`               | `var(--pk-space-md)`                                         | Internal gap inside each nav item (icon ↔ label) |
+| `--pk-sidenav-section-headline-color` | `color-mix(in srgb, var(--pk-color-fg) 45%, transparent)`    | Color of section headline labels                  |
+
 ## Examples
 
 ### Expanded
@@ -46,6 +98,18 @@ Use `SideNav` as the primary navigation surface in multi-section app layouts. Fo
 
 <Canvas>
   <Story of={SideNavStories.Collapsed} />
+</Canvas>
+
+### With Sections
+
+<Canvas>
+  <Story of={SideNavStories.WithSections} />
+</Canvas>
+
+### With Sections (Collapsed)
+
+<Canvas>
+  <Story of={SideNavStories.WithSectionsCollapsed} />
 </Canvas>
 
 ### Props

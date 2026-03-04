@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as InputStories from "./Input.stories"
 
 <Meta of={InputStories} />
@@ -31,6 +31,21 @@ Override messages via `errorTranslations`. Custom patterns via `customRegexPatte
 - Error text is linked via `aria-describedby`
 - `required` fields carry `aria-required="true"`
 - Helper text is also linked via `aria-describedby` when present
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                         | Default                   | Description           |
+| ----------------------------- | ------------------------- | --------------------- |
+| `--pk-input-bg`               | `var(--pk-color-surface)` | Input background      |
+| `--pk-input-fg`               | `var(--pk-color-fg)`      | Input text colour     |
+| `--pk-input-border`           | `var(--pk-color-border)`  | Resting border        |
+| `--pk-input-border-focus`     | `var(--pk-color-brand)`   | Focused border        |
+| `--pk-input-radius`           | `var(--pk-radius-pill)`   | Corner radius         |
+| `--pk-input-label-focused-fg` | `var(--pk-color-brand)`   | Floating label colour |
+| `--pk-input-gradient-from`    | `var(--pk-color-brand)`   | Focus gradient start  |
+| `--pk-input-gradient-to`      | `var(--pk-color-accent)`  | Focus gradient end    |
 
 ## ✅ Do
 

@@ -1,6 +1,6 @@
 import { Rating } from "@/components/rating"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
@@ -36,6 +36,20 @@ const meta = {
     readOnly: { control: "boolean" },
     fullWidth: { control: "boolean" },
     hideLegend: { control: "boolean" },
+    color: {
+      control: "select",
+      options: [
+        "primary",
+        "secondary",
+        "success",
+        "error",
+        "info",
+        "warning",
+        "white",
+        "inherit",
+      ],
+      description: "Color variant applied to icons and label",
+    },
 
     /* --- Disable non-UX / internal props in Storybook ---------- */
     name: { table: { disable: true } },
@@ -64,6 +78,7 @@ export const Default: Story = {
   args: {
     name: "rating-default",
     label: "How satisfied are you?",
+    color: "primary",
     helperText: "1 = not at all, 5 = very satisfied",
   },
 }

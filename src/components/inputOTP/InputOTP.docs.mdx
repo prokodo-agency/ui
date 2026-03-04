@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta } from "@storybook/blocks"
+import { Canvas, Controls, Meta } from "@storybook/addon-docs/blocks"
 import * as InputOTPStories from "./InputOTP.stories"
 
 <Meta of={InputOTPStories} />
@@ -27,6 +27,18 @@ Use `InputOTP` for authentication flows that require a numeric or alphanumeric c
 - Each individual input carries a positional `aria-label` (e.g. "Digit 1 of 6")
 - `groupInstruction` is linked via `aria-describedby` on the group
 - Paste support: user can paste the full code into the first field and all digits are distributed automatically
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                    | Default                  | Description                |
+| ------------------------ | ------------------------ | -------------------------- |
+| `--pk-otp-gap`           | `var(--pk-space-sm)`     | Gap between cells          |
+| `--pk-otp-cell-size`     | `2.75rem`                | Cell size (width & height) |
+| `--pk-otp-cell-radius`   | `var(--pk-radius-pill)`  | Cell corner radius         |
+| `--pk-otp-gradient-from` | `var(--pk-color-brand)`  | Focus gradient start       |
+| `--pk-otp-gradient-to`   | `var(--pk-color-accent)` | Focus gradient end         |
 
 ## ✅ Do
 
@@ -61,6 +73,18 @@ Use `InputOTP` for authentication flows that require a numeric or alphanumeric c
 ### Required
 
 <Canvas of={InputOTPStories.Required} />
+
+### With label
+
+<Canvas of={InputOTPStories.WithLabel} />
+
+### With error
+
+<Canvas of={InputOTPStories.WithError} />
+
+### Variants
+
+<Canvas of={InputOTPStories.Variants} />
 
 ### Props
 

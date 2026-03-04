@@ -4,6 +4,17 @@ import type { KeyboardEvent, MouseEvent, ReactNode, RefObject } from "react"
 export type TabsBadgeChipProps = Omit<ChipProps, "label">
 
 /**
+ * Color theme for the tab indicator and hover accent.
+ */
+export type TabsColor =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "error"
+  | "info"
+  | "warning"
+
+/**
  * A single tab definition.
  *
  * Best practice:
@@ -50,6 +61,8 @@ export type TabsProps<Value extends string = string> = {
   id: string
   /** Accessible label for the tablist. */
   ariaLabel?: string
+  /** Color theme for the tab indicator and hover accent. */
+  color?: TabsColor
   /** Tab item definitions. */
   items: TabsItem<Value>[]
   /** Controlled selected value. */

@@ -3,7 +3,7 @@ import { useMemo, useState } from "react"
 import { Autocomplete } from "./Autocomplete"
 
 import type { AutocompleteItem, AutocompleteProps } from "./Autocomplete.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const demoItems: AutocompleteItem[] = [
   {
@@ -56,6 +56,20 @@ const meta = {
     disabled: { control: "boolean" },
     readOnly: { control: "boolean" },
     minQueryLength: { control: { type: "number", min: 1, step: 1 } },
+    color: {
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "error",
+        "white",
+      ],
+      control: { type: "select" },
+      description: "Color variant — changes the focus shadow and accent color.",
+    },
 
     value: { table: { disable: true } },
     items: { table: { disable: true } },

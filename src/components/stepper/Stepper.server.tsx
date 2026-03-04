@@ -8,6 +8,7 @@ export default function StepperServer({
   initialStep = 0,
   translations,
   className,
+  color,
   ...rootProps
 }: StepperProps): JSX.Element {
   // 1) Create a shallow copy of steps that strips out any innerContainerProps.
@@ -25,6 +26,7 @@ export default function StepperServer({
       {...rootProps}
       activeStep={initialStep}
       className={className}
+      color={color}
       stepRefs={emptyStepRefs}
       steps={serverSteps}
       translations={translations}

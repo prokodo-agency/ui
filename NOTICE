@@ -1,0 +1,24 @@
+prokodo-ui
+Copyright 2025 prokodo (Christian Salat)
+
+This product is licensed under the Apache License, Version 2.0.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+----------------------------------------------------------------------------
+
+This repository contains Apache-2.0-licensed source code.
+Third-party assets included in this repository may carry their own licenses.
+See THIRD_PARTY_NOTICES.md for details.
+
+Branded theme files (signature colours, radial glows, brand illustrations,
+and the prokodo visual identity) are NOT distributed as part of this npm package.
+
+----------------------------------------------------------------------------
+
+TRADEMARK NOTICE
+
+"prokodo" and the prokodo logo are trademarks of prokodo (Christian Salat).
+The Apache License 2.0 does not grant permission to use these marks.
+See TRADEMARKS.md for the full trademark policy.

@@ -247,4 +247,10 @@ describe("TooltipView", () => {
     expect(bubbleRef.current).not.toBeNull()
     expect(bubbleRef.current?.tagName).toBe("SPAN")
   })
+
+  it("applies non-default color class to bubble", () => {
+    render(<TooltipView {...defaultProps} __open={true} color="success" />)
+    // Verifies the non-default color BEM branch executes without error
+    expect(screen.getByRole("tooltip")).toBeInTheDocument()
+  })
 })

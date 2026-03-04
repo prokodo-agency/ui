@@ -1,3 +1,4 @@
+import type { Variants } from "@/types/variants"
 import type { LabelHTMLAttributes, HTMLAttributes } from "react"
 
 /**
@@ -5,6 +6,8 @@ import type { LabelHTMLAttributes, HTMLAttributes } from "react"
  * Use for rendering labels with optional error/required indicators.
  */
 export type LabelDefaultrops = {
+  /** Visual color — sets the gradient stops on highlighted label text. */
+  color?: Variants
   /** Mark field as required (displays asterisk). */
   required?: boolean
   /** Show error styling and mark as invalid. */

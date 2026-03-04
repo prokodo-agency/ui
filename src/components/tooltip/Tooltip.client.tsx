@@ -240,6 +240,7 @@ function TooltipClient(props: TooltipProps): JSX.Element {
     triggerProps,
     placement = "top",
     tooltipClassName,
+    color = "default",
 
     ...rest
   } = props
@@ -375,8 +376,13 @@ function TooltipClient(props: TooltipProps): JSX.Element {
 
   // Base class used for measurement (stable: no placement/open modifiers).
   const portalBubbleClassBase = useMemo(
-    () => bem("bubble", undefined, tooltipClassName),
-    [tooltipClassName],
+    () =>
+      bem(
+        "bubble",
+        { ...(color !== "default" ? { [color]: true } : {}) },
+        tooltipClassName,
+      ),
+    [color, tooltipClassName],
   )
 
   // Final class once we computed placement.
@@ -384,10 +390,14 @@ function TooltipClient(props: TooltipProps): JSX.Element {
     () =>
       bem(
         "bubble",
-        { open: Boolean(open && bubbleStyle), [effectivePlacement]: true },
+        {
+          open: Boolean(open && bubbleStyle),
+          [effectivePlacement]: true,
+          ...(color !== "default" ? { [color]: true } : {}),
+        },
         tooltipClassName,
       ),
-    [open, bubbleStyle, effectivePlacement, tooltipClassName],
+    [open, bubbleStyle, effectivePlacement, color, tooltipClassName],
   )
 
   const compute = useCallback(
@@ -513,6 +523,7 @@ function TooltipClient(props: TooltipProps): JSX.Element {
         __placement={portal ? effectivePlacement : placement}
         __renderVisualBubble={!portal}
         __triggerRef={triggerRef}
+        color={color}
         content={content}
         disabled={disabled}
         placement={placement}

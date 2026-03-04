@@ -1,0 +1,138 @@
+---
+id: post-teaser
+title: PostTeaser
+sidebar_label: PostTeaser
+description: Card-style blog post teaser with cover image, category, title, excerpt, and author attribution.
+---
+
+# PostTeaser
+
+`PostTeaser` renders a vertical card-style teaser for blog or news content. Suited for grid-based article listings with a prominent cover image.
+
+---
+
+## Overview
+
+```tsx
+import { PostTeaser } from "@prokodo/ui/post-teaser"
+;<PostTeaser
+  title="Design tokens in practice"
+  slug="/blog/design-tokens"
+  date="2024-04-10"
+  image={{ src: "/blog/tokens.jpg", alt: "Design tokens" }}
+  category="Design"
+  excerpt="How we use design tokens across our component library."
+/>
+```
+
+<StorybookEmbed id="prokodo-content-postteaser--default" height={380} />
+
+---
+
+## Import
+
+```ts
+import { PostTeaser } from "@prokodo/ui/post-teaser"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/post-teaser.css"
+```
+
+---
+
+## Props
+
+| Prop             | Type                   | Default | Required | Description                                                      |
+| ---------------- | ---------------------- | ------- | -------- | ---------------------------------------------------------------- |
+| `title`          | `PostTeaserHeadline`   | —       | ✅       | Headline config: `{ content: string } & HeadlineProps`.          |
+| `content`        | `string`               | —       | —        | Excerpt text.                                                    |
+| `category`       | `string`               | —       | —        | Category label.                                                  |
+| `hideCategory`   | `boolean`              | `false` | —        | Hide the category chip.                                          |
+| `image`          | `ImageProps`           | —       | —        | Cover image props.                                               |
+| `redirect`       | `PostTeaserRedirect`   | —       | —        | Link config: `LinkProps & { label?: string; icon?: IconProps }`. |
+| `date`           | `string`               | —       | —        | ISO date string (requires `locale` when provided).               |
+| `locale`         | `Intl.LocalesArgument` | —       | —        | Locale for date formatting (required when `date` is set).        |
+| `color`          | `HeadlineVariant`      | —       | —        | Accent color variant.                                            |
+| `wordCount`      | `number`               | —       | —        | Word count for reading-time calculation.                         |
+| `readCount`      | `number`               | —       | —        | Read count shown in meta.                                        |
+| `onClick`        | `() => void`           | —       | —        | Click handler on the teaser card.                                |
+| `structuredData` | `boolean`              | `false` | —        | Emit JSON-LD structured data.                                    |
+| `className`      | `string`               | —       | —        | CSS class on root element.                                       |
+
+> See [`src/components/post-teaser/PostTeaser.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-teaser/PostTeaser.model.ts) for the full `PostTeaserProps` type.
+
+---
+
+## Color
+
+The `color` prop applies a consistent accent across the teaser card and its interactive elements:
+
+| Value         | Card border / shadow                  | Headline text                  | Link icon          |
+| ------------- | ------------------------------------- | ------------------------------ | ------------------ |
+| `"primary"`   | Brand blue (30 % tint border + glow)  | Brand blue                     | Brand blue         |
+| `"secondary"` | Accent cyan (30 % tint border + glow) | Accent cyan                    | Accent cyan        |
+| `"success"`   | Green indicator                       | Green                          | Green              |
+| `"warning"`   | Amber indicator                       | Amber                          | Amber              |
+| `"error"`     | Red indicator                         | Red                            | Red                |
+| `"info"`      | Neutral fg tint                       | Muted                          | Muted              |
+| `"white"`     | Default white card, no shadow         | `inherit` (dark auto-contrast) | `primary` fallback |
+| `"inherit"`   | No override                           | `inherit`                      | `primary` fallback |
+
+<StorybookEmbed id="prokodo-content-postteaser--colored" height={380} />
+
+---
+
+## Design Tokens
+
+`PostTeaser` does not define component-specific CSS custom properties. Override appearance by customising the following global design-system tokens on `:root` or a scoped ancestor:
+
+| Token              | Description                    |
+| ------------------ | ------------------------------ |
+| `--pk-space-xs`    | Link icon right margin         |
+| `--pk-space-sm`    | Image caption padding          |
+| `--pk-space-lg`    | Card header and footer padding |
+| `--pk-color-muted` | Date text colour               |
+| `--pk-color-brand` | Link hover colour override     |
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { PostTeaser } from "@prokodo/ui/post-teaser"
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.3.2** | **Meaningful Sequence** (A)    | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order.                                             |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                 |
+| **2.4.6** | **Headings and Labels** (AA)   | 🔍 Manual review | Headings and labels must describe the topic or purpose of their associated content.                                             |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open PostTeaser in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-postteaser--docs)
+
+---
+
+## Source
+
+[`src/components/post-teaser/PostTeaser.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-teaser/PostTeaser.model.ts)

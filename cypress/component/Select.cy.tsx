@@ -27,7 +27,7 @@ describe("Select", () => {
 
   it("renders selected value", () => {
     cy.mount(<Select id="fruit" items={fruits} label="Fruit" value="banana" />)
-    cy.contains("Banana").should("be.visible")
+    cy.get("button").contains("Banana").should("be.visible")
   })
 
   it("is disabled when disabled=true", () => {

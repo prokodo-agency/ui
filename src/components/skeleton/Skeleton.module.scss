@@ -16,13 +16,13 @@
 
 @include define-block("Skeleton") {
   display: inline-block;
-  background-color: rgba(#fff, 0.11);
-  border-radius: 4px;
+  background-color: var(--pk-skeleton-bg);
+  border-radius: var(--pk-skeleton-radius);
   position: relative;
   overflow: hidden;
 
   html[data-theme='dark'] & {
-    background-color: rgba(#1e304f, 0.11);
+    background-color: var(--pk-skeleton-bg-dark);
   }
 
   /* shimmer carrier (animation is attached in modifier) */
@@ -35,7 +35,7 @@
     background: linear-gradient(
       90deg,
       transparent,
-      var(--color-white),
+      var(--pk-skeleton-shimmer-fg),
       transparent
     );
     opacity: 0.6;
@@ -44,15 +44,15 @@
       background: linear-gradient(
         90deg,
         transparent,
-        var(--color-primary-50),
+        var(--pk-skeleton-shimmer-fg-dark),
         transparent
       );
     }
   }
 
   /* variants */
-  &--text        { height: 1em; border-radius: 4px; }
-  &--rectangular { border-radius: 4px; }
+  &--text        { height: 1em; border-radius: var(--pk-skeleton-radius); }
+  &--rectangular { border-radius: var(--pk-skeleton-radius); }
   &--circular    { border-radius: 50%; }
 
   /* animation hooks (keyframes live in effects sheet) */

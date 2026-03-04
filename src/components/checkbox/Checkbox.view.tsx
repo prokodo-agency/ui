@@ -20,6 +20,7 @@ export function CheckboxView<T extends string = string>({
   showRequiredMark,
   disabled,
   variant = "plain",
+  color = "primary",
   isChecked,
   onChangeInternal,
 }: CheckboxViewProps<T>): JSX.Element {
@@ -33,6 +34,7 @@ export function CheckboxView<T extends string = string>({
           checked: isChecked,
           disabled: Boolean(disabled),
           [variant]: true,
+          [color]: true,
         },
         className,
       )}

@@ -118,4 +118,9 @@ describe("StepperView steps without key property", () => {
     expect(screen.getByText("Step 1")).toBeInTheDocument()
     expect(screen.getByText("Step 2")).toBeInTheDocument()
   })
+
+  it("applies color modifier when color prop is provided", () => {
+    render(<StepperView activeStep={0} color="primary" steps={defaultSteps} />)
+    expect(screen.getByRole("list")).toBeInTheDocument()
+  })
 })

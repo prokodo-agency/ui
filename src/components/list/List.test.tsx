@@ -42,8 +42,34 @@ describe("List", () => {
       const iconItems = [
         { id: "a", title: "Icon item", icon: "AbacusIcon" as const },
       ]
-      render(<List items={iconItems} />)
+      render(<List items={iconItems} type="icon" />)
       expect(screen.getByText("Icon item")).toBeInTheDocument()
+    })
+
+    it("renders default-type item with a string icon", () => {
+      render(
+        <List
+          items={[
+            { id: "d1", title: "Default icon", icon: "AbacusIcon" as never },
+          ]}
+        />,
+      )
+      expect(screen.getByText("Default icon")).toBeInTheDocument()
+    })
+
+    it("renders default-type item with a JSX icon", () => {
+      render(
+        <List
+          items={[
+            {
+              id: "d2",
+              title: "JSX icon",
+              icon: (<span data-testid="list-icon" />) as never,
+            },
+          ]}
+        />,
+      )
+      expect(screen.getByText("JSX icon")).toBeInTheDocument()
     })
 
     it("renders item descriptions", () => {

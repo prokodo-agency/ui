@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as RTEStories from "./RTE.stories"
 
 <Meta of={RTEStories} />
@@ -30,6 +30,18 @@ Use `RTE` in forms where users need to author formatted content — blog drafts,
 | Underline | ⌘/Ctrl + U         |
 | Undo      | ⌘/Ctrl + Z         |
 | Redo      | ⌘/Ctrl + Shift + Z |
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                 | Default                   | Description             |
+| --------------------- | ------------------------- | ----------------------- |
+| `--pk-rte-bg`         | `var(--pk-color-surface)` | Editor background       |
+| `--pk-rte-toolbar-bg` | `color-mix(…)`            | Toolbar background tint |
+| `--pk-rte-accent`     | `var(--pk-color-brand)`   | Active element colour   |
+| `--pk-rte-icon-color` | `var(--pk-color-fg)`      | Icon colour             |
+| `--pk-rte-radius`     | `var(--pk-radius-md)`     | Border radius           |
 
 ## ✅ Do
 

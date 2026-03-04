@@ -1,135 +1,195 @@
-@use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
-@use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/colors" as *;
-@use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+
+// Component tokens — see src/styles/tokens/components/_switch.scss
 
 @include define-block("Switch") {
-  position: relative;
-  display: flex;
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--pk-space-sm);
+  cursor: pointer;
+  user-select: none;
 
-  &__label {
-    width: 100%;
-    display: grid;
-    font-size: 1rem;
-    grid-template-columns: 100%;
-    gap: 16px;
-    padding-bottom: 0;
+  // ── Color modifiers (cascade active color via CSS custom property) ───────
+  &--primary   { --pk-switch-active: var(--pk-color-brand); }
+  &--secondary { --pk-switch-active: var(--pk-color-accent); }
+  &--success   { --pk-switch-active: var(--pk-color-success, #22c55e); }
+  &--error     { --pk-switch-active: var(--pk-color-error, #ef4444); }
+  &--info      { --pk-switch-active: var(--pk-palette-grey-500); }
+  &--warning   { --pk-switch-active: var(--pk-color-warning, #f59e0b); }
+  &--inherit   { --pk-switch-active: currentColor; }
 
-    @include screenLargerThan($screen-md) {
-      grid-template-columns: 80% 20%;
-    }
-
-    @include screenLargerThan($screen-lg) {
-      grid-template-columns: 90% 10%;
-    }
-
-    &__content {
-      padding-right: $space-lg;
-    }
+  // info uses a dark grey that is unreadable on dark backgrounds — lighten it
+  :global([data-theme="dark"]) &--info,
+  :global(.pk-theme-dark) &--info {
+    --pk-switch-active: var(--pk-palette-grey-300);
   }
 
+  // In dark mode, currentColor is often near-black and unreadable — fall back
+  // to the foreground color (white/light in dark themes) for the inherit variant.
+  :global([data-theme="dark"]) &--inherit,
+  :global(.pk-theme-dark) &--inherit {
+    --pk-switch-active: var(--pk-color-fg);
+  }
+
+  // ── Label ────────────────────────────────────────────────────────────
+  &__label {
+    color: var(--pk-switch-active);
+    @include text("base");
+  }
+
+  // ── Control (position context for track + thumb + input) ─────────────
   &__control {
     position: relative;
-    width: 42px;
-    height: 26px;
-    min-width: 42px;
-    background-color: var(--color-grey-500);
-    border-radius: 13px;
-    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    width: var(--pk-switch-track-width);
+    height: var(--pk-switch-track-height);
+    flex-shrink: 0;
+  }
 
-    @include when-focused-within() {
-      @include use-custom-focus-outline();
-      border-radius: 13px;
-    }
+  // ── Track (the pill background) ───────────────────────────────────────
+  &__track {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--pk-switch-track-radius);
+    background-color: var(--pk-switch-track-bg);
+    transition: background-color var(--pk-switch-timing) ease;
 
     &--checked {
-      @include gradientBorderVar(4);
+      background: linear-gradient(
+        90deg,
+        var(--pk-switch-active),
+        color-mix(in srgb, var(--pk-switch-active) 75%, white 25%)
+      );
     }
 
     &--disabled {
-      background-color: var(--color-grey-300);
+      opacity: 0.4;
+    }
+  }
+
+  // ── Hidden native checkbox (covers the control area for interaction) ──
+  &__input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+
+    &:focus-visible + * {
+      // focus is handled on __control below via :focus-within
+    }
+
+    &:disabled {
       cursor: not-allowed;
     }
   }
 
-  &__input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-    z-index: 2; /* over track but under thumb */
+  // Colored box-shadow (always on, like Input) — deepens on hover / focus
+  &__control {
+    box-shadow:
+      0 2px 8px color-mix(in srgb, var(--pk-switch-active) 30%, transparent),
+      0 1px 3px color-mix(in srgb, var(--pk-switch-active) 15%, transparent);
+    border-radius: var(--pk-switch-track-radius);
+    transition: box-shadow var(--pk-switch-timing) ease;
+
+    &:hover {
+      box-shadow:
+        0 4px 12px color-mix(in srgb, var(--pk-switch-active) 40%, transparent),
+        0 0 5px    color-mix(in srgb, var(--pk-switch-active) 30%, transparent);
+    }
+
+    &:focus-within {
+      box-shadow:
+        0 4px 12px color-mix(in srgb, var(--pk-switch-active) 40%, transparent),
+        0 0 5px    color-mix(in srgb, var(--pk-switch-active) 30%, transparent);
+    }
   }
 
+  // ── Thumb (sliding knob) ──────────────────────────────────────────────
   &__thumb {
     position: absolute;
+    left: 3px;
     top: 50%;
-    left: 2px; /* default (unchecked) */
-    width: 22px;
-    height: 22px;
-    background-color: $white;
-    border-radius: 50%;
     transform: translateY(-50%);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    z-index: 3; /* always on top */
+    width: var(--pk-switch-thumb-size);
+    height: var(--pk-switch-thumb-size);
+    border-radius: 50%;
+    background-color: var(--pk-switch-thumb-bg);
+    box-shadow: var(--pk-shadow-sm);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      left var(--pk-switch-timing) ease,
+      background-color var(--pk-switch-timing) ease,
+      box-shadow var(--pk-switch-timing) ease;
 
-    /* If checked, shift thumb to the right */
     &--checked {
-      transform: translateY(-50%) translateX(13px);
-      left: 5px;
+      left: calc(
+        var(--pk-switch-track-width) - var(--pk-switch-thumb-size) - 3px
+      );
+      background-color: var(--pk-switch-thumb-checked-bg);
     }
 
     &--disabled {
-      background-color: var(--color-grey-600);
-    }
-
-    & {
-      /* Center child icon */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
+      opacity: 0.6;
     }
   }
 
+  // ── Icon inside the thumb ─────────────────────────────────────────────
   &__icon__wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
+    color: var(--pk-color-fg);
   }
 
   &__icon {
-    &--primary { color: var(--color-primary-500); }
-    &--secondary { color: var(--color-secondary-500); }
-    &--success { color: var(--color-success); }
-    &--error { color: var(--color-error); }
-    &--info { color: var(--color-grey-300); }
-    &--warning { color: var(--color-warning); }
+    &--isActive {
+      color: var(--pk-color-fg);
+    }
   }
 
-  &__track {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-grey-300);
-    border-radius: 13px;
-    transition: background-color 0.3s ease;
-    z-index: 1;
+  // ── Dark theme overrides ────────────────────────────────────────────────
+  // All variants: white thumb stays white, icon is black (on white thumb).
+  :global([data-theme="dark"]) &__thumb,
+  :global(.pk-theme-dark) &__thumb {
+    --pk-switch-thumb-bg: #ffffff;
+    --pk-switch-thumb-checked-bg: #ffffff;
+  }
 
-    &--checked { background-color: var(--color-primary-500); }
-    &--disabled { background-color: var(--color-grey-200); }
+  :global([data-theme="dark"]) &__icon__wrapper,
+  :global(.pk-theme-dark) &__icon__wrapper,
+  :global([data-theme="dark"]) &__icon,
+  :global(.pk-theme-dark) &__icon {
+    color: #000000;
+  }
+
+  // inherit variant only: checked thumb turns black + icon turns white so it's
+  // visible (the track is white/fg-colored, thumb needs contrast).
+  :global([data-theme="dark"]) &--inherit &__thumb--checked,
+  :global(.pk-theme-dark) &--inherit &__thumb--checked {
+    --pk-switch-thumb-checked-bg: #000000;
+  }
+
+  :global([data-theme="dark"]) &--inherit &__icon--isActive,
+  :global(.pk-theme-dark) &--inherit &__icon--isActive {
+    color: #ffffff;
+  }
+
+  // ── Disabled state on root ────────────────────────────────────────────
+  &--disabled,
+  &__control--disabled {
+    cursor: not-allowed;
   }
 }

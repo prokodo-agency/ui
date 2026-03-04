@@ -27,7 +27,7 @@ jobs:
       - name: 🧰 Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: "pnpm"
 
       - name: � Cache Cypress binary
@@ -43,6 +43,33 @@ jobs:
       - name: 🔧 Install Cypress binary
         if: steps.cypress-cache.outputs.cache-hit != 'true'
         run: npx cypress install
+
+      - name: 📝 Check docs overview is up to date
+        run: |
+          node docs/scripts/generate-overview.mjs
+          # Format the generated files so the comparison is against the same
+          # Prettier-formatted output that is committed to the repo.
+          npx prettier --write \
+            docs/docs/components/overview.mdx \
+            "docs/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx"
+          # git diff only works for tracked files; git status --porcelain catches
+          # both modified tracked files and newly untracked generated files.
+          # Run from repo root so paths are unambiguous.
+          DIRTY=$(git status --porcelain \
+                    docs/docs/components/overview.mdx \
+                    docs/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx \
+                  2>/dev/null)
+          if [ -n "$DIRTY" ]; then
+            echo "::error::overview.mdx is stale — run 'node docs/scripts/generate-overview.mjs && npx prettier --write docs/docs/components/overview.mdx' and commit the result"
+            git status --short \
+              docs/docs/components/overview.mdx \
+              docs/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx
+            exit 1
+          fi
+          echo "✅ overview.mdx is up to date"
+
+      - name: 🌍 Check translation drift (DE)
+        run: cd docs && node scripts/check-translation-drift.mjs
 
       - name: 🧪 Typecheck, Lint & Test
         run: pnpm format && pnpm lint && pnpm typecheck && pnpm test:unit:ci

@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as PostItemStories from "./PostItem.stories"
 
 <Meta of={PostItemStories} />
@@ -27,12 +27,47 @@ Use `PostItem` inside a vertically stacked list of posts. For a larger card-styl
 - Don't render `PostItem` without a title — it is the primary accessible label
 - Don't truncate the title at fewer than two lines; readers need enough context
 
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                         | Purpose                                                   |
+| ----------------------------- | --------------------------------------------------------- |
+| `--pk-space-xs`               | Paragraph element margin                                  |
+| `--pk-space-md`               | Read count left padding                                   |
+| `--pk-space-lg`               | Grid gap (mobile), button top margin                      |
+| `--pk-space-xl`               | Grid gap (desktop)                                        |
+| `--pk-color-muted`            | Date, read count, and paragraph text color                |
+| `--pk-radius-lg`              | Thumbnail image wrapper border-radius                     |
+| `--pk-color-brand/accent/...` | Colored border, background tint, and shadow (via `color`) |
+
+> **Image responsiveness:** The `image` prop renders via `object-fit: cover` — the thumbnail fills `100 %` of the media column width and a minimum height of `300 px` at all breakpoints.
+
+## Color
+
+The `color` prop applies a matching visual accent to the image card **and** the
+title Headline simultaneously, keeping the component visually cohesive:
+
+- **Card**: adds a colored `border`, a subtle `background-color` tint, and an
+  ambient `box-shadow` using `color-mix()` — identical to other design-system
+  components (Input, Select, etc.).
+- **Headline**: falls back to the same color value when `title.color` is not
+  explicitly set.
+
+Available values: `inherit` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `white`
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story of={PostItemStories.Default} />
+</Canvas>
+
+### Colored
+
+<Canvas>
+  <Story of={PostItemStories.Colored} />
 </Canvas>
 
 ### Props

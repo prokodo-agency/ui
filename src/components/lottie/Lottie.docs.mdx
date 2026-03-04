@@ -1,11 +1,11 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as LottieStories from "./Lottie.stories"
 
 <Meta of={LottieStories} />
 
 # Lottie
 
-Renders a Lottie JSON animation using `lottie-web`. Provides controls for autoplay, loop, speed, and programmatic play/pause via ref.
+Lazy-renders a dotLottie animation via `@lottiefiles/dotlottie-react`. The animation is loaded only when the container scrolls into the viewport (IntersectionObserver), keeping off-screen frames from consuming resources.
 
 ## When to use
 
@@ -13,7 +13,12 @@ Use `Lottie` for high-quality, scalable micro-animations — loading states, emp
 
 ## Available animations
 
-All animation names are defined in `LottieAnimations.ts`. Reference them via the `name` prop.
+All pre-defined animation URLs are exported from `LottieAnimations.ts` as the `ANIMATIONS` map.
+
+```tsx
+import { ANIMATIONS } from "@/components/lottie/LottieAnimations"
+;<Lottie animation={ANIMATIONS.SolutionCloud} />
+```
 
 ## Accessibility (WCAG 2.2)
 
@@ -24,7 +29,7 @@ All animation names are defined in `LottieAnimations.ts`. Reference them via the
 
 ## ✅ Do
 
-- Keep animation files small (< 100 KB JSON) for performance
+- Keep `.lottie` bundles small (< 100 KB) for performance
 - Use `loop={false}` for one-shot feedback animations (success, error)
 - Provide a static fallback image for environments where JavaScript is disabled
 
@@ -40,6 +45,12 @@ All animation names are defined in `LottieAnimations.ts`. Reference them via the
 
 <Canvas>
   <Story of={LottieStories.Default} />
+</Canvas>
+
+### Single Play (no loop)
+
+<Canvas>
+  <Story of={LottieStories.NoLoop} />
 </Canvas>
 
 ### Props

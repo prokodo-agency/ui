@@ -77,4 +77,28 @@ describe("SpinnerView", () => {
     expect(svg).toHaveAttribute("width", "24")
     expect(svg).toHaveAttribute("height", "24")
   })
+
+  it("applies color style when color prop is set", () => {
+    render(<SpinnerView color="primary" />)
+    const svg = screen.getByRole("status")
+    // CSS custom property is preserved by jsdom; standard var() on `color` is not
+    expect(svg.style.getPropertyValue("--pk-loading-color")).toBe(
+      "var(--pk-color-brand)",
+    )
+  })
+
+  it("applies white color style", () => {
+    render(<SpinnerView color="white" />)
+    const svg = screen.getByRole("status")
+    expect(svg.style.getPropertyValue("--pk-loading-color")).toBe(
+      "var(--pk-palette-white)",
+    )
+  })
+
+  it("does not set explicit color style when color is not provided", () => {
+    render(<SpinnerView />)
+    const svg = screen.getByRole("status")
+    // No color prop → no custom property set
+    expect(svg.style.getPropertyValue("--pk-loading-color")).toBe("")
+  })
 })

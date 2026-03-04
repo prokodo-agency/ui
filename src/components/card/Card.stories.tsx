@@ -3,17 +3,17 @@ import { RichText } from "../rich-text"
 
 import { Card } from "./Card"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Card",
+  title: "prokodo/layout/Card",
   component: Card,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    variant: {
+    color: {
       options: [
         "inherit",
         "panel",
@@ -59,7 +59,7 @@ export const Default: Story = {
 
 export const CardHighlight: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     highlight: true,
     children,
   },
@@ -67,7 +67,7 @@ export const CardHighlight: Story = {
 
 export const CardBackground: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     background: "/images/placeholder_1000x200.webp",
     children,
   },
@@ -75,7 +75,7 @@ export const CardBackground: Story = {
 
 export const CardGradiant: Story = {
   args: {
-    variant: "secondary",
+    color: "secondary",
     gradiant: true,
     children,
   },
@@ -83,7 +83,7 @@ export const CardGradiant: Story = {
 
 export const CardClickHandler: Story = {
   args: {
-    variant: "primary",
+    color: "primary",
     background: "/images/placeholder_1000x200.webp",
     onClick: () => console.log("Clicked!"),
     children,

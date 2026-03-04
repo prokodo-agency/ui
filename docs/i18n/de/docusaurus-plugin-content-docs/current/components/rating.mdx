@@ -1,0 +1,114 @@
+---
+id: rating
+title: Rating
+sidebar_label: Rating
+description: Star rating input component with read-only display mode, half-star support, and accessible keyboard navigation.
+---
+
+# Rating
+
+`Rating` rendert eine Bewertungs-Eingabe mit Sternen (oder Symbolen), inklusive Hover-Vorschau, Teilwerten und kontrollierter Nutzung.
+
+---
+
+## Übersicht
+
+```tsx
+import { Rating } from "@prokodo/ui/rating"
+;<Rating name="product-rating" value={rating} onChange={setRating} max={5} />
+```
+
+<StorybookEmbed id="prokodo-form-rating--default" />
+
+---
+
+## Import
+
+```ts
+import { Rating } from "@prokodo/ui/rating"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/rating.css"
+```
+
+---
+
+## Props
+
+| Prop           | Typ                       | Standard | Pflicht | Beschreibung                                 |
+| -------------- | ------------------------- | -------- | ------- | -------------------------------------------- |
+| `id`           | `string`                  | —        | ✅      | HTML-id für Barrierefreiheits-Verknüpfung.   |
+| `label`        | `string`                  | —        | —       | Zugängliches Label für die Bewertungsgruppe. |
+| `labelProps`   | `LabelProps`              | —        | —       | Props für das Label-Element.                 |
+| `value`        | `number`                  | —        | —       | Gesteuerter Bewertungswert.                  |
+| `defaultValue` | `number`                  | —        | —       | Unkontrollierter Ausgangswert.               |
+| `min`          | `number`                  | `1`      | —       | Mindestwert.                                 |
+| `max`          | `number`                  | `5`      | —       | Maximalwert (Anzahl Sterne).                 |
+| `disabled`     | `boolean`                 | `false`  | —       | Bewertungs-Interaktion deaktivieren.         |
+| `required`     | `boolean`                 | `false`  | —       | Feld als Pflichtfeld markieren.              |
+| `fullWidth`    | `boolean`                 | `false`  | —       | An Container-Breite anpassen.                |
+| `color`        | `Variants`                | —        | —       | Farbakzent-Variante.                         |
+| `helperText`   | `string`                  | —        | —       | Hilfetext unterhalb.                         |
+| `errorText`    | `string`                  | —        | —       | Fehlermeldung.                               |
+| `onChange`     | `(value: number) => void` | —        | —       | Wird bei Bewertungsänderung aufgerufen.      |
+| `className`    | `string`                  | —        | —       | CSS-Klasse am Root-Element.                  |
+
+> Siehe [`src/components/rating/Rating.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/rating/Rating.model.ts) für den vollständigen `RatingProps`-Typ.
+
+---
+
+## Design-Tokens
+
+Passe `Rating` über CSS Custom Properties auf `:root` oder einem übergeordneten Element an.
+
+| Token                        | Standard                     | Beschreibung             |
+| ---------------------------- | ---------------------------- | ------------------------ |
+| `--pk-rating-icon-size`      | `1.5rem`                     | Stern-Icon-Größe         |
+| `--pk-rating-gap`            | `var(--pk-space-lg)`         | Abstand zwischen Sternen |
+| `--pk-rating-icon-fg`        | `var(--pk-palette-grey-200)` | Ungefüllter Stern        |
+| `--pk-rating-icon-fg-filled` | `var(--pk-color-brand)`      | Gefüllter / Hover-Stern  |
+| `--pk-rating-focus-ring`     | `var(--pk-color-brand)`      | Fokusrahmen-Farbe        |
+| `--pk-rating-error-fg`       | `var(--pk-color-error)`      | Fehler-Textfarbe         |
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Rating } from "@prokodo/ui/rating"
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
+Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung                            | Status            | Hinweis                                                                                                                                              |
+| --------- | -------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info und Beziehungen** (A)           | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.                            |
+| **1.4.1** | **Verwendung von Farbe** (A)           | 🔍 Manuell prüfen | Farbe darf nicht das einzige Mittel zur Informationsvermittlung sein (z. B. Fehlerhinweise, Pflichtfeldmarkierungen).                                |
+| **2.1.1** | **Tastatur** (A)                       | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                             |
+| **2.4.7** | **Fokus sichtbar** (AA)                | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
+| **2.5.3** | **Label im Namen** (A)                 | ✅ Erfüllt        | Bei Komponenten mit sichtbarem Label muss der zugängliche Name den sichtbaren Labeltext enthalten oder diesem entsprechen.                           |
+| **3.3.2** | **Bezeichnungen oder Anweisungen** (A) | ✅ Erfüllt        | Jedes Formularfeld benötigt ein programmatisch verknüpftes Label oder eine sichtbare Anweisung.                                                      |
+| **4.1.2** | **Name, Rolle, Wert** (A)              | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                 |
+
+> **Testabdeckung:** 3 jest-axe-Assertion(s) in 5 Testdatei(en) · 8 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Rating in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-form-rating--docs)
+
+---
+
+## Quellcode
+
+[`src/components/rating/Rating.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/rating/Rating.model.ts)

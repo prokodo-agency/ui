@@ -36,7 +36,7 @@ describe("Card", () => {
       expect(container.firstChild).toBeTruthy()
     })
 
-    it("renders with all variant types", () => {
+    it("renders with all color types", () => {
       const variants = [
         "primary",
         "secondary",
@@ -49,7 +49,7 @@ describe("Card", () => {
       ] as const
       variants.forEach(variant => {
         const { unmount } = render(
-          <Card variant={variant}>
+          <Card color={variant}>
             <p>{variant}</p>
           </Card>,
         )

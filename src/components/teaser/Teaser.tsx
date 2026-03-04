@@ -17,7 +17,7 @@ const bem = create(styles, "Teaser")
 
 export const Teaser: FC<TeaserProps> = ({
   className,
-  variant = "primary",
+  color = "primary",
   animation,
   lineClamp,
   align,
@@ -28,7 +28,7 @@ export const Teaser: FC<TeaserProps> = ({
   ...props
 }) => (
   <Card
-    variant={variant}
+    color={color}
     {...props}
     className={bem(undefined, undefined, className)}
     contentClassName={bem("card")}
@@ -53,7 +53,7 @@ export const Teaser: FC<TeaserProps> = ({
         size="md"
         type="h3"
         {...title}
-        variant={title?.variant ?? variant}
+        color={title?.color ?? color}
         className={bem(
           "headline",
           {
@@ -77,7 +77,7 @@ export const Teaser: FC<TeaserProps> = ({
       {isString(redirect?.label) && (
         <span className={bem("link")}>
           <Icon
-            color={variant}
+            color={color}
             name="ArrowRight01Icon"
             size="xs"
             {...redirect?.icon}

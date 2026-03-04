@@ -10,7 +10,7 @@ import type { ReactNode, HTMLAttributes } from "react"
  * - `children` is the raw Markdown string to parse.
  * - `animated` controls whether we wrap text nodes in `<AnimatedText>`.
  * - `animationProps` are forwarded to `<AnimatedText>`.
- * - `variant` controls icon/link coloring (passed via BEM-based CSS variables).
+ * - `color` controls icon/link coloring (passed via BEM-based CSS variables).
  * - `itemProp` gets added to each <p> tag for microdata.
  * - `linkComponent` lets you override which Link component to use.
  * - All other props (`...props`) are spread onto the outer <div>.
@@ -25,8 +25,8 @@ export type RichTextProps = {
   /** Props forwarded to AnimatedText. */
   animationProps?: Omit<AnimatedTextProps, "children">
 
-  /** BEM-variant for coloring (e.g. primary, secondary, etc.). */
-  variant?: Variants
+  /** Color for icon/link coloring (e.g. primary, secondary, etc.). */
+  color?: Variants
 
   /** Microdata attributes to spread on wrapper <div>. */
   schema?: Schema

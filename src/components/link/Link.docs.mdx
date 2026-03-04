@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as LinkStories from "./Link.stories"
 
 <Meta of={LinkStories} />
@@ -22,13 +22,30 @@ Use `Link` for inline text links within prose, navigation lists, and CTAs where 
 
 - Use descriptive link text that makes sense out of context (screen reader list view)
 - Set `external` or `target="_blank"` for links that open in a new tab and inform users
-- Use `variant` to align the link color with its surrounding context
+- Use `color` to align the link color with its surrounding context
 
 ## ❌ Don't
 
 - Don't use `Link` to trigger JavaScript actions — use `Button` with `variant="text"`
 - Don't use vague text like "here", "click here", or "read more" without surrounding context
 - Don't open links in a new tab without warning
+
+## Design Tokens
+
+Customise `Link` via CSS custom properties on `:root` or a scoped ancestor.
+
+| Token                           | Default                                                   | Description                                            |
+| ------------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| `--pk-link-color`               | `color-mix(in srgb, var(--pk-color-fg) 55%, transparent)` | Default link text color                                |
+| `--pk-link-color-hover`         | `var(--pk-color-fg)`                                      | Link color on hover/focus when no color variant is set |
+| `--pk-link-color-primary`       | `var(--pk-color-brand)`                                   | Color when `color="primary"`                           |
+| `--pk-link-color-secondary`     | `var(--pk-color-accent)`                                  | Color when `color="secondary"`                         |
+| `--pk-link-color-info`          | `color-mix(in srgb, var(--pk-color-fg) 35%, transparent)` | Color when `color="info"`                              |
+| `--pk-link-color-success`       | `var(--pk-color-success)`                                 | Color when `color="success"`                           |
+| `--pk-link-color-warning`       | `var(--pk-color-warning)`                                 | Color when `color="warning"`                           |
+| `--pk-link-color-error`         | `var(--pk-color-error)`                                   | Color when `color="error"`                             |
+| `--pk-link-color-white`         | `var(--pk-palette-white)`                                 | Color when `color="white"`                             |
+| `--pk-link-color-variant-hover` | `color-mix(in srgb, var(--pk-color-fg) 55%, transparent)` | Hover/focus color applied to colored variant links     |
 
 ## Examples
 

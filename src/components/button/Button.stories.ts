@@ -1,9 +1,9 @@
 import { Button } from "./Button"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Button",
+  title: "prokodo/content/Button",
   component: Button,
   parameters: {
     layout: "centered",
@@ -43,9 +43,6 @@ export const Default: Story = {
     title: "Button",
     variant: "contained",
     color: "primary",
-    iconProps: {
-      name: "ArrowRight01Icon",
-    },
   },
 }
 
@@ -84,5 +81,32 @@ export const WithImage: Story = {
       src: "/assets/images/github_logo.webp",
       alt: "Github icon",
     },
+  },
+}
+
+export const WithLoading: Story = {
+  args: {
+    title: "Loading",
+    variant: "contained",
+    color: "primary",
+    loading: true,
+  },
+}
+
+export const WithLoadingOutlined: Story = {
+  args: {
+    title: "Loading outlined",
+    variant: "outlined",
+    color: "primary",
+    loading: true,
+  },
+}
+
+export const WithLoadingText: Story = {
+  args: {
+    title: "Loading text",
+    variant: "text",
+    color: "primary",
+    loading: true,
   },
 }

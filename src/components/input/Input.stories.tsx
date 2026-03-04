@@ -1,6 +1,6 @@
 import { Input } from "@/components/input"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
@@ -30,6 +30,20 @@ Progressive Enhancement über das Island-Pattern.",
     type: {
       control: "select",
       options: ["text", "email", "url", "tel", "number", "password", "color"],
+    },
+    color: {
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "error",
+        "white",
+      ],
+      control: { type: "select" },
+      description: "Color variant — changes the focus shadow and accent color.",
     },
 
     /* --- Disable UX-non-relevant props in SB -------------------- */

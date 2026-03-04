@@ -1,13 +1,16 @@
 import { ProgressBar } from "./ProgressBar"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/ProgressBar",
+  title: "prokodo/feedback/ProgressBar",
   component: ProgressBar,
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
-    variant: {
+    color: {
       options: [
         "inherit",
         "primary",
@@ -16,7 +19,6 @@ const meta = {
         "info",
         "warning",
         "error",
-        "white",
       ],
       control: { type: "select" },
     },
@@ -24,9 +26,9 @@ const meta = {
 } satisfies Meta<typeof ProgressBar>
 
 export default meta
+type Story = StoryObj<typeof meta>
 
-// default story
-export const Default: StoryObj<typeof meta> = {
+export const Default: Story = {
   args: {
     id: "example-progress",
     value: 60,
@@ -34,19 +36,31 @@ export const Default: StoryObj<typeof meta> = {
   },
 }
 
-// animated updating value story
-export const AnimatedProgress: StoryObj<typeof meta> = {
+export const Primary: Story = {
+  args: { id: "primary", value: 75, color: "primary" },
+}
+
+export const Success: Story = {
+  args: { id: "success", value: 100, color: "success", label: "Complete" },
+}
+
+export const Error: Story = {
+  args: { id: "error", value: 30, color: "error", label: "Failed… 30%" },
+}
+
+export const Warning: Story = {
   args: {
-    id: "animated-progress",
-    value: 10,
-    label: "Processing…",
+    id: "warning",
+    value: 55,
+    color: "warning",
+    label: "Processing… 55%",
   },
-  render: (args, { updateArgs }) => {
-    // simulate progress increase every second
-    const increment = () => {
-      updateArgs(prev => ({ ...prev, value: (prev.value ?? 0) + 10 }))
-    }
-    setTimeout(increment, 1000)
-    return <ProgressBar {...args} />
-  },
+}
+
+export const Info: Story = {
+  args: { id: "info", value: 40, color: "info", label: "Syncing… 40%" },
+}
+
+export const Indeterminate: Story = {
+  args: { id: "indeterminate", infinity: true, animated: true },
 }

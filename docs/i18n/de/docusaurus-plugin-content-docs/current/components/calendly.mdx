@@ -1,0 +1,102 @@
+---
+id: calendly
+title: Calendly
+sidebar_label: Calendly
+description: Bettet ein Calendly-Buchungs-Widget als lazy-geladenen Inline-Frame mit Island-Architektur ein.
+---
+
+# Calendly
+
+`Calendly` bindet Calendly-Buchungsflows als Komponente ein und ermöglicht Terminvereinbarungen direkt im UI-Kontext. Das Embed-Skript wird lazy-geladen — erst beim ersten Client-Render eingefügt.
+
+---
+
+## Übersicht
+
+```tsx
+import { Calendly } from "@prokodo/ui/calendly"
+;<Calendly
+  calendlyId="your-org/30min"
+  colors={{ button: "#1E90FF", background: "#FFFFFF" }}
+  hideCookieSettings
+/>
+```
+
+<StorybookEmbed id="prokodo-media-calendly--inline-demo" height={520} />
+
+---
+
+## Import
+
+```ts
+import { Calendly } from "@prokodo/ui/calendly"
+```
+
+Styling wird über Design-Tokens gesteuert — kein separater CSS-Import erforderlich.
+
+---
+
+## Styling
+
+Die Widget-Höhe wird über den CSS-Custom-Property `--pk-calendly-height` gesteuert (Standard: `700px`). Überschreibe ihn auf einem übergeordneten Element:
+
+```css
+.my-section {
+  --pk-calendly-height: 550px;
+}
+```
+
+---
+
+## Props
+
+| Prop                   | Typ                    | Standard      | Pflicht | Beschreibung                                                          |
+| ---------------------- | ---------------------- | ------------- | ------- | --------------------------------------------------------------------- |
+| `calendlyId`           | `string`               | —             | ✅      | Calendly-URL-Kennung (`"username/schedule-name"`).                    |
+| `data`                 | `CalendlyData`         | —             | —       | Vorbefüllungsdaten (Name, E-Mail, UTM-Parameter).                     |
+| `colors`               | `CalendlyColorOptions` | —             | —       | Farbkonfiguration für das Calendly-Widget (text, button, background). |
+| `animationProps`       | `AnimatedProps`        | —             | —       | Eingangsanimation.                                                    |
+| `hideLoading`          | `boolean`              | `false`       | —       | Lade-Spinner ausblenden.                                              |
+| `hideCookieSettings`   | `boolean`              | `false`       | —       | Calendly-DSGVO-Banner ausblenden.                                     |
+| `hideEventTypeDetails` | `boolean`              | `false`       | —       | Event-Typ-Seitenleiste im Widget ausblenden.                          |
+| `hideDetails`          | `boolean`              | `false`       | —       | Buchungsdetails auf der Landing-Page ausblenden.                      |
+| `LoadingComponent`     | `React.ComponentType`  | `<Loading />` | —       | Eigene Lade-Komponente während Calendly lädt.                         |
+| `className`            | `string`               | —             | —       | CSS-Klasse am Root-Element.                                           |
+
+> Siehe [`src/components/calendly/Calendly.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/calendly/Calendly.model.ts) für den vollständigen `CalendlyProps`-Typ.
+
+---
+
+## AIC-Hinweis
+
+Verwende im Anwendungscode immer den Standard-Importpfad:
+
+```ts
+import { Calendly } from "@prokodo/ui/calendly"
+```
+
+Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung                 | Status            | Hinweis                                                                                                                                                  |
+| --------- | --------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Nicht-Text-Inhalt** (A)   | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **2.1.1** | **Tastatur** (A)            | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                                 |
+| **2.4.1** | **Blöcke überspringen** (A) | 🔍 Manuell prüfen | Eingebettete Frames oder wiederholte Navigationsblöcke müssen einen Skip-to-Content-Mechanismus bieten (z. B. iframe-Titel, Skip-Link).                  |
+| **4.1.2** | **Name, Rolle, Wert** (A)   | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                     |
+
+> **Testabdeckung:** 2 jest-axe-Assertion(s) in 4 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Calendly in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-media-calendly--docs)
+
+---
+
+## Quellcode
+
+[`src/components/calendly/Calendly.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/calendly/Calendly.model.ts)

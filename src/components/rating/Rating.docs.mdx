@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as RatingStories from "./Rating.stories"
 
 <Meta of={RatingStories} />
@@ -23,6 +23,18 @@ Use `Rating` on review forms, satisfaction surveys, and product feedback flows w
 - **Tab**: enter/exit the group
 - **← / → Arrow keys**: move between stars inside the group
 - **Space / Enter**: select the focused star
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                        | Default                      | Description       |
+| ---------------------------- | ---------------------------- | ----------------- |
+| `--pk-rating-icon-size`      | `1.5rem`                     | Star size         |
+| `--pk-rating-icon-fg`        | `var(--pk-palette-grey-200)` | Unfilled star     |
+| `--pk-rating-icon-fg-filled` | `var(--pk-color-brand)`      | Filled star       |
+| `--pk-rating-focus-ring`     | `var(--pk-color-brand)`      | Focus ring colour |
+| `--pk-rating-error-fg`       | `var(--pk-color-error)`      | Error colour      |
 
 ## ✅ Do
 

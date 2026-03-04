@@ -1,7 +1,7 @@
 // DynamicList.stories.tsx
 import { DynamicList } from "@/components/dynamic-list"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ------------------------------------------------- */
 const meta = {
@@ -16,16 +16,59 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs"],
   argTypes: {
-    name: { control: "text", description: "Prefix for each field name" },
+    /* --- identity / layout --- */
+    id: { table: { disable: true } },
+    name: {
+      control: "text",
+      description: "Prefix used for each input's `name` attribute",
+    },
+    className: { table: { disable: true } },
+    classNameList: { table: { disable: true } },
+
+    /* --- label --- */
+    label: { control: "text", description: "Label rendered above the list" },
+    labelProps: { table: { disable: true } },
+
+    /* --- state --- */
+    disabled: {
+      control: "boolean",
+      description: "Disable all fields and buttons",
+    },
+    required: { control: "boolean", description: "Mark list as required" },
+
+    /* --- feedback text --- */
+    errorText: {
+      control: "text",
+      description: "Validation error message shown below the list",
+    },
+    helperText: {
+      control: "text",
+      description: "Helper/hint text shown below the list",
+    },
+
+    /* --- visual --- */
+    color: {
+      control: "select",
+      options: [
+        "primary",
+        "secondary",
+        "success",
+        "error",
+        "info",
+        "warning",
+        "white",
+        "inherit",
+      ],
+      description: "Color variant applied to child Input/Select fields",
+    },
+
+    /* --- complex props (hidden from controls panel) --- */
     fields: { table: { disable: true } },
     value: { table: { disable: true } },
     onChange: { action: "changed", table: { disable: true } },
     buttonAddProps: { table: { disable: true } },
     buttonDeleteProps: { table: { disable: true } },
-    className: { table: { disable: true } },
-    classNameList: { table: { disable: true } },
   },
 } satisfies Meta<typeof DynamicList>
 
@@ -38,6 +81,12 @@ type Story = StoryObj<typeof meta>
 export const SingleField: Story = {
   args: {
     name: "values",
+    label: "Values",
+    color: "primary",
+    disabled: false,
+    required: false,
+    helperText: "",
+    errorText: "",
     fields: [{ name: "value", label: "Value" }],
     value: ["First item", "Second item"],
   },

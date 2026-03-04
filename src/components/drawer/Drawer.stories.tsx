@@ -5,10 +5,10 @@ import { Button } from "../button"
 import { Drawer } from "./Drawer"
 
 import type { DrawerProps, DrawerChangeReason } from "./Drawer.model"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Drawer",
+  title: "prokodo/feedback/Drawer",
   component: Drawer,
   parameters: {
     layout: "fullscreen",

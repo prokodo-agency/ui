@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as PostWidgetCarouselStories from "./PostWidgetCarousel.stories"
 
 <Meta of={PostWidgetCarouselStories} />
@@ -34,12 +34,44 @@ Use `PostWidgetCarousel` when you need to surface several posts in limited horiz
 - Don't set very short autoplay intervals (< 4 s) — it prevents reading
 - Don't hide navigation arrows on touch devices; swipe is not universally available
 
+## Design Tokens
+
+Key `--pk-*` tokens used by this component:
+
+| Token                         | Purpose                                                   |
+| ----------------------------- | --------------------------------------------------------- |
+| `--pk-space-sm`               | Nav button right position, button gap                     |
+| `--pk-space-md`               | Nav button bottom position, headline top margin           |
+| `--pk-space-lg`               | Carousel wrapper bottom padding                           |
+| `--pk-space-xl`               | Carousel section top margin                               |
+| `--pk-radius-md`              | Slide image border-radius                                 |
+| `--pk-color-brand/accent/...` | Colored border, background tint, and shadow (via `color`) |
+
+## Color
+
+The `color` prop drives a unified visual theme across all nested elements,
+identical in behavior to `PostWidget` and consistent with the design system:
+
+- **Card** (outer shell): colored `border`, background tint, and `box-shadow`.
+- **Title Headline**: inherits `color` unless `title.color` overrides it.
+- **Item Headlines**: inherit `color` unless the item's `title.color` overrides.
+- **Prev / Next Buttons**: receive `color` as their button color (overridable
+  via `componentsProps.prevButton` / `componentsProps.nextButton`).
+
+Available values: `inherit` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `white`
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story of={PostWidgetCarouselStories.Default} />
+</Canvas>
+
+### Colored
+
+<Canvas>
+  <Story of={PostWidgetCarouselStories.Colored} />
 </Canvas>
 
 ### Props

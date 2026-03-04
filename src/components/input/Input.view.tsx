@@ -1,3 +1,4 @@
+import { Icon } from "@/components/icon"
 import { Label } from "@/components/label"
 import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
@@ -37,6 +38,11 @@ export function InputView({
   maxRows,
   type = "text",
   renderNode,
+  color = "primary",
+  trailingIcon,
+  trailingIconLabel,
+  onTrailingIconClick,
+  trailingIconButtonProps = {},
   ...rest
 }: InputProps): JSX.Element {
   delete rest?.onValidate
@@ -57,7 +63,7 @@ export function InputView({
     inputClassName,
   )
   return (
-    <div className={bem(undefined, undefined, className)}>
+    <div className={bem(undefined, { [color]: true }, className)}>
       <div className={bem("inner")}>
         {typeof label === "string" && (
           <Label
@@ -77,6 +83,18 @@ export function InputView({
         )}
 
         <div className={bem("field", undefined, fieldClassName)}>
+          {typeof label === "string" && (
+            <fieldset
+              aria-hidden="true"
+              className={bem("notch", {
+                "is-focused": Boolean(isFocused) || hasValue,
+              })}
+            >
+              <legend className={bem("notchLegend")}>
+                <span>{label}</span>
+              </legend>
+            </fieldset>
+          )}
           <div
             className={bem(
               "input",
@@ -85,6 +103,7 @@ export function InputView({
                 disabled: Boolean(disabled),
                 multiline: Boolean(multiline),
                 fullWidth: Boolean(fullWidth),
+                "has-trailing": Boolean(trailingIcon),
               },
               inputContainerClassName,
             )}
@@ -135,6 +154,22 @@ export function InputView({
               />
             )}
           </div>
+          {trailingIcon &&
+            (onTrailingIconClick ? (
+              <button
+                {...trailingIconButtonProps}
+                aria-label={trailingIconLabel}
+                className={bem("trailing", { clickable: true })}
+                type="button"
+                onClick={onTrailingIconClick}
+              >
+                <Icon name={trailingIcon} size="sm" />
+              </button>
+            ) : (
+              <span aria-hidden="true" className={bem("trailing")}>
+                <Icon name={trailingIcon} size="sm" />
+              </span>
+            ))}
         </div>
       </div>
 

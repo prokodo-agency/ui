@@ -1,4 +1,4 @@
-import { act, render, screen } from "@/tests"
+import { act, fireEvent, render, screen } from "@/tests"
 
 import type { Step } from "./Stepper.model"
 
@@ -344,7 +344,7 @@ describe("Stepper.client", () => {
     expect(onChange).toHaveBeenCalled()
   })
 
-  it("other keys (e.g. Enter) are ignored without calling preventDefault", async () => {
+  it("Enter activates a completed step and calls preventDefault", async () => {
     const preventDefault = jest.fn()
     render(<StepperClient initialStep={1} steps={steps} />)
     await act(async () => {
@@ -353,11 +353,64 @@ describe("Stepper.client", () => {
         preventDefault,
       } as never)
     })
-    // Neither ArrowLeft nor ArrowRight → else branch: no prevent + no step change
+    expect(screen.getByTestId("stepper-view")).toHaveAttribute(
+      "data-active",
+      "0",
+    )
+    expect(preventDefault).toHaveBeenCalled()
+  })
+
+  it("Space activates a completed step and calls preventDefault", async () => {
+    const preventDefault = jest.fn()
+    render(<StepperClient initialStep={2} steps={steps} />)
+    await act(async () => {
+      capturedSteps[1]?.innerContainerProps?.onKeyDown?.({
+        key: " ",
+        preventDefault,
+      } as never)
+    })
     expect(screen.getByTestId("stepper-view")).toHaveAttribute(
       "data-active",
       "1",
     )
-    expect(preventDefault).not.toHaveBeenCalled()
+    expect(preventDefault).toHaveBeenCalled()
+  })
+
+  it("activation keys on future steps are blocked and call preventDefault", async () => {
+    const preventDefault = jest.fn()
+    render(<StepperClient initialStep={0} steps={steps} />)
+    await act(async () => {
+      capturedSteps[2]?.innerContainerProps?.onKeyDown?.({
+        key: "Enter",
+        preventDefault,
+      } as never)
+    })
+    expect(screen.getByTestId("stepper-view")).toHaveAttribute(
+      "data-active",
+      "0",
+    )
+    expect(preventDefault).toHaveBeenCalled()
+  })
+
+  it("ArrowRight does nothing when next is within bounds but not yet completed", async () => {
+    // index=0, next=1, activeStep=0: outer (1 < 3)=true, inner (1 < 0)=false
+    render(<StepperClient initialStep={0} steps={steps} />)
+    fireEvent.keyDown(screen.getByTestId("step-0"), {
+      key: "ArrowRight",
+    })
+    expect(screen.getByTestId("stepper-view")).toHaveAttribute(
+      "data-active",
+      "0",
+    )
+  })
+
+  it("ignores unrecognised keys (e.g. Tab) without changing step", async () => {
+    // Covers else-if (key === "ArrowRight") false branch (branch 9[1])
+    render(<StepperClient initialStep={1} steps={steps} />)
+    fireEvent.keyDown(screen.getByTestId("step-0"), { key: "Tab" })
+    expect(screen.getByTestId("stepper-view")).toHaveAttribute(
+      "data-active",
+      "1",
+    )
   })
 })

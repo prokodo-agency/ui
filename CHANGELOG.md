@@ -1,5 +1,16 @@
 # @prokodo/ui
 
+## 0.1.16
+
+### Patch Changes
+
+- **`color` prop for blog components**: Added `color` prop to `PostItem`, `PostTeaser`, `PostWidget`, and `PostWidgetCarousel`. The prop accepts the full design-system `Variants` / `CardProps["color"]` palette and propagates a consistent accent to the card border, translucent background tint, ambient `box-shadow`, headline text color, and component-specific interactive elements (read-more Button in `PostItem`, link icon in `PostTeaser`, and prev/next nav buttons in `PostWidgetCarousel`).
+- **`Card` colored box-shadow**: Added an ambient `box-shadow` (via `color-mix()`) to the `primary`, `secondary`, `success`, `warning`, `error`, and `info` color variants of `Card`. Matches the interactive shadow pattern already present on `Input` and `Select`.
+- **Fixed — `white` color visibility**: Passing `color="white"` no longer makes Headline text, Buttons, or Icons invisible on light backgrounds. All affected components now guard against `"white"` and fall back to `"inherit"` for text-rendering elements while keeping the Card in its default white surface style.
+- **Fixed — `PostTeaser` link icon color**: The `ArrowRight01Icon` in the teaser footer now follows the component `color` prop (defaulting to `"primary"` when no color or `"white"` is set).
+- **Fixed — `PostItem` read-more Button color**: The `Button` in `PostItem` now receives the component `color` prop (skipping `"white"` as a button color).
+- **Fixed — `PostWidget` / `PostWidgetCarousel` title default**: Widget title and item headlines now default to `"inherit"` instead of the previously hardcoded `"secondary"`, making the neutral (no-color) state consistent with other blog components.
+
 ## 0.1.15
 
 ### Patch Changes
@@ -453,8 +464,6 @@ Wires everything together using createIsland or createLazyWrapper
 
 - Changed type structure
 
-<<<<<<< HEAD
-
 ## 0.0.7
 
 ### Patch Changes
@@ -473,18 +482,12 @@ Wires everything together using createIsland or createLazyWrapper
 
 - Added theme.css to export files
 
-=======
-
-> > > > > > > eaa5a3fb9c588b005cb1cba62d9ce68eec3c6963
-
 ## 0.0.6
 
 ### Patch Changes
 
 - f7f8cfb: Splitted component library in single exports
-  <<<<<<< HEAD
 - # fix: Exporting theme.css
-  > > > > > > > eaa5a3fb9c588b005cb1cba62d9ce68eec3c6963
 
 ## 0.0.5
 

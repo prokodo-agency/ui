@@ -1,9 +1,9 @@
 import { PostTeaser } from "./PostTeaser"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/blog/PostTeaser",
+  title: "prokodo/content/PostTeaser",
   component: PostTeaser,
   parameters: {
     layout: "centered",
@@ -12,6 +12,19 @@ const meta = {
   argTypes: {
     hideCategory: {
       control: { type: "boolean" },
+    },
+    color: {
+      options: [
+        "inherit",
+        "primary",
+        "secondary",
+        "error",
+        "info",
+        "success",
+        "warning",
+        "white",
+      ],
+      control: { type: "select" },
     },
   },
 } satisfies Meta<typeof PostTeaser>
@@ -37,5 +50,12 @@ export const Default: Story = {
       href: "#",
       label: "Read more",
     },
+  },
+}
+
+export const Colored: Story = {
+  args: {
+    ...Default.args,
+    color: "primary",
   },
 }

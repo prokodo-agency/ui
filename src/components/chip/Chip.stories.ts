@@ -1,10 +1,10 @@
 import { Chip } from "@/components/chip"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 /* ---------- Meta ----------------------------------------- */
 const meta = {
-  title: "prokodo/common/Chip",
+  title: "prokodo/content/Chip",
   component: Chip,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

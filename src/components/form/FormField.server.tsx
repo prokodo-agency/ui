@@ -20,7 +20,7 @@ import type { JSX, ReactNode } from "react"
 const bem = create(styles, "FormField")
 
 export type FormFieldProps = Omit<FormFieldModel, "onChange"> & {
-  variant?: FormVariants
+  color?: FormVariants
   messagesFields?: FormFieldMessages
   onChange?: (field: FormFieldModel, value?: FormFieldValue) => void
   onValidate?: (field: FormFieldModel, err?: string) => void
@@ -29,7 +29,7 @@ export type FormFieldProps = Omit<FormFieldModel, "onChange"> & {
 export default function FormFieldServer({
   fieldType,
   visible,
-  variant,
+  color,
   messagesFields,
   ...props
 }: FormFieldProps): JSX.Element | null {
@@ -44,16 +44,21 @@ export default function FormFieldServer({
   switch (fieldType) {
     case "switch":
       return renderFieldContainer(
-        <Switch color={variant as SwitchColor} {...(props as SwitchProps)} />,
+        <Switch color={color as SwitchColor} {...(props as SwitchProps)} />,
       )
     case "slider":
-      return renderFieldContainer(<Slider {...(props as SliderProps)} />)
+      return renderFieldContainer(
+        <Slider color={color} {...(props as SliderProps)} />,
+      )
     case "select":
-      return renderFieldContainer(<Select {...(props as SelectProps)} />)
+      return renderFieldContainer(
+        <Select color={color} {...(props as SelectProps)} />,
+      )
     case "input":
       return renderFieldContainer(
         <Input
           readOnly
+          color={color}
           errorTranslations={messagesFields?.errors?.input}
           {...(props as InputProps)}
         />,
@@ -62,6 +67,7 @@ export default function FormFieldServer({
       return renderFieldContainer(
         <DatePicker
           readOnly
+          color={color}
           {...(props as DatePickerProps)}
           translations={messagesFields?.errors?.date}
         />,

@@ -5,9 +5,12 @@
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/config/texts" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+
+// Component tokens: --pk-stepper-icon-mask-bg, --pk-stepper-label-color,
+//   --pk-stepper-label-color-active, --pk-stepper-shadow, --pk-stepper-shadow-inset,
+//   --pk-stepper-icon-mb
 
 @include define-block("Stepper") {
     display: flex;
@@ -19,6 +22,51 @@
     @include screenLargerThan($screen-md) {
         width: 100%;
         flex-direction: row;
+    }
+
+    // ── Color variant gradient overrides ──────────────────────────────────────
+    // Each variant re-maps the gradient-border CSS vars used by gradientBorderVar()
+    // so step connectors and icon borders pick up the right colour automatically.
+    &--primary {
+        --gradient-border-1: linear-gradient(180deg, var(--pk-color-brand) 0%, var(--pk-color-accent) 100%);
+        --gradient-border-5: linear-gradient(90deg,  var(--pk-color-brand) 0%, var(--pk-color-accent) 100%);
+        --gradient-border-7: linear-gradient(90deg,  var(--pk-color-brand), var(--pk-color-accent), var(--pk-color-brand));
+    }
+
+    &--secondary {
+        --gradient-border-1: linear-gradient(180deg, var(--pk-color-accent) 0%, var(--pk-color-brand) 100%);
+        --gradient-border-5: linear-gradient(90deg,  var(--pk-color-accent) 0%, var(--pk-color-brand) 100%);
+        --gradient-border-7: linear-gradient(90deg,  var(--pk-color-accent), var(--pk-color-brand), var(--pk-color-accent));
+    }
+
+    &--success {
+        --gradient-border-1: linear-gradient(180deg, var(--pk-color-success) 0%, #10CCB8 100%);
+        --gradient-border-5: linear-gradient(90deg,  var(--pk-color-success) 0%, #10CCB8 100%);
+        --gradient-border-7: linear-gradient(90deg,  var(--pk-color-success), #10CCB8, var(--pk-color-success));
+    }
+
+    &--warning {
+        --gradient-border-1: linear-gradient(180deg, var(--pk-color-warning) 0%, #f7cc6a 100%);
+        --gradient-border-5: linear-gradient(90deg,  var(--pk-color-warning) 0%, #f7cc6a 100%);
+        --gradient-border-7: linear-gradient(90deg,  var(--pk-color-warning), #f7cc6a, var(--pk-color-warning));
+    }
+
+    &--error {
+        --gradient-border-1: linear-gradient(180deg, var(--pk-color-error) 0%, #ff6b6b 100%);
+        --gradient-border-5: linear-gradient(90deg,  var(--pk-color-error) 0%, #ff6b6b 100%);
+        --gradient-border-7: linear-gradient(90deg,  var(--pk-color-error), #ff6b6b, var(--pk-color-error));
+    }
+
+    &--info {
+        --gradient-border-1: linear-gradient(180deg, var(--pk-color-fg) 0%, var(--pk-color-muted) 100%);
+        --gradient-border-5: linear-gradient(90deg,  var(--pk-color-fg) 0%, var(--pk-color-muted) 100%);
+        --gradient-border-7: linear-gradient(90deg,  var(--pk-color-fg), var(--pk-color-muted), var(--pk-color-fg));
+    }
+
+    &--inherit {
+        --gradient-border-1: linear-gradient(180deg, var(--pk-color-border) 0%, var(--pk-color-muted) 100%);
+        --gradient-border-5: linear-gradient(90deg,  var(--pk-color-border) 0%, var(--pk-color-muted) 100%);
+        --gradient-border-7: linear-gradient(90deg,  var(--pk-color-border), var(--pk-color-muted), var(--pk-color-border));
     }
 
     &__step {
@@ -79,7 +127,7 @@
             width: px-to-rem(40px);
             height: px-to-rem(40px);
             border-radius: 9999px;
-            margin-bottom: $space-md;
+            margin-bottom: var(--pk-stepper-icon-mb);
 
             &::before {
                 content: "";
@@ -92,13 +140,13 @@
                 padding: 3px;
                 @include gradientBorderVar(7);
                 mask: 
-                    linear-gradient(var(--color-white) 0 0) content-box, 
-                    linear-gradient(var(--color-white) 0 0);
+                    linear-gradient(var(--pk-stepper-icon-mask-bg) 0 0) content-box, 
+                    linear-gradient(var(--pk-stepper-icon-mask-bg) 0 0);
                 mask-composite: exclude;
             }
 
             &--is-active {
-                box-shadow: var(--elevation-1);
+                box-shadow: var(--pk-stepper-shadow);
 
                 &::before {
                     @include gradientBorderVar(1);
@@ -113,7 +161,7 @@
                     right: 4px;
                     bottom: 4px;
                     border-radius: inherit;
-                    box-shadow: var(--elevation-1--inset);
+                    box-shadow: var(--pk-stepper-shadow-inset);
                 }
             }
 
@@ -127,11 +175,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--color-grey-700);
+            color: var(--pk-stepper-label-color);
             @include text("headline/xs");
 
             &--is-active {
-                color: var(--color-grey-900);
+                color: var(--pk-stepper-label-color-active);
             }
         }
 
@@ -170,19 +218,19 @@
         font-family: map.get($font-family, "caption") !important;
         font-size: map.get($font-size, "xs") !important;
         line-height: map.get($font-height, "sm") !important;
-        color: var(--color-grey-600) !important;
+        color: var(--pk-stepper-label-color) !important;
         @include text("caption");
 
         &--is-active {
-            color: var(--color-grey-800) !important;
+            color: var(--pk-stepper-label-color-active) !important;
         }
 
         &__text {
-            color: var(--color-grey-700) !important;
+            color: var(--pk-stepper-label-color) !important;
             @include hidden();
 
             &--is-active {
-                color: var(--color-grey-900) !important;
+                color: var(--pk-stepper-label-color-active) !important;
             }
 
             @include screenLargerThan($screen-sm) {

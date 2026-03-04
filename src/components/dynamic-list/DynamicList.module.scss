@@ -1,9 +1,5 @@
 @use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/config/radials" as *;
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/designsystem/functions/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
 
 @include define-block("DynamicList") {
@@ -11,32 +7,45 @@
   padding: 0;
 
   &__label {
-    margin-bottom: $space-md;
+    margin-bottom: var(--pk-dynamic-list-label-mb);
   }
 
   &__list {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: $space-lg;
+    gap: var(--pk-dynamic-list-gap);
     list-style-type: none;
     padding: 0;
     margin-top: 0;
 
     &__item {
       display: flex;
+      // Single-field: button sits inline to the right of the input.
+      // center aligns the button with the visible input box midpoint
+      // (Input component = label + field, so flex-end would drop to bottom of label area)
+      flex-direction: row;
       align-items: center;
-      flex-direction: column;
+      gap: var(--pk-space-sm);
       width: 100%;
 
+      // Multi-field: stack fields vertically; delete button is outside <li>
       &--is-multi {
+        flex-direction: column;
         align-items: flex-start;
+        width: auto;
       }
     }
   }
 
+  // The field itself grows to fill available space in single (row) layout
+  &__field {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
   &__field--is-multi {
-    margin-bottom: $space-lg;
+    margin-bottom: var(--pk-dynamic-list-field-mb);
 
     &:last-of-type {
       margin-bottom: 0;
@@ -44,27 +53,29 @@
   }
 
   &__delete__button--is-multi {
-    margin-top: $space-sm;
+    margin-top: var(--pk-dynamic-list-delete-mt);
+    align-self: flex-start;
   }
 
   /* ───────────────── helper / error text */
   &__helperText {
-    padding-left: $space-xl;
-    padding-top: $space-md;
+    padding-left: var(--pk-dynamic-list-helper-pl);
+    padding-top: var(--pk-dynamic-list-helper-pt);
     display: flex;
-    color: var(--color-grey-300);
-    width: 80%;
+    color: var(--pk-dynamic-list-helper-fg);
+    width: var(--pk-dynamic-list-helper-w);
     @include text("caption");
 
-    html[data-theme='dark'] & {
-      color: var(--color-grey-700);
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      color: var(--pk-palette-grey-400);
     }
 
     &__content {
       width: 100%;
 
       &--is-error {
-        color: var(--color-error);
+        color: var(--pk-dynamic-list-error-fg);
       }
     }
   }

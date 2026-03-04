@@ -1,2 +1,6 @@
 export * from "./ProgressBar"
-export type { ProgressBarProps } from "./ProgressBar.model"
+export type {
+  ProgressBarProps,
+  ProgressBarColor,
+  ProgressBarVariant,
+} from "./ProgressBar.model"

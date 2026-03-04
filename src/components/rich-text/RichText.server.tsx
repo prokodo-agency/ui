@@ -23,7 +23,7 @@ export function RichTextServer(props: RichTextProps): JSX.Element {
     schema = {},
     animated: _animated,
     animationProps: _animationProps,
-    variant: _variant, // eslint-disable-next-line  @typescript-eslint/no-unused-vars
+    color: _color, // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     itemProp,
     // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     overrideParagraph,

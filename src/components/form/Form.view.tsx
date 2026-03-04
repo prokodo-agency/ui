@@ -16,7 +16,7 @@ const bem = create(styles, "Form")
 
 export const FormView: FC<FormViewProps> = ({
   id,
-  variant = "primary",
+  color = "primary",
   disabled,
   action,
   label,
@@ -87,9 +87,9 @@ export const FormView: FC<FormViewProps> = ({
             <FormField
               {...field}
               key={field.name}
+              color={color}
               disabled={disabled !== undefined ? disabled : field?.disabled}
               messagesFields={messagesFields}
-              variant={variant}
               {...fieldProps}
             />
           ))}
@@ -126,7 +126,7 @@ export const FormView: FC<FormViewProps> = ({
             type="submit"
             {...button}
             className={bem("footer__submit", undefined, button?.className)}
-            color={button?.color ?? variant}
+            color={button?.color ?? color}
             disabled={!isFormValid}
           />
         )}

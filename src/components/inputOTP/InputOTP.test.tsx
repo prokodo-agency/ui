@@ -48,7 +48,10 @@ jest.mock("../input", () => ({
   ),
 }))
 
-import { InputOTP } from "./InputOTP"
+import InputOTPClient from "./InputOTP.client"
+
+// Wrap client component to restore the named-export shape the tests expect
+const InputOTP = InputOTPClient
 
 describe("InputOTP", () => {
   // -------------------------------------------------------------------------
@@ -274,6 +277,33 @@ describe("InputOTP", () => {
         />,
       )
       expect(await axe(container)).toHaveNoViolations()
+    })
+  })
+
+  // -------------------------------------------------------------------------
+  // Color prop forwarding
+  // -------------------------------------------------------------------------
+  describe("color prop", () => {
+    it("forwards color to Label as a modifier class", () => {
+      render(
+        <InputOTP color="error" groupLabel="OTP" label="Verification code" />,
+      )
+      const labelEl = screen.getByText(
+        (_, el) =>
+          el instanceof HTMLLabelElement &&
+          (el.textContent?.trim() ?? "").includes("Verification code"),
+      )
+      expect(labelEl).toHaveClass("prokodo-Label--error")
+    })
+
+    it("does not add a color class when color is not provided", () => {
+      render(<InputOTP groupLabel="OTP" label="Verification code" />)
+      const labelEl = screen.getByText(
+        (_, el) =>
+          el instanceof HTMLLabelElement &&
+          (el.textContent?.trim() ?? "").includes("Verification code"),
+      )
+      expect(labelEl).not.toHaveClass("prokodo-Label--error")
     })
   })
 })

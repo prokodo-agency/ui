@@ -6,6 +6,7 @@ jest.mock("./Button.view", () => ({
   ButtonView: jest.fn((props: Record<string, unknown>) => (
     <button
       data-icon-only={String(props.isIconOnly ?? "")}
+      data-loading={String(props.loading ?? "")}
       data-testid="button-view"
       data-icon-name={String(
         props.iconProps
@@ -16,10 +17,6 @@ jest.mock("./Button.view", () => ({
   )),
 }))
 
-jest.mock("../loading", () => ({
-  Loading: () => <span data-testid="loading-spinner" />,
-}))
-
 jest.mock("../link/Link.client", () => ({
   default: () => <a href="https://example.com">link</a>,
 }))
@@ -27,22 +24,28 @@ jest.mock("../link/Link.client", () => ({
 const ButtonClient = require("./Button.client").default
 
 describe("Button.client", () => {
-  it("renders ButtonView without loading spinner by default", () => {
+  it("renders ButtonView without loading by default", () => {
     render(<ButtonClient title="Click me" />)
     expect(screen.getByTestId("button-view")).toBeInTheDocument()
-    expect(screen.queryByTestId("loading-spinner")).not.toBeInTheDocument()
+    expect(screen.getByTestId("button-view")).toHaveAttribute(
+      "data-loading",
+      "",
+    )
   })
 
-  it("renders Loading spinner when loading=true", () => {
+  it("passes loading=true to ButtonView when loading=true", () => {
     render(<ButtonClient loading title="Click me" />)
-    expect(screen.getByTestId("loading-spinner")).toBeInTheDocument()
+    expect(screen.getByTestId("button-view")).toHaveAttribute(
+      "data-loading",
+      "true",
+    )
   })
 
-  it("clears iconProps.name when loading=true", () => {
+  it("preserves iconProps.name when loading=true (icon hidden inside ButtonView)", () => {
     render(<ButtonClient loading iconProps={{ name: "star" }} />)
     expect(screen.getByTestId("button-view")).toHaveAttribute(
       "data-icon-name",
-      "",
+      "star",
     )
   })
 

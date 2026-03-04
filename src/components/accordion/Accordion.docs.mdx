@@ -1,4 +1,4 @@
-import { Canvas, Controls, Meta, Story } from "@storybook/blocks"
+import { Canvas, Controls, Meta, Story } from "@storybook/addon-docs/blocks"
 import * as AccordionStories from "./Accordion.stories"
 
 <Meta of={AccordionStories} />
@@ -34,7 +34,20 @@ Use `Accordion` when content needs to be grouped into collapsible sections to re
 - `items[].renderHeader` takes precedence over `title` + `titleOptions`
 - `items[].renderHeaderActions` renders right-aligned controls in the header
 - `items[].actions` renders footer-level action buttons (each requires unique `id`)
-- `variant` propagates the design-system colour token to header borders
+- `color` propagates the design-system colour token to header borders
+
+## Design Tokens
+
+Customise via CSS custom properties on `:root` or a scoped ancestor element.
+
+| Token                          | Default                  | Description          |
+| ------------------------------ | ------------------------ | -------------------- |
+| `--pk-accordion-radius`        | `var(--pk-radius-md)`    | Item corner radius   |
+| `--pk-accordion-border`        | `var(--pk-color-border)` | Border colour        |
+| `--pk-accordion-border-focus`  | `var(--pk-color-brand)`  | Focused border       |
+| `--pk-accordion-shadow`        | `var(--pk-shadow-sm)`    | Box-shadow           |
+| `--pk-accordion-gradient-from` | `var(--pk-color-brand)`  | Hover gradient start |
+| `--pk-accordion-gradient-to`   | `var(--pk-color-accent)` | Hover gradient end   |
 
 ## ✅ Do
 

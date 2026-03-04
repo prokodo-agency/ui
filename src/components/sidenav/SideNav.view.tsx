@@ -1,17 +1,23 @@
 import { create } from "@/helpers/bem"
 
+import { Headline } from "../headline"
 import { Icon, type IconProps } from "../icon"
 import { Link } from "../link"
 
 import styles from "./SideNav.module.scss"
 
-import type { SideNavViewProps, SideNavItem } from "./SideNav.model"
+import type {
+  SideNavViewProps,
+  SideNavItem,
+  SideNavSection,
+} from "./SideNav.model"
 import type { JSX } from "react"
 
 const bem = create(styles, "SideNav")
 
 export default function SideNavView({
   items,
+  sections,
   collapsed,
   collapsedLabel = "Expand menu",
   collapsedIcon = "ArrowRight01Icon",
@@ -23,6 +29,8 @@ export default function SideNavView({
   ariaLabel = "Main navigation",
   className,
   renderFooter,
+  headlineProps: globalHeadlineProps,
+  descriptionProps: globalDescriptionProps,
 }: SideNavViewProps): JSX.Element {
   const renderItem = (icon: IconProps, label: string) => (
     <>
@@ -38,6 +46,87 @@ export default function SideNavView({
       )}
     </>
   )
+
+  const renderNavItem = ({ label, icon, redirect, active }: SideNavItem) => (
+    <li key={label}>
+      {redirect?.href !== undefined ? (
+        <Link
+          {...redirect}
+          href={redirect.href}
+          className={bem(
+            "link",
+            { collapsed, "is-active": Boolean(active) },
+            redirect?.className,
+          )}
+        >
+          {renderItem(icon, label)}
+        </Link>
+      ) : (
+        <>{renderItem(icon, label)}</>
+      )}
+    </li>
+  )
+
+  const renderSection = (section: SideNavSection, index: number) => {
+    const {
+      headline,
+      description,
+      headlineComponent: HeadlineComponent,
+      headlineProps: sectionHeadlineProps,
+      descriptionProps: sectionDescriptionProps,
+      items: sectionItems,
+    } = section
+    const mergedHeadlineProps = {
+      ...globalHeadlineProps,
+      ...sectionHeadlineProps,
+    }
+    const mergedDescriptionProps = {
+      ...globalDescriptionProps,
+      ...sectionDescriptionProps,
+    }
+    const showHeader =
+      !collapsed && (headline || description || HeadlineComponent)
+
+    return (
+      <div key={index} className={bem("section")}>
+        {showHeader && (
+          <div className={bem("section__header")}>
+            {HeadlineComponent ? (
+              <HeadlineComponent className={bem("section__headline")} />
+            ) : (
+              headline && (
+                <Headline
+                  size="xs"
+                  type="h6"
+                  {...mergedHeadlineProps}
+                  className={bem(
+                    "section__headline",
+                    undefined,
+                    mergedHeadlineProps?.className,
+                  )}
+                >
+                  {headline}
+                </Headline>
+              )
+            )}
+            {!HeadlineComponent && description && (
+              <p
+                {...mergedDescriptionProps}
+                className={bem(
+                  "section__description",
+                  undefined,
+                  mergedDescriptionProps?.className,
+                )}
+              >
+                {description}
+              </p>
+            )}
+          </div>
+        )}
+        <ul className={bem("list")}>{sectionItems.map(renderNavItem)}</ul>
+      </div>
+    )
+  }
 
   return (
     <aside
@@ -63,27 +152,11 @@ export default function SideNavView({
       </button>
 
       <nav id="sidenav">
-        <ul className={bem("list")}>
-          {items.map(({ label, icon, redirect, active }: SideNavItem) => (
-            <li key={label}>
-              {redirect?.href !== undefined ? (
-                <Link
-                  {...redirect}
-                  href={redirect.href}
-                  className={bem(
-                    "link",
-                    { collapsed, "is-active": Boolean(active) },
-                    redirect?.className,
-                  )}
-                >
-                  {renderItem(icon, label)}
-                </Link>
-              ) : (
-                <>{renderItem(icon, label)}</>
-              )}
-            </li>
-          ))}
-        </ul>
+        {sections && sections.length > 0 ? (
+          <div className={bem("sections")}>{sections.map(renderSection)}</div>
+        ) : (
+          <ul className={bem("list")}>{(items ?? []).map(renderNavItem)}</ul>
+        )}
       </nav>
 
       {renderFooter !== undefined && !collapsed && renderFooter()}

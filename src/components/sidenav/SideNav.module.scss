@@ -2,9 +2,6 @@
 @use "@/styles/ui/mixins/accessibility"      as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts"     as *;
-@use "@/styles/designsystem/config/colors"    as *;
-@use "@/styles/designsystem/config/spaces"    as *;
-@use "@/styles/designsystem/config/radials"   as *;
 @use "@/styles/ui/mixins/bem"                 as *;
 
 $rail-w: 240px;   // entire moulding width
@@ -14,8 +11,6 @@ $rail-c: 56px;    // Visible toggle width
 @keyframes label-out { from { opacity:1; } to { opacity:0; } }
 
 @include define-block("SideNav") {
-  --bg: var(--color-white);
-  --shadow: var(--elevation-2);
   --t: 280ms;
 
   top: 0;
@@ -24,8 +19,8 @@ $rail-c: 56px;    // Visible toggle width
   display: flex;
   flex-direction: column;
   width: $rail-w;
-  background: var(--bg);
-  box-shadow: var(--shadow);
+  background: var(--pk-sidenav-bg);
+  box-shadow: var(--pk-sidenav-shadow);
 
   /* ───── collapsed → slide to the right leaving only the toggle visible */
   &--collapsed {
@@ -38,9 +33,9 @@ $rail-c: 56px;    // Visible toggle width
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background: var(--bg);
+    background: var(--pk-sidenav-bg);
     transition: background-color 120ms;
-    padding: $space-md $space-lg $space-md $space-md;
+    padding: var(--pk-sidenav-pad-md) var(--pk-sidenav-pad-lg) var(--pk-sidenav-pad-md) var(--pk-sidenav-pad-md);
     border: none;
     cursor: pointer;
 
@@ -55,7 +50,7 @@ $rail-c: 56px;    // Visible toggle width
     }
 
     @include when-hovered()            {
-      background: var(--color-grey-50);
+      background: var(--pk-sidenav-toggle-hover);
     }
 
     @include when-focuse-visible()     {
@@ -70,7 +65,7 @@ $rail-c: 56px;    // Visible toggle width
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: $space-xs;
+    gap: var(--pk-sidenav-gap);
     flex: 1 0 auto;
   }
 
@@ -78,16 +73,16 @@ $rail-c: 56px;    // Visible toggle width
     position: relative;
     display: flex;
     align-items: center;
-    gap: $space-md;
-    padding: $space-sm $space-lg $space-sm $space-md;
+    gap: var(--pk-sidenav-link-gap);
+    padding: var(--pk-sidenav-pad-sm) var(--pk-sidenav-pad-lg) var(--pk-sidenav-pad-sm) var(--pk-sidenav-pad-md);
     text-decoration: none;
-    border-radius: $space-xs;
+    border-radius: var(--pk-sidenav-radius);
     transition: background-color 120ms;
 
     &--is-active,
     &:hover {
       text-decoration: none;
-      background: var(--color-primary-100);
+      background: var(--pk-sidenav-link-hover-bg);
 
       & > div:first-of-type {
         position: relative;
@@ -100,7 +95,7 @@ $rail-c: 56px;    // Visible toggle width
           width: 100%;
           height: 100%;
           @include gradientBackgroundVar("primary");
-          border-radius: $ui-image-border-radius;
+          border-radius: var(--pk-sidenav-radius);
           opacity: 0.5;
         }
       }
@@ -111,30 +106,30 @@ $rail-c: 56px;    // Visible toggle width
     }
 
     &[aria-current="page"] {
-      background: var(--color-primary-50);
+      background: var(--pk-sidenav-link-active-bg);
     }
   }
 
   &__icon {
-    color: var(--color-grey-900);
+    color: var(--pk-sidenav-icon-color);
 
     &__wrapper  {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: $space-xs;
-      background: var(--color-grey-50);
-      border-radius: $ui-image-border-radius;
+      padding: var(--pk-sidenav-pad-xs);
+      background: var(--pk-sidenav-icon-bg);
+      border-radius: var(--pk-sidenav-radius);
     }
   }
 
   &__collapse {
     &__icon {
-      color: var(--color-grey-700);
+      color: var(--pk-sidenav-label-color);
     }
 
     &__label {
-      color: var(--color-grey-700);
+      color: var(--pk-sidenav-label-color);
       @include text("caption");
 
       &--is-hidden {
@@ -144,12 +139,48 @@ $rail-c: 56px;    // Visible toggle width
   }
 
   &__label  {
-    color: var(--color-grey-900);
+    color: var(--pk-sidenav-fg);
     animation: label-in 150ms ease forwards;
     @include text("base");
 
     &--collapsed & {
       animation: label-out 150ms ease forwards;
+    }
+  }
+
+  /* sections ------------------------------------------------------------ */
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+
+    & + & {
+      margin-top: var(--pk-sidenav-pad-sm);
+    }
+
+    &__header {
+      padding: var(--pk-sidenav-pad-sm) var(--pk-sidenav-pad-lg) var(--pk-sidenav-pad-xs) var(--pk-sidenav-pad-md);
+    }
+
+    &__headline {
+      display: block;
+      color: var(--pk-sidenav-section-headline-color);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      @include text("caption");
+    }
+
+    &__description {
+      color: var(--pk-sidenav-label-color);
+      margin: 0;
+      margin-top: 2px;
+      @include text("caption");
     }
   }
 }

@@ -1,16 +1,16 @@
 import { Teaser } from "./Teaser"
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 const meta = {
-  title: "prokodo/common/Teaser",
+  title: "prokodo/content/Teaser",
   component: Teaser,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    variant: {
+    color: {
       options: [
         "inherit",
         "primary",

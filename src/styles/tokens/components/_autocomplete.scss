@@ -1,0 +1,24 @@
+// =============================================================================
+// AUTOCOMPLETE COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin autocomplete-tokens() {
+  --pk-autocomplete-bg:              var(--pk-color-surface);
+  --pk-autocomplete-fg:              var(--pk-color-fg);
+  --pk-autocomplete-fg-muted:        var(--pk-color-muted);
+  --pk-autocomplete-radius:          var(--pk-radius-pill);
+  // Neutral resting shadow; transitions to brand-tinted when dropdown is open
+  --pk-autocomplete-shadow-color:       rgba(0, 0, 0, 0.1);
+  --pk-autocomplete-shadow-color-focus: color-mix(in srgb, var(--pk-color-brand) 30%, transparent);
+  --pk-autocomplete-gradient-from:      var(--pk-color-brand);
+  --pk-autocomplete-gradient-to:        var(--pk-color-accent);
+  --pk-autocomplete-shadow:          var(--pk-shadow-lg);
+  --pk-autocomplete-item-hover-bg:   var(--pk-palette-primary-50);
+  --pk-autocomplete-item-active-bg:  var(--pk-palette-primary-100);
+  --pk-autocomplete-state-bg:        var(--pk-color-surface);
+  --pk-autocomplete-state-fg:        var(--pk-palette-grey-700);
+  --pk-autocomplete-dropdown-bg:     var(--pk-color-surface-raised);
+  --pk-autocomplete-padding-x:       var(--pk-space-md);
+  --pk-autocomplete-padding-y:       var(--pk-space-sm);
+}

@@ -1,165 +1,271 @@
-@use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
-@use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/mixins/screens" as *;
-@use "@/styles/designsystem/config/screens" as *;
-@use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+
+// Component tokens — see src/styles/tokens/components/_slider.scss
 
 @include define-block("Slider") {
-  padding-bottom: $space-xl;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pk-space-xs);
 
+  // ── Color variant overrides ────────────────────────────────────────────
+  &--primary {
+    --pk-slider-fill-from: var(--pk-color-brand);
+    --pk-slider-fill-to:   var(--pk-color-accent);
+  }
+  &--secondary {
+    --pk-slider-fill-from: var(--pk-color-accent);
+    --pk-slider-fill-to:   var(--pk-color-brand);
+  }
+  &--success {
+    --pk-slider-fill-from: var(--pk-color-success);
+    --pk-slider-fill-to:   #10CCB8;
+  }
+  &--warning {
+    --pk-slider-fill-from: var(--pk-color-warning);
+    --pk-slider-fill-to:   #f7cc6a;
+  }
+  &--error {
+    --pk-slider-fill-from: var(--pk-color-error);
+    --pk-slider-fill-to:   #ff6b6b;
+  }
+  &--info,
+  &--inherit,
+  &--white {
+    --pk-slider-fill-from: var(--pk-color-muted);
+    --pk-slider-fill-to:   var(--pk-color-border);
+  }
+
+  // ── Label ─────────────────────────────────────────────────────────
   &__label {
-    padding-bottom: $space-2xl;
+    color: var(--pk-slider-label-fg);
+    @include text("base");
+    & { transition: transform var(--pk-slider-timing) ease; }
 
     &--is-hidden {
       @include hidden();
     }
   }
 
+  // ── Root (position context for all inner elements) ──────────────────
+  // Vertical layout:
+  //   [0..tooltip-height]           → floating tooltip chip lives here
+  //   [tooltip-height..+gap]        → clearance between chip and thumb
+  //   [++thumb-size]                → thumb + rail/track (centered)
+  //   [++mark-label-height]         → mark dots + labels below track
   &__root {
     position: relative;
     width: 100%;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    touch-action: none;
-    -webkit-tap-highlight-color: transparent;
+    height: calc(
+      var(--pk-slider-tooltip-height) +
+      var(--pk-slider-tooltip-gap) +
+      var(--pk-slider-thumb-size) +
+      var(--pk-slider-mark-label-height)
+    );
+    // Collapse tooltip space at idle — expands when parent is hovered (avoids
+    // the hover-oscillation that occurs when the element itself is the trigger)
+    margin-top: calc(-1 * (var(--pk-slider-tooltip-height) + var(--pk-slider-tooltip-gap)));
+    transition: margin-top var(--pk-slider-timing) ease;
 
     &--disabled {
-      cursor: default;
-      pointer-events: none;
       opacity: 0.4;
+      pointer-events: none;
+      cursor: not-allowed;
     }
   }
 
+  // ── Rail (full background track bar) ───────────────────────────────
+  // top = tooltip-height + gap + thumb-size/2 (center of thumb row)
   &__rail {
     position: absolute;
-    width: 100%;
-    height: 4px;
-    top: 50%;
+    left: 0;
+    right: 0;
+    top: calc(
+      var(--pk-slider-tooltip-height) +
+      var(--pk-slider-tooltip-gap) +
+      calc(var(--pk-slider-thumb-size) / 2)
+    );
     transform: translateY(-50%);
-    border-radius: 6px;
-    opacity: 0.3;
-    z-index: 1;
-    @include gradientBackgroundVar("primary-grey-secondary");
+    height: var(--pk-slider-track-height);
+    border-radius: 9999px;
+    background: linear-gradient(
+      90deg,
+      var(--pk-slider-fill-from),
+      var(--pk-slider-fill-to)
+    );
+    opacity: 0.25;
+    pointer-events: none;
   }
 
+  // ── Track (filled / active portion) ──────────────────────────────
   &__track {
     position: absolute;
-    height: 4px;
-    top: 50%;
+    left: 0;
+    top: calc(
+      var(--pk-slider-tooltip-height) +
+      var(--pk-slider-tooltip-gap) +
+      calc(var(--pk-slider-thumb-size) / 2)
+    );
     transform: translateY(-50%);
-    border-radius: 6px;
-    z-index: 2;
-    @include gradientBackgroundVar("primary-secondary");
+    height: var(--pk-slider-track-height);
+    border-radius: 9999px;
+    background: linear-gradient(
+      90deg,
+      var(--pk-slider-fill-from),
+      var(--pk-slider-fill-to)
+    );
+    pointer-events: none;
+    transition: width var(--pk-slider-timing) ease;
   }
 
+  // ── Mark tick (position dot + optional label) ─────────────────────
+  // top = below thumb row + small gap for the dot
   &__mark {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #dedede;
-    border-radius: 50%;
-    top: 50%;
-    text-align: center;
-    transform: translateX(-50%) translateY(-50%);
-    z-index: 3;
+    top: calc(
+      var(--pk-slider-tooltip-height) +
+      var(--pk-slider-tooltip-gap) +
+      var(--pk-slider-thumb-size) +
+      4px
+    );
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+
+    // Small dot indicator
+    &::before {
+      content: "";
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--pk-slider-mark-bg);
+      margin-bottom: 2px;
+    }
 
     &__label {
-      position: relative;
-      display: inline-block;
-      bottom: 0;
-      left: 50%;
-      padding-top: $space-xl;
-      transform: translateX(-50%);
-      color: var(--color-grey-300);
-      @include text("base");
-
-      & {
-        text-align: center;
-        font-size: 0.8rem;
-      }
-
-      @include screenLargerThan($screen-md) {
-        @include visible();
-        margin-left: 50%;
-        min-width: 100px;
-        font-size: 1rem;
-      }
+      color: var(--pk-slider-mark-label-fg);
+      @include text("caption");
+      & { white-space: nowrap; }
     }
   }
 
+  // ── Native range <input> (transparent overlay, handles interaction) ───
   &__input {
-    /* Native Slider-Optik verbergen, aber Funktion erhalten */
-    appearance: none;
-    -webkit-appearance: none;
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
-    position: relative;
-    z-index: 4;
+    opacity: 0;
+    cursor: pointer;
     margin: 0;
-    padding: 0;
-    cursor: inherit;
+    z-index: 2;
 
-    &:focus {
-      outline: none;
-    }
-
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 0;
-      height: 0;
-    }
-    &::-webkit-slider-runnable-track {
-      -webkit-appearance: none;
-      background: transparent;
-      border: none;
-    }
-
-    &::-moz-range-thumb {
-      width: 0;
-      height: 0;
-      background: transparent;
-      border: none;
-    }
-    &::-moz-range-track {
-      background: transparent;
-      border: none;
+    &:disabled {
+      cursor: not-allowed;
     }
   }
 
-  &__thumb {
-    position: absolute;
-    top: 50%;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: var(--color-primary-500);
-    transform: translateX(-50%) translateY(-50%);
-    transition: box-shadow 120ms ease, transform 120ms ease;
-    z-index: 3;
-    @include gradientBackgroundVar("primary-secondary");
-
-    @include when-hovered() {
-      box-shadow: 0 0 0 6px rgba(var(--color-primary-500-rgb), 0.3);
-    }
-
-    &--focused {
-        box-shadow: 0 0 0 6px rgba(var(--color-primary-700-rgb), 0.3);
-        outline: none;
-        @include use-custom-focus-outline(100%);
-    }
-  }
-
+  // ── Floating value tooltip ──────────────────────────────────────
   &__valueText {
     position: absolute;
-    top: -1.7em;
-    white-space: nowrap;
+    top: 0;
     transform: translateX(-50%);
-    z-index: 4;
-    @include text("headline/xs");
+    background-color: var(--pk-slider-tooltip-bg);
+    color: var(--pk-slider-tooltip-fg);
+    border-radius: 999px;
+    padding: 3px calc(var(--pk-space-xs) * 1.5);
+    height: var(--pk-slider-tooltip-height);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity var(--pk-slider-timing) ease;
+    @include text("caption");
+
+    &--focused {
+      opacity: 1;
+    }
+  }
+
+  // ── Hover on the parent component (avoids oscillation on __root itself) ──
+  @media (hover: hover) {
+    &:hover &__root {
+      margin-top: 0;
+    }
+
+    &:hover &__valueText {
+      opacity: 1;
+    }
+
+    &:hover &__label {
+      transform: translateY(var(--pk-space-xs));
+    }
+  }
+
+  // Focus always expands regardless of pointer type
+  &:has(&__valueText--focused) &__root {
+    margin-top: 0;
+  }
+
+  &:has(&__valueText--focused) &__label {
+    transform: translateY(var(--pk-space-xs));
+  }
+
+  // ── Mobile (touch devices): always show tooltip, no label animation ─────
+  @media (hover: none) {
+    &__root {
+      margin-top: 0;
+    }
+
+    &__valueText {
+      opacity: 1;
+    }
+
+    &__label {
+      transition: none;
+    }
+  }
+
+  // ── Visual thumb circle ──────────────────────────────────────────
+  &__thumb {
+    position: absolute;
+    top: calc(
+      var(--pk-slider-tooltip-height) +
+      var(--pk-slider-tooltip-gap) +
+      calc(var(--pk-slider-thumb-size) / 2)
+    );
+    transform: translate(-50%, -50%);
+    width: var(--pk-slider-thumb-size);
+    height: var(--pk-slider-thumb-size);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 38% 38%,
+      color-mix(in srgb, var(--pk-slider-fill-to) 60%, white 40%),
+      var(--pk-slider-fill-from) 70%
+    );
+    border: 2.5px solid var(--pk-slider-thumb-border);
+    box-shadow:
+      var(--pk-shadow-sm),
+      0 0 0 4px rgb(var(--pk-slider-thumb-glow-rgb) / 0.18);
+    pointer-events: none;
+    z-index: 1;
+    transition:
+      box-shadow var(--pk-slider-timing) ease,
+      transform var(--pk-slider-timing) ease;
+
+    &--focused {
+      box-shadow:
+        var(--pk-shadow-sm),
+        0 0 0 8px rgb(var(--pk-slider-thumb-glow-rgb) / 0.30);
+      transform: translate(-50%, -50%) scale(1.12);
+    }
   }
 }

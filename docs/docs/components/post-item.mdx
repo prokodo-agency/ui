@@ -1,0 +1,144 @@
+---
+id: post-item
+title: PostItem
+sidebar_label: PostItem
+description: Compact blog/news list-item component with thumbnail, category, title, and date.
+---
+
+# PostItem
+
+`PostItem` renders a compact, horizontal list-view item for a blog post or news article. Includes a thumbnail, optional category chip, title, excerpt, and publication date.
+
+---
+
+## Overview
+
+```tsx
+import { PostItem } from "@prokodo/ui/post-item"
+;<PostItem
+  title="Getting started with prokodo UI"
+  slug="/blog/getting-started"
+  date="2024-03-01"
+  category="Tutorial"
+  image={{ src: "/blog/thumb.jpg", alt: "Thumbnail" }}
+/>
+```
+
+<StorybookEmbed id="prokodo-content-postitem--default" />
+
+---
+
+## Import
+
+```ts
+import { PostItem } from "@prokodo/ui/post-item"
+```
+
+CSS:
+
+```ts
+import "@prokodo/ui/post-item.css"
+```
+
+---
+
+## Props
+
+| Prop             | Type                   | Default | Required | Description                                               |
+| ---------------- | ---------------------- | ------- | -------- | --------------------------------------------------------- |
+| `title`          | `PostItemHeadline`     | —       | ✅       | Headline config: `{ content: string } & HeadlineProps`.   |
+| `content`        | `string`               | —       | —        | Excerpt / body text.                                      |
+| `category`       | `string`               | —       | —        | Category label shown as a `Chip`.                         |
+| `image`          | `string`               | —       | —        | Image URL for the thumbnail.                              |
+| `author`         | `PostItemAuthorProps`  | —       | —        | Author info (avatar, name, etc.).                         |
+| `date`           | `string`               | —       | —        | ISO date string (requires `locale` when provided).        |
+| `locale`         | `Intl.LocalesArgument` | —       | —        | Locale for date formatting (required when `date` is set). |
+| `metaDate`       | `string`               | —       | —        | Pre-formatted date string (overrides `date` formatting).  |
+| `wordCount`      | `number`               | —       | —        | Word count used to calculate reading time.                |
+| `readCount`      | `number`               | —       | —        | Read count shown in meta.                                 |
+| `button`         | `ButtonProps`          | —       | —        | CTA button props.                                         |
+| `animate`        | `boolean`              | `false` | —        | Enable entrance animation.                                |
+| `color`          | `HeadlineVariant`      | —       | —        | Accent color for card border/shadow and headline.         |
+| `structuredData` | `boolean`              | `false` | —        | Emit JSON-LD structured data.                             |
+| `className`      | `string`               | —       | —        | CSS class on root element.                                |
+
+> See [`src/components/post-item/PostItem.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-item/PostItem.model.ts) for the full `PostItemProps` type.
+
+---
+
+## Color
+
+The `color` prop applies a unified accent across all visual parts of the article card:
+
+| Value         | Card border / shadow                  | Headline text                  | Button color |
+| ------------- | ------------------------------------- | ------------------------------ | ------------ |
+| `"primary"`   | Brand blue (30 % tint border + glow)  | Brand blue                     | Primary      |
+| `"secondary"` | Accent cyan (30 % tint border + glow) | Accent cyan                    | Secondary    |
+| `"success"`   | Green indicator                       | Green                          | Success      |
+| `"warning"`   | Amber indicator                       | Amber                          | Warning      |
+| `"error"`     | Red indicator                         | Red                            | Error        |
+| `"info"`      | Neutral fg tint                       | Muted                          | Info         |
+| `"white"`     | Default white card, no shadow         | `inherit` (dark auto-contrast) | `inherit`    |
+| `"inherit"`   | No override                           | `inherit`                      | `inherit`    |
+
+Passing `"white"` keeps the card in its default surface while safely preventing invisible text or buttons in light mode.
+
+<StorybookEmbed id="prokodo-content-postitem--colored" />
+
+---
+
+## Design Tokens
+
+`PostItem` does not define component-specific CSS custom properties. Override appearance by customising the following global design-system tokens on `:root` or a scoped ancestor:
+
+| Token              | Description                                    |
+| ------------------ | ---------------------------------------------- |
+| `--pk-space-xs`    | Minimum horizontal padding                     |
+| `--pk-space-sm`    | Small internal gap                             |
+| `--pk-space-md`    | Medium internal spacing                        |
+| `--pk-space-lg`    | Standard layout gap (grid column gap)          |
+| `--pk-space-xl`    | Wide layout gap on desktop (two-column layout) |
+| `--pk-color-muted` | Date, read time, and excerpt text colour       |
+| `--pk-radius-lg`   | Image wrapper corner radius                    |
+
+> **Image responsiveness:** The `image` background always renders with `object-fit: cover` and fills its container at all viewport sizes. On mobile the image column stretches to full width; on desktop it occupies the left 33 % column.
+
+---
+
+## AIC Note
+
+Use the standard import path in application code:
+
+```ts
+import { PostItem } from "@prokodo/ui/post-item"
+```
+
+No separate `/client` or `/lazy` import selection is required in consumer code.
+
+AIC components also support a `priority` flag for critical above-the-fold elements.
+This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+
+---
+
+## WCAG 2.2 Status
+
+| Criterion | Name                           | Status           | Note                                                                                                                            |
+| --------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1.3.1** | **Info and Relationships** (A) | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
+| **1.3.2** | **Meaningful Sequence** (A)    | 🔍 Manual review | Content reading order in the DOM must match the intended visual presentation order.                                             |
+| **1.4.3** | **Contrast (Minimum)** (AA)    | 🔍 Manual review | Text must have a contrast ratio of at least 4.5:1 (3:1 for large text). Verify against the final product theme.                 |
+| **2.4.6** | **Headings and Labels** (AA)   | 🔍 Manual review | Headings and labels must describe the topic or purpose of their associated content.                                             |
+| **4.1.2** | **Name, Role, Value** (A)      | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
+
+> **Test coverage:** 2 jest-axe assertion(s) across 5 test file(s) · 4 ARIA attribute occurrence(s) in source scan.
+> Criteria marked 🔍 require manual verification in the final product integration and theme context.
+
+## Storybook
+
+👉 [Open PostItem in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-postitem--docs)
+
+---
+
+## Source
+
+[`src/components/post-item/PostItem.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/post-item/PostItem.model.ts)

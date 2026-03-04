@@ -1,0 +1,37 @@
+// =============================================================================
+// SLIDER COMPONENT TOKENS
+// Declaration block only — no selectors.
+// RGB-triple vars are used for box-shadow alpha composition.
+// =============================================================================
+
+@mixin slider-tokens() {
+  // Track
+  --pk-slider-track-height:        4px;
+  --pk-slider-track-bg:            var(--pk-color-border);
+
+  // Fill gradient (track fill + thumb)
+  --pk-slider-fill-from:           var(--pk-color-brand);
+  --pk-slider-fill-to:             var(--pk-color-accent);
+
+  // Label
+  --pk-slider-label-fg:            var(--pk-color-fg);
+
+  // Marks
+  --pk-slider-mark-bg:             var(--pk-palette-grey-400);
+  --pk-slider-mark-label-fg:       var(--pk-palette-grey-500);
+
+  // Thumb
+  --pk-slider-thumb-size:          24px;
+  --pk-slider-thumb-border:        var(--pk-color-surface);
+  --pk-slider-thumb-glow-rgb:      var(--pk-palette-primary-500-rgb);
+
+  // Floating value tooltip
+  --pk-slider-tooltip-bg:          var(--pk-color-fg);
+  --pk-slider-tooltip-fg:          var(--pk-color-surface);
+  --pk-slider-tooltip-height:      24px; // height of the tooltip chip
+  --pk-slider-tooltip-gap:         10px; // space between tooltip bottom and thumb top
+  --pk-slider-mark-label-height:   20px; // headroom reserved at bottom
+
+  // Animation
+  --pk-slider-timing:              150ms;
+}

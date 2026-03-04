@@ -1,5 +1,5 @@
 import React from "react"
-import type { Preview, ReactRenderer } from "@storybook/react"
+import type { Preview, ReactRenderer } from "@storybook/react-vite"
 import { withThemeFromJSXProvider } from "@storybook/addon-themes"
 import "../src/styles/theme.scss"
 
@@ -71,6 +71,7 @@ export const globalTypes = {
 
 const preview: Preview = {
   globalTypes,
+
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -82,6 +83,7 @@ const preview: Preview = {
       },
     },
   },
+
   decorators: [
     ...decorators,
     withThemeFromJSXProvider<ReactRenderer>({
@@ -89,6 +91,8 @@ const preview: Preview = {
       GlobalStyles: undefined,
     }),
   ],
+
+  tags: ["autodocs"],
 }
 
 export default preview

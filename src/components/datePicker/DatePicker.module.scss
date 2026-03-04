@@ -1,0 +1,789 @@
+@use "@/styles/ui/mixins/bem" as *;
+@use "@/styles/ui/mixins/accessibility" as *;
+@use "@/styles/designsystem/config/screens" as *;
+@use "@/styles/designsystem/mixins/screens" as *;
+@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
+
+// Component tokens: --pk-dp-trigger-*, --pk-dp-dialog-*, --pk-dp-header-*,
+//   --pk-dp-nav-*, --pk-dp-weekday-*, --pk-dp-day-*, --pk-dp-gradient-*,
+//   --pk-dp-time-*, --pk-dp-footer-*
+
+@keyframes dpDialogIn {
+  from { opacity: 0; transform: translateY(-0.5rem) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)       scale(1);    }
+}
+
+@keyframes dpBorderShift {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 200% 0, 0 0; }
+}
+
+@keyframes dpSlideUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@include define-block("DatePicker") {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  // ── Color variant overrides ────────────────────────────────────────
+  &--primary {
+    --pk-dp-gradient-from:           var(--pk-color-brand);
+    --pk-dp-gradient-to:             var(--pk-color-accent);
+    --pk-dp-shadow-color:            color-mix(in srgb, var(--pk-color-brand)   30%, transparent);
+    --pk-dp-trigger-label-float-fg:  var(--pk-color-brand);
+    --pk-dp-day-today-ring:          var(--pk-color-brand);
+  }
+  &--secondary {
+    --pk-dp-gradient-from:           var(--pk-color-accent);
+    --pk-dp-gradient-to:             var(--pk-color-brand);
+    --pk-dp-shadow-color:            color-mix(in srgb, var(--pk-color-accent)  30%, transparent);
+    --pk-dp-trigger-label-float-fg:  var(--pk-color-accent);
+    --pk-dp-day-today-ring:          var(--pk-color-accent);
+  }
+  &--success {
+    --pk-dp-gradient-from:           var(--pk-color-success);
+    --pk-dp-gradient-to:             #10CCB8;
+    --pk-dp-shadow-color:            color-mix(in srgb, var(--pk-color-success) 30%, transparent);
+    --pk-dp-trigger-label-float-fg:  var(--pk-color-success);
+    --pk-dp-day-today-ring:          var(--pk-color-success);
+  }
+  &--warning {
+    --pk-dp-gradient-from:           var(--pk-color-warning);
+    --pk-dp-gradient-to:             #f7cc6a;
+    --pk-dp-shadow-color:            color-mix(in srgb, var(--pk-color-warning) 30%, transparent);
+    --pk-dp-trigger-label-float-fg:  var(--pk-color-warning);
+    --pk-dp-day-today-ring:          var(--pk-color-warning);
+  }
+  &--error {
+    --pk-dp-gradient-from:           var(--pk-color-error);
+    --pk-dp-gradient-to:             #ff6b6b;
+    --pk-dp-shadow-color:            color-mix(in srgb, var(--pk-color-error)   30%, transparent);
+    --pk-dp-trigger-label-float-fg:  var(--pk-color-error);
+    --pk-dp-day-today-ring:          var(--pk-color-error);
+  }
+  &--info,
+  &--inherit,
+  &--white {
+    --pk-dp-gradient-from:           var(--pk-color-muted);
+    --pk-dp-gradient-to:             var(--pk-color-border);
+    --pk-dp-shadow-color:            rgba(0, 0, 0, 0.1);
+    --pk-dp-trigger-label-float-fg:  var(--pk-color-muted);
+    --pk-dp-day-today-ring:          var(--pk-color-muted);
+
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) & {
+      --pk-dp-gradient-from: var(--pk-palette-grey-100);
+      --pk-dp-gradient-to:   var(--pk-palette-grey-200);
+    }
+  }
+
+  // ── Trigger button ─────────────────────────────────────────────────
+  &__trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding:
+      var(--pk-dp-trigger-padding-y)
+      calc(var(--pk-dp-trigger-padding-x) + 2rem)
+      var(--pk-dp-trigger-padding-y)
+      var(--pk-dp-trigger-padding-x);
+    background: var(--pk-dp-trigger-bg);
+    border: 1.5px solid var(--pk-dp-trigger-border);
+    border-radius: var(--pk-dp-trigger-radius);
+    cursor: pointer;
+    text-align: left;
+    transition:
+      border-color var(--pk-timing-normal) ease,
+      box-shadow   var(--pk-timing-normal) ease;
+    box-shadow:
+      0 2px 8px var(--pk-dp-shadow-color),
+      0 1px 3px color-mix(in srgb, var(--pk-dp-shadow-color) 50%, transparent);
+
+    @include when-hovered() {
+      border-color: transparent;
+      box-shadow:
+        0 4px 12px var(--pk-dp-shadow-color),
+        0 0   5px  var(--pk-dp-shadow-color);
+    }
+
+    &--open {
+      border-color: transparent;
+      box-shadow:
+        0 4px 12px var(--pk-dp-shadow-color),
+        0 0   5px  var(--pk-dp-shadow-color);
+
+      // Gradient border via outline overlay trick (same as Input)
+      &::before {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset: -1.5px;
+        border-radius: var(--pk-dp-trigger-radius);
+        background: linear-gradient(
+          90deg,
+          var(--pk-dp-gradient-from),
+          var(--pk-dp-gradient-to),
+          var(--pk-dp-gradient-from)
+        );
+        background-size: 200% 100%;
+        animation: dpBorderShift 3s linear infinite;
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        padding: 1.5px;
+      }
+    }
+  }
+
+  // Floating label inside trigger
+  &__trigger__label {
+    position: absolute;
+    top: 50%;
+    left: var(--pk-dp-trigger-padding-x);
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--pk-dp-trigger-label-fg);
+    pointer-events: none;
+    transition:
+      transform var(--pk-timing-normal) ease,
+      font-size  var(--pk-timing-normal) ease,
+      color      var(--pk-timing-normal) ease;
+
+    &--float {
+      top: 0;
+      transform: translateY(-50%) scale(0.78);
+      transform-origin: top left;
+      font-size: 1rem; // scaled via transform
+      color: var(--pk-dp-trigger-label-float-fg);
+      // text-shadow masks only the border line — no solid background rectangle
+      text-shadow:
+        -3px 0   var(--pk-dp-trigger-bg),
+         3px 0   var(--pk-dp-trigger-bg),
+         0  -2px var(--pk-dp-trigger-bg),
+         0   2px var(--pk-dp-trigger-bg);
+    }
+  }
+
+  // Formatted value text
+  &__trigger__value {
+    font-size: 1rem;
+    color: var(--pk-dp-trigger-fg);
+    line-height: 1.4;
+
+    &--empty {
+      color: var(--pk-dp-trigger-fg-muted);
+    }
+  }
+
+  // Calendar icon (right side)
+  &__trigger__icon {
+    position: absolute;
+    right: var(--pk-dp-trigger-padding-x);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: var(--pk-dp-nav-fg);
+    pointer-events: none;
+  }
+
+  // ── Calendar dialog panel ──────────────────────────────────────────
+  &__dialog {
+    position: absolute;
+    top: calc(100% + var(--pk-space-xs));
+    left: 0;
+    z-index: 200;
+    min-width: var(--pk-dp-dialog-min-width);
+    width: max-content;
+    background: var(--pk-dp-dialog-bg);
+    border: 1px solid var(--pk-dp-dialog-border);
+    border-radius: var(--pk-dp-dialog-radius);
+    box-shadow: var(--pk-dp-dialog-shadow);
+    padding: var(--pk-dp-dialog-padding);
+    animation: dpDialogIn 180ms ease both;
+
+    // Dark-mode: ensure grey chrome (arrows, weekdays, Clear) stays readable
+    // on the dark dialog background. Works for both inline + portal rendering
+    // because html[data-theme="dark"] is always an ancestor of document.body.
+    :global(html[data-theme="dark"]) &,
+    :global([data-theme="dark"]) &,
+    :global(.pk-theme-dark) & {
+      --pk-dp-header-fg:               var(--pk-palette-grey-50);
+      --pk-dp-nav-fg:                  var(--pk-palette-grey-300);
+      --pk-dp-nav-hover-bg:            rgba(255, 255, 255, 0.10);
+      --pk-dp-weekday-fg:              var(--pk-palette-grey-400);
+      --pk-dp-footer-ghost-fg:         var(--pk-palette-grey-300);
+      --pk-dp-footer-ghost-hover-fg:   var(--pk-palette-grey-50);
+      --pk-dp-dialog-border:           rgba(255, 255, 255, 0.10);
+      --pk-dp-dialog-bg:               var(--pk-color-surface);
+    }
+
+    @include screenSmallerThan($screen-md) {
+      // Bottom-sheet: fills viewport width, slides up from bottom
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+      max-height: 92dvh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 1.25rem 1.25rem 0 0;
+      border-bottom: none;
+      padding: 0 1.25rem 2rem;
+      animation: dpSlideUp 260ms cubic-bezier(0.32, 0.72, 0, 1) both;
+      box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.18), 0 -1px 0 var(--pk-dp-dialog-border);
+
+      // Drag handle
+      &::before {
+        content: "";
+        display: block;
+        width: 2.5rem;
+        height: 0.25rem;
+        background: var(--pk-dp-gradient-from);
+        border-radius: 999px;
+        margin: 0.75rem auto 1.25rem;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // Mobile backdrop (hidden on desktop)
+  &__dialog__backdrop {
+    display: none;
+
+    @include screenSmallerThan($screen-md) {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 199;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      animation: dpDialogIn 200ms ease both;
+    }
+  }
+
+  // Mobile close button (hidden on desktop)
+  &__dialog__close {
+    display: none;
+
+    @include screenSmallerThan($screen-md) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--pk-dp-nav-fg);
+      flex-shrink: 0;
+      transition: color var(--pk-timing-fast) ease, background var(--pk-timing-fast) ease;
+
+      @include when-hovered() {
+        background: color-mix(in srgb, var(--pk-dp-gradient-from) 10%, transparent);
+        color: var(--pk-dp-gradient-from);
+      }
+    }
+  }
+
+  // ── Dialog header (prev / month+year / next) ───────────────────────
+  &__dialog__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--pk-space-sm);
+    gap: var(--pk-space-xs);
+
+    @include screenSmallerThan($screen-md) {
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  &__month__label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25em;
+    white-space: nowrap;
+    color: var(--pk-dp-header-fg);
+    @include text("base");
+
+    @include screenSmallerThan($screen-md) {
+      @include text("base/lg");
+      font-weight: 700;
+    }
+  }
+
+  // Clickable month / year header buttons
+  &__header-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.15em 0.35em;
+    border-radius: var(--pk-radius-sm, 4px);
+    color: var(--pk-dp-header-fg);
+    transition: background var(--pk-timing-fast) ease, color var(--pk-timing-fast) ease;
+    @include text("base");
+
+    @include when-hovered() {
+      background: color-mix(in srgb, var(--pk-dp-gradient-from) 10%, transparent);
+      color: var(--pk-dp-gradient-from);
+    }
+  }
+
+  // Decade range label (shown in years-picker mode)
+  &__header-range {
+    flex: 1;
+    text-align: center;
+    font-weight: 700;
+    color: var(--pk-dp-header-fg);
+    @include text("base");
+  }
+
+  // 3-column grid for month / year pickers
+  &__picker-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--pk-space-xs, 0.25rem);
+    padding-block: var(--pk-space-sm, 0.5rem);
+  }
+
+  &__picker-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--pk-radius-md, 6px);
+    cursor: pointer;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    height: 2.75rem;
+    background: transparent;
+    color: var(--pk-dp-header-fg);
+    transition: background var(--pk-timing-fast) ease, color var(--pk-timing-fast) ease;
+
+    &--today {
+      font-weight: 700;
+      color: var(--pk-dp-gradient-from);
+    }
+
+    &--selected {
+      background: var(--pk-dp-gradient-from);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    &--disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    @include when-hovered() {
+      &:not([disabled]) {
+        background: color-mix(in srgb, var(--pk-dp-gradient-from) 10%, transparent);
+        color: var(--pk-dp-gradient-from);
+      }
+    }
+
+    @include screenSmallerThan($screen-md) {
+      height: 3.25rem;
+      font-size: 1rem;
+    }
+  }
+
+  // Prev / next navigation arrows
+  &__nav__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--pk-dp-nav-radius);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--pk-dp-nav-fg);
+    transition: color var(--pk-timing-fast) ease, background var(--pk-timing-fast) ease;
+
+    @include when-hovered() {
+      color: var(--pk-dp-gradient-from);
+    }
+
+    &--prev svg { transform: rotate(180deg); }
+
+    @include screenSmallerThan($screen-md) {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 100%;
+      background: color-mix(in srgb, var(--pk-dp-nav-fg) 8%, transparent);
+
+      @include when-hovered() {
+        background: color-mix(in srgb, var(--pk-dp-gradient-from) 12%, transparent);
+        color: var(--pk-dp-gradient-from);
+      }
+    }
+  }
+
+  // ── Weekday header row ─────────────────────────────────────────────
+  &__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: var(--pk-space-xs);
+
+    @include screenSmallerThan($screen-md) {
+      margin-bottom: var(--pk-space-sm);
+    }
+  }
+
+  &__weekday {
+    text-transform: uppercase;
+    color: var(--pk-dp-weekday-fg);
+    padding-block: var(--pk-space-xs);
+    @include text("caption");
+
+    & {
+      text-align: center;
+    }
+
+    @include screenSmallerThan($screen-md) {
+      @include text("base");
+      font-weight: 600;
+      padding-block: var(--pk-space-sm);
+    }
+  }
+
+  // ── Days grid ─────────────────────────────────────────────────────
+  &__days {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    > div {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+
+    @include screenSmallerThan($screen-md) {
+      gap: var(--pk-space-xs);
+
+      > div {
+        gap: var(--pk-space-xs);
+      }
+    }
+  }
+
+  &__day {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    border: none;
+    background: transparent;
+    color: var(--pk-dp-day-fg);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition:
+      background var(--pk-timing-fast) ease,
+      color      var(--pk-timing-fast) ease;
+
+    @include screenSmallerThan($screen-md) {
+      font-size: 1rem;
+      min-height: 2.75rem;
+    }
+
+    // Gradient border ring (all cells)
+    &::before {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      border-radius: 100%;
+      background: linear-gradient(
+        135deg,
+        var(--pk-dp-gradient-from),
+        var(--pk-dp-gradient-to)
+      );
+      padding: 1.5px;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity var(--pk-timing-fast) ease;
+    }
+
+    @include when-hovered() {
+      background: radial-gradient(
+        100% 100% at 50% 50%,
+        color-mix(in srgb, var(--pk-dp-gradient-from) 22%, transparent) 0%,
+        transparent 100%
+      );
+
+      &::before { opacity: 1; }
+    }
+
+    &:active:not(&--disabled) {
+      background: radial-gradient(
+        100% 100% at 50% 50%,
+        var(--pk-dp-gradient-from) 0%,
+        var(--pk-dp-gradient-to) 100%
+      );
+      color: #fff;
+
+      &::before { opacity: 0; }
+    }
+
+    // Today — full-opacity gradient border ring + bold
+    &--today:not(&--selected) {
+      font-weight: 600;
+
+      &::before { opacity: 1; }
+    }
+
+    // Selected — full circle gradient background
+    &--selected {
+      border-radius: 100%;
+      background: linear-gradient(
+        135deg,
+        var(--pk-dp-gradient-from),
+        var(--pk-dp-gradient-to)
+      );
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 8px var(--pk-dp-shadow-color);
+
+      &::before { opacity: 0; }
+
+      @include when-hovered() {
+        filter: brightness(1.08);
+        &::before { opacity: 0; }
+      }
+    }
+
+    // Days from adjacent months
+    &--outside {
+      color: var(--pk-dp-day-outside-fg);
+    }
+
+    // Out of min/max range
+    &--disabled {
+      color: var(--pk-dp-day-disabled-fg);
+      cursor: not-allowed;
+      pointer-events: none;
+
+      @include when-hovered() {
+        background: transparent;
+      }
+    }
+  }
+
+  // ── Time row (withTime=true) ───────────────────────────────────────
+  &__time__row {
+    display: flex;
+    align-items: center;
+    gap: var(--pk-space-xs);
+    padding: var(--pk-space-sm) 0 var(--pk-space-xs);
+    margin-top: var(--pk-space-sm);
+    border-top: 1px solid var(--pk-dp-footer-border);
+
+    @include screenSmallerThan($screen-md) {
+      justify-content: center;
+      gap: var(--pk-space-md);
+      padding: var(--pk-space-md) 0;
+      margin-top: var(--pk-space-md);
+    }
+  }
+
+  &__time__label {
+    padding-left: var(--pk-space-sm);
+    text-transform: uppercase;
+    color: var(--pk-dp-time-label-fg);
+    flex: 1;
+    @include text("caption");
+
+    & {
+      font-weight: 600;
+    }
+
+    @include screenSmallerThan($screen-md) {
+      display: none; // hidden on mobile — layout speaks for itself
+    }
+  }
+
+  &__time__select {
+    appearance: none;
+    background: var(--pk-dp-time-select-bg);
+    color: var(--pk-dp-time-select-fg);
+    border: 1px solid var(--pk-dp-time-select-border);
+    border-radius: var(--pk-dp-time-select-radius);
+    padding: var(--pk-space-xs) var(--pk-space-sm);
+    cursor: pointer;
+    transition: border-color var(--pk-timing-fast) ease;
+    width: 3.5rem;
+    @include text("caption");
+
+    & {
+      text-align: center;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--pk-dp-gradient-from);
+    }
+
+    @include screenSmallerThan($screen-md) {
+      width: 5.5rem;
+      height: 3.25rem;
+      font-size: 1.75rem;
+      font-weight: 600;
+      border-radius: var(--pk-radius-lg);
+      text-align: center;
+      padding: 0;
+    }
+  }
+
+  &__time__sep {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--pk-dp-time-sep-fg);
+    margin-inline: 2px;
+
+    @include screenSmallerThan($screen-md) {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+  }
+
+  // ── Footer (Today / Clear / Apply) ────────────────────────────────
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--pk-space-xs);
+    padding-top: var(--pk-space-sm);
+    margin-top: var(--pk-space-sm);
+    border-top: 1px solid var(--pk-dp-footer-border);
+
+    @include screenSmallerThan($screen-md) {
+      gap: var(--pk-space-sm);
+      padding-top: var(--pk-space-md);
+      margin-top: var(--pk-space-md);
+    }
+  }
+
+  &__footer__btn {
+    padding: var(--pk-space-xs) var(--pk-space-sm);
+    border-radius: var(--pk-radius-md);
+    border: none;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background var(--pk-timing-fast) ease,
+      color      var(--pk-timing-fast) ease,
+      box-shadow var(--pk-timing-fast) ease;
+
+    @include screenSmallerThan($screen-md) {
+      flex: 1;
+      height: 3rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      border-radius: var(--pk-radius-lg);
+    }
+
+    // Ghost variant (Today / Clear)
+    &--ghost {
+      background: transparent;
+      color: var(--pk-dp-footer-ghost-fg);
+
+      @include when-hovered() {
+        background: var(--pk-dp-nav-hover-bg);
+        color: var(--pk-dp-footer-ghost-hover-fg);
+      }
+
+      @include screenSmallerThan($screen-md) {
+        background: color-mix(in srgb, var(--pk-dp-nav-fg) 8%, transparent);
+      }
+
+      // "Today" gets a subtle brand color hint
+      &:first-child {
+        color: var(--pk-dp-gradient-from);
+        margin-right: auto;
+
+        @include when-hovered() {
+          background: color-mix(in srgb, var(--pk-dp-gradient-from) 12%, transparent);
+          color: var(--pk-dp-gradient-from);
+        }
+
+        @include screenSmallerThan($screen-md) {
+          margin-right: 0;
+          background: color-mix(in srgb, var(--pk-dp-gradient-from) 10%, transparent);
+        }
+      }
+    }
+
+    // Filled variant (Apply)
+    &--filled {
+      background: linear-gradient(
+        135deg,
+        var(--pk-dp-gradient-from),
+        var(--pk-dp-gradient-to)
+      );
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 6px var(--pk-dp-shadow-color);
+
+      @include when-hovered() {
+        filter: brightness(1.08);
+        box-shadow: 0 3px 10px var(--pk-dp-shadow-color);
+      }
+
+      @include screenSmallerThan($screen-md) {
+        flex: 1.5;
+        box-shadow: 0 4px 16px var(--pk-dp-shadow-color);
+      }
+    }
+  }
+
+  // ── Error / helper text ────────────────────────────────────────────
+  &__helper {
+    margin-top: var(--pk-space-xs);
+    padding-inline: var(--pk-dp-trigger-padding-x);
+    font-size: 0.8125rem;
+    color: var(--pk-dp-trigger-fg-muted);
+  }
+
+  &__error {
+    margin-top: var(--pk-space-xs);
+    padding-inline: var(--pk-dp-trigger-padding-x);
+    font-size: 0.8125rem;
+    color: var(--pk-color-error);
+  }
+}

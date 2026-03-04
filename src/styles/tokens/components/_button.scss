@@ -1,0 +1,17 @@
+// =============================================================================
+// BUTTON COMPONENT TOKENS
+// Declaration block only — no selectors.
+// Consumed by Button.module.scss. Override any token on :root or a scoped element.
+// =============================================================================
+
+@mixin button-tokens() {
+  // Base
+  --pk-button-bg:              var(--pk-color-surface-raised);
+--pk-button-fg:              var(--pk-color-fg);
+--pk-button-radius:          var(--pk-radius-pill);
+--pk-button-padding-x:       var(--pk-space-xl);
+--pk-button-padding-y:       0.875rem; // px-to-rem(14px) — static layout constant
+--pk-button-shadow:          var(--pk-shadow-sm);
+--pk-button-disabled-bg:     var(--pk-color-border);
+  --pk-button-disabled-fg:     var(--pk-color-muted);
+}

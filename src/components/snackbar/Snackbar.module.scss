@@ -1,114 +1,136 @@
-@use "@/styles/designsystem/config/spaces" as *;
-@use "@/styles/ui/mixins/bem"          as *;
+@use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
+@use "@/styles/designsystem/mixins/texts" as *;
 
-// ───────────────────────────────────────────────────────────
-// 1) Base component (no fixed positioning)
-// ───────────────────────────────────────────────────────────
+// Component tokens (per variant):
+//   --pk-snackbar-info-bg, --pk-snackbar-info-fg
+//   --pk-snackbar-success-bg, --pk-snackbar-success-fg
+//   --pk-snackbar-warning-bg, --pk-snackbar-warning-fg
+//   --pk-snackbar-error-bg, --pk-snackbar-error-fg
+//   --pk-snackbar-radius, --pk-snackbar-padding-x, --pk-snackbar-padding-y,
+//   --pk-snackbar-shadow, --pk-snackbar-timing
+
+@keyframes Snackbar_slideIn {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes Snackbar_slideOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(100%); }
+}
+
 @include define-block("Snackbar") {
-  // NOTE: remove 'position: fixed'
-  position: relative;            // <- changed
   display: flex;
   align-items: center;
-  gap: $space-md;
+  gap: var(--pk-space-md);
+  padding: var(--pk-snackbar-padding-y) var(--pk-snackbar-padding-x);
+  border-radius: var(--pk-snackbar-radius);
+  border: var(--pk-border-width) solid var(--pk-snackbar-border-color);
+  box-shadow: var(--pk-snackbar-shadow);
+  background-color: var(--pk-snackbar-bg);
+  color: var(--pk-snackbar-fg);
+  animation: Snackbar_slideIn var(--pk-snackbar-timing) ease;
 
-  min-width: 288px;
-  max-width: 430px;
+  &--info {
+    background-color: var(--pk-snackbar-info-bg);
+    color: var(--pk-snackbar-info-fg);
+    border-color: var(--pk-snackbar-info-border);
+    box-shadow: var(--pk-snackbar-info-shadow);
+  }
 
-  padding: $space-lg $space-xl;
-  border-radius: 8px;
-  box-shadow: var(--elevation-2);
+  &--success {
+    background-color: var(--pk-snackbar-success-bg);
+    color: var(--pk-snackbar-success-fg);
+    border-color: var(--pk-snackbar-success-border);
+    box-shadow: var(--pk-snackbar-success-shadow);
+  }
 
-  background-color: var(--color-grey-900);
-  color: var(--color-white);
+  &--warning {
+    background-color: var(--pk-snackbar-warning-bg);
+    color: var(--pk-snackbar-warning-fg);
+    border-color: var(--pk-snackbar-warning-border);
+    box-shadow: var(--pk-snackbar-warning-shadow);
+  }
 
-  // ——— Variants ————————————————————————————————
-  &--success { background-color: var(--color-success); }
-  &--error   { background-color: var(--color-error);   }
-  &--warning { background-color: var(--color-warning); color: var(--color-black); }
-  &--info    {
-    background-color: var(--color-grey-500);
+  &--error {
+    background-color: var(--pk-snackbar-error-bg);
+    color: var(--pk-snackbar-error-fg);
+    border-color: var(--pk-snackbar-error-border);
+    box-shadow: var(--pk-snackbar-error-shadow);
+  }
 
-    html[data-theme='dark'] & {
-      background-color: var(--color-grey-300);
-      color: var(--color-grey-900);
+  &--is-leaving {
+    animation: Snackbar_slideOut var(--pk-snackbar-timing) ease forwards;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__message {
+    flex: 1;
+    @include text("base");
+  }
+
+  &__action {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+
+    // Style any bare button passed as action to match the snackbar color
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pk-space-xs);
+      padding: var(--pk-space-xs) var(--pk-space-sm);
+      border: none;
+      border-radius: var(--pk-radius-sm);
+      background-color: color-mix(in srgb, currentColor 12%, transparent);
+      color: inherit;
+      cursor: pointer;
+      transition:
+        background-color var(--pk-timing-fast) ease,
+        transform        var(--pk-timing-fast) ease;
+      @include text("caption");
+
+      @include when-hovered() {
+        background-color: color-mix(in srgb, currentColor 22%, transparent);
+        transform: scale(1.03);
+      }
+
+      &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+      }
     }
   }
 
-  // ——— Elements ————————————————————————————————
-  &__message { flex: 1; }
-  &__action  { margin-left: auto; }
-  &__close   {
+  &__close {
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width:  20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     padding: 0;
     border: none;
-    background: transparent;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, currentColor 8%, transparent);
     color: inherit;
     cursor: pointer;
+    transition:
+      background-color var(--pk-timing-fast) ease,
+      transform var(--pk-timing-fast) ease;
 
-    // Accessible focus ring
+    @include when-hovered() {
+      background-color: color-mix(in srgb, currentColor 18%, transparent);
+      transform: scale(1.1);
+    }
+
     &:focus-visible {
-      outline: 2px solid var(--color-primary-500);
+      outline: 2px solid currentColor;
       outline-offset: 2px;
-    }
-
-    // Slight hover feedback
-    &:hover {
-      opacity: .8;
-    }
-  }
-
-  // Read-only (SSR) → no hover styles etc.
-  &--readonly { pointer-events: none; }
-}
-
-// ───────────────────────────────────────────────────────────
-// 2) Wrapper generated by <SnackbarProvider>
-//    One per anchorOrigin (“top-right”, etc.)
-// ───────────────────────────────────────────────────────────
-@include define-block("SnackbarProvider") {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  gap: 8;
-  z-index: 9000;
-  pointer-events: none; // clicks only inside snackbar
-
-  &--is-top {
-    top: 0;
-  }
-
-  &--is-bottom {
-    bottom: 0;
-  }
-
-  &--is-center {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  &--is-left {
-    left: $space-lg;
-  }
-
-  &--is-right {
-    right: $space-lg;
-  }
-
-  &__snackbar {
-    pointer-events: auto;
-
-    &--is-top {
-      margin-top: $space-lg;
-    }
-
-    &--is-bottom {
-      margin-bottom: $space-lg;
     }
   }
 }

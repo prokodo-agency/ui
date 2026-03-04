@@ -1,0 +1,23 @@
+// =============================================================================
+// RATING COMPONENT TOKENS
+// Declaration block only — no selectors.
+// =============================================================================
+
+@mixin rating-tokens() {
+  --pk-rating-gap:              var(--pk-space-lg);       // space between star icons
+  --pk-rating-padding-y:        var(--pk-space-md);       // vertical padding in the star group
+  --pk-rating-label-pb:         var(--pk-space-sm);       // label bottom-padding (static, above stars)
+  --pk-rating-footer-pt:        var(--pk-space-sm);       // footer top-padding
+  --pk-rating-helper-pt:        var(--pk-space-md);       // helper text top-padding
+
+  // Star colors
+  --pk-rating-icon-size:        1.5rem;                   // matches original font-size
+  --pk-rating-icon-fg:          var(--pk-palette-grey-200);    // unfilled star
+  --pk-rating-icon-fg-filled:   var(--pk-color-brand);         // filled / hovered star
+  --pk-rating-icon-fg-disabled: var(--pk-palette-grey-200);    // disabled star
+
+  // Focus ring & feedback
+  --pk-rating-focus-ring:       var(--pk-color-brand);
+  --pk-rating-helper-fg:        var(--pk-palette-grey-300);
+  --pk-rating-error-fg:         var(--pk-color-error);
+}

@@ -1,0 +1,88 @@
+---
+id: map
+title: Map
+sidebar_label: Map
+description: Interaktive Google-Maps-Karte mit Marker-Unterstützung und automatischem Hell-/Dunkel-Theme-Wechsel.
+---
+
+# Map
+
+`Map` rendert interaktive Google-Kartenansichten mit Marker-/Standortdarstellung. Die Karte wechselt automatisch zwischen hellem und dunklem Kartenstil basierend auf dem `data-theme`-Attribut der Seite.
+
+---
+
+## Übersicht
+
+```tsx
+import { Map } from "@prokodo/ui/map"
+;<Map
+  apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}
+  center={{ lat: 48.1371, lng: 11.5754 }}
+  zoom={12}
+  marker={[{ position: { lat: 48.1371, lng: 11.5754 } }]}
+/>
+```
+
+<StorybookEmbed id="prokodo-media-map--default" height={460} />
+
+---
+
+## Import
+
+```ts
+import { Map } from "@prokodo/ui/map"
+```
+
+Styling wird über Design-Tokens gesteuert — kein separater CSS-Import erforderlich.
+
+---
+
+## Styling
+
+Die Karten-Höhe wird über den CSS-Custom-Property `--pk-map-height` gesteuert (Standard: `500px`):
+
+```css
+.my-contact-section {
+  --pk-map-height: 400px;
+}
+```
+
+---
+
+## Props
+
+| Prop      | Typ                            | Standard | Pflicht | Beschreibung                                    |
+| --------- | ------------------------------ | -------- | ------- | ----------------------------------------------- |
+| `apiKey`  | `string`                       | —        | ✅      | Google Maps JS API-Schlüssel.                   |
+| `center`  | `{ lat: number; lng: number }` | —        | ✅      | Initiale Kartenzentrierung.                     |
+| `mapId`   | `string`                       | —        | —       | Map ID für cloud-basiertes Custom-Styling.      |
+| `zoom`    | `number`                       | `8`      | —       | Initialer Zoom-Level.                           |
+| `marker`  | `MapMarker[]`                  | —        | —       | Array von Markern mit `position: { lat, lng }`. |
+| `heading` | `number`                       | —        | —       | Kamera-Ausrichtung in Grad.                     |
+| `tilt`    | `number`                       | —        | —       | Kamera-Neigung in Grad.                         |
+
+> Siehe [`src/components/map/Map.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/map/Map.model.ts) für den vollständigen `MapProps`-Typ.
+
+---
+
+## WCAG-2.2-Status
+
+| Kriterium | Bezeichnung                 | Status            | Hinweis                                                                                                                                                  |
+| --------- | --------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.1.1** | **Nicht-Text-Inhalt** (A)   | 🔍 Manuell prüfen | Alle Bilder, Icons und Medien benötigen eine Textalternative (alt, aria-label oder aria-labelledby). Rein dekorative Elemente müssen aria-hidden tragen. |
+| **2.1.1** | **Tastatur** (A)            | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                                 |
+| **2.4.1** | **Blöcke überspringen** (A) | 🔍 Manuell prüfen | Eingebettete Frames oder wiederholte Navigationsblöcke müssen einen Skip-to-Content-Mechanismus bieten (z. B. iframe-Titel, Skip-Link).                  |
+| **4.1.2** | **Name, Rolle, Wert** (A)   | 🔍 Manuell prüfen | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                     |
+
+> **Testabdeckung:** 1 jest-axe-Assertion(s) in 1 Testdatei(en) · 0 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
+
+## Storybook
+
+👉 [Map in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-media-map--docs)
+
+---
+
+## Quellcode
+
+[`src/components/map/Map.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/map/Map.model.ts)

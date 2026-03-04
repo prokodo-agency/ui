@@ -1,35 +1,52 @@
+import dayjs from "dayjs"
 import { axe } from "jest-axe"
 
 import { fireEvent, render, screen } from "@/tests"
 
 import { DatePickerView } from "./DatePicker.view"
 
+import type { DatePickerDialogBehavior } from "./DatePicker.model"
+
+const noop = () => undefined
+
+const defaultBehavior: DatePickerDialogBehavior = {
+  isOpen: false,
+  viewingMonth: dayjs("2024-06-01"),
+  selectedDate: null,
+  onToggle: noop,
+  onPrevMonth: noop,
+  onNextMonth: noop,
+  onDayClick: noop,
+  onToday: noop,
+  onClear: noop,
+  onApply: noop,
+  onTimeChange: noop,
+  viewMode: "days",
+  onViewModeChange: noop,
+  onMonthSelect: noop,
+  onYearSelect: noop,
+}
+
 describe("DatePicker", () => {
   // -------------------------------------------------------------------------
   // Rendering
   // -------------------------------------------------------------------------
   describe("rendering", () => {
-    it("renders a date input", () => {
-      render(<DatePickerView label="Date of birth" name="dob" />)
-      // type="date" inputs don't have a textbox role; query by label text instead
+    it("renders a trigger input with the provided label", () => {
+      render(
+        <DatePickerView
+          {...defaultBehavior}
+          label="Date of birth"
+          name="dob"
+        />,
+      )
       expect(screen.getByLabelText(/date of birth/i)).toBeInTheDocument()
-    })
-
-    it("renders with the provided label", () => {
-      render(<DatePickerView label="Start date" name="date" />)
-      // Label text is split into highlighted + rest spans; query by partial label match
-      expect(screen.getByLabelText(/start date/i)).toBeInTheDocument()
-    })
-
-    it("renders as a datetime-local input when withTime=true", () => {
-      render(<DatePickerView withTime label="Date and time" name="dt" />)
-      const input = screen.getByLabelText("Date and time") as HTMLInputElement
-      expect(input.type).toBe("datetime-local")
     })
 
     it("renders placeholder when provided", () => {
       render(
         <DatePickerView
+          {...defaultBehavior}
           label="Event date"
           name="date"
           placeholder="YYYY-MM-DD"
@@ -38,16 +55,23 @@ describe("DatePicker", () => {
       expect(screen.getByPlaceholderText("YYYY-MM-DD")).toBeInTheDocument()
     })
 
-    it("renders with the formatted value", () => {
-      render(<DatePickerView label="Date" name="date" value="2024-06-15" />)
-      // Input should have formatted value; query by label since type="date" has no textbox role
-      const input = screen.getByLabelText(/date/i) as HTMLInputElement
-      expect(input.value).toBeTruthy()
+    it("renders the formatted selected date as the input value", () => {
+      render(
+        <DatePickerView
+          {...defaultBehavior}
+          label="Date"
+          name="date"
+          selectedDate={dayjs("2024-06-15")}
+        />,
+      )
+      const input = screen.getByRole("textbox")
+      expect(input).toHaveValue("2024-06-15")
     })
 
     it("renders error text when provided", () => {
       render(
         <DatePickerView
+          {...defaultBehavior}
           errorText="Invalid date format"
           label="Date"
           name="date"
@@ -59,6 +83,7 @@ describe("DatePicker", () => {
     it("renders helper text when provided", () => {
       render(
         <DatePickerView
+          {...defaultBehavior}
           helperText="Accepts YYYY-MM-DD format"
           label="Date"
           name="date"
@@ -67,46 +92,43 @@ describe("DatePicker", () => {
       expect(screen.getByText("Accepts YYYY-MM-DD format")).toBeInTheDocument()
     })
 
-    it("renders with minDate and maxDate props", () => {
+    it("calls onToggle when the trigger is clicked", () => {
+      const handleToggle = jest.fn()
       render(
         <DatePickerView
+          {...defaultBehavior}
           label="Date"
-          maxDate="2024-12-31"
-          minDate="2024-01-01"
           name="date"
+          onToggle={handleToggle}
         />,
       )
-      const input = screen.getByLabelText(/date/i) as HTMLInputElement
-      expect(input).toHaveAttribute("min", "2024-01-01")
-      expect(input).toHaveAttribute("max", "2024-12-31")
+      fireEvent.click(screen.getByRole("textbox"))
+      expect(handleToggle).toHaveBeenCalledTimes(1)
     })
 
-    it("calls onChangeInput when input event fires", () => {
-      const handleChange = jest.fn()
+    it("shows the calendar dialog when isOpen=true", () => {
       render(
-        <DatePickerView
-          label="Date"
-          name="date"
-          onChangeInput={handleChange}
-        />,
+        <DatePickerView {...defaultBehavior} isOpen label="Date" name="date" />,
       )
-      const input = screen.getByLabelText(/date/i)
-      fireEvent.input(input, { target: { value: "2024-06-15" } })
-      expect(handleChange).toHaveBeenCalledWith("2024-06-15")
+      expect(screen.getByRole("dialog")).toBeInTheDocument()
+      expect(
+        screen.getByText(defaultBehavior.viewingMonth.format("MMMM")),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(defaultBehavior.viewingMonth.format("YYYY")),
+      ).toBeInTheDocument()
     })
 
-    it("calls onChangeInput when change event fires", () => {
-      const handleChange = jest.fn()
+    it("hides the calendar dialog when isOpen=false", () => {
       render(
         <DatePickerView
+          {...defaultBehavior}
+          isOpen={false}
           label="Date"
           name="date"
-          onChangeInput={handleChange}
         />,
       )
-      const input = screen.getByLabelText(/date/i)
-      fireEvent.change(input, { target: { value: "2024-07-20" } })
-      expect(handleChange).toHaveBeenCalledWith("2024-07-20")
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     })
   })
 
@@ -116,7 +138,11 @@ describe("DatePicker", () => {
   describe("accessibility", () => {
     it("date picker has no axe violations", async () => {
       const { container } = render(
-        <DatePickerView label="Appointment date" name="a11y-date" />,
+        <DatePickerView
+          {...defaultBehavior}
+          label="Appointment date"
+          name="a11y-date"
+        />,
       )
       expect(await axe(container)).toHaveNoViolations()
     })
@@ -124,6 +150,7 @@ describe("DatePicker", () => {
     it("date picker with error has no axe violations", async () => {
       const { container } = render(
         <DatePickerView
+          {...defaultBehavior}
           errorText="Please enter a valid date"
           label="Date"
           name="a11y-date-err"
@@ -132,11 +159,84 @@ describe("DatePicker", () => {
       expect(await axe(container)).toHaveNoViolations()
     })
 
-    it("datetime-local picker has no axe violations", async () => {
+    it("open dialog has no axe violations", async () => {
       const { container } = render(
-        <DatePickerView withTime label="Event time" name="a11y-datetime" />,
+        <DatePickerView
+          {...defaultBehavior}
+          isOpen
+          withTime
+          label="Event time"
+          name="a11y-datetime"
+        />,
       )
       expect(await axe(container)).toHaveNoViolations()
+    })
+  })
+
+  // -------------------------------------------------------------------------
+  // Color prop forwarding
+  // -------------------------------------------------------------------------
+  describe("color prop", () => {
+    it("applies a color modifier class to the root element", () => {
+      render(
+        <DatePickerView
+          {...defaultBehavior}
+          color="success"
+          label="Date"
+          name="dp-color"
+        />,
+      )
+      expect(
+        document.querySelector(".prokodo-DatePicker--success"),
+      ).toBeInTheDocument()
+    })
+
+    it("dialog inherits color when dialogColor is not explicitly set", () => {
+      render(
+        <DatePickerView
+          {...defaultBehavior}
+          isOpen
+          color="warning"
+          label="Event"
+          name="dp-inherit"
+        />,
+      )
+      const dialog = screen.getByRole("dialog")
+      expect(dialog).toHaveClass("prokodo-DatePicker--warning")
+    })
+
+    it("dialog uses explicit dialogColor over color when both are set", () => {
+      render(
+        <DatePickerView
+          {...defaultBehavior}
+          isOpen
+          color="warning"
+          dialogColor="error"
+          label="Event"
+          name="dp-explicit"
+        />,
+      )
+      const dialog = screen.getByRole("dialog")
+      expect(dialog).toHaveClass("prokodo-DatePicker--error")
+      expect(dialog).not.toHaveClass("prokodo-DatePicker--warning")
+    })
+  })
+
+  // -------------------------------------------------------------------------
+  // Portal rendering
+  // -------------------------------------------------------------------------
+  describe("portal rendering", () => {
+    it("renders the dialog inside a portal when dialogPortalTarget is provided", () => {
+      render(
+        <DatePickerView
+          {...defaultBehavior}
+          isOpen
+          dialogPortalTarget={document.body}
+          label="Portal Date"
+          name="dp-portal"
+        />,
+      )
+      expect(screen.getByRole("dialog")).toBeInTheDocument()
     })
   })
 })
