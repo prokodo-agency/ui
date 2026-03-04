@@ -1,5 +1,9 @@
 # @prokodo/ui
 
+## [1.0.2](https://github.com/prokodo-agency/ui/compare/v1.0.1...v1.0.2) — 2026-03-04
+
+- hotfix(ci): remove broken root redirect in release.yml deploy-site
+
 ## [1.0.1](https://github.com/prokodo-agency/ui/compare/v1.0.0...v1.0.1) — 2026-03-04
 
 - hotfix(ci): build library before Storybook/docs in release.yml deploy-site
