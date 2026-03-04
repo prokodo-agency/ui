@@ -44,6 +44,25 @@ jobs:
         if: steps.cypress-cache.outputs.cache-hit != 'true'
         run: npx cypress install
 
+      - name: 📝 Check docs overview is up to date
+        run: |
+          cd docs && node scripts/generate-overview.mjs
+          # git diff only works for tracked files; git status --porcelain catches
+          # both modified tracked files and newly untracked generated files.
+          DIRTY=$(git status --porcelain docs/docs/components/overview.mdx \
+                    docs/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx \
+                  2>/dev/null)
+          if [ -n "$DIRTY" ]; then
+            echo "::error::overview.mdx is stale — run 'node docs/scripts/generate-overview.mjs' and commit the result"
+            git status --short docs/docs/components/overview.mdx \
+              docs/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx
+            exit 1
+          fi
+          echo "✅ overview.mdx is up to date"
+
+      - name: 🌍 Check translation drift (DE)
+        run: cd docs && node scripts/check-translation-drift.mjs
+
       - name: 🧪 Typecheck, Lint & Test
         run: pnpm format && pnpm lint && pnpm typecheck && pnpm test:unit:ci
 
@@ -65,12 +84,3 @@ jobs:
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
             npx cypress run --component --headless --expose theme=dark
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
-
-      - name: 📝 Check docs overview is up to date
-        run: |
-          cd docs && node scripts/generate-overview.mjs
-          git diff --exit-code docs/docs/components/overview.mdx \
-            || (echo "::error::overview.mdx is stale — run 'node docs/scripts/generate-overview.mjs' and commit" && exit 1)
-
-      - name: 🌍 Check translation drift (DE)
-        run: cd docs && node scripts/check-translation-drift.mjs
