@@ -1,4 +1,4 @@
-name: 📚 Docs Build Check
+name: 📚 Deploy Docs
 
 on:
   push:
@@ -12,10 +12,11 @@ permissions:
 
 jobs:
   deploy-docs:
-    name: Build Docs
+    name: Build & Deploy Docs
     runs-on: ubuntu-latest
-    # Skip on release commits — release.yml builds & deploys docs as part of
-    # the full release pipeline, so a separate check here would be redundant.
+    # Skip on release commits — release.yml deploys docs as part of the full
+    # release pipeline (with the freshly published npm version), so running
+    # a second deploy here would race and potentially overwrite it.
     if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
 
     steps:
@@ -41,11 +42,34 @@ jobs:
       - name: 🏗 Build library
         run: pnpm build
 
+      - name: 📘 Build Storybook (static export)
+        run: pnpm run storybook:build
+
       - name: 📝 Generate component overview
         run: cd docs && node scripts/generate-overview.mjs
 
       - name: 🛠 Build Docusaurus site
         run: cd docs && pnpm build
 
-      - name: ✅ Docs build completed
-        run: echo "Docs build successful"
+      - name: 🧱 Assemble Pages site (docs root + storybook subpath)
+        shell: bash
+        run: |
+          rm -rf site
+          mkdir -p site/storybook
+
+          # Docs become the primary site at ui.prokodo.com
+          cp -R docs/build/. site/
+
+          # Storybook is served under /storybook
+          cp -R storybook-static/. site/storybook/
+
+          # Custom domain for GitHub Pages
+          echo 'ui.prokodo.com' > site/CNAME
+
+      - name: 🌐 Deploy to GitHub Pages (ui.prokodo.com)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          cname: ui.prokodo.com
