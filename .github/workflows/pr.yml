@@ -46,15 +46,18 @@ jobs:
 
       - name: 📝 Check docs overview is up to date
         run: |
-          cd docs && node scripts/generate-overview.mjs
+          node docs/scripts/generate-overview.mjs
           # git diff only works for tracked files; git status --porcelain catches
           # both modified tracked files and newly untracked generated files.
-          DIRTY=$(git status --porcelain docs/docs/components/overview.mdx \
+          # Run from repo root so paths are unambiguous.
+          DIRTY=$(git status --porcelain \
+                    docs/docs/components/overview.mdx \
                     docs/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx \
                   2>/dev/null)
           if [ -n "$DIRTY" ]; then
             echo "::error::overview.mdx is stale — run 'node docs/scripts/generate-overview.mjs' and commit the result"
-            git status --short docs/docs/components/overview.mdx \
+            git status --short \
+              docs/docs/components/overview.mdx \
               docs/i18n/de/docusaurus-plugin-content-docs/current/components/overview.mdx
             exit 1
           fi
