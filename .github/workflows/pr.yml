@@ -77,6 +77,12 @@ jobs:
       - name: 🛠 Build library (fail fast if broken)
         run: pnpm run build
 
+      - name: 🧪 E2E – Light theme
+        if: github.actor == 'dependabot[bot]'
+        run: |
+          ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
+            npx cypress run --component --headless --expose theme=light
+
       - name: 🎨 Visual regression – Light theme (Chromatic)
         if: github.actor != 'dependabot[bot]'
         env:
@@ -85,6 +91,12 @@ jobs:
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
             npx cypress run --component --headless --expose theme=light
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
+
+      - name: 🧪 E2E – Dark theme
+        if: github.actor == 'dependabot[bot]'
+        run: |
+          ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
+            npx cypress run --component --headless --expose theme=dark
 
       - name: 🎨 Visual regression – Dark theme (Chromatic)
         if: github.actor != 'dependabot[bot]'
