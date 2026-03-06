@@ -78,6 +78,7 @@ jobs:
         run: pnpm run build
 
       - name: 🎨 Visual regression – Light theme (Chromatic)
+        if: github.actor != 'dependabot[bot]'
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         run: |
@@ -86,6 +87,7 @@ jobs:
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
 
       - name: 🎨 Visual regression – Dark theme (Chromatic)
+        if: github.actor != 'dependabot[bot]'
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         run: |
