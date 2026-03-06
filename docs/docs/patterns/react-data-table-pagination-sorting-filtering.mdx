@@ -1,0 +1,195 @@
+---
+id: react-data-table-pagination-sorting-filtering
+title: React Data Table with Pagination, Sorting & Filtering
+sidebar_label: Data Table
+description: Build a fully accessible React data table with server-side pagination, column sorting, and search filtering using prokodo UI's Table, Pagination, Input, and Select components.
+---
+
+# React Data Table with Pagination, Sorting & Filtering
+
+<StorybookEmbed id="prokodo-patterns-datatable--default" height={480} />
+
+Displaying tabular data is one of the most common UI requirements in any admin or data-heavy application. This pattern composes prokodo UI's `Table`, `Pagination`, `Input`, and `Select` into a complete server-side data table.
+
+---
+
+## When to use this pattern
+
+- Listing resources (users, orders, products) with large datasets
+- Admin interfaces that require sorting by multiple columns
+- Any list view where server-side filtering keeps payloads small
+
+---
+
+## Component setup
+
+```tsx title="components/DataTable.tsx"
+"use client"
+
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useCallback, useTransition } from "react"
+import { Table } from "@prokodo/ui/table/client"
+import { Pagination } from "@prokodo/ui/pagination/client"
+import { Input } from "@prokodo/ui/input/client"
+import { Select } from "@prokodo/ui/select/client"
+import "@prokodo/ui/table.css"
+import "@prokodo/ui/pagination.css"
+import "@prokodo/ui/input.css"
+import "@prokodo/ui/select.css"
+
+type Column<T> = { key: keyof T; label: string }
+
+interface DataTableProps<T extends Record<string, unknown>> {
+  data: T[]
+  columns: Column<T>[]
+  total: number
+  pageSize?: number
+}
+
+export function DataTable<T extends Record<string, unknown>>({
+  data,
+  columns,
+  total,
+  pageSize = 20,
+}: DataTableProps<T>) {
+  const router = useRouter()
+  const pathname = usePathname()
+  const params = useSearchParams()
+  const [isPending, startTransition] = useTransition()
+
+  const page = Number(params.get("page") ?? 1)
+  const query = params.get("q") ?? ""
+
+  const push = useCallback(
+    (updates: Record<string, string>) => {
+      const next = new URLSearchParams(params.toString())
+      Object.entries(updates).forEach(([k, v]) =>
+        v ? next.set(k, v) : next.delete(k),
+      )
+      startTransition(() => router.replace(`${pathname}?${next.toString()}`))
+    },
+    [params, pathname, router],
+  )
+
+  return (
+    <div style={{ opacity: isPending ? 0.6 : 1, transition: "opacity 0.15s" }}>
+      <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
+        <Input
+          name="search"
+          label="Search"
+          placeholder="Search…"
+          value={query}
+          onChange={e => push({ q: e.target.value, page: "1" })}
+        />
+        <Select
+          id="rows-per-page"
+          label="Rows per page"
+          value={String(pageSize)}
+          items={[
+            { value: "10", label: "10 / page" },
+            { value: "20", label: "20 / page" },
+            { value: "50", label: "50 / page" },
+          ]}
+          onChange={(_e, v) => push({ limit: String(v), page: "1" })}
+        />
+      </div>
+
+      <Table
+        caption="Data"
+        ariaLabel="Data table"
+        header={columns.map(col => ({ label: col.label }))}
+        body={data.map(row => ({
+          cells: columns.map(col => ({ label: String(row[col.key] ?? "") })),
+        }))}
+      />
+
+      <Pagination
+        page={page}
+        totalPages={Math.ceil(total / pageSize)}
+        onPageChange={p => push({ page: String(p) })}
+        style={{ marginTop: "1rem" }}
+      />
+    </div>
+  )
+}
+```
+
+---
+
+## Server-side data fetching
+
+```tsx title="app/users/page.tsx"
+import { DataTable } from "@/components/DataTable"
+
+interface SearchParams {
+  page?: string
+  sort?: string
+  order?: string
+  q?: string
+  limit?: string
+}
+
+export default async function UsersPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>
+}) {
+  const sp = await searchParams
+  const page = Number(sp.page ?? 1)
+  const limit = Number(sp.limit ?? 20)
+
+  const { users, total } = await fetchUsers({
+    page,
+    limit,
+    sort: sp.sort,
+    order: sp.order as "asc" | "desc",
+    q: sp.q,
+  })
+
+  const columns = [
+    { key: "name" as const, label: "Name" },
+    { key: "email" as const, label: "Email" },
+    { key: "role" as const, label: "Role" },
+  ]
+
+  return (
+    <main>
+      <h1>Users</h1>
+      <DataTable
+        data={users}
+        columns={columns}
+        total={total}
+        pageSize={limit}
+      />
+    </main>
+  )
+}
+```
+
+---
+
+## Accessibility notes
+
+- `Table` renders a semantic `<table>` with correct `scope="col"` headers, making it fully accessible to screen readers.
+- `Pagination` uses `role="navigation"` and `aria-label="Pagination"` by default.
+- The search `Input` should always have an `aria-label`.
+
+---
+
+## Related components
+
+- [`Table`](/docs/components/table) — column configuration, sticky headers, row selection
+- [`Pagination`](/docs/components/pagination) — page links, ellipsis strategy, size variants
+- [`Input`](/docs/components/input) — debounce helper, error states
+- [`Select`](/docs/components/select) — controlled and uncontrolled modes
+
+---
+
+## Further reading
+
+- [URL search params as state in Next.js](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating)
+- [prokodo Next.js agency](https://www.prokodo.com/en/next-js-agency/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=data_table) — we build and maintain complex data-heavy applications
+
+---
+
+👉 [Open Data Table in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-datatable--docs)

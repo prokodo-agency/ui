@@ -1,0 +1,176 @@
+---
+id: blog-card-grid
+title: Blog-Karten-Raster-Muster
+sidebar_label: Blog-Karten-Raster
+description: Responsives Blog-Karten-Raster in Next.js App Router mit prokodo-UI-Komponenten Card, PostTeaser, Grid und Pagination mit statischen und dynamischen Datenquellen erstellen.
+---
+
+# Blog-Karten-Raster-Muster
+
+<StorybookEmbed id="prokodo-patterns-blogcardgrid--default" height={560} />
+
+Ein responsives Karten-Raster ist das Standardlayout für Blog-Index-Seiten, Artikel-Listen und Content-Hubs. Dieses Muster verwendet die prokodo-UI-Komponenten `PostTeaser`, `Grid` und `Pagination` für eine vollständig serverseitig gerenderte Listing-Seite mit optionaler Pagination.
+
+---
+
+## Wann dieses Muster verwenden
+
+- Blog-Index-Seiten, Artikel-Archive und Newsfeeds
+- Content-Marketing-Hubs aus einem Headless CMS
+- Listing-Seiten, bei denen visuelle Hierarchie und LCP-Performance entscheidend sind
+
+---
+
+## Client-Pagination
+
+```tsx title="app/blog/BlogPagination.tsx"
+"use client"
+
+import { useRouter } from "next/navigation"
+import { Pagination } from "@prokodo/ui/pagination/client"
+import "@prokodo/ui/pagination.css"
+
+export function BlogPagination({
+  page,
+  totalPages,
+}: {
+  page: number
+  totalPages: number
+}) {
+  const router = useRouter()
+  return (
+    <Pagination
+      page={page}
+      totalPages={totalPages}
+      onPageChange={p => router.push(`?page=${p}`)}
+      style={{ marginTop: "3rem" }}
+    />
+  )
+}
+```
+
+---
+
+## Statisches Listing (RSC, empfohlen)
+
+```tsx title="app/blog/page.tsx"
+import { Grid } from "@prokodo/ui/grid"
+import { PostTeaser } from "@prokodo/ui/post-teaser"
+import { BlogPagination } from "./BlogPagination"
+import "@prokodo/ui/grid.css"
+import "@prokodo/ui/post-teaser.css"
+
+interface SearchParams {
+  page?: string
+}
+
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>
+}) {
+  const sp = await searchParams
+  const page = Number(sp.page ?? 1)
+  const limit = 12
+
+  const { posts, total } = await fetchPosts({ page, limit })
+
+  return (
+    <main style={{ padding: "2rem", maxWidth: "1280px", margin: "0 auto" }}>
+      <h1>Blog</h1>
+
+      <Grid columns={{ xs: 1, sm: 2, lg: 3 }} gap="lg">
+        {posts.map(post => (
+          <PostTeaser
+            key={post.slug}
+            title={{ content: post.title }}
+            content={post.excerpt}
+            image={{ src: post.coverImage, alt: post.title }}
+            redirect={{ href: `/blog/${post.slug}`, label: "Weiterlesen" }}
+            date={post.publishedAt}
+            locale="de"
+            category={post.category}
+          />
+        ))}
+      </Grid>
+
+      <BlogPagination page={page} totalPages={Math.ceil(total / limit)} />
+    </main>
+  )
+}
+```
+
+---
+
+## CMS-Integration (Strapi-Beispiel)
+
+```ts title="lib/posts.ts"
+export async function fetchPosts({
+  page = 1,
+  limit = 12,
+}: {
+  page?: number
+  limit?: number
+}) {
+  const qs = new URLSearchParams({
+    "pagination[page]": String(page),
+    "pagination[pageSize]": String(limit),
+    populate: "coverImage,author,category",
+    sort: "publishedAt:desc",
+  })
+
+  const res = await fetch(
+    `${process.env.STRAPI_URL}/api/articles?${qs}`,
+    { next: { revalidate: 60 } }, // ISR
+  )
+  if (!res.ok) throw new Error("Artikel konnten nicht geladen werden")
+  const json = await res.json()
+  return { posts: json.data.map(mapPost), total: json.meta.pagination.total }
+}
+```
+
+---
+
+## SEO & Metadaten
+
+```tsx title="app/blog/page.tsx (Metadaten-Export)"
+export const metadata = {
+  title: "Blog — prokodo UI",
+  description: "Aktuelle Artikel zu React, Next.js und Component-Design.",
+  alternates: {
+    canonical: "https://example.com/de/blog",
+  },
+}
+```
+
+---
+
+## Performance-Tipps
+
+| Technik               | Umsetzung                                              |
+| --------------------- | ------------------------------------------------------ |
+| LCP-Bild priorisieren | `<PostTeaser imagePriority />` bei den ersten 3 Karten |
+| Responsive Images     | `sizes`-Prop am `PostTeaser`-Bild setzen               |
+| ISR                   | `fetch(…, { next: { revalidate: 60 } })`               |
+| Prefetch beim Hover   | `<Link prefetch>` auf Karten-Wrapper verwenden         |
+
+---
+
+## Verwandte Komponenten
+
+- [`PostTeaser`](/docs/components/post-teaser) — Karte mit Bild, Titel, Auszug, Metadaten
+- [`Grid`](/docs/components/grid) — responsiver CSS-Grid-Container
+- [`Pagination`](/docs/components/pagination) — URL-gesteuerte Seitennavigation
+- [`Card`](/docs/components/card) — generischer Karten-Container für Nicht-Artikel-Inhalte
+
+---
+
+## Weiterführende Informationen
+
+- [Next.js Image-Komponente](https://nextjs.org/docs/app/building-your-application/optimizing/images)
+- [ISR mit On-Demand Revalidation](https://nextjs.org/docs/app/building-your-application/data-fetching/incremental-static-regeneration)
+- [prokodo Next.js Agentur](https://www.prokodo.com/de/next-js-agentur/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=blog_card_de) — wir entwickeln und betreiben contentreiche Next.js-Seiten
+
+---
+
+👉 [Blog-Karten-Raster in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-blogcardgrid--docs)

@@ -56,7 +56,7 @@ export function StorybookEmbed({
         <a
           href={storyUrl}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="nofollow noopener noreferrer"
           className={styles.link}
           aria-label="Open in Storybook"
         >

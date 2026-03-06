@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import clsx from "clsx"
 import DocLink from "@docusaurus/Link"
 import useBaseUrl from "@docusaurus/useBaseUrl"
@@ -691,6 +691,15 @@ function FeatureCard({
 function HeroSection(): ReactNode {
   const logoSrc = useBaseUrl("/img/prokodo-logo-white.webp")
   const [theme, setTheme] = useState<DocsTheme>("light")
+  const sbBtnRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const a = sbBtnRef.current?.querySelector("a")
+    if (a) {
+      a.rel = "nofollow noopener noreferrer"
+      a.target = "_blank"
+    }
+  })
 
   useEffect(() => {
     const root = document.documentElement
@@ -762,15 +771,17 @@ function HeroSection(): ReactNode {
             })}
             redirect={{ href: "/docs/components/overview" }}
           />
-          <Button
-            color="primary"
-            variant="outlined"
-            title={translate({
-              id: "prokodo.homepage.hero.openStorybook",
-              message: "Open Storybook ↗",
-            })}
-            redirect={{ href: withStorybookTheme(STORYBOOK_URL, theme) }}
-          />
+          <span ref={sbBtnRef}>
+            <Button
+              color="primary"
+              variant="outlined"
+              title={translate({
+                id: "prokodo.homepage.hero.openStorybook",
+                message: "Open Storybook ↗",
+              })}
+              redirect={{ href: withStorybookTheme(STORYBOOK_URL, theme) }}
+            />
+          </span>
         </div>
         <div className={styles.heroInstall}>
           <code>pnpm add @prokodo/ui</code>

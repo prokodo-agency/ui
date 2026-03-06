@@ -59,6 +59,24 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
+      type: "doc",
+      id: "learn",
+      label: "Learn",
+    },
+    {
+      type: "category",
+      label: "Patterns",
+      collapsed: true,
+      items: [
+        "patterns/dashboard-layout",
+        "patterns/react-data-table-pagination-sorting-filtering",
+        "patterns/settings-page-ui",
+        "patterns/login-otp-form",
+        "patterns/blog-card-grid",
+        "patterns/loading-skeleton-empty-states",
+      ],
+    },
+    {
       type: "category",
       label: "Components",
       collapsed: false,

@@ -124,7 +124,7 @@ function categoryLabel(category, locale) {
 function buildRows(entries, locale = "en") {
   return entries
     .map(c => {
-      const sbUrl = `https://ui.prokodo.com/storybook/?path=${c.storybookPath}`
+      const sbUrl = `https://ui.prokodo.com/storybook/?path=${encodeURIComponent(c.storybookPath)}`
       const catLabel = categoryLabel(c.category, locale)
       const propsLabel = c.hasPropsType ? "✅" : "—"
       return (
@@ -134,7 +134,7 @@ function buildRows(entries, locale = "en") {
         `<td class="docs-table__td">${typeBadge(c)}</td>` +
         `<td class="docs-table__td">${cssBadge(c.css)}</td>` +
         `<td class="docs-table__td">${propsLabel}</td>` +
-        `<td class="docs-table__td"><a href="${sbUrl}" target="_blank" rel="noopener noreferrer">↗ Storybook</a></td>` +
+        `<td class="docs-table__td"><a href="${sbUrl}" target="_blank" rel="nofollow noopener noreferrer">↗ Storybook</a></td>` +
         `</tr>`
       )
     })

@@ -1,0 +1,133 @@
+---
+id: dashboard-layout
+title: Dashboard Layout Pattern
+sidebar_label: Dashboard Layout
+description: Build a responsive Next.js dashboard layout with a persistent sidebar, top navigation, and main content area using prokodo UI components.
+---
+
+# Dashboard Layout Pattern
+
+<StorybookEmbed id="prokodo-patterns-dashboardlayout--default" height={520} />
+
+A persistent sidebar + top bar layout is the foundation of almost every admin or SaaS application. This pattern shows how to compose prokodo UI's `Sidenav`, `Tabs`, and layout primitives into a full App Router dashboard shell.
+
+---
+
+## When to use this pattern
+
+- Internal tools, admin panels, and SaaS dashboards
+- Any multi-section app where persistent navigation reduces context-switching
+- When you need breadcrumbs or a section-level tab bar alongside a global sidebar
+
+---
+
+## Structure
+
+```
+app/
+  (dashboard)/
+    layout.tsx        ← dashboard shell (Server Component)
+    page.tsx          ← overview page
+    settings/
+      page.tsx
+    analytics/
+      page.tsx
+```
+
+---
+
+## Shell layout
+
+```tsx title="app/(dashboard)/layout.tsx"
+import { Sidenav } from "@prokodo/ui/sidenav"
+import "@prokodo/ui/sidenav.css"
+
+const navItems = [
+  {
+    label: "Overview",
+    redirect: { href: "/" },
+    icon: { name: "HomeOutlinedIcon" },
+  },
+  {
+    label: "Analytics",
+    redirect: { href: "/analytics" },
+    icon: { name: "BarChartOutlinedIcon" },
+  },
+  {
+    label: "Settings",
+    redirect: { href: "/settings" },
+    icon: { name: "SettingsOutlinedIcon" },
+  },
+]
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <Sidenav items={navItems} />
+      <main style={{ flex: 1, padding: "2rem", overflowY: "auto" }}>
+        {children}
+      </main>
+    </div>
+  )
+}
+```
+
+---
+
+## Section tabs
+
+Use `Tabs` inside page-level components for secondary navigation:
+
+```tsx title="app/(dashboard)/analytics/page.tsx"
+import { Tabs } from "@prokodo/ui/tabs"
+import "@prokodo/ui/tabs.css"
+
+const tabs = [
+  { value: "traffic", label: "Traffic", content: <TrafficPanel /> },
+  { value: "conversion", label: "Conversion", content: <ConversionPanel /> },
+  { value: "revenue", label: "Revenue", content: <RevenuePanel /> },
+]
+
+export default function AnalyticsPage() {
+  return (
+    <>
+      <h1>Analytics</h1>
+      <Tabs
+        id="analytics-tabs"
+        ariaLabel="Analytics sections"
+        items={tabs}
+        defaultValue="traffic"
+      />
+    </>
+  )
+}
+```
+
+---
+
+## Responsive behaviour
+
+On mobile the `Sidenav` collapses to a drawer. No extra code is required — the component handles this via an internal `useMediaQuery` hook. The breakpoint is not configurable via a CSS variable.
+
+---
+
+## Related components
+
+- [`Sidenav`](/docs/components/sidenav) — collapsible, icon-only, and mobile-drawer variants
+- [`Tabs`](/docs/components/tabs) — keyboard-accessible tab bar
+- [`Drawer`](/docs/components/drawer) — full-screen mobile menu overlay
+
+---
+
+## Further reading
+
+- [Next.js Layouts & Templates](https://nextjs.org/docs/app/building-your-application/routing/layouts-and-templates)
+- [prokodo Next.js agency](https://www.prokodo.com/en/next-js-agency/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=dashboard_layout) — we build and maintain production Next.js dashboards
+
+---
+
+👉 [Open Dashboard Layout in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-dashboardlayout--docs)

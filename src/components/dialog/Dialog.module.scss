@@ -28,7 +28,10 @@
     align-items: center;
     z-index: var(--pk-z-modal);
     background-color: rgb(var(--pk-color-overlay-rgb) / var(--pk-color-overlay-alpha));
-    animation: Dialog_backdropFadeIn var(--pk-timing-normal) ease;
+
+    & {
+      animation: Dialog_backdropFadeIn var(--pk-timing-normal) ease;
+    }
 
     &--is-visible {
       display: flex;
