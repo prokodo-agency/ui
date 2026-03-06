@@ -1,5 +1,12 @@
 # @prokodo/ui
 
+## [1.0.3](https://github.com/prokodo-agency/ui/compare/v1.0.2...v1.0.3) — 2026-03-06
+
+- chore: Documentation updates (#162)
+- chore(ci): docs.yml is build-check only — release.yml owns deploy
+- hotfix(ci): switch GitHub Pages deploy to actions/deploy-pages
+- hotfix(ci): docs.yml now deploys on every main push
+
 ## [1.0.2](https://github.com/prokodo-agency/ui/compare/v1.0.1...v1.0.2) — 2026-03-04
 
 - hotfix(ci): remove broken root redirect in release.yml deploy-site
