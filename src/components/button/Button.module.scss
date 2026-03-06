@@ -34,10 +34,14 @@
   }
 
   // ── bg variants ────────────────────────────────────────────────────────────
-  // These inherit color: var(--pk-button-fg) from the base rule, which resolves
-  // to --pk-color-fg — dark in light mode, near-white in dark mode.
-  // info and error use explicit white because their gradients have dark backgrounds.
+  // All colored contained buttons use white text so they look consistent in
+  // both light and dark mode.
+  // (--has-bg-inherit uses a neutral surface bg — keeps --pk-color-fg)
+  &--has-bg-primary,
+  &--has-bg-secondary,
   &--has-bg-info,
+  &--has-bg-success,
+  &--has-bg-warning,
   &--has-bg-error {
     color: var(--pk-palette-white);
   }
@@ -61,7 +65,6 @@
 
   &--has-bg-info {
     @include gradientBackgroundVar("info");
-    color: var(--pk-palette-white);
   }
 
   &--has-bg-success {
@@ -74,7 +77,6 @@
 
   &--has-bg-error {
     @include gradientBackgroundVar("error");
-    color: var(--pk-palette-white);
   }
 
   // ── colored shadows (all variants) ───────────────────────────────────────

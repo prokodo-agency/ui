@@ -111,8 +111,8 @@
     color: var(--pk-rating-helper-fg);
     @include text("caption");
 
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       color: var(--pk-palette-grey-400);
     }
 

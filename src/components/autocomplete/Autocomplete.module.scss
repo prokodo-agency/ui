@@ -65,9 +65,9 @@
 
   // Dark mode token overrides — palette values are mode-independent so
   // we must reseat component tokens under the dark selector.
-  :global(html[data-theme="dark"]) &,
-  :global([data-theme="dark"]) &,
-  :global(.pk-theme-dark) & {
+  html[data-theme="dark"] &,
+  [data-theme="dark"] &,
+  .pk-theme-dark & {
     --pk-autocomplete-state-fg:        var(--pk-color-fg);
     --pk-autocomplete-fg-muted:        var(--pk-palette-grey-200);
     // Use the active variant's gradient-from so hover/active tints respect the color prop in dark mode
@@ -85,11 +85,11 @@
   &__input {
     &--is-open {
       // Square Input__field's box-shadow to match the open shape + go colored
-      :global(.prokodo-Input__field) {
+      .prokodo-Input__field {
         border-radius: var(--pk-autocomplete-radius) var(--pk-autocomplete-radius) 0 0;
       }
       // Square the __notch fieldset border (the visible outline) to connect with dropdown
-      :global(.prokodo-Input__notch) {
+      .prokodo-Input__notch {
         border-radius: var(--pk-autocomplete-radius) var(--pk-autocomplete-radius) 0 0;
         border-bottom-color: transparent;
       }

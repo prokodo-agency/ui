@@ -112,6 +112,7 @@ export function CardView({
 
       {isString(background) && (
         <Image
+          fill
           alt="card background"
           src={background as string}
           className={bem(

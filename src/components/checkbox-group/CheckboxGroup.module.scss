@@ -13,27 +13,27 @@
   // Legend label uses color-mix darkening in light mode (same as Label component)
   &--primary {
     --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-brand) 80%, #000000);
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-brand); }
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & { --pk-cg-legend-color: var(--pk-color-brand); }
   }
   &--secondary {
     --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-accent) 80%, #000000);
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-accent); }
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & { --pk-cg-legend-color: var(--pk-color-accent); }
   }
   &--success {
     --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-success) 80%, #000000);
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-success); }
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & { --pk-cg-legend-color: var(--pk-color-success); }
   }
   &--warning {
     --pk-cg-legend-color: color-mix(in srgb, var(--pk-color-warning) 80%, #000000);
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-color-warning); }
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & { --pk-cg-legend-color: var(--pk-color-warning); }
   }
   &--error {
     --pk-cg-legend-color: var(--pk-color-error);
@@ -42,9 +42,9 @@
   &--inherit,
   &--white {
     --pk-cg-legend-color: var(--pk-color-muted);
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & { --pk-cg-legend-color: var(--pk-palette-grey-200); }
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & { --pk-cg-legend-color: var(--pk-palette-grey-200); }
   }
 
   // ── Legend ─────────────────────────────────────────────────────────────────

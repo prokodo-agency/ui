@@ -203,6 +203,7 @@ export function PostWidgetCarouselView(
                   {imgMerged && (
                     <Link {...linkMerged}>
                       <Image
+                        fill
                         {...imgMerged}
                         className={bem(
                           "carousel__item__image",

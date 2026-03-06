@@ -103,8 +103,8 @@
       @include gradientBackgroundVar("inherit");
 
       // dark mode: adapt to surface so it reads on dark backgrounds
-      :global(html[data-theme="dark"]) &,
-      :global([data-theme="dark"]) & {
+      html[data-theme="dark"] &,
+      [data-theme="dark"] & {
         background: var(--pk-color-surface-raised);
       }
     }
@@ -148,8 +148,8 @@
         );
       }
 
-      :global(html[data-theme="dark"]) &::before,
-      :global([data-theme="dark"]) &::before {
+      html[data-theme="dark"] &::before,
+      [data-theme="dark"] &::before {
         background: linear-gradient(
           90deg,
           rgba(255, 255, 255, 0.30) 0%,
@@ -209,8 +209,8 @@
     @include gradientTextVar("grey", transparent);
 
     // override dark mode remapping — keep the same light-mode values
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] & {
       background-image: linear-gradient(
         90deg,
         var(--pk-palette-grey-400) 0%,
@@ -223,10 +223,10 @@
   &--filled--inherit   &__label { @include gradientTextVar("grey", transparent); }
   &--outlined--inherit &__label { @include gradientTextVar("grey", transparent); }
 
-  :global(html[data-theme="dark"]) &--filled--inherit   &__label,
-  :global([data-theme="dark"])     &--filled--inherit   &__label,
-  :global(html[data-theme="dark"]) &--outlined--inherit &__label,
-  :global([data-theme="dark"])     &--outlined--inherit &__label {
+  html[data-theme="dark"] &--filled--inherit   &__label,
+  [data-theme="dark"]     &--filled--inherit   &__label,
+  html[data-theme="dark"] &--outlined--inherit &__label,
+  [data-theme="dark"]     &--outlined--inherit &__label {
     background-image: linear-gradient(90deg, var(--pk-palette-white) 0%, var(--pk-palette-grey-100) 100%);
   }
 

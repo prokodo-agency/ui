@@ -23,35 +23,35 @@
     // render a 1px solid #ccc outline regardless of theme.
     // NOTE: Quill puts .ql-snow and .ql-toolbar on the SAME element, so
     // there is no parent/child relationship between them.
-    :global(.ql-toolbar),
-    :global(.ql-container) {
+    .ql-toolbar,
+    .ql-container {
       border: none !important;
     }
 
     // Toolbar button hover / active — use the variant accent colour.
     // Quill Snow's actual CSS is:  .ql-snow.ql-toolbar button:hover .ql-stroke
     // (.ql-snow and .ql-toolbar are on the same element, not descendant).
-    :global(.ql-toolbar.ql-snow button:hover .ql-stroke),
-    :global(.ql-toolbar.ql-snow button.ql-active .ql-stroke) {
+    .ql-toolbar.ql-snow button:hover .ql-stroke,
+    .ql-toolbar.ql-snow button.ql-active .ql-stroke {
       stroke: var(--pk-rte-accent) !important;
     }
-    :global(.ql-toolbar.ql-snow button:hover .ql-fill),
-    :global(.ql-toolbar.ql-snow button.ql-active .ql-fill) {
+    .ql-toolbar.ql-snow button:hover .ql-fill,
+    .ql-toolbar.ql-snow button.ql-active .ql-fill {
       fill: var(--pk-rte-accent) !important;
     }
     // Picker label goes accent on hover / when expanded
-    :global(.ql-toolbar.ql-snow .ql-picker-label:hover),
-    :global(.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label) {
+    .ql-toolbar.ql-snow .ql-picker-label:hover,
+    .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
       color: var(--pk-rte-accent) !important;
     }
-    :global(.ql-toolbar.ql-snow .ql-picker-label:hover .ql-stroke),
-    :global(.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-stroke) {
+    .ql-toolbar.ql-snow .ql-picker-label:hover .ql-stroke,
+    .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-stroke {
       stroke: var(--pk-rte-accent) !important;
     }
 
     // Let our BEM styles fully own the picker panel — strip Quill defaults.
     // Picker options live inside .ql-toolbar.ql-snow, not under a separate .ql-snow parent.
-    :global(.ql-toolbar .ql-picker-options) {
+    .ql-toolbar .ql-picker-options {
       background: var(--pk-rte-picker-bg) !important;
       border: var(--pk-border-width) solid
         color-mix(in srgb, var(--pk-rte-accent) 20%, var(--pk-color-border)) !important;
@@ -335,8 +335,8 @@
   }
 
   // ── Dark mode overrides ───────────────────────────────────────────────────
-  :global([data-theme="dark"]) &,
-  :global(.pk-theme-dark) & {
+  [data-theme="dark"] &,
+  .pk-theme-dark & {
     // Dark toolbar: deep navy with a visible brand tint
     --pk-rte-toolbar-bg:       color-mix(in srgb, var(--pk-color-brand) 14%, var(--pk-palette-slate-950));
     // Icons always white in dark
@@ -349,26 +349,26 @@
 
     // Quill's own snow CSS wins specificity on SVG parts (.ql-snow .ql-stroke)
     // — override them globally inside dark-mode context.
-    :global(.ql-snow) :global(.ql-stroke) {
+    .ql-snow .ql-stroke {
       stroke: var(--pk-palette-white) !important;
     }
-    :global(.ql-snow) :global(.ql-fill),
-    :global(.ql-snow) :global(.ql-stroke.ql-fill) {
+    .ql-snow .ql-fill,
+    .ql-snow .ql-stroke.ql-fill {
       fill: var(--pk-palette-white) !important;
     }
-    :global(.ql-snow .ql-picker) {
+    .ql-snow .ql-picker {
       color: var(--pk-palette-white) !important;
     }
-    :global(.ql-snow .ql-picker-label)::before {
+    .ql-snow .ql-picker-label::before {
       color: var(--pk-palette-white) !important;
     }
     // Override Quill's white picker panel in dark mode
     // .ql-toolbar.ql-snow contains the picker — not a separate .ql-snow parent.
-    :global(.ql-toolbar .ql-picker-options) {
+    .ql-toolbar .ql-picker-options {
       background: var(--pk-palette-slate-950) !important;
       border-color: color-mix(in srgb, var(--pk-color-brand) 30%, transparent) !important;
     }
-    :global(.ql-toolbar .ql-picker-item) {
+    .ql-toolbar .ql-picker-item {
       color: var(--pk-palette-white) !important;
     }
   }
@@ -387,12 +387,12 @@
 
   // In dark mode --pk-color-muted = grey-600 (#393939) — invisible on slate-950.
   // Override to a light grey so selected picker item text stays readable.
-  :global([data-theme="dark"]) &--info,
-  :global([data-theme="dark"]) &--inherit,
-  :global([data-theme="dark"]) &--white,
-  :global(.pk-theme-dark) &--info,
-  :global(.pk-theme-dark) &--inherit,
-  :global(.pk-theme-dark) &--white {
+  [data-theme="dark"] &--info,
+  [data-theme="dark"] &--inherit,
+  [data-theme="dark"] &--white,
+  .pk-theme-dark &--info,
+  .pk-theme-dark &--inherit,
+  .pk-theme-dark &--white {
     --pk-rte-accent: var(--pk-palette-grey-200);
   }
 

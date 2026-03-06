@@ -7,7 +7,7 @@
   width: 100%;
 
   // Dark mode: make the tab list border more visible against dark backgrounds.
-  :global(.pk-theme-dark) & {
+  .pk-theme-dark & {
     --pk-tabs-border: var(--pk-palette-grey-500);
   }
 

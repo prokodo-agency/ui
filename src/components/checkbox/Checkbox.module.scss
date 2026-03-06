@@ -14,9 +14,9 @@
   width: 100%;
   position: relative;
   // ── Dark mode: restore translucent-white box appearance ────────────────────
-  :global(html[data-theme="dark"]) &,
-  :global([data-theme="dark"]) &,
-  :global(.pk-theme-dark) & {
+  html[data-theme="dark"] &,
+  [data-theme="dark"] &,
+  .pk-theme-dark & {
     --pk-checkbox-control-border: rgba(255, 255, 255, 0.18);
     --pk-checkbox-control-bg:     rgba(255, 255, 255, 0.04);
     --pk-checkbox-card-bg:        rgba(255, 255, 255, 0.03);
@@ -57,9 +57,9 @@
     --pk-checkbox-gradient-to:   var(--pk-color-border);
     --pk-checkbox-shadow-color:  rgba(0, 0, 0, 0.1);
 
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       --pk-checkbox-gradient-from: var(--pk-palette-grey-100);
       --pk-checkbox-gradient-to:   var(--pk-palette-grey-200);
     }

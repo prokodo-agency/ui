@@ -147,6 +147,7 @@ export function PostTeaserView(props: PostTeaserViewProps): JSX.Element {
                 )}
               </div>
               <Image
+                fill
                 {...imageMerged}
                 alt={imageMerged?.alt ?? /* istanbul ignore next */ ""}
                 src={imageMerged?.src ?? /* istanbul ignore next */ ""}
