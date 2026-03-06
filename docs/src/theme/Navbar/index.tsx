@@ -74,8 +74,19 @@ function ThemeToggle(): ReactNode {
   )
 }
 
+type DocEntry =
+  | { label: string; to: string; children?: never }
+  | {
+      label: string
+      id: string
+      to?: string
+      children: { label: string; to: string }[]
+    }
+
 export default function Navbar(): ReactNode {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [docsOpen, setDocsOpen] = useState(false)
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set())
   const [theme, setTheme] = useState<DocsTheme>("light")
   const {
     i18n: { currentLocale, locales },
@@ -105,6 +116,19 @@ export default function Navbar(): ReactNode {
     ? `${otherLocalePath}${location.search || ""}${location.hash || ""}`
     : undefined
 
+  const toggleSection = (id: string) =>
+    setOpenSections(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+
+  const closeAll = () => {
+    setMobileOpen(false)
+    setDocsOpen(false)
+    setOpenSections(new Set())
+  }
+
   const logoSrc = useBaseUrl("/img/prokodo-logo-icon.webp")
 
   const navLinks: NavItem[] = [
@@ -118,6 +142,202 @@ export default function Navbar(): ReactNode {
         message: "Storybook",
       }),
       href: withStorybookTheme(STORYBOOK_URL, theme),
+    },
+  ]
+
+  const docSections: DocEntry[] = [
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.intro",
+        message: "👋 Introduction",
+      }),
+      to: "/docs/intro",
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.gettingStarted",
+        message: "Getting Started",
+      }),
+      id: "getting-started",
+      children: [
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.installation",
+            message: "Installation",
+          }),
+          to: "/docs/getting-started/installation",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.quickStart",
+            message: "Quick Start",
+          }),
+          to: "/docs/getting-started/quick-start",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.theming",
+            message: "Theming",
+          }),
+          to: "/docs/getting-started/theming",
+        },
+      ],
+    },
+    {
+      label: translate({ id: "prokodo.navbar.docs.learn", message: "Learn" }),
+      to: "/docs/learn",
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.patterns",
+        message: "Patterns",
+      }),
+      id: "patterns",
+      children: [
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.patternsDashboard",
+            message: "Dashboard Layout",
+          }),
+          to: "/docs/patterns/dashboard-layout",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.patternsDataTable",
+            message: "Data Table",
+          }),
+          to: "/docs/patterns/react-data-table-pagination-sorting-filtering",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.patternsSettings",
+            message: "Settings Page",
+          }),
+          to: "/docs/patterns/settings-page-ui",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.patternsLogin",
+            message: "Login / OTP Form",
+          }),
+          to: "/docs/patterns/login-otp-form",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.patternsBlog",
+            message: "Blog Card Grid",
+          }),
+          to: "/docs/patterns/blog-card-grid",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.patternsSkeleton",
+            message: "Loading & Empty States",
+          }),
+          to: "/docs/patterns/loading-skeleton-empty-states",
+        },
+      ],
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.components",
+        message: "Components",
+      }),
+      id: "components",
+      to: "/docs/components/overview",
+      children: [
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsOverview",
+            message: "Overview",
+          }),
+          to: "/docs/components/overview",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsForm",
+            message: "Form",
+          }),
+          to: "/docs/components/overview#form",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsLayout",
+            message: "Layout",
+          }),
+          to: "/docs/components/overview#layout",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsNavigation",
+            message: "Navigation",
+          }),
+          to: "/docs/components/overview#navigation",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsContent",
+            message: "Content",
+          }),
+          to: "/docs/components/overview#content",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsFeedback",
+            message: "Feedback",
+          }),
+          to: "/docs/components/overview#feedback",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsMedia",
+            message: "Media",
+          }),
+          to: "/docs/components/overview#media",
+        },
+        {
+          label: translate({
+            id: "prokodo.navbar.docs.componentsUtility",
+            message: "Utility",
+          }),
+          to: "/docs/components/overview#utility",
+        },
+      ],
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.designTokens",
+        message: "🎨 Design Tokens",
+      }),
+      to: "/docs/design-tokens",
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.aicPattern",
+        message: "⚡ AIC Pattern",
+      }),
+      to: "/docs/aic-pattern",
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.migration",
+        message: "🔄 Migration",
+      }),
+      to: "/docs/migration",
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.versions",
+        message: "🏷 Versions",
+      }),
+      to: "/docs/versions",
+    },
+    {
+      label: translate({
+        id: "prokodo.navbar.docs.changelog",
+        message: "📋 Changelog",
+      }),
+      to: "/docs/changelog",
     },
   ]
 
@@ -187,34 +407,113 @@ export default function Navbar(): ReactNode {
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className={styles.mobileMenu}>
-          {navLinks.map(item => (
-            <DocLink
-              key={item.label}
-              to={item.to}
-              href={item.href}
-              className={styles.mobileLink}
-              onClick={() => setMobileOpen(false)}
+          {/* Docs collapsible section */}
+          <div className={styles.mobileSection}>
+            <button
+              type="button"
+              className={clsx(
+                styles.mobileSectionHeader,
+                docsOpen && styles.mobileSectionHeaderOpen,
+              )}
+              onClick={() => setDocsOpen(prev => !prev)}
+              aria-expanded={docsOpen}
             >
-              {item.label}
-            </DocLink>
-          ))}
+              <Translate id="prokodo.navbar.link.docs">Docs</Translate>
+              <Icon
+                name={docsOpen ? "ArrowUp01Icon" : "ArrowDown01Icon"}
+                size="xs"
+              />
+            </button>
+            {docsOpen && (
+              <div className={styles.mobileSectionLinks}>
+                {docSections.map(entry => {
+                  if (!entry.children) {
+                    // Direct link entry
+                    return (
+                      <DocLink
+                        key={entry.to}
+                        to={entry.to}
+                        className={styles.mobileSectionLink}
+                        onClick={closeAll}
+                      >
+                        {entry.label}
+                      </DocLink>
+                    )
+                  }
+                  // Category entry with children
+                  const isOpen = openSections.has(entry.id)
+                  return (
+                    <div key={entry.id} className={styles.mobileSubSection}>
+                      <button
+                        type="button"
+                        className={clsx(
+                          styles.mobileSubSectionHeader,
+                          isOpen && styles.mobileSubSectionHeaderOpen,
+                        )}
+                        onClick={() => toggleSection(entry.id)}
+                        aria-expanded={isOpen}
+                      >
+                        <span>{entry.label}</span>
+                        <Icon
+                          name={isOpen ? "ArrowUp01Icon" : "ArrowDown01Icon"}
+                          size="xs"
+                        />
+                      </button>
+                      {isOpen && (
+                        <div className={styles.mobileSubSectionLinks}>
+                          {entry.children.map(child => (
+                            <DocLink
+                              key={child.to}
+                              to={child.to}
+                              className={styles.mobileSubSectionLink}
+                              onClick={closeAll}
+                            >
+                              {child.label}
+                            </DocLink>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Storybook */}
+          <DocLink
+            href={withStorybookTheme(STORYBOOK_URL, theme)}
+            className={styles.mobileLink}
+            onClick={closeAll}
+          >
+            <Translate id="prokodo.navbar.link.storybook">Storybook</Translate>
+          </DocLink>
+
+          {/* GitHub */}
           <DocLink
             href={GITHUB_UI_URL}
             className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
+            onClick={closeAll}
           >
             <Icon name="GithubIcon" size="xs" />{" "}
             <Translate id="prokodo.navbar.mobile.github">GitHub</Translate>
           </DocLink>
-          {otherLocale && otherLocaleUrl && (
-            <a
-              href={otherLocaleUrl}
-              className={styles.mobileLink}
-              onClick={() => setMobileOpen(false)}
-            >
-              {otherLocale === "de" ? "🇩🇪 Deutsch" : "🇬🇧 English"}
-            </a>
-          )}
+
+          {/* Bottom actions: locale switcher + dark mode toggle */}
+          <div className={styles.mobileActions}>
+            {otherLocale && otherLocaleUrl && (
+              <a
+                href={otherLocaleUrl}
+                className={styles.mobileActionsLocale}
+                onClick={closeAll}
+              >
+                {otherLocale === "de" ? "🇩🇪 Deutsch" : "🇬🇧 English"}
+              </a>
+            )}
+            <BrowserOnly fallback={<span className={styles.themeToggle} />}>
+              {() => <ThemeToggle />}
+            </BrowserOnly>
+          </div>
         </div>
       )}
     </nav>
