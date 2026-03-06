@@ -1,5 +1,10 @@
 # @prokodo/ui
 
+## [1.0.4](https://github.com/prokodo-agency/ui/compare/v1.0.3...v1.0.4) — 2026-03-06
+
+- fix(ci): remove pr approval steps not permitted by repo settings
+- chore: update component styles and views for consistency (#163)
+
 ## [1.0.3](https://github.com/prokodo-agency/ui/compare/v1.0.2...v1.0.3) — 2026-03-06
 
 - chore: Documentation updates (#162)
