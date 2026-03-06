@@ -263,6 +263,160 @@
   background: var(--ifm-color-emphasis-200);
 }
 
+/* ─── Mobile docs collapsible section ────────────────────────────────────── */
+.mobileSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.7rem 0.75rem;
+  border-radius: 6px;
+  transition: background 0.15s;
+  text-align: left;
+  width: 100%;
+}
+
+.mobileSectionHeader:hover,
+.mobileSectionHeaderOpen {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.mobileSectionLinks {
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem 0 0.25rem 1rem;
+  gap: 0.1rem;
+  border-left: 2px solid var(--ifm-color-emphasis-200);
+  margin-left: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.mobileSectionLink {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--ifm-font-color-base) !important;
+  text-decoration: none !important;
+  padding: 0.45rem 0.6rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.mobileSectionLink:hover {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--color-primary-500) !important;
+}
+
+/* ─── Mobile sub-section (level 3) ───────────────────────────────────────── */
+.mobileSubSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileSubSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.45rem 0.6rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+  text-align: left;
+  width: 100%;
+}
+
+.mobileSubSectionHeader:hover,
+.mobileSubSectionHeaderOpen {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.mobileSubSectionLinks {
+  display: flex;
+  flex-direction: column;
+  padding: 0.15rem 0 0.15rem 0.75rem;
+  gap: 0.05rem;
+  border-left: 2px solid var(--ifm-color-emphasis-200);
+  margin-left: 0.6rem;
+  margin-bottom: 0.1rem;
+}
+
+.mobileSubSectionLink {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--ifm-font-color-secondary, var(--ifm-font-color-base)) !important;
+  text-decoration: none !important;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.mobileSubSectionLink:hover {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--color-primary-500) !important;
+}
+
+/* ─── Mobile bottom actions row ──────────────────────────────────────────── */
+.mobileActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem 0.25rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.mobileActionsLocale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  cursor: pointer;
+  color: var(--ifm-font-color-base);
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-secondary);
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  line-height: 1;
+  flex: 1;
+}
+
+.mobileActionsLocale:hover {
+  background: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-emphasis-400);
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
 /* ─── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 996px) {
   .navLinks,

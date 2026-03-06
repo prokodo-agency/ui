@@ -64,16 +64,6 @@ Each component is built for **lazy loading**, works seamlessly with **React Serv
 
 This makes `@prokodo/ui` ideal for modern SSR apps using Next.js or Remix, with excellent Time-to-Interactive (TTI) and Core Web Vitals.
 
-## 📄 License & Usage
-
-|                  |                                                                                                                                        |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **License**      | [Apache-2.0](LICENSE) — free for production use, modification, and redistribution                                                      |
-| **Trademark**    | "prokodo" and the prokodo logo are trademarks of prokodo (Christian Salat). See [TRADEMARKS.md](TRADEMARKS.md)                         |
-| **Brand theme**  | Signature visuals (logo, illustrations, special glow patterns) may appear in docs/Storybook but are not distributed in the npm package |
-| **Contributing** | Sign-off required (DCO 1.1). See [CONTRIBUTING.md](CONTRIBUTING.md)                                                                    |
-| **Security**     | Responsible disclosure via GitHub Advisories. See [SECURITY.md](SECURITY.md)                                                           |
-
 ---
 
 ## 🚀 Getting Started
@@ -96,29 +86,15 @@ npm install @prokodo/ui
 | 🎨 Interactive component explorer | [ui.prokodo.com/storybook](https://ui.prokodo.com/storybook)               |
 | 📦 npm                            | [npmjs.com/package/@prokodo/ui](https://www.npmjs.com/package/@prokodo/ui) |
 
-## 📘 Documentation
+## 📄 License & Usage
 
-|                                   |                                                              |
-| --------------------------------- | ------------------------------------------------------------ |
-| 📖 Docs & API reference           | [ui.prokodo.com](https://ui.prokodo.com)                     |
-| 🎨 Component explorer (Storybook) | [ui.prokodo.com/storybook](https://ui.prokodo.com/storybook) |
-
-## 🛠 Local Development
-
-```bash
-pnpm i
-pnpm dev          # Start Vite dev server
-pnpm storybook    # Start Storybook locally
-```
-
-To build:
-
-```bash
-pnpm run build
-pnpm run storybook:build
-```
-
-## 📄 License
+|                  |                                                                                                                                        |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **License**      | [Apache-2.0](LICENSE) — free for production use, modification, and redistribution                                                      |
+| **Trademark**    | "prokodo" and the prokodo logo are trademarks of prokodo (Christian Salat). See [TRADEMARKS.md](TRADEMARKS.md)                         |
+| **Brand theme**  | Signature visuals (logo, illustrations, special glow patterns) may appear in docs/Storybook but are not distributed in the npm package |
+| **Contributing** | Sign-off required (DCO 1.1). See [CONTRIBUTING.md](CONTRIBUTING.md)                                                                    |
+| **Security**     | Responsible disclosure via GitHub Advisories. See [SECURITY.md](SECURITY.md)                                                           |
 
 This library is published under the [Apache License 2.0](LICENSE).
 

@@ -1,0 +1,133 @@
+---
+id: dashboard-layout
+title: Dashboard-Layout-Muster
+sidebar_label: Dashboard Layout
+description: Responsives Next.js-Dashboard-Layout mit persistenter Sidebar, Top-Navigation und Hauptinhaltsbereich mit prokodo-UI-Komponenten erstellen.
+---
+
+# Dashboard-Layout-Muster
+
+<StorybookEmbed id="prokodo-patterns-dashboardlayout--default" height={520} />
+
+Ein persistentes Sidebar- und Top-Bar-Layout ist die Grundlage nahezu jeder Admin- oder SaaS-Anwendung. Dieses Muster zeigt, wie man die `Sidenav`, `Tabs` und Layout-Primitive von prokodo UI zu einer vollständigen App-Router-Dashboard-Shell zusammensetzt.
+
+---
+
+## Wann dieses Muster verwenden
+
+- Interne Tools, Admin-Panels und SaaS-Dashboards
+- Jede mehrgliedrige Anwendung, bei der eine persistente Navigation den Kontextwechsel reduziert
+- Wenn Breadcrumbs oder ein abschnittsbezogener Tab-Bereich neben einer globalen Sidebar benötigt werden
+
+---
+
+## Struktur
+
+```
+app/
+  (dashboard)/
+    layout.tsx        ← Dashboard-Shell (Server Component)
+    page.tsx          ← Übersichtsseite
+    settings/
+      page.tsx
+    analytics/
+      page.tsx
+```
+
+---
+
+## Shell-Layout
+
+```tsx title="app/(dashboard)/layout.tsx"
+import { Sidenav } from "@prokodo/ui/sidenav"
+import "@prokodo/ui/sidenav.css"
+
+const navItems = [
+  {
+    label: "Übersicht",
+    redirect: { href: "/" },
+    icon: { name: "HomeOutlinedIcon" },
+  },
+  {
+    label: "Analytik",
+    redirect: { href: "/analytics" },
+    icon: { name: "BarChartOutlinedIcon" },
+  },
+  {
+    label: "Einstellungen",
+    redirect: { href: "/settings" },
+    icon: { name: "SettingsOutlinedIcon" },
+  },
+]
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <Sidenav items={navItems} />
+      <main style={{ flex: 1, padding: "2rem", overflowY: "auto" }}>
+        {children}
+      </main>
+    </div>
+  )
+}
+```
+
+---
+
+## Abschnitts-Tabs
+
+`Tabs` für die sekundäre Navigation innerhalb von Seiten-Komponenten verwenden:
+
+```tsx title="app/(dashboard)/analytics/page.tsx"
+import { Tabs } from "@prokodo/ui/tabs"
+import "@prokodo/ui/tabs.css"
+
+const tabs = [
+  { value: "traffic", label: "Traffic", content: <TrafficPanel /> },
+  { value: "conversion", label: "Conversion", content: <ConversionPanel /> },
+  { value: "revenue", label: "Umsatz", content: <UmsatzPanel /> },
+]
+
+export default function AnalyticsPage() {
+  return (
+    <>
+      <h1>Analytik</h1>
+      <Tabs
+        id="analytics-tabs"
+        ariaLabel="Analytik-Bereiche"
+        items={tabs}
+        defaultValue="traffic"
+      />
+    </>
+  )
+}
+```
+
+---
+
+## Responsives Verhalten
+
+Auf Mobilgeräten klappt die `Sidenav` zu einem Drawer zusammen – kein zusätzlicher Code erforderlich. Der Breakpoint wird intern über einen `useMediaQuery`-Hook verwaltet und ist derzeit nicht über eine CSS-Variable konfigurierbar.
+
+---
+
+## Verwandte Komponenten
+
+- [`Sidenav`](/docs/components/sidenav) — einklappbar, Icon-only und Mobile-Drawer-Varianten
+- [`Tabs`](/docs/components/tabs) — tastaturzugängliche Tab-Leiste
+- [`Drawer`](/docs/components/drawer) — Vollbild-Mobil-Menü-Overlay
+
+---
+
+## Weiterführende Informationen
+
+- [Next.js Layouts & Templates](https://nextjs.org/docs/app/building-your-application/routing/layouts-and-templates)
+- [prokodo Next.js Agentur](https://www.prokodo.com/de/next-js-agentur/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=dashboard_layout_de) — wir entwickeln und betreiben produktive Next.js-Dashboards
+
+---
+
+👉 [Dashboard Layout in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-dashboardlayout--docs)

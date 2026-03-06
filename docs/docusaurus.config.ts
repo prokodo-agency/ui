@@ -9,6 +9,9 @@ const STORYBOOK_DOCS_URL =
     ? "http://localhost:6006"
     : "https://ui.prokodo.com/storybook"
 
+// NOTE: docs/static/robots.txt is the authoritative robots file for this site.
+// It sets Disallow: /storybook/ to block crawl budget waste.
+// Do NOT add a robotsTxt plugin config here — it would replace the static file.
 const config: Config = {
   title: "prokodo UI",
   tagline:
@@ -150,6 +153,7 @@ const config: Config = {
           href: STORYBOOK_DOCS_URL,
           label: "Storybook",
           position: "right",
+          rel: "nofollow noopener noreferrer",
         },
         {
           href: "https://github.com/prokodo-agency/ui",
@@ -194,7 +198,11 @@ const config: Config = {
         {
           title: "prokodo",
           items: [
-            { label: "Storybook", href: STORYBOOK_DOCS_URL },
+            {
+              label: "Storybook",
+              href: STORYBOOK_DOCS_URL,
+              rel: "nofollow noopener noreferrer",
+            },
             { label: "npm", href: "https://www.npmjs.com/package/@prokodo/ui" },
             { label: "Website", href: "https://www.prokodo.com" },
             { label: "GitHub", href: "https://github.com/prokodo-agency" },

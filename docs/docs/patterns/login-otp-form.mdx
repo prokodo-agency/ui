@@ -1,0 +1,188 @@
+---
+id: login-otp-form
+title: Login & OTP Form Pattern
+sidebar_label: Login & OTP Form
+description: Build a two-step login flow with email/password and one-time password verification using prokodo UI's Form, Input, InputOtp, Button, and Loading components in Next.js App Router.
+---
+
+# Login & OTP Form Pattern
+
+<StorybookEmbed id="prokodo-patterns-loginotpform--default" height={480} />
+
+A two-step authentication flow — email/password followed by a numeric OTP — is a common requirement for secure web applications. This pattern wires up prokodo UI's `Form`, `Input`, `InputOtp`, `Button`, and `Loading` components into a complete client-side flow backed by a Next.js Server Action.
+
+---
+
+## When to use this pattern
+
+- Sign-in flows with MFA/2FA using a time-based or emailed OTP
+- Any step-form where the second screen depends on the result of the first
+
+---
+
+## Step 1 — Email & password form
+
+```tsx title="components/auth/LoginForm.tsx"
+"use client"
+
+import { useActionState } from "react"
+import { useRouter } from "next/navigation"
+import { Input } from "@prokodo/ui/input/client"
+import { Button } from "@prokodo/ui/button/client"
+import { Loading } from "@prokodo/ui/loading/client"
+import "@prokodo/ui/input.css"
+import "@prokodo/ui/button.css"
+import "@prokodo/ui/loading.css"
+
+type State = { step: "credentials" | "otp"; error?: string } | undefined
+
+async function loginAction(_prev: State, formData: FormData): Promise<State> {
+  "use server"
+  const email = formData.get("email") as string
+  const password = formData.get("password") as string
+  const result = await verifyCredentials(email, password)
+  if (!result.ok) return { step: "credentials", error: result.error }
+  await sendOtp(email)
+  return { step: "otp" }
+}
+
+export function LoginForm() {
+  const [state, action, isPending] = useActionState(loginAction, undefined)
+
+  if (state?.step === "otp") return <OtpForm />
+
+  return (
+    <form action={action} style={{ display: "grid", gap: "1rem" }}>
+      <Input
+        name="email"
+        type="email"
+        label="Email address"
+        required
+        autoComplete="username"
+        errorText={state?.error}
+      />
+      <Input
+        name="password"
+        type="password"
+        label="Password"
+        required
+        autoComplete="current-password"
+      />
+      <Button
+        title={isPending ? "Signing in…" : "Sign in"}
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={isPending}
+        fullWidth
+        loading={isPending}
+      />
+    </form>
+  )
+}
+```
+
+---
+
+## Step 2 — OTP verification
+
+```tsx title="components/auth/OtpForm.tsx"
+"use client"
+
+import { useActionState } from "react"
+import { useRouter } from "next/navigation"
+import { InputOtp } from "@prokodo/ui/input-otp/client"
+import { Button } from "@prokodo/ui/button/client"
+import "@prokodo/ui/input-otp.css"
+import "@prokodo/ui/button.css"
+
+type OtpState = { error?: string } | undefined
+
+async function verifyOtpAction(
+  _prev: OtpState,
+  formData: FormData,
+): Promise<OtpState> {
+  "use server"
+  const code = formData.get("otp") as string
+  const result = await verifyOtp(code)
+  if (!result.ok) return { error: "Invalid or expired code" }
+  // Set session cookie, then redirect
+  return undefined
+}
+
+export function OtpForm() {
+  const [state, action, isPending] = useActionState(verifyOtpAction, undefined)
+
+  return (
+    <form action={action} style={{ display: "grid", gap: "1rem" }}>
+      <p>Enter the 6-digit code we sent to your email.</p>
+      <InputOtp name="otp" length={6} autoFocus errorText={state?.error} />
+      <Button
+        title="Verify"
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={isPending}
+        fullWidth
+        loading={isPending}
+      />
+    </form>
+  )
+}
+```
+
+---
+
+## Layout
+
+```tsx title="app/(auth)/login/page.tsx"
+import { LoginForm } from "@/components/auth/LoginForm"
+
+export default function LoginPage() {
+  return (
+    <main
+      style={{
+        display: "grid",
+        placeItems: "center",
+        minHeight: "100vh",
+        padding: "1rem",
+      }}
+    >
+      <div style={{ width: "100%", maxWidth: "400px" }}>
+        <h1>Sign in</h1>
+        <LoginForm />
+      </div>
+    </main>
+  )
+}
+```
+
+---
+
+## Accessibility notes
+
+- `InputOtp` manages focus movement automatically as each digit is entered.
+- Errors are linked to inputs via `aria-describedby` so screen readers announce them on focus.
+- `Loading` inside a `Button` should pair with `aria-label="Signing in…"` on the button to give screen readers meaningful feedback.
+
+---
+
+## Related components
+
+- [`Form`](/docs/components/form) — Server Action integration, constraint validation
+- [`Input`](/docs/components/input) — all input types, error and hint slots
+- [`InputOtp`](/docs/components/input-otp) — digit-by-digit OTP entry with auto-advance
+- [`Button`](/docs/components/button) — loading and disabled states
+- [`Loading`](/docs/components/loading) — inline spinner variants
+
+---
+
+## Further reading
+
+- [Next.js Server Actions & `useActionState`](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+- [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
+- [prokodo Next.js agency](https://www.prokodo.com/en/next-js-agency/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=login_otp) — we build secure authentication flows
+
+---
+
+👉 [Open Login & OTP Form in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-loginotpform--docs)

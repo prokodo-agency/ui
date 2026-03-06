@@ -1,0 +1,178 @@
+---
+id: settings-page-ui
+title: Settings Page UI Pattern
+sidebar_label: Settings Page
+description: Build a structured Next.js settings page with grouped form sections, save feedback, and validation using prokodo UI's Form, Input, Select, Tabs, and Snackbar components.
+---
+
+# Settings Page UI Pattern
+
+<StorybookEmbed id="prokodo-patterns-settingspage--default" height={520} />
+
+Settings pages combine form validation, section grouping, and save feedback. This pattern builds a full settings screen with tab-based navigation between sections, inline validation, and a toast notification on save.
+
+---
+
+## When to use this pattern
+
+- Account, profile, notification, and billing settings screens
+- Any form with many fields split into logical sections
+- When you need to show persistent save feedback without blocking the UI
+
+---
+
+## Component setup
+
+```tsx title="app/settings/page.tsx"
+import { Tabs } from "@prokodo/ui/tabs"
+import "@prokodo/ui/tabs.css"
+import { ProfileSection } from "./ProfileSection"
+import { NotificationsSection } from "./NotificationsSection"
+
+const tabs = [
+  { value: "profile", label: "Profile", content: <ProfileSection /> },
+  {
+    value: "notifications",
+    label: "Notifications",
+    content: <NotificationsSection />,
+  },
+  { value: "security", label: "Security", content: <SecuritySection /> },
+]
+
+export default function SettingsPage() {
+  return (
+    <main style={{ maxWidth: "720px", margin: "0 auto", padding: "2rem" }}>
+      <h1>Settings</h1>
+      <Tabs
+        id="settings-tabs"
+        ariaLabel="Settings sections"
+        items={tabs}
+        defaultValue="profile"
+      />
+    </main>
+  )
+}
+```
+
+---
+
+## Profile section form
+
+```tsx title="app/settings/ProfileSection.tsx"
+"use client"
+
+import { useState } from "react"
+import { Input } from "@prokodo/ui/input/client"
+import { Select } from "@prokodo/ui/select/client"
+import { Snackbar } from "@prokodo/ui/snackbar/client"
+import { Button } from "@prokodo/ui/button/client"
+import "@prokodo/ui/input.css"
+import "@prokodo/ui/select.css"
+import "@prokodo/ui/snackbar.css"
+import "@prokodo/ui/button.css"
+
+export function ProfileSection() {
+  const [saved, setSaved] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    await updateProfile({
+      name: data.get("name") as string,
+      timezone: data.get("timezone") as string,
+    })
+    setSaved(true)
+    setTimeout(() => setSaved(false), 3000)
+  }
+
+  return (
+    <>
+      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "1rem" }}>
+        <Input
+          name="name"
+          label="Display name"
+          required
+          minLength={2}
+          autoComplete="name"
+        />
+        <Select
+          id="timezone-select"
+          name="timezone"
+          label="Timezone"
+          items={[
+            { value: "UTC", label: "UTC" },
+            { value: "Europe/Berlin", label: "Europe/Berlin" },
+            { value: "America/New_York", label: "America/New_York" },
+          ]}
+          defaultValue="UTC"
+          onChange={(_e, _v) => {}}
+        />
+        <Button
+          title="Save changes"
+          type="submit"
+          variant="contained"
+          color="primary"
+        />
+      </form>
+
+      <Snackbar
+        message="Settings saved"
+        color="success"
+        open={saved}
+        autoHideDuration={3000}
+        onClose={() => setSaved(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
+    </>
+  )
+}
+```
+
+---
+
+## Form validation
+
+`Form` passes native constraint validation to the browser before calling `action`. For async server validation, throw a structured error and use `useFormState` (React 19 / `next/navigation`):
+
+```tsx
+import { useActionState } from "react"
+
+const [state, action, isPending] = useActionState(updateProfile, undefined)
+
+// …
+
+<Input
+  name="name"
+  label="Display name"
+  errorText={state?.errors?.name}
+/>
+```
+
+---
+
+## Accessibility notes
+
+- Each form section should be wrapped in a `<section>` with a visually hidden `<h2>` so screen-reader users can navigate between sections.
+- `Snackbar` uses `role="status"` and `aria-live="polite"` by default — the saved confirmation is announced without interrupting focus.
+
+---
+
+## Related components
+
+- [`Form`](/docs/components/form) — Server Action compatible, constraint validation
+- [`Input`](/docs/components/input) — label, hint, error, and required states
+- [`Select`](/docs/components/select) — single and multi-select variants
+- [`Snackbar`](/docs/components/snackbar) — toast messages with variants
+- [`Tabs`](/docs/components/tabs) — keyboard-accessible tab navigation
+
+---
+
+## Further reading
+
+- [React `useActionState`](https://react.dev/reference/react/useActionState)
+- [Next.js Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+- [prokodo Next.js agency](https://www.prokodo.com/en/next-js-agency/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=settings_page) — we build and maintain product UIs
+
+---
+
+👉 [Open Settings Page in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-settingspage--docs)

@@ -22,6 +22,7 @@ import OriginalMDXComponents from "@theme-original/MDXComponents"
 import { Icon } from "@prokodo/ui/icon"
 import { Chip } from "@prokodo/ui/chip"
 import { StorybookEmbed } from "../components/StorybookEmbed"
+import { LiveDemoLink } from "../components/LiveDemoLink"
 import {
   readDocsThemeFromDom,
   withStorybookTheme,
@@ -58,8 +59,28 @@ function resolveStorybookHref(href: string, theme: DocsTheme): string {
   return withStorybookTheme(resolved, theme)
 }
 
+/** Returns true for any href that points at the Storybook instance. */
+function isStorybookHref(href: string): boolean {
+  return (
+    href.startsWith("https://ui.prokodo.com/storybook") ||
+    href.startsWith("http://localhost:6006") ||
+    href.startsWith("/storybook")
+  )
+}
+
+/**
+ * Merges a set of rel tokens into an existing rel string, deduplicating.
+ * e.g. mergeRel("noopener noreferrer", ["nofollow", "noopener"])
+ *   → "noopener noreferrer nofollow"
+ */
+function mergeRel(existing: string | undefined, tokens: string[]): string {
+  const parts = new Set(existing ? existing.trim().split(/\s+/) : [])
+  for (const t of tokens) parts.add(t)
+  return [...parts].join(" ")
+}
+
 function DocA(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const { href, ...rest } = props
+  const { href, rel, target, ...rest } = props
   const [theme, setTheme] = useState<DocsTheme>("light")
 
   useEffect(() => {
@@ -74,7 +95,23 @@ function DocA(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
     return () => observer.disconnect()
   }, [])
 
-  return <a href={href ? resolveStorybookHref(href, theme) : href} {...rest} />
+  const storybook = href ? isStorybookHref(href) : false
+  const resolvedHref = href ? resolveStorybookHref(href, theme) : href
+  // Storybook links always: rel="nofollow noopener noreferrer", target="_blank".
+  // All other links: preserve whatever the author wrote (or nothing).
+  const resolvedRel = storybook
+    ? mergeRel(rel, ["nofollow", "noopener", "noreferrer"])
+    : rel
+  const resolvedTarget = storybook ? "_blank" : target
+
+  return (
+    <a
+      href={resolvedHref}
+      rel={resolvedRel}
+      target={resolvedTarget}
+      {...rest}
+    />
+  )
 }
 
 // ─── Table element overrides ──────────────────────────────────────────────────
@@ -159,6 +196,8 @@ const MDXComponents: Record<string, any> = {
   DocBadge,
   /** StorybookEmbed — live iframe preview of a Storybook story */
   StorybookEmbed,
+  /** LiveDemoLink — nofollow link to Storybook docs page (SEO-safe) */
+  LiveDemoLink,
   /** Anchor rewrite for Storybook links in development */
   a: DocA,
   /** @prokodo/ui Table — applied via HTML element class overrides */

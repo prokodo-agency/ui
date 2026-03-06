@@ -1,0 +1,187 @@
+---
+id: login-otp-form
+title: Login- & OTP-Formular-Muster
+sidebar_label: Login & OTP-Formular
+description: Zweistufigen Login-Flow mit E-Mail/Passwort und Einmalpasswort-Verifizierung mit prokodo-UI-Komponenten Form, Input, InputOtp, Button und Loading in Next.js App Router erstellen.
+---
+
+# Login- & OTP-Formular-Muster
+
+<StorybookEmbed id="prokodo-patterns-loginotpform--default" height={480} />
+
+Ein zweistufiger Authentifizierungsflow — E-Mail/Passwort gefolgt von einer numerischen OTP-Eingabe — ist eine häufige Anforderung für sichere Webanwendungen. Dieses Muster verbindet die prokodo-UI-Komponenten `Form`, `Input`, `InputOtp`, `Button` und `Loading` zu einem vollständigen clientseitigen Flow mit Next.js Server Action.
+
+---
+
+## Wann dieses Muster verwenden
+
+- Anmelde-Flows mit MFA/2FA via zeitbasiertem oder per E-Mail versendeten OTP
+- Beliebige Schritt-Formulare, bei denen der zweite Bildschirm vom Ergebnis des ersten abhängt
+
+---
+
+## Schritt 1 — E-Mail & Passwort
+
+```tsx title="components/auth/LoginForm.tsx"
+"use client"
+
+import { useActionState } from "react"
+import { Input } from "@prokodo/ui/input/client"
+import { Button } from "@prokodo/ui/button/client"
+import { Loading } from "@prokodo/ui/loading/client"
+import "@prokodo/ui/input.css"
+import "@prokodo/ui/button.css"
+import "@prokodo/ui/loading.css"
+
+type State = { step: "credentials" | "otp"; error?: string } | undefined
+
+async function loginAction(_prev: State, formData: FormData): Promise<State> {
+  "use server"
+  const email = formData.get("email") as string
+  const password = formData.get("password") as string
+  const result = await verifyCredentials(email, password)
+  if (!result.ok) return { step: "credentials", error: result.error }
+  await sendOtp(email)
+  return { step: "otp" }
+}
+
+export function LoginForm() {
+  const [state, action, isPending] = useActionState(loginAction, undefined)
+
+  if (state?.step === "otp") return <OtpForm />
+
+  return (
+    <form action={action} style={{ display: "grid", gap: "1rem" }}>
+      <Input
+        name="email"
+        type="email"
+        label="E-Mail-Adresse"
+        required
+        autoComplete="username"
+        errorText={state?.error}
+      />
+      <Input
+        name="password"
+        type="password"
+        label="Passwort"
+        required
+        autoComplete="current-password"
+      />
+      <Button
+        title={isPending ? "Wird angemeldet…" : "Anmelden"}
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={isPending}
+        fullWidth
+        loading={isPending}
+      />
+    </form>
+  )
+}
+```
+
+---
+
+## Schritt 2 — OTP-Verifizierung
+
+```tsx title="components/auth/OtpForm.tsx"
+"use client"
+
+import { useActionState } from "react"
+import { InputOtp } from "@prokodo/ui/input-otp/client"
+import { Button } from "@prokodo/ui/button/client"
+import "@prokodo/ui/input-otp.css"
+import "@prokodo/ui/button.css"
+
+type OtpState = { error?: string } | undefined
+
+async function verifyOtpAction(
+  _prev: OtpState,
+  formData: FormData,
+): Promise<OtpState> {
+  "use server"
+  const code = formData.get("otp") as string
+  const result = await verifyOtp(code)
+  if (!result.ok) return { error: "Ungültiger oder abgelaufener Code" }
+  return undefined
+}
+
+export function OtpForm() {
+  const [state, action, isPending] = useActionState(verifyOtpAction, undefined)
+
+  return (
+    <form action={action} style={{ display: "grid", gap: "1rem" }}>
+      <p>
+        Gib den 6-stelligen Code ein, den wir an deine E-Mail gesendet haben.
+      </p>
+      <InputOtp name="otp" length={6} autoFocus errorText={state?.error} />
+      <Button
+        title="Bestätigen"
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={isPending}
+        fullWidth
+        loading={isPending}
+      />
+    </form>
+  )
+}
+```
+
+---
+
+## Layout
+
+```tsx title="app/(auth)/login/page.tsx"
+import { LoginForm } from "@/components/auth/LoginForm"
+
+export default function LoginPage() {
+  return (
+    <main
+      style={{
+        display: "grid",
+        placeItems: "center",
+        minHeight: "100vh",
+        padding: "1rem",
+      }}
+    >
+      <div style={{ width: "100%", maxWidth: "400px" }}>
+        <h1>Anmelden</h1>
+        <LoginForm />
+      </div>
+    </main>
+  )
+}
+```
+
+---
+
+## Barrierefreiheit
+
+- `InputOtp` steuert den Fokus automatisch, wenn eine Ziffer eingegeben wird.
+- Fehler sind über `aria-describedby` mit Eingaben verknüpft.
+- `Loading` innerhalb eines `Button` sollte mit `aria-label="Wird angemeldet…"` kombiniert werden.
+
+---
+
+## Verwandte Komponenten
+
+- [`Form`](/docs/components/form) — Server-Action-Integration, Constraint-Validierung
+- [`Input`](/docs/components/input) — alle Input-Typen, Fehler- und Hinweis-Slots
+- [`InputOtp`](/docs/components/input-otp) — stellenweise OTP-Eingabe mit Auto-Advance
+- [`Button`](/docs/components/button) — Lade- und deaktivierte Zustände
+- [`Loading`](/docs/components/loading) — inline Spinner-Varianten
+
+---
+
+## Weiterführende Informationen
+
+- [Next.js Server Actions & `useActionState`](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+- [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
+- [prokodo Next.js Agentur](https://www.prokodo.com/de/next-js-agentur/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=login_otp_de) — wir entwickeln sichere Authentifizierungs-Flows
+
+---
+
+👉 [Login & OTP Formular in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-loginotpform--docs)

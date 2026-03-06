@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /storybook/
+
+Sitemap: https://ui.prokodo.com/sitemap.xml

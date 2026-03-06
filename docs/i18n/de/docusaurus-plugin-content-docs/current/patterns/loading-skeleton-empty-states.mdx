@@ -1,0 +1,205 @@
+---
+id: loading-skeleton-empty-states
+title: Lade-Skeleton & Leerzustand-Muster
+sidebar_label: Laden & Leerzustände
+description: Lade-Skeletons, Leerzustände und Error-Boundaries in Next.js App Router mit prokodo-UI-Komponenten Skeleton, Loading und Card sowie Suspense implementieren.
+---
+
+# Lade-Skeleton & Leerzustand-Muster
+
+<StorybookEmbed id="prokodo-patterns-loadingskeleton--default" height={400} />
+
+Wahrgenommene Performance ist genauso wichtig wie echte Performance. Dieses Muster zeigt, wie man Lade-Skeletons, Leerzustände und Fehler-Feedback auf jede datenabrufende Seite in Next.js App Router mit `Skeleton`, `Loading` und Suspense-Boundaries anwendet.
+
+---
+
+## Wann dieses Muster verwenden
+
+- Jede Seite oder jeder Abschnitt, der Remote-Daten abruft
+- Janky Layout-Shifts durch gleichmäßige Skeleton-Bildschirme ersetzen
+- Leere Suchergebnisse oder Erstzustand klar kommunizieren
+
+---
+
+## Suspense mit Skeleton-Fallback
+
+Asynchrone Server-Components in `<Suspense>` einwickeln und ein Skeleton-UI als `fallback` bereitstellen. React streamt die Shell sofort und ersetzt sie mit echtem Inhalt, sobald die Daten vorliegen.
+
+```tsx title="app/nutzer/page.tsx"
+import { Suspense } from "react"
+import { NutzerListe } from "./NutzerListe"
+import { NutzerListeSkeleton } from "./NutzerListeSkeleton"
+
+export default function NutzerPage() {
+  return (
+    <main>
+      <h1>Nutzer</h1>
+      <Suspense fallback={<NutzerListeSkeleton />}>
+        <NutzerListe />
+      </Suspense>
+    </main>
+  )
+}
+```
+
+---
+
+## Skeleton-Komponente
+
+```tsx title="app/nutzer/NutzerListeSkeleton.tsx"
+import { Skeleton } from "@prokodo/ui/skeleton"
+import "@prokodo/ui/skeleton.css"
+
+export function NutzerListeSkeleton() {
+  return (
+    <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: "1rem" }}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <li
+          key={i}
+          style={{ display: "flex", gap: "1rem", alignItems: "center" }}
+        >
+          <Skeleton variant="circular" width="40px" height="40px" />
+          <div style={{ flex: 1, display: "grid", gap: "0.5rem" }}>
+            <Skeleton variant="text" width="60%" height="1rem" />
+            <Skeleton variant="text" width="40%" height="0.875rem" />
+          </div>
+          <Skeleton variant="rectangular" width="80px" height="32px" />
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+---
+
+## Asynchrone Server-Komponente
+
+```tsx title="app/nutzer/NutzerListe.tsx"
+import { fetchUsers } from "@/lib/users"
+import { Leerzustand } from "@/components/Leerzustand"
+
+export async function NutzerListe() {
+  const users = await fetchUsers()
+
+  if (users.length === 0) {
+    return (
+      <Leerzustand
+        title="Noch keine Nutzer"
+        description="Lade ein Teammitglied ein, um zu starten."
+        action={{ label: "Nutzer einladen", href: "/nutzer/einladen" }}
+      />
+    )
+  }
+
+  return (
+    <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: "1rem" }}>
+      {users.map(user => (
+        <li key={user.id}>{/* … */}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+---
+
+## Leerzustand-Komponente
+
+```tsx title="components/Leerzustand.tsx"
+import { Card } from "@prokodo/ui/card"
+import { Headline } from "@prokodo/ui/headline"
+import { Button } from "@prokodo/ui/button"
+import "@prokodo/ui/card.css"
+import "@prokodo/ui/headline.css"
+import "@prokodo/ui/button.css"
+
+interface LeerzustandProps {
+  title: string
+  description: string
+  action?: { label: string; href: string }
+}
+
+export function Leerzustand({ title, description, action }: LeerzustandProps) {
+  return (
+    <Card
+      style={{
+        textAlign: "center",
+        padding: "3rem",
+        maxWidth: "480px",
+        margin: "2rem auto",
+      }}
+    >
+      <Headline type="h2" style={{ marginBottom: "0.5rem" }}>
+        {title}
+      </Headline>
+      <p
+        style={{
+          color: "var(--pk-color-text-secondary)",
+          marginBottom: "1.5rem",
+        }}
+      >
+        {description}
+      </p>
+      {action && (
+        <Button
+          title={action.label}
+          variant="contained"
+          color="primary"
+          redirect={{ href: action.href }}
+        />
+      )}
+    </Card>
+  )
+}
+```
+
+---
+
+## Error-Boundary
+
+```tsx title="app/nutzer/error.tsx"
+"use client"
+
+export default function NutzerListeFehler({
+  error,
+  reset,
+}: {
+  error: Error
+  reset: () => void
+}) {
+  return (
+    <div style={{ textAlign: "center", padding: "3rem" }}>
+      <p>Nutzer konnten nicht geladen werden: {error.message}</p>
+      <button onClick={reset}>Erneut versuchen</button>
+    </div>
+  )
+}
+```
+
+---
+
+## INP-Hinweis
+
+Große Skeleton-Trees nicht synchron auf dem kritischen Pfad rendern. Wenn die Seite mehrere unabhängige Abschnitte hat, jede `<Suspense>` + Skeleton separat verschachteln, damit React sie unabhängig streamen und hydrieren kann.
+
+---
+
+## Verwandte Komponenten
+
+- [`Skeleton`](/docs/components/skeleton) — Rechteck-, Kreis- und Textzeilenvarianten
+- [`Loading`](/docs/components/loading) — Spinner für Inline- und Overlay-Kontexte
+- [`Card`](/docs/components/card) — Leerzustand-Container
+- [`Headline`](/docs/components/headline) — semantische Überschrift mit Größenskala
+
+---
+
+## Weiterführende Informationen
+
+- [Next.js Streaming mit Suspense](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming)
+- [React `<Suspense>`](https://react.dev/reference/react/Suspense)
+- [prokodo Next.js Agentur](https://www.prokodo.com/de/next-js-agentur/?utm_source=ui_docs&utm_medium=patterns&utm_campaign=prokodo_ui&utm_content=loading_skeleton_de) — wir helfen Teams beim Einsatz von Streaming SSR in der Produktion
+
+---
+
+👉 [Lade-Skeleton in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-patterns-loadingskeleton--docs)
