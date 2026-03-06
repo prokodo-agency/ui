@@ -74,14 +74,14 @@ function ThemeToggle(): ReactNode {
   )
 }
 
-type DocEntry =
-  | { label: string; to: string; children?: never }
-  | {
-      label: string
-      id: string
-      to?: string
-      children: { label: string; to: string }[]
-    }
+type DocLeaf = { label: string; to: string }
+type DocCategory = {
+  label: string
+  id: string
+  to?: string
+  children: { label: string; to: string }[]
+}
+type DocEntry = DocLeaf | DocCategory
 
 export default function Navbar(): ReactNode {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -427,7 +427,7 @@ export default function Navbar(): ReactNode {
             {docsOpen && (
               <div className={styles.mobileSectionLinks}>
                 {docSections.map(entry => {
-                  if (!entry.children) {
+                  if (!("id" in entry)) {
                     // Direct link entry
                     return (
                       <DocLink
