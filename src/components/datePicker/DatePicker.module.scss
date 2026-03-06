@@ -74,8 +74,8 @@
     --pk-dp-trigger-label-float-fg:  var(--pk-color-muted);
     --pk-dp-day-today-ring:          var(--pk-color-muted);
 
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] & {
       --pk-dp-gradient-from: var(--pk-palette-grey-100);
       --pk-dp-gradient-to:   var(--pk-palette-grey-200);
     }
@@ -215,9 +215,9 @@
     // Dark-mode: ensure grey chrome (arrows, weekdays, Clear) stays readable
     // on the dark dialog background. Works for both inline + portal rendering
     // because html[data-theme="dark"] is always an ancestor of document.body.
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       --pk-dp-header-fg:               var(--pk-palette-grey-50);
       --pk-dp-nav-fg:                  var(--pk-palette-grey-300);
       --pk-dp-nav-hover-bg:            rgba(255, 255, 255, 0.10);

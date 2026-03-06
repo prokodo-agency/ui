@@ -63,9 +63,9 @@
         // plenty of contrast so the vivid colours look great.
         // NOTE: must repeat background-clip because the `background` shorthand
         // resets it to `border-box`, undoing the text-clip above.
-        :global(html[data-theme='dark']) &,
-        :global([data-theme='dark']) &,
-        :global(.pk-theme-dark) & {
+        html[data-theme='dark'] &,
+        [data-theme='dark'] &,
+        .pk-theme-dark & {
             background: linear-gradient(
                 to right,
                 var(--pk-label-gradient-from),

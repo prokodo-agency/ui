@@ -1,7 +1,7 @@
 "use client"
 import { forwardRef, type JSX } from "react"
 
-import Link from "../link/Link.client"
+import BaseLink from "../base-link/BaseLink.client"
 
 import { ButtonView } from "./Button.view"
 
@@ -18,7 +18,7 @@ function ButtonClient(props: ButtonProps, ref: ButtonRef): JSX.Element {
       buttonRef={ref}
       iconProps={iconProps}
       isIconOnly={Boolean(isIconOnly)}
-      LinkComponent={Link}
+      LinkComponent={BaseLink}
       loading={loading}
     />
   )

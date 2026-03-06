@@ -24,15 +24,15 @@
   &--inherit   { --pk-switch-active: currentColor; }
 
   // info uses a dark grey that is unreadable on dark backgrounds — lighten it
-  :global([data-theme="dark"]) &--info,
-  :global(.pk-theme-dark) &--info {
+  [data-theme="dark"] &--info,
+  .pk-theme-dark &--info {
     --pk-switch-active: var(--pk-palette-grey-300);
   }
 
   // In dark mode, currentColor is often near-black and unreadable — fall back
   // to the foreground color (white/light in dark themes) for the inherit variant.
-  :global([data-theme="dark"]) &--inherit,
-  :global(.pk-theme-dark) &--inherit {
+  [data-theme="dark"] &--inherit,
+  .pk-theme-dark &--inherit {
     --pk-switch-active: var(--pk-color-fg);
   }
 
@@ -162,28 +162,28 @@
 
   // ── Dark theme overrides ────────────────────────────────────────────────
   // All variants: white thumb stays white, icon is black (on white thumb).
-  :global([data-theme="dark"]) &__thumb,
-  :global(.pk-theme-dark) &__thumb {
+  [data-theme="dark"] &__thumb,
+  .pk-theme-dark &__thumb {
     --pk-switch-thumb-bg: #ffffff;
     --pk-switch-thumb-checked-bg: #ffffff;
   }
 
-  :global([data-theme="dark"]) &__icon__wrapper,
-  :global(.pk-theme-dark) &__icon__wrapper,
-  :global([data-theme="dark"]) &__icon,
-  :global(.pk-theme-dark) &__icon {
+  [data-theme="dark"] &__icon__wrapper,
+  .pk-theme-dark &__icon__wrapper,
+  [data-theme="dark"] &__icon,
+  .pk-theme-dark &__icon {
     color: #000000;
   }
 
   // inherit variant only: checked thumb turns black + icon turns white so it's
   // visible (the track is white/fg-colored, thumb needs contrast).
-  :global([data-theme="dark"]) &--inherit &__thumb--checked,
-  :global(.pk-theme-dark) &--inherit &__thumb--checked {
+  [data-theme="dark"] &--inherit &__thumb--checked,
+  .pk-theme-dark &--inherit &__thumb--checked {
     --pk-switch-thumb-checked-bg: #000000;
   }
 
-  :global([data-theme="dark"]) &--inherit &__icon--isActive,
-  :global(.pk-theme-dark) &--inherit &__icon--isActive {
+  [data-theme="dark"] &--inherit &__icon--isActive,
+  .pk-theme-dark &--inherit &__icon--isActive {
     color: #ffffff;
   }
 

@@ -199,7 +199,7 @@ export function PostWidgetView({
                   {imgMerged && (
                     <header className={item.classes?.header}>
                       <Link {...linkMerged}>
-                        <Image {...imgMerged} itemProp="image" />
+                        <Image fill {...imgMerged} itemProp="image" />
                       </Link>
                     </header>
                   )}

@@ -308,8 +308,8 @@
     "test:e2e": "cypress open --component",
     "test:e2e:ci": "cypress run --component --headless",
     "fix": "pnpm format:fix && pnpm lint:fix",
-    "lint": "eslint 'src/**/*.{ts,tsx}' --cache --cache-location .eslintcache",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix --cache --cache-location .eslintcache",
+    "lint": "eslint . --cache --cache-location .eslintcache",
+    "lint:fix": "eslint . --fix --cache --cache-location .eslintcache",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "storybook": "storybook dev -p 6006",
@@ -403,7 +403,7 @@
     "jest-css-modules": "^2.1.0",
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^16.3.0",
-    "next": "^16.0.10",
+    "next": "^16.1.5",
     "postcss": "^8.4.39",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^10.0.2",
@@ -419,7 +419,7 @@
     "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
-    "vite": "^6.3.5",
+    "vite": "^6.4.1",
     "vite-plugin-checker": "^0.9.3",
     "vite-plugin-inspect": "^11.1.0",
     "@storybook/addon-docs": "10.2.14"
@@ -474,5 +474,22 @@
     "*.{mdx,md,json,css,html,yaml,yml}": [
       "prettier --write"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "rollup": ">=4.59.0",
+      "minimatch@^3": "3.1.4",
+      "minimatch@^5": "5.1.8",
+      "minimatch@^9": "9.0.7",
+      "minimatch@^10": "10.2.3",
+      "@isaacs/brace-expansion": ">=5.0.1",
+      "immutable": ">=5.1.5",
+      "serialize-javascript": ">=7.0.3",
+      "svgo": ">=3.3.3",
+      "lodash": ">=4.17.23",
+      "lodash-es": ">=4.17.23",
+      "webpack-dev-server": ">=5.2.1",
+      "qs": ">=6.14.2"
+    }
   }
 }

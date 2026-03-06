@@ -88,9 +88,9 @@
     --pk-select-item-active-bg:     color-mix(in srgb, var(--pk-color-muted)   18%, var(--pk-select-bg));
 
     // In dark mode muted/border resolve to near-black — swap to light greys
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       --pk-select-gradient-from: var(--pk-palette-grey-100);
       --pk-select-gradient-to:   var(--pk-palette-grey-200);
       --pk-select-label-fg:      var(--pk-palette-grey-200);
@@ -98,9 +98,9 @@
   }
 
   // Dark mode token overrides
-  :global(html[data-theme="dark"]) &,
-  :global([data-theme="dark"]) &,
-  :global(.pk-theme-dark) & {
+  html[data-theme="dark"] &,
+  [data-theme="dark"] &,
+  .pk-theme-dark & {
     --pk-select-item-hover-bg:   color-mix(in srgb, var(--pk-select-gradient-from) 15%, var(--pk-select-bg));
     --pk-select-item-active-bg:  color-mix(in srgb, var(--pk-select-gradient-from) 25%, var(--pk-select-bg));
     --pk-select-fg-placeholder:  var(--pk-palette-grey-400);
@@ -346,9 +346,9 @@
       --pk-select-item-active-bg: color-mix(in srgb, var(--pk-color-muted)   18%, var(--pk-select-bg));
     }
 
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       --pk-select-item-hover-bg:   color-mix(in srgb, var(--pk-select-gradient-from) 15%, var(--pk-select-bg));
       --pk-select-item-active-bg:  color-mix(in srgb, var(--pk-select-gradient-from) 25%, var(--pk-select-bg));
       --pk-select-fg:              var(--pk-color-fg);
@@ -518,9 +518,9 @@
     }
 
     // Dark mode
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       --pk-select-item-hover-bg:  color-mix(in srgb, var(--pk-select-gradient-from) 15%, var(--pk-select-bg));
       --pk-select-item-active-bg: color-mix(in srgb, var(--pk-select-gradient-from) 25%, var(--pk-select-bg));
       --pk-select-fg:             var(--pk-color-fg);

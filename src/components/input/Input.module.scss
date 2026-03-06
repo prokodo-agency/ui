@@ -69,9 +69,9 @@
     --pk-input-border-focus:       var(--pk-color-border);
 
     // In dark mode muted/border resolve to near-black — swap to light greys
-    :global(html[data-theme="dark"]) &,
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    html[data-theme="dark"] &,
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       --pk-input-gradient-from: var(--pk-palette-grey-100);
       --pk-input-gradient-to:   var(--pk-palette-grey-200);
     }
@@ -340,8 +340,8 @@
     z-index: 2;
 
     // Ensure the icon stays readable in dark mode
-    :global([data-theme="dark"]) &,
-    :global(.pk-theme-dark) & {
+    [data-theme="dark"] &,
+    .pk-theme-dark & {
       color: var(--pk-palette-grey-300);
     }
 
