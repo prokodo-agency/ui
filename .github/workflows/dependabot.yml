@@ -17,7 +17,7 @@ jobs:
 
       - name: Merge patch, minor and major dev updates
         if: ${{steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' || steps.dependabot-metadata.outputs.dependency-type == 'direct:development'}}
-        run: gh pr merge --merge "$PR_URL"
+        run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
