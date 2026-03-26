@@ -241,16 +241,22 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
           transition: transitioning ? "transform 0.3s ease-in-out" : "none",
         }}
       >
-        {items.map((child, i) => (
-          <div
-            // eslint-disable-next-line react/no-array-index-key
-            key={`cl-${i}`}
-            className={bem("item", undefined, classNameItem)}
-            style={{ width: `${100 / effectiveItemsToShow}%` }}
-          >
-            {child}
-          </div>
-        ))}
+        {items.map((child, i) => {
+          const isClone =
+            i < effectiveItemsToShow || i >= effectiveItemsToShow + num
+          return (
+            <div
+              // eslint-disable-next-line react/no-array-index-key
+              key={`cl-${i}`}
+              aria-hidden={isClone || undefined}
+              className={bem("item", undefined, classNameItem)}
+              inert={isClone || undefined}
+              style={{ width: `${100 / effectiveItemsToShow}%` }}
+            >
+              {child}
+            </div>
+          )
+        })}
       </div>
 
       {/* swipe hint */}
