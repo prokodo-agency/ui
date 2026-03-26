@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## [1.0.5](https://github.com/prokodo-agency/ui/compare/v1.0.4...v1.0.5) — 2026-03-26
+
+- feat: improve dark mode, portal positioning, priority image handling and docs (#171)
+- chore(dep): Bump @testing-library/jest-dom from 6.8.0 to 6.9.1 (#131)
+- fix(ci): re-add --auto flag for dependabot merge on protected branch
+
 ## [1.0.4](https://github.com/prokodo-agency/ui/compare/v1.0.3...v1.0.4) — 2026-03-06
 
 - fix(ci): remove pr approval steps not permitted by repo settings
