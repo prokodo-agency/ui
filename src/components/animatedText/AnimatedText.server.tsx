@@ -7,7 +7,6 @@ import type { JSX } from "react"
 export default function AnimatedTextServer(
   props: AnimatedTextProps,
 ): JSX.Element {
-  // we drop the original children so nothing is typed yet
-  const { children: _ignored, ...rest } = props
-  return <AnimatedTextView {...rest} text="" />
+  const { children, ...rest } = props
+  return <AnimatedTextView {...rest} text={children} />
 }
