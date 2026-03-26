@@ -10,7 +10,7 @@ import type {
   DatePickerDialogBehavior,
   DatePickerProps,
 } from "./DatePicker.model"
-import type { JSX, TouchEventHandler } from "react"
+import type { JSX, CSSProperties, TouchEventHandler } from "react"
 
 export type { DatePickerDialogBehavior } from "./DatePicker.model"
 
@@ -62,10 +62,13 @@ export function DatePickerView({
   onViewModeChange,
   onMonthSelect,
   onYearSelect,
+  dialogStyle,
 }: Omit<DatePickerProps, "onChange" | "value"> &
   DatePickerDialogBehavior & {
     /** Portal target for the calendar dialog (e.g. document.body on mobile). */
     dialogPortalTarget?: Element | null
+    /** Inline style applied to the dialog panel (fixed positioning when portaled on desktop). */
+    dialogStyle?: CSSProperties
     onDialogTouchStart?: TouchEventHandler<HTMLDivElement>
     onDialogTouchEnd?: TouchEventHandler<HTMLDivElement>
   }): JSX.Element {
@@ -119,6 +122,7 @@ export function DatePickerView({
               prevAriaLabel={prevAriaLabel}
               prevIcon={prevIcon}
               selectedDate={selectedDate}
+              style={dialogStyle}
               timeLabel={timeLabel}
               todayLabel={todayLabel}
               viewingMonth={viewingMonth}

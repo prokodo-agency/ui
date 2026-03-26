@@ -61,6 +61,7 @@ export function DatePickerDialog({
   onViewModeChange,
   onMonthSelect,
   onYearSelect,
+  style,
 }: DatePickerDialogProps): JSX.Element {
   const calendarDays = buildCalendarGrid(viewingMonth, minDate, maxDate)
   const hours = buildHours()
@@ -80,6 +81,7 @@ export function DatePickerDialog({
         aria-modal="true"
         id={`${name}-dialog`}
         role="dialog"
+        style={style}
         className={[
           bem("dialog"),
           dialogColor ? bem(undefined, { [dialogColor]: true }) : "",

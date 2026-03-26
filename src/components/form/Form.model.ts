@@ -246,8 +246,14 @@ export type FormFieldMessagesErrors = {
 /**
  * Error configuration per field.
  */
+export type FormFieldMessagesSelect = {
+  doneLabel?: string
+  closeAriaLabel?: string
+}
+
 export type FormFieldMessages = {
   errors?: FormFieldMessagesErrors
+  select?: FormFieldMessagesSelect
 }
 
 /**

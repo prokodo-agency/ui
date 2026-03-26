@@ -90,6 +90,14 @@ export default function FormFieldClient({
           priority
           color={color}
           {...(props as SelectProps)}
+          closeAriaLabel={
+            (props as SelectProps).closeAriaLabel ??
+            messagesFields?.select?.closeAriaLabel
+          }
+          doneLabel={
+            (props as SelectProps).doneLabel ??
+            messagesFields?.select?.doneLabel
+          }
           onChange={
             /* istanbul ignore next */ (
               _: SelectEvent,

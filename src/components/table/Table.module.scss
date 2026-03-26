@@ -49,11 +49,17 @@
   &__head {
     &__row {
       border-bottom: var(--pk-border-width) solid var(--pk-table-border-color);
+
+      &--double {
+        border-bottom-width: 3px;
+        border-bottom-style: double;
+      }
     }
 
     &__cell {
       padding: var(--pk-table-padding-y) var(--pk-table-padding-x);
       font-weight: 500;
+      color: var(--pk-table-cell-fg);
       @include text("headline/sm");
 
       & {
@@ -70,6 +76,11 @@
   &__body {
     &__row {
       border-bottom: var(--pk-border-width) solid var(--pk-table-border-color);
+
+      &--double {
+        border-bottom-width: 3px;
+        border-bottom-style: double;
+      }
 
       &--has-link {
         @include when-hovered() {

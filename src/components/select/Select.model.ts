@@ -129,6 +129,10 @@ export interface SelectProps<Value extends string = string> {
   selectClassName?: string
   /** Props forwarded to Label component. */
   labelProps?: LabelProps
+  /** Label for mobile "Done" button (multi-select). Default: "Done". */
+  doneLabel?: string
+  /** Aria-label for mobile close button. Default: "Close". */
+  closeAriaLabel?: string
   /** Ref to underlying select element. */
   ref?: Ref<HTMLSelectElement>
 }

@@ -88,7 +88,7 @@ import { Rating } from "@prokodo/ui/rating"
 No separate `/client` or `/lazy` import selection is required in consumer code.
 
 AIC components also support a `priority` flag for critical above-the-fold elements.
-This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+This is most visible on `Image` (native preloading via `<link rel="preload">` for above-the-fold content).
 
 ---
 

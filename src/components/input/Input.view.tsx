@@ -31,7 +31,7 @@ export function InputView({
   inputClassName,
   hideCounter,
   rows,
-  hideLegend: _hideLegend,
+  hideLegend,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   minRows,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -83,16 +83,18 @@ export function InputView({
         )}
 
         <div className={bem("field", undefined, fieldClassName)}>
-          {typeof label === "string" && (
+          {!hideLegend && (
             <fieldset
               aria-hidden="true"
               className={bem("notch", {
                 "is-focused": Boolean(isFocused) || hasValue,
               })}
             >
-              <legend className={bem("notchLegend")}>
-                <span>{label}</span>
-              </legend>
+              {typeof label === "string" && (
+                <legend className={bem("notchLegend")}>
+                  <span>{label}</span>
+                </legend>
+              )}
             </fieldset>
           )}
           <div

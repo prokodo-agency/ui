@@ -761,13 +761,13 @@ describe("DatePicker.client", () => {
       })),
     })
     render(<DatePickerClient />)
-    // Initially isMobile=false (matches=false) → dialogPortalTarget=null
-    expect(capturedProps.dialogPortalTarget).toBeNull()
+    // dialogPortalTarget is always document.body now (portal used for both mobile and desktop)
+    expect(capturedProps.dialogPortalTarget).toBe(document.body)
     // Simulate a matchMedia change event toggling to mobile
     await act(async () => {
       changeListeners.forEach(h => h({ matches: true }))
     })
-    // After change, isMobile=true → dialogPortalTarget=document.body
+    // After change, isMobile=true → dialogPortalTarget still document.body
     expect(capturedProps.dialogPortalTarget).toBe(document.body)
     // Restore mock
     Object.defineProperty(window, "matchMedia", {
@@ -965,4 +965,19 @@ it("dialogPortalTarget is document.body when isMobile=true", async () => {
       dispatchEvent: jest.fn(),
     })),
   })
+})
+
+it("scroll/resize sync updates triggerRect when picker is open on desktop", async () => {
+  render(<DatePickerClient name="dp-sync" />)
+  // Open the picker on desktop (isMobile=false by default)
+  await act(async () => {
+    ;(capturedProps.onToggle as () => void)?.()
+  })
+  expect(capturedProps.isOpen).toBe(true)
+  // Fire a scroll event — the sync handler reads getBoundingClientRect
+  await act(async () => {
+    document.dispatchEvent(new Event("scroll", { bubbles: true }))
+  })
+  // dialogStyle should now be defined (position fixed with triggerRect coords)
+  expect(capturedProps.dialogStyle).toBeDefined()
 })

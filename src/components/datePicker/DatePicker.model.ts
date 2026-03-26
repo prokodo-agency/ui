@@ -2,7 +2,7 @@ import type { InputProps } from "../input"
 import type { IconName } from "@/components/icon"
 import type { Variants } from "@/types/variants"
 import type { Dayjs } from "dayjs"
-import type { TouchEventHandler } from "react"
+import type { CSSProperties, TouchEventHandler } from "react"
 
 // -----------------------------------------------------------------
 // View mode
@@ -93,6 +93,8 @@ export interface DatePickerDialogProps
   onDialogTouchStart?: TouchEventHandler<HTMLDivElement>
   /** Touch-end handler injected by the client for swipe gestures. */
   onDialogTouchEnd?: TouchEventHandler<HTMLDivElement>
+  /** Inline style override — used for fixed positioning when portaled on desktop. */
+  style?: CSSProperties
 }
 
 /** Date/time value: Dayjs object, ISO string, or null (empty). */

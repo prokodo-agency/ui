@@ -56,11 +56,10 @@ describe("Image.client", () => {
     expect(container.querySelector("figure")).toBeNull()
   })
 
-  it("sets loading=eager and fetchPriority=high when priority=true", () => {
+  it("omits loading=lazy when priority=true", () => {
     render(<ImageClient priority alt="test" src="test.jpg" />)
     const img = screen.getByRole("img")
-    expect(img).toHaveAttribute("loading", "eager")
-    expect(img).toHaveAttribute("fetchpriority", "high")
+    expect(img).not.toHaveAttribute("loading")
   })
 
   it("extracts src from StaticImageData object", () => {

@@ -69,6 +69,7 @@ function SelectClient<Value extends string = string>({
   const [popupReady, setPopupReady] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const sheetSwipeStart = useRef<number | null>(null)
+  const didInitFocus = useRef(false)
 
   const hasPlaceholder = !Boolean(required) && !Boolean(multiple)
   const optionCount = (hasPlaceholder ? 1 : 0) + items.length
@@ -152,8 +153,15 @@ function SelectClient<Value extends string = string>({
   )
 
   // when opening: set initial active option + focus listbox (portal-safe)
+  // Guard: only run once per open cycle so value changes don't reset the
+  // active index / re-focus while the dropdown is already open.
   useEffect(() => {
-    if (!open || !popupReady) return
+    if (!open) {
+      didInitFocus.current = false
+      return
+    }
+    if (!popupReady || didInitFocus.current) return
+    didInitFocus.current = true
     setActiveIndex(valueToIndex())
     requestAnimationFrame(() => {
       listRef.current?.focus()
@@ -197,6 +205,12 @@ function SelectClient<Value extends string = string>({
       window.removeEventListener("scroll", onScroll, true)
     }
   }, [open, updatePopupPosition])
+
+  // Re-align dropdown after value changes (button text / parent layout may shift)
+  useEffect(() => {
+    if (!open) return
+    requestAnimationFrame(() => updatePopupPosition())
+  }, [val, open, updatePopupPosition])
 
   /* close on outside click */
   useEffect(() => {
@@ -400,7 +414,7 @@ function SelectClient<Value extends string = string>({
                   <div className={bem("sheet__header")}>
                     <span className={bem("sheet__title")}>{rest.label}</span>
                     <button
-                      aria-label="Close"
+                      aria-label={rest.closeAriaLabel ?? "Close"}
                       className={bem("sheet__close")}
                       type="button"
                       onClick={close}
@@ -504,7 +518,7 @@ function SelectClient<Value extends string = string>({
                         type="button"
                         onClick={close}
                       >
-                        Done
+                        {rest.doneLabel ?? "Done"}
                       </button>
                     </div>
                   )}

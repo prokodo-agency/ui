@@ -45,7 +45,7 @@
     --pk-color-surface:        var(--pk-palette-white);
     --pk-color-surface-raised: var(--pk-palette-grey-50);
     --pk-color-border:         var(--pk-palette-grey-200);
-    --pk-color-muted:          var(--pk-palette-grey-300);
+    --pk-color-muted:          var(--pk-palette-grey-500);
     --pk-color-overlay-alpha:  0.5;
 
     // Shared semantic — only emitted in light (not overridden in dark)
@@ -96,6 +96,7 @@
     --pk-z-dropdown:       998;
     --pk-z-modal-backdrop: 1300;
     --pk-z-modal:          1301;
+    --pk-z-popover:        1400;
   }
 
   @if $mode == dark {

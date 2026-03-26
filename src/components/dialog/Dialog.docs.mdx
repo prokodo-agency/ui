@@ -22,6 +22,7 @@ For non-blocking, dismissible side content prefer `Drawer` instead.
 - Uses `role="dialog"` with `aria-modal="true"`
 - `aria-labelledby` links the header to the dialog role
 - Focus is trapped inside the dialog while it is open
+- When open, body scroll is locked (`overflow: hidden`) to prevent background scrolling
 - `Escape` key closes the dialog (unless `disableEscapeKeyDown` is set)
 - Focus returns to the trigger element on close
 

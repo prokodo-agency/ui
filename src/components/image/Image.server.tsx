@@ -64,13 +64,24 @@ function toImgOnlyProps(p: Record<string, unknown>): ImgOnlyProps {
     height,
   }
 
-  // Public API: <Image priority /> → eager load in server markup too
-  if (Boolean(priority)) {
-    imgProps.loading = "eager"
-    ;(
-      imgProps as ImgOnlyProps & { fetchPriority?: "high" | "low" | "auto" }
-    ).fetchPriority = "high"
+  // Do NOT set loading or fetchPriority for priority images — Next.js <Image>
+  // handles priority via a <link rel="preload"> in <head>, not via img attributes.
+  // Setting them here causes a hydration mismatch when ImageClient renders via
+  // the Next.js Image component (which doesn't set those attributes on <img>).
+  if (!Boolean(priority)) {
+    imgProps.loading = "lazy"
   }
+
+  // Always set these to match Next.js <Image> client output
+  imgProps.decoding = "async"
+  ;(imgProps as ImgOnlyProps & { "data-nimg"?: string })["data-nimg"] = "1"
+  imgProps.style = { color: "transparent", ...imgProps.style }
+  // Suppress hydration warning for src/srcSet — they differ because Next.js
+  // optimizes URLs (/_next/image/?url=...) while the server renders the raw
+  // path. React will update the attribute after hydration.
+  ;(imgProps as ImgOnlyProps & { suppressHydrationWarning?: boolean })[
+    "suppressHydrationWarning"
+  ] = true
 
   return imgProps
 }

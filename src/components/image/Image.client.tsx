@@ -69,13 +69,21 @@ function toPlainImgProps(p: Record<string, unknown>): PlainImgProps {
     height,
   }
 
-  // Public API: <Image priority /> → eager load on the client too
-  if (Boolean(priority)) {
-    imgProps.loading = "eager"
-    ;(
-      imgProps as PlainImgProps & { fetchPriority?: "high" | "low" | "auto" }
-    ).fetchPriority = "high"
+  // Mirror Image.server.tsx: don't set loading/fetchPriority for priority images
+  // (Next.js Image uses <link rel="preload"> instead of img attributes for priority).
+  if (!Boolean(priority)) {
+    imgProps.loading = "lazy"
   }
+
+  // Always match Next.js <Image> attribute output
+  imgProps.decoding = "async"
+  ;(imgProps as PlainImgProps & { "data-nimg"?: string })["data-nimg"] = "1"
+  imgProps.style = { color: "transparent", ...imgProps.style }
+  // Suppress hydration warning — src/srcSet differ between SSR (raw path) and
+  // client (/_next/image/ optimized URL) when imageComponent is Next.js Image.
+  ;(imgProps as PlainImgProps & { suppressHydrationWarning?: boolean })[
+    "suppressHydrationWarning"
+  ] = true
 
   return imgProps
 }
@@ -95,12 +103,13 @@ const ImageClient: FC<ImageProps> = ({
     // we delegate everything to it and DO NOT sanitize its props.
     if (ctxImage !== undefined) {
       const CustomImage = ctxImage as FC<unknown>
+      const ctxProps = { ...rawProps, suppressHydrationWarning: true }
       return (
         <CustomImage
           // @ts-expect-error: custom image component prop typing is external
           alt={alt ?? /* istanbul ignore next */ ""}
           className={bem("image", undefined, className)}
-          {...rawProps}
+          {...ctxProps}
         />
       )
     }

@@ -18,26 +18,6 @@
 }
 
 @include define-block("Dialog") {
-  // ── Backdrop wrapper (rendered when closeOnBackdropClick=true) ────────────
-  // Acts as the fixed fullscreen overlay + centering shell + backdrop click target
-  &__backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    justify-content: center;
-    align-items: center;
-    z-index: var(--pk-z-modal);
-    background-color: rgb(var(--pk-color-overlay-rgb) / var(--pk-color-overlay-alpha));
-
-    & {
-      animation: Dialog_backdropFadeIn var(--pk-timing-normal) ease;
-    }
-
-    &--is-visible {
-      display: flex;
-    }
-  }
-
   // ── Dialog element (role="dialog") ────────────────────────────────────────
   // When inside __backdrop: just a plain wrapper (centering is handled by parent)
   // When rendered standalone (fullScreen / no-backdrop-click): acts as its own overlay
@@ -50,6 +30,23 @@
 
   &--is-visible {
     display: flex;
+  }
+
+  // ── Backdrop wrapper (rendered when closeOnBackdropClick=true) ────────────
+  // Acts as the fixed fullscreen overlay + centering shell + backdrop click target
+  &__backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--pk-z-modal);
+    background-color: rgb(var(--pk-color-overlay-rgb) / var(--pk-color-overlay-alpha));
+    animation: Dialog_backdropFadeIn var(--pk-timing-normal) ease;
+
+    &--is-visible {
+      display: flex;
+    }
   }
 
   // When inside __backdrop the Dialog is a flex child — reset fixed positioning

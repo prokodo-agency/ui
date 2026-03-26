@@ -90,7 +90,7 @@ import { Switch } from "@prokodo/ui/switch"
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
 
 AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
-Am sichtbarsten ist das bei `Image` (`loading="eager"` + `fetchpriority="high"`).
+Am sichtbarsten ist das bei `Image` (natives Preloading via `<link rel="preload">` für Above-the-fold-Inhalte).
 
 ---
 

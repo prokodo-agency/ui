@@ -31,7 +31,7 @@ describe("ImageServer", () => {
     expect(document.querySelector("figure")).toBeInTheDocument()
   })
 
-  it("sets fetchPriority=high when priority=true", () => {
+  it("omits loading attribute when priority=true", () => {
     render(
       <ImageServer
         priority
@@ -43,7 +43,7 @@ describe("ImageServer", () => {
     )
     // eslint-disable-next-line testing-library/no-node-access
     const img = document.querySelector("img")
-    expect(img?.getAttribute("fetchpriority")).toBe("high")
+    expect(img?.getAttribute("loading")).toBeNull()
   })
 
   it("renders with StaticImageData object as src (object src path)", () => {

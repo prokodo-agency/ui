@@ -202,7 +202,7 @@
     position: absolute;
     top: calc(100% + var(--pk-space-xs));
     left: 0;
-    z-index: 200;
+    z-index: var(--pk-z-popover, 1400);
     min-width: var(--pk-dp-dialog-min-width);
     width: max-content;
     background: var(--pk-dp-dialog-bg);
@@ -270,7 +270,7 @@
       display: block;
       position: fixed;
       inset: 0;
-      z-index: 199;
+      z-index: var(--pk-z-popover, 1400);
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
