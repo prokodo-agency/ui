@@ -15,14 +15,9 @@
 @include define-block("Stepper") {
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0;
-    height: 100%;
-
-    @include screenLargerThan($screen-md) {
-        width: 100%;
-        flex-direction: row;
-    }
+    width: 100%;
 
     // ── Color variant gradient overrides ──────────────────────────────────────
     // Each variant re-maps the gradient-border CSS vars used by gradientBorderVar()
@@ -71,34 +66,21 @@
 
     &__step {
         position: relative;
-        height: 100%;
+        width: 100%;
         list-style-type: none;
         cursor: pointer;
 
         &::after {
             content: '';
-            position: relative;
-            display: block;
-            margin: px-to-rem(-160px) 0 px-to-rem(20px) px-to-rem(20px);
-            height: calc(100% - 150px);
-            width: 3px;
+            position: absolute;
+            top: px-to-rem(20px);
+            margin: 0;
+            left: auto;
+            height: 3px;
+            width: calc(100% - 80px);
             @include gradientBorderVar(7);
-            transform: translateY(-50%);
+            transform: translateX(-50%);
             opacity: 0.5;
-        }
-
-        @include screenLargerThan($screen-md) {
-            width: 100%;
-            
-            &::after {
-                position: absolute;
-                top: px-to-rem(20px);
-                margin: 0;
-                left: auto;
-                height: 3px;
-                width: calc(100% - 80px);
-                transform: translateX(-50%);
-            }
         }
     
         &:first-child::after {
@@ -211,7 +193,7 @@
     
     &__label {
         text-align: center;
-        align-items: flex-start;
+        align-items: center;
         display: flex !important;
         flex-direction: column;
         justify-content: center;
@@ -239,7 +221,6 @@
         }
 
         @include screenLargerThan($screen-md) {
-            align-items: center;
             @include text("headline/xs");
         }
     }

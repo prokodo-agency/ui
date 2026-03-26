@@ -407,7 +407,7 @@
 
   &__counter {
     padding-top: var(--pk-space-md);
-    color: var(--pk-palette-grey-600);
+    color: var(--pk-input-helper-fg);
     @include text("caption");
   }
 }

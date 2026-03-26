@@ -68,8 +68,9 @@ Use `priority` for images that are visible immediately on first paint (for examp
 
 What `priority` does in this library:
 
-- Sets `loading="eager"`
-- Sets `fetchpriority="high"`
+- Emits a `<link rel="preload">` hint so the browser fetches the image before parsing the page
+- Omits `loading="lazy"` (non-priority images are lazy by default)
+- Sets `decoding="async"` for non-blocking decode
 - Applies the behavior in both server and client rendering paths
 
 Use it sparingly for truly critical above-the-fold images only.
@@ -100,7 +101,7 @@ import { Image } from "@prokodo/ui/image"
 No separate `/client` or `/lazy` import selection is required in consumer code.
 
 AIC components also support a `priority` flag for critical above-the-fold elements.
-This is most visible on `Image` (`loading="eager"` + `fetchpriority="high"`).
+This is most visible on `Image` (native preloading via `<link rel="preload">` for above-the-fold content).
 
 ---
 

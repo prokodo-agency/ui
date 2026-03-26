@@ -49,8 +49,6 @@ export default function CardClient({
     [onClick, onKeyDown, disabled],
   )
 
-  const linkRole =
-    isString(redirect?.href) && !Boolean(disabled) ? "link" : undefined
   const linkTabIndex =
     isString(redirect?.href) && !Boolean(disabled) ? 0 : undefined
 
@@ -60,7 +58,6 @@ export default function CardClient({
       disabled={disabled}
       isClickable={isClickable}
       redirect={redirect}
-      role={linkRole}
       tabIndex={linkTabIndex}
       onClick={!Boolean(disabled) ? handleClickVoid : undefined}
       onKeyDown={handleKey}

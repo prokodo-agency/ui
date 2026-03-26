@@ -109,14 +109,14 @@ describe("Card.client", () => {
   })
 
   describe("link role", () => {
-    it("sets role=link and tabIndex=0 for redirect with href and not disabled", () => {
+    it("sets tabIndex=0 for redirect with href and not disabled", () => {
       render(<CardClient redirect={{ href: "/page" }} />)
       const view = screen.getByTestId("card-view")
-      expect(view).toHaveAttribute("data-role", "link")
+      expect(view).not.toHaveAttribute("data-role", "link")
       expect(view).toHaveAttribute("data-tab-index", "0")
     })
 
-    it("does not set role=link when disabled", () => {
+    it("does not set role or tabIndex when disabled", () => {
       render(<CardClient disabled redirect={{ href: "/page" }} />)
       expect(screen.getByTestId("card-view")).toHaveAttribute("data-role", "")
     })

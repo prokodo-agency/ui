@@ -454,7 +454,7 @@
   &__sheet__backdrop {
     position: fixed;
     inset: 0;
-    z-index: 199;
+    z-index: var(--pk-z-popover, 1400);
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -467,7 +467,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 200;
+    z-index: calc(var(--pk-z-popover, 1400) + 1);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -634,19 +634,22 @@
   // "Done" button for multi-select sheet footer
   &__sheet__done {
     width: 100%;
-    padding: 0.75rem;
-    border-radius: var(--pk-select-radius, 8px);
+    height: 3rem;
+    padding: var(--pk-space-xs, 0.25rem) var(--pk-space-sm, 0.5rem);
+    border-radius: var(--pk-radius-lg, 12px);
     border: none;
     cursor: pointer;
-    font-weight: 700;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-align: center;
     background: linear-gradient(
-      90deg,
+      135deg,
       var(--pk-select-gradient-from),
       var(--pk-select-gradient-to)
     );
     color: #fff;
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--pk-select-gradient-from) 30%, transparent);
     transition: opacity var(--pk-timing-fast) ease;
-    @include text("base/lg");
 
     @include when-hovered() {
       opacity: 0.9;

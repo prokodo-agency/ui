@@ -50,7 +50,7 @@ export const Table: FC<TableProps> = ({
       <div className={bem("table__wrapper")}>
         <table aria-label={ariaLabel} className={bem("table")} {...props}>
           <thead className={bem("head")}>
-            <tr className={bem("head__row")}>
+            <tr className={bem("head__row", { [type]: true })}>
               {header.map((cell, i) => (
                 <th
                   // eslint-disable-next-line react/no-array-index-key
@@ -68,6 +68,7 @@ export const Table: FC<TableProps> = ({
                 // eslint-disable-next-line react/no-array-index-key
                 key={`table-body-row-${a}`}
                 className={bem("body__row", {
+                  [type]: true,
                   /* istanbul ignore next */
                   "has-link": isString(row?.redirect?.href),
                 })}

@@ -59,10 +59,6 @@
             border-radius: 1000rem;
             background-color: var(--pk-color-surface-raised);
 
-            html[data-theme='dark'] & {
-                background-color: var(--pk-palette-grey-400);
-            }
-
             &__wrapper {
                 display: flex;
                 align-items: center;

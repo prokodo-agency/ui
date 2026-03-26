@@ -3,6 +3,7 @@
 import {
   memo,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -261,6 +262,14 @@ function TooltipClient(props: TooltipProps): JSX.Element {
   const [effectivePlacement, setEffectivePlacement] =
     useState<TooltipPlacement>(placement)
 
+  // Defer portal creation until after hydration to prevent SSR/client mismatch.
+  // Using typeof document before mount is the classic branch the hydration error
+  // warns about – the server sees null but the first client render sees the DOM.
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const openTimer = useRef<number | null>(null)
   const closeTimer = useRef<number | null>(null)
 
@@ -509,9 +518,7 @@ function TooltipClient(props: TooltipProps): JSX.Element {
 
   /* istanbul ignore next */
   const overlayRoot =
-    typeof document !== "undefined" && portal
-      ? getOverlayRoot(overlayRootId, zIndex)
-      : null
+    isMounted && portal ? getOverlayRoot(overlayRootId, zIndex) : null
 
   const portalOpen = open && Boolean(bubbleStyle)
 

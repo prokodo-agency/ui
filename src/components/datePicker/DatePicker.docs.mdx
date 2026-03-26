@@ -35,6 +35,8 @@ Use `DatePicker` wherever a user must select a specific date or date range — b
 - `WithTime` adds an hour/minute picker below the calendar
 - Pass `minDate` / `maxDate` to restrict selectable range
 - `value` / `onChange` follow controlled component conventions
+- On desktop the calendar dialog renders via a portal with `position: fixed` and repositions on scroll/resize
+- Pass `dialogStyle` (`CSSProperties`) to override the calendar dialog's inline styles (e.g. custom width or offset)
 
 ## Design Tokens
 

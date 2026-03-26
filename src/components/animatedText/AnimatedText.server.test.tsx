@@ -18,7 +18,7 @@ jest.mock("./AnimatedText.view", () => ({
 }))
 
 describe("AnimatedTextServer", () => {
-  it("should render with empty text on server", () => {
+  it("should render children as text for SSR", () => {
     render(
       <AnimatedTextServer delay={100} speed={30}>
         Hello World
@@ -26,7 +26,7 @@ describe("AnimatedTextServer", () => {
     )
 
     const view = screen.getByTestId("animated-text-view")
-    expect(view).toHaveTextContent("") // Server renders empty initially
+    expect(view).toHaveTextContent("Hello World")
   })
 
   it("should pass through props except children", () => {
@@ -44,16 +44,16 @@ describe("AnimatedTextServer", () => {
     expect(view).toHaveClass("custom-class")
     expect(view).toHaveAttribute("id", "test-id")
     expect(view).toHaveAttribute("data-custom", "value")
-    expect(view).toHaveTextContent("") // Children ignored on server
+    expect(view).toHaveTextContent("Test Content")
   })
 
-  it("should ignore children prop on server", () => {
+  it("should render children as SSR fallback text", () => {
     render(
-      <AnimatedTextServer>This should not appear on server</AnimatedTextServer>,
+      <AnimatedTextServer>This should appear on server</AnimatedTextServer>,
     )
 
     const view = screen.getByTestId("animated-text-view")
-    expect(view).toHaveTextContent("")
+    expect(view).toHaveTextContent("This should appear on server")
   })
 
   it("should handle all props correctly", () => {
@@ -70,6 +70,6 @@ describe("AnimatedTextServer", () => {
 
     const view = screen.getByTestId("animated-text-view")
     expect(view).toHaveClass("server-class")
-    expect(view).toHaveTextContent("")
+    expect(view).toHaveTextContent("Server content")
   })
 })

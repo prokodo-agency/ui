@@ -63,6 +63,16 @@ function DialogClient(
     if (open) openDialog()
   }, [open, openDialog])
 
+  // Lock body scroll while Dialog is open
+  useEffect(() => {
+    if (!isOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [isOpen])
+
   useEffect(() => {
     if (!isOpen) return
     /* istanbul ignore next */

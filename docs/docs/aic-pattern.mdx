@@ -108,7 +108,7 @@ import "@prokodo/ui/image.css"
 />
 ```
 
-For `Image`, this results in eager loading with high fetch priority (`loading="eager"` and `fetchpriority="high"`) in both server and client paths.
+For `Image`, this triggers native preloading via `<link rel="preload">` for above-the-fold content in both server and client paths.
 
 ---
 

@@ -65,6 +65,11 @@ const DatePickerClient: FC<DatePickerProps> = ({
   const [isOpen, setIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [viewMode, setViewMode] = useState<DatePickerViewMode>("days")
+  const [triggerRect, setTriggerRect] = useState<{
+    top: number
+    left: number
+    width: number
+  } | null>(null)
 
   // Keep a ref so the swipe handler (which has no deps) can read current viewMode.
   const viewModeRef = useRef<DatePickerViewMode>("days")
@@ -132,14 +137,38 @@ const DatePickerClient: FC<DatePickerProps> = ({
     // backdrop/close button — skip the click-outside logic entirely.
     if (!isOpen || isMobile) return
     function handlePointerDown(e: PointerEvent) {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+      const target = e.target as Node
+      const inRoot = rootRef.current?.contains(target)
+      // Dialog is portaled to body — look it up by ID
+      const dialogEl = document.getElementById(`${name}-dialog`)
+      const inDialog = dialogEl?.contains(target)
+      if (!inRoot && !inDialog) {
         setIsOpen(false)
         setDraft(date)
       }
     }
     document.addEventListener("pointerdown", handlePointerDown)
     return () => document.removeEventListener("pointerdown", handlePointerDown)
-  }, [isOpen, isMobile, date])
+  }, [isOpen, isMobile, date, name])
+
+  // Keep the portaled dialog aligned with the trigger on scroll / resize
+  useEffect(() => {
+    if (!isOpen || isMobile || !rootRef.current) return
+    function sync() {
+      const el = rootRef.current
+      /* istanbul ignore next -- defensive: ref is always set while mounted */
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      setTriggerRect({ top: r.bottom, left: r.left, width: r.width })
+    }
+    // Listen on capture phase so we catch scroll events inside any container
+    document.addEventListener("scroll", sync, true)
+    window.addEventListener("resize", sync)
+    return () => {
+      document.removeEventListener("scroll", sync, true)
+      window.removeEventListener("resize", sync)
+    }
+  }, [isOpen, isMobile])
 
   const validateDate = useCallback(
     (d: Dayjs | null): string | undefined => {
@@ -191,6 +220,12 @@ const DatePickerClient: FC<DatePickerProps> = ({
         setViewingMonth(date ?? dayjs())
         setDraft(date)
         setViewMode("days")
+        // Capture trigger rect for fixed positioning of the portaled dialog
+        /* istanbul ignore else -- defensive: ref is always set while mounted */
+        if (rootRef.current) {
+          const r = rootRef.current.getBoundingClientRect()
+          setTriggerRect({ top: r.bottom, left: r.left, width: r.width })
+        }
       }
       return !prev
     })
@@ -289,6 +324,17 @@ const DatePickerClient: FC<DatePickerProps> = ({
     [],
   )
 
+  // Fixed-position style for the portaled dialog on desktop
+  const dialogStyle =
+    !isMobile && triggerRect
+      ? ({
+          position: "fixed" as const,
+          top: triggerRect.top + 8,
+          left: triggerRect.left,
+          zIndex: 1400,
+        } as const)
+      : undefined
+
   return (
     <div
       ref={rootRef}
@@ -297,7 +343,8 @@ const DatePickerClient: FC<DatePickerProps> = ({
       <DatePickerView
         {...rest}
         color={color}
-        dialogPortalTarget={isMobile ? document.body : null}
+        dialogPortalTarget={document.body}
+        dialogStyle={dialogStyle}
         errorText={error}
         format={fmt}
         helperText={helperText}

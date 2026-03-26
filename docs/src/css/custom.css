@@ -20,7 +20,7 @@
 /* ─── Font variables ─────────────────────────────────────────────────────── */
 :root {
   --font-primary: "Montserrat", "Montserrat Fallback", sans-serif;
-  --font-secondary: "Open Sans", "Open Sans Fallback", sans-serif;
+  --font-secondary: "Mona Sans", "Mona Sans Fallback", sans-serif;
 }
 
 /* ─── Docusaurus variable overrides — Light ──────────────────────────────── */
