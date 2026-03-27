@@ -64,20 +64,39 @@ yarn add @prokodo/ui
 
 ## 2. Globale Stile einbinden
 
-Importiere das prokodo UI CSS-Bundle in deinem Root-Layout (`app/layout.tsx`):
+prokodo UI bietet zwei CSS-Strategien. Wähle die, die zu deinen Performance-Anforderungen passt:
+
+### Empfohlen: Tokens + komponentenspezifisches CSS (beste Performance)
+
+Importiere nur die Design-Tokens in deinem Root-Layout und lade Komponenten-CSS zusammen mit jeder Komponente:
+
+```ts title="app/layout.tsx"
+import "@prokodo/ui/theme-tokens.css"
+```
+
+```tsx title="components/MyFeature.tsx"
+import { Card } from "@prokodo/ui/card"
+import "@prokodo/ui/card.css"
+```
+
+**`theme-tokens.css`** enthält nur die CSS Custom Properties (`--pk-*` Design-Tokens) — Farben, Abstände, Typografie, Radien, Schatten und Motion-Variablen. Keine Komponenten-Styles.
+
+**Komponentenspezifisches CSS** (z. B. `card.css`) ist vollständig eigenständig: Es enthält automatisch die Styles aller internen Sub-Komponenten über CSS `@import`. Zum Beispiel liefert `@prokodo/ui/post-item.css` auch die Styles für Avatar, Card, Headline und jede weitere Abhängigkeit, die PostItem intern nutzt — du musst den Dependency-Tree nicht kennen.
+
+Dieser Ansatz sendet **nur das CSS, das deine Seite tatsächlich braucht**, was sich erheblich auf die Core Web Vitals (LCP, FCP) auswirkt.
+
+### Alternative: Globales Bundle (Komfort)
+
+Für Prototyping oder wenn die Bundle-Größe keine Rolle spielt, importiere das vollständige CSS-Bundle:
 
 ```ts title="app/layout.tsx"
 import "@prokodo/ui/theme.css"
 ```
 
-Diese Datei:
+Dies enthält alle Design-Tokens **und** alle Komponenten-Styles (~288 KB). Du kannst die komponentenspezifischen `.css`-Imports überspringen, da alles bereits enthalten ist.
 
-- Importiert alle CSS-Kustomeigenschaften (`--pk-*` Design-Tokens)
-- Stellt baseline-Resets bereit, die mit Next.js App Router kompatibel sind
-- Muss **einmalig** am Root eingebunden werden — kein wiederholter Import pro Komponente erforderlich
-
-:::info CSS-Architektur
-Komponenten-CSS wird pro Komponente ausgeliefert (z. B. `@prokodo/ui/button.css`) und sollte zusammen mit der jeweiligen Komponente importiert werden. Beispiele findest du im [Schnellstart](/de/docs/getting-started/quick-start).
+:::warning Performance
+`theme.css` lädt Styles für alle ~55 Komponenten, unabhängig davon, welche du nutzt. Für Produktions-Websites solltest du `theme-tokens.css` + komponentenspezifisches CSS bevorzugen, um render-blockierendes CSS zu minimieren und die PageSpeed-Werte zu verbessern.
 :::
 
 ---
@@ -109,6 +128,8 @@ export default function TestPage() {
 
 **`Cannot find module '@prokodo/ui/…'`** — Stelle sicher, dass `node_modules/@prokodo/ui` existiert. Führe erneut den Paketmanager-Install aus.
 
-**Stile werden nicht geladen** — Bestätige, dass `@prokodo/ui/theme.css` im Root-Layout importiert ist, nicht in einer Komponentendatei.
+**Stile werden nicht geladen** — Bestätige, dass entweder `@prokodo/ui/theme.css` oder `@prokodo/ui/theme-tokens.css` im Root-Layout importiert ist. Wenn du `theme-tokens.css` nutzt, stelle zusätzlich sicher, dass du das passende Komponenten-CSS (z. B. `@prokodo/ui/button.css`) zusammen mit jeder Komponente importierst.
+
+**Fehlende Sub-Komponenten-Styles** — Du musst nur das CSS der übergeordneten Komponente importieren. Jede `.css`-Datei enthält automatisch ihre internen Abhängigkeiten. Zum Beispiel enthält `@prokodo/ui/form.css` die Styles für Input, Select, Checkbox und alle anderen Sub-Komponenten, die Form intern nutzt.
 
 **Icon wird leer dargestellt** — In der Entwicklung werden Icons aus dem lokalen `node_modules`-Asset-Pfad geladen. In der Produktion von jsDelivr CDN. Weitere Informationen auf der [Icon](/de/docs/components/icon)-Seite.

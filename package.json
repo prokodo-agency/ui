@@ -11,6 +11,7 @@
   "types": "dist/types/index.d.ts",
   "exports": {
     "./theme.css": "./dist/theme.css",
+    "./theme-tokens.css": "./dist/theme-tokens.css",
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js"
@@ -295,7 +296,7 @@
   },
   "scripts": {
     "dev": "PK_ENABLE_DEBUG_LOGS=true vite",
-    "build": "vite build && pnpm build:types && node tools/duplicate-css-modules.mjs && node tools/update-exports.mjs && node tools/check-restricted-paths.mjs",
+    "build": "vite build && pnpm build:types && node tools/duplicate-css-modules.mjs && node tools/inject-css-deps.mjs && node tools/update-exports.mjs && node tools/check-restricted-paths.mjs",
     "build:types": "tsc --project tsconfig.build.json",
     "build:prod": "pnpm test && pnpm build",
     "typecheck": "tsc --project tsconfig.typecheck.json",

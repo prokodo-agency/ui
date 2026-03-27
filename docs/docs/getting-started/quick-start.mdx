@@ -9,6 +9,10 @@ description: Use your first prokodo UI component in under 5 minutes — Button, 
 
 After [installing](/docs/getting-started/installation) `@prokodo/ui`, you're ready to use components. Each component is a separate entry point — import only what you need.
 
+:::tip
+Make sure `@prokodo/ui/theme-tokens.css` is imported in your root layout (see [Installation](/docs/getting-started/installation)). All examples below assume this is in place.
+:::
+
 ---
 
 ## Your first component — Button
@@ -48,6 +52,8 @@ import "@prokodo/ui/button.css"
 import "@prokodo/ui/card.css"
 ```
 
+Each CSS file is **self-contained**: it includes styles for all internal sub-components via CSS `@import`. Your bundler (webpack, Turbopack) deduplicates automatically — shared dependencies like `headline.css` are only included once in the output, even when imported from multiple component CSS files.
+
 - Use `priority` for critical above-the-fold elements (especially hero images) so they load/hydrate eagerly.
 
 ### ❌ Don't
@@ -63,7 +69,6 @@ import "@prokodo/ui/card.css"
 import { Form } from "@prokodo/ui/form"
 import { Input } from "@prokodo/ui/input"
 import "@prokodo/ui/form.css"
-import "@prokodo/ui/input.css"
 
 export default function ContactPage() {
   return (
@@ -74,6 +79,10 @@ export default function ContactPage() {
   )
 }
 ```
+
+:::info
+You only need `form.css` here — it already includes styles for Input, Select, Checkbox, and all other sub-components that Form uses internally.
+:::
 
 ---
 

@@ -121,6 +121,7 @@ export default defineConfig(({ mode }) => {
         input: {
           index: path.resolve(__dirname, "src/index.ts"),
           theme: path.resolve(__dirname, "src/theme.scss"),
+          "theme-tokens": path.resolve(__dirname, "src/theme-tokens.scss"),
           ...getComponentEntries(),
         },
         output: {

@@ -14,6 +14,7 @@ const pkg = JSON.parse(readFileSync(packageJsonPath, "utf-8"))
 // Base exports (root entry, helpers, runtime, theme.css)
 const exportsField = {
   "./theme.css": "./dist/theme.css",
+  "./theme-tokens.css": "./dist/theme-tokens.css",
   ".": {
     types: "./dist/types/index.d.ts",
     import: "./dist/index.js",

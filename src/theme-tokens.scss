@@ -1,0 +1,7 @@
+// =============================================================================
+// THEME TOKENS — design tokens & CSS custom properties only.
+// Does NOT include any component styles.
+// Consumers should pair this with per-component CSS imports.
+// =============================================================================
+
+@use "./styles/theme.scss";
