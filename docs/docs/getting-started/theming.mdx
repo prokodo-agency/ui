@@ -13,12 +13,21 @@ prokodo UI is built on a CSS custom property (design token) system. Theming mean
 
 ## How tokens work
 
-All design decisions — color, spacing, typography, border-radius, shadow — are expressed as `--pk-*` CSS variables defined in `@prokodo/ui/theme.css`. Components consume these variables directly from their CSS Modules.
+All design decisions — color, spacing, typography, border-radius, shadow — are expressed as `--pk-*` CSS variables. Components consume these variables directly from their CSS Modules.
 
-Override any token in your global stylesheet **after** the `theme.css` import:
+Tokens are defined in two files:
+
+| File                           | Contents                                | Size    |
+| ------------------------------ | --------------------------------------- | ------- |
+| `@prokodo/ui/theme-tokens.css` | Design tokens only (`--pk-*` variables) | Small   |
+| `@prokodo/ui/theme.css`        | Tokens **+ all component styles**       | ~288 KB |
+
+For best performance, use `theme-tokens.css` and load component CSS per component (see [Installation](/docs/getting-started/installation)).
+
+Override any token in your global stylesheet **after** the token import:
 
 ```css title="app/globals.css"
-@import "@prokodo/ui/theme.css";
+@import "@prokodo/ui/theme-tokens.css";
 
 :root {
   /* Brand colours */
@@ -86,7 +95,7 @@ prokodo UI does **not** bundle fonts. Import your typeface in the root layout an
 
 ```tsx title="app/layout.tsx"
 import { Inter } from "next/font/google"
-import "@prokodo/ui/theme.css"
+import "@prokodo/ui/theme-tokens.css"
 import "./globals.css" /* contains --pk-font-family-base override */
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })

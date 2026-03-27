@@ -16,8 +16,12 @@ All design decisions in prokodo UI are expressed as CSS custom properties under 
 Import the token definitions once in your app root:
 
 ```ts
-import "@prokodo/ui/theme.css"
+import "@prokodo/ui/theme-tokens.css"
 ```
+
+:::tip
+`theme-tokens.css` contains **only** the `--pk-*` custom properties — no component styles. This keeps your critical CSS path small. Component styles are loaded per component via their own CSS files (e.g. `@prokodo/ui/button.css`). See [Installation](/docs/getting-started/installation) for details.
+:::
 
 ---
 
@@ -139,7 +143,7 @@ Prokodo UI uses a 4 px base grid:
 ## Overriding tokens
 
 ```css title="app/globals.css"
-@import "@prokodo/ui/theme.css";
+@import "@prokodo/ui/theme-tokens.css";
 
 :root {
   --pk-color-primary: #0ea5e9;

@@ -13,12 +13,21 @@ prokodo UI basiert auf einem CSS-Kustomeigenschaften-System (Design-Tokens). The
 
 ## Wie Tokens funktionieren
 
-Alle Designentscheidungen — Farbe, Abstände, Typografie, Rahmen-Radien, Schatten — sind als `--pk-*` CSS-Variablen definiert, die in `@prokodo/ui/theme.css` enthalten sind. Komponenten verwenden diese Variablen direkt aus ihren CSS Modules.
+Alle Designentscheidungen — Farbe, Abstände, Typografie, Rahmen-Radien, Schatten — sind als `--pk-*` CSS-Variablen definiert. Komponenten verwenden diese Variablen direkt aus ihren CSS Modules.
 
-Überschreibe beliebige Tokens in deinem globalen Stylesheet **nach** dem `theme.css`-Import:
+Tokens werden in zwei Dateien bereitgestellt:
+
+| Datei                          | Inhalt                                 | Größe   |
+| ------------------------------ | -------------------------------------- | ------- |
+| `@prokodo/ui/theme-tokens.css` | Nur Design-Tokens (`--pk-*` Variablen) | Klein   |
+| `@prokodo/ui/theme.css`        | Tokens **+ alle Komponenten-Styles**   | ~288 KB |
+
+Für beste Performance nutze `theme-tokens.css` und lade Komponenten-CSS pro Komponente (siehe [Installation](/de/docs/getting-started/installation)).
+
+Überschreibe beliebige Tokens in deinem globalen Stylesheet **nach** dem Token-Import:
 
 ```css title="app/globals.css"
-@import "@prokodo/ui/theme.css";
+@import "@prokodo/ui/theme-tokens.css";
 
 :root {
   /* Markenfarben */
@@ -68,7 +77,7 @@ prokodo UI bündelt keine Schriftarten. Importiere deine Schrift im Root-Layout 
 
 ```tsx title="app/layout.tsx"
 import { Inter } from "next/font/google"
-import "@prokodo/ui/theme.css"
+import "@prokodo/ui/theme-tokens.css"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
