@@ -1,5 +1,9 @@
 # @prokodo/ui
 
+## [1.0.7](https://github.com/prokodo-agency/ui/compare/v1.0.6...v1.0.7) — 2026-03-29
+
+- refactor(styles): Colocate component tokens and slim default theme (#173)
+
 ## [1.0.6](https://github.com/prokodo-agency/ui/compare/v1.0.5...v1.0.6) — 2026-03-27
 
 - feat(css): add per-component CSS with transitive deps & theme-tokens.css (#172)
