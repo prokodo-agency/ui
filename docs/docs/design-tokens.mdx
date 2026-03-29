@@ -13,14 +13,14 @@ All design decisions in prokodo UI are expressed as CSS custom properties under 
 2. **Semantic tokens** (`--pk-color-*`, `--pk-space-*`, `--pk-radius-*`, …) — Role-based aliases
 3. **Component tokens** (`--pk-input-*`, `--pk-select-*`, …) — Per-component override points
 
-Import the token definitions once in your app root:
+Import global token definitions once in your app root:
 
 ```ts
 import "@prokodo/ui/theme-tokens.css"
 ```
 
 :::tip
-`theme-tokens.css` contains **only** the `--pk-*` custom properties — no component styles. This keeps your critical CSS path small. Component styles are loaded per component via their own CSS files (e.g. `@prokodo/ui/button.css`). See [Installation](/docs/getting-started/installation) for details.
+`theme-tokens.css` contains **only** shared `--pk-*` custom properties (palette + semantic layers) — no component styles. This keeps your critical CSS path small. Component styles are loaded per component via their own CSS files (e.g. `@prokodo/ui/button.css`), and those files provide each component's `--pk-<component>-*` tokens. See [Installation](/docs/getting-started/installation) for details.
 :::
 
 ---

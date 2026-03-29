@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type { ChangeEvent, ReactNode } from "react"
 import { useState, useEffect } from "react"
 import clsx from "clsx"
 import BrowserOnly from "@docusaurus/BrowserOnly"
@@ -115,6 +115,20 @@ export default function Navbar(): ReactNode {
   const otherLocaleUrl = otherLocalePath
     ? `${otherLocalePath}${location.search || ""}${location.hash || ""}`
     : undefined
+  const docsBasePath = currentLocale === "de" ? "/de/docs" : "/docs"
+  const isMigrationRoute = /\/docs\/migration(?:$|[/?#])/.test(
+    location.pathname,
+  )
+  const currentDocsVersion = isMigrationRoute ? "v0" : "v1"
+
+  const handleVersionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const target =
+      event.target.value === "v0"
+        ? `${docsBasePath}/migration#v0--v1`
+        : `${docsBasePath}/intro`
+
+    window.location.assign(target)
+  }
 
   const toggleSection = (id: string) =>
     setOpenSections(prev => {
@@ -367,6 +381,31 @@ export default function Navbar(): ReactNode {
 
         {/* Right actions */}
         <div className={styles.actions}>
+          <div className={styles.versionDropdown}>
+            <select
+              aria-label={translate({
+                id: "prokodo.navbar.versionSwitcher.ariaLabel",
+                message: "Switch documentation version",
+              })}
+              className={styles.versionSelect}
+              onChange={handleVersionChange}
+              value={currentDocsVersion}
+            >
+              <option value="v1">
+                {translate({
+                  id: "prokodo.navbar.versionSwitcher.v1",
+                  message: "v1 (current)",
+                })}
+              </option>
+              <option value="v0">
+                {translate({
+                  id: "prokodo.navbar.versionSwitcher.v0",
+                  message: "v0 (legacy)",
+                })}
+              </option>
+            </select>
+          </div>
+
           {otherLocale && otherLocaleUrl && (
             <a href={otherLocaleUrl} className={styles.localeToggle}>
               {otherLocale.toUpperCase()}
