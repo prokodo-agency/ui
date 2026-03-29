@@ -1,7 +1,10 @@
+@use "@/styles/tokens/components/image-text" as itTokens;
+
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include itTokens.image-text-tokens(); }
 
 // Component tokens: --pk-image-text-content-color
 

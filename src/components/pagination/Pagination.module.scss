@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/pagination" as pgTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/mixins/texts"     as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
+:root { @include pgTokens.pagination-tokens(); }
 
 // Pending state shimmer / wave animation
 @keyframes pk-pagination-pulse {

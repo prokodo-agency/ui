@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/snackbar" as snackTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+:root { @include snackTokens.snackbar-tokens(); }
 
 // Component tokens (per variant):
 //   --pk-snackbar-info-bg, --pk-snackbar-info-fg

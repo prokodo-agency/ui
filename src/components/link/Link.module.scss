@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/link" as linkTokens;
+
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include linkTokens.link-tokens(); }
 
 @include define-block("Link") {
   text-decoration: none;

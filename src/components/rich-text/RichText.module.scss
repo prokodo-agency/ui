@@ -1,5 +1,8 @@
+@use "@/styles/tokens/components/rte" as rteTokens;
+
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include rteTokens.rte-tokens(); }
 
 @include define-block("RichText") {
     &__a {

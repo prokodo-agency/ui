@@ -1,9 +1,12 @@
+@use "@/styles/tokens/components/datepicker" as dpTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+:root { @include dpTokens.datepicker-tokens(); }
 
 // Component tokens: --pk-dp-trigger-*, --pk-dp-dialog-*, --pk-dp-header-*,
 //   --pk-dp-nav-*, --pk-dp-weekday-*, --pk-dp-day-*, --pk-dp-gradient-*,

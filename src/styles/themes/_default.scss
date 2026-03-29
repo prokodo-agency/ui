@@ -1,17 +1,13 @@
 // =============================================================================
 // DEFAULT THEME
-// This file owns the single :root block for all --pk-* defaults.
-// It calls emit-semantic(light) for semantic tokens and
-// emit-components-defaults() for all component-level tokens.
-//
-// Do NOT add :root blocks anywhere else for --pk-* vars.
+// This file owns the single :root block for semantic --pk-* defaults only.
+// Component tokens (--pk-button-*, --pk-card-*, etc.) are co-located with
+// each component's .module.scss so they ship only when the component is used.
 // =============================================================================
 
 @use "../tokens/semantic" as *;
-@use "../tokens/components/index" as comp;
 
 :root,
 .pk-theme-default {
   @include emit-semantic(light);
-  @include comp.emit-components-defaults();
 }

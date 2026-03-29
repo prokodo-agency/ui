@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/inputotp" as otpTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+:root { @include otpTokens.inputotp-tokens(); }
 
 // Component tokens: --pk-otp-gap, --pk-otp-cell-size, --pk-otp-cell-radius,
 //   --pk-otp-gradient-from, --pk-otp-gradient-to

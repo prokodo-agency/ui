@@ -1,5 +1,8 @@
+@use "@/styles/tokens/components/progressbar" as pbTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/config/spaces" as *;
+:root { @include pbTokens.progressbar-tokens(); }
 
 @keyframes gradientShift {
   0% {

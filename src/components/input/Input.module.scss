@@ -1,9 +1,12 @@
+@use "@/styles/tokens/components/input" as inputTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/screens" as *;
+:root { @include inputTokens.input-tokens(); }
 
 @keyframes inputNotchAnimate {
   0%, 100% { border-color: var(--pk-input-gradient-from); }

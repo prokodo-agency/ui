@@ -1,5 +1,8 @@
+@use "@/styles/tokens/components/tooltip" as ttTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+:root { @include ttTokens.tooltip-tokens(); }
 
 @include define-block("Tooltip") {
   position: relative;

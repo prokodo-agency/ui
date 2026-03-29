@@ -1,5 +1,8 @@
+@use "@/styles/tokens/components/accordion" as accordionTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+:root { @include accordionTokens.accordion-tokens(); }
 
 // Component tokens: --pk-accordion-fg, --pk-accordion-radius,
 //   --pk-accordion-border, --pk-accordion-border-focus, --pk-accordion-shadow,

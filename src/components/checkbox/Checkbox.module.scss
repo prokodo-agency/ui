@@ -1,5 +1,8 @@
+@use "@/styles/tokens/components/checkbox" as cbTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+:root { @include cbTokens.checkbox-tokens(); }
 
 // Component tokens: see src/styles/tokens/components/_checkbox.scss
 // Color variant token cascade:
