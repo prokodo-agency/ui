@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/label" as labelTokens;
+
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include labelTokens.label-tokens(); }
 
 @include define-block("Label") {
     font-weight: 400;

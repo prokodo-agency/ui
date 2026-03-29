@@ -1,8 +1,11 @@
+@use "@/styles/tokens/components/sidenav" as snTokens;
+
 /* src/components/side-nav/SideNav.module.scss */
 @use "@/styles/ui/mixins/accessibility"      as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts"     as *;
 @use "@/styles/ui/mixins/bem"                 as *;
+:root { @include snTokens.sidenav-tokens(); }
 
 $rail-w: 240px;   // entire moulding width
 $rail-c: 56px;    // Visible toggle width

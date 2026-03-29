@@ -1,7 +1,10 @@
+@use "@/styles/tokens/components/tabs" as tabsTokens;
+
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include tabsTokens.tabs-tokens(); }
 
 @include define-block("Tabs") {
   width: 100%;

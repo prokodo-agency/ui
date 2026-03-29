@@ -1,8 +1,11 @@
+@use "@/styles/tokens/components/table" as tableTokens;
+
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/screens" as *;
+:root { @include tableTokens.table-tokens(); }
 
 // Component tokens: --pk-table-border-color, --pk-table-header-accent-color,
 //   --pk-table-row-hover-bg, --pk-table-caption-color, --pk-table-cell-fg,

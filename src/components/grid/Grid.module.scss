@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/grid" as gridTokens;
+
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include gridTokens.grid-tokens(); }
 
 // Component tokens: --pk-grid-padding
 

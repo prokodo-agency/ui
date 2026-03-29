@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/dynamic-list" as dlTokens;
+
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include dlTokens.dynamic-list-tokens(); }
 
 @include define-block("DynamicList") {
   border: none;

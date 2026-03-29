@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/rating" as ratingTokens;
+
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include ratingTokens.rating-tokens(); }
 
 @include define-block("Rating") {
   position: relative;

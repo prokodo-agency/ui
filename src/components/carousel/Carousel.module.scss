@@ -1,8 +1,11 @@
+@use "@/styles/tokens/components/carousel" as carouselTokens;
+
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
 @use "@/styles/designsystem/mixins/screens" as *;
 @use "@/styles/designsystem/config/screens" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include carouselTokens.carousel-tokens(); }
 
 // Component tokens: --pk-carousel-overlay-bg, --pk-carousel-dot-active-bg,
 //   --pk-carousel-button-padding, --pk-carousel-dots-mt, --pk-carousel-controls-mt

@@ -1,6 +1,9 @@
+@use "@/styles/tokens/components/switch" as switchTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
+:root { @include switchTokens.switch-tokens(); }
 
 // Component tokens — see src/styles/tokens/components/_switch.scss
 

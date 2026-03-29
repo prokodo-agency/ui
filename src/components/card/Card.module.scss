@@ -1,7 +1,10 @@
+@use "@/styles/tokens/components/card" as cardTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/mixins/gradients" as *;
+:root { @include cardTokens.card-tokens(); }
 
 // Component tokens: --pk-card-bg, --pk-card-fg, --pk-card-radius,
 //   --pk-card-shadow, --pk-card-padding, --pk-card-inherit-bg,

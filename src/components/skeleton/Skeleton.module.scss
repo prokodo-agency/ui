@@ -1,4 +1,7 @@
+@use "@/styles/tokens/components/skeleton" as skelTokens;
+
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include skelTokens.skeleton-tokens(); }
 
 /* Pulse opacity */
 @keyframes skeleton-pulse {

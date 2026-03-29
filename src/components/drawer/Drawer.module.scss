@@ -1,7 +1,10 @@
+@use "@/styles/tokens/components/drawer" as drawerTokens;
+
 @use "@/styles/designsystem/mixins/texts" as *;
 @use "@/styles/designsystem/config/radials" as *;
 @use "@/styles/designsystem/config/spaces" as *;
 @use "@/styles/ui/mixins/bem" as *;
+:root { @include drawerTokens.drawer-tokens(); }
 
 @include define-block("Drawer") {
   /* Backdrop (unchanged, fades in) */
