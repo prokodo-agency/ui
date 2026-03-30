@@ -1,5 +1,9 @@
 # @prokodo/ui
 
+## [1.0.8](https://github.com/prokodo-agency/ui/compare/v1.0.7...v1.0.8) — 2026-03-30
+
+- fix: Eliminate SSR HTML duplication from island streaming (#174)
+
 ## [1.0.7](https://github.com/prokodo-agency/ui/compare/v1.0.6...v1.0.7) — 2026-03-29
 
 - refactor(styles): Colocate component tokens and slim default theme (#173)
