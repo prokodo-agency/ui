@@ -9,4 +9,5 @@ export default createLazyWrapper<RTEProps>({
   name: "RTE",
   Client: RTEClient,
   Server: RTEServer,
+  isInteractive: () => true,
 })
