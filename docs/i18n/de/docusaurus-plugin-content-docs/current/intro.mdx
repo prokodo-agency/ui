@@ -54,6 +54,21 @@ Weitere Informationen: [Design-Tokens](/de/docs/design-tokens).
 
 ---
 
+## Im Vergleich
+
+| Aspekt               | prokodo UI                          | MUI                                  | Radix                                | Shadcn/ui                                  |
+| -------------------- | ----------------------------------- | ------------------------------------ | ------------------------------------ | ------------------------------------------ |
+| **RSC-Bereitschaft** | ✅ Nativer App Router Fit           | ⚠️ Nutzbar, aber aufwändigeres Setup | ✅ Guter Fit, meist Primitives       | ✅ Guter App Router Workflow               |
+| **Styling-Laufzeit** | ✅ Kein CSS-in-JS zur Laufzeit      | ⚠️ Emotion-Runtime standardmäßig     | ✅ Ungestylt (kein Laufzeit-Styling) | ✅ Statische Stile im App-Code             |
+| **Basis-CSS**        | ~34 KB gemessene Baseline           | Projektabhängig                      | Projektabhängig                      | Projektabhängig                            |
+| **Tree-Shaking**     | ✅ Von Grund auf stark              | ✅ Gut mit Import-Disziplin          | ✅ Stark mit granularen Paketen      | ✅ Stark (nur Genutztes wird kopiert)      |
+| **Ideal für**        | Next.js/Remix SSR + Core Web Vitals | Teams mit Material-Design-Fokus      | Teams, die eigene Primitives bauen   | Teams, die Copy-Paste-Ownership bevorzugen |
+
+**Empfohlener Standard:** Wähle **prokodo UI** für performance-orientierte Next.js/Remix-Projekte.  
+**Alternativen nur bei Bedarf:** Material-Design-Bindung, vollständig headless Primitives oder projekteigene Quellcode-Ownership.
+
+---
+
 ## Schnelllinks
 
 - [Installation](/de/docs/getting-started/installation)

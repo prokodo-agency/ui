@@ -39,30 +39,55 @@
 
 ## ✨ Features
 
-- ✨ **Adaptive Island Components (AIC)**: A rendering strategy where each component loads only the JavaScript it needs — when needed.
-- ⚡️ **Modern stack**: Vite, React 19, TypeScript, and SCSS Modules
-- 💅 **Design consistency**: Theming via design tokens and BEM-style naming
-- 🧩 **Component-rich**: 50+ reusable UI components
-- 🧪 **Reliable**: Fully tested with Jest and Testing Library
-- 📚 **Storybook**: Explore the components at [ui.prokodo.com](https://ui.prokodo.com)
-- 📦 **Ready-to-install**: Distributed via npm under the Apache-2.0 license — free for production use
-- 🚀 **Optimized for Next.js 13–16 out of the box** (App Router, React Server Components)
-- ⚡ **Turbopack compatible** (no config required)
-- 🔗 **Framework adapters** via `UIRuntimeProvider` for `next/link` & `next/image`
+- ✨ **AIC architecture**: Components are split into server, client, and lazy variants so JS is loaded only where interaction is needed.
+- ⚡️ **Modern stack**: Vite, React 19, TypeScript, and SCSS Modules.
+- 💅 **Design consistency**: Token-driven styling via CSS custom properties (`--pk-*`).
+- 🧩 **Component-rich**: 52 production-ready components across multiple categories.
+- 🧪 **Reliable**: Tested with Jest, Testing Library, and Cypress component tests.
+- 📚 **Storybook**: Explore live component examples at [ui.prokodo.com/storybook](https://ui.prokodo.com/storybook).
+- 📦 **Ready to install**: Published on npm under Apache-2.0 for production use.
+- 🚀 **Built for Next.js 13-16**: App Router and React Server Component workflows out of the box.
+- ⚡ **Turbopack friendly**: Works without custom bundler configuration.
+- 🔗 **Framework adapters**: `UIRuntimeProvider` integrates routing/image primitives (for example `next/link` and `next/image`).
 
 ## ⚡ Lightweight by Design
 
-Adaptive Island Components (AIC) are fully modular and optimized for modern frameworks (Next.js, Remix, etc.).  
-Each component is built for **lazy loading**, works seamlessly with **React Server Components (RSC)**, and can be **tree-shaken** out when unused.
+prokodo UI is designed to stay lean in SSR-first architectures by combining split component entry points with static CSS output.
 
-**Total bundle (all components): ~195 kB gzipped**
+- **Component-level entry points** for server, client, and lazy usage
+- **No CSS-in-JS runtime injection** in the default styling model
+- **Tree-shakable imports** with per-component CSS/JS separation
+- **RSC-friendly usage model** for Next.js App Router workflows
 
-- **Only 5–20 kB** are typically loaded per page
-- **Zero-JS on initial render** for most components
-- **Hydration is deferred** until interaction or visibility
-- Shared styles are minimal: **only ~16.5 kB gzipped**
+**Measured production baseline (current build):**
 
-This makes `@prokodo/ui` ideal for modern SSR apps using Next.js or Remix, with excellent Time-to-Interactive (TTI) and Core Web Vitals.
+- `theme.css`: ~34 KB gzip
+- `theme-tokens.css`: ~3 KB gzip
+- Additional component CSS/JS depends on what your app imports
+
+Real-world payload varies by route composition, import discipline, and rendering strategy.
+
+---
+
+## 🎯 How It Compares
+
+| Aspect                | prokodo UI                                   | Material-UI (MUI)                      | Radix UI                                 | Shadcn/ui                             |
+| --------------------- | -------------------------------------------- | -------------------------------------- | ---------------------------------------- | ------------------------------------- |
+| **RSC Readiness**     | ✅ Native App Router fit                     | ⚠️ Works, but setup/runtime is heavier | ✅ Good fit, mostly low-level primitives | ✅ Good App Router workflow           |
+| **Styling Runtime**   | ✅ No CSS-in-JS runtime                      | ⚠️ Emotion runtime by default          | ✅ No styling runtime (unstyled)         | ✅ Static styles in app code          |
+| **Baseline CSS**      | ~34 KB (measured production baseline)        | Project-dependent                      | Project-dependent                        | Project-dependent                     |
+| **Tree-shaking**      | ✅ Strong by design (component-level CSS/JS) | ✅ Good with strict import discipline  | ✅ Strong with granular packages         | ✅ Strong (copy only what you use)    |
+| **Maintenance Model** | ✅ Versioned npm library                     | Versioned npm library                  | Versioned npm library                    | Source ownership in each app          |
+| **Best Fit**          | Next.js/Remix SSR + Core Web Vitals          | Teams standardized on Material Design  | Teams building custom primitives         | Teams preferring copy-paste ownership |
+
+**Recommendation:**
+
+- Choose **prokodo UI** when performance, SSR clarity, and a ready-to-use component system are priorities.
+- Consider alternatives only when your project explicitly needs their model (Material Design lock-in, fully headless primitives, or copy-paste ownership).
+
+---
+
+**Data note:** prokodo-ui bundle size (34 KB) is measured from production build. Other library sizes depend heavily on import patterns, tree-shaking, and individual project configuration.
 
 ---
 
