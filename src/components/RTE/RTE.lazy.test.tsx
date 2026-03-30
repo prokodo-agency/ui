@@ -24,6 +24,6 @@ describe("RTE.lazy", () => {
     const wrapper = screen.getByTestId("lazy-wrapper")
     expect(wrapper).toBeInTheDocument()
     expect(wrapper).toHaveAttribute("data-name", "RTE")
-    expect(wrapper).toHaveAttribute("data-interactive", "false")
+    expect(wrapper).toHaveAttribute("data-interactive", "true")
   })
 })
