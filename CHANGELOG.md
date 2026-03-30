@@ -1,5 +1,9 @@
 # @prokodo/ui
 
+## [1.0.9](https://github.com/prokodo-agency/ui/compare/v1.0.8...v1.0.9) — 2026-03-30
+
+- hotfix: revert createIsland eager resolve – restores Streaming SSR + Carousel
+
 ## [1.0.8](https://github.com/prokodo-agency/ui/compare/v1.0.7...v1.0.8) — 2026-03-30
 
 - fix: Eliminate SSR HTML duplication from island streaming (#174)

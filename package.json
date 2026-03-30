@@ -1,6 +1,6 @@
 {
   "name": "@prokodo/ui",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "type": "module",
   "description": "UI components for production-grade Next.js + Headless CMS (Strapi, Contentful, Headless WordPress) websites by prokodo – built for Core Web Vitals & SEO.",
   "sideEffects": [
