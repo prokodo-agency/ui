@@ -47,7 +47,9 @@ jobs:
           cache: pnpm
 
       - name: ⬆️ Upgrade npm to latest
-        run: npm i -g npm@latest
+        # Two-step upgrade: npm 10.9.7 (Node 22.22.2) crashes on direct
+        # @latest due to missing promise-retry — see npm/cli#9151
+        run: npm i -g npm@10.9.8 && npm i -g npm@latest
 
       - name: 📦 Cache Cypress binary
         id: cypress-cache
