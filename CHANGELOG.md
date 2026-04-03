@@ -1,5 +1,11 @@
 # @prokodo/ui
 
+## [1.0.10](https://github.com/prokodo-agency/ui/compare/v1.0.9...v1.0.10) — 2026-04-03
+
+- ci(release): work around npm self-upgrade crash on Node 22.22.2
+- Revert "chore(release): v1.0.10"
+- fix(button): pass onClick/onKeyDown to LinkComponent in redirect path
+
 ## [1.0.9](https://github.com/prokodo-agency/ui/compare/v1.0.8...v1.0.9) — 2026-03-30
 
 - hotfix: revert createIsland eager resolve – restores Streaming SSR + Carousel
