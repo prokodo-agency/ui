@@ -94,7 +94,13 @@ export const ButtonView: FC<ButtonViewProps> = ({
   }
 
   return redirect ? (
-    <LinkComponent {...common} disabled={disabled} href={redirect.href}>
+    <LinkComponent
+      {...common}
+      disabled={disabled}
+      href={redirect.href}
+      onClick={rest.onClick}
+      onKeyDown={rest.onKeyDown}
+    >
       {variantNode}
     </LinkComponent>
   ) : (

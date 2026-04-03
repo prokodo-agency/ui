@@ -1,7 +1,14 @@
 import type { IconProps } from "../icon"
 import type { ImageProps } from "../image"
 import type { LinkProps } from "../link"
-import type { Ref, ButtonHTMLAttributes, ComponentType, ReactNode } from "react"
+import type {
+  Ref,
+  ButtonHTMLAttributes,
+  ComponentType,
+  MouseEventHandler,
+  KeyboardEventHandler,
+  ReactNode,
+} from "react"
 
 /**
  * Ref to the underlying HTMLButtonElement.
@@ -142,6 +149,8 @@ export type ButtonViewProps = ButtonProps & {
     disabled?: boolean
     id?: string
     children: ReactNode
+    onClick?: MouseEventHandler<HTMLElement>
+    onKeyDown?: KeyboardEventHandler<HTMLElement>
   }>
   /** Ref passed to underlying element. */
   buttonRef?: ButtonRef
