@@ -47,11 +47,11 @@ const sampleMarkdown = `
 Lorem ipsum **dolor sit amet**, consetetur sadipscing elitr, sed diam nonumy eirmod
 tempor invidunt ut labore et dolore magna *aliquyam erat*, sed diam voluptua.
 
-- Item one
-- Item two
+- **Item one**
+- _Item two_
 - Item three
 
-> Blockquote example with some notable text.
+> Blockquote **example** with some notable text.
 
 \`\`\`ts
 const greet = (name: string) => \`Hello, \${name}!\`
@@ -81,7 +81,7 @@ export const SecondaryVariant: Story = {
 
 export const WithLink: Story = {
   args: {
-    children: `Visit [prokodo.com](https://www.prokodo.com) for more information.`,
+    children: `Visit [prokodo.com](https://www.prokodo.com) and [**prokodo.com**](https://www.prokodo.com) for more information.`,
   },
 }
 
