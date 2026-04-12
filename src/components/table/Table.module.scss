@@ -14,6 +14,8 @@
 @include define-block("Table") {
   padding-bottom: var(--pk-table-container-pb);
   padding-left: calc(var(--pk-space-lg) + var(--pk-space-xs));
+  min-width: 0;
+  overflow: hidden;
 
   @include screenLargerThan($screen-md) {
     padding-left: 0;

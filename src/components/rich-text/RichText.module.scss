@@ -7,6 +7,11 @@
 @include define-block("RichText") {
     &__a {
         color: var(--pk-color-brand);
+
+        b,
+        strong {
+            color: var(--pk-color-brand) !important;
+        }
     }
 
     &__p {
@@ -15,6 +20,11 @@
 
         & {
             text-align: inherit;
+        }
+
+        b,
+        strong {
+            color: var(--pk-color-emphasis);
         }
     }
 
@@ -81,7 +91,12 @@
             overflow-wrap: anywhere;
             display: inline;
             @include text("base");
-            & { color: var(--pk-color-fg); }
+            & { color: var(--pk-color-muted); }
+
+            b,
+            strong {
+                color: var(--pk-color-emphasis);
+            }
         }
     }
 

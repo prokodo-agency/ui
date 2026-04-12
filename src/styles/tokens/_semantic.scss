@@ -45,7 +45,8 @@
     --pk-color-surface:        var(--pk-palette-white);
     --pk-color-surface-raised: var(--pk-palette-grey-50);
     --pk-color-border:         var(--pk-palette-grey-200);
-    --pk-color-muted:          var(--pk-palette-grey-500);
+    --pk-color-muted:          #425263;
+    --pk-color-emphasis:       #16212b;
     --pk-color-overlay-alpha:  0.5;
 
     // Shared semantic — only emitted in light (not overridden in dark)
@@ -106,7 +107,8 @@
     --pk-color-surface:        var(--pk-palette-slate-950);
     --pk-color-surface-raised: var(--pk-palette-grey-800);
     --pk-color-border:         var(--pk-palette-grey-700);
-    --pk-color-muted:          var(--pk-palette-grey-200);
+    --pk-color-muted:          #92a2b3;
+    --pk-color-emphasis:       #d9e2ec;
     --pk-color-overlay-alpha:  0.7;
   }
 }
