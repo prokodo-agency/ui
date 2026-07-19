@@ -1,5 +1,9 @@
 # @prokodo/ui
 
+## [1.0.12](https://github.com/prokodo-agency/ui/compare/v1.0.11...v1.0.12) — 2026-07-19
+
+- fix(ui): prevent interaction and scroll regressions (#176)
+
 ## [1.0.11](https://github.com/prokodo-agency/ui/compare/v1.0.10...v1.0.11) — 2026-04-12
 
 - feat(tokens): update color-muted values and add color-emphasis token (#175)
