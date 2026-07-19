@@ -374,4 +374,28 @@ describe("Carousel.client", () => {
 
     expect(wrapper?.style.transform).not.toBe(before)
   })
+
+  it("allows clicks without dragging and suppresses the click after a drag", () => {
+    const onClick = jest.fn()
+    const { container } = render(
+      <CarouselClient>
+        <button data-testid="slide-action" onClick={onClick}>
+          Open
+        </button>
+      </CarouselClient>,
+    )
+    const carousel = container.querySelector('[role="group"]') as HTMLElement
+    const action = screen.getAllByTestId("slide-action")[1]!
+
+    fireEvent.mouseMove(carousel)
+    fireEvent.click(action)
+    expect(onClick).toHaveBeenCalledTimes(1)
+
+    fireEvent.mouseDown(carousel, { clientX: 300 })
+    fireEvent.mouseMove(carousel, { clientX: 250 })
+    fireEvent.mouseUp(carousel, { clientX: 300 })
+    fireEvent.click(action)
+
+    expect(onClick).toHaveBeenCalledTimes(1)
+  })
 })

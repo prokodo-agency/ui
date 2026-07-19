@@ -93,6 +93,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
   const touchEndX = useRef(0)
   const mouseStartX = useRef(0)
   const mouseEndX = useRef(0)
+  const isDragging = useRef(false)
 
   const [mobileHint, setMobileHint] = useState(true)
   const [current, setCurrent] = useState(effectiveItemsToShow)
@@ -185,6 +186,13 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
       role="group"
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
+      onClickCapture={e => {
+        if (isDragging.current) {
+          e.preventDefault()
+          e.stopPropagation()
+          isDragging.current = false
+        }
+      }}
       onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
         onKeyDown?.(e)
         switch (e.key) {
@@ -199,7 +207,8 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
       onMouseDown={e => {
         /* istanbul ignore next */
         onMouseDown?.(e)
-        handleMouseDown(e, mouseStartX)
+        isDragging.current = false
+        handleMouseDown(e, mouseStartX, mouseEndX)
         setMouse(true)
       }}
       onMouseEnter={e => {
@@ -211,6 +220,9 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
         /* istanbul ignore next */
         onMouseLeave?.(e)
         setPlaying(true)
+      }}
+      onMouseMove={() => {
+        if (mouseActive) isDragging.current = true
       }}
       onMouseUp={e => {
         /* istanbul ignore next */
@@ -231,7 +243,7 @@ export default function CarouselClient(props: CarouselProps): JSX.Element {
       onTouchStart={(e: TouchEvent<HTMLDivElement>) => {
         /* istanbul ignore next */
         onTouchStart?.(e)
-        handleTouchStart(e, touchStartX)
+        handleTouchStart(e, touchStartX, touchEndX)
       }}
     >
       <div

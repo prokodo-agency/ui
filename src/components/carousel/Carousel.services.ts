@@ -7,8 +7,11 @@ export const PREV = "PREV"
 export const handleTouchStart = (
   e: TouchEvent<HTMLDivElement>,
   touchStartX: { current: number },
+  touchEndX: { current: number },
 ): void => {
-  touchStartX.current = e.targetTouches[0]?.clientX ?? 0
+  const x = e.targetTouches[0]?.clientX ?? 0
+  touchStartX.current = x
+  touchEndX.current = x
 }
 
 export const handleTouchMove = (
@@ -34,8 +37,10 @@ export const handleTouchEnd = (
 export const handleMouseDown = (
   e: MouseEvent<HTMLDivElement>,
   mouseStartX: { current: number },
+  mouseEndX: { current: number },
 ): void => {
   mouseStartX.current = e.clientX
+  mouseEndX.current = e.clientX
 }
 
 export const handleMouseUp = (
