@@ -2,6 +2,28 @@ import { act, render, screen, fireEvent } from "@/tests"
 
 let capturedOnMouseDown: ((e: React.MouseEvent) => void) | undefined
 let capturedOnCloseKeyDown: ((e: React.KeyboardEvent) => void) | undefined
+const overriddenProperties: Array<{
+  target: object
+  property: PropertyKey
+  descriptor: PropertyDescriptor | undefined
+}> = []
+
+const overrideProperty = (
+  target: object,
+  property: PropertyKey,
+  value: unknown,
+) => {
+  overriddenProperties.push({
+    target,
+    property,
+    descriptor: Object.getOwnPropertyDescriptor(target, property),
+  })
+  Object.defineProperty(target, property, {
+    configurable: true,
+    writable: true,
+    value,
+  })
+}
 
 const mockView = jest.fn((props: Record<string, unknown>) => {
   capturedOnMouseDown = props.onMouseDown as (e: React.MouseEvent) => void
@@ -44,7 +66,18 @@ beforeEach(() => {
   capturedOnCloseKeyDown = undefined
   jest.useFakeTimers()
 })
-afterEach(() => jest.useRealTimers())
+afterEach(() => {
+  for (const {
+    target,
+    property,
+    descriptor,
+  } of overriddenProperties.reverse()) {
+    if (descriptor) Object.defineProperty(target, property, descriptor)
+    else Reflect.deleteProperty(target, property)
+  }
+  overriddenProperties.length = 0
+  jest.useRealTimers()
+})
 
 describe("Dialog.client", () => {
   it("starts closed by default", () => {
@@ -72,19 +105,74 @@ describe("Dialog.client", () => {
     )
   })
 
-  it("dialog stays open even when re-rendered with open=false (no auto-close behavior)", () => {
-    // DialogClient can only be closed via closeDialog; prop change doesn't auto-close
+  it("closes when the controlled open prop changes to false", () => {
     const { rerender } = render(<DialogClient open={true} />)
-    // verify open
     expect(screen.getByTestId("dialog-view")).toHaveAttribute(
       "data-open",
       "true",
     )
-    // re-render with open=false should not auto-close (no effect for that case)
+
     rerender(<DialogClient open={false} />)
-    // The dialog remains open as there is no effect listening to open=false
-    // (close is triggered only through user interactions)
-    expect(screen.getByTestId("dialog-view")).toBeInTheDocument()
+    expect(screen.getByTestId("dialog-view")).toHaveAttribute(
+      "data-open",
+      "false",
+    )
+  })
+
+  it("locks and restores body when body owns the scroll offset", () => {
+    const { body } = document
+    const html = document.documentElement
+    overrideProperty(body, "scrollTop", 120)
+    overrideProperty(html, "scrollTop", 80)
+    overrideProperty(html, "clientWidth", window.innerWidth - 20)
+
+    const { rerender } = render(<DialogClient open />)
+
+    expect(body).toHaveStyle({ overflow: "hidden" })
+    expect(body).toHaveStyle({ paddingRight: "20px" })
+    expect(html).not.toHaveStyle({ overflow: "hidden" })
+
+    rerender(<DialogClient open={false} />)
+    expect(body).toHaveStyle({ overflow: "" })
+    expect(body).toHaveStyle({ paddingRight: "" })
+    expect(body.scrollTop).toBe(120)
+  })
+
+  it("locks and restores html when html owns the scroll offset", () => {
+    const { body } = document
+    const html = document.documentElement
+    overrideProperty(body, "scrollTop", 0)
+    overrideProperty(html, "scrollTop", 85)
+
+    const { rerender } = render(<DialogClient open />)
+
+    expect(html).toHaveStyle({ overflow: "hidden" })
+    expect(body).not.toHaveStyle({ overflow: "hidden" })
+
+    rerender(<DialogClient open={false} />)
+    expect(html).toHaveStyle({ overflow: "" })
+    expect(html.scrollTop).toBe(85)
+  })
+
+  it("locks a scrollable body without adding padding when no scrollbar exists", () => {
+    const { body } = document
+    const html = document.documentElement
+    overrideProperty(body, "scrollTop", 0)
+    overrideProperty(html, "scrollTop", 0)
+    overrideProperty(body, "scrollHeight", 1000)
+    overrideProperty(body, "clientHeight", 500)
+    overrideProperty(html, "clientWidth", window.innerWidth)
+    body.style.paddingRight = "7px"
+
+    const { rerender } = render(<DialogClient open />)
+
+    expect(body).toHaveStyle({ overflow: "hidden" })
+    expect(body).toHaveStyle({ paddingRight: "7px" })
+
+    rerender(<DialogClient open={false} />)
+    expect(body).toHaveStyle({ overflow: "" })
+    expect(body).toHaveStyle({ paddingRight: "7px" })
+    body.style.paddingRight = ""
   })
 
   it("closes on backdrop mousedown when closeOnBackdropClick=true (default)", () => {

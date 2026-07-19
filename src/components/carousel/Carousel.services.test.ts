@@ -18,21 +18,34 @@ describe("Carousel.services", () => {
 
   describe("handleTouchStart", () => {
     it("sets touchStartX from first touch", () => {
-      const ref = { current: 0 }
+      const startRef = { current: 0 }
+      const endRef = { current: 0 }
       const event = {
         targetTouches: [{ clientX: 120 }],
       } as unknown as React.TouchEvent<HTMLDivElement>
-      handleTouchStart(event, ref)
-      expect(ref.current).toBe(120)
+      handleTouchStart(event, startRef, endRef)
+      expect(startRef.current).toBe(120)
+    })
+
+    it("resets touchEndX to start position", () => {
+      const startRef = { current: 0 }
+      const endRef = { current: 50 }
+      const event = {
+        targetTouches: [{ clientX: 300 }],
+      } as unknown as React.TouchEvent<HTMLDivElement>
+      handleTouchStart(event, startRef, endRef)
+      expect(endRef.current).toBe(300)
     })
 
     it("defaults to 0 when no touches", () => {
-      const ref = { current: 999 }
+      const startRef = { current: 999 }
+      const endRef = { current: 999 }
       const event = {
         targetTouches: [],
       } as unknown as React.TouchEvent<HTMLDivElement>
-      handleTouchStart(event, ref)
-      expect(ref.current).toBe(0)
+      handleTouchStart(event, startRef, endRef)
+      expect(startRef.current).toBe(0)
+      expect(endRef.current).toBe(0)
     })
   })
 
@@ -78,12 +91,23 @@ describe("Carousel.services", () => {
 
   describe("handleMouseDown", () => {
     it("sets mouseStartX from clientX", () => {
-      const ref = { current: 0 }
+      const startRef = { current: 0 }
+      const endRef = { current: 0 }
       const event = {
         clientX: 300,
       } as unknown as React.MouseEvent<HTMLDivElement>
-      handleMouseDown(event, ref)
-      expect(ref.current).toBe(300)
+      handleMouseDown(event, startRef, endRef)
+      expect(startRef.current).toBe(300)
+    })
+
+    it("resets mouseEndX to start position", () => {
+      const startRef = { current: 0 }
+      const endRef = { current: 50 }
+      const event = {
+        clientX: 300,
+      } as unknown as React.MouseEvent<HTMLDivElement>
+      handleMouseDown(event, startRef, endRef)
+      expect(endRef.current).toBe(300)
     })
   })
 
