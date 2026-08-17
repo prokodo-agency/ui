@@ -1,5 +1,9 @@
 # @prokodo/ui
 
+## [1.0.13](https://github.com/prokodo-agency/ui/compare/v1.0.12...v1.0.13) — 2026-08-17
+
+- feat(button): Modernize variants, theming, and interactions (#177)
+
 ## [1.0.12](https://github.com/prokodo-agency/ui/compare/v1.0.11...v1.0.12) — 2026-07-19
 
 - fix(ui): prevent interaction and scroll regressions (#176)
