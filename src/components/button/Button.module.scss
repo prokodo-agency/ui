@@ -3,32 +3,98 @@
 @use "@/styles/ui/mixins/bem" as *;
 @use "@/styles/ui/mixins/accessibility" as *;
 @use "@/styles/designsystem/mixins/texts" as *;
-@use "@/styles/designsystem/mixins/gradients" as *;
-:root { @include buttonTokens.button-tokens(); }
 
-// Component tokens: --pk-button-bg, --pk-button-fg, --pk-button-radius,
-//   --pk-button-padding-x, --pk-button-padding-y, --pk-button-shadow,
-//   --pk-button-disabled-bg, --pk-button-disabled-fg
-// Override any token on :root or a scoped element — no !important needed.
+:root {
+  @include buttonTokens.button-tokens();
+}
+
+// Each semantic color exposes the same local pigment model. Variants decide
+// how much pigment is used: contained = material, outlined = frame, text = ink.
+@mixin button-color(
+  $name,
+  $accent,
+  $accent-alt,
+  $content-gradient,
+  $content-fallback,
+  $contained-background,
+  $contained-foreground,
+  $contained-ink
+) {
+  &--has-bg-#{$name},
+  &--has-text-#{$name},
+  &--has-variant-outlined--has-outline-#{$name} {
+    --pk-button-accent: #{$accent};
+    --pk-button-accent-alt: #{$accent-alt};
+    --pk-button-content-gradient: #{$content-gradient};
+    --pk-button-content-fallback: #{$content-fallback};
+    --pk-button-contained-background: #{$contained-background};
+    --pk-button-contained-foreground: #{$contained-foreground};
+    --pk-button-contained-ink: #{$contained-ink};
+  }
+}
 
 @include define-block("Button") {
+  --pk-button-accent: var(--pk-color-fg);
+  --pk-button-accent-alt: var(--pk-color-muted);
+  --pk-button-content-gradient: linear-gradient(
+    112deg,
+    var(--pk-color-fg),
+    var(--pk-color-muted)
+  );
+  --pk-button-content-fallback: var(--pk-color-fg);
+  --pk-button-contained-background: linear-gradient(
+    112deg,
+    var(--pk-color-surface-raised),
+    var(--pk-color-border)
+  );
+  --pk-button-contained-foreground: var(--pk-button-fg);
+  --pk-button-contained-ink: linear-gradient(
+    112deg,
+    var(--pk-color-fg),
+    var(--pk-color-muted)
+  );
+
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: var(--pk-button-min-height);
   gap: var(--pk-space-sm);
+  overflow: hidden;
+  border: 0;
   border-radius: var(--pk-button-radius);
-  border-width: 0;
   padding: var(--pk-button-padding-y) var(--pk-button-padding-x);
-  background-color: var(--pk-button-bg, var(--pk-color-brand, #1E90FF));
-  color: var(--pk-button-fg, var(--pk-color-fg, #111));
+  background-color: var(--pk-button-bg);
+  color: var(--pk-button-fg);
   box-shadow: var(--pk-button-shadow);
   cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--pk-button-motion-duration) var(--pk-button-motion-easing),
+    box-shadow var(--pk-button-motion-duration) var(--pk-button-motion-easing),
+    background-color var(--pk-button-motion-duration)
+      var(--pk-button-motion-easing),
+    color var(--pk-timing-fast) ease-out;
 
-  @include gradientBackgroundVar("inherit");
   @include text("headline/xs", true);
 
+  // The typography mixin emits its own important weight. Keep the component
+  // token after it while wrapping the declaration to avoid Sass mixed-decl
+  // deprecation warnings caused by the mixin's responsive rules.
+  & {
+    font-weight: var(--pk-button-font-weight) !important;
+  }
+
   @include when-hovered() {
-    box-shadow: none;
+    transform: translateY(var(--pk-button-hover-lift));
+  }
+
+  @include when-pressed() {
+    transform: translateY(0) scale(var(--pk-button-press-scale));
+    transition-duration: var(--pk-timing-fast);
   }
 
   @include when-focused-within() {
@@ -36,171 +102,204 @@
     border-radius: var(--pk-button-radius);
   }
 
-  // ── bg variants ────────────────────────────────────────────────────────────
-  // All colored contained buttons use white text so they look consistent in
-  // both light and dark mode.
-  // (--has-bg-inherit uses a neutral surface bg — keeps --pk-color-fg)
-  &--has-bg-primary,
-  &--has-bg-secondary,
-  &--has-bg-info,
-  &--has-bg-success,
-  &--has-bg-warning,
-  &--has-bg-error {
-    color: var(--pk-palette-white);
-  }
+  @include button-color(
+    "inherit",
+    var(--pk-color-fg),
+    var(--pk-color-muted),
+    linear-gradient(112deg, var(--pk-color-fg), var(--pk-color-muted)),
+    var(--pk-color-fg),
+    var(--pk-button-contained-background-inherit),
+    var(--pk-button-contained-foreground-inherit),
+    var(--pk-button-contained-ink-inherit)
+  );
 
+  @include button-color(
+    "primary",
+    var(--pk-color-brand),
+    var(--pk-color-accent),
+    var(--pk-button-content-primary),
+    var(--pk-button-content-fallback-primary),
+    var(--pk-button-contained-background-primary),
+    var(--pk-button-contained-foreground-primary),
+    var(--pk-button-contained-ink-primary)
+  );
+
+  @include button-color(
+    "secondary",
+    var(--pk-color-accent),
+    var(--pk-color-brand),
+    var(--pk-button-content-secondary),
+    var(--pk-button-content-fallback-secondary),
+    var(--gradient-background-secondary),
+    var(--pk-button-contained-foreground-secondary),
+    var(--pk-button-contained-ink-secondary)
+  );
+
+  @include button-color(
+    "info",
+    var(--pk-color-muted),
+    var(--pk-color-emphasis),
+    var(--pk-button-content-info),
+    var(--pk-button-content-fallback-info),
+    var(--pk-button-contained-background-info),
+    var(--pk-button-contained-foreground-info),
+    var(--pk-button-contained-ink-info)
+  );
+
+  @include button-color(
+    "success",
+    var(--pk-color-success),
+    var(--pk-button-accent-alt-success),
+    var(--pk-button-content-success),
+    var(--pk-button-content-fallback-success),
+    var(--gradient-background-success),
+    var(--pk-button-contained-foreground-success),
+    var(--pk-button-contained-ink-success)
+  );
+
+  @include button-color(
+    "warning",
+    var(--pk-color-warning),
+    var(--pk-button-accent-alt-warning),
+    var(--pk-button-content-warning),
+    var(--pk-button-content-fallback-warning),
+    var(--gradient-background-warning),
+    var(--pk-button-contained-foreground-warning),
+    var(--pk-button-contained-ink-warning)
+  );
+
+  @include button-color(
+    "error",
+    var(--pk-color-error),
+    var(--pk-button-accent-alt-error),
+    var(--pk-button-content-error),
+    var(--pk-button-content-fallback-error),
+    var(--pk-button-contained-background-error),
+    var(--pk-button-contained-foreground-error),
+    var(--pk-button-contained-ink-error)
+  );
+
+  // Primary keeps the strongest elevation so it remains the clearest action
+  // when primary and secondary contained buttons appear in the same group.
   &--has-bg-primary {
-    @include gradientBackgroundVar("primary");
+    --pk-button-contained-shadow-strength: 30%;
+    --pk-button-contained-hover-shadow-strength: 38%;
   }
 
-  &--has-bg-inherit {
-    background: linear-gradient(
-      112deg,
-      var(--pk-color-surface-raised) 0%,
-      var(--pk-color-border) 100%
-    );
-    background-color: var(--pk-color-surface-raised);
+  // Bright ink is reserved for low-pigment variants in dark mode. Contained
+  // buttons retain their dark foreground because their surfaces remain bright.
+  .pk-theme-dark &,
+  [data-theme="dark"] &,
+  html[data-theme="dark"] & {
+    @include buttonTokens.button-dark-tokens();
   }
 
-  &--has-bg-secondary {
-    @include gradientBackgroundVar("secondary");
-  }
+  // Contained: full chromatic material, inset highlight and a restrained sheen.
+  &--has-variant-contained {
+    background: var(--pk-button-contained-background);
+    background-position: 0 50%;
+    background-size: 180% 100%;
+    color: var(--pk-button-contained-foreground);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 30%),
+      0 8px 22px
+        color-mix(
+          in srgb,
+          var(--pk-button-accent)
+            var(--pk-button-contained-shadow-strength),
+          transparent
+        );
 
-  &--has-bg-info {
-    @include gradientBackgroundVar("info");
-  }
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
 
-  &--has-bg-success {
-    @include gradientBackgroundVar("success");
-  }
+    &::before {
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        92% 108% at 50% 142%,
+        var(--pk-button-contained-bottom-glow) 0%,
+        rgb(255 255 255 / 44%) 32%,
+        rgb(255 255 255 / 22%) 58%,
+        rgb(255 255 255 / 8%) 76%,
+        transparent 100%
+      );
+      opacity: 0.86;
+      transition: opacity var(--pk-button-motion-duration)
+        var(--pk-button-motion-easing);
+      z-index: 0;
+    }
 
-  &--has-bg-warning {
-    @include gradientBackgroundVar("warning");
-  }
-
-  &--has-bg-error {
-    @include gradientBackgroundVar("error");
-  }
-
-  // ── colored shadows (all variants) ───────────────────────────────────────
-  // One subtle glow per semantic color — removed on hover (base rule above).
-  // Applied to contained (--has-bg-*), text (--has-text-*) and outlined
-  // (--has-variant-outlined--has-outline-*) so the glow always matches the
-  // active color prop regardless of variant.
-  &--has-bg-primary,
-  &--has-text-primary,
-  &--has-variant-outlined--has-outline-primary   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-brand)   18%, transparent); }
-
-  &--has-bg-secondary,
-  &--has-text-secondary,
-  &--has-variant-outlined--has-outline-secondary { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-accent)  18%, transparent); }
-
-  &--has-bg-success,
-  &--has-text-success,
-  &--has-variant-outlined--has-outline-success   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-success) 18%, transparent); }
-
-  &--has-bg-warning,
-  &--has-text-warning,
-  &--has-variant-outlined--has-outline-warning   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-warning) 18%, transparent); }
-
-  &--has-bg-error,
-  &--has-text-error,
-  &--has-variant-outlined--has-outline-error     { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-error)   18%, transparent); }
-
-  &--has-bg-info,
-  &--has-text-info,
-  &--has-variant-outlined--has-outline-info,
-  &--has-bg-inherit,
-  &--has-text-inherit,
-  &--has-variant-outlined--has-outline-inherit   { box-shadow: 0 4px 20px color-mix(in srgb, var(--pk-color-fg)      10%, transparent); }
-
-
-  // ── text variants ──────────────────────────────────────────────────────────
-  // Resting bg: a subtle tint derived from the button's own text color via
-  // color-mix — fully adaptive (no opaque surface token that inverts in dark).
-  // Hover: fills to the variant color, text flips to white.
-  &--has-text-inherit,
-  &--has-text-primary,
-  &--has-text-secondary,
-  &--has-text-info,
-  &--has-text-success,
-  &--has-text-warning,
-  &--has-text-error {
-    background: none;
-    background-color: color-mix(in srgb, currentColor 8%, transparent);
-    padding: var(--pk-space-md) var(--pk-space-lg);
-    transition:
-      background-color var(--pk-timing-normal) ease-in-out,
-      color var(--pk-timing-fast) ease-in-out;
+    &::after {
+      top: -60%;
+      bottom: -60%;
+      left: -55%;
+      width: 42%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(255 255 255 / var(--pk-button-sheen-opacity)),
+        transparent
+      );
+      transform: translateX(-120%) skewX(-18deg);
+      transition: transform var(--pk-button-sheen-duration) ease-out;
+      z-index: 0;
+    }
 
     @include when-hovered() {
-      color: var(--pk-palette-white);
+      background-position: 100% 50%;
+      box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 38%),
+        0 13px 32px
+          color-mix(
+            in srgb,
+            var(--pk-button-accent)
+              var(--pk-button-contained-hover-shadow-strength),
+            transparent
+          );
+
+      &::before {
+        opacity: 1;
+      }
+
+      &::after {
+        transform: translateX(390%) skewX(-18deg);
+      }
+    }
+
+    @include when-pressed() {
+      box-shadow:
+        inset 0 2px 5px rgb(0 0 0 / 18%),
+        0 4px 13px
+          color-mix(
+            in srgb,
+            var(--pk-button-accent)
+              var(--pk-button-contained-shadow-strength),
+            transparent
+          );
+
+      &::before {
+        opacity: 0.62;
+      }
     }
   }
 
-  &--has-text-inherit {
-    color: var(--pk-color-fg);
-
-    @include when-hovered() {
-      background-color: var(--pk-color-muted);
-    }
-  }
-
-  &--has-text-primary {
-    color: var(--pk-color-brand);
-
-    @include when-hovered() {
-      background-color: var(--pk-color-brand);
-    }
-  }
-
-  &--has-text-secondary {
-    color: var(--pk-color-accent);
-
-    @include when-hovered() {
-      background-color: var(--pk-color-accent);
-      color: var(--pk-palette-black);
-    }
-  }
-
-  &--has-text-info {
-    color: var(--pk-color-fg);
-
-    @include when-hovered() {
-      background-color: var(--pk-color-muted);
-    }
-  }
-
-  &--has-text-success {
-    color: var(--pk-color-success);
-
-    @include when-hovered() {
-      background-color: var(--pk-color-success);
-    }
-  }
-
-  &--has-text-warning {
-    color: var(--pk-color-warning);
-
-    @include when-hovered() {
-      background-color: var(--pk-color-warning);
-      color: var(--pk-palette-black);
-    }
-  }
-
-  &--has-text-error {
-    color: var(--pk-color-error);
-
-    @include when-hovered() {
-      background-color: var(--pk-color-error);
-    }
-  }
-
-  // ── outlined variants (gradient-border mask technique preserved) ───────────
+  // Outlined: chromatic frame, translucent surface and readable gradient ink.
   &--has-variant-outlined {
-    position: relative;
-    background: none;
-    color: var(--pk-color-fg);
+    background: color-mix(
+      in srgb,
+      var(--pk-button-accent) 4%,
+      var(--pk-color-surface)
+    );
+    color: var(--pk-button-content-fallback);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 8%),
+      0 7px 22px
+        color-mix(in srgb, var(--pk-button-accent) 10%, transparent);
 
     &::before {
       content: "";
@@ -208,98 +307,164 @@
       inset: 0;
       border-radius: inherit;
       padding: var(--pk-border-width);
+      background: linear-gradient(
+        112deg,
+        var(--pk-button-accent),
+        var(--pk-button-accent-alt)
+      );
       mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
+        linear-gradient(white 0 0) content-box,
+        linear-gradient(white 0 0);
       mask-composite: exclude;
+      pointer-events: none;
       z-index: 0;
-      @include gradientBorderVar(4);
+    }
+
+    @include when-hovered() {
+      background: color-mix(
+        in srgb,
+        var(--pk-button-accent) 10%,
+        var(--pk-color-surface)
+      );
+      box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 12%),
+        0 11px 28px
+          color-mix(in srgb, var(--pk-button-accent) 18%, transparent);
+    }
+
+    @include when-pressed() {
+      background: color-mix(
+        in srgb,
+        var(--pk-button-accent) 15%,
+        var(--pk-color-surface)
+      );
+      box-shadow: inset 0 2px 5px
+        color-mix(in srgb, var(--pk-button-accent) 16%, transparent);
     }
   }
 
-  &--has-variant-outlined--has-outline-inherit {
-    color: var(--pk-color-fg);
+  // Text: minimal surface at rest, then a soft semantic wash on interaction.
+  &--has-variant-text {
+    padding: var(--pk-button-padding-y) var(--pk-button-padding-x);
+    background: transparent;
+    color: var(--pk-button-content-fallback);
+    box-shadow: none;
 
-    &::before {
-      @include gradientBorderVar(8);
+    @include when-hovered() {
+      background: color-mix(
+        in srgb,
+        var(--pk-button-accent) 11%,
+        transparent
+      );
+      box-shadow: 0 8px 20px
+        color-mix(in srgb, var(--pk-button-accent) 10%, transparent);
+    }
+
+    @include when-pressed() {
+      background: color-mix(
+        in srgb,
+        var(--pk-button-accent) 17%,
+        transparent
+      );
+      box-shadow: none;
     }
   }
 
-  &--has-variant-outlined--has-outline-primary {
-    color: var(--pk-color-fg);
+  // Gradient ink is shared by label and icon, so mixed and icon-only buttons
+  // remain visually coherent without inserting decorative elements.
+  &--has-variant-contained &__label,
+  &--has-variant-contained &__icon {
+    background-image: var(--pk-button-contained-ink);
+  }
 
-    &::before {
-      @include gradientBorderVar(4);
+  &--has-variant-outlined &__label,
+  &--has-variant-outlined &__icon,
+  &--has-variant-text &__label,
+  &--has-variant-text &__icon {
+    background-image: var(--pk-button-content-gradient);
+  }
+
+  &--has-variant-contained &__label,
+  &--has-variant-outlined &__label,
+  &--has-variant-text &__label {
+    @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+      background-clip: text;
+      color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
 
-  &--has-variant-outlined--has-outline-secondary {
-    color: var(--pk-color-fg);
-
-    &::before {
-      @include gradientBorderVar(2);
-    }
+  &__label,
+  &__icon {
+    position: relative;
+    z-index: 1;
+    background-position: 0 50%;
+    background-size: 180% 100%;
+    transition:
+      background-position var(--pk-button-motion-duration)
+        var(--pk-button-motion-easing),
+      filter var(--pk-button-motion-duration) var(--pk-button-motion-easing),
+      transform var(--pk-button-motion-duration) var(--pk-button-motion-easing);
   }
 
-  &--has-variant-outlined--has-outline-info {
-    color: var(--pk-color-fg);
-
-    &::before {
-      @include gradientBorderVar("info");
-    }
+  &__label {
+    line-height: 1.2;
   }
 
-  &--has-variant-outlined--has-outline-success {
-    color: var(--pk-color-fg);
-
-    &::before {
-      @include gradientBorderVar("success");
-    }
+  &__icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 0 rgb(255 255 255 / 10%));
   }
 
-  &--has-variant-outlined--has-outline-warning {
-    color: var(--pk-color-fg);
-
-    &::before {
-      @include gradientBorderVar("warning");
-    }
+  &:hover &__label,
+  &:hover &__icon {
+    background-position: 100% 50%;
   }
 
-  &--has-variant-outlined--has-outline-error {
-    color: var(--pk-color-fg);
-
-    &::before {
-      @include gradientBorderVar("error");
-    }
+  &:hover &__icon {
+    transform: translateY(-1px) scale(1.05);
   }
 
-  // ── layout modifiers ───────────────────────────────────────────────────────
-  // Base is already inline-flex with align+justify center — no per-modifier
-  // display override needed. Modifiers only adjust shape/size.
   &--icon-only {
+    width: var(--pk-button-min-height);
+    height: var(--pk-button-min-height);
+    min-width: var(--pk-button-min-height);
+    aspect-ratio: 1;
     border-radius: 10000px;
     padding: var(--pk-space-md);
+  }
+
+  &--has-icon-end &__icon,
+  &--has-icon-end > [role="status"],
+  &--has-icon-end &__content > [role="status"] {
+    order: 2;
   }
 
   &--has-fullWidth {
     width: 100%;
   }
 
-  // ── loading ────────────────────────────────────────────────────────────────
   &--is-loading {
     cursor: progress;
     pointer-events: none;
   }
 
-  // ── disabled ───────────────────────────────────────────────────────────────
   &--is-disabled {
-    cursor: default;
     box-shadow: none;
-    opacity: 0.45;
+    cursor: default;
+    filter: grayscale(0.2) saturate(0.65);
+    opacity: 0.5;
     pointer-events: none;
+    transform: none;
+
+    &::after {
+      display: none;
+    }
   }
 
-  // ── sub-elements ───────────────────────────────────────────────────────────
   &__title {
     display: flex;
     flex-direction: row;
@@ -308,21 +473,14 @@
   }
 
   &__image {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    // spacing handled by __content gap
-  }
-
-  &__icon {
-    // spacing handled by __content gap
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     flex-shrink: 0;
   }
 
   &__link {
-    // flex so it inherits the button's centered layout naturally
     display: flex;
     align-items: center;
     justify-content: center;
@@ -337,10 +495,70 @@
   }
 
   &__content {
+    position: relative;
+    z-index: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: var(--pk-space-sm);
     width: 100%;
+  }
+
+  & > [role="status"] {
+    position: relative;
+    z-index: 1;
+  }
+
+  @include when-prefers-reduced-motion() {
+    &,
+    &:hover,
+    &:active,
+    &__label,
+    &__icon,
+    &:hover &__label,
+    &:hover &__icon {
+      transition: none;
+      transform: none;
+    }
+
+    &:hover &__label,
+    &:hover &__icon {
+      background-position: 0 50%;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    &,
+    &--has-variant-contained,
+    &--has-variant-outlined,
+    &--has-variant-text {
+      border: var(--pk-border-width) solid ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+      box-shadow: none;
+    }
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    &__label,
+    &__icon {
+      background-image: none;
+      color: ButtonText;
+      -webkit-text-fill-color: currentColor;
+    }
+
+    &--is-disabled,
+    &--is-disabled &__label,
+    &--is-disabled &__icon {
+      color: GrayText;
+      -webkit-text-fill-color: currentColor;
+    }
   }
 }

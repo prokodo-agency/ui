@@ -5,7 +5,7 @@ import * as ButtonStories from "./Button.stories"
 
 # Button
 
-Interactive call-to-action element supporting contained, outlined, and text variants with icon, link, and loading states.
+Interactive call-to-action element supporting contained, outlined, and text variants, semantic colors, icon-only controls, redirects, and loading states. All visual variants share the same control height and typography.
 
 ## When to use
 
@@ -13,11 +13,11 @@ Use `Button` for any primary or secondary user action — form submission, navig
 
 ## Accessibility (WCAG 2.2)
 
-- Renders a native `<button>` (or `<a>` when `redirect` is set), correctly conveying role to assistive technology
-- Icon-only buttons **must** have a visible `aria-label` or be wrapped in an `inert` container — `title` alone is insufficient
-- Loading state sets `aria-busy="true"` and visually replaces button text with a spinner
-- Disabled buttons keep `aria-disabled="true"` and maintain tab stop (WCAG 2.1 SC 4.1.2)
-- Meets 3:1 minimum contrast on colour tokens in all variants
+- Renders a native `<button>` or an `<a>` through `BaseLink` when `redirect` is set
+- Interactive icon-only buttons **must** provide an `aria-label`; use `inert` only for decorative controls
+- Loading state sets `aria-busy="true"`, keeps the label width stable, and adds a spinner
+- Native disabled buttons use `disabled`; redirected buttons use `aria-disabled` and are removed from the tab order
+- Built-in color and ink pairs are designed for readable light and dark themes; re-check contrast after overriding tokens
 
 ### Keyboard behavior
 
@@ -32,24 +32,65 @@ Use `Button` for any primary or secondary user action — form submission, navig
 - `variant` controls visual weight: `"contained"` (filled) | `"outlined"` (border) | `"text"` (minimal)
 - `color` maps to design-system tokens: `"primary"` | `"secondary"` | `"success"` | `"error"` | `"info"` | `"warning"` | `"inherit"`
 - `iconProps` renders an icon inside the button; omit `title` for icon-only buttons and provide `aria-label`
+- `iconPosition="start" | "end"` positions an existing icon without adding decorative elements
 - `loading` shows a spinner and prevents interaction
-- `redirect` wraps the button in `BaseLink` and switches the root element to `<a>`
+- `redirect` switches the root to a geometry-compatible `BaseLink` anchor and forwards `href`, `target`, `rel`, `download`, `style`, and `linkComponent`
 - `fullWidth` stretches the button to 100% of its container
+- `priority` eagerly hydrates the interactive island; it has no visual effect
 
 ## Design Tokens
 
 Customise via CSS custom properties on `:root` or a scoped ancestor element.
 
-| Token                     | Default                          | Description                                                  |
-| ------------------------- | -------------------------------- | ------------------------------------------------------------ |
-| `--pk-button-bg`          | `var(--pk-color-surface-raised)` | Default button background (contained/inherit fallback).      |
-| `--pk-button-fg`          | `var(--pk-color-fg)`             | Default button text/icon color.                              |
-| `--pk-button-shadow`      | `none`                           | Base box-shadow; per-color glow shadows apply automatically. |
-| `--pk-button-radius`      | `var(--pk-radius-md)`            | Border radius.                                               |
-| `--pk-button-padding-x`   | `var(--pk-space-lg)`             | Horizontal padding.                                          |
-| `--pk-button-padding-y`   | `var(--pk-space-md)`             | Vertical padding.                                            |
-| `--pk-button-disabled-bg` | —                                | Override background for disabled state (optional).           |
-| `--pk-button-disabled-fg` | `var(--pk-color-muted)`          | Override text color for disabled state (optional).           |
+### Layout and typography
+
+| Token                     | Default                          | Description                                      |
+| ------------------------- | -------------------------------- | ------------------------------------------------ |
+| `--pk-button-bg`          | `var(--pk-color-surface-raised)` | Default surface fallback.                        |
+| `--pk-button-fg`          | `var(--pk-color-fg)`             | Default text/icon fallback.                      |
+| `--pk-button-font-weight` | `600`                            | Label font weight.                               |
+| `--pk-button-radius`      | `var(--pk-radius-pill)`          | Shared radius for every variant.                 |
+| `--pk-button-padding-x`   | `var(--pk-space-xl)`             | Horizontal padding.                              |
+| `--pk-button-padding-y`   | `1rem`                           | Vertical padding for contained, outlined, text.  |
+| `--pk-button-min-height`  | `3.25rem`                        | Shared control height; icon-only uses it square. |
+| `--pk-button-shadow`      | `var(--pk-shadow-sm)`            | Base fallback shadow.                            |
+
+### Material and motion
+
+| Token                                         | Default                          | Description                                |
+| --------------------------------------------- | -------------------------------- | ------------------------------------------ |
+| `--pk-button-hover-lift`                      | `-2px`                           | Vertical hover motion.                     |
+| `--pk-button-press-scale`                     | `0.985`                          | Active-state compression.                  |
+| `--pk-button-motion-duration`                 | `240ms`                          | Main interaction duration.                 |
+| `--pk-button-motion-easing`                   | `cubic-bezier(0.22, 1, 0.36, 1)` | Main interaction easing.                   |
+| `--pk-button-sheen-duration`                  | `560ms`                          | Contained sheen sweep duration.            |
+| `--pk-button-sheen-opacity`                   | `0.32`                           | Contained sheen strength.                  |
+| `--pk-button-contained-bottom-glow`           | `rgb(255 255 255 / 58%)`         | Soft inner bloom in the lower button half. |
+| `--pk-button-contained-shadow-strength`       | `22%` (`30%` on primary)         | Resting semantic elevation strength.       |
+| `--pk-button-contained-hover-shadow-strength` | `30%` (`38%` on primary)         | Hover elevation strength.                  |
+
+### Semantic surfaces and ink
+
+| Token family                               | Purpose                                                                              |
+| ------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `--pk-button-contained-background-{color}` | Contained surfaces; component overrides exist for inherit, primary, info, and error. |
+| `--pk-button-contained-foreground-{color}` | Solid icon/fallback foreground for every semantic color.                             |
+| `--pk-button-contained-ink-{color}`        | Label gradient used by contained buttons.                                            |
+| `--pk-button-content-{color}`              | Label/icon gradient used by outlined and text buttons.                               |
+| `--pk-button-content-fallback-{color}`     | Solid fallback when gradient text is unavailable.                                    |
+
+`{color}` is one of `inherit`, `primary`, `secondary`, `success`, `info`, `warning`, or `error`. Dark mode swaps these tokens automatically, including a softer charcoal contained foreground.
+
+```css
+.checkoutCta {
+  --pk-button-contained-background-primary: linear-gradient(
+    112deg,
+    #4aa8ff,
+    #43ecff
+  );
+  --pk-button-contained-bottom-glow: rgb(255 255 255 / 64%);
+}
+```
 
 ## ✅ Do
 
@@ -75,6 +116,18 @@ Customise via CSS custom properties on `:root` or a scoped ancestor element.
 
 <Canvas>
   <Story of={ButtonStories.IconOnly} />
+</Canvas>
+
+### Icon at end
+
+<Canvas>
+  <Story of={ButtonStories.WithIconAtEnd} />
+</Canvas>
+
+### All combinations
+
+<Canvas>
+  <Story of={ButtonStories.AllCombinations} />
 </Canvas>
 
 ### With link

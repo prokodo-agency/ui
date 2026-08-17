@@ -20,11 +20,15 @@ exports[`The common drawer component should render drawer 1`] = `
         type="button"
       >
         <span
-          aria-hidden="true"
-          class="prokodo-Icon prokodo-Button__icon prokodo-Button__icon--icon-only"
-          role="presentation"
-          style="width: 20px; height: 20px; background-color: currentColor; mask-image: url("https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v0.0.17/assets/icons/cancel_01_icon.svg");"
-        />
+          class="prokodo-Button__content prokodo-Button__content--icon-only"
+        >
+          <span
+            aria-hidden="true"
+            class="prokodo-Icon prokodo-Button__icon prokodo-Button__icon--icon-only"
+            role="presentation"
+            style="width: 20px; height: 20px; background-color: currentColor; mask-image: url("https://cdn.jsdelivr.net/gh/prokodo-agency/ui@v0.0.17/assets/icons/cancel_01_icon.svg");"
+          />
+        </span>
       </button>
     </div>
     <div

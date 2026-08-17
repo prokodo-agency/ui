@@ -2,12 +2,12 @@
 id: button
 title: Button
 sidebar_label: Button
-description: The prokodo UI Button component — a fully typed, AIC-ready interactive element with icon support, loading state, and redirect capability.
+description: Die prokodo UI Button-Komponente mit Contained-, Outlined- und Text-Varianten, semantischen Farben, Icons, Ladezustand und Redirect-Unterstützung.
 ---
 
 # Button
 
-Die `Button`-Komponente is the core interactive element in `@prokodo/ui`. It unterstützt text labels, icon-only mode, loading states, full-width layout, and seamless redirect (SSR-safe link conversion).
+Die `Button`-Komponente ist das zentrale interaktive Element in `@prokodo/ui`. Sie unterstützt drei gleich große visuelle Varianten, sieben semantische Farben, Icons vor oder nach dem Label, Icon-only, Ladezustände, volle Breite und SSR-sichere Redirect-Links.
 
 ---
 
@@ -43,39 +43,40 @@ import "@prokodo/ui/button.css"
 
 ## Props
 
-`ButtonProps` is a discriminated union of `ButtonDefaultProps` (labeled button) and `ButtonIconProps` (icon-only button).
+`ButtonProps` ist eine Discriminated Union aus `ButtonDefaultProps` (Button mit Label) und `ButtonIconProps` (Icon-only).
 
 ### `ButtonDefaultProps`
 
-| Prop               | Typ                                                                                    | Standard      | Pflicht | Beschreibung                                            |
-| ------------------ | -------------------------------------------------------------------------------------- | ------------- | ------- | ------------------------------------------------------- |
-| `title`            | `string`                                                                               | —             | ✅      | Button label text (also used as fallback `aria-label`). |
-| `variant`          | `"contained" \| "outlined" \| "text"`                                                  | `"contained"` | —       | Visual style variant.                                   |
-| `color`            | `"primary" \| "secondary" \| "success" \| "error" \| "info" \| "warning" \| "inherit"` | `"inherit"`   | —       | Semantic color token.                                   |
-| `priority`         | `boolean`                                                                              | `false`       | —       | Emphasize the button (higher visual weight).            |
-| `fullWidth`        | `boolean`                                                                              | `false`       | —       | Stretch button to 100% of parent width.                 |
-| `loading`          | `boolean`                                                                              | `false`       | —       | Show loading spinner and disable interaction.           |
-| `disabled`         | `boolean`                                                                              | `false`       | —       | Deaktiviere all interaction.                            |
-| `iconProps`        | `IconProps`                                                                            | —             | —       | Icon to display left of (or alongside) the label.       |
-| `redirect`         | `LinkProps`                                                                            | —             | —       | Convert button into an SSR-safe link.                   |
-| `aria-label`       | `string`                                                                               | `title`       | —       | Override accessible label.                              |
-| `ref`              | `ButtonRef`                                                                            | —             | —       | Ref to the underlying `<button>` element.               |
-| `contentClassName` | `string`                                                                               | —             | —       | CSS class on the inner content wrapper.                 |
-| `className`        | `string`                                                                               | —             | —       | CSS-Klasse am Root-Element.                             |
-| `onClick`          | `MouseEventHandler`                                                                    | —             | —       | Click handler.                                          |
-| `image`            | `ImageProps`                                                                           | —             | —       | Background image (alternative to icon).                 |
+| Prop               | Typ                                                                                    | Standard      | Pflicht | Beschreibung                                                   |
+| ------------------ | -------------------------------------------------------------------------------------- | ------------- | ------- | -------------------------------------------------------------- |
+| `title`            | `string`                                                                               | —             | ✅      | Sichtbares Label und Fallback für `aria-label`.                |
+| `variant`          | `"contained" \| "outlined" \| "text"`                                                  | `"contained"` | —       | Visual style variant.                                          |
+| `color`            | `"primary" \| "secondary" \| "success" \| "error" \| "info" \| "warning" \| "inherit"` | `"primary"`   | —       | Semantische Farbe.                                             |
+| `priority`         | `boolean`                                                                              | `false`       | —       | Hydriert die interaktive Island sofort; ohne visuellen Effekt. |
+| `fullWidth`        | `boolean`                                                                              | `false`       | —       | Streckt den Button auf 100 % der Elternbreite.                 |
+| `loading`          | `boolean`                                                                              | `false`       | —       | Zeigt den Spinner und sperrt Interaktionen.                    |
+| `disabled`         | `boolean`                                                                              | `false`       | —       | Deaktiviert alle Interaktionen.                                |
+| `iconProps`        | `IconProps`                                                                            | —             | —       | Bestehendes Icon neben dem Label.                              |
+| `iconPosition`     | `"start" \| "end"`                                                                     | `"start"`     | —       | Positioniert das Icon vor oder nach dem Label.                 |
+| `redirect`         | `LinkProps`                                                                            | —             | —       | Rendert einen geometrisch identischen SSR-sicheren Link.       |
+| `aria-label`       | `string`                                                                               | `title`       | —       | Überschreibt den zugänglichen Namen.                           |
+| `ref`              | `ButtonRef`                                                                            | —             | —       | Ref auf das zugrunde liegende `<button>`-Element.              |
+| `contentClassName` | `string`                                                                               | —             | —       | CSS-Klasse auf dem inneren Content-Wrapper.                    |
+| `className`        | `string`                                                                               | —             | —       | CSS-Klasse am Root-Element.                                    |
+| `onClick`          | `MouseEventHandler`                                                                    | —             | —       | Click-Handler.                                                 |
+| `image`            | `ImageProps`                                                                           | —             | —       | Inline-Bild als Alternative zu `iconProps`.                    |
 
 ### `ButtonIconProps`
 
-Icon-only variant. Requires either `aria-label` (interactive) or `inert` (decorative).
+Die Icon-only-Variante benötigt entweder `aria-label` (interaktiv) oder `inert` (dekorativ).
 
-| Prop         | Typ         | Standard | Pflicht | Beschreibung                               |
-| ------------ | ----------- | -------- | ------- | ------------------------------------------ |
-| `iconProps`  | `IconProps` | —        | ✅      | Icon to render.                            |
-| `aria-label` | `string`    | —        | ✅\*    | Accessible label for screen readers.       |
-| `inert`      | `boolean`   | —        | ✅\*    | Mark as decorative (no a11y label needed). |
+| Prop         | Typ         | Standard | Pflicht | Beschreibung                        |
+| ------------ | ----------- | -------- | ------- | ----------------------------------- |
+| `iconProps`  | `IconProps` | —        | ✅      | Zu renderndes Icon.                 |
+| `aria-label` | `string`    | —        | ✅\*    | Zugänglicher Name für Screenreader. |
+| `inert`      | `boolean`   | —        | ✅\*    | Markiert das Element als dekorativ. |
 
-\* Either `aria-label` or `inert` must be provided (not both).
+\* Entweder `aria-label` oder `inert` angeben, nicht beides.
 
 ---
 
@@ -83,19 +84,94 @@ Icon-only variant. Requires either `aria-label` (interactive) or `inert` (decora
 
 Passe `Button` über CSS Custom Properties auf `:root` oder einem übergeordneten Element an.
 
-| Token                     | Standard                         | Beschreibung                                                      |
-| ------------------------- | -------------------------------- | ----------------------------------------------------------------- |
-| `--pk-button-bg`          | `var(--pk-color-surface-raised)` | Standard-Hintergrundfarbe (Contained/Inherit-Fallback).           |
-| `--pk-button-fg`          | `var(--pk-color-fg)`             | Standard-Text-/Icon-Farbe.                                        |
-| `--pk-button-shadow`      | `none`                           | Basis-Schatten; farbige Glow-Schatten werden automatisch gesetzt. |
-| `--pk-button-radius`      | `var(--pk-radius-md)`            | Rahmen-Radius.                                                    |
-| `--pk-button-padding-x`   | `var(--pk-space-lg)`             | Horizontales Padding.                                             |
-| `--pk-button-padding-y`   | `var(--pk-space-md)`             | Vertikales Padding.                                               |
-| `--pk-button-disabled-bg` | —                                | Hintergrundfarbe im deaktivierten Zustand (optional).             |
-| `--pk-button-disabled-fg` | `var(--pk-color-muted)`          | Textfarbe im deaktivierten Zustand (optional).                    |
+### Layout und Typografie
 
-> **Deaktivierter Zustand** verwendet standardmäßig `opacity: 0.45` und `pointer-events: none`. Überschreibe `--pk-button-disabled-bg` / `--pk-button-disabled-fg` nur, wenn ein abweichendes Erscheinungsbild gewünscht ist (z. B. bei Brand-Vorgaben statt reduzierter Deckkraft).  
-> **Ladezustand** zeigt einen Inline-Spinner, der die Textfarbe des Buttons übernimmt (`currentColor`), und sperrt die Pointer-Interaktion mit `cursor: progress`.
+| Token                     | Standard                         | Beschreibung                                            |
+| ------------------------- | -------------------------------- | ------------------------------------------------------- |
+| `--pk-button-bg`          | `var(--pk-color-surface-raised)` | Standard-Oberfläche als Fallback.                       |
+| `--pk-button-fg`          | `var(--pk-color-fg)`             | Standard-Text-/Icon-Farbe als Fallback.                 |
+| `--pk-button-font-weight` | `600`                            | Schriftgewicht des Labels.                              |
+| `--pk-button-shadow`      | `var(--pk-shadow-sm)`            | Basis-Schatten als Fallback.                            |
+| `--pk-button-radius`      | `var(--pk-radius-pill)`          | Gemeinsamer Radius aller Varianten.                     |
+| `--pk-button-padding-x`   | `var(--pk-space-xl)`             | Horizontales Padding.                                   |
+| `--pk-button-padding-y`   | `1rem`                           | Vertikales Padding für Contained, Outlined und Text.    |
+| `--pk-button-min-height`  | `3.25rem`                        | Gemeinsame Höhe; Icon-only nutzt sie auf beiden Achsen. |
+
+### Material und Bewegung
+
+| Token                                         | Standard                         | Beschreibung                                 |
+| --------------------------------------------- | -------------------------------- | -------------------------------------------- |
+| `--pk-button-hover-lift`                      | `-2px`                           | Vertikale Hover-Bewegung.                    |
+| `--pk-button-press-scale`                     | `0.985`                          | Kompression im Active-State.                 |
+| `--pk-button-motion-duration`                 | `240ms`                          | Dauer der Haupttransition.                   |
+| `--pk-button-motion-easing`                   | `cubic-bezier(0.22, 1, 0.36, 1)` | Easing der Haupttransition.                  |
+| `--pk-button-sheen-duration`                  | `560ms`                          | Dauer des Contained-Sheen.                   |
+| `--pk-button-sheen-opacity`                   | `0.32`                           | Stärke des Contained-Sheen.                  |
+| `--pk-button-contained-bottom-glow`           | `rgb(255 255 255 / 58%)`         | Weicher innerer Bloom in der unteren Hälfte. |
+| `--pk-button-contained-shadow-strength`       | `22%` (`30%` bei Primary)        | Semantische Elevation im Ruhezustand.        |
+| `--pk-button-contained-hover-shadow-strength` | `30%` (`38%` bei Primary)        | Semantische Elevation beim Hover.            |
+
+### Semantische Token-Familien
+
+| Token-Familie                              | Beschreibung                                               |
+| ------------------------------------------ | ---------------------------------------------------------- |
+| `--pk-button-contained-background-{color}` | Oberflächen der Contained-Buttons.                         |
+| `--pk-button-contained-foreground-{color}` | Solide Icon- und Fallback-Farbe.                           |
+| `--pk-button-contained-ink-{color}`        | Label-Verlauf für Contained.                               |
+| `--pk-button-content-{color}`              | Label-/Icon-Verlauf für Outlined und Text.                 |
+| `--pk-button-content-fallback-{color}`     | Solider Fallback, falls Gradient-Text nicht verfügbar ist. |
+
+`{color}` steht für `inherit`, `primary`, `secondary`, `success`, `info`, `warning` oder `error`. Light und Dark Mode tauschen die relevanten Werte automatisch. Contained verwendet im Dark Mode ein weicheres Charcoal statt reinem Schwarz.
+
+```css title="app/globals.css"
+.checkoutCta {
+  --pk-button-contained-background-primary: linear-gradient(
+    112deg,
+    #4aa8ff,
+    #43ecff
+  );
+  --pk-button-contained-bottom-glow: rgb(255 255 255 / 64%);
+}
+```
+
+> **Deaktivierter Zustand:** `opacity: 0.5`, reduzierte Sättigung und `pointer-events: none`.
+> **Ladezustand:** setzt `aria-busy="true"`, hält das Label zur Größenstabilität sichtbar und ergänzt einen Spinner mit `currentColor`.
+
+---
+
+## Varianten und Icons
+
+```tsx
+<Button title="Primäre Aktion" color="primary" variant="contained" />
+<Button title="Sekundäre Aktion" color="primary" variant="outlined" />
+<Button title="Leise Aktion" color="primary" variant="text" />
+
+<Button
+  title="Weiter"
+  iconProps={{ name: "ArrowRight01Icon" }}
+  iconPosition="end"
+/>
+
+<Button
+  aria-label="Weiter"
+  iconProps={{ name: "ArrowRight01Icon" }}
+/>
+```
+
+Contained, Outlined und Text besitzen dieselbe Mindesthöhe. Icon-only verwendet denselben Wert als quadratische Touch-Fläche.
+
+## Redirect-Verhalten
+
+Mit `redirect` wird das Root-Element zu einem `BaseLink`-Anchor. Klassen, Content-Wrapper, Maße, Theme und Interaktionszustände bleiben identisch zum nativen Button.
+
+```tsx
+<Button
+  title="Report öffnen"
+  iconProps={{ name: "ArrowRight01Icon" }}
+  iconPosition="end"
+  redirect={{ href: "/report", target: "_self" }}
+/>
+```
 
 ## AIC-Hinweis
 
@@ -107,8 +183,7 @@ import { Button } from "@prokodo/ui/button"
 
 Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
 
-AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
-Am sichtbarsten ist das bei `Image` (natives Preloading via `<link rel="preload">` für Above-the-fold-Inhalte).
+`priority` hydriert die Button-Island sofort, statt auf Sichtbarkeit zu warten. Farbe, Elevation, Größe und andere visuelle Eigenschaften ändern sich dadurch nicht.
 
 ---
 
@@ -125,12 +200,12 @@ Am sichtbarsten ist das bei `Image` (natives Preloading via `<link rel="preload"
 | **2.5.8**  | **Zielgröße (Minimum)** (AA)         | 🔍 Manuell prüfen | Interaktive Zielbereiche müssen mindestens 24 × 24 CSS-Pixel groß sein. Prüfung in der integrierten Produkt-UI erforderlich.                         |
 | **4.1.2**  | **Name, Rolle, Wert** (A)            | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                 |
 
-> **Testabdeckung:** 5 jest-axe-Assertion(s) in 4 Testdatei(en) · 1 ARIA-Attribut-Vorkommen im Quellcode-Scan.
+> **Testabdeckung:** 5 `jest-axe`-Assertions in der Button-Testsuite sowie Redirect- und Icon-only-Tests für zugängliche Namen.
 > Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
 
 ## Storybook
 
-Explore all `Button` variants, controls, and a11y annotations live:
+Alle `Button`-Varianten, Controls und A11y-Hinweise live ansehen:
 
 👉 [Button in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-content-button--docs)
 
