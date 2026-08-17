@@ -6,12 +6,117 @@
 
 @mixin button-tokens() {
   // Base
-  --pk-button-bg:              var(--pk-color-surface-raised);
---pk-button-fg:              var(--pk-color-fg);
---pk-button-radius:          var(--pk-radius-pill);
---pk-button-padding-x:       var(--pk-space-xl);
---pk-button-padding-y:       0.875rem; // px-to-rem(14px) — static layout constant
---pk-button-shadow:          var(--pk-shadow-sm);
---pk-button-disabled-bg:     var(--pk-color-border);
-  --pk-button-disabled-fg:     var(--pk-color-muted);
+  --pk-button-bg:                   var(--pk-color-surface-raised);
+  --pk-button-fg:                   var(--pk-color-fg);
+  --pk-button-font-weight:          600;
+  --pk-button-primary-contained-fg: var(--pk-palette-black, #000000);
+  --pk-button-radius:               var(--pk-radius-pill);
+  --pk-button-padding-x:            var(--pk-space-xl);
+  --pk-button-padding-y:            1rem;
+  --pk-button-min-height:           3.25rem;
+  --pk-button-shadow:               var(--pk-shadow-sm);
+  --pk-button-hover-lift:           -2px;
+  --pk-button-press-scale:          0.985;
+  --pk-button-motion-duration:      240ms;
+  --pk-button-motion-easing:        cubic-bezier(0.22, 1, 0.36, 1);
+  --pk-button-sheen-duration:       560ms;
+  --pk-button-sheen-opacity:        0.32;
+  --pk-button-contained-bottom-glow: rgb(255 255 255 / 58%);
+  --pk-button-contained-shadow-strength:       22%;
+  --pk-button-contained-hover-shadow-strength: 30%;
+  --pk-button-disabled-bg:          var(--pk-color-border);
+  --pk-button-disabled-fg:          var(--pk-color-muted);
+
+  // Semantic pigments used by all three variants.
+  --pk-button-accent-alt-success: #10ccb8;
+  --pk-button-accent-alt-warning: #cca300;
+  --pk-button-accent-alt-error:   #c52a2a;
+
+  // Light-surface ink gradients are deliberately darker than their contained
+  // surfaces. Every endpoint clears WCAG AA for normal text on white.
+  --pk-button-content-primary:   linear-gradient(112deg, #275ea2 0%, #00636e 100%);
+  --pk-button-content-secondary: linear-gradient(112deg, #00636e 0%, #275ea2 100%);
+  --pk-button-content-info:      linear-gradient(112deg, #425263 0%, #273747 100%);
+  --pk-button-content-success:   linear-gradient(112deg, #08783e 0%, #006f68 100%);
+  --pk-button-content-warning:   linear-gradient(112deg, #765d00 0%, #5e4500 100%);
+  --pk-button-content-error:     linear-gradient(112deg, #b32620 0%, #891b19 100%);
+  --pk-button-content-fallback-primary:   #275ea2;
+  --pk-button-content-fallback-secondary: #00636e;
+  --pk-button-content-fallback-info:      #425263;
+  --pk-button-content-fallback-success:   #08783e;
+  --pk-button-content-fallback-warning:   #765d00;
+  --pk-button-content-fallback-error:     #b32620;
+
+  --pk-button-contained-background-inherit: linear-gradient(
+    112deg,
+    var(--pk-color-surface-raised) 0%,
+    var(--pk-color-border) 100%
+  );
+  --pk-button-contained-background-primary: linear-gradient(
+    112deg,
+    #3f9fff 0%,
+    #2ee7fb 100%
+  );
+  --pk-button-contained-background-info: linear-gradient(
+    112deg,
+    #d3d3d3 0%,
+    #bfbfbf 50%,
+    #ababab 100%
+  );
+  --pk-button-contained-background-error: linear-gradient(
+    112deg,
+    #f2716d 0%,
+    #e76a66 50%,
+    #ff6666 100%
+  );
+  --pk-button-contained-foreground-inherit: var(--pk-color-fg);
+  --pk-button-contained-foreground-primary: var(--pk-button-primary-contained-fg);
+  --pk-button-contained-foreground-secondary: var(--pk-palette-black);
+  --pk-button-contained-foreground-info:      var(--pk-color-fg);
+  --pk-button-contained-foreground-success:   var(--pk-palette-black);
+  --pk-button-contained-foreground-warning:   var(--pk-palette-black);
+  --pk-button-contained-foreground-error:     var(--pk-palette-black);
+
+  // Bright contained surfaces use dark, hue-related ink instead of flat black.
+  --pk-button-contained-ink-inherit:   linear-gradient(112deg, #10131b 0%, #1a2029 100%);
+  --pk-button-contained-ink-primary:   linear-gradient(112deg, #000000 0%, #071018 100%);
+  --pk-button-contained-ink-secondary: linear-gradient(112deg, #031b23 0%, #071b35 100%);
+  --pk-button-contained-ink-info:      linear-gradient(112deg, #080f16 0%, #10131b 100%);
+  --pk-button-contained-ink-success:   linear-gradient(112deg, #031f12 0%, #042b27 100%);
+  --pk-button-contained-ink-warning:   linear-gradient(112deg, #271b00 0%, #3b2700 100%);
+  --pk-button-contained-ink-error:     linear-gradient(112deg, #000000 0%, #0c0101 100%);
+}
+
+@mixin button-dark-tokens() {
+  // Low-pigment variants switch to luminous ink on dark surfaces.
+  --pk-button-content-primary:   linear-gradient(112deg, #79b4ff 0%, #00e6ff 100%);
+  --pk-button-content-secondary: linear-gradient(112deg, #00e6ff 0%, #79b4ff 100%);
+  --pk-button-content-info:      linear-gradient(112deg, #f5f5f5 0%, #a9b7c6 100%);
+  --pk-button-content-success:   linear-gradient(112deg, #45f2a0 0%, #20dccb 100%);
+  --pk-button-content-warning:   linear-gradient(112deg, #ffd84d 0%, #eeb621 100%);
+  --pk-button-content-error:     linear-gradient(112deg, #ff8c85 0%, #ff554d 100%);
+  --pk-button-content-fallback-primary:   #79b4ff;
+  --pk-button-content-fallback-secondary: #00e6ff;
+  --pk-button-content-fallback-info:      #f5f5f5;
+  --pk-button-content-fallback-success:   #45f2a0;
+  --pk-button-content-fallback-warning:   #ffd84d;
+  --pk-button-content-fallback-error:     #ff8c85;
+  --pk-button-contained-background-inherit: linear-gradient(112deg, #c4cbd2 0%, #949faa 100%);
+  --pk-button-contained-background-primary: var(--gradient-background-primary);
+  --pk-button-contained-background-info:    linear-gradient(112deg, #a9b3bd 0%, #7e8995 100%);
+  --pk-button-contained-background-error:   var(--gradient-background-error);
+  --pk-button-contained-foreground-inherit:   #18212b;
+  --pk-button-contained-foreground-primary:   #18212b;
+  --pk-button-contained-foreground-secondary: #18212b;
+  --pk-button-contained-foreground-info:      #18212b;
+  --pk-button-contained-foreground-success:   #18212b;
+  --pk-button-contained-foreground-warning:   #18212b;
+  --pk-button-contained-foreground-error:     #18212b;
+  --pk-button-contained-ink-inherit:   linear-gradient(112deg, #111820 0%, #18212b 100%);
+  --pk-button-contained-ink-primary:   linear-gradient(112deg, #111820 0%, #18212b 100%);
+  --pk-button-contained-ink-secondary: linear-gradient(112deg, #111820 0%, #18212b 100%);
+  --pk-button-contained-ink-info:      linear-gradient(112deg, #111820 0%, #18212b 100%);
+  --pk-button-contained-ink-success:   linear-gradient(112deg, #111820 0%, #18212b 100%);
+  --pk-button-contained-ink-warning:   linear-gradient(112deg, #111820 0%, #18212b 100%);
+  --pk-button-contained-ink-error:     linear-gradient(112deg, #111820 0%, #18212b 100%);
 }

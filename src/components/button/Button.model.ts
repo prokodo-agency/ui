@@ -3,8 +3,10 @@ import type { ImageProps } from "../image"
 import type { LinkProps } from "../link"
 import type {
   Ref,
+  AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   ComponentType,
+  CSSProperties,
   MouseEventHandler,
   KeyboardEventHandler,
   ReactNode,
@@ -38,7 +40,7 @@ export type ButtonProperties = Omit<
 > & {
   /** Ref to button element. */
   ref?: ButtonRef
-  /** Emphasize button (higher visual priority). */
+  /** Hydrate the interactive island eagerly instead of waiting for visibility. */
   priority?: boolean
   /** Color variant (semantic color or inherit). */
   color?: ButtonColor
@@ -54,6 +56,8 @@ export type ButtonProperties = Omit<
   disabled?: boolean
   /** Background image (alternative to icon). */
   image?: ImageProps
+  /** Place an existing icon before or after the label. */
+  iconPosition?: "start" | "end"
   /** Visual style variant. */
   variant?: "contained" | "outlined" | "text"
 }
@@ -149,6 +153,14 @@ export type ButtonViewProps = ButtonProps & {
     disabled?: boolean
     id?: string
     children: ReactNode
+    "aria-busy"?: boolean
+    "aria-label"?: string
+    download?: AnchorHTMLAttributes<HTMLAnchorElement>["download"]
+    linkComponent?: LinkProps["linkComponent"]
+    rel?: string
+    style?: CSSProperties
+    tabIndex?: number
+    target?: string
     onClick?: MouseEventHandler<HTMLElement>
     onKeyDown?: KeyboardEventHandler<HTMLElement>
   }>

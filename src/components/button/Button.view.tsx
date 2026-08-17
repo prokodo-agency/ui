@@ -3,7 +3,7 @@ import { create } from "@/helpers/bem"
 import { isString } from "@/helpers/validations"
 
 import { Icon } from "../icon"
-import { Loading, type LoadingColor } from "../loading"
+import { Loading } from "../loading"
 
 import styles from "./Button.module.scss"
 
@@ -23,21 +23,19 @@ export const ButtonView: FC<ButtonViewProps> = ({
   redirect,
   image,
   iconProps = {},
+  iconPosition = "start",
   isIconOnly,
   LinkComponent,
   loading,
   ...rest
 }) => {
-  const isOutlined = variant === "outlined"
   const iconName = iconProps?.name
   const iconMod = { "icon-only": isIconOnly }
   const { title } = rest as ButtonDefaultProps
-
-  // Spinner color: for contained buttons currentColor inherits from button text
-  // (white for info/error, --pk-color-fg for others). For outlined/text we
-  // explicitly pass the semantic color so the spinner matches the border/label.
-  const spinnerColor: LoadingColor | undefined =
-    variant !== "contained" ? (color as LoadingColor) : undefined
+  const ariaLabel = rest["aria-label"] ?? title
+  const rootClassName = [className, redirect?.className]
+    .filter(isString)
+    .join(" ")
 
   const inner = (
     <>
@@ -57,23 +55,22 @@ export const ButtonView: FC<ButtonViewProps> = ({
         <Icon className={bem("icon", iconMod)} {...iconProps} />
       )}
       {/* spinner — shown while loading, before the label */}
-      {loading && (
-        <Loading ariaLabel="Loading" color={spinnerColor} size="xs" />
-      )}
+      {loading && <Loading ariaLabel="Loading" size="xs" />}
       {/* title — always rendered so the button keeps its width */}
-      {title}
+      {title !== undefined ? (
+        <span className={bem("label")}>{title}</span>
+      ) : null}
     </>
   )
 
-  const variantNode = isOutlined ? (
-    <div className={bem("content", iconMod, contentClassName)}>{inner}</div>
-  ) : (
-    inner
+  const variantNode = (
+    <span className={bem("content", iconMod, contentClassName)}>{inner}</span>
   )
 
   const common = {
     id: rest.id,
-    "aria-label": title ?? undefined,
+    "aria-busy": loading || undefined,
+    "aria-label": ariaLabel,
     className: bem(
       undefined,
       {
@@ -85,11 +82,12 @@ export const ButtonView: FC<ButtonViewProps> = ({
         [`has-variant-${variant}--has-outline-${color}`]:
           variant === "outlined",
         [`has-text-${color}`]: variant === "text",
+        "has-icon-end": iconPosition === "end" && !Boolean(isIconOnly),
         "is-disabled": Boolean(disabled),
         "is-loading": Boolean(loading),
         ...iconMod,
       },
-      className,
+      rootClassName,
     ),
   }
 
@@ -97,9 +95,15 @@ export const ButtonView: FC<ButtonViewProps> = ({
     <LinkComponent
       {...common}
       disabled={disabled}
+      download={redirect.download}
       href={redirect.href}
-      onClick={rest.onClick}
-      onKeyDown={rest.onKeyDown}
+      linkComponent={redirect.linkComponent}
+      rel={redirect.rel}
+      style={{ ...redirect.style, ...rest.style }}
+      tabIndex={Boolean(disabled) ? -1 : (rest.tabIndex ?? redirect.tabIndex)}
+      target={redirect.target}
+      onClick={rest.onClick ?? redirect.onClick}
+      onKeyDown={rest.onKeyDown ?? redirect.onKeyDown}
     >
       {variantNode}
     </LinkComponent>
