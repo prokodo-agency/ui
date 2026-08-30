@@ -111,7 +111,7 @@ jobs:
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
 
       - name: Production readiness
-        run: pnpm verify:production-readiness --base "${{ github.event.pull_request.base.sha }}"
+        run: pnpm verify:production-readiness:ci --base "${{ github.event.pull_request.base.sha }}"
 
       - name: Render production readiness review
         if: always()

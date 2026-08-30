@@ -33,15 +33,19 @@ const artifact = {
   },
 }
 
-test("renders a human approval summary bound to the current commit", () => {
+test("renders a green-CI admin approval summary bound to the current commit", () => {
   const output = renderReadinessComment(artifact, {
     commit: "56f95bf8e4226022353b0d9d401ff220fd395af6",
     runUrl: "https://github.com/prokodo-agency/prokodo-api/actions/runs/1",
   })
 
   assert.match(output, new RegExp(COMMENT_MARKER))
-  assert.match(output, /Human approval required/u)
-  assert.match(output, /exact commit `56f95bf8e422`/u)
+  assert.match(output, /Automated checks passed · Admin approval required/u)
+  assert.match(
+    output,
+    /verification passed for \*\*exact commit `56f95bf8e422`/u,
+  )
+  assert.match(output, /Do not auto-merge or auto-publish/u)
   assert.match(output, /terraform_validate/u)
   assert.match(output, /No new readiness findings/u)
   assert.doesNotMatch(output, /PRIVATE_TOKEN/u)

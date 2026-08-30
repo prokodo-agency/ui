@@ -463,7 +463,8 @@ export const inspectEnvironmentFromFileMap = ({ files, environment = {} }) => {
       !/(?:^|\/)(?:test|tests|__tests__|cypress)(?:\/|$)|\.(?:spec|test)\.[cm]?[jt]sx?$/u.test(
         file.path,
       ) &&
-      !file.path.startsWith("scripts/autonomy/")
+      (!file.path.startsWith("scripts/autonomy/") ||
+        file.path === "scripts/autonomy/notify-pr-ci-slack.mjs")
     if (runtimeSource) {
       extractUsedNames(file.content).forEach(name => used.add(name))
     }

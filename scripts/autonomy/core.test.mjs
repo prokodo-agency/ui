@@ -82,6 +82,32 @@ test("reports a provisioned but unused environment name", () => {
   )
 })
 
+test("tracks notifier environment names without scanning autonomy policy code", () => {
+  const result = inspectEnvironmentFromFileMap({
+    files: [
+      {
+        path: "scripts/autonomy/notify-pr-ci-slack.mjs",
+        content: "process.env.SLACK_BOT_TOKEN",
+      },
+      {
+        path: "scripts/autonomy/core.mjs",
+        content: "process.env.INTERNAL_POLICY_NAME",
+      },
+      {
+        path: ".github/workflows/ci.yml",
+        content: "  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}",
+      },
+    ],
+    environment: {
+      ...environment,
+      sourceDirectories: ["scripts"],
+    },
+  })
+
+  assert.deepEqual(result.used, ["SLACK_BOT_TOKEN"])
+  assert.deepEqual(result.provisionedUnused, [])
+})
+
 test("allows a dynamic environment name only through an explicit allowlist", () => {
   const result = inspectEnvironmentFromFileMap({
     files: [{ path: "src/config.ts", content: "process.env.DYNAMIC_NAME" }],

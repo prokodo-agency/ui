@@ -3,6 +3,47 @@ import { resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 export const COMMENT_MARKER = "<!-- prokodo-production-readiness -->"
+export const COMMENT_DATA_PREFIX = "<!-- prokodo-production-readiness-data:"
+
+const renderCommentData = (artifact, commit, repository) => {
+  const environment = artifact?.environment
+  const count = value => (Array.isArray(value) ? value.length : 0)
+  const data = {
+    schemaVersion: 1,
+    repository: String(repository || artifact?.repository || "unknown"),
+    commit: String(commit || "unknown"),
+    result: artifact?.result,
+    risk: artifact?.risk,
+    affectedConsumers: Array.isArray(artifact?.affectedConsumers)
+      ? artifact.affectedConsumers.map(String)
+      : [],
+    riskSignals: Array.isArray(artifact?.riskSignals)
+      ? artifact.riskSignals.map(signal => ({
+          risk: String(signal?.risk || "UNKNOWN"),
+          reason: String(signal?.reason || "unspecified"),
+        }))
+      : [],
+    findings: Array.isArray(artifact?.findings)
+      ? artifact.findings.map(finding => ({
+          severity: String(finding?.severity || "unknown"),
+          code: String(finding?.code || finding?.id || "UNCLASSIFIED"),
+          path: String(finding?.path || finding?.file || ""),
+        }))
+      : [],
+    checks: Array.isArray(artifact?.checks)
+      ? artifact.checks.map(check => ({
+          name: String(check?.name || "readiness check"),
+          exitCode: Number.isInteger(check?.exitCode) ? check.exitCode : null,
+        }))
+      : [],
+    environmentCounts: {
+      runtime: count(environment?.used),
+      declared: count(environment?.declared),
+      provisioned: count(environment?.provisioned),
+    },
+  }
+  return `${COMMENT_DATA_PREFIX}${Buffer.from(JSON.stringify(data)).toString("base64url")} -->`
+}
 
 const RESULT_COPY = Object.freeze({
   PASS: {
@@ -17,10 +58,10 @@ const RESULT_COPY = Object.freeze({
       "Automated gates passed with advisories. Review them before merge; autonomous merge is not permitted.",
   },
   HUMAN_APPROVAL_REQUIRED: {
-    icon: "🛑",
-    title: "Human approval required",
+    icon: "🔐",
+    title: "Automated checks passed · Admin approval required",
     explanation:
-      "This is an intentional policy stop for a high-risk change, not an unclassified test failure. Exit code 20 requires a human decision.",
+      "The HIGH-risk classification does not fail CI. A repository administrator must review any protected merge, release or publication decision for this public package.",
   },
   BLOCKED: {
     icon: "❌",
@@ -173,9 +214,9 @@ export const renderReadinessComment = (
   const approvalText =
     artifact.result === "HUMAN_APPROVAL_REQUIRED"
       ? [
-          `Review and approve **exact commit \`${compactSha(commit)}\`**.`,
-          "A new commit invalidates this approval and requires a fresh review.",
-          "After approval, an authorized human may perform the protected merge.",
+          `Automated verification passed for **exact commit \`${compactSha(commit)}\`**.`,
+          "An authorized repository administrator must review the public-package impact before the protected merge, release or publication.",
+          "Do not auto-merge or auto-publish. Re-review after every new commit.",
         ].join(" ")
       : artifact.result === "BLOCKED"
         ? "Do not approve or merge. Resolve the findings and run validation again."
@@ -183,6 +224,7 @@ export const renderReadinessComment = (
 
   return [
     COMMENT_MARKER,
+    renderCommentData(artifact, commit, repository),
     `## ${copy.icon} Production readiness · ${copy.title}`,
     "",
     `> ${copy.explanation}`,

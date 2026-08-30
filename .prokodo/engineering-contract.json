@@ -37,7 +37,7 @@
   ],
   "infrastructureDirectories": [],
   "environment": {
-    "sourceDirectories": ["src", "tools", "cypress"],
+    "sourceDirectories": ["src", "scripts", "tools", "cypress"],
     "declarationFiles": [],
     "provisioningSources": [".github/workflows", "cypress.config.ts"],
     "allowDynamic": [
@@ -48,6 +48,10 @@
       {
         "pattern": "^(?:PK_|STORYBOOK_)",
         "reason": "documented library and Storybook runtime flags"
+      },
+      {
+        "pattern": "^(?:GITHUB_(?:ACTOR|REPOSITORY|RUN_ID|SERVER_URL|SHA|TOKEN)|MONITORED_WORKFLOWS|PIPELINE_RESULT|PR_(?:AUTHOR|HEAD_REF|HEAD_SHA|NUMBER|TITLE|URL)|READINESS_ARTIFACT|SLACK_(?:BOT_TOKEN|CHANNEL_ID_CICD)|SOURCE_(?:CONCLUSION|RUN_ID|WORKFLOW))$",
+        "reason": "value-free PR quality-gate and Slack notification orchestration"
       }
     ],
     "allowDocumentedUnused": [],

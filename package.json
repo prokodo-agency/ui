@@ -318,6 +318,7 @@
     "verify": "pnpm test:autonomy && pnpm format && pnpm lint && pnpm typecheck && pnpm typecheck:cypress && pnpm test:unit:ci && pnpm cypress:install && pnpm cypress:verify && pnpm test:e2e:ci && pnpm build && pnpm verify:consumers",
     "verify:changed": "node scripts/autonomy/verify-changed.mjs",
     "verify:production-readiness": "node scripts/autonomy/verify-production-readiness.mjs",
+    "verify:production-readiness:ci": "node scripts/autonomy/verify-production-readiness-ci.mjs",
     "verify:consumers": "node tools/verify-consumer-contracts.mjs",
     "fix": "pnpm format:fix && pnpm lint:fix",
     "lint": "eslint . --cache --cache-location .eslintcache",
