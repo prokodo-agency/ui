@@ -91,6 +91,7 @@ describe("Input", () => {
     it("renders a static trailing icon (no click handler) as a non-interactive span", () => {
       render(
         <InputView
+          readOnly
           label="Search"
           name="search"
           trailingIcon="Search01Icon"

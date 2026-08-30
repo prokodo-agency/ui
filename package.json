@@ -294,6 +294,10 @@
   "bugs": {
     "url": "https://github.com/prokodo-agency/ui/issues"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
     "dev": "PK_ENABLE_DEBUG_LOGS=true vite",
     "build": "vite build && pnpm build:types && node tools/duplicate-css-modules.mjs && node tools/inject-css-deps.mjs && node tools/update-exports.mjs && node tools/check-restricted-paths.mjs",
@@ -306,8 +310,15 @@
     "test:unit": "NODE_ENV=test jest --coverage --verbose",
     "test:unit:watch": "NODE_ENV=test jest --watch",
     "test:unit:ci": "NODE_ENV=test jest --runInBand --ci --coverage",
-    "test:e2e": "cypress open --component",
-    "test:e2e:ci": "cypress run --component --headless",
+    "test:e2e": "env -u ELECTRON_RUN_AS_NODE CYPRESS_CACHE_FOLDER=.cache/Cypress cypress open --component",
+    "test:e2e:ci": "env -u ELECTRON_RUN_AS_NODE CYPRESS_CACHE_FOLDER=.cache/Cypress cypress run --component --headless",
+    "test:autonomy": "node --test scripts/autonomy/*.test.mjs tools/verify-consumer-contracts.test.mjs",
+    "cypress:install": "CYPRESS_CACHE_FOLDER=.cache/Cypress cypress install",
+    "cypress:verify": "env -u ELECTRON_RUN_AS_NODE CYPRESS_CACHE_FOLDER=.cache/Cypress cypress verify",
+    "verify": "pnpm test:autonomy && pnpm format && pnpm lint && pnpm typecheck && pnpm typecheck:cypress && pnpm test:unit:ci && pnpm cypress:install && pnpm cypress:verify && pnpm test:e2e:ci && pnpm build && pnpm verify:consumers",
+    "verify:changed": "node scripts/autonomy/verify-changed.mjs",
+    "verify:production-readiness": "node scripts/autonomy/verify-production-readiness.mjs",
+    "verify:consumers": "node tools/verify-consumer-contracts.mjs",
     "fix": "pnpm format:fix && pnpm lint:fix",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "lint:fix": "eslint . --fix --cache --cache-location .eslintcache",

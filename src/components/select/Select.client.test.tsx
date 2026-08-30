@@ -416,6 +416,7 @@ describe("Select.client – listbox interaction (popupReady)", () => {
 
 describe("Select.client – mobile bottom-sheet", () => {
   beforeEach(() => {
+    jest.useFakeTimers()
     Object.defineProperty(window, "matchMedia", {
       writable: true,
       value: jest.fn().mockImplementation((query: string) => ({
@@ -430,6 +431,8 @@ describe("Select.client – mobile bottom-sheet", () => {
   })
 
   afterEach(() => {
+    jest.runOnlyPendingTimers()
+    jest.useRealTimers()
     Object.defineProperty(window, "matchMedia", {
       writable: true,
       value: jest.fn().mockImplementation((query: string) => ({
