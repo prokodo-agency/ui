@@ -1,0 +1,100 @@
+{
+  "$schema": "./engineering-contract.schema.json",
+  "schemaVersion": 1,
+  "repository": { "name": "prokodo-ui", "kind": "library" },
+  "runtime": { "node": ">=22.0.0", "packageManager": "pnpm@9.15.9" },
+  "commands": {
+    "verifyChanged": "pnpm verify:changed --base <sha>",
+    "verify": "pnpm verify",
+    "verifyProductionReadiness": "pnpm verify:production-readiness --base <sha>"
+  },
+  "staticAnalysis": {
+    "newFindings": "ZERO_TOLERANCE",
+    "autofixPolicy": "SAFE_AUTOFIX_THEN_BLOCK",
+    "scanners": ["codeql", "eslint", "axe"]
+  },
+  "entryPoints": ["src/index.ts", "package.json#exports"],
+  "deployables": ["npm-package", "storybook"],
+  "riskPaths": [
+    {
+      "risk": "HIGH",
+      "patterns": [
+        "^package.json$",
+        "^src/index.ts$",
+        "^tools/(?:update-exports|verify-consumer-contracts)",
+        "^\\.github/workflows/",
+        "^scripts/autonomy/",
+        "^\\.prokodo/"
+      ],
+      "reason": "Published package, export, release, CI or validation contract"
+    }
+  ],
+  "criticalPaths": [
+    "src/index.ts",
+    "package.json",
+    "tools/update-exports.mjs",
+    ".github/workflows/release.yml"
+  ],
+  "infrastructureDirectories": [],
+  "environment": {
+    "sourceDirectories": ["src", "scripts", "tools", "cypress"],
+    "declarationFiles": [],
+    "provisioningSources": [".github/workflows", "cypress.config.ts"],
+    "allowDynamic": [
+      {
+        "pattern": "^(?:CI|NODE_ENV|TZ|ELECTRON_EXTRA_LAUNCH_ARGS)$",
+        "reason": "test/build platform runtime"
+      },
+      {
+        "pattern": "^(?:PK_|STORYBOOK_)",
+        "reason": "documented library and Storybook runtime flags"
+      },
+      {
+        "pattern": "^(?:GITHUB_(?:ACTOR|REPOSITORY|RUN_ID|SERVER_URL|SHA|TOKEN)|MONITORED_WORKFLOWS|PIPELINE_RESULT|PR_(?:AUTHOR|HEAD_REF|HEAD_SHA|NUMBER|TITLE|URL)|READINESS_ARTIFACT|SLACK_(?:BOT_TOKEN|CHANNEL_ID_CICD)|SOURCE_(?:CONCLUSION|RUN_ID|WORKFLOW))$",
+        "reason": "value-free PR quality-gate and Slack notification orchestration"
+      }
+    ],
+    "allowDocumentedUnused": [],
+    "allowProvisionedUnused": [
+      {
+        "pattern": "^(?:GITHUB|CI|CHROMATIC|ELECTRON|CYPRESS)_",
+        "reason": "CI, Chromatic or Cypress orchestration input"
+      }
+    ],
+    "allowPublic": []
+  },
+  "secretReferenceSources": [".github/workflows"],
+  "terraformDirectories": [],
+  "ciWorkflows": [
+    ".github/workflows/pr.yml",
+    ".github/workflows/release.yml",
+    ".github/workflows/oss-guards.yml"
+  ],
+  "relationships": {
+    "providers": [],
+    "consumers": ["prokodo-portal", "prokodo-website"],
+    "contractPaths": ["^src/", "^package.json$", "^\\.changeset/"]
+  },
+  "browser": { "relevant": true, "harness": "cypress-component-and-chromatic" },
+  "previewTypes": ["storybook", "chromatic"],
+  "validationArtifacts": [
+    ".prokodo/artifacts/changed-validation.json",
+    ".prokodo/artifacts/production-readiness.json",
+    ".prokodo/artifacts/consumer-contract.json",
+    ".prokodo/artifacts/failure.json"
+  ],
+  "changedValidation": [
+    {
+      "when": ["source", "ui", "tests", "contracts", "package_dependencies"],
+      "commands": [
+        ["pnpm", "typecheck"],
+        ["pnpm", "test:unit:ci"],
+        ["pnpm", "verify:consumers", "--base", "{base}"]
+      ]
+    },
+    {
+      "when": ["deployment", "env", "security"],
+      "commands": [["pnpm", "test:autonomy"]]
+    }
+  ]
+}

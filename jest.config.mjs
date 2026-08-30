@@ -14,6 +14,9 @@ const tsConfigPaths = tsconfig.compilerOptions.paths ?? {}
 const tsConfigBaseUrl = `<rootDir>/${tsconfig.compilerOptions.baseUrl}`
 
 export default {
+  watchman: false,
+  testPathIgnorePatterns: ["<rootDir>/.cache/"],
+  watchPathIgnorePatterns: ["<rootDir>/.cache/"],
   transform: {
     "^.+\\.(ts|tsx|js|jsx|mjs)$": "babel-jest",
   },

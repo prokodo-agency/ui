@@ -6,12 +6,14 @@ on:
       - main
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
 
 jobs:
   ci:
     name: Validate PR
     runs-on: ubuntu-latest
+    env:
+      CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/Cypress
 
     steps:
       - name: ⬇️ Checkout repository
@@ -22,7 +24,7 @@ jobs:
       - name: 💿 Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 9.15.9
 
       - name: 🧰 Setup Node.js
         uses: actions/setup-node@v5
@@ -30,19 +32,23 @@ jobs:
           node-version: 22
           cache: "pnpm"
 
-      - name: � Cache Cypress binary
-        id: cypress-cache
+      - name: Cache Cypress binary
         uses: actions/cache@v4
         with:
-          path: ~/.cache/Cypress
+          path: .cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: 🔧 Install Cypress binary
-        if: steps.cypress-cache.outputs.cache-hit != 'true'
-        run: npx cypress install
+        run: pnpm cypress:install
+
+      - name: Verify Cypress binary
+        run: pnpm cypress:verify
+
+      - name: Validate engineering contract
+        run: pnpm test:autonomy
 
       - name: 📝 Check docs overview is up to date
         run: |
@@ -77,6 +83,9 @@ jobs:
       - name: 🛠 Build library (fail fast if broken)
         run: pnpm run build
 
+      - name: Validate consumer contract
+        run: pnpm verify:consumers --base "${{ github.event.pull_request.base.sha }}"
+
       - name: 🧪 E2E – Light theme
         if: github.actor == 'dependabot[bot]'
         run: |
@@ -100,3 +109,60 @@ jobs:
           ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 \
             npx cypress run --component --headless --expose theme=dark
           npx chromatic --cypress --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
+
+      - name: Production readiness
+        run: pnpm verify:production-readiness:ci --base "${{ github.event.pull_request.base.sha }}"
+
+      - name: Render production readiness review
+        if: always()
+        run: >
+          node scripts/autonomy/render-readiness-comment.mjs
+          --input .prokodo/artifacts/production-readiness.json
+          --output .prokodo/artifacts/production-readiness-comment.md
+          --commit "${{ github.event.pull_request.head.sha }}"
+          --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          --repository "${{ github.event.repository.name }}"
+
+      - name: Publish production readiness review
+        if: always()
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- prokodo-production-readiness -->';
+            const summaryPath = '.prokodo/artifacts/production-readiness-comment.md';
+            const body = fs.existsSync(summaryPath)
+              ? fs.readFileSync(summaryPath, 'utf8')
+              : `${marker}\n## ❌ Production readiness · Comment unavailable\n\nThe readiness summary could not be generated. Treat this commit as blocked and inspect the workflow run.`;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100,
+            });
+            const existing = comments.find(comment =>
+              comment.user?.type === 'Bot' && comment.body?.includes(marker)
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Upload validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prokodo-ui-validation
+          path: .prokodo/artifacts/
+          if-no-files-found: warn

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prokodo.com/schemas/engineering-contract/v1",
+  "title": "Prokodo Engineering Contract",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "repository",
+    "runtime",
+    "commands",
+    "staticAnalysis",
+    "entryPoints",
+    "deployables",
+    "riskPaths",
+    "criticalPaths",
+    "infrastructureDirectories",
+    "environment",
+    "secretReferenceSources",
+    "terraformDirectories",
+    "ciWorkflows",
+    "relationships",
+    "browser",
+    "previewTypes",
+    "validationArtifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "repository": {
+      "type": "object",
+      "required": ["name", "kind"],
+      "properties": {
+        "name": { "type": "string" },
+        "kind": { "type": "string" }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["node", "packageManager"],
+      "properties": {
+        "node": { "type": "string" },
+        "packageManager": { "type": "string" }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "required": ["verifyChanged", "verify", "verifyProductionReadiness"],
+      "properties": {
+        "verifyChanged": { "type": "string" },
+        "verify": { "type": "string" },
+        "verifyProductionReadiness": { "type": "string" }
+      }
+    },
+    "staticAnalysis": {
+      "type": "object",
+      "required": ["newFindings", "autofixPolicy", "scanners"],
+      "properties": {
+        "newFindings": { "const": "ZERO_TOLERANCE" },
+        "autofixPolicy": { "const": "SAFE_AUTOFIX_THEN_BLOCK" },
+        "scanners": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "required": ["providers", "consumers", "contractPaths"],
+      "properties": {
+        "providers": { "type": "array", "items": { "type": "string" } },
+        "consumers": { "type": "array", "items": { "type": "string" } },
+        "contractPaths": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "browser": {
+      "type": "object",
+      "required": ["relevant"],
+      "properties": { "relevant": { "type": "boolean" } }
+    }
+  },
+  "additionalProperties": true
+}

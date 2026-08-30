@@ -16,6 +16,7 @@ import { fixupPluginRules } from "@eslint/compat"
 export default [
   {
     ignores: [
+      ".cache/**",
       "**/coverage/",
       "**/node_modules/",
       "**/*.scss",
