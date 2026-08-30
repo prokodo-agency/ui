@@ -32,11 +32,6 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}
           persist-credentials: false
 
-      - name: Set up Node.js
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          node-version: 22
-
       - name: Notify Slack about the CI quality gate
         env:
           GITHUB_TOKEN: ${{ github.token }}
