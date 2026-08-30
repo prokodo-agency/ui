@@ -19,6 +19,10 @@ permissions:
   contents: read
   pull-requests: read
 
+concurrency:
+  group: ci-quality-gate-slack-${{ github.event.workflow_run.head_sha }}-${{ github.event.workflow_run.conclusion }}
+  cancel-in-progress: true
+
 jobs:
   notify:
     if: >-
@@ -35,6 +39,7 @@ jobs:
       - name: Notify Slack about the CI quality gate
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          MAIN_MONITORED_WORKFLOWS: '["OSS Guards","Release","📚 Docs (build check)","Push on main"]'
           MONITORED_WORKFLOWS: '["DCO Check","OSS Guards","PR Checks"]'
           PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -45,5 +50,6 @@ jobs:
           SOURCE_EVENT: ${{ github.event.workflow_run.event }}
           SOURCE_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+          SOURCE_TITLE: ${{ github.event.workflow_run.display_title }}
           SOURCE_WORKFLOW: ${{ github.event.workflow_run.name }}
         run: node scripts/autonomy/notify-pr-ci-slack.mjs

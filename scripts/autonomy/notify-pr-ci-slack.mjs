@@ -127,22 +127,14 @@ export const notificationDecision = ({
   if (scope === "pull_request" && currentPrState !== "open") {
     return { notify: false, reason: "pull_request_not_open" }
   }
-  if (
-    scope === "pull_request" &&
-    currentHeadSha &&
-    expectedHeadSha &&
-    currentHeadSha !== expectedHeadSha
-  ) {
+  if (scope === "main" && expectedHeadSha && !currentHeadSha) {
+    return { notify: false, reason: "current_branch_unknown" }
+  }
+  if (currentHeadSha && expectedHeadSha && currentHeadSha !== expectedHeadSha) {
     return { notify: false, reason: "superseded_commit" }
   }
   if (FAILURE_CONCLUSIONS.has(sourceConclusion)) {
     return { notify: true, reason: "source_failure" }
-  }
-  if (["neutral", "skipped"].includes(sourceConclusion)) {
-    return { notify: false, reason: "source_not_actionable" }
-  }
-  if (scope === "main") {
-    return { notify: true, reason: "main_workflow_complete" }
   }
   if (monitoredWorkflows.length === 0) {
     return { notify: true, reason: "unmonitored_source" }
@@ -152,6 +144,28 @@ export const notificationDecision = ({
   const externalChecksComplete = checkRuns
     .filter(check => check?.app?.slug !== "github-actions")
     .every(check => !check?.status || check.status === "completed")
+  if (scope === "main") {
+    const monitoredFailed = runs.some(run =>
+      FAILURE_CONCLUSIONS.has(run?.conclusion),
+    )
+    const externalFailed = checkRuns
+      .filter(check => check?.app?.slug !== "github-actions")
+      .some(check => FAILURE_CONCLUSIONS.has(check?.conclusion))
+    if (monitoredFailed) {
+      return { notify: false, reason: "main_failure_already_reported" }
+    }
+    if (externalFailed) {
+      return allComplete && externalChecksComplete
+        ? { notify: true, reason: "main_external_failure" }
+        : { notify: false, reason: "quality_gate_running" }
+    }
+    return allComplete && externalChecksComplete
+      ? { notify: true, reason: "main_quality_gate_complete" }
+      : { notify: false, reason: "quality_gate_running" }
+  }
+  if (["neutral", "skipped"].includes(sourceConclusion)) {
+    return { notify: false, reason: "source_not_actionable" }
+  }
   return allComplete && externalChecksComplete
     ? { notify: true, reason: "quality_gate_complete" }
     : { notify: false, reason: "quality_gate_running" }
@@ -205,8 +219,9 @@ export const buildSlackPayload = ({
     })),
   ]
   const blocked = artifact?.result === "BLOCKED"
+  const sourceFailed = FAILURE_CONCLUSIONS.has(jobResult)
   const pipelineFailed =
-    jobResult !== "success" ||
+    sourceFailed ||
     blocked ||
     failedWorkflowRuns.length > 0 ||
     externalFailed.length > 0
@@ -228,7 +243,7 @@ export const buildSlackPayload = ({
           ? "⏳ main checks still running"
           : "⏳ PR checks still running"
         : isMain
-          ? "✅ main workflow passed"
+          ? "✅ main CI passed"
           : artifact?.result === "HUMAN_APPROVAL_REQUIRED"
             ? "🔐 PR ready for admin review"
             : "✅ PR ready to review"
@@ -251,9 +266,9 @@ export const buildSlackPayload = ({
         ).length
   const failureCount =
     monitoredWorkflows.length > 0
-      ? Math.max(failedWorkflowRuns.length, jobResult === "success" ? 0 : 1) +
+      ? Math.max(failedWorkflowRuns.length, sourceFailed ? 1 : 0) +
         externalFailed.length
-      : externalFailed.length + (jobResult === "success" ? 0 : 1)
+      : externalFailed.length + (sourceFailed ? 1 : 0)
   const checksSummary =
     passedCount +
     " passed · " +
@@ -317,7 +332,7 @@ export const buildSlackPayload = ({
       : state === "pending"
         ? "The main pipeline completed, but additional GitHub checks are still running."
         : isMain
-          ? "The workflow completed successfully on main."
+          ? "All monitored workflows completed successfully on main."
           : artifact?.result === "HUMAN_APPROVAL_REQUIRED"
             ? "All automated checks passed. A repository admin must review the HIGH-risk scope before the protected merge, release or deployment."
             : "All reported checks passed. The PR is ready for review."
@@ -328,8 +343,35 @@ export const buildSlackPayload = ({
     (prNumber ? " #" + prNumber : "") +
     " · " +
     checksSummary +
-    " · " +
-    gateLabel(artifact)
+    (artifact ? " · " + gateLabel(artifact) : "")
+  const summaryFields = [
+    {
+      type: "mrkdwn",
+      text:
+        "*Pipeline*\n" +
+        (pipelineFailed ? "❌ Failed" : "✅ Passed") +
+        (isMain && !pipelineFailed
+          ? " · aggregate"
+          : sourceWorkflow
+            ? " · " + slackText(sourceWorkflow)
+            : ""),
+    },
+    { type: "mrkdwn", text: "*Checks*\n" + checksSummary },
+  ]
+  if (artifact) {
+    summaryFields.splice(1, 0, {
+      type: "mrkdwn",
+      text:
+        "*Quality gate*\n" +
+        gateLabel(artifact) +
+        " · " +
+        slackText(artifact.risk || "unknown risk"),
+    })
+    summaryFields.push({
+      type: "mrkdwn",
+      text: "*Consumers*\n" + truncate(consumers, 160),
+    })
+  }
   const blocks = [
     {
       type: "header",
@@ -361,25 +403,7 @@ export const buildSlackPayload = ({
     },
     {
       type: "section",
-      fields: [
-        {
-          type: "mrkdwn",
-          text:
-            "*Pipeline*\n" +
-            (pipelineFailed ? "❌ Failed" : "✅ Passed") +
-            (sourceWorkflow ? " · " + slackText(sourceWorkflow) : ""),
-        },
-        {
-          type: "mrkdwn",
-          text:
-            "*Quality gate*\n" +
-            gateLabel(artifact) +
-            " · " +
-            slackText(artifact?.risk || "unknown risk"),
-        },
-        { type: "mrkdwn", text: "*Checks*\n" + checksSummary },
-        { type: "mrkdwn", text: "*Consumers*\n" + truncate(consumers, 160) },
-      ],
+      fields: summaryFields,
     },
     { type: "section", text: { type: "mrkdwn", text: actionText } },
   ]
@@ -423,18 +447,20 @@ export const buildSlackPayload = ({
       },
     })
   }
-  blocks.push({
-    type: "context",
-    elements: [
-      {
-        type: "mrkdwn",
-        text:
-          "Environment contract counts (runtime/declared/provisioned): *" +
-          environmentSummary +
-          "*. Names and values are not sent to Slack.",
-      },
-    ],
-  })
+  if (artifact) {
+    blocks.push({
+      type: "context",
+      elements: [
+        {
+          type: "mrkdwn",
+          text:
+            "Environment contract counts (runtime/declared/provisioned): *" +
+            environmentSummary +
+            "*. Names and values are not sent to Slack.",
+        },
+      ],
+    })
+  }
   const actions = []
   const safePrUrl = safeUrl(prUrl)
   const safeRunUrl = safeUrl(runUrl)
@@ -556,7 +582,11 @@ const main = async () => {
   }
   const monitoredWorkflows = (() => {
     try {
-      const value = JSON.parse(process.env.MONITORED_WORKFLOWS || "[]")
+      const source =
+        scope === "main"
+          ? process.env.MAIN_MONITORED_WORKFLOWS
+          : process.env.MONITORED_WORKFLOWS
+      const value = JSON.parse(source || "[]")
       return Array.isArray(value) ? value.map(String) : []
     } catch {
       return []
@@ -568,6 +598,7 @@ const main = async () => {
     commentsResult,
     runsResult,
     pullRequestResult,
+    branchResult,
   ] = await Promise.allSettled([
     githubRequest(
       "/repos/" + repository + "/actions/runs/" + runId + "/jobs?per_page=100",
@@ -602,6 +633,15 @@ const main = async () => {
     prNumber
       ? githubRequest("/repos/" + repository + "/pulls/" + prNumber, token)
       : Promise.resolve(null),
+    scope === "main"
+      ? githubRequest(
+          "/repos/" +
+            repository +
+            "/branches/" +
+            encodeURIComponent(process.env.SOURCE_BRANCH || "main"),
+          token,
+        )
+      : Promise.resolve(null),
   ])
   const jobs =
     jobsResult.status === "fulfilled" ? jobsResult.value?.jobs || [] : []
@@ -619,11 +659,13 @@ const main = async () => {
       : []
   const pullRequest =
     pullRequestResult.status === "fulfilled" ? pullRequestResult.value : null
+  const branch = branchResult.status === "fulfilled" ? branchResult.value : null
   const sourceConclusion =
     process.env.SOURCE_CONCLUSION || process.env.PIPELINE_RESULT || "failure"
   const decision = notificationDecision({
     checkRuns,
-    currentHeadSha: pullRequest?.head?.sha,
+    currentHeadSha:
+      scope === "main" ? branch?.commit?.sha : pullRequest?.head?.sha,
     currentPrState: pullRequest?.state,
     expectedHeadSha: headSha,
     monitoredWorkflows,
@@ -672,14 +714,17 @@ const main = async () => {
       (scope === "main" ? process.env.SOURCE_BRANCH : pullRequest?.head?.ref) ||
       process.env.PR_HEAD_REF ||
       "",
-    checkRuns: scope === "main" ? [] : checkRuns,
+    checkRuns,
     commit: headSha,
     jobResult: sourceConclusion,
     jobs,
-    monitoredWorkflows: scope === "main" ? [] : monitoredWorkflows,
+    monitoredWorkflows,
     prNumber,
     prTitle:
-      pullRequest?.title || process.env.PR_TITLE || "Untitled pull request",
+      pullRequest?.title ||
+      (scope === "main"
+        ? process.env.SOURCE_TITLE || "Direct update on main"
+        : process.env.PR_TITLE || "Untitled pull request"),
     prUrl: pullRequest?.html_url || process.env.PR_URL,
     qualityGateUrl: qualityGate?.html_url,
     repository,
@@ -687,7 +732,7 @@ const main = async () => {
     runUrl,
     scope,
     sourceWorkflow: process.env.SOURCE_WORKFLOW || "",
-    workflowRuns: scope === "main" ? [] : workflowRuns,
+    workflowRuns,
   })
   const response = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",

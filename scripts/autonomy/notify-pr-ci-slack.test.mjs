@@ -111,14 +111,61 @@ test("renders a main failure with the failed job and merged PR context", () => {
   assert.match(output, /Open merged PR/u)
 })
 
-test("notifies actionable main completions and ignores skipped workflows", () => {
+test("omits PR-only quality fields from a direct main update", () => {
+  const payload = buildSlackPayload({
+    ...baseInput,
+    artifact: null,
+    branch: "main",
+    prNumber: "",
+    prTitle: "fix(ci): repair notifier",
+    prUrl: null,
+    qualityGateUrl: null,
+    scope: "main",
+  })
+  const output = JSON.stringify(payload)
+
+  assert.match(payload.text, /main CI passed/u)
+  assert.match(output, /fix\(ci\): repair notifier/u)
+  assert.doesNotMatch(output, /Untitled pull request/u)
+  assert.doesNotMatch(output, /Not evaluated|unknown risk|Consumers|n\/a/u)
+})
+
+test("aggregates main success and suppresses superseded commits", () => {
+  const complete = [
+    { name: "ci", status: "completed", conclusion: "success" },
+    { name: "security", status: "completed", conclusion: "success" },
+  ]
   assert.deepEqual(
-    notificationDecision({ scope: "main", sourceConclusion: "success" }),
-    { notify: true, reason: "main_workflow_complete" },
+    notificationDecision({
+      currentHeadSha: "abc",
+      expectedHeadSha: "abc",
+      monitoredWorkflows: ["ci", "security"],
+      scope: "main",
+      sourceConclusion: "success",
+      workflowRuns: complete,
+    }),
+    { notify: true, reason: "main_quality_gate_complete" },
   )
   assert.deepEqual(
-    notificationDecision({ scope: "main", sourceConclusion: "skipped" }),
-    { notify: false, reason: "source_not_actionable" },
+    notificationDecision({
+      expectedHeadSha: "abc",
+      monitoredWorkflows: ["ci", "security"],
+      scope: "main",
+      sourceConclusion: "failure",
+      workflowRuns: complete,
+    }),
+    { notify: false, reason: "current_branch_unknown" },
+  )
+  assert.deepEqual(
+    notificationDecision({
+      currentHeadSha: "new",
+      expectedHeadSha: "old",
+      monitoredWorkflows: ["ci", "security"],
+      scope: "main",
+      sourceConclusion: "failure",
+      workflowRuns: complete,
+    }),
+    { notify: false, reason: "superseded_commit" },
   )
 })
 
