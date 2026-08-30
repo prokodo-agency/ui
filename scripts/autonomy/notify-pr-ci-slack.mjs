@@ -120,17 +120,29 @@ export const notificationDecision = ({
   currentPrState = "open",
   expectedHeadSha,
   monitoredWorkflows = [],
+  scope = "pull_request",
   sourceConclusion,
   workflowRuns = [],
 }) => {
-  if (currentPrState !== "open") {
+  if (scope === "pull_request" && currentPrState !== "open") {
     return { notify: false, reason: "pull_request_not_open" }
   }
-  if (currentHeadSha && expectedHeadSha && currentHeadSha !== expectedHeadSha) {
+  if (
+    scope === "pull_request" &&
+    currentHeadSha &&
+    expectedHeadSha &&
+    currentHeadSha !== expectedHeadSha
+  ) {
     return { notify: false, reason: "superseded_commit" }
   }
   if (FAILURE_CONCLUSIONS.has(sourceConclusion)) {
     return { notify: true, reason: "source_failure" }
+  }
+  if (["neutral", "skipped"].includes(sourceConclusion)) {
+    return { notify: false, reason: "source_not_actionable" }
+  }
+  if (scope === "main") {
+    return { notify: true, reason: "main_workflow_complete" }
   }
   if (monitoredWorkflows.length === 0) {
     return { notify: true, reason: "unmonitored_source" }
@@ -160,10 +172,12 @@ export const buildSlackPayload = ({
   repository,
   runId,
   runUrl,
+  scope = "pull_request",
   sourceWorkflow,
   monitoredWorkflows = [],
   workflowRuns = [],
 }) => {
+  const isMain = scope === "main"
   const ownRunFragment = "/actions/runs/" + runId
   const externalChecks = checkRuns.filter(
     check =>
@@ -206,12 +220,18 @@ export const buildSlackPayload = ({
       : "success"
   const header =
     state === "failure"
-      ? "❌ PR quality gate failed"
+      ? isMain
+        ? "❌ main CI failed"
+        : "❌ PR quality gate failed"
       : state === "pending"
-        ? "⏳ PR checks still running"
-        : artifact?.result === "HUMAN_APPROVAL_REQUIRED"
-          ? "🔐 PR ready for admin review"
-          : "✅ PR ready to review"
+        ? isMain
+          ? "⏳ main checks still running"
+          : "⏳ PR checks still running"
+        : isMain
+          ? "✅ main workflow passed"
+          : artifact?.result === "HUMAN_APPROVAL_REQUIRED"
+            ? "🔐 PR ready for admin review"
+            : "✅ PR ready to review"
   const passedCount =
     monitoredWorkflows.length > 0
       ? monitoredRuns.filter(run => run?.conclusion === "success").length +
@@ -291,18 +311,21 @@ export const buildSlackPayload = ({
       : "n/a"
   const actionText =
     state === "failure"
-      ? "Fix the failed checks below and rerun CI. Do not merge while the quality gate is blocked."
+      ? isMain
+        ? "The workflow failed on main. Fix the failed job or step below and rerun it."
+        : "Fix the failed checks below and rerun CI. Do not merge while the quality gate is blocked."
       : state === "pending"
         ? "The main pipeline completed, but additional GitHub checks are still running."
-        : artifact?.result === "HUMAN_APPROVAL_REQUIRED"
-          ? "All automated checks passed. A repository admin must review the HIGH-risk scope before the protected merge, release or deployment."
-          : "All reported checks passed. The PR is ready for review."
+        : isMain
+          ? "The workflow completed successfully on main."
+          : artifact?.result === "HUMAN_APPROVAL_REQUIRED"
+            ? "All automated checks passed. A repository admin must review the HIGH-risk scope before the protected merge, release or deployment."
+            : "All reported checks passed. The PR is ready for review."
   const fallback =
     header +
     " · " +
     repository +
-    " #" +
-    prNumber +
+    (prNumber ? " #" + prNumber : "") +
     " · " +
     checksSummary +
     " · " +
@@ -320,8 +343,7 @@ export const buildSlackPayload = ({
           text:
             "*" +
             slackText(repository) +
-            " #" +
-            slackText(prNumber) +
+            (prNumber ? " #" + slackText(prNumber) : "") +
             "* · " +
             truncate(prTitle, 120) +
             "\n" +
@@ -420,7 +442,10 @@ export const buildSlackPayload = ({
   if (safePrUrl) {
     actions.push({
       type: "button",
-      text: { type: "plain_text", text: "Open PR" },
+      text: {
+        type: "plain_text",
+        text: isMain ? "Open merged PR" : "Open PR",
+      },
       url: safePrUrl,
     })
   }
@@ -504,9 +529,31 @@ const main = async () => {
 
   const repository = process.env.GITHUB_REPOSITORY || "unknown/unknown"
   const runId = process.env.SOURCE_RUN_ID || process.env.GITHUB_RUN_ID || ""
-  const prNumber = process.env.PR_NUMBER || ""
-  const headSha = process.env.PR_HEAD_SHA || process.env.GITHUB_SHA || ""
+  let prNumber = process.env.PR_NUMBER || ""
+  const headSha =
+    process.env.SOURCE_HEAD_SHA ||
+    process.env.PR_HEAD_SHA ||
+    process.env.GITHUB_SHA ||
+    ""
   const token = process.env.GITHUB_TOKEN || ""
+  const sourceEvent = process.env.SOURCE_EVENT || "pull_request"
+  const scope =
+    prNumber || sourceEvent === "pull_request" ? "pull_request" : "main"
+  if (!prNumber && scope === "main") {
+    const associatedPullRequests = await githubRequest(
+      "/repos/" +
+        repository +
+        "/commits/" +
+        encodeURIComponent(headSha) +
+        "/pulls?per_page=10",
+      token,
+    ).catch(() => [])
+    const pullRequest = Array.isArray(associatedPullRequests)
+      ? associatedPullRequests.find(candidate => candidate?.merged_at) ||
+        associatedPullRequests[0]
+      : null
+    prNumber = pullRequest?.number ? String(pullRequest.number) : ""
+  }
   const monitoredWorkflows = (() => {
     try {
       const value = JSON.parse(process.env.MONITORED_WORKFLOWS || "[]")
@@ -534,19 +581,27 @@ const main = async () => {
         "/check-runs?per_page=100",
       token,
     ),
-    githubRequest(
-      "/repos/" + repository + "/issues/" + prNumber + "/comments?per_page=100",
-      token,
-    ),
+    prNumber
+      ? githubRequest(
+          "/repos/" +
+            repository +
+            "/issues/" +
+            prNumber +
+            "/comments?per_page=100",
+          token,
+        )
+      : Promise.resolve(null),
     githubRequest(
       "/repos/" +
         repository +
-        "/actions/runs?event=pull_request&head_sha=" +
+        "/actions/runs?head_sha=" +
         encodeURIComponent(headSha) +
         "&per_page=100",
       token,
     ),
-    githubRequest("/repos/" + repository + "/pulls/" + prNumber, token),
+    prNumber
+      ? githubRequest("/repos/" + repository + "/pulls/" + prNumber, token)
+      : Promise.resolve(null),
   ])
   const jobs =
     jobsResult.status === "fulfilled" ? jobsResult.value?.jobs || [] : []
@@ -572,12 +627,13 @@ const main = async () => {
     currentPrState: pullRequest?.state,
     expectedHeadSha: headSha,
     monitoredWorkflows,
+    scope,
     sourceConclusion,
     workflowRuns,
   })
   if (!decision.notify) {
     process.stdout.write(
-      "Slack PR quality-gate notification skipped: " + decision.reason + ".\n",
+      "Slack CI quality-gate notification skipped: " + decision.reason + ".\n",
     )
     return
   }
@@ -601,18 +657,26 @@ const main = async () => {
           process.env.READINESS_ARTIFACT ||
             ".prokodo/artifacts/production-readiness.json",
         ),
-      ) || artifactFromQualityGateComment(qualityGate?.body, headSha),
+      ) ||
+      artifactFromQualityGateComment(
+        qualityGate?.body,
+        pullRequest?.head?.sha || headSha,
+      ),
     actor:
       pullRequest?.user?.login ||
+      process.env.SOURCE_ACTOR ||
       process.env.PR_AUTHOR ||
       process.env.GITHUB_ACTOR ||
       "unknown",
-    branch: pullRequest?.head?.ref || process.env.PR_HEAD_REF || "",
-    checkRuns,
+    branch:
+      (scope === "main" ? process.env.SOURCE_BRANCH : pullRequest?.head?.ref) ||
+      process.env.PR_HEAD_REF ||
+      "",
+    checkRuns: scope === "main" ? [] : checkRuns,
     commit: headSha,
     jobResult: sourceConclusion,
     jobs,
-    monitoredWorkflows,
+    monitoredWorkflows: scope === "main" ? [] : monitoredWorkflows,
     prNumber,
     prTitle:
       pullRequest?.title || process.env.PR_TITLE || "Untitled pull request",
@@ -621,8 +685,9 @@ const main = async () => {
     repository,
     runId,
     runUrl,
+    scope,
     sourceWorkflow: process.env.SOURCE_WORKFLOW || "",
-    workflowRuns,
+    workflowRuns: scope === "main" ? [] : workflowRuns,
   })
   const response = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
@@ -639,7 +704,7 @@ const main = async () => {
       "slack_api_" + (result.error || String(response.status || "unknown")),
     )
   }
-  process.stdout.write("Slack PR quality-gate notification sent.\n")
+  process.stdout.write("Slack CI quality-gate notification sent.\n")
 }
 
 if (resolve(process.argv[1] || "") === fileURLToPath(import.meta.url)) {

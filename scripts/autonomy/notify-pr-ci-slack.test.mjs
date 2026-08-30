@@ -89,6 +89,39 @@ test("renders failed jobs, failed checks and readiness findings directly", () =>
   assert.match(output, /TERRAFORM_VALIDATION_FAILED/u)
 })
 
+test("renders a main failure with the failed job and merged PR context", () => {
+  const payload = buildSlackPayload({
+    ...baseInput,
+    branch: "main",
+    jobResult: "failure",
+    jobs: [
+      {
+        name: "Build Docs",
+        html_url: "https://github.com/example/job/2",
+        steps: [{ name: "Setup pnpm", conclusion: "failure" }],
+      },
+    ],
+    scope: "main",
+    sourceWorkflow: "📚 Docs (build check)",
+  })
+  const output = JSON.stringify(payload)
+
+  assert.match(payload.text, /main CI failed/u)
+  assert.match(output, /Build Docs › Setup pnpm/u)
+  assert.match(output, /Open merged PR/u)
+})
+
+test("notifies actionable main completions and ignores skipped workflows", () => {
+  assert.deepEqual(
+    notificationDecision({ scope: "main", sourceConclusion: "success" }),
+    { notify: true, reason: "main_workflow_complete" },
+  )
+  assert.deepEqual(
+    notificationDecision({ scope: "main", sourceConclusion: "skipped" }),
+    { notify: false, reason: "source_not_actionable" },
+  )
+})
+
 test("reads the value-free readiness contract from the sticky PR comment", () => {
   const commit = "56f95bf8e4226022353b0d9d401ff220fd395af6"
   const comment = renderReadinessComment(artifact, { commit })
