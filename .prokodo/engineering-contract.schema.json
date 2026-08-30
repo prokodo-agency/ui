@@ -8,6 +8,7 @@
     "repository",
     "runtime",
     "commands",
+    "staticAnalysis",
     "entryPoints",
     "deployables",
     "riskPaths",
@@ -47,6 +48,15 @@
         "verifyChanged": { "type": "string" },
         "verify": { "type": "string" },
         "verifyProductionReadiness": { "type": "string" }
+      }
+    },
+    "staticAnalysis": {
+      "type": "object",
+      "required": ["newFindings", "autofixPolicy", "scanners"],
+      "properties": {
+        "newFindings": { "const": "ZERO_TOLERANCE" },
+        "autofixPolicy": { "const": "SAFE_AUTOFIX_THEN_BLOCK" },
+        "scanners": { "type": "array", "items": { "type": "string" } }
       }
     },
     "relationships": {

@@ -8,6 +8,11 @@
     "verify": "pnpm verify",
     "verifyProductionReadiness": "pnpm verify:production-readiness --base <sha>"
   },
+  "staticAnalysis": {
+    "newFindings": "ZERO_TOLERANCE",
+    "autofixPolicy": "SAFE_AUTOFIX_THEN_BLOCK",
+    "scanners": ["codeql", "eslint", "axe"]
+  },
   "entryPoints": ["src/index.ts", "package.json#exports"],
   "deployables": ["npm-package", "storybook"],
   "riskPaths": [

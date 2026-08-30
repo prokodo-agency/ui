@@ -9,3 +9,5 @@ Install/verify Cypress in the repository-local `.cache/Cypress` using `pnpm cypr
 Exit codes and failure classes match the other SaaS repositories. Never remove assertions, reduce 100% thresholds, skip component/axe checks or use retries to hide failure.
 
 Automatic repair is limited to three attempts for the same failure class. After that, stop with `BLOCKED` or `HUMAN_APPROVAL_REQUIRED`.
+
+Static analysis uses `ZERO_TOLERANCE` with `SAFE_AUTOFIX_THEN_BLOCK`. An autonomy run applies only safe scanner-supported fixes, reviews the resulting diff and reruns the scanner. Any remaining CodeQL, ESLint, axe or equivalent finding must be repaired in the PR; warnings are blocking and may not be hidden with a new suppression.

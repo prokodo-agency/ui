@@ -15,6 +15,8 @@ Use Node 22+ and pnpm 9.15.9. Run `pnpm install --frozen-lockfile`, then `pnpm c
 - `pnpm verify:production-readiness --base <sha>`
 - `pnpm verify:consumers --base <sha>`
 
+Configured static-analysis findings have zero tolerance. Apply only scanner-provided or otherwise clearly safe autofixes, review the diff, and rerun the scanner. Fix every remaining CodeQL, ESLint, axe, or equivalent finding in the same branch; never leave it as a PR warning or suppress it to obtain a pass.
+
 ## Risk and approval
 
 Breaking exports/peer dependencies and release/workflow changes are HIGH. Removed exports, missing Changesets for public changes, secrets, publishing credentials, or weakened Jest/Cypress/axe/Chromatic gates block autonomy. Do not silently align consumer versions.

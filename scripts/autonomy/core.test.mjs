@@ -27,6 +27,11 @@ const contract = {
   repository: { name: "fixture" },
   runtime: { node: "22", packageManager: "pnpm@10" },
   commands: { verifyChanged: "x", verify: "x", verifyProductionReadiness: "x" },
+  staticAnalysis: {
+    newFindings: "ZERO_TOLERANCE",
+    autofixPolicy: "SAFE_AUTOFIX_THEN_BLOCK",
+    scanners: [],
+  },
   entryPoints: [],
   deployables: [],
   criticalPaths: [],

@@ -661,6 +661,14 @@ export const validateContract = contract => {
     if (typeof contract?.commands?.[command] !== "string")
       errors.push(`commands.${command} is required`)
   }
+  if (contract?.staticAnalysis?.newFindings !== "ZERO_TOLERANCE")
+    errors.push("staticAnalysis.newFindings must equal ZERO_TOLERANCE")
+  if (contract?.staticAnalysis?.autofixPolicy !== "SAFE_AUTOFIX_THEN_BLOCK")
+    errors.push(
+      "staticAnalysis.autofixPolicy must equal SAFE_AUTOFIX_THEN_BLOCK",
+    )
+  if (!Array.isArray(contract?.staticAnalysis?.scanners))
+    errors.push("staticAnalysis.scanners must be an array")
   for (const field of [
     "entryPoints",
     "deployables",
