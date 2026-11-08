@@ -114,9 +114,10 @@ pnpm build
 2. Follow the [Coding Conventions](#coding-conventions) below.
 3. Ensure all existing tests pass (`pnpm test`).
 4. Add or update tests for any changed behaviour.
-5. Sign off every commit (`git commit -s`).
-6. Open a PR against `main` with a clear description of what changed and why.
-7. Link any relevant issues using `Closes #<issue>`.
+5. For public component changes, update the prop documentation, English/German component pages, Storybook examples and Changeset in the same PR. Document defaults, state ownership, persistence and SSR behavior where relevant, and build the affected documentation.
+6. Sign off every commit (`git commit -s`).
+7. Open a PR against `main` with a clear description of what changed and why.
+8. Link any relevant issues using `Closes #<issue>`.
 
 **Small, focused PRs are much easier to review.** Split unrelated changes into
 separate PRs where possible.

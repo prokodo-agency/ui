@@ -46,11 +46,11 @@ export type SideNavProps = {
   items?: SideNavItem[]
   /** structured navigation sections with optional headline + description */
   sections?: SideNavSection[]
-  /** initial collapsed state (default = false) */
+  /** Initial uncontrolled state (default false); stored preference may override after hydration. Ignored when collapsed is provided. */
   initialCollapsed?: boolean
-  /** Controlled collapsed state. The owner manages persistence when provided. */
+  /** Controlled state, including false. The owner applies requested changes and manages persistence; SideNav does not access browser storage. */
   collapsed?: boolean
-  /** Reports a toggle request in both controlled and uncontrolled mode. */
+  /** Reports the next state requested by the built-in toggle in either mode. Not called on mount, storage restoration or parent prop updates. */
   onCollapsedChange?: (collapsed: boolean) => void
   /** collapsed menu icon */
   collapsedIcon?: IconName

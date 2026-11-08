@@ -11,49 +11,58 @@ A persistent vertical navigation sidebar for application dashboards and portals.
 
 Use `SideNav` as the primary navigation surface in multi-section app layouts. For top-bar navigation use a `<nav>` with horizontal links; for contextual in-page navigation use anchor-tabs.
 
-## Accessibility (WCAG 2.2)
+## State and persistence
 
-- The `<nav>` landmark has `aria-label="Main navigation"` (or equivalent)
-- The toggle button has `aria-expanded` reflecting the current state and `aria-controls` pointing to the nav panel
-- Active items carry `aria-current="page"`
-- Icon-only items in collapsed mode have `aria-label` or `title` attributes for screen-reader access
+Use `collapsed` and `onCollapsedChange` together when the application owns the
+state. The callback reports the requested next boolean; the parent passes it
+back through `collapsed`. Controlled mode does not read or write localStorage.
+`initialCollapsed` is ignored while a controlled value is provided.
 
-### Keyboard behavior
+Without `collapsed`, the sidebar manages state itself. It starts from
+`initialCollapsed ?? false`, then restores `"0"` or `"1"` from
+`prokodo-adminSidebarCollapsed` after hydration. Toggle changes are saved when
+storage is available. Storage errors leave navigation usable in memory.
+`onCollapsedChange` reports toggle requests in both modes, not initial render,
+storage restoration or parent prop changes. `onChange` is for navigation links.
 
-- **Tab**: move through nav items
-- **Enter / Space**: activate the focused item or toggle collapse
-- **Escape**: collapse an expanded sub-menu (if any)
+The server fallback uses `collapsed ?? initialCollapsed ?? false`. Supply the
+same controlled value on server and initial client render. Choose one ownership
+mode for the component's lifetime. Existing uncontrolled consumers need no change.
 
-## ✅ Do
+## Accessibility and application integration
 
-- Persist the expanded/collapsed preference to `localStorage` across sessions
-- Provide icons alongside labels in expanded mode so users can re-learn them in collapsed mode
+- `ariaLabel` labels the wrapping `<aside>`.
+- The native toggle button supports Enter/Space and exposes `aria-expanded` and `aria-controls="sidenav"`.
+- Supply localized toggle labels and `redirect.ariaLabel` for icon-only links.
+- Set `active` for visual styling and `redirect["aria-current"] = "page"` for the current page; URL matching is application-owned.
+- A mobile overlay's backdrop, Escape handling, focus trap/return, inert background and scroll lock belong to the application shell. Collapsing SideNav only produces an icon rail.
 
-## ❌ Don't
-
-- Don't hide the nav completely on desktop — at minimum show the icon-only collapsed rail
-- Don't use `SideNav` for pagination or step sequences — use `Stepper`
+Use the [English](https://ui.prokodo.com/docs/components/sidenav) or
+[German](https://ui.prokodo.com/de/docs/components/sidenav) integration guide for a
+complete controlled example and server-rendering guidance.
 
 ## API
 
 ### `SideNavProps`
 
-| Prop               | Type                                                     | Default              | Description                                                                                                     |
-| ------------------ | -------------------------------------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `items`            | `SideNavItem[]`                                          | —                    | Flat list of navigation items. Mutually exclusive with `sections`.                                              |
-| `sections`         | `SideNavSection[]`                                       | —                    | Navigation organised into named sections. When set, `items` is ignored.                                         |
-| `headlineProps`    | `Omit<HeadlineProps, "children">`                        | —                    | Default props forwarded to every section's `Headline`. Section-level `headlineProps` take precedence.           |
-| `descriptionProps` | `Omit<HTMLAttributes<HTMLParagraphElement>, "children">` | —                    | Default props forwarded to every section's description `<p>`. Section-level `descriptionProps` take precedence. |
-| `initialCollapsed` | `boolean`                                                | `false`              | Initial collapsed state.                                                                                        |
-| `collapsedIcon`    | `IconName`                                               | `"ArrowRight01Icon"` | Icon shown when nav is collapsed.                                                                               |
-| `unCollapsedIcon`  | `IconName`                                               | `"ArrowLeft01Icon"`  | Icon shown when nav is expanded.                                                                                |
-| `collapsedLabel`   | `string`                                                 | `"Expand menu"`      | Screen-reader label for the toggle when collapsed.                                                              |
-| `unCollapsedLabel` | `string`                                                 | `"Collapse menu"`    | Screen-reader label for the toggle when expanded.                                                               |
-| `iconProps`        | `Omit<IconProps, "name">`                                | —                    | Extra props forwarded to the toggle icon.                                                                       |
-| `ariaLabel`        | `string`                                                 | `"Main navigation"`  | `aria-label` on the `<nav>` element.                                                                            |
-| `className`        | `string`                                                 | —                    | CSS class on the root `<aside>` element.                                                                        |
-| `renderFooter`     | `() => ReactNode`                                        | —                    | Optional footer rendered below the nav items.                                                                   |
-| `onChange`         | `(item: SideNavItem) => void`                            | —                    | Called whenever a nav item is clicked.                                                                          |
+| Prop                | Type                                                     | Default              | Description                                                                                                     |
+| ------------------- | -------------------------------------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `items`             | `SideNavItem[]`                                          | —                    | Flat list of navigation items. Used when `sections` is absent or empty.                                         |
+| `sections`          | `SideNavSection[]`                                       | —                    | Navigation organised into named sections. When non-empty, `items` is ignored.                                   |
+| `headlineProps`     | `Omit<HeadlineProps, "children">`                        | —                    | Default props forwarded to every section's `Headline`. Section-level `headlineProps` take precedence.           |
+| `descriptionProps`  | `Omit<HTMLAttributes<HTMLParagraphElement>, "children">` | —                    | Default props forwarded to every section's description `<p>`. Section-level `descriptionProps` take precedence. |
+| `initialCollapsed`  | `boolean`                                                | `false`              | Initial uncontrolled state; restored storage may replace it after hydration.                                    |
+| `collapsed`         | `boolean`                                                | —                    | Controlled state; parent owns updates and persistence. Takes precedence over `initialCollapsed`.                |
+| `onCollapsedChange` | `(collapsed: boolean) => void`                           | —                    | Requested next state when the built-in toggle is activated in either mode.                                      |
+| `collapsedIcon`     | `IconName`                                               | `"ArrowRight01Icon"` | Icon shown when nav is collapsed.                                                                               |
+| `unCollapsedIcon`   | `IconName`                                               | `"ArrowLeft01Icon"`  | Icon shown when nav is expanded.                                                                                |
+| `collapsedLabel`    | `string`                                                 | `"Expand menu"`      | Screen-reader label for the toggle when collapsed.                                                              |
+| `unCollapsedLabel`  | `string`                                                 | `"Collapse menu"`    | Screen-reader label for the toggle when expanded.                                                               |
+| `iconProps`         | `Omit<IconProps, "name">`                                | —                    | Extra props forwarded to the toggle icon.                                                                       |
+| `ariaLabel`         | `string`                                                 | `"Main navigation"`  | Accessible label on the wrapping `<aside>`.                                                                     |
+| `className`         | `string`                                                 | —                    | CSS class on the root `<aside>` element.                                                                        |
+| `renderFooter`      | `() => ReactNode`                                        | —                    | Optional footer shown while expanded after hydration.                                                           |
+| `onChange`          | `(item: SideNavItem) => void`                            | —                    | Called when a navigation link is clicked.                                                                       |
 
 ### `SideNavSection`
 
@@ -111,6 +120,15 @@ Customise `SideNav` via CSS custom properties on `:root` or a scoped ancestor.
 <Canvas>
   <Story of={SideNavStories.WithSectionsCollapsed} />
 </Canvas>
+
+### Controlled by the application
+
+<Canvas>
+  <Story of={SideNavStories.Controlled} />
+</Canvas>
+
+The external button and built-in toggle update the same parent-owned state.
+SideNav performs no browser-storage access in this example.
 
 ### Props
 

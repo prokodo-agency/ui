@@ -1,120 +1,155 @@
 ---
 id: sidenav
-title: Sidenav
-sidebar_label: Sidenav
-description: Collapsible side navigation component with nested menu items, icons, and active state tracking.
+title: SideNav
+sidebar_label: SideNav
+description: Vertical navigation with sections and controlled or persistent uncontrolled collapse state.
 ---
 
-# Sidenav
+import styles from "@site/src/css/sidenav.module.css"
 
-`Sidenav` renders a vertical navigation panel. Supports nested sections, icon labels, collapsible groups, and automatic active-item highlighting based on the current URL.
+# SideNav
+
+`SideNav` renders navigation items or named sections as an expanded sidebar or an
+icon-only rail. Use the exported `SideNav` name and `@prokodo/ui/sidenav` import.
 
 <LiveDemoLink path="/docs/prokodo-navigation-sidenav--docs" />
 
----
+## Controlled navigation
 
-## Overview
+Use `collapsed` with `onCollapsedChange` when an application shell, external
+button or responsive layout owns the state. The callback requests the next
+boolean; the parent must pass that value back to update the sidebar. Providing
+only `collapsed` makes the displayed state fixed until the parent changes it.
 
 ```tsx
-import { Sidenav } from "@prokodo/ui/sidenav"
-;<Sidenav
-  items={[
-    { label: "Home", href: "/", icon: "home" },
-    {
-      label: "Products",
-      icon: "box",
-      children: [
-        { label: "All products", href: "/products" },
-        { label: "Categories", href: "/products/categories" },
-      ],
-    },
-  ]}
-/>
-```
+"use client"
 
-<StorybookEmbed id="prokodo-navigation-sidenav--expanded" height={380} />
-
----
-
-## Import
-
-```ts
-import { Sidenav } from "@prokodo/ui/sidenav"
-```
-
-CSS:
-
-```ts
+import { useState } from "react"
+import { SideNav, type SideNavProps } from "@prokodo/ui/sidenav"
 import "@prokodo/ui/sidenav.css"
+
+const items: SideNavProps["items"] = [
+  {
+    label: "Dashboard",
+    icon: { name: "Home01Icon" },
+    active: true,
+    redirect: {
+      href: "/dashboard",
+      ariaLabel: "Dashboard",
+      "aria-current": "page",
+    },
+  },
+  {
+    label: "Settings",
+    icon: { name: "Settings01Icon" },
+    redirect: { href: "/settings", ariaLabel: "Settings" },
+  },
+]
+
+export function AppNavigation() {
+  const [collapsed, setCollapsed] = useState(false)
+
+  return (
+    <>
+      <button
+        style={{ minHeight: 44, minWidth: 44 }}
+        aria-controls="sidenav"
+        aria-expanded={!collapsed}
+        onClick={() => setCollapsed(value => !value)}
+        type="button"
+      >
+        Toggle navigation
+      </button>
+      <SideNav
+        ariaLabel="Account navigation"
+        collapsed={collapsed}
+        items={items}
+        onCollapsedChange={setCollapsed}
+      />
+    </>
+  )
+}
 ```
 
----
+<StorybookEmbed id="prokodo-navigation-sidenav--controlled" height={420} />
+
+## Uncontrolled navigation and storage
+
+Existing consumers can continue to use `<SideNav items={items} initialCollapsed />`.
+Without `collapsed`, the component manages its own state and stores toggle changes
+under `localStorage["prokodo-adminSidebarCollapsed"]`: `"1"` means collapsed and
+`"0"` expanded. Other stored values are ignored. `onCollapsedChange` can also
+observe toggle requests in this mode; `onChange` remains the navigation-link callback.
+
+If reading or writing storage throws, navigation still works with in-memory state.
+Persistence across reloads is then unavailable. In controlled mode SideNav never
+reads or writes that key: the parent decides whether and how to persist. Choose
+one mode for the component's lifetime.
+
+## Server rendering and mobile integration
+
+The server fallback uses `collapsed ?? initialCollapsed ?? false`, matching the
+initial client state. Stored uncontrolled preferences are applied only after
+hydration, so the initial layout can change then. For a stable layout derived from
+a cookie, pass the same controlled value on server and initial client render.
+Callbacks and `renderFooter` require client hydration. In Next.js, the stateful
+example belongs in a Client Component; use the standard public import, without
+selecting internal `/client` or `/lazy` files.
+
+Collapsed means an icon rail, not a hidden modal drawer. A mobile overlay belongs
+to the application shell, including its backdrop, Escape handling, focus trap and
+return, background inertness and scroll lock. `SideNav` does not implement those
+behaviors or collapsible submenus.
 
 ## Props
 
-| Prop               | Type                          | Default | Required | Description                                      |
-| ------------------ | ----------------------------- | ------- | -------- | ------------------------------------------------ |
-| `items`            | `SidenavItem[]`               | —       | ✅       | Navigation item tree.                            |
-| `initialCollapsed` | `boolean`                     | `false` | —        | Start in collapsed state.                        |
-| `collapsedIcon`    | `string`                      | —       | —        | Icon name shown when collapsed.                  |
-| `unCollapsedIcon`  | `string`                      | —       | —        | Icon name shown when expanded.                   |
-| `collapsedLabel`   | `string`                      | —       | —        | Accessible label for the collapsed state toggle. |
-| `unCollapsedLabel` | `string`                      | —       | —        | Accessible label for the expanded state toggle.  |
-| `iconProps`        | `IconProps`                   | —       | —        | Props applied to nav item icons.                 |
-| `ariaLabel`        | `string`                      | —       | —        | Accessible label for the nav landmark.           |
-| `renderFooter`     | `() => ReactNode`             | —       | —        | Custom footer render function.                   |
-| `onChange`         | `(item: SidenavItem) => void` | —       | —        | Called when a nav item is clicked.               |
-| `className`        | `string`                      | —       | —        | CSS class on root element.                       |
+<div className={styles.props}>
 
-### `SideNavSection`
+| Prop                | Type                                                     | Default              | Description                                                                                                                                                              |
+| ------------------- | -------------------------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `items`             | `SideNavItem[]`                                          | —                    | Flat navigation items; used when `sections` is absent or empty.                                                                                                          |
+| `sections`          | `SideNavSection[]`                                       | —                    | Non-empty sections take precedence over `items`.                                                                                                                         |
+| `initialCollapsed`  | `boolean`                                                | `false`              | Initial uncontrolled state. A stored preference may replace it after hydration. Ignored while `collapsed` is provided.                                                   |
+| `collapsed`         | `boolean`                                                | —                    | Controlled state. The parent owns updates and persistence, including when the value is `false`.                                                                          |
+| `onCollapsedChange` | `(collapsed: boolean) => void`                           | —                    | Reports the requested next state when the built-in toggle is activated, in either mode. It is not called on mount, stored preference restoration or parent prop updates. |
+| `collapsedIcon`     | `IconName`                                               | `"ArrowRight01Icon"` | Toggle icon while collapsed.                                                                                                                                             |
+| `unCollapsedIcon`   | `IconName`                                               | `"ArrowLeft01Icon"`  | Toggle icon while expanded.                                                                                                                                              |
+| `collapsedLabel`    | `string`                                                 | `"Expand menu"`      | Accessible toggle label while collapsed.                                                                                                                                 |
+| `unCollapsedLabel`  | `string`                                                 | `"Collapse menu"`    | Accessible toggle label while expanded.                                                                                                                                  |
+| `iconProps`         | `Omit<IconProps, "name">`                                | —                    | Additional props for the toggle icon. Item icons use each item's `icon`.                                                                                                 |
+| `ariaLabel`         | `string`                                                 | `"Main navigation"`  | Accessible label on the wrapping `<aside>`.                                                                                                                              |
+| `headlineProps`     | `Omit<HeadlineProps, "children">`                        | —                    | Default section heading props; section-level props take precedence.                                                                                                      |
+| `descriptionProps`  | `Omit<HTMLAttributes<HTMLParagraphElement>, "children">` | —                    | Default section description props; section-level props take precedence.                                                                                                  |
+| `renderFooter`      | `() => ReactNode`                                        | —                    | Footer shown while expanded after client hydration.                                                                                                                      |
+| `onChange`          | `(item: SideNavItem) => void`                            | —                    | Called when a navigation link is clicked; separate from collapse notifications.                                                                                          |
+| `className`         | `string`                                                 | —                    | CSS class on the root `<aside>`.                                                                                                                                         |
 
-| Prop                | Type                                    | Default | Required | Description                                                                                           |
-| ------------------- | --------------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| `items`             | `SideNavItem[]`                         | —       | ✅       | Navigation items belonging to this section.                                                           |
-| `headline`          | `string`                                | —       | —        | Plain-text section heading rendered via the internal `Headline` component (hidden in collapsed mode). |
-| `description`       | `string`                                | —       | —        | Short description below the headline.                                                                 |
-| `headlineComponent` | `ComponentType<{ className?: string }>` | —       | —        | Custom React component used instead of `headline` string.                                             |
-| `headlineProps`     | `Omit<HeadlineProps, "children">`       | —       | —        | Props forwarded to the section's `Headline` (overrides global `headlineProps`).                       |
-| `descriptionProps`  | `Omit<HTMLAttributes<p>, "children">`   | —       | —        | Props forwarded to the section's description `<p>` (overrides global `descriptionProps`).             |
+</div>
 
-> See [`src/components/sidenav/Sidenav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/Sidenav.model.ts) for the full `SidenavProps` type.
+Each item supplies `label`, `icon` (an `IconProps` object), an optional `redirect`
+(`LinkProps`) and an explicit `active` state. There is no `children` menu tree or
+automatic URL matching. Set `redirect.ariaLabel` for icon-only links and
+`redirect["aria-current"] = "page"` for the current page; `active` controls styling.
 
----
+A section supplies `items` plus optional `headline`, `description`,
+`headlineComponent`, `headlineProps` and `descriptionProps`. A custom
+`headlineComponent` replaces the standard heading/description block. Section
+headings, descriptions and the footer are hidden while collapsed.
 
-## AIC Note
+See the [complete SideNav model](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/SideNav.model.ts).
 
-Use the standard import path in application code:
+## Accessibility
 
-```ts
-import { Sidenav } from "@prokodo/ui/sidenav"
-```
-
-No separate `/client` or `/lazy` import selection is required in consumer code.
-
-AIC components also support a `priority` flag for critical above-the-fold elements.
-This is most visible on `Image` (native preloading via `<link rel="preload">` for above-the-fold content).
-
----
-
-## WCAG 2.2 Status
-
-| Criterion  | Name                               | Status           | Note                                                                                                                            |
-| ---------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **1.3.1**  | **Info and Relationships** (A)     | ✅ Fulfilled     | Semantic structure (headings, lists, labels, landmarks) must be conveyed programmatically via HTML or ARIA.                     |
-| **2.1.1**  | **Keyboard** (A)                   | 🔍 Manual review | All functionality must be operable via keyboard alone, without requiring specific timing.                                       |
-| **2.4.3**  | **Focus Order** (A)                | 🔍 Manual review | The keyboard focus sequence must preserve meaning and operability in the complete page integration context.                     |
-| **2.4.7**  | **Focus Visible** (AA)             | 🔍 Manual review | A visible keyboard focus indicator must be present on every interactive element. Verify against the applied product theme.      |
-| **2.4.11** | **Focus Not Obscured (Min.)** (AA) | 🔍 Manual review | The focused component must not be fully hidden by sticky headers, overlays, or other positioned page elements.                  |
-| **4.1.2**  | **Name, Role, Value** (A)          | ✅ Fulfilled     | Name, role, and state of all interactive UI components must be programmatically determinable via native HTML semantics or ARIA. |
-
-> **Test coverage:** 2 jest-axe assertion(s) across 4 test file(s) · 3 ARIA attribute occurrence(s) in source scan.
-> Criteria marked 🔍 require manual verification in the final product integration and theme context.
-
----
+The toggle exposes `aria-expanded` and `aria-controls="sidenav"`; its native
+button supports Enter and Space. Supply localized toggle labels and accessible
+names for links that remain after their visible text is collapsed. Mark the
+current page explicitly. Verify keyboard focus, contrast and overlay behavior
+in the final application. Jest/axe and Cypress checks cover the component;
+complete WCAG conformance also depends on the integration and theme.
 
 ## Design Tokens
 
-Customise `Sidenav` via CSS custom properties on `:root` or a scoped ancestor.
+Customise `SideNav` via CSS custom properties on `:root` or a scoped ancestor.
 
 | Token                                 | Default                                                      | Description                                    |
 | ------------------------------------- | ------------------------------------------------------------ | ---------------------------------------------- |
@@ -136,10 +171,10 @@ Customise `Sidenav` via CSS custom properties on `:root` or a scoped ancestor.
 
 ## Storybook
 
-👉 [Open Sidenav in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-navigation-sidenav--docs)
+👉 [Open SideNav in Storybook](https://ui.prokodo.com/storybook/?path=/docs/prokodo-navigation-sidenav--docs)
 
 ---
 
 ## Source
 
-[`src/components/sidenav/Sidenav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/Sidenav.model.ts)
+[`src/components/sidenav/SideNav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/SideNav.model.ts)

@@ -1,3 +1,6 @@
+import { useState } from "react"
+
+import { SideNav } from "../../src/components/sidenav"
 import SideNavView from "../../src/components/sidenav/SideNav.view"
 
 const navItems = [
@@ -50,6 +53,80 @@ describe("SideNav", () => {
     cy.mount(
       <SideNavView ariaLabel="Main menu" collapsed={false} items={navItems} />,
     )
+    cy.checkAccessibility()
+  })
+})
+
+describe("SideNav application-owned state", () => {
+  it("keeps external controls, built-in toggles and accessible links synchronized without persistence", () => {
+    const onCollapsedChange = cy.stub().as("collapseRequest")
+    const ControlledNavigation = () => {
+      const [collapsed, setCollapsed] = useState(false)
+      return (
+        <>
+          <button
+            style={{ minHeight: 44, minWidth: 44 }}
+            aria-controls="sidenav"
+            aria-expanded={!collapsed}
+            type="button"
+            onClick={() => setCollapsed(value => !value)}
+          >
+            Toggle from application
+          </button>
+          <SideNav
+            priority
+            collapsed={collapsed}
+            items={[
+              {
+                label: "Dashboard",
+                icon: { name: "Home01Icon" },
+                active: true,
+                redirect: {
+                  href: "#dashboard",
+                  ariaLabel: "Dashboard",
+                  "aria-current": "page",
+                },
+              },
+            ]}
+            renderFooter={() => <p>Application-owned navigation state</p>}
+            onCollapsedChange={next => {
+              onCollapsedChange(next)
+              setCollapsed(next)
+            }}
+          />
+        </>
+      )
+    }
+    cy.window().then(win => {
+      win.localStorage.setItem(
+        "prokodo-adminSidebarCollapsed",
+        "existing-value",
+      )
+      cy.stub(win.localStorage, "getItem").as("storageRead")
+      cy.stub(win.localStorage, "setItem").as("storageWrite")
+    })
+    cy.mount(<ControlledNavigation />)
+    cy.contains("Application-owned navigation state").should("be.visible")
+    cy.contains("button", "Toggle from application")
+      .click()
+      .should("have.attr", "aria-expanded", "false")
+    cy.get('a[aria-label="Dashboard"]')
+      .should("be.visible")
+      .and("have.attr", "aria-current", "page")
+    cy.get('aside button[aria-expanded="false"]').click()
+    cy.get("@collapseRequest").should("have.been.calledOnceWith", false)
+    cy.contains("button", "Toggle from application").should(
+      "have.attr",
+      "aria-expanded",
+      "true",
+    )
+    cy.contains("button", "Collapse menu").should(
+      "have.attr",
+      "aria-expanded",
+      "true",
+    )
+    cy.get("@storageRead").should("not.have.been.called")
+    cy.get("@storageWrite").should("not.have.been.called")
     cy.checkAccessibility()
   })
 })

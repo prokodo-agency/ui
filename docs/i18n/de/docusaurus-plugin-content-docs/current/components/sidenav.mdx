@@ -1,114 +1,165 @@
 ---
 id: sidenav
-title: Sidenav
-sidebar_label: Sidenav
-description: Collapsible side navigation component with nested menu items, icons, and active state tracking.
+title: SideNav
+sidebar_label: SideNav
+description: Vertikale Navigation mit Abschnitten sowie kontrolliertem oder gespeichertem unkontrolliertem Zustand.
 ---
 
-# Sidenav
+import styles from "@site/src/css/sidenav.module.css"
 
-`Sidenav` rendert eine vertical navigation panel. Unterstützt nested sections, icon labels, collapsible groups, and automatic active-item highlighting based on the current URL.
+# SideNav
 
----
+`SideNav` zeigt Navigationseinträge oder benannte Abschnitte als ausgeklappte
+Seitenleiste oder schmale Icon-Leiste. Der exportierte Name lautet `SideNav`,
+der Importpfad `@prokodo/ui/sidenav`.
 
-## Übersicht
+<LiveDemoLink path="/docs/prokodo-navigation-sidenav--docs" />
+
+## Kontrollierte Navigation
+
+Verwende `collapsed` mit `onCollapsedChange`, wenn die Anwendung, ein externer
+Schalter oder das responsive Layout den Zustand verwaltet. Der Callback meldet
+den gewünschten neuen Boolean-Wert. Die Anwendung muss ihn über `collapsed`
+zurückgeben. Mit `collapsed` allein bleibt die Darstellung bis zur nächsten
+Änderung durch die Anwendung fest.
 
 ```tsx
-import { Sidenav } from "@prokodo/ui/sidenav"
-;<Sidenav
-  items={[
-    { label: "Home", href: "/", icon: "home" },
-    {
-      label: "Products",
-      icon: "box",
-      children: [
-        { label: "All products", href: "/products" },
-        { label: "Categories", href: "/products/categories" },
-      ],
-    },
-  ]}
-/>
-```
+"use client"
 
-<StorybookEmbed id="prokodo-navigation-sidenav--expanded" height={380} />
-
----
-
-## Import
-
-```ts
-import { Sidenav } from "@prokodo/ui/sidenav"
-```
-
-CSS:
-
-```ts
+import { useState } from "react"
+import { SideNav, type SideNavProps } from "@prokodo/ui/sidenav"
 import "@prokodo/ui/sidenav.css"
+
+const items: SideNavProps["items"] = [
+  {
+    label: "Dashboard",
+    icon: { name: "Home01Icon" },
+    active: true,
+    redirect: {
+      href: "/dashboard",
+      ariaLabel: "Dashboard",
+      "aria-current": "page",
+    },
+  },
+  {
+    label: "Settings",
+    icon: { name: "Settings01Icon" },
+    redirect: { href: "/settings", ariaLabel: "Settings" },
+  },
+]
+
+export function AppNavigation() {
+  const [collapsed, setCollapsed] = useState(false)
+
+  return (
+    <>
+      <button
+        style={{ minHeight: 44, minWidth: 44 }}
+        aria-controls="sidenav"
+        aria-expanded={!collapsed}
+        onClick={() => setCollapsed(value => !value)}
+        type="button"
+      >
+        Navigation umschalten
+      </button>
+      <SideNav
+        ariaLabel="Kontonavigation"
+        collapsed={collapsed}
+        items={items}
+        collapsedLabel="Menü ausklappen"
+        unCollapsedLabel="Menü einklappen"
+        onCollapsedChange={setCollapsed}
+      />
+    </>
+  )
+}
 ```
 
----
+<StorybookEmbed id="prokodo-navigation-sidenav--controlled" height={420} />
+
+## Unkontrollierte Navigation und Speicherung
+
+Bestehende Anwendungen können weiterhin `<SideNav items={items} initialCollapsed />`
+verwenden. Ohne `collapsed` verwaltet die Komponente ihren Zustand selbst und
+speichert Änderungen durch den Schalter unter
+`localStorage["prokodo-adminSidebarCollapsed"]`: `"1"` bedeutet eingeklappt,
+`"0"` ausgeklappt. Andere gespeicherte Werte werden ignoriert.
+`onCollapsedChange` kann auch in diesem Modus Umschaltwünsche beobachten;
+`onChange` bleibt der Callback für Navigationslinks.
+
+Schlagen Lesen oder Schreiben fehl, bleibt die Navigation mit Zustand im
+Arbeitsspeicher bedienbar. Eine Speicherung über das Neuladen hinaus ist dann
+nicht möglich. Im kontrollierten Modus liest oder schreibt SideNav diesen
+Schlüssel nicht; die Anwendung entscheidet über die Speicherung. Behalte den
+gewählten Modus über die Lebensdauer der Komponente bei.
+
+## Serverdarstellung und mobile Einbindung
+
+Der Server-Fallback verwendet `collapsed ?? initialCollapsed ?? false` und
+entspricht damit dem initialen Client-Zustand. Gespeicherte unkontrollierte
+Einstellungen werden erst nach der Hydrierung übernommen; dabei kann sich das
+Layout ändern. Für ein stabiles, etwa aus einem Cookie abgeleitetes Layout müssen
+Server und erster Client-Render denselben kontrollierten Wert erhalten.
+Callbacks und `renderFooter` benötigen die Client-Hydrierung. In Next.js gehört
+das zustandsbehaftete Beispiel in eine Client Component. Verwende den öffentlichen
+Importpfad ohne Auswahl interner `/client`- oder `/lazy`-Dateien.
+
+Eingeklappt bedeutet eine Icon-Leiste, keinen versteckten modalen Drawer. Die
+Anwendung übernimmt bei mobilen Overlays Hintergrundfläche, Escape-Verhalten,
+Fokusbegrenzung und -rückgabe, Inertness des Hintergrunds und Scroll-Sperre.
+`SideNav` implementiert diese Funktionen und aufklappbare Untermenüs nicht.
 
 ## Props
 
-| Prop               | Typ                                   | Standard | Pflicht | Beschreibung                                                                                              |
-| ------------------ | ------------------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `items`            | `SideNavItem[]`                       | —        | —       | Einfache Liste von Navigationseinträgen. Wird ignoriert, wenn `sections` gesetzt ist.                     |
-| `sections`         | `SideNavSection[]`                    | —        | —       | Navigation in benannte Abschnitte unterteilt. Hat Vorrang vor `items`.                                    |
-| `headlineProps`    | `Omit<HeadlineProps, "children">`     | —        | —       | Standard-Props für die `Headline`-Komponente jedes Abschnitts. Abschnitts-`headlineProps` haben Vorrang.  |
-| `descriptionProps` | `Omit<HTMLAttributes<p>, "children">` | —        | —       | Standard-Props für das Beschreibungs-`<p>` jedes Abschnitts. Abschnitts-`descriptionProps` haben Vorrang. |
-| `collapsed`        | `boolean`                             | `false`  | —       | Klappt die Navigation auf Icon-Only-Modus zusammen.                                                       |
-| `onCollapse`       | `(collapsed: boolean) => void`        | —        | —       | Wird beim Umschalten des Collapse-Zustands aufgerufen.                                                    |
-| `className`        | `string`                              | —        | —       | CSS-Klasse am Root-`<aside>`-Element.                                                                     |
+<div className={styles.props}>
 
-### `SideNavSection`
+| Prop                | Typ                                                      | Standard             | Beschreibung                                                                                                                                                                                          |
+| ------------------- | -------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `items`             | `SideNavItem[]`                                          | —                    | Flache Navigationsliste; wird verwendet, wenn `sections` fehlt oder leer ist.                                                                                                                         |
+| `sections`          | `SideNavSection[]`                                       | —                    | Nicht leere Abschnitte haben Vorrang vor `items`.                                                                                                                                                     |
+| `initialCollapsed`  | `boolean`                                                | `false`              | Initialer Zustand im unkontrollierten Modus. Eine gespeicherte Einstellung kann ihn nach der Hydrierung ersetzen. Bei gesetztem `collapsed` ohne Wirkung.                                             |
+| `collapsed`         | `boolean`                                                | —                    | Kontrollierter Zustand. Die Anwendung übernimmt Aktualisierung und Speicherung, auch bei `false`.                                                                                                     |
+| `onCollapsedChange` | `(collapsed: boolean) => void`                           | —                    | Meldet beim Betätigen des eingebauten Schalters den gewünschten neuen Zustand in beiden Modi. Kein Aufruf beim Mounten, Wiederherstellen einer Einstellung oder Ändern der Props durch die Anwendung. |
+| `collapsedIcon`     | `IconName`                                               | `"ArrowRight01Icon"` | Schalter-Icon im eingeklappten Zustand.                                                                                                                                                               |
+| `unCollapsedIcon`   | `IconName`                                               | `"ArrowLeft01Icon"`  | Schalter-Icon im ausgeklappten Zustand.                                                                                                                                                               |
+| `collapsedLabel`    | `string`                                                 | `"Expand menu"`      | Zugänglicher Schaltername im eingeklappten Zustand.                                                                                                                                                   |
+| `unCollapsedLabel`  | `string`                                                 | `"Collapse menu"`    | Zugänglicher Schaltername im ausgeklappten Zustand.                                                                                                                                                   |
+| `iconProps`         | `Omit<IconProps, "name">`                                | —                    | Zusätzliche Props für das Schalter-Icon. Einträge verwenden jeweils `icon`.                                                                                                                           |
+| `ariaLabel`         | `string`                                                 | `"Main navigation"`  | Zugänglicher Name des umgebenden `<aside>`.                                                                                                                                                           |
+| `headlineProps`     | `Omit<HeadlineProps, "children">`                        | —                    | Standard-Props für Abschnittsüberschriften; Abschnitts-Props haben Vorrang.                                                                                                                           |
+| `descriptionProps`  | `Omit<HTMLAttributes<HTMLParagraphElement>, "children">` | —                    | Standard-Props für Abschnittsbeschreibungen; Abschnitts-Props haben Vorrang.                                                                                                                          |
+| `renderFooter`      | `() => ReactNode`                                        | —                    | Fußbereich im ausgeklappten Zustand nach der Client-Hydrierung.                                                                                                                                       |
+| `onChange`          | `(item: SideNavItem) => void`                            | —                    | Aufruf beim Klick auf einen Navigationslink; unabhängig von Zustandsmeldungen.                                                                                                                        |
+| `className`         | `string`                                                 | —                    | CSS-Klasse des äußeren `<aside>`.                                                                                                                                                                     |
 
-| Prop                | Typ                                     | Standard | Pflicht | Beschreibung                                                                                                          |
-| ------------------- | --------------------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
-| `items`             | `SideNavItem[]`                         | —        | ✅      | Navigationseinträge dieses Abschnitts.                                                                                |
-| `headline`          | `string`                                | —        | —       | Klartext-Überschrift des Abschnitts, gerendert via der internen `Headline`-Komponente (im Collapsed-Modus versteckt). |
-| `description`       | `string`                                | —        | —       | Kurzbeschreibung unterhalb der Überschrift.                                                                           |
-| `headlineComponent` | `ComponentType<{ className?: string }>` | —        | —       | Benutzerdefinierte React-Komponente statt `headline`-String.                                                          |
-| `headlineProps`     | `Omit<HeadlineProps, "children">`       | —        | —       | Props für die `Headline`-Komponente dieses Abschnitts (überschreibt globale `headlineProps`).                         |
-| `descriptionProps`  | `Omit<HTMLAttributes<p>, "children">`   | —        | —       | Props für das Beschreibungs-`<p>` dieses Abschnitts (überschreibt globale `descriptionProps`).                        |
+</div>
 
-> Siehe [`src/components/sidenav/Sidenav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/Sidenav.model.ts) für den vollständigen `SidenavProps`-Typ.
+Ein Eintrag enthält `label`, `icon` als `IconProps`-Objekt sowie optional
+`redirect` als `LinkProps` und einen expliziten `active`-Zustand. Es gibt keinen
+`children`-Menübaum und keinen automatischen URL-Abgleich. Setze für reine
+Icon-Links `redirect.ariaLabel` und für die aktuelle Seite
+`redirect["aria-current"] = "page"`; `active` steuert die Gestaltung.
 
----
+Ein Abschnitt enthält `items` sowie optional `headline`, `description`,
+`headlineComponent`, `headlineProps` und `descriptionProps`. Ein eigenes
+`headlineComponent` ersetzt den Standardblock aus Überschrift und Beschreibung.
+Im eingeklappten Zustand sind Abschnittsüberschriften, Beschreibungen und der
+Fußbereich ausgeblendet.
 
-## AIC-Hinweis
+Siehe das [vollständige SideNav-Modell](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/SideNav.model.ts).
 
-Verwende im Anwendungscode immer den Standard-Importpfad:
+## Barrierefreiheit
 
-```ts
-import { Sidenav } from "@prokodo/ui/sidenav"
-```
-
-Eine separate Auswahl von `/client` oder `/lazy` ist im Consumer-Code nicht erforderlich.
-
-AIC-Komponenten unterstützen außerdem ein `priority`-Flag für kritische Above-the-fold-Elemente.
-Am sichtbarsten ist das bei `Image` (natives Preloading via `<link rel="preload">` für Above-the-fold-Inhalte).
-
----
-
-## WCAG-2.2-Status
-
-| Kriterium  | Bezeichnung                          | Status            | Hinweis                                                                                                                                              |
-| ---------- | ------------------------------------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1.3.1**  | **Info und Beziehungen** (A)         | ✅ Erfüllt        | Semantische Struktur (Überschriften, Listen, Labels, Landmarks) muss programmatisch via HTML oder ARIA vermittelt werden.                            |
-| **2.1.1**  | **Tastatur** (A)                     | 🔍 Manuell prüfen | Alle Funktionalität muss allein über Tastatur bedienbar sein, ohne Timing-Anforderungen.                                                             |
-| **2.4.3**  | **Fokusreihenfolge** (A)             | 🔍 Manuell prüfen | Die Tastaturfokus-Reihenfolge muss im vollständigen seitenseitigen Integrationskontext Bedeutung und Bedienbarkeit erhalten.                         |
-| **2.4.7**  | **Fokus sichtbar** (AA)              | 🔍 Manuell prüfen | Auf jedem interaktiven Element muss ein sichtbarer Tastaturfokus-Indikator vorhanden sein. Prüfung gegen das angewendete Produkt-Theme erforderlich. |
-| **2.4.11** | **Fokus nicht verdeckt (Min.)** (AA) | 🔍 Manuell prüfen | Die fokussierte Komponente darf nicht vollständig durch Sticky-Header, Overlays oder andere positionierte Seitenelemente verdeckt sein.              |
-| **4.1.2**  | **Name, Rolle, Wert** (A)            | ✅ Erfüllt        | Name, Rolle und Zustand aller interaktiven UI-Komponenten müssen via nativer HTML-Semantik oder ARIA programmatisch bestimmbar sein.                 |
-
-> **Testabdeckung:** 2 jest-axe-Assertion(s) in 4 Testdatei(en) · 3 ARIA-Attribut-Vorkommen im Quellcode-Scan.
-> Kriterien mit 🔍 erfordern manuelle Prüfung im finalen Integrations- und Theme-Kontext.
-
----
+Der Schalter bietet `aria-expanded` und `aria-controls="sidenav"`; sein natives
+Button-Verhalten unterstützt Enter und Leertaste. Übersetze die Schalternamen
+und benenne Links, deren sichtbarer Text beim Einklappen entfällt. Kennzeichne
+die aktuelle Seite explizit. Prüfe Tastaturfokus, Kontrast und Overlay-Verhalten
+in der Anwendung. Jest/axe und Cypress prüfen die Komponente; die vollständige
+WCAG-Konformität hängt auch von Einbindung und Theme ab.
 
 ## Design Tokens
 
-`Sidenav` lässt sich über CSS Custom Properties an `:root` oder einem umgebenden Element anpassen.
+`SideNav` lässt sich über CSS Custom Properties an `:root` oder einem umgebenden Element anpassen.
 
 | Token                                 | Standardwert                                                 | Beschreibung                                       |
 | ------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- |
@@ -130,10 +181,10 @@ Am sichtbarsten ist das bei `Image` (natives Preloading via `<link rel="preload"
 
 ## Storybook
 
-👉 [Sidenav in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-navigation-sidenav--docs)
+👉 [SideNav in Storybook öffnen](https://ui.prokodo.com/storybook/?path=/docs/prokodo-navigation-sidenav--docs)
 
 ---
 
 ## Quellcode
 
-[`src/components/sidenav/Sidenav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/Sidenav.model.ts)
+[`src/components/sidenav/SideNav.model.ts`](https://github.com/prokodo-agency/ui/blob/main/src/components/sidenav/SideNav.model.ts)

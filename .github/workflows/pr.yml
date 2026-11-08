@@ -83,6 +83,12 @@ jobs:
       - name: 🛠 Build library (fail fast if broken)
         run: pnpm run build
 
+      - name: Build Storybook documentation
+        run: pnpm storybook:build
+
+      - name: Build documentation in English and German
+        run: pnpm docs:build
+
       - name: Validate consumer contract
         run: pnpm verify:consumers --base "${{ github.event.pull_request.base.sha }}"
 

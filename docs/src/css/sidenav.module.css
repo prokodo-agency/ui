@@ -1,0 +1,27 @@
+.props table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.props th,
+.props td,
+.props code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.props th:nth-child(1) {
+  width: 26%;
+}
+
+.props th:nth-child(2) {
+  width: 23%;
+}
+
+.props th:nth-child(3) {
+  width: 15%;
+}
+
+.props th:nth-child(4) {
+  width: 36%;
+}
