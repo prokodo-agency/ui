@@ -83,6 +83,14 @@ jobs:
       - name: 🛠 Build library (fail fast if broken)
         run: pnpm run build
 
+      - name: Build Storybook documentation
+        run: pnpm storybook:build --output-dir .prokodo/artifacts/storybook
+
+      - name: Build documentation in English and German
+        run: |
+          pnpm docs:typecheck
+          pnpm docs:build
+
       - name: Validate consumer contract
         run: pnpm verify:consumers --base "${{ github.event.pull_request.base.sha }}"
 

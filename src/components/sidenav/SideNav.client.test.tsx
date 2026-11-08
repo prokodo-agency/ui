@@ -68,6 +68,62 @@ beforeEach(() => {
 })
 
 describe("SideNav.client", () => {
+  it("leaves controlled state and persistence to the owner", () => {
+    localStorage.setItem(STORAGE_KEY, "1")
+    const onCollapsedChange = jest.fn()
+    const { rerender } = render(
+      <SidebarClient collapsed={false} onCollapsedChange={onCollapsedChange} />,
+    )
+    expect(screen.getByTestId("sidenav-view")).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    )
+    act(() => screen.getByTestId("toggle-btn").click())
+    expect(onCollapsedChange).toHaveBeenCalledWith(true)
+    expect(screen.getByTestId("sidenav-view")).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    )
+    expect(localStorage.getItem(STORAGE_KEY)).toBe("1")
+    rerender(<SidebarClient collapsed onCollapsedChange={onCollapsedChange} />)
+    expect(screen.getByTestId("sidenav-view")).toHaveAttribute(
+      "data-collapsed",
+      "true",
+    )
+    act(() => screen.getByTestId("toggle-btn").click())
+    expect(onCollapsedChange).toHaveBeenLastCalledWith(false)
+  })
+
+  it("still toggles when browser storage cannot be read or written", () => {
+    const read = jest
+      .spyOn(Storage.prototype, "getItem")
+      .mockImplementation(() => {
+        throw new Error("blocked")
+      })
+    const write = jest
+      .spyOn(Storage.prototype, "setItem")
+      .mockImplementation(() => {
+        throw new Error("blocked")
+      })
+    render(<SidebarClient />)
+    act(() => screen.getByTestId("toggle-btn").click())
+    expect(screen.getByTestId("sidenav-view")).toHaveAttribute(
+      "data-collapsed",
+      "true",
+    )
+    read.mockRestore()
+    write.mockRestore()
+  })
+
+  it("ignores malformed stored preferences", () => {
+    localStorage.setItem(STORAGE_KEY, "invalid")
+    render(<SidebarClient initialCollapsed />)
+    expect(screen.getByTestId("sidenav-view")).toHaveAttribute(
+      "data-collapsed",
+      "true",
+    )
+  })
+
   it("initializes as not collapsed by default", () => {
     render(<SidebarClient items={[]} />)
     expect(screen.getByTestId("sidenav-view")).toHaveAttribute(

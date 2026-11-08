@@ -255,7 +255,7 @@ const COMPONENTS: ComponentItem[] = [
   },
   {
     slug: "sidenav",
-    label: "Sidenav",
+    label: "SideNav",
     category: "navigation",
     icon: "SidebarLeftIcon",
     hoverIcon: "SidebarLeft01Icon",

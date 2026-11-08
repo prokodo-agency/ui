@@ -6,6 +6,7 @@ import { useDoc } from "@docusaurus/plugin-content-docs/client"
 import componentsData from "@site/docs/_data/components.json"
 
 type ComponentCatalogEntry = {
+  name: string
   slug: string
   aic: "server" | "client" | "lazy" | "none"
 }
@@ -26,10 +27,14 @@ function RuntimeInfo({ componentId }: { componentId: string }): ReactNode {
     i18n: { currentLocale },
   } = useDocusaurusContext()
 
-  const componentName = componentId
-    .split("-")
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("")
+  const componentName =
+    (componentsData as ComponentCatalogEntry[]).find(
+      entry => entry.slug === componentId,
+    )?.name ??
+    componentId
+      .split("-")
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+      .join("")
 
   const isClientOnly = componentId === "lottie" || componentId === "map"
   const isAicReady = AIC_READY_COMPONENTS.has(componentId)
