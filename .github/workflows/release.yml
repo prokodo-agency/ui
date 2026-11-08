@@ -1,16 +1,25 @@
 name: Release
 
-# Triggered only by push to main that originated from bump.yml
-# (commit message starts with "chore(release):").
-# All other main pushes are silently ignored by every job below.
+# Bump commits release automatically; an administrator may resume the exact
+# current version from main after a release-workflow repair, without another bump.
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact existing package.json version to release from main
+        required: true
+        type: string
 
 permissions:
   contents: write
   id-token: write
+
+concurrency:
+  group: ui-release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   # ─── 1 ─────────────────────────────────────────────────────────────────────
@@ -19,7 +28,7 @@ jobs:
   publish-npm:
     name: Publish — npmjs.com
     runs-on: ubuntu-latest
-    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'chore(release):'))
     permissions:
       contents: read
       id-token: write
@@ -51,19 +60,35 @@ jobs:
         # @latest due to missing promise-retry — see npm/cli#9151
         run: npm i -g npm@10.9.8 && npm i -g npm@latest
 
+      - name: Validate exact release request
+        env:
+          CI_RELEASE_EVENT: ${{ github.event_name }}
+          CI_RELEASE_REF: ${{ github.ref }}
+          CI_RELEASE_VERSION: ${{ inputs.version }}
+          CI_RELEASE_MESSAGE: ${{ github.event.head_commit.message }}
+        run: >-
+          node scripts/autonomy/verify-release-request.mjs
+          "$CI_RELEASE_EVENT" "$CI_RELEASE_REF"
+          "$CI_RELEASE_VERSION" "$CI_RELEASE_MESSAGE"
+
       - name: 📦 Cache Cypress binary
         id: cypress-cache
         uses: actions/cache@v4
         with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: .cache/Cypress
+          key: cypress-repository-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: 📥 Install dependencies (frozen lockfile)
         run: pnpm install --frozen-lockfile
 
       - name: 🔧 Install Cypress binary
-        if: steps.cypress-cache.outputs.cache-hit != 'true'
-        run: pnpm exec cypress install
+        run: pnpm cypress:install
+
+      - name: Verify repository-local Cypress binary
+        run: pnpm cypress:verify
+
+      - name: Validate release and engineering contracts
+        run: pnpm test:autonomy
 
       - name: 🧪 Typecheck, Lint & Test
         run: pnpm run test:ci
@@ -90,12 +115,18 @@ jobs:
 
       - name: 🔍 Check whether version already exists on npm
         id: npm-check
+        env:
+          CI_RELEASE_EVENT: ${{ github.event_name }}
         shell: bash
         run: |
           NAME=$(node -p "require('./package.json').name")
           VER=${{ steps.ver.outputs.version }}
           if npm view "${NAME}@${VER}" version \
                --registry https://registry.npmjs.org >/dev/null 2>&1; then
+            if [ "$CI_RELEASE_EVENT" = "workflow_dispatch" ]; then
+              echo "::error::Manual recovery requires an unpublished version; resume failed post-publication jobs from their original run instead."
+              exit 1
+            fi
             echo "exists=true"  >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
@@ -112,7 +143,7 @@ jobs:
     name: GitHub Release
     runs-on: ubuntu-latest
     needs: publish-npm
-    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    if: github.ref == 'refs/heads/main' && needs.publish-npm.result == 'success'
     permissions:
       contents: write
 
@@ -151,7 +182,7 @@ jobs:
     name: Deploy docs + Storybook → ui.prokodo.com
     runs-on: ubuntu-latest
     needs: publish-npm
-    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    if: github.ref == 'refs/heads/main' && needs.publish-npm.result == 'success'
     permissions:
       contents: read
       pages: write

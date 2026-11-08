@@ -17,6 +17,25 @@ release checks pass and the new version is actually available on npm.
 
 Install/verify Cypress in the repository-local `.cache/Cypress` using `pnpm cypress:install` and `pnpm cypress:verify`; no ambient home cache is trusted. Jest has `watchman: false` for sandbox/CI reproducibility.
 
+The release job caches that same repository-local path and always runs both
+commands before tests, including on a cache hit. A restored cache is an
+optimization, not proof that the locked binary exists and runs. The earlier
+release installed into the home cache while `test:e2e:ci` used the repository
+cache; all unit tests passed but browser tests could not start.
+
+After merging a release-workflow repair, an administrator may resume the **Release**
+workflow on **main** with the exact existing `package.json` version (for example
+`1.0.14`). No additional version bump is required. The workflow rejects other
+branches/tags, mismatched or missing versions and unrelated event types, then
+runs the full tests/build/publication chain. Ordinary main pushes remain ignored;
+existing `chore(release):` bump pushes keep their behavior. Publication, GitHub
+release and docs deployment still require the successful publish job. This
+recovery entry does not authorize an agent to merge or publish without the
+protected administrator decision. Release runs are serialized. Manual recovery
+requires an unpublished version; if npm already succeeded, resume the failed
+post-publication jobs from their original run instead. Consumer updates still
+wait for npm availability.
+
 Exit codes and failure classes match the other SaaS repositories. Never remove assertions, reduce 100% thresholds, skip component/axe checks or use retries to hide failure.
 
 CI runs production readiness through `pnpm verify:production-readiness:ci`. Exit codes `10` and `20` keep the verification pipeline green while their advisories or HIGH-risk admin decision remain visible in the artifact and sticky PR comment. Exit code `30`, an invalid/missing artifact, and every unit, component, accessibility, visual, build, consumer-contract or scanner failure remain blocking. A merge, release or publication of the public package is never automated for `HUMAN_APPROVAL_REQUIRED`.
