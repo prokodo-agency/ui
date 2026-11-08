@@ -12,21 +12,37 @@ export default function SidebarClient({
   items,
   sections,
   onChange,
+  collapsed: controlledCollapsed,
+  onCollapsedChange,
   ...props
 }: SideNavProps): JSX.Element {
-  const [collapsed, setCollapsed] = useState(props.initialCollapsed ?? false)
+  const [internalCollapsed, setCollapsed] = useState(
+    props.initialCollapsed ?? false,
+  )
+  const collapsed = controlledCollapsed ?? internalCollapsed
 
   /*  persist user preference in localStorage  */
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored !== null) setCollapsed(stored === "1")
-  }, [])
+    if (controlledCollapsed !== undefined) return
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      if (stored === "0" || stored === "1") setCollapsed(stored === "1")
+    } catch {
+      // Storage can be unavailable; navigation must still work.
+    }
+  }, [controlledCollapsed])
 
   const handleToggle = () => {
-    setCollapsed(c => {
-      localStorage.setItem(STORAGE_KEY, c ? "0" : "1")
-      return !c
-    })
+    const nextCollapsed = !collapsed
+    if (controlledCollapsed === undefined) {
+      setCollapsed(nextCollapsed)
+      try {
+        localStorage.setItem(STORAGE_KEY, nextCollapsed ? "1" : "0")
+      } catch {
+        // Persistence is optional, interaction is not.
+      }
+    }
+    onCollapsedChange?.(nextCollapsed)
   }
 
   const formatedItems = useMemo(

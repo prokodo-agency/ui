@@ -21,6 +21,13 @@ jest.mock("./SideNav.view", () => ({
 }))
 
 describe("SideNavServer", () => {
+  it("uses controlled state in the SSR fallback", () => {
+    render(<SideNavServer initialCollapsed collapsed={false} />)
+    expect(screen.getByTestId("view")).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    )
+  })
   it("renders with required items prop", () => {
     render(<SideNavServer items={[]} />)
     expect(screen.getByTestId("view")).toBeInTheDocument()

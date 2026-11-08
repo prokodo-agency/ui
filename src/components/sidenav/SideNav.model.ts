@@ -48,6 +48,10 @@ export type SideNavProps = {
   sections?: SideNavSection[]
   /** initial collapsed state (default = false) */
   initialCollapsed?: boolean
+  /** Controlled collapsed state. The owner manages persistence when provided. */
+  collapsed?: boolean
+  /** Reports a toggle request in both controlled and uncontrolled mode. */
+  onCollapsedChange?: (collapsed: boolean) => void
   /** collapsed menu icon */
   collapsedIcon?: IconName
   /** collapsed label (for Screenreaders) */
